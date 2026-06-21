@@ -14,7 +14,7 @@ public class ShionTheBruiser : PlaceholderCharacterModel
 {
     public const string CharacterId = "ShionTheBruiser";
 
-    public static readonly Color Color = new("ffffff");
+    public static readonly Color Color = new("9234eb");
 
     public override Color NameColor => Color;
     public override CharacterGender Gender => CharacterGender.Feminine;
@@ -22,11 +22,11 @@ public class ShionTheBruiser : PlaceholderCharacterModel
 
     public override IEnumerable<CardModel> StartingDeck =>
     [
-        ModelDb.Card<StrikeIronclad>(),
-        ModelDb.Card<StrikeIronclad>(),
-        ModelDb.Card<StrikeIronclad>(),
-        ModelDb.Card<StrikeIronclad>(),
-        ModelDb.Card<StrikeIronclad>(),
+        ModelDb.Card<StrikeDefect>(),
+        ModelDb.Card<StrikeDefect>(),
+        ModelDb.Card<StrikeDefect>(),
+        ModelDb.Card<StrikeDefect>(),
+        ModelDb.Card<StrikeDefect>(),
         ModelDb.Card<DefendIronclad>(),
         ModelDb.Card<DefendIronclad>(),
         ModelDb.Card<DefendIronclad>(),

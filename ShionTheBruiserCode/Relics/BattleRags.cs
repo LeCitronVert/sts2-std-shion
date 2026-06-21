@@ -1,5 +1,7 @@
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
@@ -40,17 +42,27 @@ public class BattleRags() : ShionTheBruiserRelic
         if (cardBeingPlayed.Type == CardType.Attack)
         {
             // Gain one temp strength
-            SetupStrikePower strengthPower = await PowerCmd.Apply<SetupStrikePower>((PlayerChoiceContext) new ThrowingPlayerChoiceContext(), Owner.Creature, (decimal) strengthUp, Owner.Creature, (CardModel) null);
+            SetupStrikePower strengthPower = (await PowerCmd.Apply<SetupStrikePower>((PlayerChoiceContext) new ThrowingPlayerChoiceContext(), Owner.Creature, (decimal) strengthUp, Owner.Creature, (CardModel) null!))!;
             return;
         }
         
         if (cardBeingPlayed.Type == CardType.Skill)
         {
             // Gain one temp defense
-            AnticipatePower defensePower = await PowerCmd.Apply<AnticipatePower>((PlayerChoiceContext) new ThrowingPlayerChoiceContext(), Owner.Creature, (decimal) defenseUp, Owner.Creature, (CardModel) null);
+            var defensePower = await PowerCmd.Apply<AnticipatePower>((PlayerChoiceContext) new ThrowingPlayerChoiceContext(), Owner.Creature, (decimal) defenseUp, Owner.Creature, (CardModel) null!);
             return;
         }
         
         await PlayerCmd.GainEnergy((decimal) energyUp, Owner);
+    }
+
+    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants,
+        ICombatState combatState)
+    {
+        if (!participants.Contains<Creature>(this.Owner.Creature))
+            return Task.CompletedTask;
+        
+        _wasUsedThisTurn = false;
+        return Task.CompletedTask;
     }
 }
