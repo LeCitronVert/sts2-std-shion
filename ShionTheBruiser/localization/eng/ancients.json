@@ -1,6 +1,5 @@
 {
   "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-0.ancient": "[sine]Welcome... warrior...[/sine]",
-  "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-0.ancient.sfx": "event:/sfx/npcs/neow/neow_welcome",
   "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-0.next": "Talk",
   "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-1.char": "The voice that brought me here... Was it yours?",
   "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-1.next": "Continue",
@@ -10,10 +9,10 @@
   "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-3.next": "Continue",
   "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-4.ancient": "[sine]... receive my blessing... and go...[/sine]",
   "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-4.next": "Accept",
-  "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-5.char": "(Shion nods carefully.)",
+  "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-5.char": "[i][font_size=22]Shion nods carefully.[/font_size][/i]",
 
   "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.1-0.ancient": "[sine]... I merely... healed your wounds... how did you... endure...[/sine]",
-  "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.1-0.next": "Talk",
+  "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.1-0.next": "Boast",
   "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.1-1.char": "Heh heh... I'm a tough gal!",
   "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.1-1.next": "Continue",
   "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.1-2.ancient": "[sine]Good... it will serve you well...[/sine]",
@@ -24,6 +23,145 @@
 
   "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.3-0r.char": "('ppreciate the blessings, but I don't think I can trust that thing.)",
 
+  "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.4-0r.char": "[i][font_size=22]Shion eyes Neow with suspicion.[/font_size][/i]",
+  
+  "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.5-0r.ancient": "[sine]your power grew... this time... you might defeat him....[/sine]",
+  "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.5-0r.next": "Talk",
+  "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.5-1r.char": "Hope that doesn't mean I don't get to have a blessing this time?",
+  "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.5-1r.next": "Continue",
+  "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.5-2r.ancient": "[sine]greedy... but no... approach...[/sine]",
+  
+  "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.6-0r.char": "(This is getting old.)",
+  
+  "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.7-0r.char": "(Wonder how the folks back home are doing?)",
+  "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.7-1r.next": "Ponder",
+  "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.7-2r.char": "(I should also probably pay another visit to my other self's world soon... It's been a bit.)",
+  "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.7-2r.next": "Realise",
+  "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.7-3r.char": "Oh, crap! The teach's totally gonna bust my balls for not giving news! I've [jitter]GOTTA[/jitter] get out this time!",
+  
+  "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.8-0r.char": "Can't let this get to me...",
+  
+  "NEOW.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.9-0r.ancient": "[sine]weary, but not discouraged, I see... good...[/sine]",
+  
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-0.ancient": "Human?! From another world?! Which one?",
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-0.next": "Answer",
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-1.char": "My world's connected to all sorts of other places. One of the portals there took me here!",
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-1.next": "Continue",
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-2.ancient": "Oh!! Used to this?",
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-2.next": "Continue",
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-3.ancient": "Here! Gift for new friend!",
+  
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.1-0r.ancient": "Weird human friend!! Hello again!!",
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.1-0r.next": "Continue",
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.1-1r.ancient": "Collected new shiny for you!! Wear and match with me!!",
+  
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-0.char": "Oh, it's you! Happy to see ya.",
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-0.next": "Continue",
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-1.ancient": "Weird human not friend with others?? Too shy?!",
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-1.next": "Answer",
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-2.char": "Nah, I just don't think I can trust anyone here. Except you, I mean. You're, uh... as simple as me.",
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-2.next": "Continue",
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-3.ancient": "Very simple, yes!! But not as much as you!!!",
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-3.next": "Feel hurt",
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-4.char": "(Ouch?!)",
+  
+  "PAEL.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-0.ancient": "[thinky_dots]Such a curious soul, you are. You burn bright, and cast such a tall shadow.[/thinky_dots]",
+  "PAEL.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-0.next": "Continue",
+  "PAEL.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-1.ancient": "Come closer. Let me ascertain your nature.",
+  
+  "PAEL.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.1.0r.char": "Maybe a stupid question, but... are you okay?",
+  "PAEL.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.1.0r.next": "Continue",
+  "PAEL.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.1.1r.ancient": "[thinky_dots]Fear not. I give myself away for I cannot end as easily as you.[/thinky_dots]",
+  
+  "PAEL.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-0.ancient": "[thinky_dots]Your eyes always shine when you gaze upon me. Do you admire dragons so?[/thinky_dots]",
+  "PAEL.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-0.next": "Deny",
+  "PAEL.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-1.char": "I-it's not anything like that! I just... am curious about you, I guess.",
+  "PAEL.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-1.next": "Continue",
+  "PAEL.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-2.ancient": "[thinky_dots]You need not deceive. I cast no judgement on you for it.[/thinky_dots]",
+  "PAEL.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-2.next": "'Whatever...'",
+  "PAEL.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-3.ancient": "[thinky_dots]Come, then. Accept my flesh, and perhaps it will bring your draconic potential out.[/thinky_dots]",
+
+  "TEZCATARA.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-0.ancient": "Oh, dear! Another human warrior attempting to achieve glory?",
+  "TEZCATARA.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-0.next": "Talk",
+  "TEZCATARA.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-1.char": "Nah, just trying to get home.",
+  "TEZCATARA.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-1.next": "Continue",
+  "TEZCATARA.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-2.ancient": "Oh? Well, then, let's see what old Tezcatara can do to help you out.",
+  
+  "TEZCATARA.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.1-0r.ancient": "Ahh, the inner fire of a Berserker. [jitter][b]Enthralling.[/b][/jitter]",
+  
+  "TEZCATARA.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-0.ancient": "Oh, Shion, dearie... What will take it for you to accept [jitter][b]burning your weakness[/b][/jitter] away?",
+  "TEZCATARA.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-0.next": "Leave",
+  "TEZCATARA.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-1.char": "[i][font_size=22]Shion silently turns and leaves.[/font_size][/i]",
+  "TEZCATARA.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-2.ancient": "[jitter][b]Kakaka![/b][/jitter] It's a matter of when, dearie, not if!",
+  "TEZCATARA.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-2.next": "Continue",
+  "TEZCATARA.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-3.ancient": "I so wish to be here to see it happen, but if it isn't meant to be, let me at least assist you some more.",
+  
+  "NONUPEIPE.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-0.ancient": "What a brutish looking urchin you are...",
+  "NONUPEIPE.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-0.next": "Get confused",
+  "NONUPEIPE.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-1.char": "Um...?",
+  "NONUPEIPE.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-1.next": "Continue",
+  "NONUPEIPE.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-2.ancient": "Talk no more. Come forth, and let me refine you.",
+  
+  "NONUPEIPE.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.1-0r.ancient": "A gift, for a hard-at-work warrior. May it suit you well.",
+  
+  "NONUPEIPE.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-0.ancient": "And whatever would that be?",
+  "NONUPEIPE.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-0.next": "Gift",
+  "NONUPEIPE.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-1.char": "It's not much, and it's probably not standing up to your standards, but I thought it proper to thank you for your aid.",
+  "NONUPEIPE.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-1.next": "Continue",
+  "NONUPEIPE.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-2.ancient": "How quaint. My other champions have never reciprocated my gifts.",
+  "NONUPEIPE.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-2.next": "Continue",
+  "NONUPEIPE.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-3.ancient": "I shall accept it, child. Let me return the favour once more.",
+  
+  "TANX.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-0.ancient": "A FIGHTER, UNARMED?!",
+  "TANX.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-0.next": "Talk",
+  "TANX.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-1.char": "Dunno if it counts, but technically, my fists are my weapons.",
+  "TANX.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-1.next": "Continue",
+  "TANX.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-2.ancient": "INCREDIBLE!! BUT YOU COULD HAVE [jitter][b]MORE[/b][/jitter] WEAPONS!!!",
+  
+  "TANX.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.1-0r.char": "HAVE A WEAPON!! BUT IF YOU PICK DAGGERS, I WILL BE DISAPPOINTED!!!!",
+  
+  "TANX.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-0.ancient": "FIGHT ME, BRUISER!",
+  "TANX.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-0.next": "Fight",
+  "TANX.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-1.char": "[i][font_size=22]Shion completely loses herself in her fight with Tanx.[/font_size][/i]",
+  "TANX.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-2.next": "Continue",
+  "TANX.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-3.ancient": "FREAKY BERSERKER?! GET A WEAPON AND GET OUT!!!",
+  
+  "VAKUU.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-0.ancient": "Hungry for power, are we? I think we can help each other out.",
+  "VAKUU.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-0.next": "Refuse",
+  "VAKUU.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-1.char": "I'm not that desperate.",
+  "VAKUU.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-1.next": "Continue",
+  "VAKUU.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-2.ancient": "Have you any idea how many have said the exact same thing to me before you?",
+  
+  "VAKUU.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.1-0r.ancient": "You remind me of one of my puppets. So furious. So determined. So... [jitter][b]frightened[/b][/jitter].",
+  
+  "VAKUU.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-0.ancient": "...",
+  "VAKUU.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-0.next": "Continue",
+  "VAKUU.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-1.char": "Damn. Finally gave up on the corrupting me thing? Thought I'd reach the top before THAT happened.",
+  "VAKUU.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-1.next": "Continue",
+  "VAKUU.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-2.ancient": "Hmph. Flaunt all you want. I should have checked whether another had laid claim on you before anything else.",
+  "VAKUU.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-2.next": "Think",
+  "VAKUU.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-3.char": "... [jitter][b]what?[/b][/jitter].",
+  "VAKUU.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-3.next": "Continue",
+  "VAKUU.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-4.ancient": "What? Don't tell me when you haven't noticed.",
+  "VAKUU.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-4.next": "Continue",
+  "VAKUU.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-5.char": "Here's a fair deal, kid: take my blessing, and in exchange, when you see [b]HER[/b] again, tell her to keep her strays to herself.",
+  
+  "DARV.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-0.ancient": "Oh! You a shopkeep', too?",
+  "DARV.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-0.next": "Answer",
+  "DARV.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-1.char": "Kindaaaa? I just trade junk from other worlds in the ones I visit to make some local penny.",
+  "DARV.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-1.next": "Continue",
+  "DARV.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-2.ancient": "Oh, heck yeah! I like ya' style! Let's trade!",
+  
+  "DARV.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.1-0r.ancient": "Check out my newest finds, pal!",
+  
+  "DARV.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-0.char": "... and that one is a trap; if you break it, you take damage.",
+  "DARV.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-0.next": "Continue",
+  "DARV.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-1.ancient": "That's nasty! But I'll say, storing junk in them big screens seems handy!",
+  "DARV.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-1.next": "Continue",
+  "DARV.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-2.char": "It can be. Want some? Got quite a few to spare, really...",
+  "DARV.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-2.next": "Continue",
+  "DARV.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-3.ancient": "You know what? Whatever. Help y'self out to some of my junk, and I'll rid you of yours!",
+  
   "THE_ARCHITECT.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-0r.char": "So, I'm assuming you're the one that whale's warned me about.",
   "THE_ARCHITECT.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-0r.next": "Continue",
   "THE_ARCHITECT.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-1r.ancient": "How did an idiot like you climb to the top?",
@@ -47,7 +185,7 @@
   "THE_ARCHITECT.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-1r.char": "Still unable to get rid of me?",
   "THE_ARCHITECT.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-1r.next": "Continue",
   "THE_ARCHITECT.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-2r.ancient": "Hmph. Foolish and annoying. Begone!",
-  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-2r.next": "Fight",
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-2r.next": "Continue",
   "THE_ARCHITECT.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-attack": "Architect",
   
   "THE_ARCHITECT.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.3-0r.ancient": "Don't we both have better things to do?",
