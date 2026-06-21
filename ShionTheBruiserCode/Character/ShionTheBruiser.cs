@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Relics;
+using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Character;
@@ -22,16 +23,15 @@ public class ShionTheBruiser : PlaceholderCharacterModel
 
     public override IEnumerable<CardModel> StartingDeck =>
     [
-        ModelDb.Card<StrikeDefect>(),
-        ModelDb.Card<StrikeDefect>(),
-        ModelDb.Card<StrikeDefect>(),
-        ModelDb.Card<StrikeDefect>(),
-        ModelDb.Card<StrikeDefect>(),
-        ModelDb.Card<DefendIronclad>(),
-        ModelDb.Card<DefendIronclad>(),
-        ModelDb.Card<DefendIronclad>(),
-        ModelDb.Card<DefendIronclad>(),
-        ModelDb.Card<DefendIronclad>()
+        ModelDb.Card<ShionStrike>(),
+        ModelDb.Card<ShionStrike>(),
+        ModelDb.Card<ShionStrike>(),
+        ModelDb.Card<ShionStrike>(),
+        ModelDb.Card<ShionStrike>(),
+        ModelDb.Card<ShionDefend>(),
+        ModelDb.Card<ShionDefend>(),
+        ModelDb.Card<ShionDefend>(),
+        ModelDb.Card<ShionDefend>(),
     ];
 
     public override IReadOnlyList<RelicModel> StartingRelics =>

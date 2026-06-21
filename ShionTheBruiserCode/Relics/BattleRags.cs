@@ -65,4 +65,6 @@ public class BattleRags() : ShionTheBruiserRelic
         _wasUsedThisTurn = false;
         return Task.CompletedTask;
     }
+
+    public override RelicModel? GetUpgradeReplacement() => ModelDb.Relic<BattleGloves>();
 }

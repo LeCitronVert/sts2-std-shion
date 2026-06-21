@@ -61,7 +61,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="ShionTheBruiser\images\card_portraits\big\"/>
         <Folder Include="ShionTheBruiser\images\powers\big\"/>
         <Folder Include="ShionTheBruiser\images\relics\big\"/>
     </ItemGroup>
