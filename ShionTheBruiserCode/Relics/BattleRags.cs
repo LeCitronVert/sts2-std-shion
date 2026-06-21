@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
@@ -42,14 +43,14 @@ public class BattleRags() : ShionTheBruiserRelic
         if (cardBeingPlayed.Type == CardType.Attack)
         {
             // Gain one temp strength
-            SetupStrikePower strengthPower = (await PowerCmd.Apply<SetupStrikePower>((PlayerChoiceContext) new ThrowingPlayerChoiceContext(), Owner.Creature, (decimal) strengthUp, Owner.Creature, (CardModel) null!))!;
+            var strengthPower = (await PowerCmd.Apply<ScrappyStrength>((PlayerChoiceContext) new ThrowingPlayerChoiceContext(), Owner.Creature, (decimal) strengthUp, Owner.Creature, (CardModel) null!))!;
             return;
         }
         
         if (cardBeingPlayed.Type == CardType.Skill)
         {
             // Gain one temp defense
-            var defensePower = await PowerCmd.Apply<AnticipatePower>((PlayerChoiceContext) new ThrowingPlayerChoiceContext(), Owner.Creature, (decimal) defenseUp, Owner.Creature, (CardModel) null!);
+            var defensePower = await PowerCmd.Apply<ScrappyDexterity>((PlayerChoiceContext) new ThrowingPlayerChoiceContext(), Owner.Creature, (decimal) defenseUp, Owner.Creature, (CardModel) null!);
             return;
         }
         

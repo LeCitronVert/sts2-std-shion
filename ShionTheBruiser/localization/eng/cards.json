@@ -1,6 +1,6 @@
 {
   "SHIONTHEBRUISER-SHION_STRIKE.description": "Deal {Damage:diff()} damage.",
   "SHIONTHEBRUISER-SHION_STRIKE.title": "Strike",
-  "SHIONTHEBRUISER-SHION_DEFEND.description": "Gain {Block:diff()} [gold]Block[/gold]",
+  "SHIONTHEBRUISER-SHION_DEFEND.description": "Gain {Block:diff()} [gold]Block[/gold].",
   "SHIONTHEBRUISER-SHION_DEFEND.title": "Defend"
 }
