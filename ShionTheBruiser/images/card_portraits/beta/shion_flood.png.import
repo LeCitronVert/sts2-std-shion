@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://fd8hrocbvkov"
-path="res://.godot/imported/shionflood.png-ca7121e67a4aefc8dc0667dafd452da0.ctex"
+path="res://.godot/imported/shion_flood.png-f3cd4ad20f130ea772f7bb499a698640.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ShionTheBruiser/images/card_portraits/beta/shionflood.png"
-dest_files=["res://.godot/imported/shionflood.png-ca7121e67a4aefc8dc0667dafd452da0.ctex"]
+source_file="res://ShionTheBruiser/images/card_portraits/beta/shion_flood.png"
+dest_files=["res://.godot/imported/shion_flood.png-f3cd4ad20f130ea772f7bb499a698640.ctex"]
 
 [params]
 

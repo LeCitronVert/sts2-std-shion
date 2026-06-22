@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -23,18 +24,19 @@ public class FellDragon() : ShionTheBruiserPower
         PowerStackType.Single;
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<VigorPower>()
+        HoverTipFactory.FromPower<VigorPower>(),
+        HoverTipFactory.Static(StaticHoverTip.Block)
     ];
 
-    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
+    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
         var uniqueBuffsCount = ShionMechanicsHelper.GetDragonUniqueBuffCount(Owner);
         if (uniqueBuffsCount == 0) return;
         
         Decimal num = (Decimal) 5 * uniqueBuffsCount;
-        Decimal hpLoss = 2M;
+        Decimal hpLoss = 2M  * uniqueBuffsCount;
         var vigorPower = (await PowerCmd.Apply<VigorPower>(new ThrowingPlayerChoiceContext(), Owner, num, Owner, (CardModel) null!))!;
-        var block = (await CreatureCmd.GainBlock(Owner, new BlockVar(num, ValueProp.Move), (CardPlay) null!))!;
-        var selfDamage = (await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), Owner, new DamageVar(hpLoss, ValueProp.Unpowered), (CardModel) null!))!;
+        var block = (await CreatureCmd.GainBlock(Owner, new BlockVar(num, ValueProp.Unpowered), (CardPlay) null!))!;
+        var selfDamage = (await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), Owner, new DamageVar(hpLoss , ValueProp.Unblockable), Owner))!;
     }
 }
