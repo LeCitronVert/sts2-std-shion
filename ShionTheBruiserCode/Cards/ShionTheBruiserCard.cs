@@ -1,9 +1,14 @@
-﻿using BaseLib.Abstracts;
+﻿using System.Diagnostics;
+using BaseLib.Abstracts;
 using BaseLib.Extensions;
 using BaseLib.Utils;
 using ShionTheBruiser.ShionTheBruiserCode.Character;
 using ShionTheBruiser.ShionTheBruiserCode.Extensions;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -29,4 +34,16 @@ public abstract class ShionTheBruiserCard(int cost, CardType type, CardRarity ra
     //Uses card_portraits/card_name.png as image path. These should be smaller images.
     public override string PortraitPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".CardImagePath();
     public override string BetaPortraitPath => $"beta/{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".CardImagePath();
+
+    public override decimal ModifyDamageCap(Creature? target, ValueProp props, Creature? dealer, CardModel? cardSource)
+    {
+        if (cardSource == null) return base.ModifyDamageCap(target, props, dealer, cardSource);
+        
+        if (cardSource.DynamicVars.TryGetValue(DamageCapVar.Key, out var damageCapVar) && damageCapVar is DamageCapVar capVar)
+        {
+            return capVar.BaseValue;
+        }
+
+        return base.ModifyDamageCap(target, props, dealer, cardSource);
+    }
 }

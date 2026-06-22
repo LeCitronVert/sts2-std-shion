@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
+using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -14,7 +15,7 @@ public class ShionStrike() : ShionTheBruiserCard(1,
 {
     protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(6M, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(6M, ValueProp.Move), new DamageCapVar(6M)];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -32,5 +33,6 @@ public class ShionStrike() : ShionTheBruiserCard(1,
     protected override void OnUpgrade()
     {
         this.DynamicVars.Damage.UpgradeValueBy(3M);
+        this.DynamicVars[DamageCapVar.Key].UpgradeValueBy(3M);
     }
 }
