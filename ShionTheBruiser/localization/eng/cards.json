@@ -1,9 +1,9 @@
 {
-  "SHIONTHEBRUISER-SHION_STRIKE.description": "Deal {Damage:diff()} damage.",
+  "SHIONTHEBRUISER-SHION_STRIKE.description": "Deal {Damage:diff()} damage.\n[gold]Damage Cap[/gold] {DamageCap()}.",
   "SHIONTHEBRUISER-SHION_STRIKE.title": "Strike",
   "SHIONTHEBRUISER-SHION_DEFEND.description": "Gain {Block:diff()} [gold]Block[/gold].",
   "SHIONTHEBRUISER-SHION_DEFEND.title": "Defend",
-  "SHIONTHEBRUISER-SHION_FLOOD.description": "Deal {Damage:diff()} damage {Repeat:diff()} times.",
+  "SHIONTHEBRUISER-SHION_FLOOD.description": "Deal {Damage:diff()} damage {Repeat:diff()} times.\n[gold]Damage Cap[/gold] {DamageCap()}.",
   "SHIONTHEBRUISER-SHION_FLOOD.title": "Flood",
   "SHIONTHEBRUISER-SHION_BLUFF.description": "[gold]Exhaust[/gold] 1 card.\nGain {StrengthPower:diff()} [gold]Strength[/gold].",
   "SHIONTHEBRUISER-SHION_BLUFF.title": "Bluff"

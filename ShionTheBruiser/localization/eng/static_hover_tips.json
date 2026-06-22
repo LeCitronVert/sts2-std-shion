@@ -1,4 +1,4 @@
 {
-  "SHIONTHEBRUISER-DAMAGECAP.title": "Damage Cap",
-  "SHIONTHEBRUISER-DAMAGECAP.description": "Each hit of this Attack can only deal up to [blue]{DamageCap}[/blue] damage."
+  "SHIONTHEBRUISER-DAMAGE_CAP.title": "Damage Cap",
+  "SHIONTHEBRUISER-DAMAGE_CAP.description": "Each hit of this Attack can only deal up to [blue]{DamageCap}[/blue] damage."
 }
