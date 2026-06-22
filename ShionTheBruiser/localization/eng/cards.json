@@ -6,5 +6,7 @@
   "SHIONTHEBRUISER-SHION_FLOOD.description": "Deal {Damage:diff()} damage {Repeat:diff()} times.\n[gold]Damage Cap[/gold] {DamageCap}.",
   "SHIONTHEBRUISER-SHION_FLOOD.title": "Flood",
   "SHIONTHEBRUISER-SHION_BLUFF.description": "[gold]Exhaust[/gold] 1 card.\nGain {StrengthPower:diff()} [gold]Strength[/gold].",
-  "SHIONTHEBRUISER-SHION_BLUFF.title": "Bluff"
+  "SHIONTHEBRUISER-SHION_BLUFF.title": "Bluff",
+  "SHIONTHEBRUISER-SHION_BREAK_DOWN.description": "Deal {Damage:diff()} damage {Repeat:diff()} times.",
+  "SHIONTHEBRUISER-SHION_BREAK_DOWN.title": "Break Down"
 }

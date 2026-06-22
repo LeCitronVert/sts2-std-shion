@@ -1,8 +1,10 @@
+using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
@@ -11,7 +13,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 public class ShionFlood() : ShionTheBruiserCard(1,
     CardType.Attack, CardRarity.Basic,
-    TargetType.AnyEnemy)
+    TargetType.AnyEnemy), ITranscendenceCard
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(1M, ValueProp.Move),
@@ -38,4 +40,6 @@ public class ShionFlood() : ShionTheBruiserCard(1,
     {
         this.DynamicVars.Repeat.UpgradeValueBy(1M);
     }
+
+    public CardModel GetTranscendenceTransformedCard() => ModelDb.Card<ShionBreakDown>();
 }
