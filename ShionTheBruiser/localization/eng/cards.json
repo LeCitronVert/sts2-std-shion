@@ -8,5 +8,7 @@
   "SHIONTHEBRUISER-SHION_BLUFF.description": "[gold]Exhaust[/gold] 1 card.\nGain {StrengthPower:diff()} [gold]Strength[/gold].",
   "SHIONTHEBRUISER-SHION_BLUFF.title": "Bluff",
   "SHIONTHEBRUISER-SHION_BREAK_DOWN.description": "Deal {Damage:diff()} damage {Repeat:diff()} times.",
-  "SHIONTHEBRUISER-SHION_BREAK_DOWN.title": "Break Down"
+  "SHIONTHEBRUISER-SHION_BREAK_DOWN.title": "Break Down",
+  "SHIONTHEBRUISER-SHION_FELL_DRAGON.description": "At the beginning of your turn, gain 5 [gold]Vigor[/gold], 5 [gold]Block[/gold], and lose 2 HP per unique buff you have.",
+  "SHIONTHEBRUISER-SHION_FELL_DRAGON.title": "Fell Dragon"
 }

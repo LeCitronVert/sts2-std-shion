@@ -1,0 +1,13 @@
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Powers;
+
+namespace ShionTheBruiser.ShionTheBruiserCode.Helper;
+
+public static class ShionMechanicsHelper
+{
+    public static int GetDragonUniqueBuffCount(Creature creature)
+    {
+        // Get count of unique Buffs.
+        return creature.Powers.Where(p => p.Type == PowerType.Buff).DistinctBy(p => p.GetType()).Count();
+    }
+}

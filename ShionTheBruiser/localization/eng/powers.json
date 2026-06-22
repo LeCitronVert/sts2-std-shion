@@ -1,3 +1,5 @@
 {
-  
+  "SHIONTHEBRUISER-FELL_DRAGON.description": "Each turn, gain [gold]Vigor[/gold] and [gold]Block[/gold], but lose HP, depending on your amount of unique buffs.",
+  "SHIONTHEBRUISER-FELL_DRAGON.smartDescription": "At the beginning of your turn, gain 5 [gold]Vigor[/gold], 5 [gold]Block[/gold], and lose 2 HP per unique buff you have.",
+  "SHIONTHEBRUISER-FELL_DRAGON.title": "Fell Dragon"
 }
