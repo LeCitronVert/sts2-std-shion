@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
@@ -20,7 +21,7 @@ public class ShionEnergyBall() : ShionTheBruiserCard(1,
         new CalculationBaseVar(7),
         new ExtraDamageVar(5),
         // If player has Vigor, 1 x ExtraDamage / Otherwise, 0
-        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((model, creature) => model.Owner.Creature.HasPower<VigorPower>() ? 1 : 0),
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((model, creature) => ShionMechanicsHelper.HasVigor(model.Owner.Creature) ? 1 : 0),
         new DamageCapVar(30),
     ];
     
@@ -29,6 +30,8 @@ public class ShionEnergyBall() : ShionTheBruiserCard(1,
     ];
     
     protected override HashSet<CardTag> CanonicalTags => [ShionCardTags.Energy];
+    
+    public bool ShouldGlowGold => ShionMechanicsHelper.HasVigor(this.Owner.Creature);
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
