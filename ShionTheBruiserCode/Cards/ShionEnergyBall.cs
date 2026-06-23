@@ -20,7 +20,7 @@ public class ShionEnergyBall() : ShionTheBruiserCard(1,
         new CalculationBaseVar(7),
         new ExtraDamageVar(5),
         // If player has Vigor, 1 x ExtraDamage / Otherwise, 0
-        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((model, creature) => creature.HasPower<VigorPower>() ? 1 : 0),
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((model, creature) => model.Owner.Creature.HasPower<VigorPower>() ? 1 : 0),
         new DamageCapVar(30),
     ];
     
