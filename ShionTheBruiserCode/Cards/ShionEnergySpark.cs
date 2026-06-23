@@ -1,0 +1,40 @@
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Cards;
+
+namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
+
+public class ShionEnergySpark() : ShionTheBruiserCard(0,
+    CardType.Skill, CardRarity.Common,
+    TargetType.Self)
+{
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CardsVar(1),
+        new PowerVar<VigorPower>(1)
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<VigorPower>()
+    ];
+
+    protected override async Task OnPlay(
+        PlayerChoiceContext choiceContext,
+        CardPlay play)
+    {
+        ShionEnergySpark source = this;
+        int cardCount = source.DynamicVars.Cards.IntValue;
+        IEnumerable<CardModel> cardModels = await CardPileCmd.Draw(choiceContext, (Decimal)cardCount, source.Owner);
+        VigorPower vigorPower = await PowerCmd.Apply<VigorPower>(choiceContext, source.Owner.Creature, (Decimal)source.DynamicVars["VigorPower"].IntValue, source.Owner.Creature, (CardModel)source);
+    }
+
+    protected override void OnUpgrade()
+    {
+        this.DynamicVars.Cards.UpgradeValueBy(1M);
+        this.DynamicVars["VigorPower"].UpgradeValueBy(1M);
+    }
+}

@@ -10,5 +10,7 @@
   "SHIONTHEBRUISER-SHION_BREAK_DOWN.description": "Deal {Damage:diff()} damage {Repeat:diff()} times.",
   "SHIONTHEBRUISER-SHION_BREAK_DOWN.title": "Break Down",
   "SHIONTHEBRUISER-SHION_FELL_DRAGON.description": "At the beginning of your turn, gain 5 [gold]Vigor[/gold], 5 [gold]Block[/gold], and lose 2 HP per unique buff you have.",
-  "SHIONTHEBRUISER-SHION_FELL_DRAGON.title": "Fell Dragon"
+  "SHIONTHEBRUISER-SHION_FELL_DRAGON.title": "Fell Dragon",
+  "SHIONTHEBRUISER-SHION_ENERGY_SPARK.description": "Gain {VigorPower:diff()} [gold]Vigor[/gold].\nDraw {Cards:diff()} {Cards:plural:card|cards}.",
+  "SHIONTHEBRUISER-SHION_ENERGY_SPARK.title": "Energy Spark"
 }
