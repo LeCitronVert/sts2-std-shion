@@ -31,7 +31,7 @@ public class ShionEnergyBall() : ShionTheBruiserCard(1,
     
     protected override HashSet<CardTag> CanonicalTags => [ShionCardTags.Energy];
     
-    public bool ShouldGlowGold => ShionMechanicsHelper.HasVigor(this.Owner.Creature);
+    protected override bool ShouldGlowGoldInternal => ShionMechanicsHelper.HasVigor(this.Owner.Creature);
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
