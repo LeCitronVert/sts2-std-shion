@@ -1,3 +1,5 @@
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -32,7 +34,13 @@ public class ShionEnergyBall() : ShionTheBruiserCard(1,
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        
+        ShionEnergyBall card = this;
+        ArgumentNullException.ThrowIfNull(play.Target, "play.Target");
+        AttackCommand attackCommand = await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
+            .FromCard(card)
+            .Targeting(play.Target)
+            .WithHitFx("vfx/vfx_attack_slash")
+            .Execute(choiceContext);
     }
 
     protected override void OnUpgrade()

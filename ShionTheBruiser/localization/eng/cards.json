@@ -14,5 +14,7 @@
   "SHIONTHEBRUISER-SHION_ENERGY_SPARK.description": "Gain {VigorPower:diff()} [gold]Vigor[/gold].\nDraw {Cards:diff()} {Cards:plural:card|cards}.",
   "SHIONTHEBRUISER-SHION_ENERGY_SPARK.title": "Energy Spark",
   "SHIONTHEBRUISER-SHION_ENERGY_BALL.description": "Deal {CalculatedDamage:diff()} damage.\nDeals {ExtraDamage:diff()} damage if you have Vigor.",
-  "SHIONTHEBRUISER-SHION_ENERGY_BALL.title": "Energy Ball"
+  "SHIONTHEBRUISER-SHION_ENERGY_BALL.title": "Energy Ball",
+  "SHIONTHEBRUISER-SHION_ENERGY_STRIKE.description": "Deal {Damage:diff()} damage.\n[gold]Damage Cap[/gold] {DamageCap}.",
+  "SHIONTHEBRUISER-SHION_ENERGY_STRIKE.title": "Energy Strike"
 }
