@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -21,6 +22,8 @@ public class ShionEnergySpark() : ShionTheBruiserCard(0,
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<VigorPower>()
     ];
+    
+    protected override HashSet<CardTag> CanonicalTags => [ShionCardTags.Energy];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
