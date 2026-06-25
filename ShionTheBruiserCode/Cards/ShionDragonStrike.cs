@@ -11,7 +11,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 public class ShionDragonStrike() : ShionTheBruiserCard(1,
     CardType.Attack, CardRarity.Common,
-    TargetType.Self)
+    TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CalculationBaseVar(6M),
