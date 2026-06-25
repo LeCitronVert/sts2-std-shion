@@ -1,8 +1,12 @@
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Monsters;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Critical;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
@@ -100,6 +104,7 @@ public class ShionCritTrackerPower : ShionTheBruiserPower
         if (ShionCritSystem.CurrentHitIsCrit && result.UnblockedDamage > 0)
         {
             // TODO: replace with real FMOD event / VFX scene paths once assets are ready.
+            TalkCmd.Play(new LocString("combat_messages", "SHIONTHEBRUISER-CRIT"), dealer, VfxColor.Purple, VfxDuration.VeryShort);
             // SfxCmd.Play("event:/sfx/characters/shion/crit_hit");
             // VfxCmd.PlayOnCreatureCenter(target, "vfx/vfx_crit");
         }

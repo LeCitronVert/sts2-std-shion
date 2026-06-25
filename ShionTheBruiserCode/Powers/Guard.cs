@@ -18,14 +18,14 @@ public class Guard(): ShionTheBruiserPower
     public override PowerStackType StackType =>
         PowerStackType.Counter;
 
-    public override Decimal ModifyHpLostAfterOstyLate(
-        Creature target,
+    public override Decimal ModifyDamageMultiplicative(
+        Creature? target,
         Decimal amount,
         ValueProp props,
         Creature? dealer,
         CardModel? cardSource)
     {
-        return target == this.Owner || !props.IsPoweredAttack() ? amount : amount * 0.8M;
+        return target != this.Owner ? 1M : 0.8M;
     }
 
     public override Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)

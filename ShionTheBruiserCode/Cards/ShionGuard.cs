@@ -4,12 +4,13 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionGuard() : ShionTheBruiserCard(1,
-    CardType.Attack, CardRarity.Basic,
+public class ShionGuard() : ShionDefensiveCard(0,
+    CardType.Skill, CardRarity.Common,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
@@ -19,6 +20,7 @@ public class ShionGuard() : ShionTheBruiserCard(1,
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<Guard>(),
     ];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [ShionCardKeywords.Defensive];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -32,6 +34,7 @@ public class ShionGuard() : ShionTheBruiserCard(1,
             card.Owner.Creature,
             card
         );
+        await ApplyDefensiveToPlayer();
     }
 
     protected override void OnUpgrade()
