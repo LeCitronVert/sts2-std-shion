@@ -19,6 +19,6 @@
   "SHIONTHEBRUISER-SHION_ENERGY_STRIKE.title": "Energy Strike",
   "SHIONTHEBRUISER-SHION_CRITICAL_STRIKE.description": "Deal {Damage:diff()} damage. Always a [gold]Critical Hit[/gold].\n[gold]Damage Cap[/gold] {DamageCap}.",
   "SHIONTHEBRUISER-SHION_CRITICAL_STRIKE.title": "Critical Strike",
-  "SHIONTHEBRUISER-SHION_DRAGON_STRIKE.description": "Deal {Damage:diff()} damage. Damage is doubled if you have at least 3 unique buffs.\n[gold]Damage Cap[/gold] {DamageCap}.",
+  "SHIONTHEBRUISER-SHION_DRAGON_STRIKE.description": "Deal {CalculatedDamage:diff()} damage. Damage is doubled if you have at least 3 unique buffs.\n[gold]Damage Cap[/gold] {DamageCap}.",
   "SHIONTHEBRUISER-SHION_DRAGON_STRIKE.title": "Dragon Strike"
 }
