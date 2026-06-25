@@ -14,15 +14,28 @@ public static class ShionHooksHelper
     /// </summary>
     public static decimal CalculateCritHitRate(ICombatState combatState, CardModel? card)
     {
+        // Exclude the source card from the listener query — it is checked directly below.
+        // Cards often leave the hook-listener set before ModifyDamageMultiplicative fires
+        // (they're no longer in the hand), so we can't rely on IterateHookListeners() alone.
+        // The explicit exclusion also prevents double-counting on the rare occasion the card
+        // IS still in the listener set.
         decimal rate = combatState.IterateHookListeners()
+            .Where(l => l != card)
             .OfType<ICritHitRateContributor>()
             .Sum(c => c.GetCritHitRateBonus(card));
 
+        if (card is ICritHitRateContributor cardHitContributor)
+            rate += cardHitContributor.GetCritHitRateBonus(card);
+
         decimal minRate = combatState.IterateHookListeners()
+            .Where(l => l != card)
             .OfType<IMinCritHitRateContributor>()
             .Select(c => c.GetMinCritHitRate(card))
             .DefaultIfEmpty(0m)
             .Max();
+
+        if (card is IMinCritHitRateContributor cardMinHitContributor)
+            minRate = Math.Max(minRate, cardMinHitContributor.GetMinCritHitRate(card));
 
         return Math.Max(rate, minRate);
     }
@@ -35,15 +48,24 @@ public static class ShionHooksHelper
     /// </summary>
     public static decimal CalculateCritAttackRate(ICombatState combatState, CardModel? card)
     {
+        // Same direct-card logic as CalculateCritHitRate — see comments there.
         decimal rate = combatState.IterateHookListeners()
+            .Where(l => l != card)
             .OfType<ICritAttackRateContributor>()
             .Sum(c => c.GetCritAttackRateBonus(card));
 
+        if (card is ICritAttackRateContributor cardAttackContributor)
+            rate += cardAttackContributor.GetCritAttackRateBonus(card);
+
         decimal minRate = combatState.IterateHookListeners()
+            .Where(l => l != card)
             .OfType<IMinCritAttackRateContributor>()
             .Select(c => c.GetMinCritAttackRate(card))
             .DefaultIfEmpty(0m)
             .Max();
+
+        if (card is IMinCritAttackRateContributor cardMinAttackContributor)
+            minRate = Math.Max(minRate, cardMinAttackContributor.GetMinCritAttackRate(card));
 
         return Math.Max(rate, minRate);
     }
