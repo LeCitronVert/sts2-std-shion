@@ -4,5 +4,11 @@
   "SHIONTHEBRUISER-FELL_DRAGON.title": "Fell Dragon",
   "SHIONTHEBRUISER-SHION_CRIT_TRACKER_POWER.description": "This character's attacks can deal [gold]Critical Hits[/gold], dealing 50% more damage.",
   "SHIONTHEBRUISER-SHION_CRIT_TRACKER_POWER.smartDescription": "Attacks deal 50% damage on a [gold]Critical Hit[/gold].\nPer-hit crit chance: [blue]{HitRate}%[/blue].\nPer-attack crit chance: [blue]{AttackRate}%[/blue].",
-  "SHIONTHEBRUISER-SHION_CRIT_TRACKER_POWER.title": "Critical Hits"
+  "SHIONTHEBRUISER-SHION_CRIT_TRACKER_POWER.title": "Critical Hits",
+  "SHIONTHEBRUISER-DEFENSIVE_DEBUFF.description": "A defensive stance is assumed this turn, rendering you unable to attack.",
+  "SHIONTHEBRUISER-DEFENSIVE_DEBUFF.smartDescription": "A defensive stance is assumed this turn, rendering you unable to attack.",
+  "SHIONTHEBRUISER-DEFENSIVE_DEBUFF.title": "Defensive",
+  "SHIONTHEBRUISER-GUARD.description": "Reduces attack damage taken by 20%.",
+  "SHIONTHEBRUISER-GUARD.smartDescription": "Reduces attack damage taken by 20% {Amount:plural:until the next turn|for [blue]{}[/blue] turns}.",
+  "SHIONTHEBRUISER-GUARD.title": "Guard"
 }
