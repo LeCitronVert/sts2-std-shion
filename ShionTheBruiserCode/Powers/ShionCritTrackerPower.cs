@@ -88,17 +88,15 @@ public class ShionCritTrackerPower : ShionTheBruiserPower
         PlayerChoiceContext choiceContext, Creature? dealer, DamageResult result,
         ValueProp props, Creature target, CardModel? cardSource)
     {
-        if (dealer == Owner)
+        if (dealer != Owner) return Task.CompletedTask;
+        if (ShionCritSystem.CurrentHitIsCrit && result.UnblockedDamage > 0)
         {
-            if (ShionCritSystem.CurrentHitIsCrit && result.UnblockedDamage > 0)
-            {
-                // TODO: replace with real FMOD event / VFX scene paths once assets are ready.
-                // SfxCmd.Play("event:/sfx/characters/shion/crit_hit");
-                // VfxCmd.PlayOnCreatureCenter(target, "vfx/vfx_crit");
-            }
-
-            ShionCritSystem.EndHit();
+            // TODO: replace with real FMOD event / VFX scene paths once assets are ready.
+            // SfxCmd.Play("event:/sfx/characters/shion/crit_hit");
+            // VfxCmd.PlayOnCreatureCenter(target, "vfx/vfx_crit");
         }
+
+        ShionCritSystem.EndHit();
 
         return Task.CompletedTask;
     }

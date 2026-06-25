@@ -11,7 +11,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionCriticalStrike() : ShionTheBruiserCard(2,
+public class ShionCriticalStrike() : CritContributorCard(2,
     CardType.Attack, CardRarity.Common,
     TargetType.AnyEnemy), ICritHitRateContributor
 {
