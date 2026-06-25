@@ -17,21 +17,18 @@ public static class ShionCritSystem
     /// If true, every hit of the attack is a critical hit regardless of the per-hit roll.
     /// </summary>
     private static bool _critAttack;
-
-    /// <summary>
-    /// True when the current individual hit is a critical hit.
-    /// Set inside <see cref="EnsureHitRolled"/> and read by the tracker relic's
-    /// <c>ModifyDamageMultiplicative</c> and <c>AfterDamageGiven</c> overrides.
-    /// </summary>
     private static bool _currentHitIsCrit;
+    private static bool _hitCritRolled;
 
     /// <summary>
-    /// Guard flag: true once a per-hit crit roll has been performed for the current hit.
-    /// Prevents re-rolling when multiple targets are hit by the same attack call,
-    /// or when <see cref="EnsureHitRolled"/> is called more than once.
-    /// Reset by <see cref="EndHit"/> between hits.
+    /// The card whose attack is currently being resolved.
+    /// Set by <see cref="StartAttack"/> and used by <see cref="EnsureHitRolled"/> to
+    /// ignore STS2's card-preview recalculations, which call ModifyDamageMultiplicative
+    /// for every card in hand (with that card as the source) immediately after the attack starts.
+    /// Without this guard, those preview calls consume <see cref="_hitCritRolled"/> before
+    /// the actual damage calculation for the attacking card runs.
     /// </summary>
-    private static bool _hitCritRolled;
+    private static CardModel? _currentAttackCard;
 
     /// <summary>Whether the hit currently being resolved is a critical hit.</summary>
     public static bool CurrentHitIsCrit => _currentHitIsCrit;
@@ -47,6 +44,7 @@ public static class ShionCritSystem
     /// </param>
     public static void StartAttack(ICombatState cs, CardModel? card)
     {
+        _currentAttackCard = card;
         decimal attackRate = card != null
             ? ShionHooksHelper.CalculateCritAttackRate(cs, card)
             : 0m;
@@ -67,6 +65,17 @@ public static class ShionCritSystem
     /// </summary>
     public static void EnsureHitRolled(ICombatState cs, CardModel? card)
     {
+        // STS2 recalculates card-preview damage for every card in hand immediately after
+        // an attack starts. Each preview fires ModifyDamageMultiplicative with that card
+        // as the source. Ignore any call whose source doesn't match the attacking card —
+        // otherwise the first preview (e.g. ShionStrike) steals _hitCritRolled before the
+        // actual ShionCriticalStrike damage calculation runs.
+        if (card != _currentAttackCard)
+        {
+            MainFile.Logger.Info($"[ShionCritSystem] EnsureHitRolled SKIPPED (preview) — card={card?.GetType().Name ?? "null"}, expected={_currentAttackCard?.GetType().Name ?? "null"}");
+            return;
+        }
+
         if (_hitCritRolled) return;
         decimal hitRate = card != null
             ? ShionHooksHelper.CalculateCritHitRate(cs, card)
@@ -93,6 +102,7 @@ public static class ShionCritSystem
     /// </summary>
     public static void EndAttack()
     {
+        _currentAttackCard = null;
         _critAttack = false;
         _currentHitIsCrit = false;
         _hitCritRolled = false;
