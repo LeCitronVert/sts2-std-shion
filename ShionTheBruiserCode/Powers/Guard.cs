@@ -18,15 +18,10 @@ public class Guard(): ShionTheBruiserPower
     public override PowerStackType StackType =>
         PowerStackType.Counter;
 
-    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer,
+    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer,
         CardModel? cardSource)
     {
-        if (target == Owner && props.IsPoweredAttack())
-        {
-            return amount * 0.8m;
-        }
-
-        return 1;
+        return target != this.Owner || !props.IsPoweredAttack() || dealer == this.Applier ? 0 : (decimal) - (this.Amount * 0.2);
     }
 
     public override Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
