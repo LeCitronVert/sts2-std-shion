@@ -14,30 +14,45 @@ public static class ShionHooksHelper
     /// </summary>
     public static decimal CalculateCritHitRate(ICombatState combatState, CardModel? card)
     {
-        // Exclude the source card from the listener query — it is checked directly below.
-        // Cards often leave the hook-listener set before ModifyDamageMultiplicative fires
-        // (they're no longer in the hand), so we can't rely on IterateHookListeners() alone.
-        // The explicit exclusion also prevents double-counting on the rare occasion the card
-        // IS still in the listener set.
-        decimal rate = combatState.IterateHookListeners()
-            .Where(l => l != card)
-            .OfType<ICritHitRateContributor>()
-            .Sum(c => c.GetCritHitRateBonus(card));
+        MainFile.Logger.Info($"[ShionHooksHelper] CalculateCritHitRate — card={card?.GetType().Name ?? "null"}");
+
+        decimal rate = 0m;
+        foreach (var l in combatState.IterateHookListeners().Where(l => l != card).OfType<ICritHitRateContributor>())
+        {
+            decimal bonus = l.GetCritHitRateBonus(card);
+            MainFile.Logger.Info($"[ShionHooksHelper]   listener contributor {l.GetType().Name} → hitRateBonus={bonus:P0}");
+            rate += bonus;
+        }
 
         if (card is ICritHitRateContributor cardHitContributor)
-            rate += cardHitContributor.GetCritHitRateBonus(card);
+        {
+            decimal bonus = cardHitContributor.GetCritHitRateBonus(card);
+            MainFile.Logger.Info($"[ShionHooksHelper]   direct-card contributor {card.GetType().Name} → hitRateBonus={bonus:P0}");
+            rate += bonus;
+        }
+        else
+        {
+            MainFile.Logger.Info($"[ShionHooksHelper]   card {card?.GetType().Name ?? "null"} does NOT implement ICritHitRateContributor");
+        }
 
-        decimal minRate = combatState.IterateHookListeners()
-            .Where(l => l != card)
-            .OfType<IMinCritHitRateContributor>()
-            .Select(c => c.GetMinCritHitRate(card))
-            .DefaultIfEmpty(0m)
-            .Max();
+        decimal minRate = 0m;
+        foreach (var l in combatState.IterateHookListeners().Where(l => l != card).OfType<IMinCritHitRateContributor>())
+        {
+            decimal floor = l.GetMinCritHitRate(card);
+            MainFile.Logger.Info($"[ShionHooksHelper]   listener minHit {l.GetType().Name} → floor={floor:P0}");
+            minRate = Math.Max(minRate, floor);
+        }
 
         if (card is IMinCritHitRateContributor cardMinHitContributor)
-            minRate = Math.Max(minRate, cardMinHitContributor.GetMinCritHitRate(card));
+        {
+            decimal floor = cardMinHitContributor.GetMinCritHitRate(card);
+            MainFile.Logger.Info($"[ShionHooksHelper]   direct-card minHit {card.GetType().Name} → floor={floor:P0}");
+            minRate = Math.Max(minRate, floor);
+        }
 
-        return Math.Max(rate, minRate);
+        decimal result = Math.Max(rate, minRate);
+        MainFile.Logger.Info($"[ShionHooksHelper] CalculateCritHitRate result: rate={rate:P0}, minRate={minRate:P0}, final={result:P0}");
+        return result;
     }
 
     /// <summary>
@@ -48,26 +63,45 @@ public static class ShionHooksHelper
     /// </summary>
     public static decimal CalculateCritAttackRate(ICombatState combatState, CardModel? card)
     {
-        // Same direct-card logic as CalculateCritHitRate — see comments there.
-        decimal rate = combatState.IterateHookListeners()
-            .Where(l => l != card)
-            .OfType<ICritAttackRateContributor>()
-            .Sum(c => c.GetCritAttackRateBonus(card));
+        MainFile.Logger.Info($"[ShionHooksHelper] CalculateCritAttackRate — card={card?.GetType().Name ?? "null"}");
+
+        decimal rate = 0m;
+        foreach (var l in combatState.IterateHookListeners().Where(l => l != card).OfType<ICritAttackRateContributor>())
+        {
+            decimal bonus = l.GetCritAttackRateBonus(card);
+            MainFile.Logger.Info($"[ShionHooksHelper]   listener contributor {l.GetType().Name} → attackRateBonus={bonus:P0}");
+            rate += bonus;
+        }
 
         if (card is ICritAttackRateContributor cardAttackContributor)
-            rate += cardAttackContributor.GetCritAttackRateBonus(card);
+        {
+            decimal bonus = cardAttackContributor.GetCritAttackRateBonus(card);
+            MainFile.Logger.Info($"[ShionHooksHelper]   direct-card contributor {card.GetType().Name} → attackRateBonus={bonus:P0}");
+            rate += bonus;
+        }
+        else
+        {
+            MainFile.Logger.Info($"[ShionHooksHelper]   card {card?.GetType().Name ?? "null"} does NOT implement ICritAttackRateContributor");
+        }
 
-        decimal minRate = combatState.IterateHookListeners()
-            .Where(l => l != card)
-            .OfType<IMinCritAttackRateContributor>()
-            .Select(c => c.GetMinCritAttackRate(card))
-            .DefaultIfEmpty(0m)
-            .Max();
+        decimal minRate = 0m;
+        foreach (var l in combatState.IterateHookListeners().Where(l => l != card).OfType<IMinCritAttackRateContributor>())
+        {
+            decimal floor = l.GetMinCritAttackRate(card);
+            MainFile.Logger.Info($"[ShionHooksHelper]   listener minAttack {l.GetType().Name} → floor={floor:P0}");
+            minRate = Math.Max(minRate, floor);
+        }
 
         if (card is IMinCritAttackRateContributor cardMinAttackContributor)
-            minRate = Math.Max(minRate, cardMinAttackContributor.GetMinCritAttackRate(card));
+        {
+            decimal floor = cardMinAttackContributor.GetMinCritAttackRate(card);
+            MainFile.Logger.Info($"[ShionHooksHelper]   direct-card minAttack {card.GetType().Name} → floor={floor:P0}");
+            minRate = Math.Max(minRate, floor);
+        }
 
-        return Math.Max(rate, minRate);
+        decimal result = Math.Max(rate, minRate);
+        MainFile.Logger.Info($"[ShionHooksHelper] CalculateCritAttackRate result: rate={rate:P0}, minRate={minRate:P0}, final={result:P0}");
+        return result;
     }
 
     /// <summary>

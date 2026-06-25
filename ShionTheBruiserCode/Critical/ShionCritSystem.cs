@@ -50,9 +50,11 @@ public static class ShionCritSystem
         decimal attackRate = card != null
             ? ShionHooksHelper.CalculateCritAttackRate(cs, card)
             : 0m;
-        _critAttack = (decimal)GD.Randf() < attackRate;
+        float roll = GD.Randf();
+        _critAttack = (decimal)roll < attackRate;
         _currentHitIsCrit = false;
         _hitCritRolled = false;
+        MainFile.Logger.Info($"[ShionCritSystem] StartAttack — card={card?.GetType().Name ?? "null"}, attackRate={attackRate:P0}, roll={roll:F3}, _critAttack={_critAttack}");
     }
 
     /// <summary>
@@ -69,8 +71,10 @@ public static class ShionCritSystem
         decimal hitRate = card != null
             ? ShionHooksHelper.CalculateCritHitRate(cs, card)
             : 0m;
-        _currentHitIsCrit = _critAttack || (decimal)GD.Randf() < hitRate;
+        float roll = GD.Randf();
+        _currentHitIsCrit = _critAttack || (decimal)roll < hitRate;
         _hitCritRolled = true;
+        MainFile.Logger.Info($"[ShionCritSystem] EnsureHitRolled — card={card?.GetType().Name ?? "null"}, hitRate={hitRate:P0}, roll={roll:F3}, _critAttack={_critAttack}, _currentHitIsCrit={_currentHitIsCrit}");
     }
 
     /// <summary>
@@ -94,4 +98,3 @@ public static class ShionCritSystem
         _hitCritRolled = false;
     }
 }
-

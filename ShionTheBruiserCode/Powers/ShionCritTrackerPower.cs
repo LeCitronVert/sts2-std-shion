@@ -55,10 +55,14 @@ public class ShionCritTrackerPower : ShionTheBruiserPower
     /// </summary>
     public override Task BeforeAttack(AttackCommand command)
     {
+        MainFile.Logger.Info($"[ShionCritTrackerPower] BeforeAttack fired. Attacker={command.Attacker?.GetType().Name ?? "null"}, Owner={Owner?.GetType().Name ?? "null"}, isMatch={command.Attacker == Owner}, ModelSource={command.ModelSource?.GetType().Name ?? "null"}");
+
         if (command.Attacker != Owner)
             return Task.CompletedTask;
 
-        ShionCritSystem.StartAttack(Owner.CombatState!, command.ModelSource as CardModel);
+        var card = command.ModelSource as CardModel;
+        MainFile.Logger.Info($"[ShionCritTrackerPower] Calling StartAttack. Card={card?.GetType().Name ?? "null (no card)"}");
+        ShionCritSystem.StartAttack(Owner.CombatState!, card);
         return Task.CompletedTask;
     }
 
@@ -73,11 +77,15 @@ public class ShionCritTrackerPower : ShionTheBruiserPower
     public override decimal ModifyDamageMultiplicative(
         Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
+        MainFile.Logger.Info($"[ShionCritTrackerPower] ModifyDamageMultiplicative fired. dealer={dealer?.GetType().Name ?? "null"}, Owner={Owner?.GetType().Name ?? "null"}, isMatch={dealer == Owner}, card={cardSource?.GetType().Name ?? "null"}");
+
         if (dealer != Owner)
             return 1m;
 
         ShionCritSystem.EnsureHitRolled(Owner.CombatState!, cardSource);
-        return ShionCritSystem.CurrentHitIsCrit ? 1.5m : 1m;
+        decimal multiplier = ShionCritSystem.CurrentHitIsCrit ? 1.5m : 1m;
+        MainFile.Logger.Info($"[ShionCritTrackerPower] CurrentHitIsCrit={ShionCritSystem.CurrentHitIsCrit}, returning multiplier={multiplier}");
+        return multiplier;
     }
 
     /// <summary>
@@ -112,4 +120,3 @@ public class ShionCritTrackerPower : ShionTheBruiserPower
         return Task.CompletedTask;
     }
 }
-

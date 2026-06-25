@@ -17,6 +17,6 @@
   "SHIONTHEBRUISER-SHION_ENERGY_BALL.title": "Energy Ball",
   "SHIONTHEBRUISER-SHION_ENERGY_STRIKE.description": "Deal {Damage:diff()} damage.\n[gold]Damage Cap[/gold] {DamageCap}.",
   "SHIONTHEBRUISER-SHION_ENERGY_STRIKE.title": "Energy Strike",
-  "SHIONTHEBRUISER-SHION_CRITICAL_STRIKE.description": "Deal {Damage:diff()} damage.Always a [gold]Critical Hit[/gold].\n[gold]Damage Cap[/gold] {DamageCap}.",
+  "SHIONTHEBRUISER-SHION_CRITICAL_STRIKE.description": "Deal {Damage:diff()} damage. Always a [gold]Critical Hit[/gold].\n[gold]Damage Cap[/gold] {DamageCap}.",
   "SHIONTHEBRUISER-SHION_CRITICAL_STRIKE.title": "Critical Strike"
 }
