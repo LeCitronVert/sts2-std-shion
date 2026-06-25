@@ -1,4 +1,6 @@
 {
   "SHIONTHEBRUISER-DAMAGE_CAP.title": "Damage Cap",
-  "SHIONTHEBRUISER-DAMAGE_CAP.description": "Each hit of this Attack can only deal up to [blue]{DamageCap}[/blue] damage."
+  "SHIONTHEBRUISER-DAMAGE_CAP.description": "Each hit of this Attack can only deal up to [blue]{DamageCap}[/blue] damage.",
+  "SHIONTHEBRUISER-CRITICAL_HIT.title": "Critical",
+  "SHIONTHEBRUISER-CRITICAL_HIT.description": "[gold]Critical Hits[/gold] deal 50% more damage. Relics, powers and Shion's attacks can all influence the chance of a Critical Hit occuring per Hit or Attack."
 }

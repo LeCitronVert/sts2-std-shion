@@ -1,12 +1,10 @@
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
-using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
@@ -27,7 +25,7 @@ public class ShionFlood() : ShionTheBruiserCard(1,
     {
         ShionFlood card = this;
         ArgumentNullException.ThrowIfNull(play.Target, "play.Target");
-        AttackCommand attackCommand = await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
+        await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .WithHitCount(card.DynamicVars.Repeat.IntValue)
             .FromCard(card)
             .Targeting(play.Target)
