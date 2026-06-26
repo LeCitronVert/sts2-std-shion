@@ -10,5 +10,8 @@
   "SHIONTHEBRUISER-DEFENSIVE_DEBUFF.title": "Defensive",
   "SHIONTHEBRUISER-GUARD.description": "Reduces attack damage taken by 20%.",
   "SHIONTHEBRUISER-GUARD.smartDescription": "Reduces attack damage taken by 20% {Amount:plural:until the next turn|for [blue]{}[/blue] turns}.",
-  "SHIONTHEBRUISER-GUARD.title": "Guard"
+  "SHIONTHEBRUISER-GUARD.title": "Guard",
+  "SHIONTHEBRUISER-FLOW_CHARGE.description": "Gain [gold]Vigor[/gold] at the start of your turn, and upon first application of this Power.",
+  "SHIONTHEBRUISER-FLOW_CHARGE.smartDescription": "At the beginning of your turn, gain [blue]{VigorPower}[/blue] [gold]Vigor[/gold] for the next {Amount:plural:turn|[blue]{}[/blue] turns}. ",
+  "SHIONTHEBRUISER-FLOW_CHARGE.title": "Flow Charge"
 }
