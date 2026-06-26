@@ -18,17 +18,17 @@ public class FlowCharge() : ShionTheBruiserPower
     public override PowerStackType StackType =>
         PowerStackType.Counter;
     
-    public static int vigorAmount = 3;
+    public static readonly int VigorAmount = 3;
     
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<VigorPower>(vigorAmount),
+        new PowerVar<VigorPower>(VigorAmount),
     ];
 
     public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side == CombatSide.Player)
         {
-            ApplyPower();
+            await ApplyPower();
         }
     }
 

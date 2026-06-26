@@ -14,7 +14,7 @@ public class ShionFlowCharge() : ShionTheBruiserCard(1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<FlowCharge>(3),
-        new("VigorAmount", FlowCharge.vigorAmount),
+        new("VigorAmount", FlowCharge.VigorAmount),
     ];
 
     protected override async Task OnPlay(
@@ -35,9 +35,9 @@ public class ShionFlowCharge() : ShionTheBruiserCard(1,
         if (!ownerHasPowerAlready)
         {
             var appliedPower = card.Owner.Creature.GetPower<FlowCharge>();
-            if (appliedPower != null)
+            if (null != appliedPower)
             {
-                await PowerCmd.TickDownDuration(appliedPower);
+                await appliedPower.ApplyPower();
             }
         }
     }

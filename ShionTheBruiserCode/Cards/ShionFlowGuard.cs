@@ -25,7 +25,7 @@ public class ShionFlowGuard() : ShionTheBruiserCard(1,
         CardPlay play)
     {
         var card = this;
-        for (int i = 0; i < DynamicVars.Block.BaseValue; i++)
+        for (int i = 0; i < DynamicVars.Repeat.BaseValue; i++)
         {
             await CreatureCmd.GainBlock(
                 card.Owner.Creature,
