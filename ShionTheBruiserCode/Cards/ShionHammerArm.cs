@@ -15,7 +15,7 @@ public class ShionHammerArm() : ShionTheBruiserCard(1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(4, ValueProp.Move),
-        new PowerVar<StrengthPower>(-1),
+        new PowerVar<StrengthPower>(1),
     ];
 
     protected override async Task OnPlay(
@@ -25,12 +25,12 @@ public class ShionHammerArm() : ShionTheBruiserCard(1,
         var cardSource = this;
         ArgumentNullException.ThrowIfNull(play.Target, "play.Target");
         await CreatureCmd.Damage(choiceContext, play.Target, cardSource.DynamicVars.Damage, cardSource.Owner.Creature, (CardModel) cardSource);
-        await PowerCmd.Apply<StrengthPower>(choiceContext, play.Target, cardSource.DynamicVars["StrengthPower"].BaseValue, cardSource.Owner.Creature, (CardModel) cardSource);
+        await PowerCmd.Apply<StrengthPower>(choiceContext, play.Target, -cardSource.DynamicVars["StrengthPower"].BaseValue, cardSource.Owner.Creature, (CardModel) cardSource);
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(2);
-        DynamicVars["StrengthPower"].UpgradeValueBy(-1);
+        DynamicVars["StrengthPower"].UpgradeValueBy(1);
     }
 }

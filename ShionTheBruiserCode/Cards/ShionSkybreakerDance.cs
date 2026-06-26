@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
@@ -14,7 +15,9 @@ public class ShionSkybreakerDance() : ShionTheBruiserCard(2,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(1, ValueProp.Unblockable | ValueProp.Unpowered),
+        new CalculationBaseVar(0),
+        new ExtraDamageVar(1),
+        new CalculatedDamageVar(ValueProp.Unpowered).WithMultiplier((model, creature) => model.Owner.Creature.Powers.FirstOrDefault(p => p is VigorPower)?.DynamicVars["VigorPower"].BaseValue ?? 0),
         new DynamicVar("VigorCap", 15),
     ];
 
@@ -23,24 +26,26 @@ public class ShionSkybreakerDance() : ShionTheBruiserCard(2,
         CardPlay play)
     {
         var card = this;
-        var vigorPowerAmount = card.Owner.Creature.Powers.FirstOrDefault(p => p is VigorPower)?.DynamicVars["VigorPower"].BaseValue ?? 0;
-        vigorPowerAmount = Math.Min(vigorPowerAmount, card.DynamicVars["VigorCap"].BaseValue);
         ArgumentNullException.ThrowIfNull(play.Target, "play.Target");
         
-        for (int i = 0; i < vigorPowerAmount; i++)
-        {
-            await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
-                .FromCard(card)
-                .Targeting(play.Target)
-                .WithHitFx("vfx/vfx_attack_slash")
-                .Unpowered()
-                .Execute(choiceContext)
-            ;
-        }
+        await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
+            .FromCard(card)
+            .Targeting(play.Target)
+            .WithHitFx("vfx/vfx_attack_slash")
+            .Unpowered()
+            .Execute(choiceContext)
+        ;
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars["VigorCap"].UpgradeValueBy(15);
+    }
+
+    public override decimal ModifyDamageCap(Creature? target, ValueProp props, Creature? dealer, CardModel? cardSource)
+    {
+        if (cardSource == null || cardSource != this) return base.ModifyDamageCap(target, props, dealer, cardSource);
+        
+        return this.DynamicVars["VigorCap"].BaseValue;
     }
 }
