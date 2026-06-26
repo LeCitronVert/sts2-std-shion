@@ -24,5 +24,7 @@
   "SHIONTHEBRUISER-SHION_ENERGY_SURGE.description": "Gain {StrengthPower:diff()} [gold]Strength[/gold].\nGain {VigorPower:diff()} [gold]Vigor[/gold].",
   "SHIONTHEBRUISER-SHION_ENERGY_SURGE.title": "Energy Surge",
   "SHIONTHEBRUISER-SHION_GUARD.description": "Reduces attack damage taken by 20% for the next {Guard:plural:turn|[blue]{}[/blue] turns}.",
-  "SHIONTHEBRUISER-SHION_GUARD.title": "Guard"
+  "SHIONTHEBRUISER-SHION_GUARD.title": "Guard",
+  "SHIONTHEBRUISER-SHION_RAGE_GUARD.description": "\nReduces attack damage taken by 20% for the next {Guard:plural:turn|[blue]{}[/blue] turns}.",
+  "SHIONTHEBRUISER-SHION_RAGE_GUARD.title": "Rage Guard"
 }
