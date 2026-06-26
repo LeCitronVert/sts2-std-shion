@@ -25,7 +25,6 @@ public class ShionSkybreakerDance() : ShionTheBruiserCard(2,
         var card = this;
         var vigorPowerAmount = card.Owner.Creature.Powers.FirstOrDefault(p => p is VigorPower)?.DynamicVars["VigorPower"].BaseValue ?? 0;
         vigorPowerAmount = Math.Min(vigorPowerAmount, card.DynamicVars["VigorCap"].BaseValue);
-        
         ArgumentNullException.ThrowIfNull(play.Target, "play.Target");
         
         for (int i = 0; i < vigorPowerAmount; i++)

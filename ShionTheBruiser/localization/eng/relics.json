@@ -4,5 +4,8 @@
   "SHIONTHEBRUISER-BATTLE_RAGS.title": "Battle Rags",
   "SHIONTHEBRUISER-BATTLE_GLOVES.description": "Each card you play grants you a bonus for the remainder of the turn: +1 Strength for Attacks, +1 Dexterity for Skills, and +1 Energy otherwise.",
   "SHIONTHEBRUISER-BATTLE_GLOVES.flavor": "'Huh... I guess it IS more comfortable.' - Shion",
-  "SHIONTHEBRUISER-BATTLE_GLOVES.title": "Battle Gloves"
+  "SHIONTHEBRUISER-BATTLE_GLOVES.title": "Battle Gloves",
+  "SHIONTHEBRUISER-UPGRADINATOR.description": "TEST!!! Upgrades all cards at the start of the fight.",
+  "SHIONTHEBRUISER-UPGRADINATOR.flavor": "If you see this, I fucked up. - the Dev",
+  "SHIONTHEBRUISER-UPGRADINATOR.title": "Upgradinator"
 }
