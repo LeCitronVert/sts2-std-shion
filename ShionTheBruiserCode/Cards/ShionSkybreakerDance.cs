@@ -17,7 +17,7 @@ public class ShionSkybreakerDance() : ShionTheBruiserCard(2,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CalculationBaseVar(0),
         new ExtraDamageVar(1),
-        new CalculatedDamageVar(ValueProp.Unpowered).WithMultiplier((model, creature) => model.Owner.Creature.Powers.FirstOrDefault(p => p is VigorPower)?.DynamicVars["VigorPower"].BaseValue ?? 0),
+        new CalculatedDamageVar(ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move).WithMultiplier((model, creature) => model.Owner.Creature.Powers.FirstOrDefault(p => p is VigorPower)?.Amount ?? 0),
         new DynamicVar("VigorCap", 15),
     ];
 
