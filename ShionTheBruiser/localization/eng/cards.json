@@ -30,5 +30,7 @@
   "SHIONTHEBRUISER-SHION_FLOW_GUARD.description": "Gain {Block:diff()} [gold]Block[/gold] {Repeat:diff()} times.\nReduces attack damage taken by 20% for the next {Guard:plural:turn|[blue]{}[/blue] turns}.",
   "SHIONTHEBRUISER-SHION_FLOW_GUARD.title": "Flow Guard",
   "SHIONTHEBRUISER-SHION_FLOW_CHARGE.description": "Gain {VigorAmount} [gold]Vigor[/gold] for the next [blue]{FlowCharge}[/blue] turns.",
-  "SHIONTHEBRUISER-SHION_FLOW_CHARGE.title": "Flow Charge"
+  "SHIONTHEBRUISER-SHION_FLOW_CHARGE.title": "Flow Charge",
+  "SHIONTHEBRUISER-SHION_HAMMER_ARM.description": "Deal {Damage:diff()} damage.\nEnemy loses [blue]{StrengthPower:abs()}[/blue] [gold]Strength[/gold].",
+  "SHIONTHEBRUISER-SHION_HAMMER_ARM.title": "Hammer Arm"
 }
