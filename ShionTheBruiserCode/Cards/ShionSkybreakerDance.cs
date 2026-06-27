@@ -15,9 +15,7 @@ public class ShionSkybreakerDance() : ShionTheBruiserCard(2,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CalculationBaseVar(0),
-        new ExtraDamageVar(1),
-        new CalculatedDamageVar(ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move).WithMultiplier((model, creature) => model.Owner.Creature.Powers.FirstOrDefault(p => p is VigorPower)?.Amount ?? 0),
+        new DamageVar(0, ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move),
         new DynamicVar("VigorCap", 15),
     ];
 
@@ -28,11 +26,14 @@ public class ShionSkybreakerDance() : ShionTheBruiserCard(2,
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target, "play.Target");
 
-        await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
-            .FromCard(card)
-            .Targeting(play.Target)
-            .Execute(choiceContext)
-        ;
+        DynamicVars.Damage.BaseValue = Owner.Creature.Powers.FirstOrDefault(p => p is VigorPower)?.Amount ?? 0;
+
+        await CreatureCmd.Damage(
+            choiceContext, 
+            play.Target, 
+            card.DynamicVars.Damage, 
+            card
+        );
     }
 
     protected override void OnUpgrade()
