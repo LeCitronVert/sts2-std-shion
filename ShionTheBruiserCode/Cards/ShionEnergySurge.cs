@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -15,6 +16,8 @@ public class ShionEnergySurge() : ShionTheBruiserCard(1,
         new PowerVar<StrengthPower>(1),
         new PowerVar<VigorPower>(4),
     ];
+    
+    protected override HashSet<CardTag> CanonicalTags => [ShionCardTags.Energy];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
