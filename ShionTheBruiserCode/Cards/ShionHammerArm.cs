@@ -24,7 +24,12 @@ public class ShionHammerArm() : ShionTheBruiserCard(1,
     {
         var cardSource = this;
         ArgumentNullException.ThrowIfNull(play.Target, "play.Target");
-        await CreatureCmd.Damage(choiceContext, play.Target, cardSource.DynamicVars.Damage, cardSource.Owner.Creature, (CardModel) cardSource);
+        await DamageCmd.Attack(cardSource.DynamicVars.Damage.BaseValue)
+            .FromCard(cardSource)
+            .Targeting(play.Target)
+            .WithHitFx("vfx/vfx_attack_slash")
+            .Execute(choiceContext)
+        ;
         await PowerCmd.Apply<StrengthPower>(choiceContext, play.Target, -cardSource.DynamicVars["StrengthPower"].BaseValue, cardSource.Owner.Creature, (CardModel) cardSource);
     }
 

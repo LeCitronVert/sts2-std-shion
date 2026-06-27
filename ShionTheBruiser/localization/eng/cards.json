@@ -35,6 +35,6 @@
   "SHIONTHEBRUISER-SHION_HAMMER_ARM.title": "Hammer Arm",
   "SHIONTHEBRUISER-SHION_POWER_UP_PUNCH.description": "Deal {Damage:diff()} damage.\nGain [blue]{StrengthPower}[/blue] [gold]Strength[/gold].",
   "SHIONTHEBRUISER-SHION_POWER_UP_PUNCH.title": "Power-Up Punch",
-  "SHIONTHEBRUISER-SHION_SKYBREAKER_DANCE.description": "Enemy loses {ExtraDamage:diff()}HP for each Vigor you have, up to {VigorCap}.",
+  "SHIONTHEBRUISER-SHION_SKYBREAKER_DANCE.description": "Enemy loses {Damage:diff()}HP for each Vigor you have, up to {VigorCap}.",
   "SHIONTHEBRUISER-SHION_SKYBREAKER_DANCE.title": "Skybreaker Dance"
 }
