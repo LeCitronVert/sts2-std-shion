@@ -49,6 +49,6 @@
   "SHIONTHEBRUISER-SHION_BERSERK_STRIKE.title": "Berserk Strike",
   "SHIONTHEBRUISER-SHION_RAGE_STRIKE.description": "Lose {HpLoss:diff()} HP.\nDeal {Damage:diff()} damage.",
   "SHIONTHEBRUISER-SHION_RAGE_STRIKE.title": "Rage Strike",
-  "SHIONTHEBRUISER-SHION_DRAGON_ROAR.description": "ALL enemies lose {CalculationBase::diff()} [gold]Strength[/gold] for each unique buff you have.",
+  "SHIONTHEBRUISER-SHION_DRAGON_ROAR.description": "ALL enemies lose {CalculationExtra::diff()} [gold]Strength[/gold] for each unique buff you have.",
   "SHIONTHEBRUISER-SHION_DRAGON_ROAR.title": "Dragon Roar"
 }
