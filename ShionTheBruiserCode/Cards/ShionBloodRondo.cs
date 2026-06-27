@@ -24,12 +24,12 @@ public class ShionBloodRondo() : ShionTheBruiserCard(1,
     {
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target, "play.Target");
-        var hits = 1 + Owner.Creature.Powers.FirstOrDefault(p => p is StrengthPower)?.Amount ?? 0;
+        var hits = (Owner.Creature.Powers.FirstOrDefault(p => p is StrengthPower)?.Amount ?? 0);
         
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .FromCard(card)
             .Targeting(play.Target)
-            .WithHitCount(hits)
+            .WithHitCount(hits + 1)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext)
         ;

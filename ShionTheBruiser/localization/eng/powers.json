@@ -14,7 +14,7 @@
   "SHIONTHEBRUISER-FLOW_CHARGE.description": "Gain [gold]Vigor[/gold] at the start of your turn, and upon first application of this Power.",
   "SHIONTHEBRUISER-FLOW_CHARGE.smartDescription": "At the beginning of your turn, gain [blue]{VigorPower}[/blue] [gold]Vigor[/gold] for the next {Amount:plural:turn|[blue]{}[/blue] turns}. ",
   "SHIONTHEBRUISER-FLOW_CHARGE.title": "Flow Charge",
-  "SHIONTHEBRUISER-CRIT_RATE_UP.description": "Increases the chance of your attacks being [gold]Critical Hits[/gold].",
-  "SHIONTHEBRUISER-CRIT_RATE_UP.smartDescription": "",
-  "SHIONTHEBRUISER-CRIT_RATE_UP.title": "CritRateUp"
+  "SHIONTHEBRUISER-CRIT_RATE_UP.description": "Increases the chances of [gold]Critical Hits[/gold] occuring, dealing 50% more damage.",
+  "SHIONTHEBRUISER-CRIT_RATE_UP.smartDescription": "Increases the chance of your attacks dealing [gold]Critical Hits[/gold], dealing 50% more damage. This chance applies to each of the hits you deal individually.",
+  "SHIONTHEBRUISER-CRIT_RATE_UP.title": "Critical Hit Rate Up"
 }
