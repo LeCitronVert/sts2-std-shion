@@ -27,17 +27,12 @@ public class ShionSkybreakerDance() : ShionTheBruiserCard(2,
     {
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target, "play.Target");
-        DamageVar computedDamage = new DamageVar(
-            card.DynamicVars.CalculatedDamage.BaseValue,
-            ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move
-        );
-        
-        await CreatureCmd.Damage(
-            choiceContext,
-            play.Target,
-            computedDamage,
-            card
-        );
+
+        await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
+            .FromCard(card)
+            .Targeting(play.Target)
+            .Execute(choiceContext)
+        ;
     }
 
     protected override void OnUpgrade()
