@@ -17,9 +17,16 @@ public class ShionBerserkStrike() : ShionTheBruiserCard(2,
         new CalculationBaseVar(9),
         new ExtraDamageVar(34),
         // Damage scales with missing hp, up until the maximum which is stored in ExtraDamageVar
-        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((model, creature) => 
-            (model.DynamicVars.ExtraDamage.BaseValue - model.DynamicVars.CalculationBase.BaseValue)
-            * (1 - (decimal)model.Owner.Creature.CurrentHp / model.Owner.Creature.MaxHp)
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((model, creature) =>
+            {
+                var maxBerserkBonus = model.DynamicVars.ExtraDamage.BaseValue -
+                                      model.DynamicVars.CalculationBase.BaseValue;
+
+                var missingHpRatio = (model.Owner.Creature.MaxHp - model.Owner.Creature.CurrentHp)
+                                     / (float)model.Owner.Creature.MaxHp;
+
+                return (decimal) missingHpRatio * maxBerserkBonus;
+            }
         ),
     ];
 
