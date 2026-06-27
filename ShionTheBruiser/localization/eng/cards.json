@@ -44,5 +44,7 @@
   "SHIONTHEBRUISER-SHION_AN_OPENING.description": "Gain [blue]+{CritRateUp}%[/blue] [gold]Critical Hit Rate[/gold] this turn.\nDraw 1 {Cards:diff()} Attack from your Draw Pile.",
   "SHIONTHEBRUISER-SHION_AN_OPENING.title": "An Opening!",
   "SHIONTHEBRUISER-SHION_GUARD_OPENER.description": "Deal {Damage:diff()} damage to an enemy with Block.",
-  "SHIONTHEBRUISER-SHION_GUARD_OPENER.title": "Guard Opener"
+  "SHIONTHEBRUISER-SHION_GUARD_OPENER.title": "Guard Opener",
+  "SHIONTHEBRUISER-SHION_BERSERK_STRIKE.description": "Deal {CalculatedDamage:diff()} damage.\n Damage increases with your missing HP, up to {ExtraDamage:diff()} if you have 1HP.",
+  "SHIONTHEBRUISER-SHION_BERSERK_STRIKE.title": "Berserk Strike"
 }
