@@ -46,5 +46,7 @@
   "SHIONTHEBRUISER-SHION_GUARD_OPENER.description": "Deal {Damage:diff()} damage to an enemy with Block.",
   "SHIONTHEBRUISER-SHION_GUARD_OPENER.title": "Guard Opener",
   "SHIONTHEBRUISER-SHION_BERSERK_STRIKE.description": "Deal {CalculatedDamage:diff()} damage.\n Damage increases with your missing HP, up to {ExtraDamage:diff()} if you have 1HP.",
-  "SHIONTHEBRUISER-SHION_BERSERK_STRIKE.title": "Berserk Strike"
+  "SHIONTHEBRUISER-SHION_BERSERK_STRIKE.title": "Berserk Strike",
+  "SHIONTHEBRUISER-SHION_RAGE_STRIKE.description": "Lose {HpLoss:diff()} HP.\nDeal {Damage:diff()} damage.",
+  "SHIONTHEBRUISER-SHION_RAGE_STRIKE.title": "Rage Strike"
 }
