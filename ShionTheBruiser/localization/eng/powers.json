@@ -13,5 +13,8 @@
   "SHIONTHEBRUISER-GUARD.title": "Guard",
   "SHIONTHEBRUISER-FLOW_CHARGE.description": "Gain [gold]Vigor[/gold] at the start of your turn, and upon first application of this Power.",
   "SHIONTHEBRUISER-FLOW_CHARGE.smartDescription": "At the beginning of your turn, gain [blue]{VigorPower}[/blue] [gold]Vigor[/gold] for the next {Amount:plural:turn|[blue]{}[/blue] turns}. ",
-  "SHIONTHEBRUISER-FLOW_CHARGE.title": "Flow Charge"
+  "SHIONTHEBRUISER-FLOW_CHARGE.title": "Flow Charge",
+  "SHIONTHEBRUISER-CRIT_RATE_UP.description": "Increases the chance of your attacks being [gold]Critical Hits[/gold].",
+  "SHIONTHEBRUISER-CRIT_RATE_UP.smartDescription": "",
+  "SHIONTHEBRUISER-CRIT_RATE_UP.title": "CritRateUp"
 }

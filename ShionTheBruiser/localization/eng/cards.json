@@ -40,5 +40,7 @@
   "SHIONTHEBRUISER-SHION_BLOOD_RONDO.description": "Deal {Damage:diff()} damage once, then strikes again for each Strength you have.\n[gold]Damage Cap[/gold] {DamageCap}.",
   "SHIONTHEBRUISER-SHION_BLOOD_RONDO.title": "Blood Rondo",
   "SHIONTHEBRUISER-SHION_EMERALD_REFLECTION.description": "Gain {Block:diff()} [gold]Block[/gold].\n.Next turn, gain {Energy:energyIcons()} and draw {DrawCardsNextTurnPower:plural:[blue]{}[/blue] more card|[blue]{}[/blue] more cards}.",
-  "SHIONTHEBRUISER-SHION_EMERALD_REFLECTION.title": "Emerald Reflection"
+  "SHIONTHEBRUISER-SHION_EMERALD_REFLECTION.title": "Emerald Reflection",
+  "SHIONTHEBRUISER-SHION_AN_OPENING.description": "Gain [blue]+{CritRateUp}%[/blue] [gold]Critical Hit Rate[/gold] this turn.\nDraw 1 {Cards:diff()} Attack from your Draw Pile.",
+  "SHIONTHEBRUISER-SHION_AN_OPENING.title": "An Opening!"
 }

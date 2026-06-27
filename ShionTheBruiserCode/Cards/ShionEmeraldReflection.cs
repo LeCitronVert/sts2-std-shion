@@ -10,7 +10,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Enums;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 public class ShionEmeraldReflection() : ShionDefensiveCard(2,
-    CardType.Attack, CardRarity.Basic,
+    CardType.Skill, CardRarity.Common,
     TargetType.Self)
 {
     public override bool GainsBlock => true;
