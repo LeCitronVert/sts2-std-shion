@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
+using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -25,6 +26,7 @@ public class ShionBerserkStrike() : ShionTheBruiserCard(2,
                 return (decimal) missingHpRatio;
             }
         ),
+        new DamageCapVar(34)
     ];
 
     protected override async Task OnPlay(
@@ -44,5 +46,6 @@ public class ShionBerserkStrike() : ShionTheBruiserCard(2,
     protected override void OnUpgrade()
     {
         DynamicVars.ExtraDamage.UpgradeValueBy(18);
+        DynamicVars["DamageCap"].UpgradeValueBy(18);
     }
 }

@@ -4,4 +4,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
-public class TemporaryArtifact() : CustomTemporaryPowerModelWrapper<ShionTouchOfForesight, ArtifactPower>;
+public class TemporaryArtifact() : CustomTemporaryPowerModelWrapper<ShionTouchOfForesight, ArtifactPower>
+{
+    protected override bool UntilEndOfOtherSideTurn => true;
+}
