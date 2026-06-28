@@ -32,7 +32,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 public class ShionCritTrackerPower : ShionTheBruiserPower
 {
     public override MegaCrit.Sts2.Core.Entities.Powers.PowerType Type =>
-        MegaCrit.Sts2.Core.Entities.Powers.PowerType.Buff;
+        MegaCrit.Sts2.Core.Entities.Powers.PowerType.None;
 
     public override MegaCrit.Sts2.Core.Entities.Powers.PowerStackType StackType =>
         MegaCrit.Sts2.Core.Entities.Powers.PowerStackType.Single;
