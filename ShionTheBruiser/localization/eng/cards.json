@@ -72,5 +72,7 @@
   "SHIONTHEBRUISER-SHION_CHAOS_CRASH.description": "Lose {HpLoss:diff()} HP.\nDeal {Damage:diff()} damage to ALL enemies.",
   "SHIONTHEBRUISER-SHION_CHAOS_CRASH.title": "Chaos Crash",
   "SHIONTHEBRUISER-SHION_HOMING_BLITZ.description": "Deal {Damage:diff()} damage to ALL enemies.\nHits as many times as there are enemies.",
-  "SHIONTHEBRUISER-SHION_HOMING_BLITZ.title": "Homing Blitz"
+  "SHIONTHEBRUISER-SHION_HOMING_BLITZ.title": "Homing Blitz",
+  "SHIONTHEBRUISER-SHION_CRITICAL_DRIVE.description": "The next Attack you play this turn will be a [gold]Critical Attack[/gold].",
+  "SHIONTHEBRUISER-SHION_CRITICAL_DRIVE.title": "Critical Drive"
 }
