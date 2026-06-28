@@ -64,5 +64,7 @@
   "SHIONTHEBRUISER-SHION_TOUCH_OF_FORESIGHT.description": "Gain 1 Intangible.\nGain 1 Artifact until your next turn.",
   "SHIONTHEBRUISER-SHION_TOUCH_OF_FORESIGHT.title": "Touch Of Foresight",
   "SHIONTHEBRUISER-SHION_ENERGY_JOLT.description": "Enemy loses {Damage:diff()} HP.\nApply [blue]{DebuffAmount}[/blue] Weak and Vulnerable.",
-  "SHIONTHEBRUISER-SHION_ENERGY_JOLT.title": "Energy Jolt"
+  "SHIONTHEBRUISER-SHION_ENERGY_JOLT.title": "Energy Jolt",
+  "SHIONTHEBRUISER-SHION_DESPERATE_CHARGE.description": " Gain [blue]{VigorPower}[/blue] [gold]Vigor[/gold].",
+  "SHIONTHEBRUISER-SHION_DESPERATE_CHARGE.title": "Desperate Charge"
 }
