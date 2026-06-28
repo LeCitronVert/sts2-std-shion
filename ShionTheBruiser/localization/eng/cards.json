@@ -60,5 +60,7 @@
   "SHIONTHEBRUISER-SHION_DEFENSIVE_STRATEGIES.description": "Gain [blue]{DefensiveStrategies}[/blue] [gold]Vigor[/gold] whenever you use a Defensive card.",
   "SHIONTHEBRUISER-SHION_DEFENSIVE_STRATEGIES.title": "Defensive Strategies",
   "SHIONTHEBRUISER-SHION_SHIELD_BREAKER.description": "Whenever you play an Attack against an enemy with [gold]Block[/gold], replay that attack [blue]{ShieldBreaker}[/blue] {ShieldBreaker:plural:time|times}.",
-  "SHIONTHEBRUISER-SHION_SHIELD_BREAKER.title": "Shield Breaker"
+  "SHIONTHEBRUISER-SHION_SHIELD_BREAKER.title": "Shield Breaker",
+  "SHIONTHEBRUISER-SHION_TOUCH_OF_FORESIGHT.description": "Gain 1 Intangible.\nGain 1 Artifact until your next turn.",
+  "SHIONTHEBRUISER-SHION_TOUCH_OF_FORESIGHT.title": "Touch Of Foresight"
 }
