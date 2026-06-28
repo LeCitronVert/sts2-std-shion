@@ -26,6 +26,7 @@ public class BerserkCharge() : ShionTheBruiserPower
                              / (float)Owner.MaxHp
         ;
         var vigorAmount = Math.Round(missingHpRatio * 10 * this.Amount);
+        if (vigorAmount <= 0) return;
         await PowerCmd.Apply<VigorPower>(new ThrowingPlayerChoiceContext(), power.Owner, (decimal) vigorAmount, power.Owner, (CardModel) null!);
     }
 }
