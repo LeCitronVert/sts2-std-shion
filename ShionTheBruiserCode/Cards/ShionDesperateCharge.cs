@@ -19,6 +19,8 @@ public class ShionDesperateCharge() : ShionTheBruiserCard(1,
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<VigorPower>()
     ];
+    
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Ethereal];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
