@@ -41,7 +41,7 @@ public class ShionDragonRoar() : ShionTheBruiserCard(1,
         await CreatureCmd.TriggerAnim(cardSource.Owner.Creature, "Cast", cardSource.Owner.Character.CastAnimDelay);
         foreach (Creature hittableEnemy in (IEnumerable<Creature>) cardSource.CombatState.HittableEnemies)
         {
-            await PowerCmd.Apply<DragonRoar>(choiceContext, hittableEnemy, cardSource.DynamicVars["StrengthLoss"].BaseValue, cardSource.Owner.Creature, (CardModel) cardSource);
+            await PowerCmd.Apply<DragonRoar>(choiceContext, hittableEnemy, cardSource.DynamicVars["DebuffAmount"].BaseValue, cardSource.Owner.Creature, (CardModel) cardSource);
         }
     }
 
