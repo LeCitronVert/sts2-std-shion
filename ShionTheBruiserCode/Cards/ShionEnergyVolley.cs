@@ -16,7 +16,7 @@ public class ShionEnergyVolley() : ShionTheBruiserCard(3,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(1, ValueProp.Move),
         new RepeatVar(10),
-        new DamageCapVar(10)
+        new DamageCapVar(3)
     ];
     
     protected override HashSet<CardTag> CanonicalTags => [ShionCardTags.Energy];
@@ -38,6 +38,6 @@ public class ShionEnergyVolley() : ShionTheBruiserCard(3,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["DamageCap"].UpgradeValueBy(10m);
+        DynamicVars["DamageCap"].UpgradeValueBy(2);
     }
 }
