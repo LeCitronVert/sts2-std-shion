@@ -66,5 +66,7 @@
   "SHIONTHEBRUISER-SHION_ENERGY_JOLT.description": "Enemy loses {Damage:diff()} HP.\nApply [blue]{DebuffAmount}[/blue] Weak and Vulnerable.",
   "SHIONTHEBRUISER-SHION_ENERGY_JOLT.title": "Energy Jolt",
   "SHIONTHEBRUISER-SHION_DESPERATE_CHARGE.description": " Gain [blue]{VigorPower}[/blue] [gold]Vigor[/gold].",
-  "SHIONTHEBRUISER-SHION_DESPERATE_CHARGE.title": "Desperate Charge"
+  "SHIONTHEBRUISER-SHION_DESPERATE_CHARGE.title": "Desperate Charge",
+  "SHIONTHEBRUISER-SHION_BREAK_ME_IF_YOU_CAN.description": "Gain [blue]{RegenAmount}[/blue] [gold]Regen[/gold] and [blue]{VigorAmount}[/blue] [gold]Vigor[/gold] at the end of each turn.\nEffect ends when you use an Attack.",
+  "SHIONTHEBRUISER-SHION_BREAK_ME_IF_YOU_CAN.title": "Break Me If You Can"
 }

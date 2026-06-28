@@ -25,5 +25,8 @@
   "SHIONTHEBRUISER-DEFENSIVE_STRATEGIES.title": "Defensive Strategies",
   "SHIONTHEBRUISER-SHIELD_BREAKER.description": "Replays Attacks used against enemies that had Block.",
   "SHIONTHEBRUISER-SHIELD_BREAKER.smartDescription": "Whenever you play an Attack against an enemy with Block, replay that attack {Amount:plural:once|[blue]{}[/blue] times}.",
-  "SHIONTHEBRUISER-SHIELD_BREAKER.title": "Shield Breaker"
+  "SHIONTHEBRUISER-SHIELD_BREAKER.title": "Shield Breaker",
+  "SHIONTHEBRUISER-BREAK_ME_IF_YOU_CAN.description": "Gain Regen and Vigor at the end of each turn. Ends if you use an Attack.",
+  "SHIONTHEBRUISER-BREAK_ME_IF_YOU_CAN.smartDescription": "Gain [blue]{RegenAmount}[/blue] [gold]Regen[/gold] and [blue]{VigorAmount}[/blue] [gold]Vigor[/gold] at the end of each turn. This effect is removed when you use an Attack.",
+  "SHIONTHEBRUISER-BREAK_ME_IF_YOU_CAN.title": "Break Me If You Can"
 }
