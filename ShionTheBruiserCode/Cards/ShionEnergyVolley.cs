@@ -11,7 +11,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 public class ShionEnergyVolley() : ShionTheBruiserCard(3,
     CardType.Attack, CardRarity.Uncommon,
-    TargetType.Self)
+    TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(1, ValueProp.Move),

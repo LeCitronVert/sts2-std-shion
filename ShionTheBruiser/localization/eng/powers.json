@@ -16,5 +16,8 @@
   "SHIONTHEBRUISER-FLOW_CHARGE.title": "Flow Charge",
   "SHIONTHEBRUISER-CRIT_RATE_UP.description": "Increases the chances of [gold]Critical Hits[/gold] occuring, dealing 50% more damage.",
   "SHIONTHEBRUISER-CRIT_RATE_UP.smartDescription": "Increases the chance of your attacks dealing [gold]Critical Hits[/gold], dealing 50% more damage. This chance applies to each of the hits you deal individually.",
-  "SHIONTHEBRUISER-CRIT_RATE_UP.title": "Critical Hit Rate Up"
+  "SHIONTHEBRUISER-CRIT_RATE_UP.title": "Critical Hit Rate Up",
+  "SHIONTHEBRUISER-BERSERK_CHARGE.description": "Gain Vigor based on your missing HP each turn.",
+  "SHIONTHEBRUISER-BERSERK_CHARGE.smartDescription": "Gain [blue]{Amount}[/blue] [gold]Vigor[/gold] for each missing 10% of your HP at the start of your turn.",
+  "SHIONTHEBRUISER-BERSERK_CHARGE.title": "Berserk Charge"
 }

@@ -52,5 +52,9 @@
   "SHIONTHEBRUISER-SHION_DRAGON_ROAR.description": "ALL enemies lose {CalculationExtra::diff()} [gold]Strength[/gold] for each unique buff you have.",
   "SHIONTHEBRUISER-SHION_DRAGON_ROAR.title": "Dragon Roar",
   "SHIONTHEBRUISER-SHION_ENERGY_VOLLEY.description": "Deal {Damage:diff()} damage {Repeat:diff()} times.\n[gold]Damage Cap[/gold] {DamageCap}.",
-  "SHIONTHEBRUISER-SHION_ENERGY_VOLLEY.title": "Energy Volley"
+  "SHIONTHEBRUISER-SHION_ENERGY_VOLLEY.title": "Energy Volley",
+  "SHIONTHEBRUISER-SHION_DRAGON_CLAW.description": "Deal {Damage:diff()} damage. Damage is {ExtraDamage:plural:doubled|tripled} if you have at least 5 unique buffs.\n[gold]Damage Cap[/gold] {DamageCap}.",
+  "SHIONTHEBRUISER-SHION_DRAGON_CLAW.title": "Dragon Claw",
+  "SHIONTHEBRUISER-SHION_BERSERK_CHARGE.description": "Gain [blue]{BerserkCharge}[/blue] [gold]Vigor[/gold] for each missing 10% of your HP at the start of your turn.",
+  "SHIONTHEBRUISER-SHION_BERSERK_CHARGE.title": "Berserk Charge"
 }
