@@ -15,9 +15,9 @@ public class TemporaryArtifact() : CustomTemporaryPowerModelWrapper<ShionTouchOf
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext context, PowerModel power, decimal amount, Creature? applier,
         CardModel? cardSource)
     {
-        if (Owner == power.Owner && power is VigorPower && amount < 0)
+        if (Owner == power.Owner && power is ArtifactPower && amount < 0)
         {
-            await PowerCmd.Remove(power);
+            await PowerCmd.Remove(this);
         }
     }
 }
