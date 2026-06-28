@@ -68,5 +68,7 @@
   "SHIONTHEBRUISER-SHION_DESPERATE_CHARGE.description": " Gain [blue]{VigorPower}[/blue] [gold]Vigor[/gold].",
   "SHIONTHEBRUISER-SHION_DESPERATE_CHARGE.title": "Desperate Charge",
   "SHIONTHEBRUISER-SHION_BREAK_ME_IF_YOU_CAN.description": "Gain [blue]{RegenAmount}[/blue] [gold]Regen[/gold] and [blue]{VigorAmount}[/blue] [gold]Vigor[/gold] at the end of each turn.\nEffect ends when you use an Attack.",
-  "SHIONTHEBRUISER-SHION_BREAK_ME_IF_YOU_CAN.title": "Break Me If You Can"
+  "SHIONTHEBRUISER-SHION_BREAK_ME_IF_YOU_CAN.title": "Break Me If You Can",
+  "SHIONTHEBRUISER-SHION_CHAOS_CRASH.description": "Lose {HpLoss:diff()} HP.\nDeal {Damage:diff()} damage to ALL enemies.",
+  "SHIONTHEBRUISER-SHION_CHAOS_CRASH.title": "Chaos Crash"
 }
