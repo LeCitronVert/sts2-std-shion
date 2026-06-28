@@ -58,5 +58,7 @@
   "SHIONTHEBRUISER-SHION_BERSERK_CHARGE.description": "Gain [blue]{BerserkCharge}[/blue] [gold]Vigor[/gold] for each missing 10% of your HP at the start of your turn.",
   "SHIONTHEBRUISER-SHION_BERSERK_CHARGE.title": "Berserk Charge",
   "SHIONTHEBRUISER-SHION_DEFENSIVE_STRATEGIES.description": "Gain [blue]{DefensiveStrategies}[/blue] [gold]Vigor[/gold] whenever you use a Defensive card.",
-  "SHIONTHEBRUISER-SHION_DEFENSIVE_STRATEGIES.title": "Defensive Strategies"
+  "SHIONTHEBRUISER-SHION_DEFENSIVE_STRATEGIES.title": "Defensive Strategies",
+  "SHIONTHEBRUISER-SHION_SHIELD_BREAKER.description": "Whenever you play an Attack against an enemy with [gold]Block[/gold], replay that attack [blue]{ShieldBreaker}[/blue] {ShieldBreaker:plural:time|times}.",
+  "SHIONTHEBRUISER-SHION_SHIELD_BREAKER.title": "SHIELD_BREAKER"
 }

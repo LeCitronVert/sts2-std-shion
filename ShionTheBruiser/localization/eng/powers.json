@@ -22,5 +22,8 @@
   "SHIONTHEBRUISER-BERSERK_CHARGE.title": "Berserk Charge",
   "SHIONTHEBRUISER-DEFENSIVE_STRATEGIES.description": "Gain Vigor whenever you use a Defensive card.",
   "SHIONTHEBRUISER-DEFENSIVE_STRATEGIES.smartDescription": "Gain [blue]{Amount}[/blue] [gold]Vigor[/gold] whenever you use a Defensive card.",
-  "SHIONTHEBRUISER-DEFENSIVE_STRATEGIES.title": "Defensive Strategies"
+  "SHIONTHEBRUISER-DEFENSIVE_STRATEGIES.title": "Defensive Strategies",
+  "SHIONTHEBRUISER-SHIELD_BREAKER.description": "Replays Attacks used against enemies that had Block.",
+  "SHIONTHEBRUISER-SHIELD_BREAKER.smartDescription": "Whenever you play an Attack against an enemy with Block, replay that attack {Amount:plural:once|[blue]{}[/blue] times}.",
+  "SHIONTHEBRUISER-SHIELD_BREAKER.title": "Shield Breaker"
 }

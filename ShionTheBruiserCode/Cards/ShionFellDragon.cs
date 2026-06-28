@@ -32,6 +32,6 @@ public class ShionFellDragon() : ShionTheBruiserCard(1,
 
     protected override void OnUpgrade()
     {
-        this.AddKeyword(CardKeyword.Retain);
+        AddKeyword(CardKeyword.Retain);
     }
 }
