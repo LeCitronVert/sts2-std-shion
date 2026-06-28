@@ -27,7 +27,7 @@ public class DefensiveStrategies() : ShionTheBruiserPower
     {
         if (
             cardPlay.Card.Owner.Creature != Owner
-            || cardPlay.Card.Keywords.Contains(ShionCardKeywords.Defensive)
+            || !cardPlay.Card.Keywords.Contains(ShionCardKeywords.Defensive)
         ) return;
 
         var power = this;
