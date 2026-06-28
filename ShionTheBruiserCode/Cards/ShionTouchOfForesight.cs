@@ -29,7 +29,7 @@ public class ShionTouchOfForesight() : ShionTheBruiserCard(1,
         CardPlay play)
     {
         var card = this;
-        await PowerCmd.Apply<ArtifactPower>(choiceContext, card.Owner.Creature, 1M, card.Owner.Creature, card);
+        await PowerCmd.Apply<IntangiblePower>(choiceContext, card.Owner.Creature, 1M, card.Owner.Creature, card);
         await PowerCmd.Apply<TemporaryArtifact>(choiceContext, card.Owner.Creature, 1M, card.Owner.Creature, card);
     }
 

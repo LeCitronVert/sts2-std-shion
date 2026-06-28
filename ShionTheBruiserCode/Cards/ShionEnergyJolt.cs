@@ -15,7 +15,7 @@ public class ShionEnergyJolt() : ShionTheBruiserCard(2,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(3, ValueProp.Unpowered | ValueProp.Move),
+        new DamageVar(3, ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move),
         new DynamicVar("DebuffAmount", 2)
     ];
     
@@ -32,12 +32,12 @@ public class ShionEnergyJolt() : ShionTheBruiserCard(2,
     {
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target, "play.Target");
-        await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
-            .FromCard(card)
-            .Targeting(play.Target)
-            .WithHitFx("vfx/vfx_attack_slash")
-            .Execute(choiceContext)
-        ;
+        await CreatureCmd.Damage(
+            choiceContext, 
+            play.Target, 
+            DynamicVars.Damage, 
+            card
+        );
         await PowerCmd.Apply<WeakPower>(
             choiceContext,
             play.Target,
