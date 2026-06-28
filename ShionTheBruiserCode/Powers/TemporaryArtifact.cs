@@ -19,5 +19,7 @@ public class TemporaryArtifact() : CustomTemporaryPowerModelWrapper<ShionTouchOf
         {
             await PowerCmd.Remove(this);
         }
+        
+        await base.AfterPowerAmountChanged(context, power, amount, applier, cardSource);
     }
 }
