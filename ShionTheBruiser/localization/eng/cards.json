@@ -90,5 +90,7 @@
   "SHIONTHEBRUISER-SHION_DRAGON_SMASH.description": "Deal {CalculatedDamage:diff()} damage X times.\nDeals additional damage equivalent to your amount of unique buffs.\n[gold]Damage Cap[/gold] {DamageCap}.",
   "SHIONTHEBRUISER-SHION_DRAGON_SMASH.title": "Dragon Smash",
   "SHIONTHEBRUISER-SHION_COMPETITIVE_SPIRIT.description": "When ANYONE else gains a buff, gain 1 Strength.\nCan be triggered up to {CompetitiveSpirit} times per turn.\n\n",
-  "SHIONTHEBRUISER-SHION_COMPETITIVE_SPIRIT.title": "Competitive Spirit"
+  "SHIONTHEBRUISER-SHION_COMPETITIVE_SPIRIT.title": "Competitive Spirit",
+  "SHIONTHEBRUISER-SHION_EEPY.description": "Heal {Heal:diff()} HP.\nEnd your turn.",
+  "SHIONTHEBRUISER-SHION_EEPY.title": "Eepy"
 }
