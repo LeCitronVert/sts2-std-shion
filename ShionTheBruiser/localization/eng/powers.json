@@ -35,4 +35,7 @@
   "SHIONTHEBRUISER-DRAGONSONG.description": "Reduces HP loss for each unique buff you have.",
   "SHIONTHEBRUISER-DRAGONSONG.smartDescription": "Reduces HP loss for each unique buff you have, up to a maximum reduction of {Amount}.",
   "SHIONTHEBRUISER-DRAGONSONG.title": "Dragonsong",
+  "SHIONTHEBRUISER-DARK_ARTS.description": "The next card you play this turn is played an additional time.",
+  "SHIONTHEBRUISER-DARK_ARTS.smartDescription": "The next {Amount:plural:card|[blue]{}[/blue] cards} you play this turn are played an additional time.",
+  "SHIONTHEBRUISER-DARK_ARTS.title": "Dark Arts"
 }

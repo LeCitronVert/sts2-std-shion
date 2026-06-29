@@ -82,5 +82,7 @@
   "SHIONTHEBRUISER-SHION_CRUNCH.description": "If you have Vigor, apply {DebuffAmount} Weak.\nIf you have at least {VigorForVuln} Vigor, apply {DebuffAmount} Vulnerable.\nIf you have at least {VigorForDebil} Vigor, apply {DebuffAmount} Debilitate.",
   "SHIONTHEBRUISER-SHION_CRUNCH.title": "Crunch",
   "SHIONTHEBRUISER-SHION_DRAGONSONG.description": "Reduces HP loss for each unique buff you have, up to a maximum reduction of {Dragonsong}.",
-  "SHIONTHEBRUISER-SHION_DRAGONSONG.title": "Dragonsong"
+  "SHIONTHEBRUISER-SHION_DRAGONSONG.title": "Dragonsong",
+  "SHIONTHEBRUISER-SHION_DARK_ARTS.description": "Lose {HpLoss:diff()} HP.\nThe next {DarkArts:plural:card|[blue]{}[/blue] cards} you play this turn are played an additional time.",
+  "SHIONTHEBRUISER-SHION_DARK_ARTS.title": "Dark Arts"
 }
