@@ -78,5 +78,7 @@
   "SHIONTHEBRUISER-SHION_IMPROVISE.description": "Add a random Colorless card to your Hand. It's free to play this turn.",
   "SHIONTHEBRUISER-SHION_IMPROVISE.title": "Improvise",
   "SHIONTHEBRUISER-SHION_NOT_NOW.description": "Gain X energy next turn.",
-  "SHIONTHEBRUISER-SHION_NOT_NOW.title": "Not Now"
+  "SHIONTHEBRUISER-SHION_NOT_NOW.title": "Not Now",
+  "SHIONTHEBRUISER-SHION_CRUNCH.description": "If you have Vigor, apply {DebuffAmount} Weak.\nIf you have at least {VigorForVuln} Vigor, apply {DebuffAmount} Vulnerable.\nIf you have at least {VigorForDebil} Vigor, apply {DebuffAmount} Debilitate.",
+  "SHIONTHEBRUISER-SHION_CRUNCH.title": "Crunch"
 }
