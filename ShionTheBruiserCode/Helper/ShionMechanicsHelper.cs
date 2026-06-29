@@ -28,4 +28,9 @@ public static class ShionMechanicsHelper
     {
         return card.Pool.Id != ModelDb.CardPool<ShionTheBruiserCardPool>().Id;
     }
+    
+    public static bool IsCardNativeToCharacter(CardModel card, CharacterModel character)
+    {
+        return card.Pool.Id == character.CardPool.Id;
+    }
 }

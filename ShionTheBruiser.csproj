@@ -46,7 +46,6 @@
         <Compile Remove="materials/**"/>
         <Compile Remove="shaders/**"/>
         <Compile Remove="images/**"/>
-        <Compile Include="ShionTheBruiser\images\powers\CompetitiveSpirit.cs" />
         <EmbeddedResource Remove="ShionTheBruiser/**"/>
         <EmbeddedResource Remove="materials/**"/>
         <EmbeddedResource Remove="shaders/**"/>
@@ -59,6 +58,7 @@
         <None Include="ShionTheBruiser.json"/>
         <None Include="project.godot"/>
         <None Include="ShionTheBruiser/**"/>
+        <None Include="ShionTheBruiserCode\Powers\CompetitiveSpirit.cs.uid" />
     </ItemGroup>
 
     <ItemGroup>

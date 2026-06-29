@@ -43,5 +43,8 @@
   "SHIONTHEBRUISER-COMPETITIVE_SPIRIT.title": "Competitive Spirit",
   "SHIONTHEBRUISER-GUTSY.description": "Gain Vigor when receiving unblocked attack damage.",
   "SHIONTHEBRUISER-GUTSY.smartDescription": "Gain Vigor equivalent to {Amount}% of unblocked attack damage received.",
-  "SHIONTHEBRUISER-GUTSY.title": "Gutsy"
+  "SHIONTHEBRUISER-GUTSY.title": "Gutsy",
+  "SHIONTHEBRUISER-STARTING_GATE.description": "The first non-native card you play each turn cost one energy less.",
+  "SHIONTHEBRUISER-STARTING_GATE.smartDescription": "The first {Amount:plural:[gold]Non-Native[/gold] card|[blue]{}[/blue] [gold]Non-Native[/gold] cards} you play each turn cost one energy less.",
+  "SHIONTHEBRUISER-STARTING_GATE.title": "Starting Gate"
 }
