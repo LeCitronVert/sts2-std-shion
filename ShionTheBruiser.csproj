@@ -46,6 +46,7 @@
         <Compile Remove="materials/**"/>
         <Compile Remove="shaders/**"/>
         <Compile Remove="images/**"/>
+        <Compile Include="ShionTheBruiser\images\powers\CompetitiveSpirit.cs" />
         <EmbeddedResource Remove="ShionTheBruiser/**"/>
         <EmbeddedResource Remove="materials/**"/>
         <EmbeddedResource Remove="shaders/**"/>

@@ -88,5 +88,7 @@
   "SHIONTHEBRUISER-SHION_MIGHTY_DEFEND.description": "Gain {InCombat:{CalculatedBlock:diff()}|{CalculationBase:diff()}} [gold]Block[/gold].\nAdds additional Block equal to your Strength.",
   "SHIONTHEBRUISER-SHION_MIGHTY_DEFEND.title": "Mighty Defend",
   "SHIONTHEBRUISER-SHION_DRAGON_SMASH.description": "Deal {CalculatedDamage:diff()} damage X times.\nDeals additional damage equivalent to your amount of unique buffs.\n[gold]Damage Cap[/gold] {DamageCap}.",
-  "SHIONTHEBRUISER-SHION_DRAGON_SMASH.title": "Dragon Smash"
+  "SHIONTHEBRUISER-SHION_DRAGON_SMASH.title": "Dragon Smash",
+  "SHIONTHEBRUISER-SHION_COMPETITIVE_SPIRIT.description": "When ANYONE else gains a buff, gain 1 Strength.\nCan be triggered up to {CompetitiveSpirit} times per turn.\n\n",
+  "SHIONTHEBRUISER-SHION_COMPETITIVE_SPIRIT.title": "Competitive Spirit"
 }

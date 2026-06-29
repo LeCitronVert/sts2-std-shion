@@ -37,5 +37,8 @@
   "SHIONTHEBRUISER-DRAGONSONG.title": "Dragonsong",
   "SHIONTHEBRUISER-DARK_ARTS.description": "The next card you play this turn is played an additional time.",
   "SHIONTHEBRUISER-DARK_ARTS.smartDescription": "The next {Amount:plural:card|[blue]{}[/blue] cards} you play this turn are played an additional time.",
-  "SHIONTHEBRUISER-DARK_ARTS.title": "Dark Arts"
+  "SHIONTHEBRUISER-DARK_ARTS.title": "Dark Arts",
+  "SHIONTHEBRUISER-COMPETITIVE_SPIRIT.description": "Gain 1 Strength when ANYONE else gains a buff.",
+  "SHIONTHEBRUISER-COMPETITIVE_SPIRIT.smartDescription": "Gain 1 Strength when ANYONE else gains a buff, up to {Amount:plural:once|[blue]{}[/blue] times} per turn.",
+  "SHIONTHEBRUISER-COMPETITIVE_SPIRIT.title": "Competitive Spirit"
 }

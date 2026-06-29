@@ -5,12 +5,12 @@ ShionTheBruiser.json::JSON::-1::1782762435::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1782764432
+::res://bin/ExportRelease/net9.0/publish/::1782765577
 ShionTheBruiser.deps.json::JSON::-1::1782764432::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiser/::1782158780
 mod_image.png::CompressedTexture2D::8120906206059877335::1781940056::1782158780::1::::<><><>0<>0<>981796944b721321e967a9a00a87ee4e<>res://.godot/imported/mod_image.png-42cee5b6b030b953b3c956b7ca85a956.ctex::
 ::res://ShionTheBruiser/images/::1782765263
-::res://ShionTheBruiser/images/card_portraits/::1782765264
+::res://ShionTheBruiser/images/card_portraits/::1782765458
 card.png::CompressedTexture2D::1049500711854334682::1781940056::1782158780::1::::<><><>0<>0<>e86ff99e55e178dfa257e115aff98269<>res://.godot/imported/card.png-ed4193b7714d803835eb3395cc67803f.ctex::
 shion_an_opening.png::CompressedTexture2D::9195167307355441706::1782571254::1782762902::1::::<><><>0<>0<>847c9de6f6052fe556b1c52ad62e0116<>res://.godot/imported/shion_an_opening.png-8b66582e78ea51c509ef981b1c54d25f.ctex::
 shion_berserk_charge.png::CompressedTexture2D::980710379456040947::1782633926::1782762902::1::::<><><>0<>0<>a33690b4f7e39abd6178a62d798b3c05<>res://.godot/imported/shion_berserk_charge.png-9899ac529b0b79f1411842f6a9a4b9ef.ctex::
@@ -19,7 +19,7 @@ shion_blood_rondo.png::CompressedTexture2D::2598116645548202196::1782568764::178
 shion_bluff.png::CompressedTexture2D::2217097185702047819::1782156246::1782168656::1::::<><><>0<>0<>ecd766dd8f6193eb5b062384a91dc408<>res://.godot/imported/shion_bluff.png-15a54910ed12f852c898f65887c6afa3.ctex::
 shion_break_down.png::CompressedTexture2D::2930162707654529812::1782214156::1782168656::1::::<><><>0<>0<>4b4fcc82c2978289c6d1ab8ab981fc98<>res://.godot/imported/shion_break_down.png-62ab97e11a1bc17f0b9568b215055d97.ctex::
 shion_break_me_if_you_can.png::CompressedTexture2D::8061791702600660671::1782664930::1782762902::1::::<><><>0<>0<>2e0de4b785f2dfd250d201f409ad73ee<>res://.godot/imported/shion_break_me_if_you_can.png-f3f29c817f8857409a4e3c2b4cf5a43b.ctex::
-shion_chaos_crash.png::CompressedTexture2D::6057102372958005478::1782765264::1782765278::1::::<><><>0<>0<>967694e16c784b3c0cb61f9da4c6b78a<>res://.godot/imported/shion_chaos_crash.png-88c230e247bdd68c7c160511c0891c07.ctex::
+shion_chaos_crash.png::CompressedTexture2D::6057102372958005478::1782756962::1782765580::1::::<><><>0<>0<>967694e16c784b3c0cb61f9da4c6b78a<>res://.godot/imported/shion_chaos_crash.png-88c230e247bdd68c7c160511c0891c07.ctex::
 shion_critical_drive.png::CompressedTexture2D::9176320113838552985::1782676922::1782762902::1::::<><><>0<>0<>a110311c181ca0817c8d0a40c28e7326<>res://.godot/imported/shion_critical_drive.png-cf4629909d24781ad9f08023818c3c85.ctex::
 shion_critical_strike.png::CompressedTexture2D::525782666504094298::1782406592::1782409544::1::::<><><>0<>0<>615f197e25b954684b1f5ca5f00366f7<>res://.godot/imported/shion_critical_strike.png-96eb0949ce7c0e79ab703f13b1f27461.ctex::
 shion_crunch.png::CompressedTexture2D::5136399972919290328::1782751434::1782762902::1::::<><><>0<>0<>ccc5ca964e084baf97ed3165b0713bd8<>res://.godot/imported/shion_crunch.png-bf9772e2f942cbab7453bcac7609c81f.ctex::
@@ -57,7 +57,7 @@ shion_shield_breaker.png::CompressedTexture2D::9174413227080954538::1782662714::
 shion_skybreaker_dance.png::CompressedTexture2D::6812881769387307407::1782473200::1782762902::1::::<><><>0<>0<>a400ce115f3d8a4ed8c7f9e4b96b4d75<>res://.godot/imported/shion_skybreaker_dance.png-4cb7ea86ccf45c9551a69ddc32aa3242.ctex::
 shion_strike.png::CompressedTexture2D::59826923369783066::1782064075::1782158780::1::::<><><>0<>0<>708df522604abebc98878a0d66da87d8<>res://.godot/imported/shion_strike.png-b5488aed6242ac0bb6158e9bfd75b8b7.ctex::
 shion_touch_of_foresight.png::CompressedTexture2D::5334015829365299987::1782663276::1782762902::1::::<><><>0<>0<>4b7f2f68b1a331934a781bd5bf3fa36b<>res://.godot/imported/shion_touch_of_foresight.png-818ff385cf74dc7e750cff04943e286b.ctex::
-::res://ShionTheBruiser/images/card_portraits/beta/::1782765264
+::res://ShionTheBruiser/images/card_portraits/beta/::1782756969
 shion_an_opening.png::CompressedTexture2D::1781845352635364423::1782765263::1782765278::1::::<><><>0<>0<>1e331609cf5f4ecec8892e90f22346ff<>res://.godot/imported/shion_an_opening.png-757dba8188f1156be4a1a5d92bac0b07.ctex::
 shion_berserk_charge.png::CompressedTexture2D::694957321665412194::1782765263::1782765278::1::::<><><>0<>0<>d342c91019094701d24f1bae308bbc7e<>res://.godot/imported/shion_berserk_charge.png-a920d3f2c21ab60ec80d2d2181833211.ctex::
 shion_berserk_strike.png::CompressedTexture2D::8534255849591144728::1782765263::1782765278::1::::<><><>0<>0<>ffb5505b3ecff3ac23cfb9ba93603d4b<>res://.godot/imported/shion_berserk_strike.png-85541d3654034a8574f7344c8bfca0aa.ctex::
@@ -103,7 +103,7 @@ shion_shield_breaker.png::CompressedTexture2D::1596423991553297229::1782765264::
 shion_skybreaker_dance.png::CompressedTexture2D::5794698038515176962::1782765264::1782765278::1::::<><><>0<>0<>81d838948ab8f7ed2aead2c316ef6150<>res://.godot/imported/shion_skybreaker_dance.png-73d0ea21b557980ec729e32645e730e2.ctex::
 shion_strike.png::CompressedTexture2D::6620399744862040189::1782765264::1782765264::1::::<><><>0<>0<>10949b30655a207166afa9a535289888<>res://.godot/imported/shion_strike.png-cfd96a3963641157c780ae357cae7cc4.ctex::
 shion_touch_of_foresight.png::CompressedTexture2D::2434946672436049149::1782765264::1782765278::1::::<><><>0<>0<>d0c471b64341da1a827f6001d459bb63<>res://.godot/imported/shion_touch_of_foresight.png-fe5a4ff43b2f19e52c5004d911d6b0d0.ctex::
-::res://ShionTheBruiser/images/card_portraits/big/::1782765264
+::res://ShionTheBruiser/images/card_portraits/big/::1782756969
 card.png::CompressedTexture2D::5376909193275950955::1782765264::1782765264::1::::<><><>0<>0<>e9bc5581e7060e2b238b6e16f552b620<>res://.godot/imported/card.png-f2bdec99a9547bf841f67e1ad99b4423.ctex::
 shion_an_opening.png::CompressedTexture2D::5713376713263133086::1782765264::1782765278::1::::<><><>0<>0<>5a7790b0bfae655f8b632020769ed9f8<>res://.godot/imported/shion_an_opening.png-fc8d3f44e58d47a08d7270f6e563e820.ctex::
 shion_berserk_charge.png::CompressedTexture2D::5369783378253978599::1782765264::1782765277::1::::<><><>0<>0<>8408deaf2fab553804124f65fc814f6b<>res://.godot/imported/shion_berserk_charge.png-7c9939e8c483559eb0164897975f976b.ctex::
@@ -226,8 +226,8 @@ ShionSkybreakerDance.cs::CSharpScript::3632239070991335954::1782761541::0::1::::
 ShionStrike.cs::CSharpScript::8408367939145974781::1782761532::0::1::::<><><>0<>0<><>::
 ShionTheBruiserCard.cs::CSharpScript::6999578716303428152::1782379788::0::1::::<><><>0<>0<><>::
 ShionTouchOfForesight.cs::CSharpScript::8858960271852629060::1782761509::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Character/::1782761408
-ShionTheBruiser.cs::CSharpScript::5230343434016276755::1782761408::0::1::::<><><>0<>0<><>::
+::res://ShionTheBruiserCode/Character/::1782765572
+ShionTheBruiser.cs::CSharpScript::5230343434016276755::1782765572::0::1::::<><><>0<>0<><>::
 ShionTheBruiserCardPool.cs::CSharpScript::5768901081701376971::1782148659::0::1::::<><><>0<>0<><>::
 ShionTheBruiserPotionPool.cs::CSharpScript::8942352038865602766::1781940058::0::1::::<><><>0<>0<><>::
 ShionTheBruiserRelicPool.cs::CSharpScript::7291834671674422082::1781940056::0::1::::<><><>0<>0<><>::
