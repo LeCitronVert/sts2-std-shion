@@ -76,5 +76,7 @@
   "SHIONTHEBRUISER-SHION_CRITICAL_DRIVE.description": "The next Attack you play this turn will be a [gold]Critical Attack[/gold].",
   "SHIONTHEBRUISER-SHION_CRITICAL_DRIVE.title": "Critical Drive",
   "SHIONTHEBRUISER-SHION_IMPROVISE.description": "Add a random Colorless card to your Hand. It's free to play this turn.",
-  "SHIONTHEBRUISER-SHION_IMPROVISE.title": "Improvise"
+  "SHIONTHEBRUISER-SHION_IMPROVISE.title": "Improvise",
+  "SHIONTHEBRUISER-SHION_NOT_NOW.description": "Gain X energy next turn.",
+  "SHIONTHEBRUISER-SHION_NOT_NOW.title": "Not Now"
 }
