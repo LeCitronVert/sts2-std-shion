@@ -94,5 +94,7 @@
   "SHIONTHEBRUISER-SHION_EEPY.description": "Heal {Heal:diff()} HP.\nEnd your turn.",
   "SHIONTHEBRUISER-SHION_EEPY.title": "Eepy",
   "SHIONTHEBRUISER-SHION_GUTSY.description": "Gain Vigor equivalent to {Gutsy}% of unblocked attack damage received.",
-  "SHIONTHEBRUISER-SHION_GUTSY.title": "Gutsy"
+  "SHIONTHEBRUISER-SHION_GUTSY.title": "Gutsy",
+  "SHIONTHEBRUISER-SHION_OFF_ROCKERS.description": "Transform up to {Cards:diff()} cards in your Draw Pile to random Colorless cards.",
+  "SHIONTHEBRUISER-SHION_OFF_ROCKERS.title": "Off-Rockers"
 }
