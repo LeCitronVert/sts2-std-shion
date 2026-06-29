@@ -86,5 +86,7 @@
   "SHIONTHEBRUISER-SHION_DARK_ARTS.description": "Lose {HpLoss:diff()} HP.\nThe next {DarkArts:plural:card|[blue]{}[/blue] cards} you play this turn are played an additional time.",
   "SHIONTHEBRUISER-SHION_DARK_ARTS.title": "Dark Arts",
   "SHIONTHEBRUISER-SHION_MIGHTY_DEFEND.description": "Gain {InCombat:{CalculatedBlock:diff()}|{CalculationBase:diff()}} [gold]Block[/gold].\nAdds additional Block equal to your Strength.",
-  "SHIONTHEBRUISER-SHION_MIGHTY_DEFEND.title": "Mighty Defend"
+  "SHIONTHEBRUISER-SHION_MIGHTY_DEFEND.title": "Mighty Defend",
+  "SHIONTHEBRUISER-SHION_DRAGON_SMASH.description": "Deal {CalculatedDamage:diff()} damage X times.\nDeals additional damage equivalent to your amount of unique buffs.\n[gold]Damage Cap[/gold] {DamageCap}.",
+  "SHIONTHEBRUISER-SHION_DRAGON_SMASH.title": "Dragon Smash"
 }
