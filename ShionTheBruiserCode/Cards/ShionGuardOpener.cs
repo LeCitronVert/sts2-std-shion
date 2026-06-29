@@ -4,7 +4,6 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
-using ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -26,7 +25,7 @@ public class ShionGuardOpener() : ShionTheBruiserCard(1,
         CardPlay play)
     {
         var card = this;
-        ArgumentNullException.ThrowIfNull(play.Target, "play.Target");
+        ArgumentNullException.ThrowIfNull(play.Target);
         var target =  play.Target;
         if (target.Block <= 0) return;
         

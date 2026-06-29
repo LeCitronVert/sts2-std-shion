@@ -4,7 +4,6 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
-using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
@@ -23,7 +22,7 @@ public class ShionBloodRondo() : ShionTheBruiserCard(1,
         CardPlay play)
     {
         var card = this;
-        ArgumentNullException.ThrowIfNull(play.Target, "play.Target");
+        ArgumentNullException.ThrowIfNull(play.Target);
         var hits = (Owner.Creature.Powers.FirstOrDefault(p => p is StrengthPower)?.Amount ?? 0);
         
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)

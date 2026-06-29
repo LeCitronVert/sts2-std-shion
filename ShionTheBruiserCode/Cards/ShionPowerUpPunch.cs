@@ -2,10 +2,8 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
-using ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -23,14 +21,14 @@ public class ShionPowerUpPunch() : ShionTheBruiserCard(1,
         CardPlay play)
     {
         var card = this;
-        ArgumentNullException.ThrowIfNull(play.Target, "play.Target");
+        ArgumentNullException.ThrowIfNull(play.Target);
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .FromCard(card)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext)
         ;
-        await PowerCmd.Apply<StrengthPower>(choiceContext, this.Owner.Creature, card.DynamicVars["StrengthPower"].BaseValue, card.Owner.Creature, (CardModel) card);
+        await PowerCmd.Apply<StrengthPower>(choiceContext, this.Owner.Creature, card.DynamicVars["StrengthPower"].BaseValue, card.Owner.Creature, card);
     }
 
     protected override void OnUpgrade()

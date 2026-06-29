@@ -3,7 +3,6 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
-using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
@@ -18,7 +17,7 @@ public class ShionBerserkStrike() : ShionTheBruiserCard(2,
         new CalculationBaseVar(9),
         new ExtraDamageVar(25),
         // Damage scales with missing hp, up until the maximum which is stored in ExtraDamageVar
-        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((model, creature) =>
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((model, _) =>
             {
                 var missingHpRatio = (model.Owner.Creature.MaxHp - model.Owner.Creature.CurrentHp)
                                      / (float)model.Owner.Creature.MaxHp;
@@ -34,7 +33,7 @@ public class ShionBerserkStrike() : ShionTheBruiserCard(2,
         CardPlay play)
     {
         var card = this;
-        ArgumentNullException.ThrowIfNull(play.Target, "play.Target");
+        ArgumentNullException.ThrowIfNull(play.Target);
         await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
             .FromCard(card)
             .Targeting(play.Target)

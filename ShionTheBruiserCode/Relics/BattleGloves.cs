@@ -2,19 +2,18 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Models;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
-public class BattleGloves() : ShionTheBruiserRelic
+public class BattleGloves : ShionTheBruiserRelic
 {
     public override RelicRarity Rarity =>
         RelicRarity.Starter;
 
-    public const int strengthUp = 1;
-    public const int defenseUp = 1;
-    public const int energyUp = 1;
+    public const int StrengthUp = 1;
+    public const int DefenseUp = 1;
+    public const int EnergyUp = 1;
 
     public override async Task BeforeCardPlayed(CardPlay cardPlay)
     {
@@ -35,17 +34,17 @@ public class BattleGloves() : ShionTheBruiserRelic
         if (cardBeingPlayed.Type == CardType.Attack)
         {
             // Gain one temp strength
-            var strengthPower = (await PowerCmd.Apply<ScrappyStrength>((PlayerChoiceContext) new ThrowingPlayerChoiceContext(), Owner.Creature, (decimal) strengthUp, Owner.Creature, (CardModel) null!))!;
+            _ = (await PowerCmd.Apply<ScrappyStrength>(new ThrowingPlayerChoiceContext(), Owner.Creature, StrengthUp, Owner.Creature, null!))!;
             return;
         }
         
         if (cardBeingPlayed.Type == CardType.Skill)
         {
             // Gain one temp defense
-            var defensePower = await PowerCmd.Apply<ScrappyDexterity>((PlayerChoiceContext) new ThrowingPlayerChoiceContext(), Owner.Creature, (decimal) defenseUp, Owner.Creature, (CardModel) null!);
+            await PowerCmd.Apply<ScrappyDexterity>(new ThrowingPlayerChoiceContext(), Owner.Creature, DefenseUp, Owner.Creature, null!);
             return;
         }
         
-        await PlayerCmd.GainEnergy((decimal) energyUp, Owner);
+        await PlayerCmd.GainEnergy(EnergyUp, Owner);
     }
 }

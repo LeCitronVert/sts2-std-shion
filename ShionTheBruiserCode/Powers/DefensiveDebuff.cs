@@ -5,12 +5,10 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Powers;
-using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
-public class DefensiveDebuff() : ShionTheBruiserPower
+public class DefensiveDebuff : ShionTheBruiserPower
 {
     public override PowerType Type =>
         PowerType.Debuff;
@@ -23,7 +21,6 @@ public class DefensiveDebuff() : ShionTheBruiserPower
         CombatSide side,
         IEnumerable<Creature> participants)
     {
-        var power = this;
         if (side != CombatSide.Enemy)
             return;
         await PowerCmd.Remove(this);

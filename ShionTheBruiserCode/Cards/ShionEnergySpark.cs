@@ -3,9 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
-using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
@@ -31,8 +29,8 @@ public class ShionEnergySpark() : ShionTheBruiserCard(0,
     {
         ShionEnergySpark source = this;
         int cardCount = source.DynamicVars.Cards.IntValue;
-        IEnumerable<CardModel> cardModels = await CardPileCmd.Draw(choiceContext, (Decimal)cardCount, source.Owner);
-        VigorPower vigorPower = await PowerCmd.Apply<VigorPower>(choiceContext, source.Owner.Creature, (Decimal)source.DynamicVars["VigorPower"].IntValue, source.Owner.Creature, (CardModel)source);
+        await CardPileCmd.Draw(choiceContext, cardCount, source.Owner);
+        await PowerCmd.Apply<VigorPower>(choiceContext, source.Owner.Creature, source.DynamicVars["VigorPower"].IntValue, source.Owner.Creature, source);
     }
 
     protected override void OnUpgrade()

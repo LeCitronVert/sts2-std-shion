@@ -5,22 +5,19 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Powers;
-using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
-using ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
-public class BattleRags() : ShionTheBruiserRelic
+public class BattleRags : ShionTheBruiserRelic
 {
     public override RelicRarity Rarity =>
         RelicRarity.Starter;
 
-    private bool _wasUsedThisTurn = false;
-    public const int strengthUp = 1;
-    public const int defenseUp = 1;
-    public const int energyUp = 1;
+    private bool _wasUsedThisTurn;
+    public const int StrengthUp = 1;
+    public const int DefenseUp = 1;
+    public const int EnergyUp = 1;
 
     public override async Task BeforeCardPlayed(CardPlay cardPlay)
     {
@@ -43,29 +40,29 @@ public class BattleRags() : ShionTheBruiserRelic
         if (cardBeingPlayed.Type == CardType.Attack)
         {
             // Gain one temp strength
-            var strengthPower = (await PowerCmd.Apply<ScrappyStrength>((PlayerChoiceContext) new ThrowingPlayerChoiceContext(), Owner.Creature, (decimal) strengthUp, Owner.Creature, (CardModel) null!))!;
+            _ = (await PowerCmd.Apply<ScrappyStrength>(new ThrowingPlayerChoiceContext(), Owner.Creature, StrengthUp, Owner.Creature, null!))!;
             return;
         }
         
         if (cardBeingPlayed.Type == CardType.Skill)
         {
             // Gain one temp defense
-            var defensePower = await PowerCmd.Apply<ScrappyDexterity>((PlayerChoiceContext) new ThrowingPlayerChoiceContext(), Owner.Creature, (decimal) defenseUp, Owner.Creature, (CardModel) null!);
+            await PowerCmd.Apply<ScrappyDexterity>(new ThrowingPlayerChoiceContext(), Owner.Creature, DefenseUp, Owner.Creature, null!);
             return;
         }
         
-        await PlayerCmd.GainEnergy((decimal) energyUp, Owner);
+        await PlayerCmd.GainEnergy(EnergyUp, Owner);
     }
 
     public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants,
         ICombatState combatState)
     {
-        if (!participants.Contains<Creature>(this.Owner.Creature))
+        if (!participants.Contains(this.Owner.Creature))
             return Task.CompletedTask;
         
         _wasUsedThisTurn = false;
         return Task.CompletedTask;
     }
 
-    public override RelicModel? GetUpgradeReplacement() => ModelDb.Relic<BattleGloves>();
+    public override RelicModel GetUpgradeReplacement() => ModelDb.Relic<BattleGloves>();
 }

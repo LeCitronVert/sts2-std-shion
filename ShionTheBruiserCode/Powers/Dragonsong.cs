@@ -3,11 +3,10 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
-using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
-public class Dragonsong() : ShionTheBruiserPower
+public class Dragonsong : ShionTheBruiserPower
 {
     public override PowerType Type =>
         PowerType.Buff;

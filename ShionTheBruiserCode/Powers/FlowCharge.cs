@@ -4,13 +4,11 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
-using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
-public class FlowCharge() : ShionTheBruiserPower
+public class FlowCharge : ShionTheBruiserPower
 {
     public override PowerType Type =>
         PowerType.Buff;
@@ -35,7 +33,7 @@ public class FlowCharge() : ShionTheBruiserPower
     public async Task ApplyPower()
     {
         var power = this;
-        await PowerCmd.Apply<VigorPower>(new ThrowingPlayerChoiceContext(), power.Owner, power.DynamicVars["VigorPower"].BaseValue, power.Owner, (CardModel) null!);
+        await PowerCmd.Apply<VigorPower>(new ThrowingPlayerChoiceContext(), power.Owner, power.DynamicVars["VigorPower"].BaseValue, power.Owner, null!);
         await PowerCmd.TickDownDuration(this);
     }
 }

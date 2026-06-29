@@ -2,9 +2,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
-using ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -24,14 +22,15 @@ public class ShionHomingBlitz() : ShionTheBruiserCard(2,
         var amountOfEnemies = play.Card.CombatState?.HittableEnemies.Count ?? 0;
 
         if (amountOfEnemies <= 0) return;
-        await DamageCmd
-            .Attack(card.DynamicVars.Damage.BaseValue)
-            .FromCard((CardModel) card)
-            .TargetingAllOpponents(card.CombatState)
-            .WithHitFx("vfx/vfx_attack_blunt", tmpSfx: "heavy_attack.mp3")
-            .WithHitCount(amountOfEnemies)
-            .Execute(choiceContext)
-        ;
+        if (card.CombatState != null)
+            await DamageCmd
+                .Attack(card.DynamicVars.Damage.BaseValue)
+                .FromCard(card)
+                .TargetingAllOpponents(card.CombatState)
+                .WithHitFx("vfx/vfx_attack_blunt", tmpSfx: "heavy_attack.mp3")
+                .WithHitCount(amountOfEnemies)
+                .Execute(choiceContext)
+            ;
     }
 
     protected override void OnUpgrade()

@@ -5,7 +5,6 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Critical;
@@ -59,7 +58,7 @@ public class ShionCritTrackerPower : ShionTheBruiserPower
     /// </summary>
     public override Task BeforeAttack(AttackCommand command)
     {
-        MainFile.Logger.Info($"[ShionCritTrackerPower] BeforeAttack fired. Attacker={command.Attacker?.GetType().Name ?? "null"}, Owner={Owner?.GetType().Name ?? "null"}, isMatch={command.Attacker == Owner}, ModelSource={command.ModelSource?.GetType().Name ?? "null"}");
+        MainFile.Logger.Info($"[ShionCritTrackerPower] BeforeAttack fired. Attacker={command.Attacker?.GetType().Name ?? "null"}, Owner={Owner.GetType().Name}, isMatch={command.Attacker == Owner}, ModelSource={command.ModelSource?.GetType().Name ?? "null"}");
 
         if (command.Attacker != Owner)
             return Task.CompletedTask;
@@ -81,7 +80,7 @@ public class ShionCritTrackerPower : ShionTheBruiserPower
     public override decimal ModifyDamageMultiplicative(
         Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        MainFile.Logger.Info($"[ShionCritTrackerPower] ModifyDamageMultiplicative fired. dealer={dealer?.GetType().Name ?? "null"}, Owner={Owner?.GetType().Name ?? "null"}, isMatch={dealer == Owner}, card={cardSource?.GetType().Name ?? "null"}");
+        MainFile.Logger.Info($"[ShionCritTrackerPower] ModifyDamageMultiplicative fired. dealer={dealer?.GetType().Name ?? "null"}, Owner={Owner.GetType().Name}, isMatch={dealer == Owner}, card={cardSource?.GetType().Name ?? "null"}");
 
         if (dealer != Owner)
             return 1m;

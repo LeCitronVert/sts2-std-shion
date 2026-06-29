@@ -1,10 +1,8 @@
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
-using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
@@ -27,8 +25,8 @@ public class ShionEnergyStrike() : ShionTheBruiserCard(1,
         CardPlay play)
     {
         ShionEnergyStrike card = this;
-        ArgumentNullException.ThrowIfNull(play.Target, "play.Target");
-        AttackCommand attackCommand = await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
+        ArgumentNullException.ThrowIfNull(play.Target);
+        await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .FromCard(card)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_slash")

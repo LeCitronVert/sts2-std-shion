@@ -2,12 +2,11 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using ShionTheBruiser.ShionTheBruiserCode.Critical;
-using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
-public class CritRateUp() : CritContributorPower, ICritHitRateContributor
+public class CritRateUp : CritContributorPower, ICritHitRateContributor
 {
     public override PowerType Type =>
         PowerType.Buff;

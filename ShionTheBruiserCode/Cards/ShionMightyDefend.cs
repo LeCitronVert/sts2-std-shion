@@ -3,7 +3,6 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
-using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
@@ -19,7 +18,7 @@ public class ShionMightyDefend() : ShionTheBruiserCard(1,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CalculationBaseVar(5),
         new CalculationExtraVar(1),
-        new CalculatedBlockVar(ValueProp.Move).WithMultiplier((model, creature) => ShionMechanicsHelper.GetStrengthAmount(model.Owner.Creature)),
+        new CalculatedBlockVar(ValueProp.Move).WithMultiplier((model, _) => ShionMechanicsHelper.GetStrengthAmount(model.Owner.Creature)),
     ];
 
     protected override async Task OnPlay(

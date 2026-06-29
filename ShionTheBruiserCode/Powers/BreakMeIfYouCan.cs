@@ -7,11 +7,10 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
-using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
-public class BreakMeIfYouCan() : ShionTheBruiserPower
+public class BreakMeIfYouCan : ShionTheBruiserPower
 {
     public override PowerType Type =>
         PowerType.Buff;

@@ -3,7 +3,6 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
-using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
@@ -28,7 +27,7 @@ public class ShionCrunch() : ShionTheBruiserCard(2,
         var owner = card.Owner.Creature;
         if (!ShionMechanicsHelper.HasVigor(owner)) return;
         var vigorAmount = owner.Powers.OfType<VigorPower>().First().Amount;
-        ArgumentNullException.ThrowIfNull(play.Target, "play.Target");
+        ArgumentNullException.ThrowIfNull(play.Target);
         
         await PowerCmd.Apply<WeakPower>(choiceContext, play.Target, card.DynamicVars["DebuffAmount"].BaseValue, card.Owner.Creature, card);
         if (vigorAmount >= DynamicVars["VigorForVuln"].BaseValue)

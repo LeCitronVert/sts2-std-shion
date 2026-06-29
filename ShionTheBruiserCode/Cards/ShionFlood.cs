@@ -24,7 +24,7 @@ public class ShionFlood() : ShionTheBruiserCard(1,
         CardPlay play)
     {
         ShionFlood card = this;
-        ArgumentNullException.ThrowIfNull(play.Target, "play.Target");
+        ArgumentNullException.ThrowIfNull(play.Target);
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .WithHitCount(card.DynamicVars.Repeat.IntValue)
             .FromCard(card)

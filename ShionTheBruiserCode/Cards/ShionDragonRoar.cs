@@ -4,9 +4,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
-using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -20,7 +18,7 @@ public class ShionDragonRoar() : ShionTheBruiserCard(1,
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
         // Damage scales with missing hp, up until the maximum which is stored in ExtraDamageVar
-        new CalculatedVar("DebuffAmount").WithMultiplier((model, creature) => 
+        new CalculatedVar("DebuffAmount").WithMultiplier((model, _) => 
             ShionMechanicsHelper.GetDragonUniqueBuffCount(model.Owner.Creature)
         ),
     ];
@@ -39,9 +37,9 @@ public class ShionDragonRoar() : ShionTheBruiserCard(1,
     {
         var cardSource = this;
         await CreatureCmd.TriggerAnim(cardSource.Owner.Creature, "Cast", cardSource.Owner.Character.CastAnimDelay);
-        foreach (Creature hittableEnemy in (IEnumerable<Creature>) cardSource.CombatState.HittableEnemies)
+        foreach (Creature hittableEnemy in cardSource.CombatState?.HittableEnemies ?? [])
         {
-            await PowerCmd.Apply<DragonRoar>(choiceContext, hittableEnemy, cardSource.DynamicVars["DebuffAmount"].BaseValue, cardSource.Owner.Creature, (CardModel) cardSource);
+            await PowerCmd.Apply<DragonRoar>(choiceContext, hittableEnemy, cardSource.DynamicVars["DebuffAmount"].BaseValue, cardSource.Owner.Creature, cardSource);
         }
     }
 

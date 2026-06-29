@@ -3,7 +3,6 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
-using ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -22,7 +21,7 @@ public class ShionDefend() : ShionTheBruiserCard(1,
         CardPlay play)
     {
         ShionDefend shionDefend = this;
-        Decimal num = await CreatureCmd.GainBlock(shionDefend.Owner.Creature, shionDefend.DynamicVars.Block, play);
+        await CreatureCmd.GainBlock(shionDefend.Owner.Creature, shionDefend.DynamicVars.Block, play);
     }
 
     protected override void OnUpgrade()

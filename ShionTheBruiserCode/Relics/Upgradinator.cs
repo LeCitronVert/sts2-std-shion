@@ -2,12 +2,10 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Relics;
-using MegaCrit.Sts2.Core.Models;
-using ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
-public class Upgradinator() : ShionTheBruiserRelic
+public class Upgradinator : ShionTheBruiserRelic
 {
     public override RelicRarity Rarity =>
         RelicRarity.Starter;
@@ -18,7 +16,7 @@ public class Upgradinator() : ShionTheBruiserRelic
         ICombatState combatState)
     {
         var relic = this;
-        if (!participants.Contains<Creature>(relic.Owner.Creature) || relic.Owner.PlayerCombatState.TurnNumber > 1)
+        if (!participants.Contains(relic.Owner.Creature) || relic.Owner.PlayerCombatState is { TurnNumber: > 1 })
             return;
         
         relic.Flash();

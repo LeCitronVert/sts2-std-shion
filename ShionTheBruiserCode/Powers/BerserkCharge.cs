@@ -3,13 +3,11 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
-using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
-public class BerserkCharge() : ShionTheBruiserPower
+public class BerserkCharge : ShionTheBruiserPower
 {
     public override PowerType Type =>
         PowerType.Buff;
@@ -27,6 +25,6 @@ public class BerserkCharge() : ShionTheBruiserPower
         ;
         var vigorAmount = Math.Round(missingHpRatio * 10 * this.Amount);
         if (vigorAmount <= 0) return;
-        await PowerCmd.Apply<VigorPower>(new ThrowingPlayerChoiceContext(), power.Owner, (decimal) vigorAmount, power.Owner, (CardModel) null!);
+        await PowerCmd.Apply<VigorPower>(new ThrowingPlayerChoiceContext(), power.Owner, (decimal) vigorAmount, power.Owner, null!);
     }
 }

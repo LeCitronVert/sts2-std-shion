@@ -3,7 +3,6 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
@@ -24,7 +23,7 @@ public class ShionFlowCharge() : ShionTheBruiserCard(1,
         var card = this;
         var ownerHasPowerAlready = card.Owner.HasPower<FlowCharge>();
         
-        var power = PowerCmd.Apply<FlowCharge>(
+        await PowerCmd.Apply<FlowCharge>(
             choiceContext,
             card.Owner.Creature,
             card.DynamicVars["FlowCharge"].BaseValue,

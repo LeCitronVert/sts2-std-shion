@@ -7,7 +7,7 @@ using MegaCrit.Sts2.Core.Models;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
-public class ShieldBreaker() : ShionTheBruiserPower
+public class ShieldBreaker : ShionTheBruiserPower
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;

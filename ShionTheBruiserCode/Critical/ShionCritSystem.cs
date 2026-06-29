@@ -8,7 +8,6 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Critical;
 /// <summary>
 /// Central state manager for Shion's Critical Damage mechanic.
 /// All state is static because STS2's game logic is single-threaded.
-/// The <see cref="Relics.ShionCritTrackerRelic"/> drives this class via combat hooks.
 /// </summary>
 public static class ShionCritSystem
 {

@@ -1,13 +1,10 @@
-using BaseLib.Abstracts;
 using BaseLib.Extensions;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Critical;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -34,11 +31,11 @@ public class ShionAnOpening() : CritContributorCard(1,
             card.Owner.Creature,
             card
         );
-        CardModel card2 = PileType
-            .Draw
-            .GetPile(card.Owner)
-            .Cards
-            .Where<CardModel>((Func<CardModel, bool>) (c => c.Type == CardType.Attack && !c.Keywords.Contains(CardKeyword.Unplayable))).ToList<CardModel>().StableShuffle<CardModel>(card.Owner.RunState.Rng.Shuffle).FirstOrDefault<CardModel>() ?? PileType.Draw.GetPile(card.Owner).Cards.Where<CardModel>((Func<CardModel, bool>) (c => c.Type == CardType.Attack)).ToList<CardModel>().StableShuffle<CardModel>(card.Owner.RunState.Rng.Shuffle).FirstOrDefault<CardModel>()
+        CardModel? card2 = (PileType
+                .Draw
+                .GetPile(card.Owner)
+                .Cards
+                .Where(c => c.Type == CardType.Attack && !c.Keywords.Contains(CardKeyword.Unplayable)).ToList().StableShuffle(card.Owner.RunState.Rng.Shuffle).FirstOrDefault() ?? PileType.Draw.GetPile(card.Owner).Cards.Where(c => c.Type == CardType.Attack).ToList().StableShuffle(card.Owner.RunState.Rng.Shuffle).FirstOrDefault()) ?? null
         ;
         if (card2 == null)
             return;

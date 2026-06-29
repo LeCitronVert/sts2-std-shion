@@ -20,7 +20,7 @@ public class ShionStrike() : ShionTheBruiserCard(1,
         CardPlay play)
     {
         ShionStrike card = this;
-        ArgumentNullException.ThrowIfNull(play.Target, "play.Target");
+        ArgumentNullException.ThrowIfNull(play.Target);
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .FromCard(card)
             .Targeting(play.Target)

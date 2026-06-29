@@ -6,7 +6,6 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
-using ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -24,7 +23,7 @@ public class ShionSkybreakerDance() : ShionTheBruiserCard(2,
         CardPlay play)
     {
         var card = this;
-        ArgumentNullException.ThrowIfNull(play.Target, "play.Target");
+        ArgumentNullException.ThrowIfNull(play.Target);
         var newDamage = DynamicVars.Damage;
 
         newDamage.BaseValue = Owner.Creature.Powers.FirstOrDefault(p => p is VigorPower)?.Amount ?? 0;

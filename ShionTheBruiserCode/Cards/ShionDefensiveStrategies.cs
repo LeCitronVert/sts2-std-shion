@@ -4,7 +4,6 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
-using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -28,8 +27,8 @@ public class ShionDefensiveStrategies() : ShionTheBruiserCard(2,
         CardPlay play)
     {
         var card = this;
-        
-        var power = PowerCmd.Apply<DefensiveStrategies>(
+
+        await PowerCmd.Apply<DefensiveStrategies>(
             choiceContext,
             card.Owner.Creature,
             card.DynamicVars["DefensiveStrategies"].BaseValue,

@@ -1,6 +1,5 @@
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -34,7 +33,7 @@ public abstract class CritContributorRelic : CustomRelicModel
     /// </summary>
     public override async Task BeforeCombatStart()
     {
-        if (Owner?.Creature != null && !Owner.Creature.HasPower<ShionCritTrackerPower>())
+        if (!Owner.Creature.HasPower<ShionCritTrackerPower>())
         {
             await PowerCmd.Apply<ShionCritTrackerPower>(
                 new ThrowingPlayerChoiceContext(),

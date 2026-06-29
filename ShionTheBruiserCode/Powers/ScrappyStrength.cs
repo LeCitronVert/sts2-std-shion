@@ -4,4 +4,4 @@ using ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
-public class ScrappyStrength() : CustomTemporaryPowerModelWrapper<BattleRags, StrengthPower> {}
+public class ScrappyStrength : CustomTemporaryPowerModelWrapper<BattleRags, StrengthPower> {}
