@@ -4,8 +4,10 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -21,6 +23,10 @@ public class StartingGate() : ShionTheBruiserPower
     
     public int AmountThisTurn = 0;
     public bool Initialized;
+    
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(ShionCardKeywords.NonNative),
+    ];
     
     public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {

@@ -46,5 +46,8 @@
   "SHIONTHEBRUISER-GUTSY.title": "Gutsy",
   "SHIONTHEBRUISER-STARTING_GATE.description": "The first non-native card you play each turn cost one energy less.",
   "SHIONTHEBRUISER-STARTING_GATE.smartDescription": "The first {Amount:plural:[gold]Non-Native[/gold] card|[blue]{}[/blue] [gold]Non-Native[/gold] cards} you play each turn cost one energy less.",
-  "SHIONTHEBRUISER-STARTING_GATE.title": "Starting Gate"
+  "SHIONTHEBRUISER-STARTING_GATE.title": "Starting Gate",
+  "SHIONTHEBRUISER-DRAGONS_MIGHT.description": "Strikes deal more damage based on your amount of unique buffs.",
+  "SHIONTHEBRUISER-DRAGONS_MIGHT.smartDescription": "Your Strikes deal [blue]{Amount}[/blue] more damage for each unique buff you have.",
+  "SHIONTHEBRUISER-DRAGONS_MIGHT.title": "Dragon's Might"
 }

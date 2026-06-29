@@ -18,7 +18,7 @@ public class ShionUma() : ShionTheBruiserCard(2,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CalculationBaseVar(0),
         new CalculationExtraVar(3),
-        new CalculatedBlockVar(ValueProp.Move).WithMultiplier((card, _) => CombatManager.Instance.History.Entries.OfType<CardPlayFinishedEntry>().Count((Func<CardPlayFinishedEntry, bool>) (e => e.CardPlay.Card.Owner == card.Owner && ShionMechanicsHelper.IsCardNonNativeToShion(card))))
+        new CalculatedBlockVar(ValueProp.Move).WithMultiplier((card, _) => CombatManager.Instance.History.Entries.OfType<CardPlayFinishedEntry>().Count((Func<CardPlayFinishedEntry, bool>) (e => e.CardPlay.Card.Owner == card.Owner && !ShionMechanicsHelper.IsCardNativeToCharacter(e.CardPlay.Card, e.CardPlay.Card.Owner.Character))))
     ];
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [

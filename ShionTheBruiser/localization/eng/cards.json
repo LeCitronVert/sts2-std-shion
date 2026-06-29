@@ -97,8 +97,10 @@
   "SHIONTHEBRUISER-SHION_GUTSY.title": "Gutsy",
   "SHIONTHEBRUISER-SHION_OFF_ROCKERS.description": "Transform up to {Cards:diff()} cards in your Draw Pile to random Colorless cards.",
   "SHIONTHEBRUISER-SHION_OFF_ROCKERS.title": "Off-Rockers",
-  "SHIONTHEBRUISER-SHION_UMA.description": "Gain 3 block for each [gold]Non-Native[/gold] card you've played this fight.\n",
+  "SHIONTHEBRUISER-SHION_UMA.description": "Gain {CalculationExtra::diff()} block for each [gold]Non-Native[/gold] card you've played this fight.{InCombat:\n(Gain {CalculatedBlock:diff()} [gold]Block[/gold])|}",
   "SHIONTHEBRUISER-SHION_UMA.title": "U=ma²",
-  "SHIONTHEBRUISER-SHION_STARTING_GATE.description": "The first {StartingGate:plural:[gold]Non-Native[/gold] card|[blue]{} [gold]Non-Native[/gold] cards[/blue] turns}",
-  "SHIONTHEBRUISER-SHION_STARTING_GATE.title": "Starting Gate"
+  "SHIONTHEBRUISER-SHION_STARTING_GATE.description": "The first {StartingGate:plural:[gold]Non-Native[/gold] card|[blue]{} [gold]Non-Native[/gold] cards[/blue]} you play each turn cost one energy less.",
+  "SHIONTHEBRUISER-SHION_STARTING_GATE.title": "Starting Gate",
+  "SHIONTHEBRUISER-SHION_DRAGONS_MIGHT.description": "Your Strikes deal [blue]{DragonsMight}[/blue] damage more per unique buff you have.",
+  "SHIONTHEBRUISER-SHION_DRAGONS_MIGHT.title": "Dragon's Might"
 }

@@ -1,8 +1,10 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
@@ -13,6 +15,10 @@ public class ShionStartingGate() : ShionTheBruiserCard(1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<StartingGate>(1),
+    ];
+    
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(ShionCardKeywords.NonNative),
     ];
 
     protected override async Task OnPlay(
