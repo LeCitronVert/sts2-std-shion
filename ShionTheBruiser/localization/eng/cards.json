@@ -89,12 +89,14 @@
   "SHIONTHEBRUISER-SHION_MIGHTY_DEFEND.title": "Mighty Defend",
   "SHIONTHEBRUISER-SHION_DRAGON_SMASH.description": "Deal {CalculatedDamage:diff()} damage X times.\nDeals additional damage equivalent to your amount of unique buffs.\n[gold]Damage Cap[/gold] {DamageCap}.",
   "SHIONTHEBRUISER-SHION_DRAGON_SMASH.title": "Dragon Smash",
-  "SHIONTHEBRUISER-SHION_COMPETITIVE_SPIRIT.description": "When ANYONE else gains a buff, gain 1 Strength.\nCan be triggered up to {CompetitiveSpirit} times per turn.\n\n",
+  "SHIONTHEBRUISER-SHION_COMPETITIVE_SPIRIT.description": "When ANYONE else gains a buff, gain 1 Strength.\nCan be triggered up to {CompetitiveSpirit} times per turn.",
   "SHIONTHEBRUISER-SHION_COMPETITIVE_SPIRIT.title": "Competitive Spirit",
   "SHIONTHEBRUISER-SHION_EEPY.description": "Heal {Heal:diff()} HP.\nEnd your turn.",
   "SHIONTHEBRUISER-SHION_EEPY.title": "Eepy",
   "SHIONTHEBRUISER-SHION_GUTSY.description": "Gain Vigor equivalent to {Gutsy}% of unblocked attack damage received.",
   "SHIONTHEBRUISER-SHION_GUTSY.title": "Gutsy",
   "SHIONTHEBRUISER-SHION_OFF_ROCKERS.description": "Transform up to {Cards:diff()} cards in your Draw Pile to random Colorless cards.",
-  "SHIONTHEBRUISER-SHION_OFF_ROCKERS.title": "Off-Rockers"
+  "SHIONTHEBRUISER-SHION_OFF_ROCKERS.title": "Off-Rockers",
+  "SHIONTHEBRUISER-SHION_UMA.description": "Gain 3 block for each [gold]non-native[/gold] card you've played this fight.\n",
+  "SHIONTHEBRUISER-SHION_UMA.title": "U=ma²"
 }

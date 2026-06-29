@@ -34,7 +34,7 @@ public class Gutsy : ShionTheBruiserPower
         if (target != power.Owner || !props.IsPoweredAttack() || amountTaken <= 0)
             return;
 
-        var vigorAmount = (int) (Amount * 0.01);
+        var vigorAmount = (int)(amountTaken * Amount / 100m);
         await PowerCmd.Apply<VigorPower>(
             choiceContext,
             Owner,

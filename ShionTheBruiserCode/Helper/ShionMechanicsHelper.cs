@@ -1,6 +1,8 @@
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Character;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Helper;
 
@@ -20,5 +22,10 @@ public static class ShionMechanicsHelper
     public static int GetStrengthAmount(Creature creature)
     {
         return creature.GetPower<StrengthPower>()?.Amount ?? 0;
+    }
+    
+    public static bool IsCardNonNativeToShion(CardModel card)
+    {
+        return card.Pool.Id != ModelDb.CardPool<ShionTheBruiserCardPool>().Id;
     }
 }

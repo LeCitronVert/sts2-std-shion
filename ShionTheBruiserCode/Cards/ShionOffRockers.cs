@@ -36,7 +36,7 @@ public class ShionOffRockers() : ShionTheBruiserCard(1,
             choiceContext,
             PileType.Draw.GetPile(card.Owner),
             card.Owner,
-            new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, DynamicVars.Cards.IntValue)
+            new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 0, DynamicVars.Cards.IntValue)
         )).ToList<CardModel>();
 
         foreach (CardModel original in selection)

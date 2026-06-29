@@ -43,7 +43,7 @@ public class CompetitiveSpirit() : ShionTheBruiserPower
     public async void GainStrengthIfOtherBuff()
     {
         if (AmountThisTurn <= 0) return;
-        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), Owner, AmountThisTurn, Owner, null!);
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), Owner, 1, Owner, null!);
         AmountThisTurn--;
         this.Flash();
     }
