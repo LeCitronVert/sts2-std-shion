@@ -40,5 +40,8 @@
   "SHIONTHEBRUISER-DARK_ARTS.title": "Dark Arts",
   "SHIONTHEBRUISER-COMPETITIVE_SPIRIT.description": "Gain 1 Strength when ANYONE else gains a buff.",
   "SHIONTHEBRUISER-COMPETITIVE_SPIRIT.smartDescription": "Gain 1 Strength when ANYONE else gains a buff, up to {Amount:plural:once|[blue]{}[/blue] times} per turn.",
-  "SHIONTHEBRUISER-COMPETITIVE_SPIRIT.title": "Competitive Spirit"
+  "SHIONTHEBRUISER-COMPETITIVE_SPIRIT.title": "Competitive Spirit",
+  "SHIONTHEBRUISER-GUTSY.description": "Gain Vigor when receiving unblocked attack damage.",
+  "SHIONTHEBRUISER-GUTSY.smartDescription": "Gain Vigor equivalent to {Amount}% of unblocked attack damage received.",
+  "SHIONTHEBRUISER-GUTSY.title": "Gutsy"
 }
