@@ -31,5 +31,8 @@
   "SHIONTHEBRUISER-BREAK_ME_IF_YOU_CAN.title": "Break Me If You Can",
   "SHIONTHEBRUISER-CRITICAL_ATTACK_NEXT.description": "Your next Attack is guaranteed to be a [gold]Critical Attack[/gold].",
   "SHIONTHEBRUISER-CRITICAL_ATTACK_NEXT.smartDescription": "Your next {Amount:plural:Attack is|[blue]{}[/blue] Attacks are} guaranteed to be {Amount:plural:a [gold]Critical Attack[/gold]|[gold]Critical Attacks[/gold]}.",
-  "SHIONTHEBRUISER-CRITICAL_ATTACK_NEXT.title": "Critical Attack Next"
+  "SHIONTHEBRUISER-CRITICAL_ATTACK_NEXT.title": "Critical Attack Next",
+  "SHIONTHEBRUISER-DRAGONSONG.description": "Reduces HP loss for each unique buff you have.",
+  "SHIONTHEBRUISER-DRAGONSONG.smartDescription": "Reduces HP loss for each unique buff you have, up to a maximum reduction of {Amount}.",
+  "SHIONTHEBRUISER-DRAGONSONG.title": "Dragonsong",
 }
