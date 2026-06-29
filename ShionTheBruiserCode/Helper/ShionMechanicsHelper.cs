@@ -16,4 +16,9 @@ public static class ShionMechanicsHelper
     {
         return creature.HasPower<VigorPower>();
     }
+    
+    public static int GetStrengthAmount(Creature creature)
+    {
+        return creature.GetPower<StrengthPower>()?.Amount ?? 0;
+    }
 }

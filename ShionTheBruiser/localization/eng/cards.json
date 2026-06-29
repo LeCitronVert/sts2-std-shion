@@ -84,5 +84,7 @@
   "SHIONTHEBRUISER-SHION_DRAGONSONG.description": "Reduces HP loss for each unique buff you have, up to a maximum reduction of {Dragonsong}.",
   "SHIONTHEBRUISER-SHION_DRAGONSONG.title": "Dragonsong",
   "SHIONTHEBRUISER-SHION_DARK_ARTS.description": "Lose {HpLoss:diff()} HP.\nThe next {DarkArts:plural:card|[blue]{}[/blue] cards} you play this turn are played an additional time.",
-  "SHIONTHEBRUISER-SHION_DARK_ARTS.title": "Dark Arts"
+  "SHIONTHEBRUISER-SHION_DARK_ARTS.title": "Dark Arts",
+  "SHIONTHEBRUISER-SHION_MIGHTY_DEFEND.description": "Gain {InCombat:{CalculatedBlock:diff()}|{CalculationBase:diff()}} [gold]Block[/gold].\nAdds additional Block equal to your Strength.",
+  "SHIONTHEBRUISER-SHION_MIGHTY_DEFEND.title": "Mighty Defend"
 }
