@@ -64,5 +64,8 @@
   "SHIONTHEBRUISER-LURKING_INTENSITY.title": "Lurking Intensity",
   "SHIONTHEBRUISER-BERSERK_FORM.description": "Attacks heal you for a portion of the damage dealt, but you lose Strength at the start of each turn.",
   "SHIONTHEBRUISER-BERSERK_FORM.smartDescription": "Attacks heal you for [blue]{Amount}[/blue]% of the damage dealt, but you lose [blue]{StrengthLoss}[/blue] Strength at the start of each turn.",
-  "SHIONTHEBRUISER-BERSERK_FORM.title": "Berserk Form"
+  "SHIONTHEBRUISER-BERSERK_FORM.title": "Berserk Form",
+  "SHIONTHEBRUISER-MONSTERMANCY.description": "Copy enemy actions at the beginning of your turn.",
+  "SHIONTHEBRUISER-MONSTERMANCY.smartDescription": "Copy enemy actions at the beginning of your turn, creating a card in your hand for each enemy action copied.\nEnemy actions like Summoning monsters or Fleeing battle can't be copied. If the enemy is Stunned, you can't copy the action they would have taken this turn.",
+  "SHIONTHEBRUISER-MONSTERMANCY.title": "Monstermancy"
 }
