@@ -1,13 +1,15 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 public class ShionBattleTempo() : ShionTheBruiserCard(1,
-    CardType.Attack, CardRarity.Basic,
+    CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [];

@@ -33,7 +33,7 @@ public class ShionExtremeSpeed() : ShionTheBruiserCard(0,
         
         await PowerCmd.Apply<SlowPower>(
             choiceContext,
-            card.Owner.Creature,
+            play.Target,
             1M,
             play.Target,
             card
