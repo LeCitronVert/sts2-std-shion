@@ -17,7 +17,6 @@ public class ShionDragonRoar() : ShionTheBruiserCard(1,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
-        // Damage scales with missing hp, up until the maximum which is stored in ExtraDamageVar
         new CalculatedVar("DebuffAmount").WithMultiplier((model, _) => 
             ShionMechanicsHelper.GetDragonUniqueBuffCount(model.Owner.Creature)
         ),
