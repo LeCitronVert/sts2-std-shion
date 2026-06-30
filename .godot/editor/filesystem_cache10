@@ -5,7 +5,7 @@ ShionTheBruiser.json::JSON::-1::1782762435::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1782813923
+::res://bin/ExportRelease/net9.0/publish/::1782814551
 ShionTheBruiser.deps.json::JSON::-1::1782775277::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiser/::1782158780
 mod_image.png::CompressedTexture2D::8120906206059877335::1781940056::1782158780::1::::<><><>0<>0<>981796944b721321e967a9a00a87ee4e<>res://.godot/imported/mod_image.png-42cee5b6b030b953b3c956b7ca85a956.ctex::
@@ -270,8 +270,8 @@ ShionStrike.cs::CSharpScript::8408367939145974781::1782761532::0::1::::<><><>0<>
 ShionTheBruiserCard.cs::CSharpScript::6999578716303428152::1782379788::0::1::::<><><>0<>0<><>::
 ShionTouchOfForesight.cs::CSharpScript::8858960271852629060::1782761509::0::1::::<><><>0<>0<><>::
 ShionUma.cs::CSharpScript::7161926289584648397::1782775622::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Character/::1782813468
-ShionTheBruiser.cs::CSharpScript::5230343434016276755::1782813468::0::1::::<><><>0<>0<><>::
+::res://ShionTheBruiserCode/Character/::1782814549
+ShionTheBruiser.cs::CSharpScript::5230343434016276755::1782814549::0::1::::<><><>0<>0<><>::
 ShionTheBruiserCardPool.cs::CSharpScript::5768901081701376971::1782148659::0::1::::<><><>0<>0<><>::
 ShionTheBruiserPotionPool.cs::CSharpScript::8942352038865602766::1781940058::0::1::::<><><>0<>0<><>::
 ShionTheBruiserRelicPool.cs::CSharpScript::7291834671674422082::1781940056::0::1::::<><><>0<>0<><>::
@@ -291,7 +291,7 @@ ShionHooksHelper.cs::CSharpScript::7312245568866882451::1782410494::0::1::::<><>
 ShionMechanicsHelper.cs::CSharpScript::2990478697957247076::1782774326::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiserCode/Potions/::1782158780
 ShionTheBruiserPotion.cs::CSharpScript::9201725349623556408::1781940056::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Powers/::1782813922
+::res://ShionTheBruiserCode/Powers/::1782814463
 AnOpening.cs::CSharpScript::1437147261964541114::1782761225::0::1::::<><><>0<>0<><>::
 BerserkCharge.cs::CSharpScript::8895171129478005530::1782761216::0::1::::<><><>0<>0<><>::
 BerserkDrive.cs::CSharpScript::4397575169758918708::1782813226::0::1::::<><><>0<>0<><>::
@@ -310,7 +310,7 @@ FellDragon.cs::CSharpScript::2463300243953118873::1782761078::0::1::::<><><>0<>0
 FlowCharge.cs::CSharpScript::4006183358672310548::1782761068::0::1::::<><><>0<>0<><>::
 Guard.cs::CSharpScript::2780377752628514470::1782761061::0::1::::<><><>0<>0<><>::
 Gutsy.cs::CSharpScript::2855502864341694401::1782772122::0::1::::<><><>0<>0<><>::
-LurkingIntensity.cs::CSharpScript::767240719531401790::1782779904::0::1::::<><><>0<>0<><>::
+LurkingIntensity.cs::CSharpScript::767240719531401790::1782814463::0::1::::<><><>0<>0<><>::
 MightyGuard.cs::CSharpScript::5570312348288471074::1782777957::0::1::::<><><>0<>0<><>::
 ScrappyDexterity.cs::CSharpScript::6072365754661039199::1782761059::0::1::::<><><>0<>0<><>::
 ScrappyStrength.cs::CSharpScript::747979528289590123::1782761054::0::1::::<><><>0<>0<><>::

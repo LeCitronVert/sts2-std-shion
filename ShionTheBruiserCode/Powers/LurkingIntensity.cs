@@ -6,11 +6,10 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
-using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
-public class LurkingIntensity() : ShionTheBruiserPower
+public class LurkingIntensity : ShionTheBruiserPower
 {
     public override PowerType Type =>
         PowerType.Buff;
@@ -26,13 +25,6 @@ public class LurkingIntensity() : ShionTheBruiserPower
         
         var colorlessOptions = ModelDb.CardPool<ColorlessCardPool>()
             .GetUnlockedCards(player.UnlockState, player.RunState.CardMultiplayerConstraint).ToList();
-
-        List<CardModel> selection = (await CardSelectCmd.FromCombatPile(
-            choiceContext,
-            PileType.Draw.GetPile(player),
-            player,
-            new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 0, DynamicVars.Cards.IntValue)
-        )).ToList();
         
         foreach (CardModel original in (await CardSelectCmd.FromHand(choiceContext, player, new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, source.Amount), null, source)).ToList())
         {
