@@ -32,9 +32,9 @@ public class LurkingIntensity() : ShionTheBruiserPower
             PileType.Draw.GetPile(player),
             player,
             new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 0, DynamicVars.Cards.IntValue)
-        )).ToList<CardModel>();
+        )).ToList();
         
-        foreach (CardModel original in (await CardSelectCmd.FromHand(choiceContext, player, new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, source.Amount), (Func<CardModel, bool>) null, (AbstractModel) source)).ToList<CardModel>())
+        foreach (CardModel original in (await CardSelectCmd.FromHand(choiceContext, player, new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, source.Amount), null, source)).ToList())
         {
             await CardCmd.Transform(
                 new CardTransformation(original, colorlessOptions).Yield(),

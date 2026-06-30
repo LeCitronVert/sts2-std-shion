@@ -12,7 +12,7 @@ public class ShionBerserkDrive() : ShionTheBruiserCard(2,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<BerserkDrive>(20),
+        new PowerVar<BerserkDrive>(40),
     ];
 
     protected override async Task OnPlay(
@@ -31,6 +31,6 @@ public class ShionBerserkDrive() : ShionTheBruiserCard(2,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["BerserkDrive"].UpgradeValueBy(10);
+        DynamicVars["BerserkDrive"].UpgradeValueBy(20);
     }
 }

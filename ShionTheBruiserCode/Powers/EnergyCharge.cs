@@ -29,7 +29,7 @@ public class EnergyCharge : ShionTheBruiserPower
             || cardSource == null 
             || !cardSource.Tags.Contains(ShionCardTags.Energy) 
             || dealer != this.Owner 
-            && cardSource.Owner.Creature != this.Owner ? 0M : amount
+            && cardSource.Owner.Creature != this.Owner ? 0M : Amount
         ;
     }
 

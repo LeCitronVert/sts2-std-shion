@@ -21,12 +21,9 @@ public class BerserkDrive() : ShionTheBruiserPower
         Creature? dealer,
         CardModel? cardSource)
     {
-        return 
-            !props.IsPoweredAttack() 
-            || cardSource == null 
-            || dealer != this.Owner 
-            && cardSource.Owner.Creature != this.Owner ? 1 : GetBerserkDriveMultiplier(Owner)
-        ;
+        if (null == dealer) return 1M;
+        
+        return dealer != this.Owner && !this.Owner.Pets.Contains<Creature>(dealer) || !props.IsPoweredAttack() || cardSource == null ? 1M : GetBerserkDriveMultiplier(Owner);
     }
     
     private decimal GetBerserkDriveMultiplier(Creature creature)
@@ -35,6 +32,6 @@ public class BerserkDrive() : ShionTheBruiserPower
         var missingHpRatio = (creature.MaxHp - creature.CurrentHp)
                              / (float) creature.MaxHp;
 
-        return (decimal) (missingHpRatio * Amount) * 0.01M;
+        return ((decimal) (missingHpRatio * (float) (Amount * 0.01M))) + 1;
     }
 }

@@ -27,7 +27,7 @@ public class DragonsMight : ShionTheBruiserPower
             || cardSource == null 
             || !cardSource.Tags.Contains(CardTag.Strike) 
             || dealer != this.Owner 
-            && cardSource.Owner.Creature != this.Owner ? 0M : amount * ShionMechanicsHelper.GetDragonUniqueBuffCount(Owner)
+            && cardSource.Owner.Creature != this.Owner ? 0M : Amount * ShionMechanicsHelper.GetDragonUniqueBuffCount(Owner)
         ;
     }
 }
