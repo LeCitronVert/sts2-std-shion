@@ -52,5 +52,8 @@
   "SHIONTHEBRUISER-DRAGONS_MIGHT.title": "Dragon's Might",
   "SHIONTHEBRUISER-ENERGY_CHARGE.description": "This turn, your Energy Attacks deal more damage.",
   "SHIONTHEBRUISER-ENERGY_CHARGE.smartDescription": "This turn, your Energy Attacks deal [blue]{Amount}[/blue] more damage.",
-  "SHIONTHEBRUISER-ENERGY_CHARGE.title": "Energy Charge"
+  "SHIONTHEBRUISER-ENERGY_CHARGE.title": "Energy Charge",
+  "SHIONTHEBRUISER-MIGHTY_GUARD.description": "Reduces attack damage taken by 80%.",
+  "SHIONTHEBRUISER-MIGHTY_GUARD.smartDescription": "Reduces attack damage taken by 80% {Amount:plural:until the next turn|for [blue]{}[/blue] turns}.",
+  "SHIONTHEBRUISER-MIGHTY_GUARD.title": "Mighty Guard"
 }
