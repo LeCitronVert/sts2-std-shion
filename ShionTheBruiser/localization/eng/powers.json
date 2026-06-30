@@ -67,5 +67,8 @@
   "SHIONTHEBRUISER-BERSERK_FORM.title": "Berserk Form",
   "SHIONTHEBRUISER-MONSTERMANCY.description": "Copy enemy actions at the beginning of your turn.",
   "SHIONTHEBRUISER-MONSTERMANCY.smartDescription": "Copy enemy actions at the beginning of your turn, creating a card in your hand for each enemy action copied.\nEnemy actions like Summoning monsters or Fleeing battle can't be copied. If the enemy is Stunned, you can't copy the action they would have taken this turn.",
-  "SHIONTHEBRUISER-MONSTERMANCY.title": "Monstermancy"
+  "SHIONTHEBRUISER-MONSTERMANCY.title": "Monstermancy",
+  "SHIONTHEBRUISER-BATTLE_TEMPO.description": "Whenever you play a different type of card than the previous one you've played this turn, gain Battle Rags' bonus for that type.",
+  "SHIONTHEBRUISER-BATTLE_TEMPO.smartDescription": "Whenever you play a different type of card than the previous one you've played this turn, gain Battle Rags' bonus for that type {Amount:plural:once|for [blue]{}[/blue] times}.",
+  "SHIONTHEBRUISER-BATTLE_TEMPO.title": "Battle Tempo"
 }
