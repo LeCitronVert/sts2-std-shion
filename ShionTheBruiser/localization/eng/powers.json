@@ -49,5 +49,8 @@
   "SHIONTHEBRUISER-STARTING_GATE.title": "Starting Gate",
   "SHIONTHEBRUISER-DRAGONS_MIGHT.description": "Strikes deal more damage based on your amount of unique buffs.",
   "SHIONTHEBRUISER-DRAGONS_MIGHT.smartDescription": "Your Strikes deal [blue]{Amount}[/blue] more damage for each unique buff you have.",
-  "SHIONTHEBRUISER-DRAGONS_MIGHT.title": "Dragon's Might"
+  "SHIONTHEBRUISER-DRAGONS_MIGHT.title": "Dragon's Might",
+  "SHIONTHEBRUISER-ENERGY_CHARGE.description": "This turn, your Energy Attacks deal more damage.",
+  "SHIONTHEBRUISER-ENERGY_CHARGE.smartDescription": "This turn, your Energy Attacks deal [blue]{Amount}[/blue] more damage.",
+  "SHIONTHEBRUISER-ENERGY_CHARGE.title": "Energy Charge"
 }

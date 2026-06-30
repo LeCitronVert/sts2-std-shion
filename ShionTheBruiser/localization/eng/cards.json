@@ -102,5 +102,7 @@
   "SHIONTHEBRUISER-SHION_STARTING_GATE.description": "The first {StartingGate:plural:[gold]Non-Native[/gold] card|[blue]{} [gold]Non-Native[/gold] cards[/blue]} you play each turn cost one energy less.",
   "SHIONTHEBRUISER-SHION_STARTING_GATE.title": "Starting Gate",
   "SHIONTHEBRUISER-SHION_DRAGONS_MIGHT.description": "Your Strikes deal [blue]{DragonsMight}[/blue] damage more per unique buff you have.",
-  "SHIONTHEBRUISER-SHION_DRAGONS_MIGHT.title": "Dragon's Might"
+  "SHIONTHEBRUISER-SHION_DRAGONS_MIGHT.title": "Dragon's Might",
+  "SHIONTHEBRUISER-SHION_ENERGY_CHARGE.description": "This turn, your Energy Attacks deal [blue]{EnergyCharge}[/blue] more damage.",
+  "SHIONTHEBRUISER-SHION_ENERGY_CHARGE.title": "Energy Charge"
 }
