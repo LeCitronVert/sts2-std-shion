@@ -70,5 +70,8 @@
   "SHIONTHEBRUISER-MONSTERMANCY.title": "Monstermancy",
   "SHIONTHEBRUISER-BATTLE_TEMPO.description": "Whenever you play a different type of card than the previous one you've played this turn, gain Battle Rags' bonus for that type.",
   "SHIONTHEBRUISER-BATTLE_TEMPO.smartDescription": "Whenever you play a different type of card than the previous one you've played this turn, gain Battle Rags' bonus for that type {Amount:plural:once|for [blue]{}[/blue] times}.",
-  "SHIONTHEBRUISER-BATTLE_TEMPO.title": "Battle Tempo"
+  "SHIONTHEBRUISER-BATTLE_TEMPO.title": "Battle Tempo",
+  "SHIONTHEBRUISER-ENDURE.description": "When you take fatal damage, heal for a portion of your max HP but lose Strength and Dexterity instead.",
+  "SHIONTHEBRUISER-ENDURE.smartDescription": "When you take fatal damage, heal for {Heal}% of your Max HP, but lose {DebuffAmount} Strength and Dexterity instead. Can trigger {Amount:plural:once|[blue]{}[/blue] times}.",
+  "SHIONTHEBRUISER-ENDURE.title": "Endure"
 }
