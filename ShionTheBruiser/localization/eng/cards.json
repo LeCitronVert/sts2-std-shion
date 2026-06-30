@@ -120,5 +120,7 @@
   "SHIONTHEBRUISER-SHION_BATTLE_TEMPO.description": "Whenever you play a different type of card than the previous one you've played this turn, gain Battle Rags' bonus for that type again.",
   "SHIONTHEBRUISER-SHION_BATTLE_TEMPO.title": "Battle Tempo",
   "SHIONTHEBRUISER-SHION_ENDURE.description": "Gain [blue]{Endure}[/blue] Endure.",
-  "SHIONTHEBRUISER-SHION_ENDURE.title": "Endure"
+  "SHIONTHEBRUISER-SHION_ENDURE.title": "Endure",
+  "SHIONTHEBRUISER-SHION_EXTREME_SPEED.description": "Apply 1 Slow on the enemy.",
+  "SHIONTHEBRUISER-SHION_EXTREME_SPEED.title": "Extreme Speed"
 }

@@ -2,5 +2,7 @@
   "SHIONTHEBRUISER-DEFENSIVE.description": "Can only be played if you have played no Attacks this turn, and will stop you from doing so for the rest of it.",
   "SHIONTHEBRUISER-DEFENSIVE.title": "Defensive",
   "SHIONTHEBRUISER-NONNATIVE.description": "Cards from other characters, or colourless cards.",
-  "SHIONTHEBRUISER-NONNATIVE.title": "Non-Native"
+  "SHIONTHEBRUISER-NONNATIVE.title": "Non-Native",
+  "SHIONTHEBRUISER-STALE.description": "Doesn't offer any advantages when upgraded.",
+  "SHIONTHEBRUISER-STALE.title": "Stale"
 }
