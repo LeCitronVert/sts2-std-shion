@@ -20,6 +20,8 @@ public class ShionMonsterSpell() : ShionTheBruiserCard(2,
     private List<(Type PowerType, int Amount)> _powersOnSelf = [];
     private List<(Type PowerType, int Amount)> _powersOnTarget = [];
     
+    public override bool CanBeGeneratedInCombat => false;
+    
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
         CardKeyword.Ethereal,
         CardKeyword.Exhaust,
