@@ -55,5 +55,8 @@
   "SHIONTHEBRUISER-ENERGY_CHARGE.title": "Energy Charge",
   "SHIONTHEBRUISER-MIGHTY_GUARD.description": "Reduces attack damage taken by 80%.",
   "SHIONTHEBRUISER-MIGHTY_GUARD.smartDescription": "Reduces attack damage taken by 80% {Amount:plural:until the next turn|for [blue]{}[/blue] turns}.",
-  "SHIONTHEBRUISER-MIGHTY_GUARD.title": "Mighty Guard"
+  "SHIONTHEBRUISER-MIGHTY_GUARD.title": "Mighty Guard",
+  "SHIONTHEBRUISER-BERSERK_DRIVE.description": "Attack damage is increased based on your missing HP.",
+  "SHIONTHEBRUISER-BERSERK_DRIVE.smartDescription": "Attack damage is increased based on your missing HP, up to a maximum of [blue]{Amount}[/blue]%.",
+  "SHIONTHEBRUISER-BERSERK_DRIVE.title": "Berserk Drive"
 }
