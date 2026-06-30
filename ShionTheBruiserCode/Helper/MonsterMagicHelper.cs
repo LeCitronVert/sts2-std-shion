@@ -16,9 +16,7 @@ public class MonsterMagicHelper(Creature monster)
     public bool HasBlock;
     public int BlockAmount;
 
-    // Powers applied to self (the enemy who acted)
-    public List<(PowerModel Power, int Amount)> PowersOnSelf = [];
-
-    // Powers/debuffs applied to others (usually the player)
-    public List<(PowerModel Power, int Amount)> PowersOnTarget = [];
+    // Power
+    public List<(Type PowerType, int Amount)> PowersOnSelf = [];
+    public List<(Type PowerType, int Amount)> PowersOnTarget = [];
 }

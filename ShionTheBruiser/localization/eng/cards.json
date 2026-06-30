@@ -113,7 +113,7 @@
   "SHIONTHEBRUISER-SHION_LURKING_INTENSITY.title": "Lurking Intensity",
   "SHIONTHEBRUISER-SHION_BERSERK_FORM.description": "Transforms ALL of your cards that are not Attacks into random Bruiser and Colorless Attacks for the remainder of the fight.\n\nAttacks heal you for [blue]{BerserkForm}[/blue]% of the damage dealt, but lose [blue]{StrengthLoss}[/blue] Strength at the end of each turn.",
   "SHIONTHEBRUISER-SHION_BERSERK_FORM.title": "Berserk Form",
-  "SHIONTHEBRUISER-SHION_MONSTER_SPELL.description": "{HasAttacks:cond:>0?Deal {Damage:diff()} damage{Guard:plural:| [blue]{}[/blue] times.}\n|}{HasBlock:cond:>0?Gain {Block:diff()} [gold]Block[/gold].\n|}{PowersOnSelfAmount:cond:>0?Gain {PowersOnSelfAmount} Powers.\n|}{PowersOnTargetAmount:cond:>0?Apply {PowersOnTargetAmount} effects on the enemy.|}",
+  "SHIONTHEBRUISER-SHION_MONSTER_SPELL.description": "{Damage:cond:>0?Deal {Damage:diff()} damage{Repeat:plural:| [blue]{}[/blue] times}.|}{Block:cond:>0?{Damage:cond:>0?\n|}Gain {Block:diff()} [gold]Block[/gold].|}{PowersOnSelfAmount:cond:>0?{Damage:cond:>0?\n|{Block:cond:>0?\n|}}Gain {PowersOnSelfAmount} {PowersOnSelfAmount:plural:Power|Powers}.|}{PowersOnTargetAmount:cond:>0?{Damage:cond:>0?\n|{Block:cond:>0?\n|{PowersOnSelfAmount:cond:>0?\n|}}}Apply {PowersOnTargetAmount} {PowersOnTargetAmount:plural:effect|effects} on the enemy.|}",
   "SHIONTHEBRUISER-SHION_MONSTER_SPELL.title": "Monster Spell",
   "SHIONTHEBRUISER-SHION_MONSTERMANCY.description": "When an enemy does an action, creates a 2-cost [gold]Ethereal[/gold] version of that action in your hand next turn.\nCertain actions can't be copied that way.",
   "SHIONTHEBRUISER-SHION_MONSTERMANCY.title": "Monstermancy"

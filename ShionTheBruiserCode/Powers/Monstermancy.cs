@@ -72,14 +72,13 @@ public class Monstermancy() : ShionTheBruiserPower
         PlayerChoiceContext choiceContext, PowerModel power, decimal amount,
         Creature? applier, CardModel? cardSource)
     {
-        if (applier is { IsEnemy: true } && IsCopyable(power))
+        if (applier is { IsEnemy: true } && MonsterPowersHelper.IsCopyable(power.GetType()))
         {
             var helper = GetOrCreateHelper(applier);
-
             if (power.Owner == applier)
-                helper.PowersOnSelf.Add((power, (int)amount));
+                helper.PowersOnSelf.Add((power.GetType(), (int)amount));
             else
-                helper.PowersOnTarget.Add((power, (int)amount));
+                helper.PowersOnTarget.Add((power.GetType(), (int)amount));
         }
 
         await base.AfterPowerAmountChanged(choiceContext, power, amount, applier, cardSource);
@@ -91,11 +90,13 @@ public class Monstermancy() : ShionTheBruiserPower
         
         foreach (var helper in _learningMagic.Values)
         {
-            var spell = new ShionMonsterSpell();
+            var spell = CombatState.CreateCard<ShionMonsterSpell>(player);
             spell.Configure(helper);
-            
-            spell.Owner = player;
-            await CardPileCmd.Add(spell, PileType.Hand.GetPile(player));
+            await CardPileCmd.AddGeneratedCardToCombat(
+                spell,
+                PileType.Hand,
+                player
+            );
         }
         _learningMagic.Clear();
     }

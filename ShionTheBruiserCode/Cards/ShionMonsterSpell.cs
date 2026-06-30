@@ -2,15 +2,13 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Commands.Builders;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 public class ShionMonsterSpell() : ShionTheBruiserCard(2,
-    CardType.Skill, CardRarity.Token, TargetType.AnyEnemy)
+    CardType.Attack, CardRarity.Token, TargetType.AnyEnemy)
 {
     private bool _hasAttack;
     private int _damagePerHit;
@@ -19,8 +17,13 @@ public class ShionMonsterSpell() : ShionTheBruiserCard(2,
     private bool _hasBlock;
     private int _blockAmount;
 
-    private List<(PowerModel Power, int Amount)> _powersOnSelf = [];
-    private List<(PowerModel Power, int Amount)> _powersOnTarget = [];
+    private List<(Type PowerType, int Amount)> _powersOnSelf = [];
+    private List<(Type PowerType, int Amount)> _powersOnTarget = [];
+    
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [
+        CardKeyword.Ethereal,
+        CardKeyword.Exhaust,
+    ];
     
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("HasAttack", _hasAttack ? 1 : 0),
@@ -84,29 +87,11 @@ public class ShionMonsterSpell() : ShionTheBruiserCard(2,
             await CreatureCmd.GainBlock(card.Owner.Creature, card.DynamicVars.Block, play);
         }
 
-        foreach (var (power, amount) in _powersOnSelf)
-        {
-            await PowerCmd.Apply(
-                choiceContext,
-                power, 
-                play.Card.Owner.Creature, 
-                amount, 
-                play.Card.Owner.Creature, 
-                card
-            );
-        }
+        foreach (var (powerType, amount) in _powersOnTarget)
+            await MonsterPowersHelper.Apply(choiceContext, powerType, play.Target!, amount, play.Card.Owner.Creature, card);
 
-        foreach (var (power, amount) in _powersOnTarget)
-        {
-            await PowerCmd.Apply(
-                choiceContext, 
-                power,
-                play.Target!, 
-                amount, 
-                play.Card.Owner.Creature, 
-                card
-            );
-        }
+        foreach (var (powerType, amount) in _powersOnSelf)
+            await MonsterPowersHelper.Apply(choiceContext, powerType, play.Card.Owner.Creature, amount, play.Card.Owner.Creature, card);
     }
 
     protected override void OnUpgrade() { }
