@@ -61,5 +61,8 @@
   "SHIONTHEBRUISER-BERSERK_DRIVE.title": "Berserk Drive",
   "SHIONTHEBRUISER-LURKING_INTENSITY.description": "Each turn, Transform cards from your hand into random colourless cards.",
   "SHIONTHEBRUISER-LURKING_INTENSITY.smartDescription": "At the start of your turn, Transform {Amount:plural:a card|[blue]{}[/blue] cards} in your Hand into {Amount:plural:a|} random Colourless {Amount:plural:card|cards}.",
-  "SHIONTHEBRUISER-LURKING_INTENSITY.title": "Lurking Intensity"
+  "SHIONTHEBRUISER-LURKING_INTENSITY.title": "Lurking Intensity",
+  "SHIONTHEBRUISER-BERSERK_FORM.description": "Attacks heal you for a portion of the damage dealt, but you lose Strength at the start of each turn.",
+  "SHIONTHEBRUISER-BERSERK_FORM.smartDescription": "Attacks heal you for [blue]{Amount}[/blue]% of the damage dealt, but you lose [blue]{StrengthLoss}[/blue] Strength at the start of each turn.",
+  "SHIONTHEBRUISER-BERSERK_FORM.title": "Berserk Form"
 }

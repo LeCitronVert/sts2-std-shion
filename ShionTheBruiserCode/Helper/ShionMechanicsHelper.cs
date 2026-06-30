@@ -1,4 +1,6 @@
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
@@ -32,5 +34,26 @@ public static class ShionMechanicsHelper
     public static bool IsCardNativeToCharacter(CardModel card, CharacterModel character)
     {
         return card.Pool.Id == character.CardPool.Id;
+    }
+    
+    public static IEnumerable<CardModel> GetAllCombatCards (Player player)
+    {
+        var handCards = PileType.Hand.GetPile(player).Cards;
+        var drawCards = PileType.Draw.GetPile(player).Cards;
+        var discardCards = PileType.Discard.GetPile(player).Cards;
+        
+        return handCards.Concat(drawCards).Concat(discardCards);
+    }
+    
+    public static IEnumerable<CardModel> GetRandomCardOptionsForPool (IEnumerable<CardPoolModel> pools, Player player)
+    {
+        List<CardModel> randomOptions = [];
+
+        foreach (var pool in pools)
+        {
+            randomOptions = randomOptions.Concat(pool.GetUnlockedCards(player.UnlockState, player.RunState.CardMultiplayerConstraint)).ToList();
+        }
+
+        return randomOptions;
     }
 }

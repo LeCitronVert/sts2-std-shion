@@ -110,5 +110,7 @@
   "SHIONTHEBRUISER-SHION_BERSERK_DRIVE.description": "Increases the Attack damage you deal based on your missing HP, up to [blue]{BerserkDrive}[/blue]%.",
   "SHIONTHEBRUISER-SHION_BERSERK_DRIVE.title": "Berserk Drive",
   "SHIONTHEBRUISER-SHION_LURKING_INTENSITY.description": "At the start of your turn, choose {LurkingIntensity:plural:a card|[blue]{}[/blue] cards} to be transformed into {LurkingIntensity:plural:a random Colourless card|random Colourless cards}.",
-  "SHIONTHEBRUISER-SHION_LURKING_INTENSITY.title": "Lurking Intensity"
+  "SHIONTHEBRUISER-SHION_LURKING_INTENSITY.title": "Lurking Intensity",
+  "SHIONTHEBRUISER-SHION_BERSERK_FORM.description": "Transforms ALL of your cards that are not Attacks into random Bruiser and Colorless Attacks for the remainder of the fight.\n\nAttacks heal you for [blue]{BerserkForm}[/blue]% of the damage dealt, but lose [blue]{StrengthLoss}[/blue] Strength at the end of each turn.",
+  "SHIONTHEBRUISER-SHION_BERSERK_FORM.title": "Berserk Form"
 }
