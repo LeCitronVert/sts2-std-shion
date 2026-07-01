@@ -38,7 +38,8 @@ public class ShionDragonRoar() : ShionTheBruiserCard(1,
         await CreatureCmd.TriggerAnim(cardSource.Owner.Creature, "Cast", cardSource.Owner.Character.CastAnimDelay);
         foreach (Creature hittableEnemy in cardSource.CombatState?.HittableEnemies ?? [])
         {
-            await PowerCmd.Apply<DragonRoar>(choiceContext, hittableEnemy, cardSource.DynamicVars["DebuffAmount"].BaseValue, cardSource.Owner.Creature, cardSource);
+            // idk why i can't just use the dynamic var here, i prolly fucked up something
+            await PowerCmd.Apply<DragonRoar>(choiceContext, hittableEnemy, ShionMechanicsHelper.GetDragonUniqueBuffCount(cardSource.Owner.Creature), cardSource.Owner.Creature, cardSource);
         }
     }
 

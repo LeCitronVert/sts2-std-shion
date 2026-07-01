@@ -1,5 +1,5 @@
 {
-  "SHIONTHEBRUISER-SHION_STRIKE.description": "Deal {Damage:diff()} damage.\n[gold]Damage Cap[/gold] {DamageCap}.",
+  "SHIONTHEBRUISER-SHION_STRIKE.description": "Deal {Damage:diff()} damage.",
   "SHIONTHEBRUISER-SHION_STRIKE.title": "Strike",
   "SHIONTHEBRUISER-SHION_DEFEND.description": "Gain {Block:diff()} [gold]Block[/gold].",
   "SHIONTHEBRUISER-SHION_DEFEND.title": "Defend",
@@ -49,7 +49,7 @@
   "SHIONTHEBRUISER-SHION_BERSERK_STRIKE.title": "Berserk Strike",
   "SHIONTHEBRUISER-SHION_RAGE_STRIKE.description": "Lose {HpLoss:diff()} HP.\nDeal {Damage:diff()} damage.",
   "SHIONTHEBRUISER-SHION_RAGE_STRIKE.title": "Rage Strike",
-  "SHIONTHEBRUISER-SHION_DRAGON_ROAR.description": "ALL enemies lose {CalculationExtra::diff()} [gold]Strength[/gold] this turn for each unique buff you have.",
+  "SHIONTHEBRUISER-SHION_DRAGON_ROAR.description": "ALL enemies lose {CalculationExtra::diff()} [gold]Strength[/gold] this turn for each unique buff you have.{InCombat:\n([blue]{DebuffAmount}[/blue] Strength)|}",
   "SHIONTHEBRUISER-SHION_DRAGON_ROAR.title": "Dragon Roar",
   "SHIONTHEBRUISER-SHION_ENERGY_VOLLEY.description": "Deal {Damage:diff()} damage {Repeat:diff()} times.\n[gold]Damage Cap[/gold] {DamageCap}.",
   "SHIONTHEBRUISER-SHION_ENERGY_VOLLEY.title": "Energy Volley",
@@ -125,6 +125,6 @@
   "SHIONTHEBRUISER-SHION_EXTREME_SPEED.title": "Extreme Speed",
   "SHIONTHEBRUISER-SHION_NAP.description": "Heal {IfUpgraded:show:X+1|X} HP.",
   "SHIONTHEBRUISER-SHION_NAP.title": "Nap",
-  "SHIONTHEBRUISER-SHION_HALF_HEARTED.description": "Add a random Ethereal Colourless card to your Hand{IfUpgraded:show: [green]and Upgrades it[/green]|X}.",
+  "SHIONTHEBRUISER-SHION_HALF_HEARTED.description": "Add a random Ethereal Colourless card to your Hand{IfUpgraded:show: [green]and Upgrades it[/green]|}.",
   "SHIONTHEBRUISER-SHION_HALF_HEARTED.title": "Half-Hearted Effort"
 }
