@@ -130,5 +130,7 @@
   "SHIONTHEBRUISER-SHION_ONCE_MORE.description": "The next [gold]Defensive[/gold] card you play is played {OnceMore:plural:1 additional time|[blue]{}[/blue] additional times}.",
   "SHIONTHEBRUISER-SHION_ONCE_MORE.title": "Once More",
   "SHIONTHEBRUISER-SHION_BREAKING_SWIPES.description": "Deal {Damage:diff()} damage.\nApply [blue]{VulnerablePower}[/blue] [gold]Vulnerable[/gold].\nReturn this card to your hand.",
-  "SHIONTHEBRUISER-SHION_BREAKING_SWIPES.title": "Breaking Swipes"
+  "SHIONTHEBRUISER-SHION_BREAKING_SWIPES.title": "Breaking Swipes",
+  "SHIONTHEBRUISER-SHION_SHIELD_BUSTER.description": "Deal {Damage:diff()} damage.\nHits enemies with Block [blue]{Repeat:diff()}[/blue] times.",
+  "SHIONTHEBRUISER-SHION_SHIELD_BUSTER.title": "Shield Buster"
 }
