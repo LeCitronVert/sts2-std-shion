@@ -88,5 +88,9 @@
   "SHIONTHEBRUISER-PLEASURE_IN_PAIN.title": "Pleasure In Pain",
   "SHIONTHEBRUISER-INSTINCTUAL_PREMONITIONS.description": "At the start of your turn, get a bonus depending on each enemy's intent: [gold]Block[/gold] for Attacks, [gold]Artifact[/gold] for Debuffs, [gold]Strength[/gold] and [gold]Dexterity[/gold] for Buffs, [gold]Vigor[/gold] for Blocking.",
   "SHIONTHEBRUISER-INSTINCTUAL_PREMONITIONS.smartDescription": "At the start of your turn, get a bonus depending on each enemy's intent: [blue]{BlockBonusAgainstAttacks}[/blue] [gold]Block[/gold] for Attacks, [blue]{ArtifactBonusAgainstDebuffs}[/blue] [gold]Artifact[/gold] for Debuffs, [blue]{StatsBonusAgainstBuffs}[/blue] [gold]Strength[/gold] and [gold]Dexterity[/gold] for Buffs, [blue]{VigorBonusAgainstBlock}[/blue] [gold]Vigor[/gold] for Blocking.",
-  "SHIONTHEBRUISER-INSTINCTUAL_PREMONITIONS.title": "Instinctual Premonitions"
+  "SHIONTHEBRUISER-INSTINCTUAL_PREMONITIONS.title": "Instinctual Premonitions",
+  "SHIONTHEBRUISER-SPIRIT_BURST.description": "When you draw a card containing \"Energy\", play it and draw one card.\nWhen this effect ends, you will be unable to Block using cards for the rest of the fight.",
+  "SHIONTHEBRUISER-SPIRIT_BURST.smartDescription": "When you draw a card containing \"Energy\", play it and draw one card.\nWhen this effect ends {Amount:plural:this turn|in [blue]{}[/blue] turns}, you will be unable to Block using cards for the rest of the fight.",
+  "SHIONTHEBRUISER-SPIRIT_BURST.autocap": "(pant)... [sine]Kinda... tired...[/sine]",
+  "SHIONTHEBRUISER-SPIRIT_BURST.title": "SpiritBurst"
 }
