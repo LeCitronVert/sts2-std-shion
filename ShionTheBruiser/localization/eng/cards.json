@@ -140,5 +140,7 @@
   "SHIONTHEBRUISER-SHION_STELLAR_STRIKE.description": "Deal {CalculatedDamage:diff()} damage.\nDeals additional damage equal to half of your [gold]Vigor[/gold].",
   "SHIONTHEBRUISER-SHION_STELLAR_STRIKE.title": "Stellar Strike",
   "SHIONTHEBRUISER-SHION_PLEASURE_IN_PAIN.description": "Until your next turn, take [blue]{PleasureInPain}[/blue]% more damage from attacks, but convert [blue]{PleasureInPain}[/blue]% of the Blocked damage to Strength, [blue]{PleasureInPain}[/blue]% of Unblocked damage to Vigor, and [blue]{PleasureInPain}[/blue]% of the total Damage to Regen.",
-  "SHIONTHEBRUISER-SHION_PLEASURE_IN_PAIN.title": "Pleasure In Pain"
+  "SHIONTHEBRUISER-SHION_PLEASURE_IN_PAIN.title": "Pleasure In Pain",
+  "SHIONTHEBRUISER-SHION_INSTINCTUAL_PREMONITIONS.description": "At the start of your turn, get a bonus depending on each enemy's intent: [blue]{BlockBonusAgainstAttacks}[/blue] [gold]Block[/gold] for Attacks, [blue]{ArtifactBonusAgainstDebuffs}[/blue] [gold]Artifact[/gold] for Debuffs, [blue]{StatsBonusAgainstBuffs}[/blue] [gold]Strength[/gold] and [gold]Dexterity[/gold] for Buffs, [blue]{VigorBonusAgainstBlock}[/blue] [gold]Vigor[/gold] for Blocking.",
+  "SHIONTHEBRUISER-SHION_INSTINCTUAL_PREMONITIONS.title": "Instinctual Premonitions"
 }
