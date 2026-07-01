@@ -132,5 +132,7 @@
   "SHIONTHEBRUISER-SHION_BREAKING_SWIPES.description": "Deal {Damage:diff()} damage.\nApply [blue]{VulnerablePower}[/blue] [gold]Vulnerable[/gold].\nReturn this card to your hand.",
   "SHIONTHEBRUISER-SHION_BREAKING_SWIPES.title": "Breaking Swipes",
   "SHIONTHEBRUISER-SHION_SHIELD_BUSTER.description": "Deal {Damage:diff()} damage.\nHits enemies with Block [blue]{Repeat:diff()}[/blue] times.",
-  "SHIONTHEBRUISER-SHION_SHIELD_BUSTER.title": "Shield Buster"
+  "SHIONTHEBRUISER-SHION_SHIELD_BUSTER.title": "Shield Buster",
+  "SHIONTHEBRUISER-SHION_EMERGENCY_GUARD.description": "Gain {Block:diff()} [gold]Block[/gold] {Repeat:diff()} times.\nReduces attack damage taken by 20% for the next {Guard:plural:turn|[blue]{}[/blue] turns}.",
+  "SHIONTHEBRUISER-SHION_EMERGENCY_GUARD.title": "Emergency Guard"
 }
