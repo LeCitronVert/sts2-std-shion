@@ -127,6 +127,6 @@
   "SHIONTHEBRUISER-SHION_NAP.title": "Nap",
   "SHIONTHEBRUISER-SHION_HALF_HEARTED.description": "Add a random Ethereal Colourless card to your Hand{IfUpgraded:show: [green]and Upgrades it[/green]|}.",
   "SHIONTHEBRUISER-SHION_HALF_HEARTED.title": "Half-Hearted Effort",
-  "SHIONTHEBRUISER-SHION_ONCE_MORE.description": "he next [gold]Defensive[/gold] card you play is played {OnceMore:plural:1 additional time|[blue]{}[/blue] additional times}.",
+  "SHIONTHEBRUISER-SHION_ONCE_MORE.description": "The next [gold]Defensive[/gold] card you play is played {OnceMore:plural:1 additional time|[blue]{}[/blue] additional times}.",
   "SHIONTHEBRUISER-SHION_ONCE_MORE.title": "Once More"
 }
