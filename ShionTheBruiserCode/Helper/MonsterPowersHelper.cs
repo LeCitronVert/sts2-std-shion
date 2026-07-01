@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Helper;
 
@@ -51,7 +52,26 @@ public static class MonsterPowersHelper
         [typeof(PlatingPower)] = (ctx, target, amount, applier, card) =>
             PowerCmd.Apply<PlatingPower>(ctx, target, amount, applier, card),
 
+        [typeof(SteamEruptionPower)] = (ctx, target, amount, applier, card) =>
+            PowerCmd.Apply<VigorPower>(ctx, target, amount, applier, card),
         
+        [typeof(PlowPower)] = (ctx, target, amount, applier, card) =>
+            PowerCmd.Apply<RitualPower>(ctx, target, amount, applier, card),
+        
+        [typeof(SandpitPower)] = (ctx, target, amount, applier, card) =>
+            PowerCmd.Apply<NeurosurgePower>(ctx, target, amount, applier, card),
+        
+        [typeof(ChainsOfBindingPower)] = (ctx, target, amount, applier, card) =>
+            PowerCmd.Apply<NeurosurgePower>(ctx, target, amount, applier, card),
+        
+        [typeof(VitalSparkPower)] = (ctx, target, amount, applier, card) =>
+            PowerCmd.Apply<RegenPower>(ctx, target, amount, applier, card),
+        
+        [typeof(HexPower)] = (ctx, target, amount, applier, card) =>
+            PowerCmd.Apply<NeurosurgePower>(ctx, target, amount, applier, card),
+        
+        [typeof(DampenPower)] = (ctx, target, amount, applier, card) =>
+            PowerCmd.Apply<NeurosurgePower>(ctx, target, amount, applier, card),
     };
 
     public static bool IsCopyable(Type powerType) => _applicators.ContainsKey(powerType);

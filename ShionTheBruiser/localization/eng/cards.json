@@ -145,6 +145,6 @@
   "SHIONTHEBRUISER-SHION_INSTINCTUAL_PREMONITIONS.title": "Instinctual Premonitions",
   "SHIONTHEBRUISER-SHION_SPIRIT_BURST.description": "For the next [blue]{SpiritBurst}[/blue] turns, whenever you draw a card with Energy in its name, play it and draw one more card.\nWhen Spirit Burst fades, you will be unable to block for the rest of the fight.",
   "SHIONTHEBRUISER-SHION_SPIRIT_BURST.title": "Spirit Burst",
-  "SHIONTHEBRUISER-SHION_SPIRIT_BREAK.description": "Your {SpiritBreak:plural:next Energy Attack is|next [blue]{}[/blue] Energy Attacks are} [gold]Critical[/gold].",
+  "SHIONTHEBRUISER-SHION_SPIRIT_BREAK.description": "Your {SpiritBreak:plural:next Attack is|next [blue]{}[/blue] Attacks are} [gold]Critical[/gold].",
   "SHIONTHEBRUISER-SHION_SPIRIT_BREAK.title": "Spirit Break"
 }

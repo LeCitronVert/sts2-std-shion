@@ -93,7 +93,7 @@
   "SHIONTHEBRUISER-SPIRIT_BURST.smartDescription": "When you draw a card containing \"Energy\", play it and draw one card.\nWhen this effect ends {Amount:plural:this turn|in [blue]{}[/blue] turns}, you will be unable to Block using cards for the rest of the fight.",
   "SHIONTHEBRUISER-SPIRIT_BURST.autocap": "(pant)... [sine]Kinda... tired...[/sine]",
   "SHIONTHEBRUISER-SPIRIT_BURST.title": "Spirit Burst",
-  "SHIONTHEBRUISER-SPIRIT_BREAK.description": "Your next Energy Attack is [gold]Critical.[/gold]",
-  "SHIONTHEBRUISER-SPIRIT_BREAK.smartDescription": "Your {Amount:plural:next Energy Attack is|next [blue]{}[/blue] Energy Attacks are} [gold]Critical[/gold].",
+  "SHIONTHEBRUISER-SPIRIT_BREAK.description": "Your next Attack is [gold]Critical.[/gold]",
+  "SHIONTHEBRUISER-SPIRIT_BREAK.smartDescription": "Your {Amount:plural:next Attack is|next [blue]{}[/blue] Attacks are} [gold]Critical[/gold].",
   "SHIONTHEBRUISER-SPIRIT_BREAK.title": "Spirit Break"
 }
