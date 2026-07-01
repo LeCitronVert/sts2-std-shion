@@ -7,7 +7,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionStellarStrike() : ShionTheBruiserCard(3,
+public class ShionStellarStrike() : ShionLatentCard(3,
     CardType.Attack, CardRarity.Rare,
     TargetType.AnyEnemy)
 {

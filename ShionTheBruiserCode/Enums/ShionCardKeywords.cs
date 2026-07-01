@@ -13,4 +13,7 @@ public static class ShionCardKeywords
     
     [CustomEnum, KeywordProperties(AutoKeywordPosition.After)]
     public static CardKeyword Stale;
+
+    [CustomEnum, KeywordProperties(AutoKeywordPosition.Before)]
+    public static CardKeyword Latent;
 }

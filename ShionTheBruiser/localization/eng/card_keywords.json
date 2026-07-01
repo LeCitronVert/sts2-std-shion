@@ -4,5 +4,7 @@
   "SHIONTHEBRUISER-NONNATIVE.description": "Cards from other characters, or colourless cards.",
   "SHIONTHEBRUISER-NONNATIVE.title": "Non-Native",
   "SHIONTHEBRUISER-STALE.description": "Doesn't offer any advantages when upgraded.",
-  "SHIONTHEBRUISER-STALE.title": "Stale"
+  "SHIONTHEBRUISER-STALE.title": "Stale",
+  "SHIONTHEBRUISER-LATENT.description": "Shuffled at the end of your Deck at the beginning of each fight.",
+  "SHIONTHEBRUISER-LATENT.title": "Latent"
 }
