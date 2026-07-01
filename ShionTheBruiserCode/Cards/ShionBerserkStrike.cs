@@ -8,7 +8,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Variables;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 public class ShionBerserkStrike() : ShionTheBruiserCard(2,
-    CardType.Attack, CardRarity.Common,
+    CardType.Attack, CardRarity.Uncommon,
     TargetType.AnyEnemy)
 {
     protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];

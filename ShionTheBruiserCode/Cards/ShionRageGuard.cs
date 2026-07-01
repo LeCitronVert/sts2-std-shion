@@ -13,7 +13,7 @@ public class ShionRageGuard() : ShionTheBruiserCard(1,
 {
     public override bool GainsBlock => true;
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new HpLossVar(13),
+        new HpLossVar(9),
         new BlockVar(24, ValueProp.Move),
         new PowerVar<Guard>(1)
     ];

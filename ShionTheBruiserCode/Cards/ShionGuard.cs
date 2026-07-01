@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -14,6 +15,8 @@ public class ShionGuard() : ShionDefensiveCard(0,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<Guard>(1),
+        new EnergyVar(1),
+        new PowerVar<DrawCardsNextTurnPower>(1),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -30,6 +33,20 @@ public class ShionGuard() : ShionDefensiveCard(0,
             choiceContext,
             card.Owner.Creature,
             card.DynamicVars["Guard"].BaseValue,
+            card.Owner.Creature,
+            card
+        );
+        await PowerCmd.Apply<EnergyNextTurnPower>(
+            choiceContext,
+            card.Owner.Creature,
+            card.DynamicVars.Energy.BaseValue,
+            card.Owner.Creature,
+            card
+        );
+        await PowerCmd.Apply<DrawCardsNextTurnPower>(
+            choiceContext,
+            card.Owner.Creature,
+            card.DynamicVars["DrawCardsNextTurnPower"].BaseValue,
             card.Owner.Creature,
             card
         );

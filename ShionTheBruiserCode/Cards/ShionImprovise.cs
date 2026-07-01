@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Models.CardPools;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 public class ShionImprovise() : ShionTheBruiserCard(1,
-    CardType.Skill, CardRarity.Uncommon,
+    CardType.Skill, CardRarity.Common,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [];
