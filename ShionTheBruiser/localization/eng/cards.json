@@ -128,5 +128,7 @@
   "SHIONTHEBRUISER-SHION_HALF_HEARTED.description": "Add a random Ethereal Colourless card to your Hand{IfUpgraded:show: [green]and Upgrades it[/green]|}.",
   "SHIONTHEBRUISER-SHION_HALF_HEARTED.title": "Half-Hearted Effort",
   "SHIONTHEBRUISER-SHION_ONCE_MORE.description": "The next [gold]Defensive[/gold] card you play is played {OnceMore:plural:1 additional time|[blue]{}[/blue] additional times}.",
-  "SHIONTHEBRUISER-SHION_ONCE_MORE.title": "Once More"
+  "SHIONTHEBRUISER-SHION_ONCE_MORE.title": "Once More",
+  "SHIONTHEBRUISER-SHION_BREAKING_SWIPES.description": "Deal {Damage:diff()} damage.\nApply [blue]{VulnerablePower}[/blue] [gold]Vulnerable[/gold].\nReturn this card to your hand.",
+  "SHIONTHEBRUISER-SHION_BREAKING_SWIPES.title": "Breaking Swipes"
 }
