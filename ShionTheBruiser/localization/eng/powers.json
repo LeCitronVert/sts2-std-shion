@@ -82,5 +82,8 @@
   "SHIONTHEBRUISER-ONCE_MORE.title": "Once More",
   "SHIONTHEBRUISER-REVENGE_DRIVE.description": "Gain [gold]Vigor[/gold] whenever you are attacked this turn.",
   "SHIONTHEBRUISER-REVENGE_DRIVE.smartDescription": "Gain [blue]{Amount}[/blue] [gold]Vigor[/gold] whenever you are attacked this turn.",
-  "SHIONTHEBRUISER-REVENGE_DRIVE.title": "Revenge Drive"
+  "SHIONTHEBRUISER-REVENGE_DRIVE.title": "Revenge Drive",
+  "SHIONTHEBRUISER-PLEASURE_IN_PAIN.description": "This turn, take [blue]{Amount}%[/blue] more attack damage, but convert [blue]{Amount}%[/blue] blocked damage to [gold]Strength[/gold], [blue]{Amount}%[/blue] unblocked damage to [gold]Vigor[/gold] and [blue]{Amount}%[/blue] total damage to [gold]Regen[/gold].",
+  "SHIONTHEBRUISER-PLEASURE_IN_PAIN.smartDescription": "This turn, take more attack damage, but convert blocked damage to [gold]Strength[/gold], unblocked damage to [gold]Vigor[/gold] and total damage to [gold]Regen[/gold].",
+  "SHIONTHEBRUISER-PLEASURE_IN_PAIN.title": "Pleasure In Pain"
 }
