@@ -39,12 +39,12 @@ public class ShionDragonRoar() : ShionTheBruiserCard(1,
         foreach (Creature hittableEnemy in cardSource.CombatState?.HittableEnemies ?? [])
         {
             // idk why i can't just use the dynamic var here, i prolly fucked up something
-            await PowerCmd.Apply<DragonRoar>(choiceContext, hittableEnemy, ShionMechanicsHelper.GetDragonUniqueBuffCount(cardSource.Owner.Creature), cardSource.Owner.Creature, cardSource);
+            await PowerCmd.Apply<DragonRoar>(choiceContext, hittableEnemy, ShionMechanicsHelper.GetDragonUniqueBuffCount(cardSource.Owner.Creature) * DynamicVars.CalculationExtra.IntValue, cardSource.Owner.Creature, cardSource);
         }
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.CalculationBase.UpgradeValueBy(1);
+        DynamicVars.CalculationExtra.UpgradeValueBy(1);
     }
 }

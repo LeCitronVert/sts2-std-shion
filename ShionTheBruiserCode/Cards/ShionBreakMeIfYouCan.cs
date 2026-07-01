@@ -9,7 +9,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionBreakMeIfYouCan() : ShionTheBruiserCard(2,
+public class ShionBreakMeIfYouCan() : ShionDefensiveCard(2,
     CardType.Power, CardRarity.Uncommon,
     TargetType.Self)
 {
@@ -31,6 +31,7 @@ public class ShionBreakMeIfYouCan() : ShionTheBruiserCard(2,
     {
         var card = this;
         await PowerCmd.Apply<BreakMeIfYouCan>(choiceContext, card.Owner.Creature, 1M, card.Owner.Creature, card);
+        await ApplyDefensiveToPlayer();
     }
 
     protected override void OnUpgrade()
