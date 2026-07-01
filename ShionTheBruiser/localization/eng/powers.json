@@ -79,5 +79,8 @@
   "SHIONTHEBRUISER-TEMPORARY_ARTIFACT.title": "Temporary Artifact",
   "SHIONTHEBRUISER-ONCE_MORE.description": "The next [gold]Defensive[/gold] card you play is played additional times.",
   "SHIONTHEBRUISER-ONCE_MORE.smartDescription": "The next [gold]Defensive[/gold] card you play is played {Amount:plural:1 additional time|[blue]{}[/blue] additional times}.",
-  "SHIONTHEBRUISER-ONCE_MORE.title": "Once More"
+  "SHIONTHEBRUISER-ONCE_MORE.title": "Once More",
+  "SHIONTHEBRUISER-REVENGE_DRIVE.description": "Gain [gold]Vigor[/gold] whenever you are attacked this turn.",
+  "SHIONTHEBRUISER-REVENGE_DRIVE.smartDescription": "Gain [blue]{Amount}[/blue] [gold]Vigor[/gold] whenever you are attacked this turn.",
+  "SHIONTHEBRUISER-REVENGE_DRIVE.title": "Revenge Drive"
 }
