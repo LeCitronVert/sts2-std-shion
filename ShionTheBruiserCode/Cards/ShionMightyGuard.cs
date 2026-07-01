@@ -7,7 +7,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionMightyGuard() : ShionTheBruiserCard(3,
+public class ShionMightyGuard() : ShionDefensiveCard(3,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
@@ -22,6 +22,7 @@ public class ShionMightyGuard() : ShionTheBruiserCard(3,
     {
         var card = this;
         await PowerCmd.Apply<MightyGuard>(choiceContext, card.Owner.Creature, DynamicVars["MightyGuard"].BaseValue, card.Owner.Creature, card);
+        await ApplyDefensiveToPlayer();
     }
 
     protected override void OnUpgrade()

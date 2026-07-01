@@ -73,5 +73,8 @@
   "SHIONTHEBRUISER-BATTLE_TEMPO.title": "Battle Tempo",
   "SHIONTHEBRUISER-ENDURE.description": "When you take fatal damage, heal for a portion of your max HP but lose Strength and Dexterity instead.",
   "SHIONTHEBRUISER-ENDURE.smartDescription": "When you take fatal damage, heal for {Heal}% of your Max HP, but lose {DebuffAmount} Strength and Dexterity instead. Can trigger {Amount:plural:once|[blue]{}[/blue] times}.",
-  "SHIONTHEBRUISER-ENDURE.title": "Endure"
+  "SHIONTHEBRUISER-ENDURE.title": "Endure",
+  "SHIONTHEBRUISER-TEMPORARY_ARTIFACT.description": "[gold]Negates[/gold] debuffs until next turn.",
+  "SHIONTHEBRUISER-TEMPORARY_ARTIFACT.smartDescription": "[gold]Negates[/gold] [blue]{Amount}[/blue] {Amount:plural:debuff|debuffs} until next turn.",
+  "SHIONTHEBRUISER-TEMPORARY_ARTIFACT.title": "Temporary Artifact"
 }
