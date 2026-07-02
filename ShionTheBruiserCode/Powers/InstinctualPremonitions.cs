@@ -15,7 +15,7 @@ public class InstinctualPremonitions : ShionTheBruiserPower
         PowerType.Buff;
 
     public override PowerStackType StackType =>
-        PowerStackType.None;
+        PowerStackType.Counter;
 
     public const int BlockBonusAgainstAttacks = 10;
     public const int ArtifactBonusAgainstDebuffs = 1;
@@ -38,6 +38,9 @@ public class InstinctualPremonitions : ShionTheBruiserPower
             
             foreach (var intent in enemy.Monster.NextMove.Intents)
             {
+                // Just in case 
+                if (Amount <= 0) break;
+                
                 GainBonusBasedOnIntent(intent);
             }
         }
@@ -51,27 +54,35 @@ public class InstinctualPremonitions : ShionTheBruiserPower
         {
             case IntentType.Attack:
             case IntentType.DeathBlow:
+                Flash();
                 await CreatureCmd.GainBlock(
                     Owner,
                     new BlockVar(BlockBonusAgainstAttacks, ValueProp.Unpowered),
                     null
                 );
+                await PowerCmd.Decrement(this);
                 break;
             case IntentType.Buff:
             case IntentType.Summon:
             case IntentType.Escape:
             case IntentType.Heal:
+                Flash();
                 await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), Owner, StatsBonusAgainstBuffs, Owner, null!);
                 await PowerCmd.Apply<DexterityPower>(new ThrowingPlayerChoiceContext(), Owner, StatsBonusAgainstBuffs, Owner, null!);
+                await PowerCmd.Decrement(this);
                 break;
             case IntentType.Debuff:
             case IntentType.DebuffStrong:
             case IntentType.StatusCard:
             case IntentType.CardDebuff:
+                Flash();
                 await PowerCmd.Apply<ArtifactPower>(new ThrowingPlayerChoiceContext(), Owner, ArtifactBonusAgainstDebuffs, Owner, null!);
+                await PowerCmd.Decrement(this);
                 break;
             case IntentType.Defend:
+                Flash();
                 await PowerCmd.Apply<VigorPower>(new ThrowingPlayerChoiceContext(), Owner, VigorBonusAgainstBlock, Owner, null!);
+                await PowerCmd.Decrement(this);
                 break;
             case IntentType.Hidden:
             case IntentType.Sleep:

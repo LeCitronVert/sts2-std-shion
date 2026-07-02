@@ -15,6 +15,7 @@ public class ShionInstinctualPremonitions() : ShionTheBruiserCard(2,
         new DynamicVar("ArtifactBonusAgainstDebuffs", InstinctualPremonitions.ArtifactBonusAgainstDebuffs),
         new DynamicVar("StatsBonusAgainstBuffs", InstinctualPremonitions.StatsBonusAgainstBuffs),
         new DynamicVar("VigorBonusAgainstBlock", InstinctualPremonitions.VigorBonusAgainstBlock),
+        new PowerVar<InstinctualPremonitions>(4),
     ];
     
     protected override async Task OnPlay(
@@ -25,7 +26,7 @@ public class ShionInstinctualPremonitions() : ShionTheBruiserCard(2,
         await PowerCmd.Apply<InstinctualPremonitions>(
             choiceContext,
             card.Owner.Creature,
-            1,
+            DynamicVars["InstinctualPremonitions"].BaseValue,
             card.Owner.Creature,
             card
         );
@@ -34,5 +35,6 @@ public class ShionInstinctualPremonitions() : ShionTheBruiserCard(2,
     protected override void OnUpgrade()
     {
         AddKeyword(CardKeyword.Innate);
+        DynamicVars["InstinctualPremonitions"].UpgradeValueBy(2);
     }
 }
