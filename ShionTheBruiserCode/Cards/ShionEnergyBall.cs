@@ -20,7 +20,6 @@ public class ShionEnergyBall() : ShionTheBruiserCard(1,
         new ExtraDamageVar(5),
         // If player has Vigor, 1 x ExtraDamage / Otherwise, 0
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier((model, _) => ShionMechanicsHelper.HasVigor(model.Owner.Creature) ? 1 : 0),
-        new DamageCapVar(30),
     ];
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [

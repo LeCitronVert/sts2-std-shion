@@ -16,7 +16,6 @@ public class ShionCriticalStrike() : CritContributorCard(2,
     protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(14M, ValueProp.Move), 
-        new DamageCapVar(30M),
         new CritDisplayTooltipVar(),
         new CritAttackRateVar(100)
     ];
@@ -39,6 +38,6 @@ public class ShionCriticalStrike() : CritContributorCard(2,
 
     protected override void OnUpgrade()
     {
-        this.DynamicVars[DamageCapVar.Key].UpgradeValueBy(20M);
+        DynamicVars.Damage.UpgradeValueBy(4);
     }
 }

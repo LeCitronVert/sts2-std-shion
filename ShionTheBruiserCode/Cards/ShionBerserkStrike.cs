@@ -24,8 +24,7 @@ public class ShionBerserkStrike() : ShionTheBruiserCard(2,
 
                 return (decimal) missingHpRatio;
             }
-        ),
-        new DamageCapVar(34)
+        )
     ];
 
     protected override async Task OnPlay(
@@ -45,6 +44,5 @@ public class ShionBerserkStrike() : ShionTheBruiserCard(2,
     protected override void OnUpgrade()
     {
         DynamicVars.ExtraDamage.UpgradeValueBy(18);
-        DynamicVars["DamageCap"].UpgradeValueBy(18);
     }
 }

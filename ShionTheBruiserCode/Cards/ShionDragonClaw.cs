@@ -17,7 +17,6 @@ public class ShionDragonClaw() : ShionTheBruiserCard(2,
         new ExtraDamageVar(1),
         new DynamicVar("DragonMultiplier", 2),
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier((model, _) => 5 <= ShionMechanicsHelper.GetDragonUniqueBuffCount(model.Owner.Creature) ? model.DynamicVars.CalculationBase.BaseValue : 0),
-        new DamageCapVar(30)
     ];
 
     protected override async Task OnPlay(
@@ -37,6 +36,5 @@ public class ShionDragonClaw() : ShionTheBruiserCard(2,
     protected override void OnUpgrade()
     {
         DynamicVars.ExtraDamage.UpgradeValueBy(1);
-        this.DynamicVars[DamageCapVar.Key].UpgradeValueBy(20M);
     }
 }

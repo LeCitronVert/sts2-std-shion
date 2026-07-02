@@ -16,7 +16,6 @@ public class ShionDragonSmash() : ShionTheBruiserCard(0,
         new CalculationBaseVar(12),
         new ExtraDamageVar(1),
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier((model, _) => ShionMechanicsHelper.GetDragonUniqueBuffCount(model.Owner.Creature)),
-        new DamageCapVar(15),
     ];
     protected override bool HasEnergyCostX => true;
 
@@ -39,6 +38,6 @@ public class ShionDragonSmash() : ShionTheBruiserCard(0,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["DamageCap"].UpgradeValueBy(3);
+        DynamicVars.ExtraDamage.UpgradeValueBy(1);
     }
 }

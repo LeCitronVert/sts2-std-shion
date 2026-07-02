@@ -14,7 +14,6 @@ public class ShionBloodRondo() : ShionTheBruiserCard(1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(1, ValueProp.Move),
-        new DamageCapVar(10)
     ];
 
     protected override async Task OnPlay(
