@@ -8,6 +8,6 @@ public class ShionTheBruiserRelicPool : CustomRelicPoolModel
 {
     public override Color LabOutlineColor => ShionTheBruiser.Color;
 
-    public override string BigEnergyIconPath => "charui/big_energy.png".ImagePath();
-    public override string TextEnergyIconPath => "charui/text_energy.png".ImagePath();
+    public override string BigEnergyIconPath => "charui/shion_big_energy.png".ImagePath();
+    public override string TextEnergyIconPath => "charui/shion_text_energy.png".ImagePath();
 }

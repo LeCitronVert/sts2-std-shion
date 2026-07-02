@@ -13,9 +13,9 @@ public class ShionEepy() : ShionTheBruiserCard(3,
     public override bool CanBeGeneratedInCombat => false;
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new HealVar(20),
+        new DynamicVar("HpGate", 33)
     ];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
-        CardKeyword.Retain,
         CardKeyword.Exhaust,
     ];
 
@@ -32,5 +32,19 @@ public class ShionEepy() : ShionTheBruiserCard(3,
     protected override void OnUpgrade()
     {
         DynamicVars.Heal.UpgradeValueBy(10);
+    }
+    
+    // Can only be played if you have less than 50% your max HP
+    protected override bool IsPlayable
+    {
+        get
+        {
+            var missingHpRatio = (Owner.Creature.MaxHp - Owner.Creature.CurrentHp)
+                                 / (float)Owner.Creature.MaxHp
+            ;
+            var hpGate = DynamicVars["HpGate"].BaseValue / 100M;
+            
+            return missingHpRatio >= (float) hpGate;
+        }
     }
 }

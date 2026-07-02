@@ -61,11 +61,6 @@
         <None Include="ShionTheBruiserCode\Powers\CompetitiveSpirit.cs.uid" />
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="ShionTheBruiser\images\powers\big\"/>
-        <Folder Include="ShionTheBruiser\images\relics\big\"/>
-    </ItemGroup>
-
     <Target Name="CheckDependencyPaths">
         <Error
                 Text=" Slay the Spire 2 data not found at path '$(Sts2DataDir)'"

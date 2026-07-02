@@ -59,7 +59,7 @@ public static class MonsterPowersHelper
             PowerCmd.Apply<RitualPower>(ctx, target, amount, applier, card),
         
         [typeof(SandpitPower)] = (ctx, target, amount, applier, card) =>
-            PowerCmd.Apply<NeurosurgePower>(ctx, target, amount, applier, card),
+            PowerCmd.Apply<PlatingPower>(ctx, target, amount, applier, card),
         
         [typeof(ChainsOfBindingPower)] = (ctx, target, amount, applier, card) =>
             PowerCmd.Apply<NeurosurgePower>(ctx, target, amount, applier, card),

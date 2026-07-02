@@ -65,7 +65,7 @@
   "SHIONTHEBRUISER-SHION_TOUCH_OF_FORESIGHT.title": "Touch Of Foresight",
   "SHIONTHEBRUISER-SHION_ENERGY_JOLT.description": "Enemy loses {Damage:diff()} HP.\nApply [blue]{DebuffAmount}[/blue] Weak and Vulnerable.",
   "SHIONTHEBRUISER-SHION_ENERGY_JOLT.title": "Energy Jolt",
-  "SHIONTHEBRUISER-SHION_DESPERATE_CHARGE.description": "Gain [blue]{VigorPower}[/blue] [gold]Vigor[/gold].\nGain {Block:diff()} [gold]Block[/gold].",
+  "SHIONTHEBRUISER-SHION_DESPERATE_CHARGE.description": "Gain [blue]{VigorPower}[/blue] [gold]Vigor[/gold].\nGain {Block:diff()} [gold]Block[/gold].\nIncrease this card's cost by 1.",
   "SHIONTHEBRUISER-SHION_DESPERATE_CHARGE.title": "Desperate Charge",
   "SHIONTHEBRUISER-SHION_BREAK_ME_IF_YOU_CAN.description": "Gain [blue]{RegenAmount}[/blue] [gold]Regen[/gold] and [blue]{VigorAmount}[/blue] [gold]Vigor[/gold] at the end of each turn.\nEffect ends when you use an Attack.",
   "SHIONTHEBRUISER-SHION_BREAK_ME_IF_YOU_CAN.title": "Break Me If You Can",
@@ -91,7 +91,7 @@
   "SHIONTHEBRUISER-SHION_DRAGON_SMASH.title": "Dragon Smash",
   "SHIONTHEBRUISER-SHION_COMPETITIVE_SPIRIT.description": "When ANYONE else gains a buff, gain 1 Strength.\nCan be triggered up to {CompetitiveSpirit} times per turn.",
   "SHIONTHEBRUISER-SHION_COMPETITIVE_SPIRIT.title": "Competitive Spirit",
-  "SHIONTHEBRUISER-SHION_EEPY.description": "Heal {Heal:diff()} HP.\nEnd your turn.",
+  "SHIONTHEBRUISER-SHION_EEPY.description": "Heal {Heal:diff()} HP.\nEnd your turn.\nCan only be used if you have less than [blue]{HpGate}[/blue]% of your Max HP.",
   "SHIONTHEBRUISER-SHION_EEPY.title": "Eepy",
   "SHIONTHEBRUISER-SHION_GUTSY.description": "Gain Vigor equivalent to {Gutsy}% of unblocked attack damage received.",
   "SHIONTHEBRUISER-SHION_GUTSY.title": "Gutsy",
@@ -146,5 +146,7 @@
   "SHIONTHEBRUISER-SHION_SPIRIT_BURST.description": "For the next [blue]{SpiritBurst}[/blue] turns, whenever you draw a card with Energy in its name, play it and draw one more card.\nWhen Spirit Burst fades, you will be unable to block for the rest of the fight.",
   "SHIONTHEBRUISER-SHION_SPIRIT_BURST.title": "Spirit Burst",
   "SHIONTHEBRUISER-SHION_SPIRIT_BREAK.description": "Your {SpiritBreak:plural:next Attack is|next [blue]{}[/blue] Attacks are} [gold]Critical[/gold].",
-  "SHIONTHEBRUISER-SHION_SPIRIT_BREAK.title": "Spirit Break"
+  "SHIONTHEBRUISER-SHION_SPIRIT_BREAK.title": "Spirit Break",
+  "SHIONTHEBRUISER-SHION_ENERGY_BOMB.description": "Deal {Damage:diff()} damage.{IfUpgraded:show:\n[green]{CritAttackRate}% chance to deal a Critical Hit.[/green]|}",
+  "SHIONTHEBRUISER-SHION_ENERGY_BOMB.title": "Energy Bomb"
 }

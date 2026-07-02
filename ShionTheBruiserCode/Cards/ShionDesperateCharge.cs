@@ -40,6 +40,7 @@ public class ShionDesperateCharge() : ShionTheBruiserCard(1,
             DynamicVars.Block,
             play
         );
+        card.EnergyCost.AddThisCombat(1);
     }
 
     protected override void OnUpgrade()
