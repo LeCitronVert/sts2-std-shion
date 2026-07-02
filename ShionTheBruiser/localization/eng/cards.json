@@ -31,7 +31,7 @@
   "SHIONTHEBRUISER-SHION_FLOW_GUARD.title": "Flow Guard",
   "SHIONTHEBRUISER-SHION_FLOW_CHARGE.description": "Gain {VigorAmount} [gold]Vigor[/gold] for the next [blue]{FlowCharge}[/blue] turns.",
   "SHIONTHEBRUISER-SHION_FLOW_CHARGE.title": "Flow Charge",
-  "SHIONTHEBRUISER-SHION_HAMMER_ARM.description": "Deal {Damage:diff()} damage.\nEnemy loses [blue]{StrengthPower}[/blue] [gold]Strength[/gold].",
+  "SHIONTHEBRUISER-SHION_HAMMER_ARM.description": "Deal {Damage:diff()} damage.\nEnemy loses [blue]{StrengthPower}[/blue] [gold]Strength[/gold] for the next {Duration:plural:turn|[blue]{}[/blue] turns}.",
   "SHIONTHEBRUISER-SHION_HAMMER_ARM.title": "Hammer Arm",
   "SHIONTHEBRUISER-SHION_POWER_UP_PUNCH.description": "Deal {Damage:diff()} damage.\nGain [blue]{StrengthPower}[/blue] [gold]Strength[/gold].",
   "SHIONTHEBRUISER-SHION_POWER_UP_PUNCH.title": "Power-Up Punch",

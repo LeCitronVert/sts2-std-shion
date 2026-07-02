@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -14,6 +15,7 @@ public class ShionHammerArm() : ShionTheBruiserCard(1,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(4, ValueProp.Move),
         new PowerVar<StrengthPower>(1),
+        new DynamicVar("Duration", HammerArm.Duration),
     ];
 
     protected override async Task OnPlay(
@@ -28,7 +30,7 @@ public class ShionHammerArm() : ShionTheBruiserCard(1,
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext)
         ;
-        await PowerCmd.Apply<StrengthPower>(choiceContext, play.Target, -cardSource.DynamicVars["StrengthPower"].BaseValue, cardSource.Owner.Creature, cardSource);
+        await PowerCmd.Apply<HammerArm>(choiceContext, play.Target, cardSource.DynamicVars["StrengthPower"].BaseValue, cardSource.Owner.Creature, cardSource);
     }
 
     protected override void OnUpgrade()
