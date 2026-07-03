@@ -11,7 +11,7 @@ public class ShionSpiritBurst() : ShionTheBruiserCard(2,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<SpiritBurst>(4)
+        new PowerVar<SpiritBurst>(3)
     ];
 
     protected override async Task OnPlay(

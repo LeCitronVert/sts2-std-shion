@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -29,7 +30,7 @@ public class SpiritBurst: ShionTheBruiserPower
     {
         var power = this;
         Data? data;
-        if (card.Owner.Creature != power.Owner || !card.Tags.Contains(ShionCardTags.Energy))
+        if (card.Owner.Creature != power.Owner || (!card.Tags.Contains(ShionCardTags.Energy) && !card.Tags.Contains(CardTag.Strike)))
             data = null;
         else
         {
@@ -60,7 +61,10 @@ public class SpiritBurst: ShionTheBruiserPower
                 data.autoPlayingCards.Add(card);
                 await CardCmd.AutoPlay(choiceContext, card, null);
                 data.autoPlayingCards.Remove(card);
-                await CardPileCmd.Draw(choiceContext, 1, card.Owner);
+                if (card.Tags.Contains(ShionCardTags.Energy))
+                {
+                    await CardPileCmd.Draw(choiceContext, 1, card.Owner);
+                }
                 data = null;
             }
         }
@@ -103,6 +107,13 @@ public class SpiritBurst: ShionTheBruiserPower
             await Cmd.CustomScaledWait(0.2f, 0.4f);
             await PowerCmd.Remove((PowerModel) power);
             await PowerCmd.Apply<NoBlockPower>(
+                choiceContext,
+                power.Owner,
+                999,
+                power.Owner,
+                null
+            );
+            await PowerCmd.Apply<NoHealPower>(
                 choiceContext,
                 power.Owner,
                 999,

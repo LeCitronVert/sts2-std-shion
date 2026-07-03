@@ -95,5 +95,8 @@
   "SHIONTHEBRUISER-SPIRIT_BURST.title": "Spirit Burst",
   "SHIONTHEBRUISER-SPIRIT_BREAK.description": "Your next Attack is [gold]Critical.[/gold]",
   "SHIONTHEBRUISER-SPIRIT_BREAK.smartDescription": "Your {Amount:plural:next Attack is|next [blue]{}[/blue] Attacks are} [gold]Critical[/gold].",
-  "SHIONTHEBRUISER-SPIRIT_BREAK.title": "Spirit Break"
+  "SHIONTHEBRUISER-SPIRIT_BREAK.title": "Spirit Break",
+  "SHIONTHEBRUISER-NO_HEAL_POWER.description": "You cannot heal for the rest of the fight.",
+  "SHIONTHEBRUISER-NO_HEAL_POWER.smartDescription": "You cannot heal for the rest of the fight.",
+  "SHIONTHEBRUISER-NO_HEAL_POWER.title": "No Heal"
 }
