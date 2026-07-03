@@ -11,8 +11,12 @@ public class ShionShieldBuster() : ShionTheBruiserCard(1,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(14, ValueProp.Move),
-        new RepeatVar(3)
+        new DamageVar(1, ValueProp.Move)
+    ];
+    
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [
+        CardKeyword.Exhaust,
+        CardKeyword.Retain,
     ];
 
     protected override async Task OnPlay(
@@ -22,10 +26,10 @@ public class ShionShieldBuster() : ShionTheBruiserCard(1,
         var card = this;
         var target = play.Target;
         ArgumentNullException.ThrowIfNull(target);
-        var amountOfHits = target.Block > 0 ? card.DynamicVars.Repeat.IntValue : 1;
         
+        VfxCmd.PlayOnCreatureCenter(card.Owner.Creature, "vfx/vfx_flying_slash");
+        await CreatureCmd.LoseBlock(target, target.Block);
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
-            .WithHitCount(amountOfHits)
             .FromCard(card)
             .Targeting(target)
             .WithHitFx("vfx/vfx_attack_slash")
@@ -35,7 +39,6 @@ public class ShionShieldBuster() : ShionTheBruiserCard(1,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(4);
-        DynamicVars.Repeat.UpgradeValueBy(1);
+        EnergyCost.UpgradeBy(-1);
     }
 }
