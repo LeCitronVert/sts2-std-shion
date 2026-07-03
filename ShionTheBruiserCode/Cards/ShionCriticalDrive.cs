@@ -23,7 +23,7 @@ public class ShionCriticalDrive() : CritContributorCard(2,
         CardPlay play)
     {
         var card = this;
-        await PowerCmd.Apply<TempCriticalAttackNext>(
+        await PowerCmd.Apply<CriticalAttackNext>(
             choiceContext,
             card.Owner.Creature,
             1,

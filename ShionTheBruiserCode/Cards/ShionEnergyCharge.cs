@@ -13,7 +13,8 @@ public class ShionEnergyCharge() : ShionTheBruiserCard(1,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<EnergyCharge>(15),
+        new PowerVar<EnergyCharge>(3),
+        new DynamicVar("DamageAmount", EnergyCharge.DamageUp)
     ];
     
     protected override HashSet<CardTag> CanonicalTags => [ShionCardTags.Energy];
@@ -23,12 +24,18 @@ public class ShionEnergyCharge() : ShionTheBruiserCard(1,
         CardPlay play)
     {
         var card = this;
-        await PowerCmd.Apply<EnergyCharge>(choiceContext, card.Owner.Creature, card.DynamicVars["EnergyCharge"].BaseValue, card.Owner.Creature, card);
+        await PowerCmd.Apply<EnergyCharge>(
+            choiceContext, 
+            card.Owner.Creature, 
+            card.DynamicVars["EnergyCharge"].BaseValue, 
+            card.Owner.Creature, 
+            card
+        );
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["EnergyCharge"].UpgradeValueBy(5);
+        DynamicVars["EnergyCharge"].UpgradeValueBy(2);
         EnergyCost.UpgradeBy(-1);
     }
 }

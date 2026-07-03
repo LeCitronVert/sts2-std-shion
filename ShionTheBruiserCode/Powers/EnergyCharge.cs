@@ -16,6 +16,8 @@ public class EnergyCharge : ShionTheBruiserPower
 
     public override PowerStackType StackType =>
         PowerStackType.Counter;
+
+    public const int DamageUp = 5;
     
     public override Decimal ModifyDamageAdditive(
         Creature? target,
@@ -29,18 +31,12 @@ public class EnergyCharge : ShionTheBruiserPower
             || cardSource == null 
             || !cardSource.Tags.Contains(ShionCardTags.Energy) 
             || dealer != this.Owner 
-            && cardSource.Owner.Creature != this.Owner ? 0M : Amount
+            && cardSource.Owner.Creature != this.Owner ? 0M : DamageUp
         ;
     }
 
-    public override async Task AfterSideTurnEnd(
-        PlayerChoiceContext choiceContext,
-        CombatSide side,
-        IEnumerable<Creature> participants)
+    public override async Task AfterModifyingDamageAmount(CardModel? cardSource)
     {
-        var power = this;
-        if (!participants.Contains(power.Owner))
-            return;
-        await PowerCmd.Remove(power);
+        await PowerCmd.Decrement(this);
     }
 }

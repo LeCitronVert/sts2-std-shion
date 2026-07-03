@@ -6,12 +6,12 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionSpiritBreak() : ShionTheBruiserCard(1,
-    CardType.Skill, CardRarity.Rare,
+public class ShionSpiritBreak() : ShionTheBruiserCard(3,
+    CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<SpiritBreak>(1)
+        new PowerVar<SpiritBreak>(3)
     ];
 
     protected override async Task OnPlay(
@@ -19,7 +19,7 @@ public class ShionSpiritBreak() : ShionTheBruiserCard(1,
         CardPlay play)
     {
         var card = this;
-        await PowerCmd.Apply<SpiritBreak>(
+        await PowerCmd.Apply<CriticalAttackNext>(
             choiceContext,
             card.Owner.Creature,
             DynamicVars["SpiritBreak"].BaseValue,
@@ -30,6 +30,6 @@ public class ShionSpiritBreak() : ShionTheBruiserCard(1,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["SpiritBreak"].UpgradeValueBy(1);
+        DynamicVars["SpiritBreak"].UpgradeValueBy(2);
     }
 }

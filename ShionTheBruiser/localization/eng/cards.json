@@ -41,7 +41,7 @@
   "SHIONTHEBRUISER-SHION_BLOOD_RONDO.title": "Blood Rondo",
   "SHIONTHEBRUISER-SHION_EMERALD_REFLECTION.description": "Gain {Block:diff()} [gold]Block[/gold].\nNext turn, gain {Energy:energyIcons()} and draw {DrawCardsNextTurnPower:plural:[blue]{}[/blue] more card|[blue]{}[/blue] more cards}.",
   "SHIONTHEBRUISER-SHION_EMERALD_REFLECTION.title": "Emerald Reflection",
-  "SHIONTHEBRUISER-SHION_AN_OPENING.description": "Gain [blue]+{CritRateUp}%[/blue] [gold]Critical Hit Rate[/gold] this turn.\nDraw {Cards:diff()} Attack from your Draw Pile.",
+  "SHIONTHEBRUISER-SHION_AN_OPENING.description": "Gain [blue]+{CritRateUp}%[/blue] [gold]Critical Hit Rate[/gold] for the next 3 turns.\nDraw {Cards:diff()} Attack from your Draw Pile.",
   "SHIONTHEBRUISER-SHION_AN_OPENING.title": "An Opening!",
   "SHIONTHEBRUISER-SHION_GUARD_OPENER.description": "Deal {Damage:diff()} damage to an enemy with Block.",
   "SHIONTHEBRUISER-SHION_GUARD_OPENER.title": "Guard Opener",
@@ -73,7 +73,7 @@
   "SHIONTHEBRUISER-SHION_CHAOS_CRASH.title": "Chaos Crash",
   "SHIONTHEBRUISER-SHION_HOMING_BLITZ.description": "Deal {Damage:diff()} damage to ALL enemies.\nHits as many times as there are enemies.",
   "SHIONTHEBRUISER-SHION_HOMING_BLITZ.title": "Homing Blitz",
-  "SHIONTHEBRUISER-SHION_CRITICAL_DRIVE.description": "The next Attack you play this turn will be a [gold]Critical Attack[/gold].",
+  "SHIONTHEBRUISER-SHION_CRITICAL_DRIVE.description": "The next Attack you play will be a [gold]Critical Attack[/gold].",
   "SHIONTHEBRUISER-SHION_CRITICAL_DRIVE.title": "Critical Drive",
   "SHIONTHEBRUISER-SHION_IMPROVISE.description": "Add a random Colorless card to your Hand. It's free to play this turn.",
   "SHIONTHEBRUISER-SHION_IMPROVISE.title": "Improvise",
@@ -103,7 +103,7 @@
   "SHIONTHEBRUISER-SHION_STARTING_GATE.title": "Starting Gate",
   "SHIONTHEBRUISER-SHION_DRAGONS_MIGHT.description": "Your Strikes deal [blue]{DragonsMight}[/blue] damage more per unique buff you have.",
   "SHIONTHEBRUISER-SHION_DRAGONS_MIGHT.title": "Dragon's Might",
-  "SHIONTHEBRUISER-SHION_ENERGY_CHARGE.description": "This turn, your Energy Attacks deal [blue]{EnergyCharge}[/blue] more damage.",
+  "SHIONTHEBRUISER-SHION_ENERGY_CHARGE.description": "Your next [blue]{EnergyCharge}[/blue] Energy Attacks deal [blue]{DamageAmount}[/blue] more damage.",
   "SHIONTHEBRUISER-SHION_ENERGY_CHARGE.title": "Energy Charge",
   "SHIONTHEBRUISER-SHION_MIGHTY_GUARD.description": "Reduces attack damage taken by 80% for the next {MightyGuard:plural:turn|[blue]{}[/blue] turns}.",
   "SHIONTHEBRUISER-SHION_MIGHTY_GUARD.title": "Mighty Guard",
@@ -148,5 +148,7 @@
   "SHIONTHEBRUISER-SHION_SPIRIT_BREAK.description": "Your {SpiritBreak:plural:next Attack is|next [blue]{}[/blue] Attacks are} [gold]Critical[/gold].",
   "SHIONTHEBRUISER-SHION_SPIRIT_BREAK.title": "Spirit Break",
   "SHIONTHEBRUISER-SHION_ENERGY_BOMB.description": "Deal {Damage:diff()} damage.{IfUpgraded:show:\n[green]{CritAttackRate}% chance to deal a Critical Hit.[/green]|}",
-  "SHIONTHEBRUISER-SHION_ENERGY_BOMB.title": "Energy Bomb"
+  "SHIONTHEBRUISER-SHION_ENERGY_BOMB.title": "Energy Bomb",
+  "SHIONTHEBRUISER-SHION_DRAGON_PULSE.description": "Heal {CalculationExtra::diff()} HP per unique buff you have.{InCombat:\n([blue]{HealAmount}[/blue] HP)|}",
+  "SHIONTHEBRUISER-SHION_DRAGON_PULSE.title": "Dragon Pulse"
 }
