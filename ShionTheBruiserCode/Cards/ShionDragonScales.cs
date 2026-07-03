@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
@@ -18,6 +19,8 @@ public class ShionDragonScales() : ShionDefensiveCard(2,
             ShionMechanicsHelper.GetDragonUniqueBuffCount(model.Owner.Creature)
         ),
     ];
+    
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [ShionCardKeywords.Defensive];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,

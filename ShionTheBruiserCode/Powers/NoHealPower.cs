@@ -24,7 +24,7 @@ public class NoHealPower() : ShionTheBruiserPower
         CreatureCmd.Damage(
             new ThrowingPlayerChoiceContext(),
             Owner,
-            new DamageVar(delta, ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Unpowered),
+            new DamageVar(delta, ValueProp.Unblockable | ValueProp.Unpowered),
             null,
             null
         );

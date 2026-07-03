@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
@@ -15,6 +16,8 @@ public class ShionRevengeDrive() : ShionDefensiveCard(1,
         new PowerVar<VigorPower>(6),
         new PowerVar<RevengeDrive>(4),
     ];
+    
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [ShionCardKeywords.Defensive];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -37,6 +40,8 @@ public class ShionRevengeDrive() : ShionDefensiveCard(1,
             card.Owner.Creature,
             card
         );
+
+        await ApplyDefensiveToPlayer();
     }
 
     protected override void OnUpgrade()

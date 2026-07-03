@@ -34,7 +34,7 @@ public class ShionEnergyBomb() : CritContributorCard(3,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["CritAttackRate"].UpgradeValueBy(25);
+        DynamicVars[CritAttackRateVar.Key].UpgradeValueBy(25);
     }
 
     public decimal GetCritHitRateBonus(CardModel? sourceCard) =>
