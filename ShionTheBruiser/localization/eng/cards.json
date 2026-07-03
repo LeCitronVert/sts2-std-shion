@@ -150,5 +150,7 @@
   "SHIONTHEBRUISER-SHION_ENERGY_BOMB.description": "Deal {Damage:diff()} damage.{IfUpgraded:show:\n[green]{CritAttackRate}% chance to deal a Critical Hit.[/green]|}",
   "SHIONTHEBRUISER-SHION_ENERGY_BOMB.title": "Energy Bomb",
   "SHIONTHEBRUISER-SHION_DRAGON_PULSE.description": "Heal {CalculationExtra::diff()} HP per unique buff you have.{InCombat:\n([blue]{HealAmount}[/blue] HP)|}",
-  "SHIONTHEBRUISER-SHION_DRAGON_PULSE.title": "Dragon Pulse"
+  "SHIONTHEBRUISER-SHION_DRAGON_PULSE.title": "Dragon Pulse",
+  "SHIONTHEBRUISER-SHION_DRAGON_SCALES.description": "Gain [blue]{CalculationExtra::diff()}[/blue] Block per unique buff you have.{InCombat:\n([blue]{BlockAmount}[/blue] Block)|}",
+  "SHIONTHEBRUISER-SHION_DRAGON_SCALES.title": "Dragon Scales"
 }
