@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Critical;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
@@ -17,6 +18,8 @@ public class ShionEnergyBomb() : CritContributorCard(3,
         new DamageVar(30, ValueProp.Move),
         new CritAttackRateVar(0)
     ];
+    
+    protected override HashSet<CardTag> CanonicalTags => [ShionCardTags.Energy];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
