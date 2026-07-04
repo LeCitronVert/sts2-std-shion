@@ -1,4 +1,5 @@
-﻿using BaseLib.Abstracts;
+﻿using System.Runtime.InteropServices;
+using BaseLib.Abstracts;
 using BaseLib.Utils.NodeFactories;
 using ShionTheBruiser.ShionTheBruiserCode.Extensions;
 using Godot;
@@ -60,4 +61,17 @@ public class ShionTheBruiser : PlaceholderCharacterModel
     public override string CustomCharacterSelectIconPath => "char_select_char_name.png".CharacterUiPath();
     public override string CustomCharacterSelectLockedIconPath => "char_select_char_name_locked.png".CharacterUiPath();
     public override string CustomMapMarkerPath => "map_marker_char_name.png".CharacterUiPath();
+    
+    public override List<string> GetArchitectAttackVfx()
+    {
+        int num = 20;
+        List<string> list = new List<string>(num);
+        CollectionsMarshal.SetCount<string>(list, num);
+        Span<string> span = CollectionsMarshal.AsSpan<string>(list);
+        for (int i = 0; i < 20; i++)
+        {
+            span[i] = "vfx/vfx_heavy_blunt";
+        }
+        return list;
+    }
 }
