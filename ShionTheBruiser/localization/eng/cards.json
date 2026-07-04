@@ -154,5 +154,7 @@
   "SHIONTHEBRUISER-SHION_DRAGON_SCALES.description": "Gain [blue]{CalculationExtra::diff()}[/blue] Block per unique buff you have.{InCombat:\n([blue]{BlockAmount}[/blue] Block)|}",
   "SHIONTHEBRUISER-SHION_DRAGON_SCALES.title": "Dragon Scales",
   "SHIONTHEBRUISER-SHION_PSYCHO_CUT.description": "Your Energy Attacks deal [blue]{EnergyDamageUp}[/blue] more damage.\nDeal {Damage:diff()} damage.\nIs considered an Energy Attack.",
-  "SHIONTHEBRUISER-SHION_PSYCHO_CUT.title": "Psycho Cut"
+  "SHIONTHEBRUISER-SHION_PSYCHO_CUT.title": "Psycho Cut",
+  "SHIONTHEBRUISER-SHION_CHILD_OF_MANY.description": "Pick between 3 random Powers from other classes. Play it.",
+  "SHIONTHEBRUISER-SHION_CHILD_OF_MANY.title": "Child Of Many"
 }
