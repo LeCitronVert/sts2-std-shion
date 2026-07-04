@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -31,7 +32,7 @@ public class ShionExtremeSpeed() : ShionTheBruiserCard(0,
             return;
         }
         
-        await PowerCmd.Apply<SlowPower>(
+        await PowerCmd.Apply<ExtremeSpeed>(
             choiceContext,
             play.Target,
             1M,
