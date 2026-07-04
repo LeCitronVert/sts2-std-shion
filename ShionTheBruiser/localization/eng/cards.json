@@ -158,5 +158,7 @@
   "SHIONTHEBRUISER-SHION_CHILD_OF_MANY.description": "Pick between 3 random Powers from other classes. Play it.",
   "SHIONTHEBRUISER-SHION_CHILD_OF_MANY.title": "Child Of Many",
   "SHIONTHEBRUISER-SHION_NIGHT_SLASH.description": "Deal {Damage:diff()} damage.\n{CriticalAttackRate}% chance to deal a [gold]Critical Hit[/gold].",
-  "SHIONTHEBRUISER-SHION_NIGHT_SLASH.title": "Night Slash"
+  "SHIONTHEBRUISER-SHION_NIGHT_SLASH.title": "Night Slash",
+  "SHIONTHEBRUISER-SHION_UNUSUAL_STRATEGIES.description": "Your Strikes cost {UnusualStrategies:energyIcons()} less.",
+  "SHIONTHEBRUISER-SHION_UNUSUAL_STRATEGIES.title": "Unusual Strategies"
 }

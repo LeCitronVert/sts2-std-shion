@@ -64,7 +64,23 @@
   "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-3.ancient": "Very simple, yes!! But not as much as you!!!",
   "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-3.next": "Feel hurt",
   "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-4.char": "(Ouch?!)",
+
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.3-0r.ancient": "Too angry!! Friend should calm down!",
+
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.4-0.ancient": "Friend! You an Ironclad? Where armor? Where sword?!",
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.4-0.next": "Answer",
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.4-1.char": "Iron-what? No, no, I'm just... me. Good ol' boring me.",
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.4-1.next": "Continue",
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.4-2.ancient": "Not boring!! Very unique friend!",
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.4-2.next": "Continue",
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.4-3.ancient": "... Are you sure? Not Ironclad? Not even a little?!",
   
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.5-0r.char": "I wonder where this little guy comes from?",
+
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.6-0.char": "I'm about done with this entire place... I should just wreck it all...",
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.6-0.next": "Continue",
+  "OROBAS.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.6-1.ancient": "No! Not destroy!! I live here!!",
+
   "PAEL.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-0.ancient": "[thinky_dots]Such a curious soul, you are. You burn bright, and cast such a tall shadow.[/thinky_dots]",
   "PAEL.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-0.next": "Continue",
   "PAEL.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-1.ancient": "Come closer. Let me ascertain your nature.",
@@ -81,6 +97,18 @@
   "PAEL.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-2.next": "'Whatever...'",
   "PAEL.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-3.ancient": "[thinky_dots]Come, then. Accept my flesh, and perhaps it will bring your draconic potential out.[/thinky_dots]",
 
+  "PAEL.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.3-0r.ancient": "[thinky_dots]Rest your weary wings with me, for a spell...[/thinky_dots]",
+
+  "PAEL.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.4-0.ancient": "[thinky_dots]I had a dream about your friend in red and white.[/thinky_dots]",
+  "PAEL.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.4-0.next": "Ask",
+  "PAEL.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.4-1.char": "Oh? Which one?",
+  "PAEL.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.4-1.next": "Continue",
+  "PAEL.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.4-2.ancient": "[thinky_dots]The angry one...[/thinky_dots]",
+  "PAEL.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.4-2.next": "Ask",
+  "PAEL.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.4-r.char": "... Which one?!",
+
+  "PAEL.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.5-0r.ancient": "[thinky_dots]Pride... Power... Is it all worth it to you?[/thinky_dots]",
+  
   "TEZCATARA.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-0.ancient": "Oh, dear! Another human warrior attempting to achieve glory?",
   "TEZCATARA.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-0.next": "Talk",
   "TEZCATARA.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-1.char": "Nah, just trying to get home.",
