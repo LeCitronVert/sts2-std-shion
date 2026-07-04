@@ -15,7 +15,7 @@ public class ShionNightSlash() : CritContributorCard(3,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(25, ValueProp.Move),
-        new CritAttackRateVar(50),
+        new CritAttackRateVar(100),
         new CritDisplayTooltipVar()
     ];
 
@@ -35,7 +35,7 @@ public class ShionNightSlash() : CritContributorCard(3,
 
     protected override void OnUpgrade()
     {
-        DynamicVars[CritAttackRateVar.Key].UpgradeValueBy(50);
+        DynamicVars.Damage.UpgradeValueBy(7);
     }
 
     public decimal GetCritAttackRateBonus(CardModel? sourceCard)

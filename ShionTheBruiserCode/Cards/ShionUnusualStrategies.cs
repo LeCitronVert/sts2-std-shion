@@ -12,6 +12,7 @@ public class ShionUnusualStrategies() : ShionTheBruiserCard(2,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<UnusualStrategies>(1),
+        new EnergyVar(1)
     ];
 
     protected override async Task OnPlay(
