@@ -15,6 +15,9 @@ public static class MonsterPowersHelper
     {
         [typeof(WeakPower)] = (ctx, target, amount, applier, card) =>
             PowerCmd.Apply<WeakPower>(ctx, target, amount, applier, card),
+        
+        [typeof(FrailPower)] = (ctx, target, amount, applier, card) =>
+            PowerCmd.Apply<VulnerablePower>(ctx, target, amount, applier, card),
 
         [typeof(VulnerablePower)] = (ctx, target, amount, applier, card) =>
             PowerCmd.Apply<VulnerablePower>(ctx, target, amount, applier, card),
@@ -72,6 +75,12 @@ public static class MonsterPowersHelper
         
         [typeof(DampenPower)] = (ctx, target, amount, applier, card) =>
             PowerCmd.Apply<NeurosurgePower>(ctx, target, amount, applier, card),
+        
+        [typeof(BurrowedPower)] = (ctx, target, amount, applier, card) =>
+            PowerCmd.Apply<BarricadePower>(ctx, target, amount, applier, card),
+        
+        [typeof(HighVoltagePower)] = (ctx, target, amount, applier, card) =>
+            PowerCmd.Apply<RitualPower>(ctx, target, amount, applier, card),
     };
 
     public static bool IsCopyable(Type powerType) => _applicators.ContainsKey(powerType);

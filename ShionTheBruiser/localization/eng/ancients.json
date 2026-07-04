@@ -120,6 +120,7 @@
   "TEZCATARA.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-0.ancient": "Oh, Shion, dearie... What will take it for you to accept [jitter][b]burning your weakness[/b][/jitter] away?",
   "TEZCATARA.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-0.next": "Leave",
   "TEZCATARA.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-1.char": "[i][font_size=22]Shion silently turns and leaves.[/font_size][/i]",
+  "TEZCATARA.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-1.next": "Continue",
   "TEZCATARA.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-2.ancient": "[jitter][b]Kakaka![/b][/jitter] It's a matter of when, dearie, not if!",
   "TEZCATARA.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-2.next": "Continue",
   "TEZCATARA.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-3.ancient": "I so wish to be here to see it happen, but if it isn't meant to be, let me at least assist you some more.",
@@ -146,7 +147,7 @@
   "TANX.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-1.next": "Continue",
   "TANX.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.0-2.ancient": "INCREDIBLE!! BUT YOU COULD HAVE [jitter][b]MORE[/b][/jitter] WEAPONS!!!",
   
-  "TANX.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.1-0r.char": "HAVE A WEAPON!! BUT IF YOU PICK DAGGERS, I WILL BE DISAPPOINTED!!!!",
+  "TANX.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.1-0r.ancient": "HAVE A WEAPON!! BUT IF YOU PICK DAGGERS, I WILL BE DISAPPOINTED!!!!",
   
   "TANX.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-0.ancient": "FIGHT ME, BRUISER!",
   "TANX.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-0.next": "Fight",

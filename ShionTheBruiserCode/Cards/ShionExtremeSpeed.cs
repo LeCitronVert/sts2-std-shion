@@ -19,7 +19,7 @@ public class ShionExtremeSpeed() : ShionTheBruiserCard(0,
         HoverTipFactory.FromPower<SlowPower>(),
     ];
     
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [ShionCardKeywords.Stale, CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -27,10 +27,6 @@ public class ShionExtremeSpeed() : ShionTheBruiserCard(0,
     {
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
-        if (play.Target.HasPower<SlowPower>())
-        {
-            return;
-        }
         
         await PowerCmd.Apply<ExtremeSpeed>(
             choiceContext,
@@ -43,5 +39,6 @@ public class ShionExtremeSpeed() : ShionTheBruiserCard(0,
 
     protected override void OnUpgrade()
     {
+        RemoveKeyword(CardKeyword.Exhaust);
     }
 }

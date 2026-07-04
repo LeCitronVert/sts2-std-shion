@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionSkybreakerDance() : ShionTheBruiserCard(2,
+public class ShionSkybreakerDance() : ShionTheBruiserCard(1,
     CardType.Attack, CardRarity.Common,
     TargetType.AnyEnemy)
 {

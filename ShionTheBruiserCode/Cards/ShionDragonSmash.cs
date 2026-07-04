@@ -13,7 +13,7 @@ public class ShionDragonSmash() : ShionTheBruiserCard(0,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CalculationBaseVar(12),
+        new CalculationBaseVar(3),
         new ExtraDamageVar(1),
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier((model, _) => ShionMechanicsHelper.GetDragonUniqueBuffCount(model.Owner.Creature)),
     ];
