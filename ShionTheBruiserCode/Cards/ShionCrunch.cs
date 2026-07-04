@@ -7,7 +7,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionCrunch() : ShionTheBruiserCard(2,
+public class ShionCrunch() : ShionTheBruiserCard(1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.AnyEnemy)
 {
