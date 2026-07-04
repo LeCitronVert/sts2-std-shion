@@ -156,5 +156,7 @@
   "SHIONTHEBRUISER-SHION_PSYCHO_CUT.description": "Your Energy Attacks deal [blue]{EnergyDamageUp}[/blue] more damage.\nDeal {Damage:diff()} damage.\nIs considered an Energy Attack.",
   "SHIONTHEBRUISER-SHION_PSYCHO_CUT.title": "Psycho Cut",
   "SHIONTHEBRUISER-SHION_CHILD_OF_MANY.description": "Pick between 3 random Powers from other classes. Play it.",
-  "SHIONTHEBRUISER-SHION_CHILD_OF_MANY.title": "Child Of Many"
+  "SHIONTHEBRUISER-SHION_CHILD_OF_MANY.title": "Child Of Many",
+  "SHIONTHEBRUISER-SHION_NIGHT_SLASH.description": "Deal {Damage:diff()} damage.\n{CriticalAttackRate}% chance to deal a [gold]Critical Hit[/gold].",
+  "SHIONTHEBRUISER-SHION_NIGHT_SLASH.title": "Night Slash"
 }
