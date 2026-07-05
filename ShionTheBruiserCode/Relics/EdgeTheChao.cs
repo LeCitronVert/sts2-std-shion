@@ -30,28 +30,25 @@ public class EdgeTheChao() : ShionTheBruiserRelic
     ];
 
 
-    public override Task AfterPowerAmountChanged(
+    public override async Task AfterPowerAmountChanged(
         PlayerChoiceContext context,
         PowerModel power,
         decimal amount,
         Creature? applier,
         CardModel? cardSource)
     {
-        if (power.Owner != Owner.Creature || power is not VigorPower || amount >= 0) return Task.CompletedTask;
+        if (power.Owner != Owner.Creature || power is not VigorPower || amount >= 0) return;
 
         var amountToRefund = Math.Min(
-            Math.Abs(amount) * (RefundPercent / 100),
+            Math.Abs(amount) * (RefundPercent / 100M),
             RefundCap
         );
         
-        PowerCmd.Apply<VigorPower>(
+        await PowerCmd.Apply<VigorPower>(
             context,
             Owner.Creature,
             amountToRefund,
             Owner.Creature,
-            null)
-        ;
-        
-        return Task.CompletedTask;
+            null);
     }
 }

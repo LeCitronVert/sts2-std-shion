@@ -31,7 +31,7 @@ public class SMonitor() : ShionTheBruiserRelic
         await PowerCmd.Apply<BufferPower>(
             new ThrowingPlayerChoiceContext(),
             relic.Owner.Creature,
-            DynamicVars["SpiritBreak"].BaseValue,
+            1,
             relic.Owner.Creature,
             null
         );

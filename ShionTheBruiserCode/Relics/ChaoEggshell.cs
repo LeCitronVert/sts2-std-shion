@@ -52,7 +52,7 @@ public class ChaoEggshell() : ShionTheBruiserRelic
     {
         if (target != Owner.Creature) return amount;
         var reduction = ReductionAmount * _attacksReceivedThisTurn;
-        var damage = Math.Max(0M, amount - 1 * reduction);
+        var damage = Math.Max(0M, amount - reduction);
         _attacksReceivedThisTurn++;
 
         if (reduction > 0)
