@@ -11,6 +11,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Character;
 using ShionTheBruiser.ShionTheBruiserCode.Critical;
 using ShionTheBruiser.ShionTheBruiserCode.Extensions;
+using ShionTheBruiser.ShionTheBruiserCode.Monsters;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
@@ -52,7 +53,7 @@ public class AbbyTheAbsol : CritContributorRelic, ICritAttackRateContributor, IO
 
     private async Task SummonPet()
     {
-        await PlayerCmd.AddPet<Byrdpip>(this.Owner);
+        await PlayerCmd.AddPet<AbbyMonster>(this.Owner);
     }
 
     public async Task OnCriticalHit(Creature attacker, Creature target, DamageResult damageResult, ValueProp props,
@@ -60,19 +61,23 @@ public class AbbyTheAbsol : CritContributorRelic, ICritAttackRateContributor, IO
     {
         if (target.IsDead || Owner.PlayerCombatState == null || sourceCard == null) return;
 
-         await DamageCmd
-             .Attack(damageResult.TotalDamage)
-             .FromCard(sourceCard)
-             .Unpowered()
-             .Targeting(target)
-             .WithAttackerAnim(
-                 "Attack", 
-                 Owner.Character.AttackAnimDelay, 
-                 Owner.PlayerCombatState.GetPet<Byrdpip>()
-                )
-             .WithHitFx("vfx/vfx_attack_slash", "event:/sfx/byrdpip/byrdpip_attack")
-             .Execute(choiceContext)
+        Flash();
+        await Cmd.Wait(0.3f);
+        await DamageCmd
+            .Attack(damageResult.TotalDamage)
+            .FromCard(sourceCard)
+            .Unpowered()
+            .Targeting(target)
+            .WithAttackerAnim(
+             "Attack", 
+             Owner.Character.AttackAnimDelay, 
+             Owner.PlayerCombatState.GetPet<AbbyMonster>()
+            )
+            .WithHitFx("vfx/vfx_attack_slash", "event:/sfx/byrdpip/byrdpip_attack")
+            .Execute(choiceContext)
         ;
+        await Cmd.Wait(0.3f);
+
 
     }
 }
