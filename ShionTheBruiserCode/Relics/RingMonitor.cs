@@ -1,11 +1,14 @@
+using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
+[Pool(typeof(SharedRelicPool))]
 public class RingMonitor() : ShionTheBruiserRelic
 {
     public override RelicRarity Rarity =>

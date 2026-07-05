@@ -1,3 +1,4 @@
+using BaseLib.Utils;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -6,10 +7,12 @@ using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.RelicPools;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
+[Pool(typeof(SharedRelicPool))]
 public class SouvenirPicture() : ShionTheBruiserRelic
 {
     public override RelicRarity Rarity =>
@@ -30,7 +33,6 @@ public class SouvenirPicture() : ShionTheBruiserRelic
         if (nextCards.Count == 0 || player.Creature.CombatState == null)
             return;
         
-        // Show preview to player using FromSimpleGrid with 0 selection required
         await CardSelectCmd.FromSimpleGrid(
             choiceContext,
             nextCards,
@@ -42,7 +44,6 @@ public class SouvenirPicture() : ShionTheBruiserRelic
                 )
         );
         
-        // Now offer the Yes/No choice for shuffling
         CardModel? choice = await CardSelectCmd.FromChooseACardScreen(
             choiceContext,
             new List<CardModel> {
