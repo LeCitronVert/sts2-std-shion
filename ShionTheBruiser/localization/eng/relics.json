@@ -7,5 +7,8 @@
   "SHIONTHEBRUISER-BATTLE_GLOVES.title": "Battle Gloves",
   "SHIONTHEBRUISER-UPGRADINATOR.description": "TEST!!! Upgrades all cards at the start of the fight.",
   "SHIONTHEBRUISER-UPGRADINATOR.flavor": "If you see this, I fucked up. - the Dev",
-  "SHIONTHEBRUISER-UPGRADINATOR.title": "Upgradinator"
+  "SHIONTHEBRUISER-UPGRADINATOR.title": "Upgradinator",
+  "SHIONTHEBRUISER-SPIKES_GLOVES.description": "Your Strikes and Energy Attacks deal {Damage::diff()} more damage.",
+  "SHIONTHEBRUISER-SPIKES_GLOVES.flavor": "It's a bad look, but is it a worse look than the rags you started with?",
+  "SHIONTHEBRUISER-SPIKES_GLOVES.title": "Spiked Gloves"
 }

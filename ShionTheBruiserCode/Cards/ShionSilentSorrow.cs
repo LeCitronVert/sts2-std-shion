@@ -4,19 +4,22 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
-using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionDragonScales() : ShionDefensiveCard(2,
+public class ShionSilentSorrow() : ShionTheBruiserCard(2,
     CardType.Skill, CardRarity.Rare,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CalculationBaseVar(0),
-        new CalculationExtraVar(1),
-        new CalculatedVar("BlockAmount").WithMultiplier((model, _) => 
-            ShionMechanicsHelper.GetDragonUniqueBuffCount(model.Owner.Creature)
+        new CalculationBaseVar(5),
+        new CalculationExtraVar(15),
+        new CalculatedBlockVar(ValueProp.Move).WithMultiplier((model, _) =>  {
+                var missingHpRatio = (model.Owner.Creature.MaxHp - model.Owner.Creature.CurrentHp)
+                                     / (float)model.Owner.Creature.MaxHp;
+
+                return (decimal) missingHpRatio;
+            }
         ),
     ];
     
@@ -27,20 +30,16 @@ public class ShionDragonScales() : ShionDefensiveCard(2,
         CardPlay play)
     {
         var card = this;
-        var blockAmount = ShionMechanicsHelper.GetDragonUniqueBuffCount(card.Owner.Creature) * DynamicVars.CalculationExtra.IntValue;
-        if (blockAmount <= 0) return;
-        
         await CreatureCmd.GainBlock(
             card.Owner.Creature,
-            new BlockVar(blockAmount, ValueProp.Move),
-            play,
-            false
+            new BlockVar(DynamicVars.CalculatedBlock.Calculate(card.Owner.Creature), ValueProp.Move),
+            play
         );
-        await ApplyDefensiveToPlayer();
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.CalculationExtra.UpgradeValueBy(1);
+        DynamicVars.CalculationBase.UpgradeValueBy(4);
+        DynamicVars.CalculationExtra.UpgradeValueBy(7);
     }
 }
