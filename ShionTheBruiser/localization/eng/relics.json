@@ -41,5 +41,8 @@
   "SHIONTHEBRUISER-MASTER_PENDANT.title": "Master Emerald Shard Pendant",
   "SHIONTHEBRUISER-MASTER_PENDANT.cardSelection": "You feel a quiet, serene presence from the Pendant.\nChoose a card to add to your Deck.",
   "SHIONTHEBRUISER-MASTER_PENDANT.rest_title": "Lull",
-  "SHIONTHEBRUISER-MASTER_PENDANT.rest_desc": "Add a [gold]powerful card[/gold] to your Deck."
+  "SHIONTHEBRUISER-MASTER_PENDANT.rest_desc": "Add a [gold]powerful card[/gold] to your Deck.",
+  "SHIONTHEBRUISER-SPEED_SHOES.description": "Draw 1 card when you play a Strike card.",
+  "SHIONTHEBRUISER-SPEED_SHOES.flavor": "Dr.Eggman says it's just a placebo. Sonic says they legit make you faster. Somehow, they're both correct.",
+  "SHIONTHEBRUISER-SPEED_SHOES.title": "Speed Shoes"
 }
