@@ -6,5 +6,7 @@
   "SHIONTHEBRUISER-STALE.description": "Doesn't offer any advantages when upgraded.",
   "SHIONTHEBRUISER-STALE.title": "Stale",
   "SHIONTHEBRUISER-LATENT.description": "Shuffled at the end of your Deck at the beginning of each fight.",
-  "SHIONTHEBRUISER-LATENT.title": "Latent"
+  "SHIONTHEBRUISER-LATENT.title": "Latent",
+  "SHIONTHEBRUISER-EMERALDPOWER.description": "Exhausts ALL other Emerald Powers in your possession upon play.",
+  "SHIONTHEBRUISER-EMERALDPOWER.title": "Emerald Power"
 }

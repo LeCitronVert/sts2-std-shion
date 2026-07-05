@@ -160,5 +160,7 @@
   "SHIONTHEBRUISER-SHION_NIGHT_SLASH.description": "Deal {Damage:diff()} damage.\nAlways a [gold]Critical Hit[/gold].",
   "SHIONTHEBRUISER-SHION_NIGHT_SLASH.title": "Night Slash",
   "SHIONTHEBRUISER-SHION_UNUSUAL_STRATEGIES.description": "Your Strikes cost {Energy:energyIcons()} less.",
-  "SHIONTHEBRUISER-SHION_UNUSUAL_STRATEGIES.title": "Unusual Strategies"
+  "SHIONTHEBRUISER-SHION_UNUSUAL_STRATEGIES.title": "Unusual Strategies",
+  "SHIONTHEBRUISER-EMERALD_POWER_VISION.description": "Gain [blue]{IntangiblePower}[/blue] [gold]Intangible[/gold].\nBecome immune to Debuffs until next turn..",
+  "SHIONTHEBRUISER-EMERALD_POWER_VISION.title": "Emerald Power : Vision"
 }
