@@ -23,7 +23,10 @@ public class SpiritBreak : CritContributorPower, ICritAttackRateContributor
     
     public decimal GetCritAttackRateBonus(CardModel? sourceCard)
     {
-        return Owner != sourceCard?.Owner.Creature || sourceCard.Type != CardType.Attack ? 0 : 1;
+        if (sourceCard == null) return 1;
+        
+        // Only apply to Attack cards from the owner
+        return sourceCard.Owner.Creature == Owner && sourceCard.Type == CardType.Attack ? 1 : 0;
     }
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)

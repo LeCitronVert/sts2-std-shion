@@ -49,18 +49,31 @@ public class CritRateDisplayVar : DynamicVar
     /// </summary>
     protected override decimal GetBaseValueForIConvertible()
     {
+        MainFile.Logger.Info($"[CritRateDisplayVar] GetBaseValueForIConvertible called. _isAttackRate={_isAttackRate}");
+        
         // Only works for mutable (in-combat) power instances.
         if (_owner is not PowerModel power || !power.IsMutable)
+        {
+            MainFile.Logger.Info($"[CritRateDisplayVar] Owner is not a mutable power, returning 0");
             return 0m;
+        }
 
         var cs = power.Owner.CombatState;
-        if (cs == null) return 0m;
+        if (cs == null)
+        {
+            MainFile.Logger.Info($"[CritRateDisplayVar] CombatState is null, returning 0");
+            return 0m;
+        }
 
+        MainFile.Logger.Info($"[CritRateDisplayVar] Calling ShionHooksHelper with power.Owner.Player={power.Owner.Player?.GetType().Name ?? "null"}");
+        
         decimal rate = _isAttackRate
             ? ShionHooksHelper.CalculateCritAttackRate(cs, null, power.Owner.Player)
             : ShionHooksHelper.CalculateCritHitRate(cs, null, power.Owner.Player);
 
-        return Math.Round(rate * 100m, 0, MidpointRounding.AwayFromZero);
+        decimal result = Math.Round(rate * 100m, 0, MidpointRounding.AwayFromZero);
+        MainFile.Logger.Info($"[CritRateDisplayVar] Final result: rate={rate:P0}, rounded={result}");
+        return result;
     }
 }
 

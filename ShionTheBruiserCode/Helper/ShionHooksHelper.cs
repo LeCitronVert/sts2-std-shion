@@ -19,11 +19,6 @@ public static class ShionHooksHelper
     public static decimal CalculateCritHitRate(ICombatState combatState, CardModel? card, Player? playerToCheck = null)
     {
         MainFile.Logger.Info($"[ShionHooksHelper] CalculateCritHitRate — card={card?.GetType().Name ?? "null"}");
-        
-        if (card == null && playerToCheck != null)
-        {
-            card = PileType.Deck.GetPile(playerToCheck).Cards[0];
-        }
 
         decimal rate = 0m;
         foreach (var l in combatState.IterateHookListeners().Where(l => l != card).OfType<ICritHitRateContributor>())
@@ -73,11 +68,6 @@ public static class ShionHooksHelper
     public static decimal CalculateCritAttackRate(ICombatState combatState, CardModel? card, Player? playerToCheck = null)
     {
         MainFile.Logger.Info($"[ShionHooksHelper] CalculateCritAttackRate — card={card?.GetType().Name ?? "null"}");
-
-        if (card == null && playerToCheck != null)
-        {
-            card = PileType.Deck.GetPile(playerToCheck).Cards[0];
-        }
         
         decimal rate = 0m;
         foreach (var l in combatState.IterateHookListeners().Where(l => l != card).OfType<ICritAttackRateContributor>())

@@ -20,8 +20,10 @@ public class CritRateUp : CritContributorPower, ICritHitRateContributor
     
     public decimal GetCritHitRateBonus(CardModel? sourceCard)
     {
-        if (null == sourceCard || sourceCard.Owner.Creature != Owner) return 0;
-
-        return (decimal) (this.Amount * 0.01);
+        // Powers contribute to tooltip (null) and to attacks by their owner
+        if (sourceCard == null || sourceCard.Owner.Creature == Owner)
+            return (decimal)(this.Amount * 0.01);
+        
+        return 0;
     }
 }

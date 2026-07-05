@@ -11,7 +11,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 public class ShionCriticalStrike() : CritContributorCard(2,
     CardType.Attack, CardRarity.Common,
-    TargetType.AnyEnemy), ICritHitRateContributor
+    TargetType.AnyEnemy), ICritAttackRateContributor
 {
     protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
@@ -20,8 +20,8 @@ public class ShionCriticalStrike() : CritContributorCard(2,
         new CritAttackRateVar(100)
     ];
     
-    public decimal GetCritHitRateBonus(CardModel? sourceCard) =>
-        sourceCard == this ? sourceCard.DynamicVars[CritAttackRateVar.Key].BaseValue : 0m;
+    public decimal GetCritAttackRateBonus(CardModel? sourceCard) =>
+        sourceCard == this ? DynamicVars[CritAttackRateVar.Key].BaseValue / 100 : 0m;
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,

@@ -23,7 +23,11 @@ public class CriticalAttackNext : CritContributorPower, ICritAttackRateContribut
     
     public decimal GetCritAttackRateBonus(CardModel? sourceCard)
     {
-        return Owner != sourceCard?.Owner.Creature ? 0 : 1;
+        // Powers contribute to tooltip (null) and to attacks by their owner
+        if (sourceCard == null || sourceCard.Owner.Creature == Owner)
+            return 1;
+        
+        return 0;
     }
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)

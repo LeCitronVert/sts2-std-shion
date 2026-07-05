@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -8,7 +9,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Critical;
-using ShionTheBruiser.ShionTheBruiserCode.Variables;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -27,6 +28,11 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 /// Because it is a <see cref="MegaCrit.Sts2.Core.Entities.Powers.PowerStackType.Single"/>
 /// power, repeated application is a no-op; exactly one instance exists per
 /// creature per combat.
+/// 
+/// Crit rates are CACHED and recalculated when:
+/// - Combat starts
+/// - A power is applied/removed on the owner
+/// - A relic is obtained (handled by relic's BeforeCombatStart)
 /// </summary>
 public class ShionCritTrackerPower : ShionTheBruiserPower
 {
@@ -39,16 +45,94 @@ public class ShionCritTrackerPower : ShionTheBruiserPower
     // ── DynamicVars ───────────────────────────────────────────────────────────
 
     /// <summary>
-    /// Exposes the live crit rates as lazily-computed tokens for the smart description.
-    /// <c>{HitRate}</c>    → per-hit critical chance as a whole integer percentage.
-    /// <c>{AttackRate}</c> → whole-attack critical chance as a whole integer percentage.
-    /// Both include the minimum-rate floor and are computed fresh on every hover-tip render.
+    /// Stored/cached crit rates displayed in tooltips.
+    /// These are recalculated when combat starts or powers/relics change.
     /// </summary>
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new CritRateDisplayVar(isAttackRate: false),  // {HitRate}
-        new CritRateDisplayVar(isAttackRate: true),   // {AttackRate}
+        new DynamicVar("HitRate", 0m),    // Per-hit critical chance percentage
+        new DynamicVar("AttackRate", 0m), // Whole-attack critical chance percentage
     ];
+
+    // ── Recalculation ──────────────────────────────────────────────────────────
+
+    /// <summary>
+    /// Recalculates and updates the stored crit rate values.
+    /// Called when combat starts, powers change, or relics are obtained.
+    /// </summary>
+    private void RecalculateCritRates()
+    {
+        if (Owner.CombatState == null)
+        {
+            MainFile.Logger.Info("[ShionCritTrackerPower] RecalculateCritRates: No CombatState, skipping");
+            return;
+        }
+
+        MainFile.Logger.Info($"[ShionCritTrackerPower] RecalculateCritRates for {Owner.GetType().Name}");
+
+        // Calculate baseline rates (what appears in tooltip)
+        decimal hitRate = ShionHooksHelper.CalculateCritHitRate(Owner.CombatState, null, Owner.Player);
+        decimal attackRate = ShionHooksHelper.CalculateCritAttackRate(Owner.CombatState, null, Owner.Player);
+
+        // Convert to percentages and store
+        DynamicVars["HitRate"].BaseValue = Math.Round(hitRate * 100m, 0, MidpointRounding.AwayFromZero);
+        DynamicVars["AttackRate"].BaseValue = Math.Round(attackRate * 100m, 0, MidpointRounding.AwayFromZero);
+
+        MainFile.Logger.Info($"[ShionCritTrackerPower] Updated rates: HitRate={DynamicVars["HitRate"].BaseValue}%, AttackRate={DynamicVars["AttackRate"].BaseValue}%");
+        
+        // Notify UI to update
+        InvokeDisplayAmountChanged();
+    }
+
+    // ── Recalculation Triggers ────────────────────────────────────────────────
+
+    /// <summary>
+    /// Recalculate when combat starts (after all relics/powers are set up).
+    /// </summary>
+    public override Task BeforeCombatStart()
+    {
+        MainFile.Logger.Info("[ShionCritTrackerPower] BeforeCombatStart - will recalculate after base call");
+        RecalculateCritRates();
+        return Task.CompletedTask;
+    }
+
+    /// <summary>
+    /// Recalculate when any power changes on the owner creature.
+    /// </summary>
+    public override Task AfterPowerAmountChanged(
+        PlayerChoiceContext context,
+        PowerModel power,
+        decimal amount,
+        Creature? applier,
+        CardModel? cardSource)
+    {
+        // Only recalculate if the power belongs to our owner
+        if (power.Owner == Owner)
+        {
+            MainFile.Logger.Info($"[ShionCritTrackerPower] AfterPowerAmountChanged: {power.GetType().Name} amount={amount}");
+            RecalculateCritRates();
+        }
+
+        return Task.CompletedTask;
+    }
+
+    /// <summary>
+    /// Recalculate at the start of each turn (in case something changed).
+    /// </summary>
+    public override Task BeforeSideTurnStart(
+        PlayerChoiceContext choiceContext,
+        CombatSide side,
+        IReadOnlyList<Creature> participants,
+        ICombatState combatState)
+    {
+        if (participants.Contains(Owner))
+        {
+            MainFile.Logger.Info("[ShionCritTrackerPower] BeforeSideTurnStart - recalculating");
+            RecalculateCritRates();
+        }
+
+        return Task.CompletedTask;
+    }
 
     // ── Combat hooks ─────────────────────────────────────────────────────────
 

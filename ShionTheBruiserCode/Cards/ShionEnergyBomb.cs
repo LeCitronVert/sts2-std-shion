@@ -16,7 +16,7 @@ public class ShionEnergyBomb() : CritContributorCard(3,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(30, ValueProp.Move),
-        new CritAttackRateVar(0)
+        new CritHitRateVar(0)
     ];
     
     protected override HashSet<CardTag> CanonicalTags => [ShionCardTags.Energy];
@@ -34,9 +34,9 @@ public class ShionEnergyBomb() : CritContributorCard(3,
 
     protected override void OnUpgrade()
     {
-        DynamicVars[CritAttackRateVar.Key].UpgradeValueBy(25);
+        DynamicVars[CritHitRateVar.Key].UpgradeValueBy(25);
     }
 
     public decimal GetCritHitRateBonus(CardModel? sourceCard) =>
-        sourceCard == this ? sourceCard.DynamicVars[CritAttackRateVar.Key].BaseValue / 100 : 0m;
+        sourceCard == this ? DynamicVars[CritHitRateVar.Key].BaseValue / 100 : 0m;
 }
