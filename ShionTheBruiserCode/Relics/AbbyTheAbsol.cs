@@ -73,7 +73,7 @@ public class AbbyTheAbsol : CritContributorRelic, ICritAttackRateContributor, IO
              Owner.Character.AttackAnimDelay, 
              Owner.PlayerCombatState.GetPet<AbbyMonster>()
             )
-            .WithHitFx("vfx/vfx_attack_slash", "event:/sfx/byrdpip/byrdpip_attack")
+            .WithHitFx("vfx/vfx_attack_slash", Path.Join(MainFile.ResPath, "audio", "monsters", "abby_cry.mp3"))
             .Execute(choiceContext)
         ;
         await Cmd.Wait(0.3f);

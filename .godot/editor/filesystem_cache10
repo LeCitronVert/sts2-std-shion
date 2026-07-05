@@ -5,11 +5,14 @@ ShionTheBruiser.json::JSON::-1::1782762435::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1783256974
+::res://bin/ExportRelease/net9.0/publish/::1783257370
 ShionTheBruiser.deps.json::JSON::-1::1783256113::0::1::::<><><>0<>0<><>::
 ::res://exportToHTML/::1782829109
-::res://ShionTheBruiser/::1782158780
+::res://ShionTheBruiser/::1783257322
 mod_image.png::CompressedTexture2D::8120906206059877335::1781940056::1782158780::1::::<><><>0<>0<>981796944b721321e967a9a00a87ee4e<>res://.godot/imported/mod_image.png-42cee5b6b030b953b3c956b7ca85a956.ctex::
+::res://ShionTheBruiser/audio/::1783257329
+::res://ShionTheBruiser/audio/monsters/::1783257329
+abby_cry.mp3::AudioStreamMP3::5378262688525908553::1783257218::1783257373::1::::<><><>0<>0<>18ae4e70743613656c80bd98369a5fbe<>res://.godot/imported/abby_cry.mp3-ae38cbe1b620798428d3ef3470f24654.mp3str::
 ::res://ShionTheBruiser/images/::1783256088
 ::res://ShionTheBruiser/images/card_portraits/::1783250447
 card.png::CompressedTexture2D::1049500711854334682::1781940056::1782158780::1::::<><><>0<>0<>e86ff99e55e178dfa257e115aff98269<>res://.godot/imported/card.png-ed4193b7714d803835eb3395cc67803f.ctex::
@@ -521,8 +524,8 @@ StartingGate.cs::CSharpScript::2997973463447305810::1782775793::0::1::::<><><>0<
 TempCriticalAttackNext.cs::CSharpScript::920953950281857104::1782761038::0::1::::<><><>0<>0<><>::
 TemporaryArtifact.cs::CSharpScript::6722705193844881131::1782899785::0::1::::<><><>0<>0<><>::
 UnusualStrategies.cs::CSharpScript::5152194611686798018::1783149926::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Relics/::1783256491
-AbbyTheAbsol.cs::CSharpScript::4933717058365350120::1783256491::0::1::::<><><>0<>0<><>::
+::res://ShionTheBruiserCode/Relics/::1783257368
+AbbyTheAbsol.cs::CSharpScript::4933717058365350120::1783257368::0::1::::<><><>0<>0<><>::
 BattleGloves.cs::CSharpScript::8565195483457157643::1782760974::0::1::::<><><>0<>0<><>::
 BattleRags.cs::CSharpScript::8592603631170881753::1782760950::0::1::::<><><>0<>0<><>::
 ChaoEggshell.cs::CSharpScript::7020309206761549810::1783238860::0::1::::<><><>0<>0<><>::
