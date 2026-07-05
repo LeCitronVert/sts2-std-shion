@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 
@@ -14,6 +15,10 @@ public class SMonitor() : ShionTheBruiserRelic
 {
     public override RelicRarity Rarity =>
         RelicRarity.Uncommon;
+    
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<BufferPower>()
+    ];
 
     public override async Task AfterSideTurnStart(
         CombatSide side,

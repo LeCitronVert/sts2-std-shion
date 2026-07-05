@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Factories;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -14,6 +15,10 @@ public class PurpleChaosEmerald() : ShionTheBruiserRelic
 {
     public override RelicRarity Rarity =>
         RelicRarity.Rare;
+    
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromCard<EmeraldPowerVision>()
+    ];
 
     public override async Task BeforeCombatStart()
     {

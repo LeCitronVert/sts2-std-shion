@@ -14,13 +14,16 @@
   "SHIONTHEBRUISER-COMMANDER_CAP.description": "Gain [gold]Critical Hit[/gold] [blue]+{CritHitRate}%[/blue] and [gold]Critical Attack[/gold] [blue]+{CritAttackRate}%[/blue].",
   "SHIONTHEBRUISER-COMMANDER_CAP.flavor": "Apparently, he keeps an entire stock of those things...",
   "SHIONTHEBRUISER-COMMANDER_CAP.title": "Commander Cap",
-  "SHIONTHEBRUISER-PURPLE_CHAOS_EMERALD.description": "Shuffles an Emerald Power - Vision card into your draw pile at the start of the fight.",
+  "SHIONTHEBRUISER-PURPLE_CHAOS_EMERALD.description": "Shuffles an [gold]Emerald Power - Vision[/gold] card into your draw pile at the start of the fight.",
   "SHIONTHEBRUISER-PURPLE_CHAOS_EMERALD.flavor": "This gem of incredible power is drawn to those who show acumen or great intuition.",
   "SHIONTHEBRUISER-PURPLE_CHAOS_EMERALD.title": "Purple Chaos Emerald",
-  "SHIONTHEBRUISER-S_MONITOR.description": "Gain 1 Buffer at the start of each fight.",
+  "SHIONTHEBRUISER-S_MONITOR.description": "Gain [blue]1[/blue] [gold]Buffer[gold] at the start of each fight.",
   "SHIONTHEBRUISER-S_MONITOR.flavor": "Note: only to use in the Chao Garden or as part of comedy routines. Do not use for actual battle.",
   "SHIONTHEBRUISER-S_MONITOR.title": "S Monitor",
-  "SHIONTHEBRUISER-CHAO_EGGSHELL.description": "Reduces attack damage received by {ReductionAmount} x by the amount of times you've already been attacked this turn.",
+  "SHIONTHEBRUISER-CHAO_EGGSHELL.description": "Reduces attack damage received by [blue]{ReductionAmount}[/blue] x by the amount of times you've already been attacked this turn.",
   "SHIONTHEBRUISER-CHAO_EGGSHELL.flavor": "Do you think Shions grow out of an egg, too?",
-  "SHIONTHEBRUISER-CHAO_EGGSHELL.title": "Chao Eggshell"
+  "SHIONTHEBRUISER-CHAO_EGGSHELL.title": "Chao Eggshell",
+  "SHIONTHEBRUISER-EDGE_THE_CHAO.description": "Whenever you consume your [gold]Vigor[/gold], gains [blue]{RefundPercent}[/blue]% of it back, up to [blue]{RefundCap}[/blue].\n",
+  "SHIONTHEBRUISER-EDGE_THE_CHAO.flavor": "Shion's trusted and beloved little guy. Wants to be a Bruiser when he grows up, too.",
+  "SHIONTHEBRUISER-EDGE_THE_CHAO.title": "Edge The Chao"
 }
