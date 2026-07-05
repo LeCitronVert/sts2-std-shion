@@ -19,5 +19,8 @@
   "SHIONTHEBRUISER-PURPLE_CHAOS_EMERALD.title": "Purple Chaos Emerald",
   "SHIONTHEBRUISER-S_MONITOR.description": "Gain 1 Buffer at the start of each fight.",
   "SHIONTHEBRUISER-S_MONITOR.flavor": "Note: only to use in the Chao Garden or as part of comedy routines. Do not use for actual battle.",
-  "SHIONTHEBRUISER-S_MONITOR.title": "S Monitor"
+  "SHIONTHEBRUISER-S_MONITOR.title": "S Monitor",
+  "SHIONTHEBRUISER-CHAO_EGGSHELL.description": "Reduces attack damage received by {ReductionAmount} x by the amount of times you've already been attacked this turn.",
+  "SHIONTHEBRUISER-CHAO_EGGSHELL.flavor": "Do you think Shions grow out of an egg, too?",
+  "SHIONTHEBRUISER-CHAO_EGGSHELL.title": "Chao Eggshell"
 }
