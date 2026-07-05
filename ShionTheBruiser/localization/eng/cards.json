@@ -166,5 +166,11 @@
   "SHIONTHEBRUISER-YES.description": "",
   "SHIONTHEBRUISER-YES.title": "Yes",
   "SHIONTHEBRUISER-NO.description": "",
-  "SHIONTHEBRUISER-NO.title": "No"
+  "SHIONTHEBRUISER-NO.title": "No",
+  "SHIONTHEBRUISER-COSMO_GUIDANCE.description": "Gain [blue]{BuffAmount}[/blue] [gold]Strength[/gold] and [gold]Dexterity[/gold].",
+  "SHIONTHEBRUISER-COSMO_GUIDANCE.title": "Cosmo's Guidance",
+  "SHIONTHEBRUISER-COSMO_DETERMINATION.description": "Gain [blue]{VigorPower}[/blue] [gold]Vigor[/gold].",
+  "SHIONTHEBRUISER-COSMO_DETERMINATION.title": "Cosmo's Determination",
+  "SHIONTHEBRUISER-COSMO_KINDNESS.description": "Gain [blue]{RegenPower}[/blue] [gold]Regen[/gold].",
+  "SHIONTHEBRUISER-COSMO_KINDNESS.title": "Cosmo's Kindness"
 }

@@ -35,5 +35,11 @@
   "SHIONTHEBRUISER-SOUVENIR_PICTURE.preview": "These are the next cards you will draw.\nYou will be asked whether you want to shuffle your Draw Pile next.",
   "SHIONTHEBRUISER-ABBY_THE_ABSOL.description": "At the start of the fight, gain Critical Attack +[blue]{CritAttackRate}[/blue]% and summons [gold]Abby[/gold].\n[gold]Abby[/gold] will repeat any Critical damage you inflict on the enemy.\n",
   "SHIONTHEBRUISER-ABBY_THE_ABSOL.flavor": "Former Shadow Pokémon, now mascot and daughter, the ever-vigilant Abby watches over Shion more than the other way around.",
-  "SHIONTHEBRUISER-ABBY_THE_ABSOL.title": "Abby the Absol"
+  "SHIONTHEBRUISER-ABBY_THE_ABSOL.title": "Abby the Absol",
+  "SHIONTHEBRUISER-MASTER_PENDANT.description": "You can [gold]Lull[/gold] at Rest Sites to add a strong card to your Deck.",
+  "SHIONTHEBRUISER-MASTER_PENDANT.flavor": "It's said that the Master Emerald's existence is shared across space and time. Somewhere, somewhen, someone is VERY confused why a shard of the Master Emerald is suddenly flying upwards.",
+  "SHIONTHEBRUISER-MASTER_PENDANT.title": "Master Emerald Shard Pendant",
+  "SHIONTHEBRUISER-MASTER_PENDANT.cardSelection": "You feel a quiet, serene presence from the Pendant.\nChoose a card to add to your Deck.",
+  "SHIONTHEBRUISER-MASTER_PENDANT.rest_title": "Lull",
+  "SHIONTHEBRUISER-MASTER_PENDANT.rest_desc": "Add a [gold]powerful card[/gold] to your Deck."
 }

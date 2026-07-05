@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://grwr8vrl43tt"
-path="res://.godot/imported/shion_dragon_scales.png-6685f92a27511602f149f330921ba698.ctex"
+uid="uid://ddahdfguui3kb"
+path="res://.godot/imported/cosmo_determination.png-de16beb2149397672a3cc958560a33b9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ShionTheBruiser/images/card_portraits/beta/shion_dragon_scales.png"
-dest_files=["res://.godot/imported/shion_dragon_scales.png-6685f92a27511602f149f330921ba698.ctex"]
+source_file="res://ShionTheBruiser/images/card_portraits/cosmo_determination.png"
+dest_files=["res://.godot/imported/cosmo_determination.png-de16beb2149397672a3cc958560a33b9.ctex"]
 
 [params]
 
