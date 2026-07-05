@@ -52,8 +52,11 @@ public class ChoiceBand() : ShionTheBruiserRelic
     {
         if (!participants.Contains(this.Owner.Creature))
             return Task.CompletedTask;
+
+        var attacksUsed = _attacksUsedThisTurn;
+        _attacksUsedThisTurn = 0;
         
-        if (_attacksUsedThisTurn != 1) return Task.CompletedTask;
+        if (attacksUsed != 1) return Task.CompletedTask;
         
         PowerCmd.Apply<VigorPower>(
             new ThrowingPlayerChoiceContext(),
@@ -69,5 +72,11 @@ public class ChoiceBand() : ShionTheBruiserRelic
     {
         _attacksUsedThisTurn = 0;
         return Task.CompletedTask;
+    }
+    
+    private void UpdateDisplay()
+    {
+        this.Status = _attacksUsedThisTurn == 1 ? RelicStatus.Active : RelicStatus.Normal;
+        this.InvokeDisplayAmountChanged();
     }
 }

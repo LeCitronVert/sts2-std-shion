@@ -2,6 +2,7 @@ using BaseLib.Utils;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Multiplayer;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -34,7 +35,7 @@ public class MasterArtisanCleat() : ShionTheBruiserRelic
             relic.Owner,
             count,
             new CardCreationOptions(list, CardCreationSource.Other, CardRarityOddsType.Uniform)
-        ).ToList();
+        ).Where((result => result.Card.CanBeGeneratedInCombat)).ToList();
 
         var card = (await CardSelectCmd.FromSimpleGridForRewards(
             new BlockingPlayerChoiceContext(),

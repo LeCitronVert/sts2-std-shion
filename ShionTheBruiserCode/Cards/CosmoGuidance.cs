@@ -14,6 +14,8 @@ public class CosmoGuidance() : ShionTheBruiserCard(2,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
+    public override bool CanBeGeneratedInCombat => false;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("BuffAmount", 5)
     ];

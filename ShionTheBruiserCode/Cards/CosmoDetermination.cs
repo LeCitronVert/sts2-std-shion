@@ -14,6 +14,8 @@ public class CosmoDetermination() : ShionTheBruiserCard(2,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
+    public override bool CanBeGeneratedInCombat => false;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<VigorPower>(30)
     ];
