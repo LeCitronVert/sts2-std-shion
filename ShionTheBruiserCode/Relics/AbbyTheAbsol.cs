@@ -46,14 +46,7 @@ public class AbbyTheAbsol : CritContributorRelic, ICritAttackRateContributor, IO
     // Everything below this point is pet related stuff i copied from byrdpip and i have no idea wha ti'm doing
 
     public override bool AddsPet => true;
-    public override bool HasUponPickupEffect => true;
     public override bool SpawnsPets => true;
-
-    public override async Task AfterObtained()
-    {
-        var relic = this;
-        await relic.SummonPet();
-    }
 
     public override async Task BeforeCombatStart() => await this.SummonPet();
 
@@ -65,10 +58,11 @@ public class AbbyTheAbsol : CritContributorRelic, ICritAttackRateContributor, IO
     public async Task OnCriticalHit(Creature attacker, Creature target, DamageResult damageResult, ValueProp props,
         CardModel? sourceCard, PlayerChoiceContext? choiceContext)
     {
-        if (target.IsDead || Owner.PlayerCombatState == null) return;
+        if (target.IsDead || Owner.PlayerCombatState == null || sourceCard == null) return;
 
          await DamageCmd
              .Attack(damageResult.TotalDamage)
+             .FromCard(sourceCard)
              .Unpowered()
              .Targeting(target)
              .WithAttackerAnim(

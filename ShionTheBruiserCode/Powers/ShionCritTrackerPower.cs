@@ -167,7 +167,7 @@ public class ShionCritTrackerPower : ShionTheBruiserPower
     {
         MainFile.Logger.Info($"[ShionCritTrackerPower] ModifyDamageMultiplicative fired. dealer={dealer?.GetType().Name ?? "null"}, Owner={Owner.GetType().Name}, isMatch={dealer == Owner}, card={cardSource?.GetType().Name ?? "null"}");
 
-        if (dealer != Owner)
+        if (dealer != Owner || !props.IsPoweredAttack())
             return 1m;
 
         ShionCritSystem.EnsureHitRolled(Owner.CombatState!, cardSource);
@@ -184,7 +184,7 @@ public class ShionCritTrackerPower : ShionTheBruiserPower
         PlayerChoiceContext choiceContext, Creature? dealer, DamageResult result,
         ValueProp props, Creature target, CardModel? cardSource)
     {
-        if (dealer != Owner) return;
+        if (dealer != Owner || !props.IsPoweredAttack()) return;
         bool isCrit = ShionCritSystem.CurrentHitIsCrit;
 
         if (isCrit && result.UnblockedDamage > 0)

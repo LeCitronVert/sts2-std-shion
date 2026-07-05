@@ -32,11 +32,13 @@ public class ShionTheBruiser : PlaceholderCharacterModel
         ModelDb.Card<ShionDefend>(),
         ModelDb.Card<ShionFlood>(),
         ModelDb.Card<ShionBluff>(),
+        ModelDb.Card<ShionSpiritBreak>(),
+        ModelDb.Card<ShionCriticalStrike>()
     ];
 
     public override IReadOnlyList<RelicModel> StartingRelics =>
     [
-        ModelDb.Relic<BattleRags>(),
+        ModelDb.Relic<AbbyTheAbsol>(),
     ];
 
     public override CardPoolModel CardPool => ModelDb.CardPool<ShionTheBruiserCardPool>();
