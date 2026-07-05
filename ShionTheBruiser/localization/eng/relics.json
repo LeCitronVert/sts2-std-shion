@@ -56,5 +56,9 @@
   "SHIONTHEBRUISER-CHOICE_BAND.title": "Choice Band",
   "SHIONTHEBRUISER-SHELL_BELL.description": "Critical Hits heal you for [blue]{Heal}[/blue] HP. \nGain [gold]Critical Hit[/gold] [blue]+{CritHitRate}%[/blue]",
   "SHIONTHEBRUISER-SHELL_BELL.flavor": "ring ring make feel brain so nicey it heal me",
-  "SHIONTHEBRUISER-SHELL_BELL.title": "Shell Bell"
+  "SHIONTHEBRUISER-SHELL_BELL.title": "Shell Bell",
+  "SHIONTHEBRUISER-MASTER_ARTISAN_CLEAT.description": "Upon pickup, add 1 Colourless card of your choice to your Deck.",
+  "SHIONTHEBRUISER-MASTER_ARTISAN_CLEAT.flavor": "Umamusume (and Shion) wear these. Maybe you haven't guessed it yet, but horse girls are very high maintenance!",
+  "SHIONTHEBRUISER-MASTER_ARTISAN_CLEAT.title": "Master Artisan Cleat",
+  "SHIONTHEBRUISER-MASTER_ARTISAN_CLEAT.selection": "Select a Colourless card to add to your Deck."
 }
