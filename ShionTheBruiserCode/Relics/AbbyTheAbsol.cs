@@ -1,0 +1,84 @@
+using BaseLib.Extensions;
+using BaseLib.Utils;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Monsters;
+using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Character;
+using ShionTheBruiser.ShionTheBruiserCode.Critical;
+using ShionTheBruiser.ShionTheBruiserCode.Extensions;
+using ShionTheBruiser.ShionTheBruiserCode.Variables;
+
+namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
+
+[Pool(typeof(ShionTheBruiserRelicPool))]
+public class AbbyTheAbsol : CritContributorRelic, ICritAttackRateContributor, IOnCriticalHitListener
+{
+    // Shion relic
+    public override string PackedIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".RelicImagePath();
+
+    protected override string PackedIconOutlinePath =>
+        $"{Id.Entry.RemovePrefix().ToLowerInvariant()}_outline.png".RelicImagePath();
+
+    protected override string BigIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".BigRelicImagePath();
+    
+    // Normal stuff I master
+    public override RelicRarity Rarity =>
+        RelicRarity.Rare;
+    
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CritDisplayTooltipVar(),
+        new DynamicVar("CritAttackRate", 10)
+    ];
+    
+    public decimal GetCritAttackRateBonus(CardModel? sourceCard)
+    {
+        if (sourceCard != null && sourceCard.Owner.Creature != Owner.Creature) return 0;
+        
+        var bonus = DynamicVars["CritAttackRate"].BaseValue / 100;
+        return bonus;
+    }
+    
+    // Everything below this point is pet related stuff i copied from byrdpip and i have no idea wha ti'm doing
+
+    public override bool AddsPet => true;
+    public override bool HasUponPickupEffect => true;
+    public override bool SpawnsPets => true;
+
+    public override async Task AfterObtained()
+    {
+        var relic = this;
+        await relic.SummonPet();
+    }
+
+    public override async Task BeforeCombatStart() => await this.SummonPet();
+
+    private async Task SummonPet()
+    {
+        await PlayerCmd.AddPet<Byrdpip>(this.Owner);
+    }
+
+    public async Task OnCriticalHit(Creature attacker, Creature target, DamageResult damageResult, ValueProp props,
+        CardModel? sourceCard, PlayerChoiceContext? choiceContext)
+    {
+        if (target.IsDead || Owner.PlayerCombatState == null) return;
+
+         await DamageCmd
+             .Attack(damageResult.TotalDamage)
+             .Unpowered()
+             .Targeting(target)
+             .WithAttackerAnim(
+                 "Attack", 
+                 Owner.Character.AttackAnimDelay, 
+                 Owner.PlayerCombatState.GetPet<Byrdpip>()
+                )
+             .WithHitFx("vfx/vfx_attack_slash", "event:/sfx/byrdpip/byrdpip_attack")
+             .Execute(choiceContext)
+        ;
+
+    }
+}

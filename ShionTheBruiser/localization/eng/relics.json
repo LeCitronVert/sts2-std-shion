@@ -32,5 +32,8 @@
   "SHIONTHEBRUISER-SOUVENIR_PICTURE.description": "After you've drawn your first hand each fight, see the content of your next draw; you can then choose to shuffle your Draw Pile.",
   "SHIONTHEBRUISER-SOUVENIR_PICTURE.flavor": "There is a phone number on the back of the frame. There is also a claw mark for some reason...?",
   "SHIONTHEBRUISER-SOUVENIR_PICTURE.title": "Souvenir Picture",
-  "SHIONTHEBRUISER-SOUVENIR_PICTURE.preview": "These are the next cards you will draw.\nYou will be asked whether you want to shuffle your Draw Pile next."
+  "SHIONTHEBRUISER-SOUVENIR_PICTURE.preview": "These are the next cards you will draw.\nYou will be asked whether you want to shuffle your Draw Pile next.",
+  "SHIONTHEBRUISER-ABBY_THE_ABSOL.description": "At the start of the fight, gain Critical Attack +[blue]{CritAttackRate}[/blue]% and summons [gold]Abby[/gold].\n[gold]Abby[/gold] will repeat any Critical damage you inflict on the enemy.\n",
+  "SHIONTHEBRUISER-ABBY_THE_ABSOL.flavor": "Former Shadow Pokémon, now mascot and daughter, the ever-vigilant Abby watches over Shion more than the other way around.",
+  "SHIONTHEBRUISER-ABBY_THE_ABSOL.title": "Abby the Absol"
 }

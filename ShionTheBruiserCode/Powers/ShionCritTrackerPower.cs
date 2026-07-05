@@ -180,12 +180,14 @@ public class ShionCritTrackerPower : ShionTheBruiserPower
     /// Plays critical-hit SFX / spawns gold VFX when a crit connects, then
     /// resets the per-hit roll guard so the next hit gets an independent roll.
     /// </summary>
-    public override Task AfterDamageGiven(
+    public override async Task AfterDamageGiven(
         PlayerChoiceContext choiceContext, Creature? dealer, DamageResult result,
         ValueProp props, Creature target, CardModel? cardSource)
     {
-        if (dealer != Owner) return Task.CompletedTask;
-        if (ShionCritSystem.CurrentHitIsCrit && result.UnblockedDamage > 0)
+        if (dealer != Owner) return;
+        bool isCrit = ShionCritSystem.CurrentHitIsCrit;
+
+        if (isCrit && result.UnblockedDamage > 0)
         {
             // TODO: replace with real FMOD event / VFX scene paths once assets are ready.
             TalkCmd.Play(new LocString("combat_messages", "SHIONTHEBRUISER-CRIT"), dealer, VfxColor.Purple, VfxDuration.VeryShort);
@@ -193,9 +195,23 @@ public class ShionCritTrackerPower : ShionTheBruiserPower
             // VfxCmd.PlayOnCreatureCenter(target, "vfx/vfx_crit");
         }
 
-        ShionCritSystem.EndHit();
+        if (isCrit)
+        {
+            foreach (var listener in Owner.CombatState!.IterateHookListeners().OfType<IOnCriticalHitListener>())
+            {
+                await listener.OnCriticalHit(dealer, target, result, props, cardSource, choiceContext);
+            }
+        }
+        else
+        {
+            // Invoke all OnCriticalFail listeners
+            foreach (var listener in Owner.CombatState!.IterateHookListeners().OfType<IOnCriticalFailListener>())
+            {
+                await listener.OnCriticalFail(dealer, target, result, props, cardSource, choiceContext);
+            }
+        }
 
-        return Task.CompletedTask;
+        ShionCritSystem.EndHit();
     }
 
     /// <summary>
