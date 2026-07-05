@@ -53,5 +53,8 @@
   "SHIONTHEBRUISER-SCOPE_LENS.title": "Scope Lens",
   "SHIONTHEBRUISER-CHOICE_BAND.description": "If you play EXACTLY 1 Attack in a turn, gain [blue]{VigorPower}[/blue] [gold]Vigor[/gold] at the start of the next turn.\n",
   "SHIONTHEBRUISER-CHOICE_BAND.flavor": "Did you know? Putting a head band on Shion's head stunlocks her. If you put a Choice Band on her head, though...",
-  "SHIONTHEBRUISER-CHOICE_BAND.title": "Choice Band"
+  "SHIONTHEBRUISER-CHOICE_BAND.title": "Choice Band",
+  "SHIONTHEBRUISER-SHELL_BELL.description": "Critical Hits heal you for [blue]{Heal}[/blue] HP. \nGain [gold]Critical Hit[/gold] [blue]+{CritHitRate}%[/blue]",
+  "SHIONTHEBRUISER-SHELL_BELL.flavor": "ring ring make feel brain so nicey it heal me",
+  "SHIONTHEBRUISER-SHELL_BELL.title": "Shell Bell"
 }

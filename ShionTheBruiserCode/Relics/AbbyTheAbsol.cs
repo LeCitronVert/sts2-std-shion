@@ -59,7 +59,7 @@ public class AbbyTheAbsol : CritContributorRelic, ICritAttackRateContributor, IO
     public async Task OnCriticalHit(Creature attacker, Creature target, DamageResult damageResult, ValueProp props,
         CardModel? sourceCard, PlayerChoiceContext? choiceContext)
     {
-        if (target.IsDead || Owner.PlayerCombatState == null || sourceCard == null) return;
+        if (target.IsDead || Owner.PlayerCombatState == null || sourceCard == null || sourceCard.Owner != Owner) return;
 
         Flash();
         await Cmd.Wait(0.3f);
