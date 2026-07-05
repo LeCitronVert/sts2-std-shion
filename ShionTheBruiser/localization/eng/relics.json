@@ -45,10 +45,13 @@
   "SHIONTHEBRUISER-SPEED_SHOES.description": "Draw 1 card when you play a Strike card.",
   "SHIONTHEBRUISER-SPEED_SHOES.flavor": "Dr.Eggman says it's just a placebo. Sonic says they legit make you faster. Somehow, they're both correct.",
   "SHIONTHEBRUISER-SPEED_SHOES.title": "Speed Shoes",
-  "SHIONTHEBRUISER-MAID_OUTFIT.description": "The first time you play an Energy card each turn, gain {1:energyIcons()}.",
+  "SHIONTHEBRUISER-MAID_OUTFIT.description": "The first time you play an Energy card each turn, gain {Energy:energyIcons()}.",
   "SHIONTHEBRUISER-MAID_OUTFIT.flavor": "'I wish I could get rid of that damned thing already. BUT IT'S MADE OUT OF ME AND I'M BLOODY STURDY!' - Shion",
   "SHIONTHEBRUISER-MAID_OUTFIT.title": "Suspicious, Rotten, Disgusting, Forgotten, Stupid Outfit",
   "SHIONTHEBRUISER-SCOPE_LENS.description": "Gain [blue]+{CritAttackRate}%[/blue] [gold]Critical Attack[/gold].",
   "SHIONTHEBRUISER-SCOPE_LENS.flavor": "'But I'm not a Pokémon', you think. 'It won't work on me', you think. Well, about that...",
-  "SHIONTHEBRUISER-SCOPE_LENS.title": "Scope Lens"
+  "SHIONTHEBRUISER-SCOPE_LENS.title": "Scope Lens",
+  "SHIONTHEBRUISER-CHOICE_BAND.description": "If you play EXACTLY 1 Attack in a turn, gain [blue]{VigorPower}[/blue] [gold]Vigor[/gold] at the start of the next turn.\n",
+  "SHIONTHEBRUISER-CHOICE_BAND.flavor": "Did you know? Putting a head band on Shion's head stunlocks her. If you put a Choice Band on her head, though...",
+  "SHIONTHEBRUISER-CHOICE_BAND.title": "Choice Band"
 }

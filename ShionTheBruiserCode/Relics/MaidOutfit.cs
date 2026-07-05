@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
@@ -12,6 +13,10 @@ public class MaidOutfit() : ShionTheBruiserRelic
 {
     public override RelicRarity Rarity =>
         RelicRarity.Rare;
+    
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new EnergyVar(1)
+    ];
 
     private bool _wasUsedThisTurn;
     
