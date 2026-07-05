@@ -10,5 +10,8 @@
   "SHIONTHEBRUISER-UPGRADINATOR.title": "Upgradinator",
   "SHIONTHEBRUISER-SPIKES_GLOVES.description": "Your Strikes and Energy Attacks deal {Damage::diff()} more damage.",
   "SHIONTHEBRUISER-SPIKES_GLOVES.flavor": "It's a bad look, but is it a worse look than the rags you started with?",
-  "SHIONTHEBRUISER-SPIKES_GLOVES.title": "Spiked Gloves"
+  "SHIONTHEBRUISER-SPIKES_GLOVES.title": "Spiked Gloves",
+  "SHIONTHEBRUISER-COMMANDER_CAP.description": "Gain [gold]Critical Hit[/gold] [blue]+{CritHitRate}%[/blue] and [gold]Critical Attack[/gold] [blue]+{CritAttackRate}%[/blue].",
+  "SHIONTHEBRUISER-COMMANDER_CAP.flavor": "Apparently, he keeps an entire stock of those things...",
+  "SHIONTHEBRUISER-COMMANDER_CAP.title": "Commander Cap"
 }

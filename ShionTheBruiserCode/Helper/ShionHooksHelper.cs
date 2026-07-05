@@ -1,4 +1,8 @@
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.Models;
 using ShionTheBruiser.ShionTheBruiserCode.Critical;
 
@@ -12,9 +16,14 @@ public static class ShionHooksHelper
     /// listeners, then clamps the result to be at least the highest floor set by any
     /// <see cref="IMinCritHitRateContributor"/>.
     /// </summary>
-    public static decimal CalculateCritHitRate(ICombatState combatState, CardModel? card)
+    public static decimal CalculateCritHitRate(ICombatState combatState, CardModel? card, Player? playerToCheck = null)
     {
         MainFile.Logger.Info($"[ShionHooksHelper] CalculateCritHitRate — card={card?.GetType().Name ?? "null"}");
+        
+        if (card == null && playerToCheck != null)
+        {
+            card = PileType.Deck.GetPile(playerToCheck).Cards[0];
+        }
 
         decimal rate = 0m;
         foreach (var l in combatState.IterateHookListeners().Where(l => l != card).OfType<ICritHitRateContributor>())
@@ -61,10 +70,15 @@ public static class ShionHooksHelper
     /// per-hit roll. Sums all <see cref="ICritAttackRateContributor"/> bonuses, then
     /// clamps to the floor set by <see cref="IMinCritAttackRateContributor"/> contributors.
     /// </summary>
-    public static decimal CalculateCritAttackRate(ICombatState combatState, CardModel? card)
+    public static decimal CalculateCritAttackRate(ICombatState combatState, CardModel? card, Player? playerToCheck = null)
     {
         MainFile.Logger.Info($"[ShionHooksHelper] CalculateCritAttackRate — card={card?.GetType().Name ?? "null"}");
 
+        if (card == null && playerToCheck != null)
+        {
+            card = PileType.Deck.GetPile(playerToCheck).Cards[0];
+        }
+        
         decimal rate = 0m;
         foreach (var l in combatState.IterateHookListeners().Where(l => l != card).OfType<ICritAttackRateContributor>())
         {

@@ -57,8 +57,8 @@ public class CritRateDisplayVar : DynamicVar
         if (cs == null) return 0m;
 
         decimal rate = _isAttackRate
-            ? ShionHooksHelper.CalculateCritAttackRate(cs, null)
-            : ShionHooksHelper.CalculateCritHitRate(cs, null);
+            ? ShionHooksHelper.CalculateCritAttackRate(cs, null, power.Owner.Player)
+            : ShionHooksHelper.CalculateCritHitRate(cs, null, power.Owner.Player);
 
         return Math.Round(rate * 100m, 0, MidpointRounding.AwayFromZero);
     }
