@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using ShionTheBruiser.ShionTheBruiserCode.Critical;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
@@ -24,6 +25,7 @@ public class ShionAnOpening() : CritContributorCard(1,
         CardPlay play)
     {
         var card = play.Card;
+        ShionMechanicsHelper.EnsureCreatureHasCritTracker(card.Owner.Creature);
         await PowerCmd.Apply<AnOpening>(
             choiceContext,
             card.Owner.Creature,

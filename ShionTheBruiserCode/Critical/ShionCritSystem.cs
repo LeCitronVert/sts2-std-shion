@@ -1,4 +1,3 @@
-using Godot;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Models;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
@@ -47,7 +46,11 @@ public static class ShionCritSystem
         decimal attackRate = card != null
             ? ShionHooksHelper.CalculateCritAttackRate(cs, card)
             : 0m;
-        float roll = GD.Randf();
+        
+        // Use proper game RNG for determinism (replays, seeding, etc.)
+        // CombatMisc is used for combat mechanics like this
+        float roll = card?.Owner.RunState.Rng.Niche.NextFloat() ?? 0f;
+        
         _critAttack = (decimal)roll < attackRate;
         _currentHitIsCrit = false;
         _hitCritRolled = false;
@@ -79,7 +82,11 @@ public static class ShionCritSystem
         decimal hitRate = card != null
             ? ShionHooksHelper.CalculateCritHitRate(cs, card)
             : 0m;
-        float roll = GD.Randf();
+        
+        // Use proper game RNG for determinism (replays, seeding, etc.)
+        // CombatMisc is used for combat mechanics like this
+        float roll = card?.Owner.RunState.Rng.Niche.NextFloat() ?? 0f;
+        
         _currentHitIsCrit = _critAttack || (decimal)roll < hitRate;
         _hitCritRolled = true;
         MainFile.Logger.Info($"[ShionCritSystem] EnsureHitRolled — card={card?.GetType().Name ?? "null"}, hitRate={hitRate:P0}, roll={roll:F3}, _critAttack={_critAttack}, _currentHitIsCrit={_currentHitIsCrit}");

@@ -1,10 +1,14 @@
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Character;
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Helper;
 
@@ -55,5 +59,27 @@ public static class ShionMechanicsHelper
         }
 
         return randomOptions;
+    }
+
+    public static async void EnsureCreatureHasCritTracker(Creature creature)
+    {
+        try
+        {
+            if (creature.HasPower<ShionCritTrackerPower>()) return;
+
+            await PowerCmd.Apply<ShionCritTrackerPower>(
+                new ThrowingPlayerChoiceContext(),
+                creature,
+                1,
+                creature,
+                null,
+                true
+            );
+        }
+        catch (Exception e)
+        {
+            
+            Log.Error("Crit crashed : " + e.Message);
+        }
     }
 }
