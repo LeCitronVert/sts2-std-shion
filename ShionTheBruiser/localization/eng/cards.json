@@ -162,5 +162,9 @@
   "SHIONTHEBRUISER-SHION_UNUSUAL_STRATEGIES.description": "Your Strikes cost {Energy:energyIcons()} less.",
   "SHIONTHEBRUISER-SHION_UNUSUAL_STRATEGIES.title": "Unusual Strategies",
   "SHIONTHEBRUISER-EMERALD_POWER_VISION.description": "Gain [blue]{IntangiblePower}[/blue] [gold]Intangible[/gold].\nBecome immune to Debuffs until next turn.",
-  "SHIONTHEBRUISER-EMERALD_POWER_VISION.title": "Emerald Power : Vision"
+  "SHIONTHEBRUISER-EMERALD_POWER_VISION.title": "Emerald Power : Vision",
+  "SHIONTHEBRUISER-YES.description": "",
+  "SHIONTHEBRUISER-YES.title": "Yes",
+  "SHIONTHEBRUISER-NO.description": "",
+  "SHIONTHEBRUISER-NO.title": "No"
 }
