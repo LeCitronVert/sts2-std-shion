@@ -37,7 +37,7 @@ public class SpiritBurst: ShionTheBruiserPower
             data = power.GetInternalData<Data>();
             var flag = true;
             
-            if (power.Owner.CombatState.HittableEnemies.All<Creature>((Func<Creature, bool>) (c => c.HpDisplay.IsInfinite())))
+            if (power.Owner.CombatState?.HittableEnemies.All<Creature>((Func<Creature, bool>) (c => c.HpDisplay.IsInfinite())) ?? false)
             {
                 if (data.infiniteAutoPlaysThisTurn >= 9)
                 {
@@ -83,7 +83,7 @@ public class SpiritBurst: ShionTheBruiserPower
     
     public override Task BeforeAttack(AttackCommand command)
     {
-        if (!((IEnumerable<AbstractModel>) this.GetInternalData<SpiritBurst.Data>().autoPlayingCards).Contains<AbstractModel>(command.ModelSource))
+        if (command.ModelSource == null || command.Attacker?.Player == null || !this.GetInternalData<Data>().autoPlayingCards.Contains(command.ModelSource))
             return Task.CompletedTask;
         command.WithHitFx("vfx/hellraiser_attack_vfx", command.HitSfx, command.TmpHitSfx).WithAttackerAnim("Cast", command.Attacker.Player.Character.CastAnimDelay).SpawningHitVfxOnEachCreature().WithHitVfxSpawnedAtBase();
         return Task.CompletedTask;

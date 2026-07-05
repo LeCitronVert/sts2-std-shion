@@ -26,7 +26,8 @@ public class AbbyMonster: CustomMonsterModel
     
     public override NCreatureVisuals? CreateCustomVisuals()
     {
-        return NodeFactory<NCreatureVisuals>.CreateFromResource(Path.Join(MainFile.ResPath, "images", "monsters", "abby_sprite.png"));
+        return NodeFactory<NCreatureVisuals>.CreateFromScene(Path.Join(MainFile.ResPath, "scenes",
+            "abby_monster.tscn"));
     }
 
 }

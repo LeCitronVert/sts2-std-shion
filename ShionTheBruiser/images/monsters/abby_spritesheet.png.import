@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://drj548jjs6g00"
-path="res://.godot/imported/abby_sprite.png-ab261fd702112c370c6b9b0a30f63883.ctex"
+uid="uid://cx6urwqi2oasn"
+path="res://.godot/imported/abby_spritesheet.png-15e009d3c3b50174fb1ebb60cd36d45c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ShionTheBruiser/images/monsters/abby_sprite.png"
-dest_files=["res://.godot/imported/abby_sprite.png-ab261fd702112c370c6b9b0a30f63883.ctex"]
+source_file="res://ShionTheBruiser/images/monsters/abby_spritesheet.png"
+dest_files=["res://.godot/imported/abby_spritesheet.png-15e009d3c3b50174fb1ebb60cd36d45c.ctex"]
 
 [params]
 
