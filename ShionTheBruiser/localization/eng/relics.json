@@ -47,5 +47,8 @@
   "SHIONTHEBRUISER-SPEED_SHOES.title": "Speed Shoes",
   "SHIONTHEBRUISER-MAID_OUTFIT.description": "The first time you play an Energy card each turn, gain {1:energyIcons()}.",
   "SHIONTHEBRUISER-MAID_OUTFIT.flavor": "'I wish I could get rid of that damned thing already. BUT IT'S MADE OUT OF ME AND I'M BLOODY STURDY!' - Shion",
-  "SHIONTHEBRUISER-MAID_OUTFIT.title": "Suspicious, Rotten, Disgusting, Forgotten, Stupid Outfit"
+  "SHIONTHEBRUISER-MAID_OUTFIT.title": "Suspicious, Rotten, Disgusting, Forgotten, Stupid Outfit",
+  "SHIONTHEBRUISER-SCOPE_LENS.description": "Gain [blue]+{CritAttackRate}%[/blue] [gold]Critical Attack[/gold].",
+  "SHIONTHEBRUISER-SCOPE_LENS.flavor": "'But I'm not a Pokémon', you think. 'It won't work on me', you think. Well, about that...",
+  "SHIONTHEBRUISER-SCOPE_LENS.title": "Scope Lens"
 }
