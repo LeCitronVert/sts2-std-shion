@@ -5,7 +5,7 @@ ShionTheBruiser.json::JSON::-1::1782762435::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1783232369
+::res://bin/ExportRelease/net9.0/publish/::1783233295
 ShionTheBruiser.deps.json::JSON::-1::1783194145::0::1::::<><><>0<>0<><>::
 ::res://exportToHTML/::1782829109
 ::res://ShionTheBruiser/::1782158780
@@ -435,8 +435,8 @@ ShionTheBruiserCard.cs::CSharpScript::6999578716303428152::1782379788::0::1::::<
 ShionTouchOfForesight.cs::CSharpScript::8858960271852629060::1782761509::0::1::::<><><>0<>0<><>::
 ShionUma.cs::CSharpScript::7161926289584648397::1782775622::0::1::::<><><>0<>0<><>::
 ShionUnusualStrategies.cs::CSharpScript::4073147821231419699::1783150333::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Character/::1783230200
-ShionTheBruiser.cs::CSharpScript::5230343434016276755::1783230200::0::1::::<><><>0<>0<><>::
+::res://ShionTheBruiserCode/Character/::1783232958
+ShionTheBruiser.cs::CSharpScript::5230343434016276755::1783232958::0::1::::<><><>0<>0<><>::
 ShionTheBruiserCardPool.cs::CSharpScript::5768901081701376971::1782984673::0::1::::<><><>0<>0<><>::
 ShionTheBruiserPotionPool.cs::CSharpScript::8942352038865602766::1782984673::0::1::::<><><>0<>0<><>::
 ShionTheBruiserRelicPool.cs::CSharpScript::7291834671674422082::1782984673::0::1::::<><><>0<>0<><>::
@@ -460,7 +460,7 @@ ShionHooksHelper.cs::CSharpScript::7312245568866882451::1783231394::0::1::::<><>
 ShionMechanicsHelper.cs::CSharpScript::2990478697957247076::1782817318::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiserCode/Potions/::1782158780
 ShionTheBruiserPotion.cs::CSharpScript::9201725349623556408::1781940056::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Powers/::1783232141
+::res://ShionTheBruiserCode/Powers/::1783233293
 AnOpening.cs::CSharpScript::1437147261964541114::1783089204::0::1::::<><><>0<>0<><>::
 BattleTempo.cs::CSharpScript::8564905511811489123::1782839293::0::1::::<><><>0<>0<><>::
 BerserkCharge.cs::CSharpScript::8895171129478005530::1782761216::0::1::::<><><>0<>0<><>::
@@ -496,7 +496,7 @@ RevengeDrive.cs::CSharpScript::7268529852581681210::1782914860::0::1::::<><><>0<
 ScrappyDexterity.cs::CSharpScript::6072365754661039199::1782988686::0::1::::<><><>0<>0<><>::
 ScrappyStrength.cs::CSharpScript::747979528289590123::1782988368::0::1::::<><><>0<>0<><>::
 ShieldBreaker.cs::CSharpScript::6717770345197320334::1783188227::0::1::::<><><>0<>0<><>::
-ShionCritTrackerPower.cs::CSharpScript::8130791580971268065::1783232141::0::1::::<><><>0<>0<><>::
+ShionCritTrackerPower.cs::CSharpScript::8130791580971268065::1783233293::0::1::::<><><>0<>0<><>::
 ShionTheBruiserPower.cs::CSharpScript::5304893804806538408::1781940058::0::1::::<><><>0<>0<><>::
 SpiritBreak.cs::CSharpScript::5026743736895344921::1783231220::0::1::::<><><>0<>0<><>::
 SpiritBurst.cs::CSharpScript::2581299230402162673::1783092266::0::1::::<><><>0<>0<><>::

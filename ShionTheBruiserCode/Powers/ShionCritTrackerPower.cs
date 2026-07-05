@@ -93,6 +93,7 @@ public class ShionCritTrackerPower : ShionTheBruiserPower
     {
         MainFile.Logger.Info("[ShionCritTrackerPower] BeforeCombatStart - will recalculate after base call");
         RecalculateCritRates();
+        ShionCritSystem.EndAttack();
         return Task.CompletedTask;
     }
 
