@@ -16,5 +16,8 @@
   "SHIONTHEBRUISER-COMMANDER_CAP.title": "Commander Cap",
   "SHIONTHEBRUISER-PURPLE_CHAOS_EMERALD.description": "Shuffles an Emerald Power - Vision card into your draw pile at the start of the fight.",
   "SHIONTHEBRUISER-PURPLE_CHAOS_EMERALD.flavor": "This gem of incredible power is drawn to those who show acumen or great intuition.",
-  "SHIONTHEBRUISER-PURPLE_CHAOS_EMERALD.title": "Purple Chaos Emerald"
+  "SHIONTHEBRUISER-PURPLE_CHAOS_EMERALD.title": "Purple Chaos Emerald",
+  "SHIONTHEBRUISER-S_MONITOR.description": "Gain 1 Buffer at the start of each fight.",
+  "SHIONTHEBRUISER-S_MONITOR.flavor": "Note: only to use in the Chao Garden or as part of comedy routines. Do not use for actual battle.",
+  "SHIONTHEBRUISER-S_MONITOR.title": "S Monitor"
 }
