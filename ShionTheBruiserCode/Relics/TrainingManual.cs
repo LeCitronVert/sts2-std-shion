@@ -1,11 +1,14 @@
+using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.Rooms;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
+[Pool(typeof(SharedRelicPool))]
 public class TrainingManual : ShionTheBruiserRelic
 {
     public override RelicRarity Rarity =>

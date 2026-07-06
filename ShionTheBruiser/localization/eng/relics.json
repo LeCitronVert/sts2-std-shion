@@ -66,5 +66,8 @@
   "SHIONTHEBRUISER-GRILLED_CARROT.title": "Grilled Carrot",
   "SHIONTHEBRUISER-TRAINING_MANUAL.description": "When you enter an Elite or Boss room, Upgrade one card in your Deck permanently.",
   "SHIONTHEBRUISER-TRAINING_MANUAL.flavor": "A book from another world Shion brought over to help her and others train. But, uh, it seems very focused on racing...?",
-  "SHIONTHEBRUISER-TRAINING_MANUAL.title": "Training Manual"
+  "SHIONTHEBRUISER-TRAINING_MANUAL.title": "Training Manual",
+  "SHIONTHEBRUISER-SIGNATURE_RACEWEAR.description": "When you play a [gold]Non-Native[/gold] card, gain [blue]{Block::diff()}[/blue] [gold]Block[/gold].",
+  "SHIONTHEBRUISER-SIGNATURE_RACEWEAR.flavor": "A certain racer's signature outfit. Whatever you do, do NOT let Shion wear it. It makes her incredibly worse as a person.",
+  "SHIONTHEBRUISER-SIGNATURE_RACEWEAR.title": "Signature Racewear"
 }
