@@ -60,5 +60,8 @@
   "SHIONTHEBRUISER-MASTER_ARTISAN_CLEAT.description": "Upon pickup, add 1 Colourless card of your choice to your Deck.",
   "SHIONTHEBRUISER-MASTER_ARTISAN_CLEAT.flavor": "Umamusume (and Shion) wear these. Maybe you haven't guessed it yet, but horse girls are very high maintenance!",
   "SHIONTHEBRUISER-MASTER_ARTISAN_CLEAT.title": "Master Artisan Cleat",
-  "SHIONTHEBRUISER-MASTER_ARTISAN_CLEAT.selection": "Select a Colourless card to add to your Deck."
+  "SHIONTHEBRUISER-MASTER_ARTISAN_CLEAT.selection": "Select a Colourless card to add to your Deck.",
+  "SHIONTHEBRUISER-GRILLED_CARROT.description": "Doing a non-Rest action at a Rest site heals you for [blue]{Heal}[/blue] HP.",
+  "SHIONTHEBRUISER-GRILLED_CARROT.flavor": "A healthy snack that fills your energy right back up. Don't overeat, though! Think of your poor metabolism!",
+  "SHIONTHEBRUISER-GRILLED_CARROT.title": "Grilled Carrot"
 }
