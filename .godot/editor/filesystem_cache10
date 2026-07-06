@@ -5,7 +5,7 @@ ShionTheBruiser.json::JSON::-1::1783257731::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1783324464
+::res://bin/ExportRelease/net9.0/publish/::1783336027
 ShionTheBruiser.deps.json::JSON::-1::1783323959::0::1::::<><><>0<>0<><>::
 ::res://exportToHTML/::1782829109
 ::res://ShionTheBruiser/::1783259216
@@ -471,8 +471,8 @@ ShionTouchOfForesight.cs::CSharpScript::8858960271852629060::1782761509::0::1:::
 ShionUma.cs::CSharpScript::7161926289584648397::1782775622::0::1::::<><><>0<>0<><>::
 ShionUnusualStrategies.cs::CSharpScript::4073147821231419699::1783150333::0::1::::<><><>0<>0<><>::
 Yes.cs::CSharpScript::1548182700875497738::1783248701::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Character/::1783323956
-ShionTheBruiser.cs::CSharpScript::5230343434016276755::1783323956::0::1::::<><><>0<>0<><>::
+::res://ShionTheBruiserCode/Character/::1783324706
+ShionTheBruiser.cs::CSharpScript::5230343434016276755::1783324706::0::1::::<><><>0<>0<><>::
 ShionTheBruiserCardPool.cs::CSharpScript::5768901081701376971::1782984673::0::1::::<><><>0<>0<><>::
 ShionTheBruiserPotionPool.cs::CSharpScript::8942352038865602766::1782984673::0::1::::<><><>0<>0<><>::
 ShionTheBruiserRelicPool.cs::CSharpScript::7291834671674422082::1782984673::0::1::::<><><>0<>0<><>::
@@ -496,10 +496,10 @@ ShionHooksHelper.cs::CSharpScript::7312245568866882451::1783231394::0::1::::<><>
 ShionMechanicsHelper.cs::CSharpScript::2990478697957247076::1783235415::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiserCode/Monsters/::1783259594
 AbbyMonster.cs::CSharpScript::7065894295935417984::1783259594::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Patches/::1783324463
+::res://ShionTheBruiserCode/Patches/::1783324708
 IRestSiteActionRelic.cs::CSharpScript::5282923357520593129::1783323268::0::1::::<><><>0<>0<><>::
 RestSiteHooks.cs::CSharpScript::3722907556398537321::1783323268::0::1::::<><><>0<>0<><>::
-RestSiteOptionPatches.cs::CSharpScript::5859460897548258494::1783324463::0::1::::<><><>0<>0<><>::
+RestSiteOptionPatches.cs::CSharpScript::5859460897548258494::1783324708::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiserCode/Potions/::1782158780
 ShionTheBruiserPotion.cs::CSharpScript::9201725349623556408::1781940056::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiserCode/Powers/::1783259848

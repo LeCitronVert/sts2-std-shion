@@ -63,5 +63,8 @@
   "SHIONTHEBRUISER-MASTER_ARTISAN_CLEAT.selection": "Select a Colourless card to add to your Deck.",
   "SHIONTHEBRUISER-GRILLED_CARROT.description": "Doing a non-Rest action at a Rest site heals you for [blue]{Heal}[/blue] HP.",
   "SHIONTHEBRUISER-GRILLED_CARROT.flavor": "A healthy snack that fills your energy right back up. Don't overeat, though! Think of your poor metabolism!",
-  "SHIONTHEBRUISER-GRILLED_CARROT.title": "Grilled Carrot"
+  "SHIONTHEBRUISER-GRILLED_CARROT.title": "Grilled Carrot",
+  "SHIONTHEBRUISER-TRAINING_MANUAL.description": "When you enter an Elite or Boss room, Upgrade one card in your Deck permanently.",
+  "SHIONTHEBRUISER-TRAINING_MANUAL.flavor": "A book from another world Shion brought over to help her and others train. But, uh, it seems very focused on racing...?",
+  "SHIONTHEBRUISER-TRAINING_MANUAL.title": "Training Manual"
 }
