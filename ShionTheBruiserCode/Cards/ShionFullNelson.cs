@@ -9,7 +9,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 public class ShionFullNelson() : ShionDefensiveCard(2,
     CardType.Skill, CardRarity.Uncommon,
-    TargetType.Self)
+    TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [ShionCardKeywords.Defensive];
