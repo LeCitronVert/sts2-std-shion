@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
@@ -18,5 +19,20 @@ public static class DreamersMechanicsHelper
         });
         
         return Task.CompletedTask;
+    }
+    
+    public static async Task ExhaustAllTeamBlasts(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        var card = cardPlay.Card;
+        foreach (Creature creature in card.CombatState?.GetTeammatesOf(card.Owner.Creature).Where(c => c?.IsPlayer ?? false))
+        {
+            ShionMechanicsHelper.GetAllCombatCards(creature.Player).Where(c => c.Keywords.Contains(DreamersKeywords.TeamBlast)).ToList().ForEach(c =>
+            {
+                CardCmd.Exhaust(
+                    choiceContext,
+                    c
+                );
+            });
+        }
     }
 }

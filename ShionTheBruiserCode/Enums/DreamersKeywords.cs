@@ -7,4 +7,7 @@ public static class DreamersKeywords
 {
     [CustomEnum, KeywordProperties(AutoKeywordPosition.Before)]
     public static CardKeyword EmeraldPower;
+    
+    [CustomEnum, KeywordProperties(AutoKeywordPosition.Before)]
+    public static CardKeyword TeamBlast;
 }

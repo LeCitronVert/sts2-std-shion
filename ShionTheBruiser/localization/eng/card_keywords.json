@@ -7,6 +7,8 @@
   "SHIONTHEBRUISER-STALE.title": "Stale",
   "SHIONTHEBRUISER-LATENT.description": "Shuffled at the end of your Deck at the beginning of each fight.",
   "SHIONTHEBRUISER-LATENT.title": "Latent",
-  "SHIONTHEBRUISER-EMERALDPOWER.description": "Exhausts ALL other Emerald Powers in your possession upon play.",
-  "SHIONTHEBRUISER-EMERALDPOWER.title": "Emerald Power"
+  "SHIONTHEBRUISER-EMERALDPOWER.description": "Exhausts ALL others Emerald Powers in your possession upon play.",
+  "SHIONTHEBRUISER-EMERALDPOWER.title": "Emerald Power",
+  "SHIONTHEBRUISER-TEAMBLAST.description": "Exhausts ALL others Team Blasts in ALL PLAYERS' possession upon play.",
+  "SHIONTHEBRUISER-TEAMBLAST.title": "Team Blast"
 }
