@@ -26,7 +26,7 @@
   "SHIONTHEBRUISER-EDGE_THE_CHAO.description": "Whenever you consume your [gold]Vigor[/gold], gains [blue]{RefundPercent}[/blue]% of it back, up to [blue]{RefundCap}[/blue].\n",
   "SHIONTHEBRUISER-EDGE_THE_CHAO.flavor": "Shion's trusted and beloved little guy. Wants to be a Bruiser when he grows up, too.",
   "SHIONTHEBRUISER-EDGE_THE_CHAO.title": "Edge The Chao",
-  "SHIONTHEBRUISER-RING_MONITOR.description": "[blue]{BlockChance}[blue]% chance to reduce HP loss by [blue]{BlockAmount}[blue].",
+  "SHIONTHEBRUISER-RING_MONITOR.description": "[blue]{BlockChance}[/blue]% chance to reduce HP loss by [blue]{BlockAmount}[/blue].",
   "SHIONTHEBRUISER-RING_MONITOR.flavor": "There is probably a cynical remark to make about currency being able to protect you from harm.",
   "SHIONTHEBRUISER-RING_MONITOR.title": "Ring Monitor",
   "SHIONTHEBRUISER-SOUVENIR_PICTURE.description": "After you've drawn your first hand each fight, see the content of your next draw; you can then choose to shuffle your Draw Pile.",
