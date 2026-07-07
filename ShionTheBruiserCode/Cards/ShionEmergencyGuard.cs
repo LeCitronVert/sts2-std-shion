@@ -22,6 +22,7 @@ public class ShionEmergencyGuard() : ShionDefensiveCard(2,
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<Guard>(),
     ];
+    public override bool GainsBlock => true;
     public override IEnumerable<CardKeyword> CanonicalKeywords => [ShionCardKeywords.Defensive];
 
     protected override async Task OnPlay(

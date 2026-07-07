@@ -22,6 +22,7 @@ public class ShionDesperateCharge() : ShionTheBruiserCard(1,
     ];
     
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Ethereal];
+    public override bool GainsBlock => true;
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
