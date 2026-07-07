@@ -22,10 +22,12 @@ public class GrilledCarrot : ShionTheBruiserRelic, IRestSiteActionRelic
     
     public async Task OnRestSiteActionTaken(Player player, RestSiteOption restSiteOption)
     {
-        if (player != this.Owner || restSiteOption.OptionId == "HEAL")
+        // Add null check for Owner
+        if (Owner == null || player != this.Owner || restSiteOption.OptionId == "HEAL")
             return;
 
         Flash();
-        await CreatureCmd.Heal(Owner.Creature, HealAmount);
+        await CreatureCmd.Heal(player.Creature, HealAmount);
     }
+
 }

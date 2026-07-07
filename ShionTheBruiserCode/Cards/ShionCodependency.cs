@@ -28,14 +28,14 @@ public class ShionCodependency() : ShionTheBruiserCard(2,
         await PowerCmd.Apply<Codependency>(
             choiceContext,
             applier,
-            1,
+            50,
             target,
             card
         );
         await PowerCmd.Apply<Codependency>(
             choiceContext,
             target,
-            1,
+            50,
             applier,
             card
         );

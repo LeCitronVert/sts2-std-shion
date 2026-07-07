@@ -147,7 +147,7 @@
   "SHIONTHEBRUISER-SHION_SPIRIT_BURST.title": "Spirit Burst",
   "SHIONTHEBRUISER-SHION_SPIRIT_BREAK.description": "Your {SpiritBreak:plural:next Attack is|next [blue]{}[/blue] Attacks are} [gold]Critical[/gold].",
   "SHIONTHEBRUISER-SHION_SPIRIT_BREAK.title": "Spirit Break",
-  "SHIONTHEBRUISER-SHION_ENERGY_BOMB.description": "Deal {Damage:diff()} damage to ALL enemies.{IfUpgraded:show:\n[green]{CriticalAttackRate}% chance to deal a Critical Hit.[/green]|}",
+  "SHIONTHEBRUISER-SHION_ENERGY_BOMB.description": "Deal {Damage:diff()} damage to ALL enemies.{IfUpgraded:show:\n[green]{CriticalHitRate}% chance to deal a Critical Hit.[/green]|}",
   "SHIONTHEBRUISER-SHION_ENERGY_BOMB.title": "Energy Bomb",
   "SHIONTHEBRUISER-SHION_DRAGON_PULSE.description": "Heal {CalculationExtra::diff()} HP per unique buff you have.{InCombat:\n([blue]{HealAmount}[/blue] HP)|}",
   "SHIONTHEBRUISER-SHION_DRAGON_PULSE.title": "Dragon Pulse",

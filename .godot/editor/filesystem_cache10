@@ -5,7 +5,7 @@ ShionTheBruiser.json::JSON::-1::1783257731::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1783428118
+::res://bin/ExportRelease/net9.0/publish/::1783431716
 ShionTheBruiser.deps.json::JSON::-1::1783341080::0::1::::<><><>0<>0<><>::
 ::res://exportToHTML/::1782829109
 ::res://ShionTheBruiser/::1783259216
@@ -418,9 +418,9 @@ relic.png::CompressedTexture2D::6591758752928169384::1781940056::1782158780::1::
 ::res://ShionTheBruiser/images/ui/rest/::1783267487
 lull.png::CompressedTexture2D::1267024042070092315::1783267457::1783267487::1::::<><><>0<>0<>46ca43c57aac12a6d7ea8ace1d934f9d<>res://.godot/imported/lull.png-a7714865cfaf878a1f7a05dec126e0c0.ctex::
 ::res://ShionTheBruiser/localization/::1781940056
-::res://ShionTheBruiser/localization/eng/::1783423539
+::res://ShionTheBruiser/localization/eng/::1783431709
 ancients.json::JSON::-1::1783240737::0::1::::<><><>0<>0<><>::
-cards.json::JSON::-1::1783420484::0::1::::<><><>0<>0<><>::
+cards.json::JSON::-1::1783431709::0::1::::<><><>0<>0<><>::
 card_keywords.json::JSON::-1::1783373578::0::1::::<><><>0<>0<><>::
 characters.json::JSON::-1::1782051226::0::1::::<><><>0<>0<><>::
 combat_messages.json::JSON::-1::1782426298::0::1::::<><><>0<>0<><>::
@@ -529,8 +529,8 @@ ShionTouchOfForesight.cs::CSharpScript::8858960271852629060::1782761509::0::1:::
 ShionUma.cs::CSharpScript::7161926289584648397::1782775622::0::1::::<><><>0<>0<><>::
 ShionUnusualStrategies.cs::CSharpScript::4073147821231419699::1783150333::0::1::::<><><>0<>0<><>::
 Yes.cs::CSharpScript::1548182700875497738::1783248701::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Character/::1783427176
-ShionTheBruiser.cs::CSharpScript::5230343434016276755::1783427176::0::1::::<><><>0<>0<><>::
+::res://ShionTheBruiserCode/Character/::1783428587
+ShionTheBruiser.cs::CSharpScript::5230343434016276755::1783428587::0::1::::<><><>0<>0<><>::
 ShionTheBruiserCardPool.cs::CSharpScript::5768901081701376971::1782984673::0::1::::<><><>0<>0<><>::
 ShionTheBruiserPotionPool.cs::CSharpScript::8942352038865602766::1782984673::0::1::::<><><>0<>0<><>::
 ShionTheBruiserRelicPool.cs::CSharpScript::7291834671674422082::1782984673::0::1::::<><><>0<>0<><>::

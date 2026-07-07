@@ -7,7 +7,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionSilentSorrow() : ShionTheBruiserCard(2,
+public class ShionSilentSorrow() : ShionDefensiveCard(1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
@@ -35,6 +35,8 @@ public class ShionSilentSorrow() : ShionTheBruiserCard(2,
             new BlockVar(DynamicVars.CalculatedBlock.Calculate(card.Owner.Creature), ValueProp.Move),
             play
         );
+
+        await ApplyDefensiveToPlayer();
     }
 
     protected override void OnUpgrade()

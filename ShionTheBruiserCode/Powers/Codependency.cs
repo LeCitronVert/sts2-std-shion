@@ -16,14 +16,14 @@ public class Codependency() : ShionTheBruiserPower
         PowerType.Buff;
 
     public override PowerStackType StackType =>
-        PowerStackType.Single;
+        PowerStackType.Counter;
 
     public const int MaxDamage = 50;
     
     
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new StringVar("Partner"),
-        new DynamicVar("MaxDamage", MaxDamage)
+        new DynamicVar("MaxDamage", Amount)
     ];
     
     public override Decimal ModifyDamageMultiplicative(
@@ -33,7 +33,7 @@ public class Codependency() : ShionTheBruiserPower
         Creature? dealer,
         CardModel? cardSource)
     {
-        return dealer != this.Owner || !props.IsPoweredAttack() || dealer == this.Applier ? 1M : GetDamageBoost();
+        return dealer != this.Owner || !props.IsPoweredAttack()  ? 1M : GetDamageBoost();
     }
     
     public decimal GetDamageBoost()
@@ -47,7 +47,7 @@ public class Codependency() : ShionTheBruiserPower
         var missingHpRatio = (partner.MaxHp - partner.CurrentHp)
                              / (float) partner.MaxHp;
 
-        return ((decimal) (missingHpRatio * (float) (MaxDamage * 0.01M))) + 1;
+        return ((decimal) (missingHpRatio * (float) (Amount * 0.01M))) + 1;
     }
     
     public override Task AfterApplied(Creature? applier, CardModel? cardSource)
@@ -59,7 +59,8 @@ public class Codependency() : ShionTheBruiserPower
     public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
     {
         if (creature != Applier) return;
-
+        
+        await PowerCmd.Remove(this);
         await CreatureCmd.Kill(Owner);
     }
 }

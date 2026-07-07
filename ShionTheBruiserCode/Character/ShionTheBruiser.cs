@@ -5,7 +5,6 @@ using ShionTheBruiser.ShionTheBruiserCode.Extensions;
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Relics;
 
@@ -23,14 +22,16 @@ public class ShionTheBruiser : PlaceholderCharacterModel
 
     public override IEnumerable<CardModel> StartingDeck =>
     [
-        ModelDb.Card<ShionTeamBlast>(),
-        ModelDb.Card<ShionFrontliner>(),
-        ModelDb.Card<ShionBorrowTechnique>(),
-        ModelDb.Card<ShionFaeReturn>(),
-        ModelDb.Card<ShionFullNelson>(),
-        ModelDb.Card<ShionPout>(),
-        ModelDb.Card<ShionCodependency>(),
-        ModelDb.Card<BeaconOfHope>()
+        ModelDb.Card<ShionStrike>(),
+        ModelDb.Card<ShionStrike>(),
+        ModelDb.Card<ShionStrike>(),
+        ModelDb.Card<ShionStrike>(),
+        ModelDb.Card<ShionDefend>(),
+        ModelDb.Card<ShionDefend>(),
+        ModelDb.Card<ShionDefend>(),
+        ModelDb.Card<ShionDefend>(),
+        ModelDb.Card<ShionFlood>(),
+        ModelDb.Card<ShionBluff>(),
     ];
 
     public override IReadOnlyList<RelicModel> StartingRelics =>
