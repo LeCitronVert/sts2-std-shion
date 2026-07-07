@@ -109,6 +109,9 @@
   "SHIONTHEBRUISER-UNUSUAL_STRATEGIES.smartDescription": "Your Strikes cost [blue]{Amount}[/blue] less Energy.",
   "SHIONTHEBRUISER-UNUSUAL_STRATEGIES.title": "Unusual Strategies",
   "SHIONTHEBRUISER-FRONTLINER.description": "Take triple damage this turn.",
-  "SHIONTHEBRUISER-FRONTLINER.smartDescription": "Take triple damage this turn.",
-  "SHIONTHEBRUISER-FRONTLINER.title": "Frontliner"
+  "SHIONTHEBRUISER-FRONTLINER.smartDescription": "Take triple damage {Amount:plural:this turn|for [blue]{}[/blue] turns}.",
+  "SHIONTHEBRUISER-FRONTLINER.title": "Frontliner",
+  "SHIONTHEBRUISER-FULL_NELSON.description": "Take double the Attack damage this turn.",
+  "SHIONTHEBRUISER-FULL_NELSON.smartDescription": "Take double the Attack damage {Amount:plural:this turn|for [blue]{}[/blue] turns}.",
+  "SHIONTHEBRUISER-FULL_NELSON.title": "FullNelson"
 }

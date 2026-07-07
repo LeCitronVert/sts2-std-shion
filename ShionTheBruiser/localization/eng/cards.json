@@ -180,5 +180,7 @@
   "SHIONTHEBRUISER-SHION_BORROW_TECHNIQUE.description": "Gain a random Skill from the targeted player's class.\nIt's free to play this turn.",
   "SHIONTHEBRUISER-SHION_BORROW_TECHNIQUE.title": "Borrow Technique",
   "SHIONTHEBRUISER-SHION_FAE_RETURN.description": "Deal {CalculatedDamage:diff()} damage.\nDeals {ExtraDamage:diff()} additional damage per times another player gave you a buff or [gold]Block[/gold].",
-  "SHIONTHEBRUISER-SHION_FAE_RETURN.title": "Fae Return"
+  "SHIONTHEBRUISER-SHION_FAE_RETURN.title": "Fae Return",
+  "SHIONTHEBRUISER-SHION_FULL_NELSON.description": "",
+  "SHIONTHEBRUISER-SHION_FULL_NELSON.title": "Full-Nelson"
 }
