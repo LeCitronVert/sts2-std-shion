@@ -20,6 +20,7 @@ public class Codependency() : ShionTheBruiserPower
 
     public const int MaxDamage = 50;
     
+    
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new StringVar("Partner"),
         new DynamicVar("MaxDamage", MaxDamage)

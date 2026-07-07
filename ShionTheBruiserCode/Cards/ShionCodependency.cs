@@ -13,6 +13,8 @@ public class ShionCodependency() : ShionTheBruiserCard(2,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("MaxDamage", Codependency.MaxDamage)
     ];
+    
+    public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
