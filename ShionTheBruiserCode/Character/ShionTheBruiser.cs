@@ -35,7 +35,7 @@ public class ShionTheBruiser : PlaceholderCharacterModel
 
     public override IReadOnlyList<RelicModel> StartingRelics =>
     [
-        ModelDb.Relic<Upgradinator>(),
+        ModelDb.Relic<BattleRags>(),
     ];
 
     public override CardPoolModel CardPool => ModelDb.CardPool<ShionTheBruiserCardPool>();
