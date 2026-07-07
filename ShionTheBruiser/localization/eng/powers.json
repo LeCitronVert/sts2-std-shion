@@ -107,5 +107,8 @@
   "SHIONTHEBRUISER-ENERGY_DAMAGE_UP.title": "Energy Damage Up",
   "SHIONTHEBRUISER-UNUSUAL_STRATEGIES.description": "Your Strikes cost less Energy.",
   "SHIONTHEBRUISER-UNUSUAL_STRATEGIES.smartDescription": "Your Strikes cost [blue]{Amount}[/blue] less Energy.",
-  "SHIONTHEBRUISER-UNUSUAL_STRATEGIES.title": "Unusual Strategies"
+  "SHIONTHEBRUISER-UNUSUAL_STRATEGIES.title": "Unusual Strategies",
+  "SHIONTHEBRUISER-FRONTLINER.description": "Take triple damage this turn.",
+  "SHIONTHEBRUISER-FRONTLINER.smartDescription": "Take triple damage this turn.",
+  "SHIONTHEBRUISER-FRONTLINER.title": "Frontliner"
 }
