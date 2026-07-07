@@ -113,5 +113,8 @@
   "SHIONTHEBRUISER-FRONTLINER.title": "Frontliner",
   "SHIONTHEBRUISER-FULL_NELSON.description": "Take double the Attack damage this turn.",
   "SHIONTHEBRUISER-FULL_NELSON.smartDescription": "Take double the Attack damage {Amount:plural:this turn|for [blue]{}[/blue] turns}.",
-  "SHIONTHEBRUISER-FULL_NELSON.title": "FullNelson"
+  "SHIONTHEBRUISER-FULL_NELSON.title": "FullNelson",
+  "SHIONTHEBRUISER-CODEPENDENCY.description": "Increases Attack damage dealt based on your partner's missing HP, but dies if they do.",
+  "SHIONTHEBRUISER-CODEPENDENCY.smartDescription": "Increases Attack damage dealt up to [blue]{MaxDamage}%[/blue] based on [gold]{Partner}[/gold]'s missing HP, but dies if they do.",
+  "SHIONTHEBRUISER-CODEPENDENCY.title": "Codependency"
 }
