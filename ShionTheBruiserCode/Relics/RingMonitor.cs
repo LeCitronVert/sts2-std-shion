@@ -38,6 +38,6 @@ public class RingMonitor() : ShionTheBruiserRelic
         
         if (isBlocked) Flash();
         
-        return isBlocked ? amount - BlockAmount : amount;
+        return isBlocked ? Math.Max(0, amount - BlockAmount) : amount;
     }
 }
