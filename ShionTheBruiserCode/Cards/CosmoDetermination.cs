@@ -11,7 +11,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 [Pool(typeof(ColorlessCardPool))]
 public class CosmoDetermination() : ShionTheBruiserCard(2,
-    CardType.Power, CardRarity.Rare,
+    CardType.Power, CardRarity.Token,
     TargetType.Self)
 {
     public override bool CanBeGeneratedInCombat => false;
