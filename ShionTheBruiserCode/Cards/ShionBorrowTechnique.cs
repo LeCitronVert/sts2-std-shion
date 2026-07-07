@@ -8,7 +8,7 @@ using MegaCrit.Sts2.Core.Models;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 public class ShionBorrowTechnique() : ShionTheBruiserCard(1,
-    CardType.Skill, CardRarity.Rare,
+    CardType.Skill, CardRarity.Uncommon,
     TargetType.AnyAlly)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [];
