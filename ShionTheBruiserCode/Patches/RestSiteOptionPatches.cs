@@ -26,7 +26,16 @@ public class RestSiteOptionPatches
     
     public static async void Postfix(Task<bool> __result)
     {
-        if (_selectedOption == null || _selectingPlayer == null)
+        // Capture the ThreadStatic values into local variables BEFORE the await
+        var selectedOption = _selectedOption;
+        var selectingPlayer = _selectingPlayer;
+        
+        // Clear the ThreadStatic variables immediately
+        _selectedOption = null;
+        _selectingPlayer = null;
+        
+        // Now use the local variables (which won't be affected by thread switches)
+        if (selectedOption == null || selectingPlayer == null)
             return;
             
         try
@@ -35,13 +44,14 @@ public class RestSiteOptionPatches
             
             if (wasSuccessful)
             {
-                await RestSiteHooks.OnRestSiteActionTaken(_selectingPlayer, _selectedOption);
+                // Use the captured local variables, not the ThreadStatic ones
+                await RestSiteHooks.OnRestSiteActionTaken(selectingPlayer, selectedOption);
             }
         }
-        finally
+        catch (Exception ex)
         {
-            _selectedOption = null;
-            _selectingPlayer = null;
+            // Add error handling to prevent silent failures
+            MainFile.Logger.Error($"Error in RestSiteHooks: {ex}");
         }
     }
 }
