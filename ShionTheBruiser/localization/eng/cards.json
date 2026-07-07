@@ -181,6 +181,8 @@
   "SHIONTHEBRUISER-SHION_BORROW_TECHNIQUE.title": "Borrow Technique",
   "SHIONTHEBRUISER-SHION_FAE_RETURN.description": "Deal {CalculatedDamage:diff()} damage.\nDeals {ExtraDamage:diff()} additional damage per times another player gave you a buff or [gold]Block[/gold].",
   "SHIONTHEBRUISER-SHION_FAE_RETURN.title": "Fae Return",
-  "SHIONTHEBRUISER-SHION_FULL_NELSON.description": "",
-  "SHIONTHEBRUISER-SHION_FULL_NELSON.title": "Full-Nelson"
+  "SHIONTHEBRUISER-SHION_FULL_NELSON.description": "Both the targeted enemy and you take twice the Attack damage from ANYONE until your next turn.",
+  "SHIONTHEBRUISER-SHION_FULL_NELSON.title": "Full-Nelson",
+  "SHIONTHEBRUISER-SHION_POUT.description": "Give another player X+1 energy.",
+  "SHIONTHEBRUISER-SHION_POUT.title": "Pout"
 }
