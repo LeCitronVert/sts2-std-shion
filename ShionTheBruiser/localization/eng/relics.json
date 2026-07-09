@@ -17,7 +17,7 @@
   "SHIONTHEBRUISER-PURPLE_CHAOS_EMERALD.description": "Shuffles an [gold]Emerald Power - Vision[/gold] card into your draw pile at the start of the fight.",
   "SHIONTHEBRUISER-PURPLE_CHAOS_EMERALD.flavor": "This gem of incredible power is drawn to those who show acumen or great intuition.",
   "SHIONTHEBRUISER-PURPLE_CHAOS_EMERALD.title": "Purple Chaos Emerald",
-  "SHIONTHEBRUISER-S_MONITOR.description": "Gain [blue]1[/blue] [gold]Buffer[gold] at the start of each fight.",
+  "SHIONTHEBRUISER-S_MONITOR.description": "Gain [blue]1[/blue] [gold]Buffer[/gold] at the start of each fight.",
   "SHIONTHEBRUISER-S_MONITOR.flavor": "Note: only to use in the Chao Garden or as part of comedy routines. Do not use for actual battle.",
   "SHIONTHEBRUISER-S_MONITOR.title": "S Monitor",
   "SHIONTHEBRUISER-CHAO_EGGSHELL.description": "Reduces attack damage received by [blue]{ReductionAmount}[/blue] x by the amount of times you've already been attacked this turn.",
