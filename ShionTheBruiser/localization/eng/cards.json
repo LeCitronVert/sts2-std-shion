@@ -173,7 +173,7 @@
   "SHIONTHEBRUISER-COSMO_DETERMINATION.title": "Cosmo's Determination",
   "SHIONTHEBRUISER-COSMO_KINDNESS.description": "Gain [blue]{RegenPower}[/blue] [gold]Regen[/gold].",
   "SHIONTHEBRUISER-COSMO_KINDNESS.title": "Cosmo's Kindness",
-  "SHIONTHEBRUISER-SHION_TEAM_BLAST.description": "Give ALL players [blue]{Block::diff()}[/blue] [gold]Block[/gold], [gold]Critical Hit[/gold] [blue]+{CritHitRate}%[/blue] and [gold]Critical Attack[/gold] [blue]+{CritAttackRate}%[/blue]..",
+  "SHIONTHEBRUISER-SHION_TEAM_BLAST.description": "Give ALL players [blue]{Block::diff()}[/blue] [gold]Block[/gold], [gold]Critical Hit[/gold] [blue]+{CritHitRate}%[/blue] and [gold]Critical Attack[/gold] [blue]+{CritAttackRate}%[/blue].",
   "SHIONTHEBRUISER-SHION_TEAM_BLAST.title": "Dragon Cheer",
   "SHIONTHEBRUISER-SHION_FRONTLINER.description": "Other players gain 1 Intangible, but you will take triple damage until your next turn.",
   "SHIONTHEBRUISER-SHION_FRONTLINER.title": "Frontliner",
