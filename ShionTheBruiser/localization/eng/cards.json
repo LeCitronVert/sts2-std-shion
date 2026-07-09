@@ -151,7 +151,7 @@
   "SHIONTHEBRUISER-SHION_ENERGY_BOMB.title": "Energy Bomb",
   "SHIONTHEBRUISER-SHION_DRAGON_PULSE.description": "Heal {CalculationExtra::diff()} HP per unique buff you have.{InCombat:\n([blue]{HealAmount}[/blue] HP)|}",
   "SHIONTHEBRUISER-SHION_DRAGON_PULSE.title": "Dragon Pulse",
-  "SHIONTHEBRUISER-SHION_SILENT_SORROW.description": "Gain {InCombat:{CalculatedBlock:diff()}|{CalculationBase:diff()}} [gold]Block[/gold].\nAdds additional Block based on your missing HP, up to {CalculationExtra::diff()}.",
+  "SHIONTHEBRUISER-SHION_SILENT_SORROW.description": "Gain {InCombat:{CalculatedBlock:diff()}|{CalculationBase:diff()}} [gold]Block[/gold].\nAdds additional Block based on your missing HP, up to {CalculationExtra::diff()}.\nReduces attack damage taken by 20% for the next {Guard:plural:turn|[blue]{}[/blue] turns}.",
   "SHIONTHEBRUISER-SHION_SILENT_SORROW.title": "Silent Sorrow",
   "SHIONTHEBRUISER-SHION_PSYCHO_CUT.description": "Your Energy Attacks deal [blue]{EnergyDamageUp}[/blue] more damage.\nDeal {Damage:diff()} damage.\nIs an Energy Attack.",
   "SHIONTHEBRUISER-SHION_PSYCHO_CUT.title": "Psycho Cut",

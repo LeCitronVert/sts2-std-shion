@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -21,6 +22,7 @@ public class ShionSilentSorrow() : ShionDefensiveCard(1,
                 return (decimal) missingHpRatio;
             }
         ),
+        new PowerVar<Guard>(1),
     ];
     
     public override IEnumerable<CardKeyword> CanonicalKeywords => [ShionCardKeywords.Defensive];
@@ -35,6 +37,14 @@ public class ShionSilentSorrow() : ShionDefensiveCard(1,
             new BlockVar(DynamicVars.CalculatedBlock.Calculate(card.Owner.Creature), ValueProp.Move),
             play
         );
+        
+        await PowerCmd.Apply<Guard>(
+            choiceContext,
+            card.Owner.Creature,
+            DynamicVars["Guard"].BaseValue,
+            card.Owner.Creature,
+            card
+        );
 
         await ApplyDefensiveToPlayer();
     }
@@ -43,5 +53,6 @@ public class ShionSilentSorrow() : ShionDefensiveCard(1,
     {
         DynamicVars.CalculationBase.UpgradeValueBy(4);
         DynamicVars.CalculationExtra.UpgradeValueBy(7);
+        DynamicVars["Guard"].UpgradeValueBy(1);
     }
 }
