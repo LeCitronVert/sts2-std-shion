@@ -135,7 +135,7 @@
   "SHIONTHEBRUISER-SHION_SHIELD_BUSTER.title": "Shield Buster",
   "SHIONTHEBRUISER-SHION_EMERGENCY_GUARD.description": "Gain {Block:diff()} [gold]Block[/gold] {Repeat:diff()} times.\nReduces attack damage taken by 20% for the next {Guard:plural:turn|[blue]{}[/blue] turns}.",
   "SHIONTHEBRUISER-SHION_EMERGENCY_GUARD.title": "Emergency Guard",
-  "SHIONTHEBRUISER-SHION_REVENGE_DRIVE.description": "Gain [blue]{VigorPower}[/blue] [gold]Vigor[/gold].\nWhen you get attacked this turn, gain [blue]{RevengeDrive}[/blue] [gold]Vigor[/gold].",
+  "SHIONTHEBRUISER-SHION_REVENGE_DRIVE.description": "Gain [blue]{VigorPower}[/blue] [gold]Vigor[/gold] and [blue]{Block::diff()}[/blue] [gold]Block[/gold].\nWhen you get attacked this turn, gain [blue]{RevengeDrive}[/blue] [gold]Vigor[/gold].",
   "SHIONTHEBRUISER-SHION_REVENGE_DRIVE.title": "Revenge Drive",
   "SHIONTHEBRUISER-SHION_STELLAR_STRIKE.description": "Deal {CalculatedDamage:diff()} damage.\nDeals additional damage equal to half of your [gold]Vigor[/gold].",
   "SHIONTHEBRUISER-SHION_STELLAR_STRIKE.title": "Stellar Strike",
