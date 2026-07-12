@@ -60,7 +60,7 @@
   "SHIONTHEBRUISER-MIGHTY_GUARD.smartDescription": "Reduces attack damage taken by 80% {Amount:plural:until the next turn|for [blue]{}[/blue] turns}.",
   "SHIONTHEBRUISER-MIGHTY_GUARD.title": "Mighty Guard",
   "SHIONTHEBRUISER-BERSERK_DRIVE.description": "Attack damage is increased based on your missing HP.",
-  "SHIONTHEBRUISER-BERSERK_DRIVE.smartDescription": "Attack damage is increased based on your missing HP, up to a maximum of [blue]{Amount}[/blue]%.",
+  "SHIONTHEBRUISER-BERSERK_DRIVE.smartDescription": "Attack damage is increased based on your missing HP, up to a maximum of [blue]{Amount}[/blue]%.\n(Currently: [blue]{DisplayAmount}[/blue]%)",
   "SHIONTHEBRUISER-BERSERK_DRIVE.title": "Berserk Drive",
   "SHIONTHEBRUISER-LURKING_INTENSITY.description": "Each turn, Transform cards from your hand into random colourless cards.",
   "SHIONTHEBRUISER-LURKING_INTENSITY.smartDescription": "At the start of your turn, Transform {Amount:plural:a card|[blue]{}[/blue] cards} in your Hand into {Amount:plural:a|} random Colourless {Amount:plural:card|cards}.",
@@ -115,6 +115,6 @@
   "SHIONTHEBRUISER-FULL_NELSON.smartDescription": "Take double the Attack damage {Amount:plural:this turn|for [blue]{}[/blue] turns}.",
   "SHIONTHEBRUISER-FULL_NELSON.title": "FullNelson",
   "SHIONTHEBRUISER-CODEPENDENCY.description": "Increases Attack damage dealt based on your partner's missing HP, but dies if they do.",
-  "SHIONTHEBRUISER-CODEPENDENCY.smartDescription": "Increases Attack damage dealt up to [blue]{MaxDamage}%[/blue] based on [gold]{Partner}[/gold]'s missing HP, but dies if they do.",
+  "SHIONTHEBRUISER-CODEPENDENCY.smartDescription": "Increases Attack damage dealt by up to [blue]{Amount}%[/blue] based on [gold]{Partner}[/gold]'s missing HP (currently at [blue]{DisplayAmount}[/blue]% damage boost). Dies if they do.",
   "SHIONTHEBRUISER-CODEPENDENCY.title": "Codependency"
 }

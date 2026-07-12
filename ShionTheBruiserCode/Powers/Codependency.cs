@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
-public class Codependency() : ShionTheBruiserPower
+public class Codependency : ShionTheBruiserPower
 {
     public override PowerType Type =>
         PowerType.Buff;
@@ -20,10 +20,29 @@ public class Codependency() : ShionTheBruiserPower
 
     public const int MaxDamage = 50;
     
+    /// <summary>
+    /// Display the current damage bonus percentage based on partner's missing HP.
+    /// </summary>
+    public override int DisplayAmount
+    {
+        get
+        {
+            var partner = Applier;
+            if (partner == null)
+            {
+                return 0;
+            }
+            
+            var missingHpRatio = (partner.MaxHp - partner.CurrentHp) / (float)partner.MaxHp;
+            var currentPercentage = (int)Math.Round(missingHpRatio * (float)Amount);
+            return currentPercentage;
+        }
+    }
     
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new StringVar("Partner"),
-        new DynamicVar("MaxDamage", Amount)
+        new DynamicVar("MaxDamage", Amount),
+        new DynamicVar("DisplayAmount", 0)
     ];
     
     public override Decimal ModifyDamageMultiplicative(
@@ -44,15 +63,17 @@ public class Codependency() : ShionTheBruiserPower
             return 1M;
         }
         
-        var missingHpRatio = (partner.MaxHp - partner.CurrentHp)
-                             / (float) partner.MaxHp;
+        var missingHpRatio = (partner.MaxHp - partner.CurrentHp) / (float)partner.MaxHp;
 
-        return ((decimal) (missingHpRatio * (float) (Amount * 0.01M))) + 1;
+        return (decimal)(missingHpRatio * (float)(Amount * 0.01M)) + 1;
     }
     
     public override Task AfterApplied(Creature? applier, CardModel? cardSource)
     {
-        ((StringVar) this.DynamicVars["Partner"]).StringValue = PlatformUtil.GetPlayerName(RunManager.Instance.NetService.Platform, this.Applier.Player.NetId);
+        ((StringVar) this.DynamicVars["Partner"]).StringValue = PlatformUtil.GetPlayerName(RunManager.Instance.NetService.Platform, this.Applier!.Player.NetId);
+        InvokeDisplayAmountChanged();
+        DynamicVars["DisplayAmount"].BaseValue = DisplayAmount;
+        
         return Task.CompletedTask;
     }
 
@@ -62,5 +83,19 @@ public class Codependency() : ShionTheBruiserPower
         
         await PowerCmd.Remove(this);
         await CreatureCmd.Kill(Owner);
+    }
+
+    /// <summary>
+    /// Update the display when any creature's HP changes (owner or partner).
+    /// </summary>
+    public override Task AfterCurrentHpChanged(Creature creature, decimal delta)
+    {
+        // Update display if either the owner or the partner's HP changes
+        if (creature == Owner || creature == Applier)
+        {
+            InvokeDisplayAmountChanged();
+            DynamicVars["DisplayAmount"].BaseValue = DisplayAmount;
+        }
+        return Task.CompletedTask;
     }
 }
