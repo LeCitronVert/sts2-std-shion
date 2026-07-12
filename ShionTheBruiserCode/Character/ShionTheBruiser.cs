@@ -4,7 +4,9 @@ using BaseLib.Utils.NodeFactories;
 using ShionTheBruiser.ShionTheBruiserCode.Extensions;
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Characters;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.Combat;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Relics;
 
@@ -23,10 +25,15 @@ public class ShionTheBruiser : PlaceholderCharacterModel
     public override IEnumerable<CardModel> StartingDeck =>
     [
         ModelDb.Card<ShionStrike>(),
-        ModelDb.Card<ShionBerserkDrive>(),
-        ModelDb.Card<ShionCodependency>(),
-        ModelDb.Card<ShionCodependency>(),
-        ModelDb.Card<ShionEmergencyGuard>(),
+        ModelDb.Card<ShionStrike>(),
+        ModelDb.Card<ShionStrike>(),
+        ModelDb.Card<ShionStrike>(),
+        ModelDb.Card<ShionDefend>(),
+        ModelDb.Card<ShionDefend>(),
+        ModelDb.Card<ShionDefend>(),
+        ModelDb.Card<ShionDefend>(),
+        ModelDb.Card<ShionFlood>(),
+        ModelDb.Card<ShionBluff>(),
     ];
 
     public override IReadOnlyList<RelicModel> StartingRelics =>
@@ -69,4 +76,13 @@ public class ShionTheBruiser : PlaceholderCharacterModel
         }
         return list;
     }
+    
+    public override NCreatureVisuals CreateCustomVisuals()
+    {
+        return NodeFactory<NCreatureVisuals>.CreateFromScene(Path.Join(MainFile.ResPath, "scenes",
+            "shion_character.tscn"));
+    }
+
+    public override string CustomMerchantAnimPath => Path.Join(MainFile.ResPath, "scenes",
+        "shion_merchant.tscn");
 }
