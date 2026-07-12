@@ -15,6 +15,8 @@ public class CosmoKindness() : ShionTheBruiserCard(2,
     TargetType.Self)
 {
     public override bool CanBeGeneratedInCombat => false;
+    public override bool CanBeGeneratedByModifiers => false;
+
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<RegenPower>(10)
