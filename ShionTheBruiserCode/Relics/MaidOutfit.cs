@@ -1,3 +1,4 @@
+using BaseLib.Extensions;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -6,11 +7,19 @@ using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Extensions;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 public class MaidOutfit() : ShionTheBruiserRelic
 {
+    // Shion relic
+    public override string PackedIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".RelicImagePath();
+
+    protected override string PackedIconOutlinePath =>
+        $"{Id.Entry.RemovePrefix().ToLowerInvariant()}_outline.png".RelicImagePath();
+
+    protected override string BigIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".BigRelicImagePath();
     public override RelicRarity Rarity =>
         RelicRarity.Rare;
     

@@ -1,3 +1,4 @@
+using BaseLib.Extensions;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -8,12 +9,20 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Character;
+using ShionTheBruiser.ShionTheBruiserCode.Extensions;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 [Pool(typeof(ShionTheBruiserRelicPool))]
 public class EdgeTheChao() : ShionTheBruiserRelic
 {
+    // Shion relic
+    public override string PackedIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".RelicImagePath();
+
+    protected override string PackedIconOutlinePath =>
+        $"{Id.Entry.RemovePrefix().ToLowerInvariant()}_outline.png".RelicImagePath();
+
+    protected override string BigIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".BigRelicImagePath();
     public override RelicRarity Rarity =>
         RelicRarity.Rare;
 

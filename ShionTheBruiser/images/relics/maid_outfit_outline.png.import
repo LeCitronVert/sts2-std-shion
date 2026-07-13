@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dj36ncea5ss5a"
-path="res://.godot/imported/abby_the_absol_relic.png-2ad7f020f89ca72f747d8b8172d765ad.ctex"
+uid="uid://3yj283jjpf3m"
+path="res://.godot/imported/maid_outfit_outline.png-596545a8b79d860e82f8c62402d90251.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ShionTheBruiser/images/relics/abby_the_absol_relic.png"
-dest_files=["res://.godot/imported/abby_the_absol_relic.png-2ad7f020f89ca72f747d8b8172d765ad.ctex"]
+source_file="res://ShionTheBruiser/images/relics/maid_outfit_outline.png"
+dest_files=["res://.godot/imported/maid_outfit_outline.png-596545a8b79d860e82f8c62402d90251.ctex"]
 
 [params]
 

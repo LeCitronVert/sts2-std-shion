@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Models.RelicPools;
+using MegaCrit.Sts2.Core.Rooms;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
@@ -18,62 +19,77 @@ public class ChoiceBand() : ShionTheBruiserRelic
     public override RelicRarity Rarity =>
         RelicRarity.Rare;
 
-    private int _attacksUsedThisTurn = 0;
     public const int VigorAmount = 10;
-    public override bool ShowCounter => CombatManager.Instance.IsInProgress;
-    
-    public override int DisplayAmount
+
+    private int _attacksUsedThisTurn;
+
+    private int AttacksUsedThisTurn
     {
-        get
+        get => _attacksUsedThisTurn;
+        set
         {
-            return _attacksUsedThisTurn;
+            AssertMutable();
+            _attacksUsedThisTurn = value;
+            UpdateDisplay();
         }
     }
-    
+
+    public override bool ShowCounter => CombatManager.Instance.IsInProgress;
+
+    public override int DisplayAmount => AttacksUsedThisTurn;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("VigorAmount", VigorAmount)
     ];
-    
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<VigorPower>(),
     ];
-    
+
     public override Task BeforeCardPlayed(CardPlay cardPlay)
     {
         if (cardPlay.Card.Owner != Owner || cardPlay.Card.Type != CardType.Attack)
             return Task.CompletedTask;
-        
-        _attacksUsedThisTurn++;
+
+        AttacksUsedThisTurn++;
         return Task.CompletedTask;
     }
 
-    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants,
+    public override async Task BeforeSideTurnStart(
+        PlayerChoiceContext choiceContext,
+        CombatSide side,
+        IReadOnlyList<Creature> participants,
         ICombatState combatState)
     {
         if (!participants.Contains(this.Owner.Creature))
-            return Task.CompletedTask;
+            return;
 
-        var attacksUsed = _attacksUsedThisTurn;
-        _attacksUsedThisTurn = 0;
-        
-        if (attacksUsed != 1) return Task.CompletedTask;
-        
-        PowerCmd.Apply<VigorPower>(
-            new ThrowingPlayerChoiceContext(),
+        var attacksUsed = AttacksUsedThisTurn;
+        AttacksUsedThisTurn = 0;
+
+        if (attacksUsed != 1)
+            return;
+
+        await PowerCmd.Apply<VigorPower>(
+            choiceContext,
             Owner.Creature,
             amount: VigorAmount,
             applier: Owner.Creature,
             cardSource: null);
-        
-        return Task.CompletedTask;
     }
 
     public override Task BeforeCombatStart()
     {
-        _attacksUsedThisTurn = 0;
+        AttacksUsedThisTurn = 0;
         return Task.CompletedTask;
     }
-    
+
+    public override Task AfterCombatEnd(CombatRoom _)
+    {
+        AttacksUsedThisTurn = 0;
+        return Task.CompletedTask;
+    }
+
     private void UpdateDisplay()
     {
         this.Status = _attacksUsedThisTurn == 1 ? RelicStatus.Active : RelicStatus.Normal;

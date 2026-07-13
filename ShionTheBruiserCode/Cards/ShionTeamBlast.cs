@@ -1,7 +1,9 @@
+using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -92,5 +94,6 @@ public class ShionTeamBlast() : ShionLatentCard(3,
     protected override void OnUpgrade()
     {
         DynamicVars["RegenPower"].UpgradeValueBy(5);
+        HoverTips.AddItem(HoverTipFactory.FromPower<RegenPower>());
     }
 }
