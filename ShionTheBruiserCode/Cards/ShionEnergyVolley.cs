@@ -24,11 +24,17 @@ public class ShionEnergyVolley() : ShionTheBruiserCard(3,
     {
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
+        await CreatureCmd.TriggerAnim(
+            card.Owner.Creature,
+            Character.ShionTheBruiser.GetEnergyCastAnimIfApplicable(card.Owner.Character),
+            Character.ShionTheBruiser.GetEnergyCastDelayIfApplicable(card.Owner.Character)
+        );
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .WithHitCount(card.DynamicVars.Repeat.IntValue)
             .FromCard(card)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_slash")
+            .WithAttackerAnim(Character.ShionTheBruiser.GetEnergyAnimIfApplicable(card.Owner.Character), Character.ShionTheBruiser.GetEnergyDelayIfApplicable(card.Owner.Character))
             .Execute(choiceContext)
         ;
     }

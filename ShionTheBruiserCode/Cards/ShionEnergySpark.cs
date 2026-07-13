@@ -29,6 +29,11 @@ public class ShionEnergySpark() : ShionTheBruiserCard(0,
     {
         ShionEnergySpark source = this;
         int cardCount = source.DynamicVars.Cards.IntValue;
+        await CreatureCmd.TriggerAnim(
+            source.Owner.Creature,
+            Character.ShionTheBruiser.GetEnergyCastAnimIfApplicable(source.Owner.Character),
+            Character.ShionTheBruiser.GetEnergyCastDelayIfApplicable(source.Owner.Character)
+        );
         await CardPileCmd.Draw(choiceContext, cardCount, source.Owner);
         await PowerCmd.Apply<VigorPower>(choiceContext, source.Owner.Creature, source.DynamicVars["VigorPower"].IntValue, source.Owner.Creature, source);
     }

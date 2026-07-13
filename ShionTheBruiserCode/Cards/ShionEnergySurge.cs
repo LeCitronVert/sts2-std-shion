@@ -23,6 +23,11 @@ public class ShionEnergySurge() : ShionTheBruiserCard(1,
         CardPlay play)
     {
         var card = this;
+        await CreatureCmd.TriggerAnim(
+            card.Owner.Creature,
+            Character.ShionTheBruiser.GetEnergyCastAnimIfApplicable(card.Owner.Character),
+            Character.ShionTheBruiser.GetEnergyCastDelayIfApplicable(card.Owner.Character)
+        );
         await PowerCmd.Apply<StrengthPower>(
             choiceContext,
             card.Owner.Creature,

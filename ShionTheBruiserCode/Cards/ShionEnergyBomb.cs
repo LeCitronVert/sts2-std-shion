@@ -29,6 +29,7 @@ public class ShionEnergyBomb() : CritContributorCard(3,
         if (card.CombatState != null)
             await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue).FromCard(card)
                 .TargetingAllOpponents(card.CombatState).WithHitFx("vfx/vfx_attack_blunt", tmpSfx: "heavy_attack.mp3")
+                .WithAttackerAnim(Character.ShionTheBruiser.GetEnergyAnimIfApplicable(card.Owner.Character), Character.ShionTheBruiser.GetEnergyDelayIfApplicable(card.Owner.Character))
                 .Execute(choiceContext);
     }
 

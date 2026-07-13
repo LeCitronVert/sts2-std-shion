@@ -24,6 +24,11 @@ public class ShionEnergyCharge() : ShionTheBruiserCard(1,
         CardPlay play)
     {
         var card = this;
+        await CreatureCmd.TriggerAnim(
+            card.Owner.Creature,
+            Character.ShionTheBruiser.GetEnergyCastAnimIfApplicable(card.Owner.Character),
+            Character.ShionTheBruiser.GetEnergyCastDelayIfApplicable(card.Owner.Character)
+        );
         await PowerCmd.Apply<EnergyCharge>(
             choiceContext, 
             card.Owner.Creature, 

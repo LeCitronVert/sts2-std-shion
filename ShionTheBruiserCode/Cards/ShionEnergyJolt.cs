@@ -31,6 +31,11 @@ public class ShionEnergyJolt() : ShionTheBruiserCard(2,
     {
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
+        await CreatureCmd.TriggerAnim(
+            card.Owner.Creature,
+            Character.ShionTheBruiser.GetEnergyCastAnimIfApplicable(card.Owner.Character),
+            Character.ShionTheBruiser.GetEnergyCastDelayIfApplicable(card.Owner.Character)
+        );
         await CreatureCmd.Damage(
             choiceContext, 
             play.Target, 

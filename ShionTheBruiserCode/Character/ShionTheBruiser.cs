@@ -44,6 +44,27 @@ public class ShionTheBruiser : PlaceholderCharacterModel
     public override CardPoolModel CardPool => ModelDb.CardPool<ShionTheBruiserCardPool>();
     public override RelicPoolModel RelicPool => ModelDb.RelicPool<ShionTheBruiserRelicPool>();
     public override PotionPoolModel PotionPool => ModelDb.PotionPool<ShionTheBruiserPotionPool>();
+    
+    // Exclusive animations
+    public static string GetEnergyAnimIfApplicable(CharacterModel character)
+    {
+        return character is not ShionTheBruiser ? "Attack" : "Energy";
+    }
+    
+    public static float GetEnergyDelayIfApplicable(CharacterModel character)
+    {
+        return character is not ShionTheBruiser ? character.AttackAnimDelay : 0.2f;
+    }
+    
+    public static string GetEnergyCastAnimIfApplicable(CharacterModel character)
+    {
+        return character is not ShionTheBruiser ? "Cast" : "Energy";
+    }
+    
+    public static float GetEnergyCastDelayIfApplicable(CharacterModel character)
+    {
+        return character is not ShionTheBruiser ? character.CastAnimDelay : 0.2f;
+    }
 
     /*  PlaceholderCharacterModel will utilize placeholder basegame assets for most of your character assets until you
         override all the other methods that define those assets.

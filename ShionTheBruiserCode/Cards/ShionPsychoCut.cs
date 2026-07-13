@@ -37,6 +37,7 @@ public class ShionPsychoCut() : ShionTheBruiserCard(1,
             .FromCard(card)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_slash")
+            .WithAttackerAnim(Character.ShionTheBruiser.GetEnergyAnimIfApplicable(card.Owner.Character), Character.ShionTheBruiser.GetEnergyDelayIfApplicable(card.Owner.Character))
             .Execute(choiceContext)
         ;
     }
