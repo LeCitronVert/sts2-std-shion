@@ -49,6 +49,16 @@ public class ShionDarkArts() : ShionBerserkCard(2,
         
         return Task.CompletedTask;
     }
-    
+
+    public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    {
+        if (card == this && ShionMechanicsHelper.IsBerserk(card.Owner.Creature))
+        {
+            this.ReduceCost();
+        }
+        
+        return Task.CompletedTask;
+    }
+
     private void ReduceCost() => this.EnergyCost.SetThisTurn(0);
 }
