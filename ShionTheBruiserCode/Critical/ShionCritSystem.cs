@@ -142,4 +142,17 @@ public static class ShionCritSystem
             MainFile.Logger.Info($"[ShionCritSystem] EndAttack called but stack is empty!");
         }
     }
+
+    /// <summary>
+    /// Clears all stacked attack state unconditionally.
+    /// Called at the start of each combat to ensure no state leaks in from a
+    /// previous fight (e.g. a combat that ended while an attack was still
+    /// in-flight, leaving entries on the stack).
+    /// </summary>
+    public static void Reset()
+    {
+        int cleared = _attackStack.Count;
+        _attackStack.Clear();
+        MainFile.Logger.Info($"[ShionCritSystem] Reset — cleared {cleared} stale attack state(s) from previous combat");
+    }
 }

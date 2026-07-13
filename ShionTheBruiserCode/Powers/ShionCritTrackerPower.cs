@@ -92,8 +92,8 @@ public class ShionCritTrackerPower : ShionTheBruiserPower
     public override Task BeforeCombatStart()
     {
         MainFile.Logger.Info("[ShionCritTrackerPower] BeforeCombatStart - will recalculate after base call");
+        ShionCritSystem.Reset(); // Clear any stale state left over from a previous combat
         RecalculateCritRates();
-        ShionCritSystem.EndAttack();
         return Task.CompletedTask;
     }
 
