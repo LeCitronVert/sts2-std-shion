@@ -1,13 +1,16 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionDarkArts() : ShionTheBruiserCard(2,
+public class ShionDarkArts() : ShionBerserkCard(2,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
@@ -29,4 +32,23 @@ public class ShionDarkArts() : ShionTheBruiserCard(2,
     {
         AddKeyword(CardKeyword.Retain);
     }
+    
+    public override Task AfterCardEnteredCombat(CardModel card)
+    {
+        if (card != this || !ShionMechanicsHelper.IsBerserk(this.Owner.Creature)) return Task.CompletedTask;
+        this.ReduceCost();
+        return Task.CompletedTask;
+    }
+    
+    public override Task AfterCurrentHpChanged(Creature creature, decimal delta)
+    {
+        if (creature == Owner.Creature && ShionMechanicsHelper.IsBerserk(creature))
+        {
+            this.ReduceCost();
+        }
+        
+        return Task.CompletedTask;
+    }
+    
+    private void ReduceCost() => this.EnergyCost.SetThisTurn(0);
 }

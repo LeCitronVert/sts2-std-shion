@@ -82,6 +82,28 @@ public static class ShionMechanicsHelper
             Log.Error("Crit crashed : " + e.Message);
         }
     }
+    
+    public static async void EnsureCreatureHasBerserkIndicator(Creature creature)
+    {
+        try
+        {
+            if (creature.HasPower<BerserkIndicator>()) return;
+
+            await PowerCmd.Apply<BerserkIndicator>(
+                new ThrowingPlayerChoiceContext(),
+                creature,
+                1,
+                creature,
+                null,
+                true
+            );
+        }
+        catch (Exception e)
+        {
+            
+            Log.Error("Berserk crashed : " + e.Message);
+        }
+    }
 
     public static async void ApplyCriticalDraw(CardModel criticalDrawCard, PlayerChoiceContext choiceContext, CardModel cardDrawn)
     {

@@ -2,13 +2,18 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
-using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Critical;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
-public class Endure() : ShionTheBruiserPower
+public class Endure() : CritContributorPower, ICritAttackRateContributor
 {
     public override PowerType Type =>
         PowerType.Buff;
@@ -18,7 +23,13 @@ public class Endure() : ShionTheBruiserPower
     
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new HealVar(50),
-        new DynamicVar("DebuffAmount", 5)
+        new DynamicVar("DebuffAmount", 5),
+        new CritDisplayTooltipVar(),
+        new CritHitRateVar(0.33M)
+    ];
+    
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
     ];
     
     public override bool ShouldDieLate(Creature creature)
@@ -34,5 +45,43 @@ public class Endure() : ShionTheBruiserPower
         await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), Owner, -DynamicVars["DebuffAmount"].BaseValue, Owner, null!);
         await PowerCmd.Apply<DexterityPower>(new ThrowingPlayerChoiceContext(), Owner, -DynamicVars["DebuffAmount"].BaseValue, Owner, null!);
         await PowerCmd.Decrement(power);
+    }
+    
+    public override Task AfterCurrentHpChanged(Creature creature, decimal delta)
+    {
+        if (creature == Owner)
+        {
+            ChangePulse();
+        }
+        return Task.CompletedTask;
+    }
+    
+    public override Task AfterApplied(Creature? applier, CardModel? cardSource)
+    {
+        ChangePulse();
+        
+        return Task.CompletedTask;
+    }
+
+    public void ChangePulse()
+    {
+        var shouldPulse = ShionMechanicsHelper.IsBerserk(Owner);
+
+        if (shouldPulse)
+        {
+            StartPulsing();
+        }
+        else
+        {
+            StopPulsing();
+        }
+    }
+    
+    public decimal GetCritAttackRateBonus(CardModel? sourceCard)
+    {
+        if (sourceCard == null || sourceCard.Owner.Creature == Owner)
+            return ShionMechanicsHelper.IsBerserk(Owner) ? DynamicVars[CritHitRateVar.Key].BaseValue : 0M;
+        
+        return 0;
     }
 }

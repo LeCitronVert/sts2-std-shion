@@ -3,7 +3,10 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -14,17 +17,53 @@ public class BerserkCharge : ShionTheBruiserPower
 
     public override PowerStackType StackType =>
         PowerStackType.Counter;
+    
+    public override int DisplayAmount => ShionMechanicsHelper.IsBerserk(Owner) ? (int) (DynamicVars["BerserkMultiplier"]
+        .BaseValue * Amount) : Amount;
+    
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new DynamicVar("BerserkMultiplier", 2)
+    ];
 
     public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side != CombatSide.Player) return;
 
         var power = this;
-        var missingHpRatio = (Owner.MaxHp - Owner.CurrentHp)
-                             / (float)Owner.MaxHp
-        ;
-        var vigorAmount = Math.Round(missingHpRatio * 10 * this.Amount);
-        if (vigorAmount <= 0) return;
+        var vigorAmount = Amount *
+                          (ShionMechanicsHelper.IsBerserk(Owner) ? DynamicVars["BerserkMultiplier"].BaseValue : 1);
         await PowerCmd.Apply<VigorPower>(new ThrowingPlayerChoiceContext(), power.Owner, (decimal) vigorAmount, power.Owner, null!);
+    }
+    
+    public override Task AfterCurrentHpChanged(Creature creature, decimal delta)
+    {
+        if (creature == Owner)
+        {
+            InvokeDisplayAmountChanged();
+            ChangePulse();
+        }
+        return Task.CompletedTask;
+    }
+    
+    public override Task AfterApplied(Creature? applier, CardModel? cardSource)
+    {
+        ChangePulse();
+        InvokeDisplayAmountChanged();
+        
+        return Task.CompletedTask;
+    }
+
+    public void ChangePulse()
+    {
+        var shouldPulse = ShionMechanicsHelper.IsBerserk(Owner);
+
+        if (shouldPulse)
+        {
+            StartPulsing();
+        }
+        else
+        {
+            StopPulsing();
+        }
     }
 }

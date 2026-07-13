@@ -1,3 +1,4 @@
+using BaseLib.Extensions;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -8,6 +9,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
@@ -36,7 +38,8 @@ public class ShionBreakDown() : ShionTheBruiserCard(1,
     {
         ShionBreakDown card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
-        await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
+        await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
+            .WithValueProp(ValueProp.Move)
             .WithHitCount(card.DynamicVars.Repeat.IntValue)
             .FromCard(card)
             .Targeting(play.Target)
@@ -55,4 +58,25 @@ public class ShionBreakDown() : ShionTheBruiserCard(1,
         
         return Task.CompletedTask;
     }
+    
+    public override Task BeforeCombatStart()    
+    {
+        if (!Owner.Creature.HasPower<ShionCritTrackerPower>())
+        {
+            ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(Owner.Creature);
+        }
+        
+        return Task.CompletedTask;
+    }
+
+    public override Task AfterCardEnteredCombat(CardModel card)
+    {
+        if (card != this) return Task.CompletedTask;
+        
+        ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(card.Owner.Creature);
+        
+        return Task.CompletedTask;
+    }
+    
+    protected override bool ShouldGlowGoldInternal => ShionMechanicsHelper.IsBerserk(this.Owner.Creature) || ShionMechanicsHelper.HasVigor(this.Owner.Creature) || ShionMechanicsHelper.GetDragonUniqueBuffCount(this.Owner.Creature) >= 3;
 }

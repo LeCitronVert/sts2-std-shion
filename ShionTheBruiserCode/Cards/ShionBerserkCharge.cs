@@ -4,20 +4,22 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionBerserkCharge() : ShionTheBruiserCard(1,
+public class ShionBerserkCharge() : ShionBerserkCard(1,
     CardType.Power, CardRarity.Uncommon,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<BerserkCharge>(1)
+        new PowerVar<BerserkCharge>(2)
     ];
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<VigorPower>()
+        HoverTipFactory.FromPower<VigorPower>(),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk)
     ];
 
 
@@ -38,6 +40,6 @@ public class ShionBerserkCharge() : ShionTheBruiserCard(1,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["BerserkCharge"].UpgradeValueBy(1);
+        DynamicVars["BerserkCharge"].UpgradeValueBy(2);
     }
 }

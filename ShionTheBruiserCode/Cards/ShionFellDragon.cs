@@ -4,11 +4,12 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionFellDragon() : ShionTheBruiserCard(1,
+public class ShionFellDragon() : ShionBerserkCard(1,
     CardType.Power, CardRarity.Ancient,
     TargetType.Self)
 {
@@ -19,7 +20,8 @@ public class ShionFellDragon() : ShionTheBruiserCard(1,
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<VigorPower>(),
-        HoverTipFactory.Static(StaticHoverTip.Block)
+        HoverTipFactory.Static(StaticHoverTip.Block),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk)
     ];
 
     protected override async Task OnPlay(

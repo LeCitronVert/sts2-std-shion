@@ -7,7 +7,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionSpiritBreak() : ShionTheBruiserCard(3,
+public class ShionSpiritBreak() : ShionBerserkCard(3,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
@@ -21,10 +21,16 @@ public class ShionSpiritBreak() : ShionTheBruiserCard(3,
     {
         var card = this;
         ShionMechanicsHelper.EnsureCreatureHasCritTracker(card.Owner.Creature);
+        var critAmount = DynamicVars["SpiritBreak"].BaseValue;
+        if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature))
+        {
+            critAmount *= 2;
+        }
+        
         await PowerCmd.Apply<CriticalAttackNext>(
             choiceContext,
             card.Owner.Creature,
-            DynamicVars["SpiritBreak"].BaseValue,
+            critAmount,
             card.Owner.Creature,
             card
         );

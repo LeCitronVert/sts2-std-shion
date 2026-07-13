@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -17,15 +18,8 @@ public class BerserkDrive : ShionTheBruiserPower
     /// <summary>
     /// Display the current damage bonus percentage based on missing HP.
     /// </summary>
-    public override int DisplayAmount
-    {
-        get
-        {
-            var missingHpRatio = (Owner.MaxHp - Owner.CurrentHp) / (float)Owner.MaxHp;
-            return (int)Math.Round(missingHpRatio * Amount);
-        }
-    }
-    
+    public override int DisplayAmount => ShionMechanicsHelper.IsBerserk(Owner) ? 2 * Amount : Amount;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("DisplayAmount", 0)
     ];
@@ -44,11 +38,7 @@ public class BerserkDrive : ShionTheBruiserPower
     
     private decimal GetBerserkDriveMultiplier(Creature creature)
     {
-        // Amount = percentage of damage but a 0 - 1 decimal is expected, based on the max hp and missing ratio
-        var missingHpRatio = (creature.MaxHp - creature.CurrentHp)
-                             / (float) creature.MaxHp;
-
-        return ((decimal) (missingHpRatio * (float) (Amount * 0.01M))) + 1;
+        return 1 + Amount / 100M + (ShionMechanicsHelper.IsBerserk(creature) ? (Amount / 100M) : 0);
     }
 
     /// <summary>
@@ -60,6 +50,7 @@ public class BerserkDrive : ShionTheBruiserPower
         {
             InvokeDisplayAmountChanged();
             DynamicVars["DisplayAmount"].BaseValue = DisplayAmount;
+            ChangePulse();
         }
         return Task.CompletedTask;
     }
@@ -68,8 +59,24 @@ public class BerserkDrive : ShionTheBruiserPower
     {
         InvokeDisplayAmountChanged();
         DynamicVars["DisplayAmount"].BaseValue = DisplayAmount;
+        ChangePulse();
         
         return Task.CompletedTask;
+    }
+    
+
+    public void ChangePulse()
+    {
+        var shouldPulse = ShionMechanicsHelper.IsBerserk(Owner);
+
+        if (shouldPulse)
+        {
+            StartPulsing();
+        }
+        else
+        {
+            StopPulsing();
+        }
     }
 
 }

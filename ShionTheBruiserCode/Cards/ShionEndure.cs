@@ -4,22 +4,27 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionEndure() : ShionTheBruiserCard(0,
+public class ShionEndure() : ShionBerserkCard(0,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<Endure>(1)
+        new PowerVar<Endure>(1),
+        new CritDisplayTooltipVar()
     ];
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<StrengthPower>(),
         HoverTipFactory.FromPower<DexterityPower>(),
         HoverTipFactory.FromPower<Endure>(),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk)
     ];
 
     protected override async Task OnPlay(
@@ -27,6 +32,7 @@ public class ShionEndure() : ShionTheBruiserCard(0,
         CardPlay play)
     {
         var card = this;
+        ShionMechanicsHelper.EnsureCreatureHasCritTracker(card.Owner.Creature);
         await PowerCmd.Apply<Endure>(
             choiceContext,
             card.Owner.Creature,
