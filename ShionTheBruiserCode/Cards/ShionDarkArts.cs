@@ -12,7 +12,7 @@ public class ShionDarkArts() : ShionTheBruiserCard(2,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new HpLossVar(10),
+        new HpLossVar(4),
         new PowerVar<DarkArts>(1),
     ];
 
