@@ -14,10 +14,7 @@ public abstract class ShionBerserkCard(int cost, CardType type, CardRarity rarit
     
     public override Task BeforeCombatStart()    
     {
-        if (!Owner.Creature.HasPower<ShionCritTrackerPower>())
-        {
-            ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(Owner.Creature);
-        }
+        ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(Owner.Creature);
         
         return Task.CompletedTask;
     }

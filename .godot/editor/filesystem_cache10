@@ -5,7 +5,7 @@ ShionTheBruiser.json::JSON::-1::1783257731::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1783977741
+::res://bin/ExportRelease/net9.0/publish/::1783983322
 ShionTheBruiser.deps.json::JSON::-1::1783942296::0::1::::<><><>0<>0<><>::
 ::res://exportToHTML/::1782829109
 ::res://ShionTheBruiser/::1783259216
@@ -564,8 +564,8 @@ ShionTouchOfForesight.cs::CSharpScript::8858960271852629060::1782761509::0::1:::
 ShionUma.cs::CSharpScript::7161926289584648397::1782775622::0::1::::<><><>0<>0<><>::
 ShionUnusualStrategies.cs::CSharpScript::4073147821231419699::1783150333::0::1::::<><><>0<>0<><>::
 Yes.cs::CSharpScript::1548182700875497738::1783248701::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Character/::1783976514
-ShionTheBruiser.cs::CSharpScript::5230343434016276755::1783976514::0::1::::<><><>0<>0<><>::
+::res://ShionTheBruiserCode/Character/::1783978125
+ShionTheBruiser.cs::CSharpScript::5230343434016276755::1783978125::0::1::::<><><>0<>0<><>::
 ShionTheBruiserCardPool.cs::CSharpScript::5768901081701376971::1782984673::0::1::::<><><>0<>0<><>::
 ShionTheBruiserPotionPool.cs::CSharpScript::8942352038865602766::1782984673::0::1::::<><><>0<>0<><>::
 ShionTheBruiserRelicPool.cs::CSharpScript::7291834671674422082::1782984673::0::1::::<><><>0<>0<><>::
@@ -598,10 +598,10 @@ CriticalPotion.cs::CSharpScript::1928527186095989498::1783340501::0::1::::<><><>
 DraconicJuice.cs::CSharpScript::9211876073659952205::1783340500::0::1::::<><><>0<>0<><>::
 ShionTheBruiserPotion.cs::CSharpScript::9201725349623556408::1783339625::0::1::::<><><>0<>0<><>::
 UltraSpicyBrew.cs::CSharpScript::9048578971562818039::1783341003::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Powers/::1783977729
+::res://ShionTheBruiserCode/Powers/::1783977881
 BattleTempo.cs::CSharpScript::8564905511811489123::1782839293::0::1::::<><><>0<>0<><>::
-BerserkCharge.cs::CSharpScript::8895171129478005530::1783977729::0::1::::<><><>0<>0<><>::
-BerserkDrive.cs::CSharpScript::4397575169758918708::1783976308::0::1::::<><><>0<>0<><>::
+BerserkCharge.cs::CSharpScript::8895171129478005530::1783977881::0::1::::<><><>0<>0<><>::
+BerserkDrive.cs::CSharpScript::4397575169758918708::1783977878::0::1::::<><><>0<>0<><>::
 BerserkForm.cs::CSharpScript::8546351100132521052::1782816112::0::1::::<><><>0<>0<><>::
 BerserkIndicator.cs::CSharpScript::5679451472385701625::1783969833::0::1::::<><><>0<>0<><>::
 BreakMeIfYouCan.cs::CSharpScript::6839460217314529791::1783936211::0::1::::<><><>0<>0<><>::
@@ -647,11 +647,11 @@ TempCriticalAttackNext.cs::CSharpScript::920953950281857104::1782761038::0::1:::
 TemporaryArtifact.cs::CSharpScript::6722705193844881131::1782899785::0::1::::<><><>0<>0<><>::
 UltraSpicyBrewPower.cs::CSharpScript::1677793608499280835::1783340826::0::1::::<><><>0<>0<><>::
 UnusualStrategies.cs::CSharpScript::5152194611686798018::1783149926::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Relics/::1783942051
+::res://ShionTheBruiserCode/Relics/::1783983084
 AbbyTheAbsol.cs::CSharpScript::4933717058365350120::1783279528::0::1::::<><><>0<>0<><>::
 BattleGloves.cs::CSharpScript::8565195483457157643::1782760974::0::1::::<><><>0<>0<><>::
 BattleRags.cs::CSharpScript::8592603631170881753::1783342812::0::1::::<><><>0<>0<><>::
-ChaoEggshell.cs::CSharpScript::7020309206761549810::1783238860::0::1::::<><><>0<>0<><>::
+ChaoEggshell.cs::CSharpScript::7020309206761549810::1783983084::0::1::::<><><>0<>0<><>::
 ChoiceBand.cs::CSharpScript::8821199811291539698::1783939096::0::1::::<><><>0<>0<><>::
 CommanderCap.cs::CSharpScript::5748431079974314787::1783231591::0::1::::<><><>0<>0<><>::
 EdgeTheChao.cs::CSharpScript::4304950549856756260::1783941857::0::1::::<><><>0<>0<><>::

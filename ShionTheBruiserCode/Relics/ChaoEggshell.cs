@@ -42,24 +42,31 @@ public class ChaoEggshell() : ShionTheBruiserRelic
         this._attacksReceivedThisTurn = 0;
         return Task.CompletedTask;
     }
-    
-    public override Decimal ModifyHpLostAfterOsty(
-        Creature target,
-        Decimal amount,
-        ValueProp props,
-        Creature? dealer,
+
+    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer,
         CardModel? cardSource)
     {
-        if (target != Owner.Creature) return amount;
-        var reduction = ReductionAmount * _attacksReceivedThisTurn;
-        var damage = Math.Max(0M, amount - reduction);
-        _attacksReceivedThisTurn++;
+        if (target != Owner.Creature) return 0;
+        
+        return -(ReductionAmount * _attacksReceivedThisTurn);
+    }
 
-        if (reduction > 0)
+    public override Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props,
+        Creature? dealer, CardModel? cardSource)
+    {
+        if (target != Owner.Creature) return Task.CompletedTask;
+        
+        // Only count attacks from other creatures (not self-damage)
+        if (dealer != null && dealer != Owner.Creature)
         {
-            Flash();
+            if (_attacksReceivedThisTurn > 0)
+            {
+                Flash();
+            }
+            _attacksReceivedThisTurn++;
         }
         
-        return damage;
+        return Task.CompletedTask;
     }
+
 }
