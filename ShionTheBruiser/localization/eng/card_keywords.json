@@ -10,5 +10,7 @@
   "SHIONTHEBRUISER-EMERALDPOWER.description": "Exhausts ALL others Emerald Powers in your possession upon play.",
   "SHIONTHEBRUISER-EMERALDPOWER.title": "Emerald Power",
   "SHIONTHEBRUISER-TEAMBLAST.description": "Exhausts ALL others Team Blasts in ALL PLAYERS' possession upon play.",
-  "SHIONTHEBRUISER-TEAMBLAST.title": "Team Blast"
+  "SHIONTHEBRUISER-TEAMBLAST.title": "Team Blast",
+  "SHIONTHEBRUISER-BERSERK.description": "Gains additional effects if your HP is equal or lower to half of your Max HP.",
+  "SHIONTHEBRUISER-BERSERK.title": "Berserk"
 }

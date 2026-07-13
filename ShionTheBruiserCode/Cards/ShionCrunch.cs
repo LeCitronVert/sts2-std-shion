@@ -2,8 +2,10 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -13,8 +15,9 @@ public class ShionCrunch() : ShionTheBruiserCard(1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("DebuffAmount", 1),
-        new DynamicVar("VigorForVuln", 15),
-        new DynamicVar("VigorForDebil", 30)
+        new DynamicVar("VigorForVuln", 10),
+        new DynamicVar("VigorForDebil", 15),
+        new CriticalDrawVar(10)
     ];
     
     protected override bool ShouldGlowGoldInternal => ShionMechanicsHelper.HasVigor(this.Owner.Creature);
@@ -43,5 +46,12 @@ public class ShionCrunch() : ShionTheBruiserCard(1,
     protected override void OnUpgrade()
     {
         EnergyCost.UpgradeBy(-1);
+    }
+    
+    public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    {
+        ShionMechanicsHelper.ApplyCriticalDraw(this, choiceContext, card);
+        
+        return Task.CompletedTask;
     }
 }

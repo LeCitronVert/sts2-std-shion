@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using ShionTheBruiser.ShionTheBruiserCode.Critical;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
@@ -15,6 +16,7 @@ public class ShionCriticalDrive() : CritContributorCard(2,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CritDisplayTooltipVar(),
+        new CriticalDrawVar(30)
     ];
     
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
@@ -37,5 +39,12 @@ public class ShionCriticalDrive() : CritContributorCard(2,
     protected override void OnUpgrade()
     {
         EnergyCost.UpgradeBy(-1);
+    }
+    
+    public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    {
+        ShionMechanicsHelper.ApplyCriticalDraw(this, choiceContext, card);
+        
+        return Task.CompletedTask;
     }
 }

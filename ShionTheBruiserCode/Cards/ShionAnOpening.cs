@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Models;
 using ShionTheBruiser.ShionTheBruiserCode.Critical;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -16,8 +17,9 @@ public class ShionAnOpening() : CritContributorCard(1,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<CritRateUp>(10),
+        new PowerVar<CritRateUp>(5),
         new CardsVar(1),
+        new CriticalDrawVar(15)
     ];
 
     protected override async Task OnPlay(
@@ -26,7 +28,7 @@ public class ShionAnOpening() : CritContributorCard(1,
     {
         var card = play.Card;
         ShionMechanicsHelper.EnsureCreatureHasCritTracker(card.Owner.Creature);
-        await PowerCmd.Apply<AnOpening>(
+        await PowerCmd.Apply<CritAttackUp>(
             choiceContext,
             card.Owner.Creature,
             DynamicVars.Power<CritRateUp>().BaseValue,
@@ -47,5 +49,12 @@ public class ShionAnOpening() : CritContributorCard(1,
     protected override void OnUpgrade()
     {
         DynamicVars.Power<CritRateUp>().UpgradeValueBy(5);
+    }
+    
+    public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    {
+        ShionMechanicsHelper.ApplyCriticalDraw(this, choiceContext, card);
+        
+        return Task.CompletedTask;
     }
 }

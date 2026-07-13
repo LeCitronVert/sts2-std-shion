@@ -7,6 +7,8 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -19,7 +21,8 @@ public class ShionFaeReturn() : ShionTheBruiserCard(3,
         new ExtraDamageVar(10M),
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier(
             (card, target) => (Decimal) CountAllyBeneficialEffects(card)
-        )
+        ),
+        new CriticalDrawVar(15)
     ];
     
     public override CardMultiplayerConstraint MultiplayerConstraint => 
@@ -79,5 +82,12 @@ public class ShionFaeReturn() : ShionTheBruiserCard(3,
     {
         DynamicVars.CalculationBase.UpgradeValueBy(2M);
         DynamicVars.ExtraDamage.UpgradeValueBy(2M);
+    }
+    
+    public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    {
+        ShionMechanicsHelper.ApplyCriticalDraw(this, choiceContext, card);
+        
+        return Task.CompletedTask;
     }
 }

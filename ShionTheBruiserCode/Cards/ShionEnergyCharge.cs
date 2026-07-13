@@ -2,9 +2,11 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using ShionTheBruiser.ShionTheBruiserCode.Cards;
+using MegaCrit.Sts2.Core.Models;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -14,7 +16,8 @@ public class ShionEnergyCharge() : ShionTheBruiserCard(1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<EnergyCharge>(3),
-        new DynamicVar("DamageAmount", EnergyCharge.DamageUp)
+        new DynamicVar("DamageAmount", EnergyCharge.DamageUp),
+        new CriticalDrawVar(20)
     ];
     
     protected override HashSet<CardTag> CanonicalTags => [ShionCardTags.Energy];
@@ -42,5 +45,13 @@ public class ShionEnergyCharge() : ShionTheBruiserCard(1,
     {
         DynamicVars["EnergyCharge"].UpgradeValueBy(2);
         EnergyCost.UpgradeBy(-1);
+        DynamicVars["CriticalDraw"].UpgradeValueBy(5);
+    }
+    
+    public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    {
+        ShionMechanicsHelper.ApplyCriticalDraw(this, choiceContext, card);
+        
+        return Task.CompletedTask;
     }
 }

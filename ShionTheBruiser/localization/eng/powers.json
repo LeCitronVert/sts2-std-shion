@@ -1,6 +1,6 @@
 {
   "SHIONTHEBRUISER-FELL_DRAGON.description": "Each turn, gain [gold]Vigor[/gold] and [gold]Block[/gold], but lose HP, depending on your amount of unique buffs.",
-  "SHIONTHEBRUISER-FELL_DRAGON.smartDescription": "At the beginning of your turn, gain 5 [gold]Vigor[/gold], 5 [gold]Block[/gold], and lose 2 HP per unique buff you have.",
+  "SHIONTHEBRUISER-FELL_DRAGON.smartDescription": "At the beginning of your turn, gain 5 [gold]Vigor[/gold], 5 [gold]Block[/gold], and lose 2 HP per unique buff you have.\nThis effect cannot make you lose more than [blue]{HpLossCap}[/blue] HP per turn.",
   "SHIONTHEBRUISER-FELL_DRAGON.title": "Fell Dragon",
   "SHIONTHEBRUISER-SHION_CRIT_TRACKER_POWER.description": "This character's attacks can deal [gold]Critical Hits[/gold], dealing 50% more damage.",
   "SHIONTHEBRUISER-SHION_CRIT_TRACKER_POWER.smartDescription": "Attacks deal 50% damage on a [gold]Critical Hit[/gold].\nPer-hit crit chance: [blue]{HitRate}%[/blue].\nPer-attack crit chance: [blue]{AttackRate}%[/blue].",

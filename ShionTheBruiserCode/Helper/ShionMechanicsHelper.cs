@@ -82,4 +82,33 @@ public static class ShionMechanicsHelper
             Log.Error("Crit crashed : " + e.Message);
         }
     }
+
+    public static async void ApplyCriticalDraw(CardModel criticalDrawCard, PlayerChoiceContext choiceContext, CardModel cardDrawn)
+    {
+        if (criticalDrawCard != cardDrawn) return;
+
+        var owner = criticalDrawCard.Owner.Creature;
+        var critDrawAmount = criticalDrawCard.DynamicVars["CriticalDraw"].BaseValue;
+        
+        if (critDrawAmount <= 0) return;
+        
+        EnsureCreatureHasCritTracker(owner);
+        
+        await PowerCmd.Apply<CriticalDraw>(
+            choiceContext,
+            owner,
+            critDrawAmount,
+            owner,
+            criticalDrawCard
+        );
+    }
+    
+    // Checks whether creature has 50%HP or less
+    public static bool IsBerserk(Creature creature)
+    {
+        var missingHpRatio = (creature.MaxHp - creature.CurrentHp)
+                             / (float) creature.MaxHp;
+        
+        return missingHpRatio >= 0.5;
+    }
 }

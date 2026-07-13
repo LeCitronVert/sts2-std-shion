@@ -17,6 +17,12 @@ public class FellDragon : ShionTheBruiserPower
 
     public override PowerStackType StackType =>
         PowerStackType.Single;
+
+    public const int HpLossCap = 5;
+    
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new DynamicVar("HpLossCap", HpLossCap)
+    ];
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<VigorPower>(),
@@ -29,7 +35,7 @@ public class FellDragon : ShionTheBruiserPower
         if (uniqueBuffsCount == 0) return;
         
         Decimal num = (Decimal) 5 * uniqueBuffsCount;
-        Decimal hpLoss = 2M  * uniqueBuffsCount;
+        Decimal hpLoss = Math.Min(2M  * uniqueBuffsCount, HpLossCap);
         _ = (await PowerCmd.Apply<VigorPower>(new ThrowingPlayerChoiceContext(), Owner, num, Owner, null!))!;
         _ = (await CreatureCmd.GainBlock(Owner, new BlockVar(num, ValueProp.Unpowered), null!))!;
         _ = (await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), Owner, new DamageVar(hpLoss , ValueProp.Unblockable), Owner));

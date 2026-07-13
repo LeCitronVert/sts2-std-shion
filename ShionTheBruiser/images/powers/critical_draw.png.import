@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c6epikcqy20nv"
-path="res://.godot/imported/an_opening.png-b213814d3c03b8d1b756af871268d544.ctex"
+path="res://.godot/imported/critical_draw.png-740f6c5b90971be069156f446ba20c77.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ShionTheBruiser/images/powers/an_opening.png"
-dest_files=["res://.godot/imported/an_opening.png-b213814d3c03b8d1b756af871268d544.ctex"]
+source_file="res://ShionTheBruiser/images/powers/critical_draw.png"
+dest_files=["res://.godot/imported/critical_draw.png-740f6c5b90971be069156f446ba20c77.ctex"]
 
 [params]
 

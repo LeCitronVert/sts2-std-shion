@@ -3,8 +3,11 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -14,7 +17,8 @@ public class ShionEnergySpark() : ShionTheBruiserCard(0,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(1),
-        new PowerVar<VigorPower>(1)
+        new PowerVar<VigorPower>(1),
+        new CriticalDrawVar(5)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -42,5 +46,12 @@ public class ShionEnergySpark() : ShionTheBruiserCard(0,
     {
         this.DynamicVars.Cards.UpgradeValueBy(1M);
         this.DynamicVars["VigorPower"].UpgradeValueBy(1M);
+    }
+    
+    public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    {
+        ShionMechanicsHelper.ApplyCriticalDraw(this, choiceContext, card);
+        
+        return Task.CompletedTask;
     }
 }

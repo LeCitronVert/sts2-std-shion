@@ -1,8 +1,14 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -11,9 +17,18 @@ public class ShionBreakDown() : ShionTheBruiserCard(1,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(5M, ValueProp.Move),
-        new RepeatVar(3)
+        new RepeatVar(3),
+        new CriticalDrawVar(20),
+        new CalculationBaseVar(5),
+        new ExtraDamageVar(5),
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((model, _) =>
+            (model.Owner.Creature.GetPower<VigorPower>()?.Amount ?? 0) > 0 ? 1 : 0
+        +   ShionMechanicsHelper.GetDragonUniqueBuffCount(model.Owner.Creature) >= 3 ? 1 : 0
+        + (ShionMechanicsHelper.IsBerserk(model.Owner.Creature) ? 1 : 0)
+        )
     ];
+    
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk)];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -32,5 +47,12 @@ public class ShionBreakDown() : ShionTheBruiserCard(1,
     protected override void OnUpgrade()
     {
         this.DynamicVars.Repeat.UpgradeValueBy(2M);
+    }
+    
+    public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    {
+        ShionMechanicsHelper.ApplyCriticalDraw(this, choiceContext, card);
+        
+        return Task.CompletedTask;
     }
 }
