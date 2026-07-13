@@ -22,7 +22,8 @@ public class BerserkCharge : ShionTheBruiserPower
         .BaseValue * Amount) : Amount;
     
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("BerserkMultiplier", 2)
+        new DynamicVar("BerserkMultiplier", 2),
+        new DynamicVar("DisplayAmount", 0)
     ];
 
     public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
@@ -40,6 +41,7 @@ public class BerserkCharge : ShionTheBruiserPower
         if (creature == Owner)
         {
             InvokeDisplayAmountChanged();
+            DynamicVars["DisplayAmount"].BaseValue = DisplayAmount;
             ChangePulse();
         }
         return Task.CompletedTask;
@@ -48,6 +50,7 @@ public class BerserkCharge : ShionTheBruiserPower
     public override Task AfterApplied(Creature? applier, CardModel? cardSource)
     {
         ChangePulse();
+        DynamicVars["DisplayAmount"].BaseValue = DisplayAmount;
         InvokeDisplayAmountChanged();
         
         return Task.CompletedTask;
