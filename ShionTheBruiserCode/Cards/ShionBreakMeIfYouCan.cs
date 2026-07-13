@@ -13,14 +13,17 @@ public class ShionBreakMeIfYouCan() : ShionDefensiveCard(2,
     CardType.Power, CardRarity.Uncommon,
     TargetType.Self)
 {
+    public const int PlatingInitialAmount = 7;
+    
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("RegenAmount", BreakMeIfYouCan.RegenAmount),
+        new DynamicVar("PlatingAmount", BreakMeIfYouCan.PlatingAmount),
+        new DynamicVar("PlatingInitialAmount", PlatingInitialAmount),
         new DynamicVar("VigorAmount", BreakMeIfYouCan.VigorAmount)
     ];
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<WeakPower>(),
-        HoverTipFactory.FromPower<VulnerablePower>(),
+        HoverTipFactory.FromPower<PlatingPower>(),
+        HoverTipFactory.FromPower<VigorPower>(),
     ];
     
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Ethereal, ShionCardKeywords.Defensive];
@@ -30,6 +33,7 @@ public class ShionBreakMeIfYouCan() : ShionDefensiveCard(2,
         CardPlay play)
     {
         var card = this;
+        await PowerCmd.Apply<PlatingPower>(choiceContext, card.Owner.Creature, PlatingInitialAmount, card.Owner.Creature, card);
         await PowerCmd.Apply<BreakMeIfYouCan>(choiceContext, card.Owner.Creature, 1M, card.Owner.Creature, card);
         await ApplyDefensiveToPlayer();
     }

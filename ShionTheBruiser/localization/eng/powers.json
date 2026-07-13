@@ -30,7 +30,7 @@
   "SHIONTHEBRUISER-SHIELD_BREAKER.smartDescription": "Whenever you play an Attack against an enemy with Block, replay that attack {Amount:plural:once|[blue]{}[/blue] times}.",
   "SHIONTHEBRUISER-SHIELD_BREAKER.title": "Shield Breaker",
   "SHIONTHEBRUISER-BREAK_ME_IF_YOU_CAN.description": "Gain Regen and Vigor at the end of each turn. Ends if you use an Attack.",
-  "SHIONTHEBRUISER-BREAK_ME_IF_YOU_CAN.smartDescription": "Gain [blue]{RegenAmount}[/blue] [gold]Regen[/gold] and [blue]{VigorAmount}[/blue] [gold]Vigor[/gold] at the end of each turn. This effect is removed when you use an Attack.",
+  "SHIONTHEBRUISER-BREAK_ME_IF_YOU_CAN.smartDescription": "Gain [blue]{PlatingAmount}[/blue] [gold]Plating[/gold] and [blue]{VigorAmount}[/blue] [gold]Vigor[/gold] at the end of each turn. This effect is removed when you use an Attack.",
   "SHIONTHEBRUISER-BREAK_ME_IF_YOU_CAN.title": "Break Me If You Can",
   "SHIONTHEBRUISER-CRITICAL_ATTACK_NEXT.description": "Your next Attack is guaranteed to be a [gold]Critical Attack[/gold].",
   "SHIONTHEBRUISER-CRITICAL_ATTACK_NEXT.smartDescription": "Your next {Amount:plural:Attack is|[blue]{}[/blue] Attacks are} guaranteed to be {Amount:plural:a [gold]Critical Attack[/gold]|[gold]Critical Attacks[/gold]}.",

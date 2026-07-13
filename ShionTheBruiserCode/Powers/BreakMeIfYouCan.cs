@@ -18,16 +18,16 @@ public class BreakMeIfYouCan : ShionTheBruiserPower
     public override PowerStackType StackType =>
         PowerStackType.None;
 
-    public const int RegenAmount = 2;
+    public const int PlatingAmount = 1;
     public const int VigorAmount = 7;
     
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("RegenAmount", RegenAmount),
+        new DynamicVar("PlatingAmount", PlatingAmount),
         new DynamicVar("VigorAmount", VigorAmount)
     ];
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<RegenPower>(),
+        HoverTipFactory.FromPower<PlatingPower>(),
         HoverTipFactory.FromPower<VigorPower>(),
     ];
 
@@ -35,7 +35,7 @@ public class BreakMeIfYouCan : ShionTheBruiserPower
     {
         if (side != CombatSide.Player) return;
         
-        await PowerCmd.Apply<RegenPower>(choiceContext, Owner, RegenAmount, Owner, null);
+        await PowerCmd.Apply<PlatingPower>(choiceContext, Owner, PlatingAmount, Owner, null);
         await PowerCmd.Apply<VigorPower>(choiceContext, Owner, VigorAmount, Owner, null);
     }
 
