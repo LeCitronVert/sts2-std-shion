@@ -24,7 +24,16 @@ public class ShionTheBruiser : PlaceholderCharacterModel
 
     public override IEnumerable<CardModel> StartingDeck =>
     [
-        ModelDb.Card<ShionNightSlash>(),
+        ModelDb.Card<ShionStrike>(),
+        ModelDb.Card<ShionStrike>(),
+        ModelDb.Card<ShionStrike>(),
+        ModelDb.Card<ShionStrike>(),
+        ModelDb.Card<ShionDefend>(),
+        ModelDb.Card<ShionDefend>(),
+        ModelDb.Card<ShionDefend>(),
+        ModelDb.Card<ShionDefend>(),
+        ModelDb.Card<ShionFlood>(),
+        ModelDb.Card<ShionBluff>(),
     ];
 
     public override IReadOnlyList<RelicModel> StartingRelics =>

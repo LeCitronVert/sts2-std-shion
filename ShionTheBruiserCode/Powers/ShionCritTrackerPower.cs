@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
+using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Critical;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
@@ -92,6 +93,13 @@ public class ShionCritTrackerPower : ShionTheBruiserPower
     public override Task BeforeCombatStart()
     {
         MainFile.Logger.Info("[ShionCritTrackerPower] BeforeCombatStart - will recalculate after base call");
+        ShionCritSystem.Reset(); // Clear any stale state left over from a previous combat
+        RecalculateCritRates();
+        return Task.CompletedTask;
+    }
+    
+    public override Task AfterCombatEnd(CombatRoom room)
+    {
         ShionCritSystem.Reset(); // Clear any stale state left over from a previous combat
         RecalculateCritRates();
         return Task.CompletedTask;
