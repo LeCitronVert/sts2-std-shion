@@ -85,6 +85,8 @@ public class ShionTheBruiser : PlaceholderCharacterModel
     public override string CustomCharacterSelectLockedIconPath => "char_select_char_name_locked.png".CharacterUiPath();
     public override string CustomMapMarkerPath => "shion/ui_map_taco.png".CharacterUiPath();
     
+    public override string? CustomIconOutlineTexturePath => CustomIconTexturePath;
+
     public override List<string> GetArchitectAttackVfx()
     {
         int num = 20;
