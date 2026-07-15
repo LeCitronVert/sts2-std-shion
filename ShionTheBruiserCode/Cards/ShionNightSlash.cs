@@ -4,15 +4,14 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
-using ShionTheBruiser.ShionTheBruiserCode.Critical;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionNightSlash() : CritContributorCard(3,
+public class ShionNightSlash() : ShionTheBruiserCard(3,
     CardType.Attack, CardRarity.Rare,
-    TargetType.AnyEnemy), ICritAttackRateContributor
+    TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(25, ValueProp.Move),
@@ -37,11 +36,6 @@ public class ShionNightSlash() : CritContributorCard(3,
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(7);
-    }
-
-    public decimal GetCritAttackRateBonus(CardModel? sourceCard)
-    {
-        return sourceCard == this ? DynamicVars[CritAttackRateVar.Key].BaseValue / 100 : 0;
     }
     
     public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
