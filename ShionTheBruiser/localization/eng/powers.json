@@ -21,7 +21,7 @@
   "SHIONTHEBRUISER-CRIT_ATTACK_UP.smartDescription": "Increases the chance of your attacks dealing [gold]Critical Hits[/gold], dealing 50% more damage. This chance applies to the entire Attack, and is rolled once for all its hits.",
   "SHIONTHEBRUISER-CRIT_ATTACK_UP.title": "Critical Attack Rate Up",
   "SHIONTHEBRUISER-BERSERK_CHARGE.description": "Gain Vigor each turn. Gain more if you are below 50% HP.",
-  "SHIONTHEBRUISER-BERSERK_CHARGE.smartDescription": "Gain [blue]{Amount}[/blue] [gold]Vigor[/gold] each turn.\n[gold]Berserk:[/gold] Gain double that amount.\n(Currently: [blue]{DisplayAmount}[/blue]%)",
+  "SHIONTHEBRUISER-BERSERK_CHARGE.smartDescription": "Gain [blue]{Amount}[/blue] [gold]Vigor[/gold] each turn.\n[gold]Berserk:[/gold] Gain double that amount.\n(Currently: [blue]{DisplayAmount}[/blue])",
   "SHIONTHEBRUISER-BERSERK_CHARGE.title": "Berserk Charge",
   "SHIONTHEBRUISER-DEFENSIVE_STRATEGIES.description": "Gain Vigor whenever you use a Defensive card.",
   "SHIONTHEBRUISER-DEFENSIVE_STRATEGIES.smartDescription": "Gain [blue]{Amount}[/blue] [gold]Vigor[/gold] whenever you use a Defensive card.",

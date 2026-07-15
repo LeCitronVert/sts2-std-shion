@@ -69,4 +69,12 @@ public class BerserkCharge : ShionTheBruiserPower
             StopPulsing();
         }
     }
+
+    public override Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier,
+        CardModel? cardSource)
+    {
+        DynamicVars["DisplayAmount"].BaseValue = DisplayAmount;
+        InvokeDisplayAmountChanged();
+        return Task.CompletedTask;
+    }
 }

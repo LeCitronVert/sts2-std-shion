@@ -5,7 +5,7 @@ ShionTheBruiser.json::JSON::-1::1783257731::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1784130466
+::res://bin/ExportRelease/net9.0/publish/::1784131253
 ShionTheBruiser.deps.json::JSON::-1::1783942296::0::1::::<><><>0<>0<><>::
 ::res://exportToHTML/::1782829109
 ::res://ShionTheBruiser/::1783259216
@@ -449,14 +449,14 @@ character_shion_merchant.png::CompressedTexture2D::3897435678589359565::17838900
 ::res://ShionTheBruiser/images/ui/rest/::1783267487
 lull.png::CompressedTexture2D::1267024042070092315::1783267457::1783267487::1::::<><><>0<>0<>46ca43c57aac12a6d7ea8ace1d934f9d<>res://.godot/imported/lull.png-a7714865cfaf878a1f7a05dec126e0c0.ctex::
 ::res://ShionTheBruiser/localization/::1781940056
-::res://ShionTheBruiser/localization/eng/::1784036105
+::res://ShionTheBruiser/localization/eng/::1784130610
 ancients.json::JSON::-1::1783240737::0::1::::<><><>0<>0<><>::
 cards.json::JSON::-1::1783977259::0::1::::<><><>0<>0<><>::
 card_keywords.json::JSON::-1::1783947258::0::1::::<><><>0<>0<><>::
 characters.json::JSON::-1::1782051226::0::1::::<><><>0<>0<><>::
 combat_messages.json::JSON::-1::1782426298::0::1::::<><><>0<>0<><>::
 potions.json::JSON::-1::1783341011::0::1::::<><><>0<>0<><>::
-powers.json::JSON::-1::1783977545::0::1::::<><><>0<>0<><>::
+powers.json::JSON::-1::1784130610::0::1::::<><><>0<>0<><>::
 relics.json::JSON::-1::1783575529::0::1::::<><><>0<>0<><>::
 rest_site_ui.json::JSON::-1::1783267882::0::1::::<><><>0<>0<><>::
 static_hover_tips.json::JSON::-1::1784036105::0::1::::<><><>0<>0<><>::
@@ -598,9 +598,9 @@ CriticalPotion.cs::CSharpScript::1928527186095989498::1783340501::0::1::::<><><>
 DraconicJuice.cs::CSharpScript::9211876073659952205::1783340500::0::1::::<><><>0<>0<><>::
 ShionTheBruiserPotion.cs::CSharpScript::9201725349623556408::1783339625::0::1::::<><><>0<>0<><>::
 UltraSpicyBrew.cs::CSharpScript::9048578971562818039::1783341003::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Powers/::1784075428
+::res://ShionTheBruiserCode/Powers/::1784131250
 BattleTempo.cs::CSharpScript::8564905511811489123::1782839293::0::1::::<><><>0<>0<><>::
-BerserkCharge.cs::CSharpScript::8895171129478005530::1783977881::0::1::::<><><>0<>0<><>::
+BerserkCharge.cs::CSharpScript::8895171129478005530::1784131250::0::1::::<><><>0<>0<><>::
 BerserkDrive.cs::CSharpScript::4397575169758918708::1783977878::0::1::::<><><>0<>0<><>::
 BerserkForm.cs::CSharpScript::8546351100132521052::1782816112::0::1::::<><><>0<>0<><>::
 BerserkIndicator.cs::CSharpScript::5679451472385701625::1783969833::0::1::::<><><>0<>0<><>::
