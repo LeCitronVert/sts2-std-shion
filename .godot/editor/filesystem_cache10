@@ -5,7 +5,7 @@ ShionTheBruiser.json::JSON::-1::1783257731::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1784075430
+::res://bin/ExportRelease/net9.0/publish/::1784076629
 ShionTheBruiser.deps.json::JSON::-1::1783942296::0::1::::<><><>0<>0<><>::
 ::res://exportToHTML/::1782829109
 ::res://ShionTheBruiser/::1783259216
@@ -564,8 +564,8 @@ ShionTouchOfForesight.cs::CSharpScript::8858960271852629060::1782761509::0::1:::
 ShionUma.cs::CSharpScript::7161926289584648397::1782775622::0::1::::<><><>0<>0<><>::
 ShionUnusualStrategies.cs::CSharpScript::4073147821231419699::1783150333::0::1::::<><><>0<>0<><>::
 Yes.cs::CSharpScript::1548182700875497738::1783248701::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Character/::1784074933
-ShionTheBruiser.cs::CSharpScript::5230343434016276755::1784074933::0::1::::<><><>0<>0<><>::
+::res://ShionTheBruiserCode/Character/::1784075945
+ShionTheBruiser.cs::CSharpScript::5230343434016276755::1784075945::0::1::::<><><>0<>0<><>::
 ShionTheBruiserCardPool.cs::CSharpScript::5768901081701376971::1782984673::0::1::::<><><>0<>0<><>::
 ShionTheBruiserPotionPool.cs::CSharpScript::8942352038865602766::1782984673::0::1::::<><><>0<>0<><>::
 ShionTheBruiserRelicPool.cs::CSharpScript::7291834671674422082::1782984673::0::1::::<><><>0<>0<><>::
@@ -647,14 +647,14 @@ TempCriticalAttackNext.cs::CSharpScript::920953950281857104::1782761038::0::1:::
 TemporaryArtifact.cs::CSharpScript::6722705193844881131::1782899785::0::1::::<><><>0<>0<><>::
 UltraSpicyBrewPower.cs::CSharpScript::1677793608499280835::1783340826::0::1::::<><><>0<>0<><>::
 UnusualStrategies.cs::CSharpScript::5152194611686798018::1783149926::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Relics/::1783983084
+::res://ShionTheBruiserCode/Relics/::1784076599
 AbbyTheAbsol.cs::CSharpScript::4933717058365350120::1783279528::0::1::::<><><>0<>0<><>::
 BattleGloves.cs::CSharpScript::8565195483457157643::1782760974::0::1::::<><><>0<>0<><>::
 BattleRags.cs::CSharpScript::8592603631170881753::1783342812::0::1::::<><><>0<>0<><>::
 ChaoEggshell.cs::CSharpScript::7020309206761549810::1783983084::0::1::::<><><>0<>0<><>::
 ChoiceBand.cs::CSharpScript::8821199811291539698::1783939096::0::1::::<><><>0<>0<><>::
 CommanderCap.cs::CSharpScript::5748431079974314787::1783231591::0::1::::<><><>0<>0<><>::
-EdgeTheChao.cs::CSharpScript::4304950549856756260::1783941857::0::1::::<><><>0<>0<><>::
+EdgeTheChao.cs::CSharpScript::4304950549856756260::1784076599::0::1::::<><><>0<>0<><>::
 GrilledCarrot.cs::CSharpScript::8721297644806811372::1783433286::0::1::::<><><>0<>0<><>::
 MaidOutfit.cs::CSharpScript::5787638174562989650::1783942051::0::1::::<><><>0<>0<><>::
 MasterArtisanCleat.cs::CSharpScript::6260437140938537688::1783287626::0::1::::<><><>0<>0<><>::
