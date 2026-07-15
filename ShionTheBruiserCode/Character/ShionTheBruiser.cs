@@ -80,10 +80,10 @@ public class ShionTheBruiser : PlaceholderCharacterModel
         }
     }
 
-    public override string CustomIconTexturePath => "character_icon_char_name.png".CharacterUiPath();
-    public override string CustomCharacterSelectIconPath => "char_select_char_name.png".CharacterUiPath();
+    public override string CustomIconTexturePath => "shion/ui_icon_shion.png".CharacterUiPath();
+    public override string CustomCharacterSelectIconPath => "shion/ui_portrait_shion.png".CharacterUiPath();
     public override string CustomCharacterSelectLockedIconPath => "char_select_char_name_locked.png".CharacterUiPath();
-    public override string CustomMapMarkerPath => "map_marker_char_name.png".CharacterUiPath();
+    public override string CustomMapMarkerPath => "shion/ui_map_taco.png".CharacterUiPath();
     
     public override List<string> GetArchitectAttackVfx()
     {
