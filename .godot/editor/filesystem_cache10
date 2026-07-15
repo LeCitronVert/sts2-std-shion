@@ -5,7 +5,7 @@ ShionTheBruiser.json::JSON::-1::1783257731::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1784076629
+::res://bin/ExportRelease/net9.0/publish/::1784130466
 ShionTheBruiser.deps.json::JSON::-1::1783942296::0::1::::<><><>0<>0<><>::
 ::res://exportToHTML/::1782829109
 ::res://ShionTheBruiser/::1783259216
@@ -467,7 +467,7 @@ shion_merchant.tscn::PackedScene::5749524307241725221::1783893074::0::1::::<><><
 shion_visuals.gd::GDScript::1994071127518005964::1783891773::0::1::::<>AnimatedSprite2D<><>0<>0<><>::
 ::res://ShionTheBruiserCode/::1783322642
 MainFile.cs::CSharpScript::2954314548483070873::1781940058::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Cards/::1784073386
+::res://ShionTheBruiserCode/Cards/::1784130462
 CosmoDetermination.cs::CSharpScript::4903082444639403780::1783862372::0::1::::<><><>0<>0<><>::
 CosmoGuidance.cs::CSharpScript::4895954223051435257::1783862377::0::1::::<><><>0<>0<><>::
 CosmoKindness.cs::CSharpScript::2527117697509655675::1783862377::0::1::::<><><>0<>0<><>::
@@ -505,7 +505,7 @@ ShionDragonSmash.cs::CSharpScript::7408657493329758494::1783163911::0::1::::<><>
 ShionDragonsMight.cs::CSharpScript::8698830652557604718::1782776611::0::1::::<><><>0<>0<><>::
 ShionDragonsong.cs::CSharpScript::3739779855039255285::1783426282::0::1::::<><><>0<>0<><>::
 ShionDragonStrike.cs::CSharpScript::5761327322615258117::1782972716::0::1::::<><><>0<>0<><>::
-ShionEepy.cs::CSharpScript::7361024668647920590::1783003226::0::1::::<><><>0<>0<><>::
+ShionEepy.cs::CSharpScript::7361024668647920590::1784130462::0::1::::<><><>0<>0<><>::
 ShionEmeraldReflection.cs::CSharpScript::8453308753580855263::1782892129::0::1::::<><><>0<>0<><>::
 ShionEmergencyGuard.cs::CSharpScript::8690074971349723207::1783423384::0::1::::<><><>0<>0<><>::
 ShionEndure.cs::CSharpScript::3990314036148543778::1783976712::0::1::::<><><>0<>0<><>::
@@ -564,8 +564,8 @@ ShionTouchOfForesight.cs::CSharpScript::8858960271852629060::1782761509::0::1:::
 ShionUma.cs::CSharpScript::7161926289584648397::1782775622::0::1::::<><><>0<>0<><>::
 ShionUnusualStrategies.cs::CSharpScript::4073147821231419699::1783150333::0::1::::<><><>0<>0<><>::
 Yes.cs::CSharpScript::1548182700875497738::1783248701::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Character/::1784075945
-ShionTheBruiser.cs::CSharpScript::5230343434016276755::1784075945::0::1::::<><><>0<>0<><>::
+::res://ShionTheBruiserCode/Character/::1784076852
+ShionTheBruiser.cs::CSharpScript::5230343434016276755::1784076852::0::1::::<><><>0<>0<><>::
 ShionTheBruiserCardPool.cs::CSharpScript::5768901081701376971::1782984673::0::1::::<><><>0<>0<><>::
 ShionTheBruiserPotionPool.cs::CSharpScript::8942352038865602766::1782984673::0::1::::<><><>0<>0<><>::
 ShionTheBruiserRelicPool.cs::CSharpScript::7291834671674422082::1782984673::0::1::::<><><>0<>0<><>::
