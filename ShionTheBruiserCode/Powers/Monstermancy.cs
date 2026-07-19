@@ -6,9 +6,11 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -16,6 +18,8 @@ public class Monstermancy() : ShionTheBruiserPower
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.None;
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk)];
+
 
     private readonly Dictionary<Creature, MonsterMagicHelper> _learningMagic = new();
 
@@ -108,4 +112,52 @@ public class Monstermancy() : ShionTheBruiserPower
         true; // todo
 
     private bool IsRelevantDamageResults(List<DamageResult> results) => results.First().Receiver == Owner;
+    
+    public override bool TryModifyEnergyCostInCombat(
+        CardModel card,
+        Decimal originalCost,
+        out Decimal modifiedCost)
+    {
+        modifiedCost = originalCost;
+
+        if (card is not ShionMonsterSpell || !ShionMechanicsHelper.IsBerserk(Owner))
+        {
+            return false;
+        }
+
+        modifiedCost -= 1;
+        
+        return true;
+    }
+    
+    // Berserk Power stuff
+    public override Task AfterCurrentHpChanged(Creature creature, decimal delta)
+    {
+        if (creature != Owner) return Task.CompletedTask;
+        
+        ChangePulse();
+        return Task.CompletedTask;
+    }
+
+    public override Task AfterApplied(Creature? applier, CardModel? cardSource)
+    {
+        ChangePulse();
+        
+        return Task.CompletedTask;
+    }
+    
+
+    public void ChangePulse()
+    {
+        var shouldPulse = ShionMechanicsHelper.IsBerserk(Owner);
+
+        if (shouldPulse)
+        {
+            StartPulsing();
+        }
+        else
+        {
+            StopPulsing();
+        }
+    }
 }

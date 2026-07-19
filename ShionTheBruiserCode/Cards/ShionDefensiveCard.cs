@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
@@ -10,6 +11,8 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 public abstract class ShionDefensiveCard(int cost, CardType type, CardRarity rarity, TargetType target) :
     ShionTheBruiserCard(cost, type, rarity, target)
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [ShionCardKeywords.Defensive];
+    
     protected async Task ApplyDefensiveToPlayer()
     {
         await PowerCmd.Apply<DefensiveDebuff>(

@@ -1,4 +1,6 @@
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
@@ -12,13 +14,13 @@ public abstract class ShionBerserkCard(int cost, CardType type, CardRarity rarit
 {
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk)];
     
-    public override Task BeforeCombatStart()    
+    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(Owner.Creature);
         
         return Task.CompletedTask;
     }
-
+    
     public override Task AfterCardEnteredCombat(CardModel card)
     {
         if (card != this) return Task.CompletedTask;

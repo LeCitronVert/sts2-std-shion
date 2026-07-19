@@ -5,10 +5,12 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionBreakingSwipes() : ShionTheBruiserCard(1,
+public class ShionBreakingSwipes() : ShionBerserkCard(1,
     CardType.Attack, CardRarity.Rare,
     TargetType.AnyEnemy)
 {
@@ -19,6 +21,7 @@ public class ShionBreakingSwipes() : ShionTheBruiserCard(1,
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<VulnerablePower>(),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk)
     ];
 
     protected override async Task OnPlay(
@@ -33,13 +36,11 @@ public class ShionBreakingSwipes() : ShionTheBruiserCard(1,
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext)
         ;
-        await PowerCmd.Apply<VulnerablePower>(
-            choiceContext,
-            play.Target,
-            DynamicVars["VulnerablePower"].BaseValue,
-            play.Target,
-            card
-        );
+        
+        if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature))
+        {
+            await PowerCmd.Apply<VulnerablePower>(choiceContext, play.Target, DynamicVars["VulnerablePower"].BaseValue, card.Owner.Creature, card);
+        }
     }
 
     protected override void OnUpgrade()

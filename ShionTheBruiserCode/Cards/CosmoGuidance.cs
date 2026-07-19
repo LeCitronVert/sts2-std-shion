@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -16,15 +17,10 @@ public class CosmoGuidance() : ShionTheBruiserCard(2,
 {
     public override bool CanBeGeneratedInCombat => false;
     public override bool CanBeGeneratedByModifiers => false;
-
-
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("BuffAmount", 5)
-    ];
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<StrengthPower>(),
-        HoverTipFactory.FromPower<DexterityPower>(),
+        HoverTipFactory.FromPower<Guard>(),
+        HoverTipFactory.FromPower<CounterStance>(),
     ];
 
     protected override async Task OnPlay(
@@ -32,17 +28,17 @@ public class CosmoGuidance() : ShionTheBruiserCard(2,
         CardPlay play)
     {
         var card = this;
-        await PowerCmd.Apply<StrengthPower>(
+        await PowerCmd.Apply<Guard>(
             choiceContext, 
             card.Owner.Creature, 
-            card.DynamicVars["BuffAmount"].BaseValue, 
+            999, 
             card.Owner.Creature, 
             card
         );
-        await PowerCmd.Apply<DexterityPower>(
+        await PowerCmd.Apply<CounterStance>(
             choiceContext, 
             card.Owner.Creature, 
-            card.DynamicVars["BuffAmount"].BaseValue, 
+            999, 
             card.Owner.Creature, 
             card
         );

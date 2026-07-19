@@ -1,21 +1,33 @@
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionFlowGuard() : ShionTheBruiserCard(1,
+public class ShionFlowGuard() : ShionBerserkCard(1,
     CardType.Skill, CardRarity.Common,
     TargetType.Self)
 {
     public override bool GainsBlock => true;
     
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Defensive)
+    ];
+    
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new BlockVar(3, ValueProp.Move),
-        new RepeatVar(3),
+        new CalculationBaseVar(3),
+        new CalculationExtraVar(1),
+        new CalculatedVar("BlockCount").WithMultiplier((model, _) => ShionMechanicsHelper.IsBerserk(model.Owner.Creature) ? 1 : 0),
         new PowerVar<Guard>(1)
     ];
 
@@ -24,7 +36,7 @@ public class ShionFlowGuard() : ShionTheBruiserCard(1,
         CardPlay play)
     {
         var card = this;
-        for (int i = 0; i < DynamicVars.Repeat.BaseValue; i++)
+        for (int i = 0; i < ((CalculatedVar) DynamicVars["BlockCount"]).Calculate(this.Owner.Creature); i++)
         {
             await CreatureCmd.GainBlock(
                 card.Owner.Creature,
@@ -40,10 +52,38 @@ public class ShionFlowGuard() : ShionTheBruiserCard(1,
             card.Owner.Creature,
             card
         );
+        
+        await ApplyDefensiveToPlayer();
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Repeat.UpgradeValueBy(1);
+        DynamicVars.CalculationBase.UpgradeValueBy(1);
+    }
+    
+    // ShionDefensiveCard stuff
+    protected async Task ApplyDefensiveToPlayer()
+    {
+        await PowerCmd.Apply<DefensiveDebuff>(
+            new ThrowingPlayerChoiceContext(),
+            Owner.Creature,
+            amount: 1,
+            applier: Owner.Creature,
+            cardSource: this
+        );
+    }
+
+    // Defensive cards are only playable if the player didn't play any attacks this turn
+    protected override bool IsPlayable
+    {
+        get
+        {
+            var amount = CombatManager.Instance.History.Entries
+                    .OfType<CardPlayStartedEntry>()
+                    .Count((Func<CardPlayStartedEntry, bool>) (e => e.HappenedThisTurn(CombatState) && e.Actor == this.Owner.Creature && e.CardPlay.Card.Type == CardType.Attack))
+                ;
+            
+            return amount == 0;
+        }
     }
 }

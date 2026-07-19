@@ -19,14 +19,11 @@ public class ShionBerserkStrike() : ShionBerserkCard(2,
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CalculationBaseVar(9),
-        new ExtraDamageVar(25),
+        new ExtraDamageVar(3),
         // Damage scales with missing hp, up until the maximum which is stored in ExtraDamageVar
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier((model, _) =>
             {
-                var missingHpRatio = (model.Owner.Creature.MaxHp - model.Owner.Creature.CurrentHp)
-                                     / (float)model.Owner.Creature.MaxHp;
-
-                return (decimal) missingHpRatio;
+                return ShionMechanicsHelper.IsBerserk(model.Owner.Creature) ? 1M : 0M;
             }
         )
     ];
@@ -53,6 +50,7 @@ public class ShionBerserkStrike() : ShionBerserkCard(2,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.ExtraDamage.UpgradeValueBy(18);
+        DynamicVars.CalculationBase.UpgradeValueBy(3);
+        DynamicVars.ExtraDamage.UpgradeValueBy(2);
     }
 }

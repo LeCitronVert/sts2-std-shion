@@ -133,4 +133,18 @@ public static class ShionMechanicsHelper
         
         return missingHpRatio >= 0.5;
     }
+    
+    // Patch Up : Heals by X amount until you're at 50%HP
+    public static async Task PatchUpCreature(int amount, Creature creature)
+    {
+        var patchUpLimit = creature.MaxHp / 2;
+        var amountToHeal = Math.Min(amount, patchUpLimit - creature.CurrentHp);
+        
+        if (amountToHeal <= 0) return;
+        
+        await CreatureCmd.Heal(
+            creature,
+            amountToHeal
+        );
+    }
 }

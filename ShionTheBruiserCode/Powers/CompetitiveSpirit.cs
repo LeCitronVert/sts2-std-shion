@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiser.images.powers;
@@ -44,6 +45,10 @@ public class CompetitiveSpirit() : ShionTheBruiserPower
     {
         if (AmountThisTurn <= 0) return;
         await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), Owner, 1, Owner, null!);
+        if (ShionMechanicsHelper.IsBerserk(Owner))
+        {
+            await PowerCmd.Apply<DexterityPower>(new ThrowingPlayerChoiceContext(), Owner, 1, Owner, null!);
+        }
         AmountThisTurn--;
         this.Flash();
     }
@@ -59,6 +64,37 @@ public class CompetitiveSpirit() : ShionTheBruiserPower
         if (Owner != power.Owner && power.Type == PowerType.Buff)
         {
             GainStrengthIfOtherBuff();
+        }
+    }
+    
+    // Berserk Power stuff
+    public override Task AfterCurrentHpChanged(Creature creature, decimal delta)
+    {
+        if (creature != Owner) return Task.CompletedTask;
+        
+        ChangePulse();
+        return Task.CompletedTask;
+    }
+
+    public override Task AfterApplied(Creature? applier, CardModel? cardSource)
+    {
+        ChangePulse();
+        
+        return Task.CompletedTask;
+    }
+    
+
+    public void ChangePulse()
+    {
+        var shouldPulse = ShionMechanicsHelper.IsBerserk(Owner);
+
+        if (shouldPulse)
+        {
+            StartPulsing();
+        }
+        else
+        {
+            StopPulsing();
         }
     }
 }

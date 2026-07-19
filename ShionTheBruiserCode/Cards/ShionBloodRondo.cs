@@ -1,19 +1,24 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionBloodRondo() : ShionTheBruiserCard(1,
+public class ShionBloodRondo() : ShionBerserkCard(1,
     CardType.Attack, CardRarity.Common,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(1, ValueProp.Move),
+        new PatchUpVar(0),
+        new DynamicVar("BerserkLifeSteal", 25)
     ];
 
     protected override async Task OnPlay(
@@ -36,5 +41,16 @@ public class ShionBloodRondo() : ShionTheBruiserCard(1,
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(1);
+        DynamicVars["BerserkLifeSteal"].UpgradeValueBy(10);
+    }
+    
+    public override async Task AfterDamageGiven(PlayerChoiceContext choiceContext, Creature? dealer, DamageResult result, ValueProp props,
+        Creature target, CardModel? cardSource)
+    {
+        if (cardSource == this && Owner.Creature == dealer && result.TotalDamage > 0 && cardSource?.Type == CardType.Attack && ShionMechanicsHelper.IsBerserk(Owner.Creature))
+        {
+            var patchUpAmount = DynamicVars["BerserkLifeSteal"].IntValue * 0.01 * result.TotalDamage;
+            await ShionMechanicsHelper.PatchUpCreature((int) patchUpAmount, Owner.Creature);
+        }
     }
 }

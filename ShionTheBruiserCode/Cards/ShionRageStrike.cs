@@ -18,11 +18,8 @@ public class ShionRageStrike() : ShionBerserkCard(2,
     protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CalculationBaseVar(20M),
-        new ExtraDamageVar(10),
-        // Damage is doubled if owner has 3+ unique buffs
-        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((model, _) => ShionMechanicsHelper.IsBerserk(model.Owner.Creature) ? 1 : 0),
-        new HpLossVar(5),
+        new DamageVar(16, ValueProp.Move),
+        new HpLossVar(3),
         new CritDisplayTooltipVar(),
         new CritHitRateVar(40),
     ];
@@ -33,14 +30,23 @@ public class ShionRageStrike() : ShionBerserkCard(2,
     {
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
-        await CreatureCmd.Damage(
-            choiceContext,
-            card.Owner.Creature,
-            card.DynamicVars.HpLoss.BaseValue,
-            ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move,
-            this
-        );
-        await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
+        
+        if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature))
+        {
+            await ShionMechanicsHelper.PatchUpCreature(card.DynamicVars.HpLoss.IntValue, card.Owner.Creature);
+        }
+        else
+        {
+            await CreatureCmd.Damage(
+                choiceContext,
+                card.Owner.Creature,
+                card.DynamicVars.HpLoss.BaseValue,
+                ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move,
+                this
+            );
+        }
+        
+        await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .WithValueProp(ValueProp.Move)
             .FromCard(card)
             .Targeting(play.Target)
@@ -51,8 +57,7 @@ public class ShionRageStrike() : ShionBerserkCard(2,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.CalculationBase.UpgradeValueBy(6);
-        DynamicVars.ExtraDamage.UpgradeValueBy(5);
+        DynamicVars.Damage.UpgradeValueBy(2);
         DynamicVars[CritHitRateVar.Key].UpgradeValueBy(20);
     }
     

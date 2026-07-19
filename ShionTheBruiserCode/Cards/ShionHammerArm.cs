@@ -4,18 +4,20 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionHammerArm() : ShionTheBruiserCard(1,
+public class ShionHammerArm() : ShionBerserkCard(1,
     CardType.Attack, CardRarity.Common,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(4, ValueProp.Move),
+        new DamageVar(1, ValueProp.Move),
         new PowerVar<StrengthPower>(1),
         new DynamicVar("Duration", HammerArm.Duration),
+        new PowerVar<WeakPower>(1),
     ];
 
     protected override async Task OnPlay(
@@ -31,11 +33,16 @@ public class ShionHammerArm() : ShionTheBruiserCard(1,
             .Execute(choiceContext)
         ;
         await PowerCmd.Apply<HammerArm>(choiceContext, play.Target, cardSource.DynamicVars["StrengthPower"].BaseValue, cardSource.Owner.Creature, cardSource);
+        
+        if (ShionMechanicsHelper.IsBerserk(this.Owner.Creature))
+        {
+            await PowerCmd.Apply<WeakPower>(choiceContext, play.Target, cardSource.DynamicVars["WeakPower"].BaseValue, cardSource.Owner.Creature, cardSource);
+        }
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(2);
         DynamicVars["StrengthPower"].UpgradeValueBy(1);
+        DynamicVars["WeakPower"].UpgradeValueBy(1);
     }
 }

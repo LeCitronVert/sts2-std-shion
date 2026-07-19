@@ -15,6 +15,10 @@ public class ShionDragonPulse() : ShionTheBruiserCard(2,
         new CalculationExtraVar(1),
         new CalculatedVar("HealAmount").WithMultiplier((card, _) => ShionMechanicsHelper.GetDragonUniqueBuffCount(card.Owner.Creature))
     ];
+    
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [
+        CardKeyword.Exhaust,
+    ];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,

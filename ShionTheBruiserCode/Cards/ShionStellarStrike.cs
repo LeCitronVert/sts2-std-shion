@@ -19,7 +19,7 @@ public class ShionStellarStrike() : ShionLatentCard(3,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CriticalDrawVar(30),
         new CalculationBaseVar(24),
-        new ExtraDamageVar(0.5M),
+        new ExtraDamageVar(1M),
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier((model, _) => model.Owner.Creature.GetPower<VigorPower>()?.Amount ?? 0),
     ];
 

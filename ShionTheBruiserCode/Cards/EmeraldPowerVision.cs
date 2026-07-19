@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
@@ -18,6 +19,11 @@ public class EmeraldPowerVision() : ShionTheBruiserCard(0,
     ];
     
     public override IEnumerable<CardKeyword> CanonicalKeywords => [DreamersKeywords.EmeraldPower];
+    
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<CounterStance>(),
+        HoverTipFactory.FromPower<IntangiblePower>(),
+    ];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -32,10 +38,10 @@ public class EmeraldPowerVision() : ShionTheBruiserCard(0,
             card
         );
         
-        await PowerCmd.Apply<TemporaryArtifact>(
+        await PowerCmd.Apply<CounterStance>(
             choiceContext,
             card.Owner.Creature,
-            999,
+            1,
             card.Owner.Creature,
             card
         );

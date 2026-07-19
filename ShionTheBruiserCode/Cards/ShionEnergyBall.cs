@@ -20,6 +20,8 @@ public class ShionEnergyBall() : ShionTheBruiserCard(1,
         new ExtraDamageVar(5),
         // If player has Vigor, 1 x ExtraDamage / Otherwise, 0
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier((model, _) => ShionMechanicsHelper.HasVigor(model.Owner.Creature) ? 1 : 0),
+        new DynamicVar("VigorRefundCap", 15),
+        new DynamicVar("VigorRefundPercent", 33)
     ];
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -36,17 +38,31 @@ public class ShionEnergyBall() : ShionTheBruiserCard(1,
     {
         ShionEnergyBall card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
+
+        var vigorAmount = card.Owner.Creature.GetPowerAmount<VigorPower>();
         await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
             .FromCard(card)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .WithAttackerAnim(Character.ShionTheBruiser.GetEnergyAnimIfApplicable(card.Owner.Character), Character.ShionTheBruiser.GetEnergyDelayIfApplicable(card.Owner.Character))
             .Execute(choiceContext);
+
+        if (vigorAmount <= 0) return;
+        
+        var refundAmount = Math.Min(
+            vigorAmount * card.DynamicVars["VigorRefundPercent"].BaseValue / 100,
+            card.DynamicVars["VigorRefundCap"].BaseValue
+        );
+        
+        if (refundAmount <= 0) return;
+        
+        await PowerCmd.Apply<VigorPower>(choiceContext, card.Owner.Creature, refundAmount, card.Owner.Creature, null);
     }
 
     protected override void OnUpgrade()
     {
         this.DynamicVars.CalculationBase.UpgradeValueBy(2M);
         this.DynamicVars.ExtraDamage.UpgradeValueBy(2M);
+        this.DynamicVars["VigorRefundCap"].UpgradeValueBy(5);
     }
 }

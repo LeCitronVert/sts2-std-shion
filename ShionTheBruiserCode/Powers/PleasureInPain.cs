@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -46,7 +47,7 @@ public class PleasureInPain() : ShionTheBruiserPower
         
         var strengthAmount = (int) (result.BlockedDamage * Amount / 100m);
         var vigorAmount = (int) (result.UnblockedDamage * Amount / 100m);
-        var regenAmount = (int) (result.TotalDamage * Amount / 100m);
+        var patchUpAmount = (int) (result.TotalDamage * Amount / 100m);
         
         if (strengthAmount > 0) {
             await PowerCmd.Apply<StrengthPower>(
@@ -69,14 +70,8 @@ public class PleasureInPain() : ShionTheBruiserPower
             );
         }
         
-        if (regenAmount > 0) {
-            await PowerCmd.Apply<RegenPower>(
-                choiceContext,
-                Owner,
-                regenAmount,
-                Owner,
-                null
-            );
+        if (ShionMechanicsHelper.IsBerserk(Owner) && patchUpAmount > 0) {
+            await ShionMechanicsHelper.PatchUpCreature(patchUpAmount, Owner);
         }
     }
 }

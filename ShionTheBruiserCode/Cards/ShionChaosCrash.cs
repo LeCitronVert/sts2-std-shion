@@ -9,14 +9,14 @@ using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionChaosCrash() : ShionTheBruiserCard(1,
+public class ShionChaosCrash() : ShionBerserkCard(1,
     CardType.Attack, CardRarity.Uncommon,
     TargetType.AllEnemies)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(12M, ValueProp.Move),
         new HpLossVar(3M),
-        new CriticalDrawVar(10)
+        new PatchUpVar(3)
     ];
 
     protected override async Task OnPlay(
@@ -24,7 +24,16 @@ public class ShionChaosCrash() : ShionTheBruiserCard(1,
         CardPlay play)
     {
         var card = this;
-        await CreatureCmd.Damage(choiceContext, card.Owner.Creature, card.DynamicVars.HpLoss.BaseValue, ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, card);
+        
+        if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature))
+        {
+            await ShionMechanicsHelper.PatchUpCreature(card.DynamicVars[PatchUpVar.Key].IntValue, card.Owner.Creature);
+        }
+        else
+        {
+            await CreatureCmd.Damage(choiceContext, card.Owner.Creature, card.DynamicVars.HpLoss.BaseValue, ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, card);
+        }
+        
         if (card.CombatState != null)
             await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue).FromCard(card)
                 .TargetingAllOpponents(card.CombatState).WithHitFx("vfx/vfx_attack_blunt", tmpSfx: "heavy_attack.mp3")
@@ -34,12 +43,5 @@ public class ShionChaosCrash() : ShionTheBruiserCard(1,
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(4M);
-    }
-    
-    public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
-    {
-        ShionMechanicsHelper.ApplyCriticalDraw(this, choiceContext, card);
-        
-        return Task.CompletedTask;
     }
 }

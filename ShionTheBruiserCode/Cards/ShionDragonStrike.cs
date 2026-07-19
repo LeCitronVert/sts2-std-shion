@@ -16,7 +16,7 @@ public class ShionDragonStrike() : ShionTheBruiserCard(1,
         new CalculationBaseVar(6M),
         new ExtraDamageVar(2),
         // Damage is doubled if owner has 3+ unique buffs
-        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((model, _) => 3 <= ShionMechanicsHelper.GetDragonUniqueBuffCount(model.Owner.Creature) ? model.DynamicVars.CalculationBase.BaseValue : 0),
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((model, _) => 5 <= ShionMechanicsHelper.GetDragonUniqueBuffCount(model.Owner.Creature) ? model.DynamicVars.CalculationBase.BaseValue : 0),
     ];
     
     protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];
@@ -36,6 +36,6 @@ public class ShionDragonStrike() : ShionTheBruiserCard(1,
 
     protected override void OnUpgrade()
     {
-        this.DynamicVars.CalculationBase.UpgradeValueBy(3M);
+        this.DynamicVars.ExtraDamage.UpgradeValueBy(1);
     }
 }

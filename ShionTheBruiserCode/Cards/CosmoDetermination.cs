@@ -11,7 +11,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 [Pool(typeof(ColorlessCardPool))]
 public class CosmoDetermination() : ShionTheBruiserCard(2,
-    CardType.Power, CardRarity.Token,
+    CardType.Skill, CardRarity.Token,
     TargetType.Self)
 {
     public override bool CanBeGeneratedInCombat => false;
@@ -19,7 +19,7 @@ public class CosmoDetermination() : ShionTheBruiserCard(2,
 
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<VigorPower>(30)
+        new PowerVar<VigorPower>(15)
     ];
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [

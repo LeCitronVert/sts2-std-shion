@@ -7,7 +7,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionCompetitiveSpirit() : ShionTheBruiserCard(2,
+public class ShionCompetitiveSpirit() : ShionBerserkCard(2,
     CardType.Power, CardRarity.Uncommon,
     TargetType.Self)
 {

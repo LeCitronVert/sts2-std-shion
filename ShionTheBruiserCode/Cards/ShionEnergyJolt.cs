@@ -6,10 +6,11 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionEnergyJolt() : ShionTheBruiserCard(2,
+public class ShionEnergyJolt() : ShionBerserkCard(2,
     CardType.Attack, CardRarity.Uncommon,
     TargetType.AnyEnemy)
 {
@@ -23,6 +24,7 @@ public class ShionEnergyJolt() : ShionTheBruiserCard(2,
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<WeakPower>(),
         HoverTipFactory.FromPower<VulnerablePower>(),
+        HoverTipFactory.FromPower<DebilitatePower>(),
     ];
 
     protected override async Task OnPlay(
@@ -56,6 +58,17 @@ public class ShionEnergyJolt() : ShionTheBruiserCard(2,
             card.Owner.Creature,
             card
         );
+        
+        if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature))
+        {
+            await PowerCmd.Apply<DebilitatePower>(
+                choiceContext,
+                play.Target,
+                DynamicVars["DebuffAmount"].BaseValue,
+                card.Owner.Creature,
+                card
+            );
+        }
     }
 
     protected override void OnUpgrade()

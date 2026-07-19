@@ -6,12 +6,14 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 [Pool(typeof(ColorlessCardPool))]
 public class CosmoKindness() : ShionTheBruiserCard(2,
-    CardType.Power, CardRarity.Token,
+    CardType.Skill, CardRarity.Token,
     TargetType.Self)
 {
     public override bool CanBeGeneratedInCombat => false;
@@ -19,11 +21,7 @@ public class CosmoKindness() : ShionTheBruiserCard(2,
 
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<RegenPower>(10)
-    ];
-    
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<RegenPower>(),
+        new PatchUpVar(999)
     ];
 
     protected override async Task OnPlay(
@@ -31,12 +29,9 @@ public class CosmoKindness() : ShionTheBruiserCard(2,
         CardPlay play)
     {
         var card = this;
-        await PowerCmd.Apply<RegenPower>(
-            choiceContext, 
-            card.Owner.Creature, 
-            card.DynamicVars["RegenPower"].BaseValue, 
-            card.Owner.Creature, 
-            card
+        await ShionMechanicsHelper.PatchUpCreature(
+            card.DynamicVars[PatchUpVar.Key].IntValue, 
+            card.Owner.Creature
         );
     }
 

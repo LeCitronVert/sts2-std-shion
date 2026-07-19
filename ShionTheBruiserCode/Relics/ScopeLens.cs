@@ -9,7 +9,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Variables;
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 [Pool(typeof(SharedRelicPool))]
-public class ScopeLens :  CritContributorRelic, ICritAttackRateContributor
+public class ScopeLens :  CritContributorRelic, ICritHitRateContributor
 {
     public override RelicRarity Rarity =>
         RelicRarity.Uncommon;
@@ -19,7 +19,7 @@ public class ScopeLens :  CritContributorRelic, ICritAttackRateContributor
         new DynamicVar("CritAttackRate", 10)
     ];
 
-    public decimal GetCritAttackRateBonus(CardModel? sourceCard)
+    public decimal GetCritHitRateBonus(CardModel? sourceCard)
     {
         if (sourceCard == null || sourceCard.Owner.Creature == Owner.Creature)
         {

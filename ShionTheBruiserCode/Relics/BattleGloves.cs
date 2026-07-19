@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
@@ -14,6 +15,10 @@ public class BattleGloves : ShionTheBruiserRelic
     public const int StrengthUp = 1;
     public const int DefenseUp = 1;
     public const int EnergyUp = 1;
+    
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<Scrappy>(),
+    ];
 
     public override async Task BeforeCardPlayed(CardPlay cardPlay)
     {

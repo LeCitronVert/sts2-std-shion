@@ -17,7 +17,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Variables;
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 [Pool(typeof(ShionTheBruiserRelicPool))]
-public class AbbyTheAbsol : CritContributorRelic, ICritAttackRateContributor, IOnCriticalHitListener
+public class AbbyTheAbsol : CritContributorRelic, ICritHitRateContributor, IOnCriticalHitListener
 {
     // Shion relic
     public override string PackedIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".RelicImagePath();
@@ -35,14 +35,6 @@ public class AbbyTheAbsol : CritContributorRelic, ICritAttackRateContributor, IO
         new CritDisplayTooltipVar(),
         new DynamicVar("CritAttackRate", 10)
     ];
-    
-    public decimal GetCritAttackRateBonus(CardModel? sourceCard)
-    {
-        if (sourceCard != null && sourceCard.Owner.Creature != Owner.Creature) return 0;
-        
-        var bonus = DynamicVars["CritAttackRate"].BaseValue / 100;
-        return bonus;
-    }
     
     // Everything below this point is pet related stuff i copied from byrdpip and i have no idea wha ti'm doing
 
@@ -79,5 +71,13 @@ public class AbbyTheAbsol : CritContributorRelic, ICritAttackRateContributor, IO
         await Cmd.Wait(0.3f);
 
 
+    }
+
+    public decimal GetCritHitRateBonus(CardModel? sourceCard)
+    {
+        if (sourceCard != null && sourceCard.Owner.Creature != Owner.Creature) return 0;
+        
+        var bonus = DynamicVars["CritAttackRate"].BaseValue / 100;
+        return bonus;
     }
 }

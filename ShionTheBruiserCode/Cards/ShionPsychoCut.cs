@@ -16,8 +16,8 @@ public class ShionPsychoCut() : ShionTheBruiserCard(1,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<EnergyDamageUp>(2),
-        new DamageVar(6, ValueProp.Move),
+        new PowerVar<EnergyDamageUp>(3),
+        new DamageVar(8, ValueProp.Move),
         new CriticalDrawVar(33)
     ];
     
@@ -28,13 +28,6 @@ public class ShionPsychoCut() : ShionTheBruiserCard(1,
         CardPlay play)
     {
         var card = this;
-        await PowerCmd.Apply<EnergyDamageUp>(
-            choiceContext,
-            card.Owner.Creature,
-            DynamicVars["EnergyDamageUp"].BaseValue,
-            card.Owner.Creature,
-            card
-        );
         
         ArgumentNullException.ThrowIfNull(play.Target);
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
@@ -44,12 +37,20 @@ public class ShionPsychoCut() : ShionTheBruiserCard(1,
             .WithAttackerAnim(Character.ShionTheBruiser.GetEnergyAnimIfApplicable(card.Owner.Character), Character.ShionTheBruiser.GetEnergyDelayIfApplicable(card.Owner.Character))
             .Execute(choiceContext)
         ;
+        
+        await PowerCmd.Apply<EnergyDamageUp>(
+            choiceContext,
+            card.Owner.Creature,
+            DynamicVars["EnergyDamageUp"].BaseValue,
+            card.Owner.Creature,
+            card
+        );
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars["EnergyDamageUp"].UpgradeValueBy(1);
-        DynamicVars.Damage.UpgradeValueBy(3);
+        DynamicVars.Damage.UpgradeValueBy(2);
         DynamicVars["CriticalDraw"].UpgradeValueBy(17);
     }
     

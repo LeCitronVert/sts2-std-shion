@@ -9,18 +9,18 @@ using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionCrunch() : ShionTheBruiserCard(1,
+public class ShionCrunch() : ShionTheBruiserCard(0,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("DebuffAmount", 1),
-        new DynamicVar("VigorForVuln", 10),
-        new DynamicVar("VigorForDebil", 15),
+        new DynamicVar("VigorNeeded", 5),
         new CriticalDrawVar(10)
     ];
     
-    protected override bool ShouldGlowGoldInternal => ShionMechanicsHelper.HasVigor(this.Owner.Creature);
+    protected override bool ShouldGlowGoldInternal => Owner.Creature.GetPowerAmount<VigorPower>() >= DynamicVars["VigorNeeded"].BaseValue;
+    protected override bool ShouldGlowRedInternal => !ShouldGlowGoldInternal;
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -28,24 +28,25 @@ public class ShionCrunch() : ShionTheBruiserCard(1,
     {
         var card = this;
         var owner = card.Owner.Creature;
-        if (!ShionMechanicsHelper.HasVigor(owner)) return;
-        var vigorAmount = owner.Powers.OfType<VigorPower>().First().Amount;
+
+        if (owner.GetPowerAmount<VigorPower>() < card.DynamicVars["VigorNeeded"].BaseValue)
+        {
+            await CardCmd.Exhaust(choiceContext, card);
+            return;
+        }
+        
         ArgumentNullException.ThrowIfNull(play.Target);
         
         await PowerCmd.Apply<WeakPower>(choiceContext, play.Target, card.DynamicVars["DebuffAmount"].BaseValue, card.Owner.Creature, card);
-        if (vigorAmount >= DynamicVars["VigorForVuln"].BaseValue)
-        {
-            await PowerCmd.Apply<VulnerablePower>(choiceContext, play.Target, card.DynamicVars["DebuffAmount"].BaseValue, card.Owner.Creature, card);
-        }
-        if (vigorAmount >= DynamicVars["VigorForDebil"].BaseValue)
-        {
-            await PowerCmd.Apply<DebilitatePower>(choiceContext, play.Target, card.DynamicVars["DebuffAmount"].BaseValue, card.Owner.Creature, card);
-        }
+        await PowerCmd.Apply<VulnerablePower>(choiceContext, play.Target, card.DynamicVars["DebuffAmount"].BaseValue, card.Owner.Creature, card);
+        await PowerCmd.Apply<DebilitatePower>(choiceContext, play.Target, card.DynamicVars["DebuffAmount"].BaseValue, card.Owner.Creature, card);
+        
+        await PowerCmd.Apply<VigorPower>(choiceContext, card.Owner.Creature, -card.DynamicVars["VigorNeeded"].BaseValue, card.Owner.Creature, card);
     }
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars["DebuffAmount"].UpgradeValueBy(1);
     }
     
     public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
@@ -53,5 +54,11 @@ public class ShionCrunch() : ShionTheBruiserCard(1,
         ShionMechanicsHelper.ApplyCriticalDraw(this, choiceContext, card);
         
         return Task.CompletedTask;
+    }
+    
+    protected override PileType GetResultPileTypeForCardPlay()
+    {
+        PileType pileTypeForCardPlay = base.GetResultPileTypeForCardPlay();
+        return pileTypeForCardPlay != PileType.Discard ? pileTypeForCardPlay : PileType.Hand;
     }
 }

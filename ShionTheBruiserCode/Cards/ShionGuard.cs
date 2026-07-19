@@ -14,7 +14,7 @@ public class ShionGuard() : ShionDefensiveCard(0,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<Guard>(1),
+        new PowerVar<Guard>(3),
         new EnergyVar(1),
         new PowerVar<DrawCardsNextTurnPower>(1),
     ];
@@ -55,6 +55,7 @@ public class ShionGuard() : ShionDefensiveCard(0,
 
     protected override void OnUpgrade()
     {
-        this.DynamicVars["Guard"].UpgradeValueBy(1);
+        DynamicVars.Energy.UpgradeValueBy(1);
+        DynamicVars["DrawCardsNextTurnPower"].UpgradeValueBy(1);
     }
 }

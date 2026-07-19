@@ -4,5 +4,7 @@
   "SHIONTHEBRUISER-CRITICAL_HIT.title": "Critical",
   "SHIONTHEBRUISER-CRITICAL_HIT.description": "[gold]Critical Hits[/gold] deal 50% more damage. Relics, powers and Shion's attacks can all influence the chance of a Critical Hit occuring per Hit or Attack.",
   "SHIONTHEBRUISER-CRITICAL_DRAW.title": "Critical Draw",
-  "SHIONTHEBRUISER-CRITICAL_DRAW.description": "When you draw this card from your Draw Pile, increase [gold]Critical Hits[/gold] chance by [blue]{CriticalDraw}[/blue]% for the rest of the turn."
+  "SHIONTHEBRUISER-CRITICAL_DRAW.description": "When you draw this card from your Draw Pile, increase [gold]Critical Hits[/gold] chance by [blue]{CriticalDraw}[/blue]% for the rest of the turn.\nThis effect can only contribute to 50% Critical Hit chance per turn.",
+  "SHIONTHEBRUISER-PATCH_UP.title": "Patch Up",
+  "SHIONTHEBRUISER-PATCH_UP.description": "Heal for {PatchUp:cond:>0?[blue]{PatchUp}[/blue] HP|the amount specified}.\nThis healing cannot put you above [blue]50%[/blue] of your Max HP."
 }

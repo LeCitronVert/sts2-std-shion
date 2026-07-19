@@ -11,7 +11,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionEndure() : ShionBerserkCard(0,
+public class ShionEndure() : ShionBerserkCard(2,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {

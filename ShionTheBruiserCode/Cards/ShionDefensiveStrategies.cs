@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -14,7 +15,8 @@ public class ShionDefensiveStrategies() : ShionTheBruiserCard(2,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<DefensiveStrategies>(5)
+        new PowerVar<DefensiveStrategies>(5),
+        new CritDisplayTooltipVar()
     ];
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [

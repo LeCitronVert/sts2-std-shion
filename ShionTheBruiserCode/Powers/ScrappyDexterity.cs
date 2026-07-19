@@ -6,7 +6,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
-public class ScrappyDexterity : CustomTemporaryPowerModelWrapper<BattleRags, DexterityPower>
+public class ScrappyDexterity : CustomTemporaryPowerModelWrapper<Scrappy, DexterityPower>
 {
     public override string CustomPackedIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".PowerImagePath();
     public override string CustomBigIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".BigPowerImagePath();

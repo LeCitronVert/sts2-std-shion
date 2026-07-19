@@ -28,7 +28,7 @@ public class ShionAnOpening() : CritContributorCard(1,
     {
         var card = play.Card;
         ShionMechanicsHelper.EnsureCreatureHasCritTracker(card.Owner.Creature);
-        await PowerCmd.Apply<CritAttackUp>(
+        await PowerCmd.Apply<CritRateUp>(
             choiceContext,
             card.Owner.Creature,
             DynamicVars.Power<CritRateUp>().BaseValue,

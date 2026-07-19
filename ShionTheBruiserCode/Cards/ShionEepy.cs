@@ -3,6 +3,8 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -12,36 +14,20 @@ public class ShionEepy() : ShionTheBruiserCard(3,
 {
     public override bool CanBeGeneratedInCombat => false;
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new HealVar(20),
-        new DynamicVar("HpGate", 33)
+        new PatchUpVar(999),
     ];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [
-        CardKeyword.Exhaust,
-    ];
-
-
+    
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
         var card = this;
-        await CreatureCmd.Heal(card.Owner.Creature, card.DynamicVars.Heal.BaseValue);
+        await ShionMechanicsHelper.PatchUpCreature(DynamicVars[PatchUpVar.Key].IntValue, card.Owner.Creature);
         PlayerCmd.EndTurn(card.Owner, false);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Heal.UpgradeValueBy(10);
-    }
-    
-    protected override bool IsPlayable
-    {
-        get
-        {
-            var remainingHpRatio = Owner.Creature.CurrentHp / (float)Owner.Creature.MaxHp;
-            var hpGate = DynamicVars["HpGate"].BaseValue / 100M;
-            
-            return remainingHpRatio <= (float) hpGate; 
-        }
+        AddKeyword(CardKeyword.Retain);
     }
 }

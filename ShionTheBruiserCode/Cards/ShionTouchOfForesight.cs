@@ -19,7 +19,7 @@ public class ShionTouchOfForesight() : ShionTheBruiserCard(1,
     protected override IEnumerable<DynamicVar> CanonicalVars => [];
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<ArtifactPower>(),
+        HoverTipFactory.FromPower<CounterStance>(),
         HoverTipFactory.FromPower<IntangiblePower>(),
     ];
 
@@ -29,7 +29,7 @@ public class ShionTouchOfForesight() : ShionTheBruiserCard(1,
     {
         var card = this;
         await PowerCmd.Apply<IntangiblePower>(choiceContext, card.Owner.Creature, 1M, card.Owner.Creature, card);
-        await PowerCmd.Apply<TemporaryArtifact>(choiceContext, card.Owner.Creature, 1M, card.Owner.Creature, card);
+        await PowerCmd.Apply<CounterStance>(choiceContext, card.Owner.Creature, 1M, card.Owner.Creature, card);
     }
 
     protected override void OnUpgrade()

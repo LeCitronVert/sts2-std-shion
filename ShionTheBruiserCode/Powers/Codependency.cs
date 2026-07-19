@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Platform;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -18,7 +19,7 @@ public class Codependency : ShionTheBruiserPower
     public override PowerStackType StackType =>
         PowerStackType.Counter;
 
-    public const int MaxDamage = 50;
+    public const int BerserkMultiplier = 2;
     
     /// <summary>
     /// Display the current damage bonus percentage based on partner's missing HP.
@@ -33,9 +34,7 @@ public class Codependency : ShionTheBruiserPower
                 return 0;
             }
             
-            var missingHpRatio = (partner.MaxHp - partner.CurrentHp) / (float)partner.MaxHp;
-            var currentPercentage = (int)Math.Round(missingHpRatio * (float)Amount);
-            return currentPercentage;
+            return ShionMechanicsHelper.IsBerserk(partner) ? BerserkMultiplier * Amount : Amount;
         }
     }
     
@@ -63,9 +62,7 @@ public class Codependency : ShionTheBruiserPower
             return 1M;
         }
         
-        var missingHpRatio = (partner.MaxHp - partner.CurrentHp) / (float)partner.MaxHp;
-
-        return (decimal)(missingHpRatio * (float)(Amount * 0.01M)) + 1;
+        return (decimal) (float) (Amount * 0.01M * (ShionMechanicsHelper.IsBerserk(partner) ? 2 : 1)) + 1;
     }
     
     public override Task AfterApplied(Creature? applier, CardModel? cardSource)
@@ -73,6 +70,7 @@ public class Codependency : ShionTheBruiserPower
         ((StringVar) this.DynamicVars["Partner"]).StringValue = PlatformUtil.GetPlayerName(RunManager.Instance.NetService.Platform, this.Applier!.Player.NetId);
         InvokeDisplayAmountChanged();
         DynamicVars["DisplayAmount"].BaseValue = DisplayAmount;
+        ChangePulse();
         
         return Task.CompletedTask;
     }
@@ -95,7 +93,25 @@ public class Codependency : ShionTheBruiserPower
         {
             InvokeDisplayAmountChanged();
             DynamicVars["DisplayAmount"].BaseValue = DisplayAmount;
+            ChangePulse();
         }
         return Task.CompletedTask;
+    }
+    
+    // Berserk Power stuff
+    public void ChangePulse()
+    {
+        var partner = Applier;
+        if (partner == null) return;
+        var shouldPulse = ShionMechanicsHelper.IsBerserk(partner);
+
+        if (shouldPulse)
+        {
+            StartPulsing();
+        }
+        else
+        {
+            StopPulsing();
+        }
     }
 }

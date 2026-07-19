@@ -7,12 +7,14 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionSpiritBreak() : ShionBerserkCard(3,
+public class ShionSpiritBreak() : ShionBerserkCard(2,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
+    public const int BerserkCritAttacks = 3;
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<SpiritBreak>(3)
+        new PowerVar<SpiritBreak>(1),
+        new DynamicVar("BerserkCritAttacks", BerserkCritAttacks)
     ];
 
     protected override async Task OnPlay(
@@ -24,7 +26,7 @@ public class ShionSpiritBreak() : ShionBerserkCard(3,
         var critAmount = DynamicVars["SpiritBreak"].BaseValue;
         if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature))
         {
-            critAmount *= 2;
+            critAmount = BerserkCritAttacks;
         }
         
         await PowerCmd.Apply<CriticalAttackNext>(
@@ -38,6 +40,6 @@ public class ShionSpiritBreak() : ShionBerserkCard(3,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["SpiritBreak"].UpgradeValueBy(2);
+        EnergyCost.UpgradeBy(-1);
     }
 }

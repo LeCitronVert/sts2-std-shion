@@ -26,8 +26,8 @@ public class BerserkIndicator : ShionTheBruiserPower
             
             // Visual styling
             Color = isBerserk 
-                ? new Color("#fc5170", 1f)
-                : new Color("#eb7f2d", 0.7f),
+                ? new Color("#eb7f2d", 1f)
+                : new Color("#eb7f2d", 0f),
             
             Direction = HealthBarForecastDirection.FromLeft,
             

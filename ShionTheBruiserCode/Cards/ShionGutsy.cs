@@ -6,7 +6,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionGutsy() : ShionTheBruiserCard(1,
+public class ShionGutsy() : ShionBerserkCard(1,
     CardType.Power, CardRarity.Uncommon,
     TargetType.Self)
 {

@@ -3,23 +3,29 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionBattleTempo() : ShionTheBruiserCard(1,
+public class ShionBattleTempo() : ShionBerserkCard(1,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [];
+    public const int PowerAmount = 1;
+    
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new EnergyVar("PowerAmount", PowerAmount)
+    ];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
         var card = this;
-        await PowerCmd.Apply<BattleTempo>(choiceContext, card.Owner.Creature, 1, card.Owner.Creature, card);
+        await PowerCmd.Apply<BattleTempo>(choiceContext, card.Owner.Creature, PowerAmount, card.Owner.Creature, card);
+        ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(Owner.Creature);
     }
 
     protected override void OnUpgrade()

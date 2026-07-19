@@ -14,7 +14,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionBreakDown() : ShionTheBruiserCard(1,
+public class ShionBreakDown() : ShionBerserkCard(1,
     CardType.Attack, CardRarity.Ancient,
     TargetType.AnyEnemy)
 {
@@ -26,9 +26,10 @@ public class ShionBreakDown() : ShionTheBruiserCard(1,
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier((model, _) =>
             (model.Owner.Creature.GetPower<VigorPower>()?.Amount ?? 0) > 0 ? 1 : 0
         +   ShionMechanicsHelper.GetDragonUniqueBuffCount(model.Owner.Creature) >= 3 ? 1 : 0
-        + (ShionMechanicsHelper.IsBerserk(model.Owner.Creature) ? 1 : 0)
         )
     ];
+    
+    protected override HashSet<CardTag> CanonicalTags => [ShionCardTags.Energy];
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk)];
 
@@ -45,6 +46,11 @@ public class ShionBreakDown() : ShionTheBruiserCard(1,
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
+        
+        if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature))
+        {
+            await PowerCmd.Apply<VulnerablePower>(choiceContext, play.Target, 1, card.Owner.Creature, card);
+        }
     }
 
     protected override void OnUpgrade()
@@ -55,25 +61,6 @@ public class ShionBreakDown() : ShionTheBruiserCard(1,
     public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
     {
         ShionMechanicsHelper.ApplyCriticalDraw(this, choiceContext, card);
-        
-        return Task.CompletedTask;
-    }
-    
-    public override Task BeforeCombatStart()    
-    {
-        if (!Owner.Creature.HasPower<ShionCritTrackerPower>())
-        {
-            ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(Owner.Creature);
-        }
-        
-        return Task.CompletedTask;
-    }
-
-    public override Task AfterCardEnteredCombat(CardModel card)
-    {
-        if (card != this) return Task.CompletedTask;
-        
-        ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(card.Owner.Creature);
         
         return Task.CompletedTask;
     }

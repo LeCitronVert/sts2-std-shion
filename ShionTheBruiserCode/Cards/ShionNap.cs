@@ -1,7 +1,7 @@
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -10,9 +10,12 @@ public class ShionNap() : ShionTheBruiserCard(0,
     TargetType.Self)
 {
     public override bool CanBeGeneratedInCombat => false;
+    public const int PatchUpMultiplier = 3;
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("XBonus", 0)
+        new DynamicVar("XBonus", 0),
+        new DynamicVar("PatchUpMultiplier", PatchUpMultiplier)
     ];
     protected override bool HasEnergyCostX => true;
 
@@ -21,13 +24,13 @@ public class ShionNap() : ShionTheBruiserCard(0,
         CardPlay play)
     {
         var card = this;
-        var xAmount = card.ResolveEnergyXValue() + DynamicVars["XBonus"].BaseValue;
+        var xAmount = card.ResolveEnergyXValue() * PatchUpMultiplier;
         if (xAmount == 0) return;
-        await CreatureCmd.Heal(card.Owner.Creature, xAmount);
+        await ShionMechanicsHelper.PatchUpCreature(xAmount, card.Owner.Creature);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["XBonus"].UpgradeValueBy(1);
+        RemoveKeyword(CardKeyword.Exhaust);
     }
 }

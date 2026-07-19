@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -18,8 +19,9 @@ public class ShionRageGuard() : ShionDefensiveCard(1,
     public override bool GainsBlock => true;
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new HpLossVar(3),
-        new BlockVar(24, ValueProp.Move),
-        new PowerVar<Guard>(1)
+        new BlockVar(12, ValueProp.Move),
+        new PowerVar<Guard>(1),
+        new PatchUpVar(3)
     ];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk)];
 
@@ -28,35 +30,22 @@ public class ShionRageGuard() : ShionDefensiveCard(1,
         CardPlay play)
     {
         var card = this;
-        await CreatureCmd.Damage(
-            choiceContext,
-            card.Owner.Creature,
-            card.DynamicVars.HpLoss.BaseValue,
-            ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move,
-            this
-        );
-        await CreatureCmd.GainBlock(card.Owner.Creature, card.DynamicVars.Block, play);
-        
         if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature))
         {
-            await PowerCmd.Apply<MightyGuard>(
-                choiceContext,
-                card.Owner.Creature,
-                card.DynamicVars["Guard"].BaseValue,
-                card.Owner.Creature,
-                card
-            );
+            await ShionMechanicsHelper.PatchUpCreature(card.DynamicVars[PatchUpVar.Key].IntValue, card.Owner.Creature);
         }
         else
         {
-            await PowerCmd.Apply<Guard>(
+            await CreatureCmd.Damage(
                 choiceContext,
                 card.Owner.Creature,
-                card.DynamicVars["Guard"].BaseValue,
-                card.Owner.Creature,
-                card
+                card.DynamicVars.HpLoss.BaseValue,
+                ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move,
+                this
             );
         }
+        await CreatureCmd.GainBlock(card.Owner.Creature, card.DynamicVars.Block, play);
+        await PowerCmd.Apply<Guard>(choiceContext, card.Owner.Creature, card.DynamicVars["Guard"].IntValue, card.Owner.Creature, this);
 
         await ApplyDefensiveToPlayer();
     }

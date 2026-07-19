@@ -36,6 +36,10 @@ public class ShionTeamBlast() : ShionLatentCard(3,
         ShionCardKeywords.Latent
     ];
 
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
+    ];
+    
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
@@ -51,26 +55,13 @@ public class ShionTeamBlast() : ShionLatentCard(3,
                 play
             );
             
-            if (!target.HasPower<ShionCritTrackerPower>())
-            {
-                await PowerCmd.Apply<ShionCritTrackerPower>(
-                    choiceContext,
-                    target,
-                    amount: 1m,
-                    applier: applier,
-                    cardSource: null);
-            }
-            await PowerCmd.Apply<CritRateUp>(
+            ShionMechanicsHelper.EnsureCreatureHasCritTracker(target);
+            ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(target);
+            
+            await PowerCmd.Apply<DragonCheer>(
                 choiceContext,
                 target,
-                DynamicVars["CritHitRate"].BaseValue,
-                applier,
-                card
-            );
-            await PowerCmd.Apply<CritAttackUp>(
-                choiceContext,
-                target,
-                DynamicVars["CritAttackRate"].BaseValue,
+                1,
                 applier,
                 card
             );

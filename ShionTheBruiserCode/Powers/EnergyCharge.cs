@@ -1,47 +1,18 @@
-using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Creatures;
+using BaseLib.Abstracts;
+using BaseLib.Extensions;
 using MegaCrit.Sts2.Core.Entities.Powers;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.ValueProps;
-using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Cards;
+using ShionTheBruiser.ShionTheBruiserCode.Extensions;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
-public class EnergyCharge : ShionTheBruiserPower
+public class EnergyCharge : CustomTemporaryPowerModelWrapper<ShionEnergyCharge, EnergyDamageUp>
 {
-    public override PowerType Type =>
-        PowerType.Buff;
+    public const int Duration = 3;
 
-    public override PowerStackType StackType =>
-        PowerStackType.Counter;
-
-    public const int DamageUp = 5;
+    public override PowerType Type => PowerType.Buff;
+    protected override int LastForXExtraTurns => Duration;
     
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("DamageUp", DamageUp)
-    ];
-    
-    public override Decimal ModifyDamageAdditive(
-        Creature? target,
-        Decimal amount,
-        ValueProp props,
-        Creature? dealer,
-        CardModel? cardSource)
-    {
-        return 
-            !props.IsPoweredAttack() 
-            || cardSource == null 
-            || !cardSource.Tags.Contains(ShionCardTags.Energy) 
-            || dealer != this.Owner 
-            && cardSource.Owner.Creature != this.Owner ? 0M : DamageUp
-        ;
-    }
-
-    public override async Task AfterModifyingDamageAmount(CardModel? cardSource)
-    {
-        await PowerCmd.Decrement(this);
-    }
+    public override string CustomPackedIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".PowerImagePath();
+    public override string CustomBigIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".BigPowerImagePath();
 }

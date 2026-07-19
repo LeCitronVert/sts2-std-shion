@@ -1,8 +1,8 @@
 {
-  "SHIONTHEBRUISER-CRITICAL_POTION.description": "Gain [gold]Critical Hit[/gold] [blue]+{CritHitRate}%[/blue] and [gold]Critical Attack[/gold] [blue]+{CritAttackRate}%[/blue].",
+  "SHIONTHEBRUISER-CRITICAL_POTION.description": "Gain [gold]Critical Hit[/gold] [blue]+{CritHitRate}%[/blue].",
   "SHIONTHEBRUISER-CRITICAL_POTION.title": "Critical Potion",
   "SHIONTHEBRUISER-DRACONIC_JUICE.description": "Gain +1 Strength, +1 Dexterity, +1% Critical Attack, +1 Vigor and +1 Regen.",
   "SHIONTHEBRUISER-DRACONIC_JUICE.title": "Draconic Juice",
-  "SHIONTHEBRUISER-ULTRA_SPICY_BREW.description": "Gain +100% Critical Attack for 1 turn.",
+  "SHIONTHEBRUISER-ULTRA_SPICY_BREW.description": "Gain +100% [gold]Critical Hit[/gold] chance for 1 turn.",
   "SHIONTHEBRUISER-ULTRA_SPICY_BREW.title": "Ultra Spicy Brew"
 }

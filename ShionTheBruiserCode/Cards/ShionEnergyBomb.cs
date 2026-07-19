@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Critical;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
@@ -16,7 +17,7 @@ public class ShionEnergyBomb() : CritContributorCard(3,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(30, ValueProp.Move),
-        new CritHitRateVar(0)
+        new CriticalDrawVar(15)
     ];
     
     protected override HashSet<CardTag> CanonicalTags => [ShionCardTags.Energy];
@@ -35,9 +36,16 @@ public class ShionEnergyBomb() : CritContributorCard(3,
 
     protected override void OnUpgrade()
     {
-        DynamicVars[CritHitRateVar.Key].UpgradeValueBy(25);
+        DynamicVars[CriticalDrawVar.Key].UpgradeValueBy(15);
     }
 
     public decimal GetCritHitRateBonus(CardModel? sourceCard) =>
-        sourceCard == this ? DynamicVars[CritHitRateVar.Key].BaseValue / 100 : 0m;
+        sourceCard == this ? DynamicVars[CriticalDrawVar.Key].BaseValue / 100 : 0m;
+    
+    public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    {
+        ShionMechanicsHelper.ApplyCriticalDraw(this, choiceContext, card);
+        
+        return Task.CompletedTask;
+    }
 }

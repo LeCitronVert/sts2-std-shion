@@ -16,7 +16,7 @@ public class ShionEnergyCharge() : ShionTheBruiserCard(1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<EnergyCharge>(3),
-        new DynamicVar("DamageAmount", EnergyCharge.DamageUp),
+        new DynamicVar("TurnDuration", EnergyCharge.Duration),
         new CriticalDrawVar(20)
     ];
     
