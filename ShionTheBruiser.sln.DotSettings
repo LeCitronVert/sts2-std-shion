@@ -9,11 +9,19 @@
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=00E2BB0BE57C7344A9558AF85C99E086/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=00E2BB0BE57C7344A9558AF85C99E086/EntryName/@EntryValue">Custom Power</s:String>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=00E2BB0BE57C7344A9558AF85C99E086/Position/@EntryValue">12</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=7C8F7E2B1A4D3E6C/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=7C8F7E2B1A4D3E6C/EntryName/@EntryValue">Custom Potion</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=7C8F7E2B1A4D3E6C/Position/@EntryValue">13</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=9D5C4E1B7F2A8D9E/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=9D5C4E1B7F2A8D9E/EntryName/@EntryValue">Custom Character</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=9D5C4E1B7F2A8D9E/Position/@EntryValue">9</s:Int64>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=CHARACTER/Expression/@EntryValue">list("ShionTheBruiser,SlalTheEndless")</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=CHARACTER/Order/@EntryValue">6</s:Int64>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=CLASS/Expression/@EntryValue">getAlphaNumericFileNameWithoutExtension()</s:String>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=CLASS/InitialRange/@EntryValue">-1</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=CLASS/InitialRange/@EntryValue">-1</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=COST/Expression/@EntryValue">guessExpectedType("")</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=NAMESPACE/Expression/@EntryValue">fileDefaultNamespace()</s:String>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=NAMESPACE/InitialRange/@EntryValue">-1</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=NAMESPACE/InitialRange/@EntryValue">-1</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=RARITY/Expression/@EntryValue">list("Basic,Common,Uncommon,Rare,Ancient,Event,Token,Status,Curse,Quest")</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=TARGET/Expression/@EntryValue">list("Self,AnyEnemy,AllEnemies,RandomEnemy,AnyPlayer,AnyAlly,AllAllies,Osty")</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=TYPE/Expression/@EntryValue">list("Attack,Skill,Power,Status,Curse,Quest")</s:String>
@@ -23,10 +31,12 @@
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/CustomProperties/=FileName/@EntryIndexedValue">Card</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/CustomProperties/=ValidateFileName/@EntryIndexedValue">True</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Description/@EntryValue">Custom Card</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=CHARACTER/@KeyIndexDefined">True</s:Boolean>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=CHARACTER/Order/@EntryValue">1</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=CLASS/@KeyIndexDefined">True</s:Boolean>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=CLASS/Order/@EntryValue">1</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=CLASS/Order/@EntryValue">2</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=COST/@KeyIndexDefined">True</s:Boolean>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=COST/Order/@EntryValue">2</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=COST/Order/@EntryValue">3</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=HEADER/@KeyIndexDefined">False</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=NAMESPACE/@KeyIndexDefined">True</s:Boolean>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=NAMESPACE/Order/@EntryValue">0</s:Int64>
@@ -35,14 +45,14 @@
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=TARGET/@KeyIndexDefined">True</s:Boolean>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=TARGET/Order/@EntryValue">5</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=TYPE/@KeyIndexDefined">True</s:Boolean>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=TYPE/Order/@EntryValue">3</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Field/=TYPE/Order/@EntryValue">4</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Reformat/@EntryValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Scope/=E8F0594528C33E45BBFEC6CFE851095D/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Scope/=E8F0594528C33E45BBFEC6CFE851095D/Type/@EntryValue">InCSharpProjectFile</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BE313041F989B4185D2966033C031C3/Text/@EntryValue">namespace $NAMESPACE$;
 
-public class $CLASS$() : ShionTheBruiser.ShionTheBruiserCode.Cards.ShionTheBruiserCard($COST$, MegaCrit.Sts2.Core.Entities.Cards.CardType.$TYPE$, MegaCrit.Sts2.Core.Entities.Cards.CardRarity.$RARITY$, MegaCrit.Sts2.Core.Entities.Cards.TargetType.$TARGET$) {
+public class $CLASS$() : ShionTheBruiser.ShionTheBruiserCode.Cards.$CHARACTER$Card($COST$, MegaCrit.Sts2.Core.Entities.Cards.CardType.$TYPE$, MegaCrit.Sts2.Core.Entities.Cards.CardRarity.$RARITY$, MegaCrit.Sts2.Core.Entities.Cards.TargetType.$TARGET$) {
     protected override IEnumerable&lt;MegaCrit.Sts2.Core.Localization.DynamicVars.DynamicVar&gt; CanonicalVars =&gt; [];
 
     protected override async System.Threading.Tasks.Task OnPlay(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext choiceContext, MegaCrit.Sts2.Core.Entities.Cards.CardPlay play)
@@ -60,27 +70,30 @@ public class $CLASS$() : ShionTheBruiser.ShionTheBruiserCode.Cards.ShionTheBruis
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/CustomProperties/=FileName/@EntryIndexedValue">Relic</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/CustomProperties/=ValidateFileName/@EntryIndexedValue">True</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Description/@EntryValue">Custom Relic</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=CHARACTER/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=CHARACTER/Expression/@EntryValue">list("ShionTheBruiser,SlalTheEndless")</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=CHARACTER/Order/@EntryValue">1</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=CLASS/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=CLASS/Expression/@EntryValue">getAlphaNumericFileNameWithoutExtension()</s:String>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=CLASS/InitialRange/@EntryValue">-1</s:Int64>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=CLASS/Order/@EntryValue">1</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=CLASS/Order/@EntryValue">2</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=NAMESPACE/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=NAMESPACE/Expression/@EntryValue">fileDefaultNamespace()</s:String>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=NAMESPACE/InitialRange/@EntryValue">-1</s:Int64>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=NAMESPACE/Order/@EntryValue">0</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=POOL/@KeyIndexDefined">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=POOL/Expression/@EntryValue">constant("RelicPool")</s:String>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=POOL/Order/@EntryValue">2</s:Int64>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=POOL/Expression/@EntryValue">list("ShionTheBruiserRelicPool,SlalTheEndlessRelicPool")</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=POOL/Order/@EntryValue">3</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=RARITY/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=RARITY/Expression/@EntryValue">list("Starter,Common,Uncommon,Rare,Shop,Event,Ancient")</s:String>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=RARITY/Order/@EntryValue">3</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Field/=RARITY/Order/@EntryValue">4</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Reformat/@EntryValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Scope/=E8F0594528C33E45BBFEC6CFE851095D/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Scope/=E8F0594528C33E45BBFEC6CFE851095D/Type/@EntryValue">InCSharpProjectFile</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B4D0CA86CBDACD42AD544A77CAE9FDEC/Text/@EntryValue">namespace $NAMESPACE$;
 
-public class $CLASS$() : ShionTheBruiser.ShionTheBruiserCode.Relics.ShionTheBruiserRelic {
+public class $CLASS$() : ShionTheBruiser.ShionTheBruiserCode.Relics.$CHARACTER$Relic {
     public override MegaCrit.Sts2.Core.Entities.Relics.RelicRarity Rarity =&gt; MegaCrit.Sts2.Core.Entities.Relics.RelicRarity.$RARITY$;
     
     $END$
@@ -91,26 +104,143 @@ public class $CLASS$() : ShionTheBruiser.ShionTheBruiserCode.Relics.ShionTheBrui
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=00E2BB0BE57C7344A9558AF85C99E086/CustomProperties/=FileName/@EntryIndexedValue">Power</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=00E2BB0BE57C7344A9558AF85C99E086/CustomProperties/=ValidateFileName/@EntryIndexedValue">True</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=00E2BB0BE57C7344A9558AF85C99E086/Description/@EntryValue">Custom Power</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=00E2BB0BE57C7344A9558AF85C99E086/Field/=CHARACTER/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=00E2BB0BE57C7344A9558AF85C99E086/Field/=CHARACTER/Expression/@EntryValue">list("ShionTheBruiser,SlalTheEndless")</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=00E2BB0BE57C7344A9558AF85C99E086/Field/=CHARACTER/Order/@EntryValue">1</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=00E2BB0BE57C7344A9558AF85C99E086/Field/=CLASS/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=00E2BB0BE57C7344A9558AF85C99E086/Field/=CLASS/Expression/@EntryValue">getAlphaNumericFileNameWithoutExtension()</s:String>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=00E2BB0BE57C7344A9558AF85C99E086/Field/=CLASS/InitialRange/@EntryValue">-1</s:Int64>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=00E2BB0BE57C7344A9558AF85C99E086/Field/=CLASS/Order/@EntryValue">1</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=00E2BB0BE57C7344A9558AF85C99E086/Field/=CLASS/Order/@EntryValue">2</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=00E2BB0BE57C7344A9558AF85C99E086/Field/=NAMESPACE/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=00E2BB0BE57C7344A9558AF85C99E086/Field/=NAMESPACE/Expression/@EntryValue">fileDefaultNamespace()</s:String>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=00E2BB0BE57C7344A9558AF85C99E086/Field/=NAMESPACE/InitialRange/@EntryValue">-1</s:Int64>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=00E2BB0BE57C7344A9558AF85C99E086/Field/=NAMESPACE/Order/@EntryValue">0</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=00E2BB0BE57C7344A9558AF85C99E086/Field/=TYPE/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=00E2BB0BE57C7344A9558AF85C99E086/Field/=TYPE/Expression/@EntryValue">list("Buff,Debuff")</s:String>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=00E2BB0BE57C7344A9558AF85C99E086/Field/=TYPE/Order/@EntryValue">2</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=00E2BB0BE57C7344A9558AF85C99E086/Field/=TYPE/Order/@EntryValue">3</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=00E2BB0BE57C7344A9558AF85C99E086/Reformat/@EntryValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=00E2BB0BE57C7344A9558AF85C99E086/Scope/=E8F0594528C33E45BBFEC6CFE851095D/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=00E2BB0BE57C7344A9558AF85C99E086/Scope/=E8F0594528C33E45BBFEC6CFE851095D/Type/@EntryValue">InCSharpProjectFile</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=00E2BB0BE57C7344A9558AF85C99E086/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=00E2BB0BE57C7344A9558AF85C99E086/Text/@EntryValue">namespace $NAMESPACE$;
 
-public class $CLASS$() : ShionTheBruiser.ShionTheBruiserCode.Powers.ShionTheBruiserPower {
+public class $CLASS$() : ShionTheBruiser.ShionTheBruiserCode.Powers.$CHARACTER$Power {
     public override MegaCrit.Sts2.Core.Entities.Powers.PowerType Type =&gt; MegaCrit.Sts2.Core.Entities.Powers.PowerType.$TYPE$;
     public override MegaCrit.Sts2.Core.Entities.Powers.PowerStackType StackType =&gt; MegaCrit.Sts2.Core.Entities.Powers.PowerStackType.Counter;
     
     $END$
-}</s:String></wpf:ResourceDictionary>
+}</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7C8F7E2B1A4D3E6C/@KeyIndexDefined">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7C8F7E2B1A4D3E6C/Applicability/=File/@EntryIndexedValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7C8F7E2B1A4D3E6C/CustomProperties/=Extension/@EntryIndexedValue">cs</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7C8F7E2B1A4D3E6C/CustomProperties/=FileName/@EntryIndexedValue">Potion</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7C8F7E2B1A4D3E6C/CustomProperties/=ValidateFileName/@EntryIndexedValue">True</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7C8F7E2B1A4D3E6C/Description/@EntryValue">Custom Potion</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7C8F7E2B1A4D3E6C/Field/=CHARACTER/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7C8F7E2B1A4D3E6C/Field/=CHARACTER/Expression/@EntryValue">list("ShionTheBruiser,SlalTheEndless")</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7C8F7E2B1A4D3E6C/Field/=CHARACTER/Order/@EntryValue">1</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7C8F7E2B1A4D3E6C/Field/=CLASS/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7C8F7E2B1A4D3E6C/Field/=CLASS/Expression/@EntryValue">getAlphaNumericFileNameWithoutExtension()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7C8F7E2B1A4D3E6C/Field/=CLASS/InitialRange/@EntryValue">-1</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7C8F7E2B1A4D3E6C/Field/=CLASS/Order/@EntryValue">2</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7C8F7E2B1A4D3E6C/Field/=NAMESPACE/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7C8F7E2B1A4D3E6C/Field/=NAMESPACE/Expression/@EntryValue">fileDefaultNamespace()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7C8F7E2B1A4D3E6C/Field/=NAMESPACE/InitialRange/@EntryValue">-1</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7C8F7E2B1A4D3E6C/Field/=NAMESPACE/Order/@EntryValue">0</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7C8F7E2B1A4D3E6C/Reformat/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7C8F7E2B1A4D3E6C/Scope/=E8F0594528C33E45BBFEC6CFE851095D/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7C8F7E2B1A4D3E6C/Scope/=E8F0594528C33E45BBFEC6CFE851095D/Type/@EntryValue">InCSharpProjectFile</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7C8F7E2B1A4D3E6C/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=7C8F7E2B1A4D3E6C/Text/@EntryValue">namespace $NAMESPACE$;
+
+public class $CLASS$() : ShionTheBruiser.ShionTheBruiserCode.Potions.$CHARACTER$Potion {
+    
+    $END$
+}</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/@KeyIndexDefined">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Applicability/=File/@EntryIndexedValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/CustomProperties/=Extension/@EntryIndexedValue">cs</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/CustomProperties/=FileName/@EntryIndexedValue">Character</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/CustomProperties/=ValidateFileName/@EntryIndexedValue">True</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Description/@EntryValue">Custom Character</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Field/=CLASS/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Field/=CLASS/Expression/@EntryValue">getAlphaNumericFileNameWithoutExtension()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Field/=CLASS/InitialRange/@EntryValue">-1</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Field/=CLASS/Order/@EntryValue">2</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Field/=CHARACTERID/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Field/=CHARACTERID/Expression/@EntryValue">getAlphaNumericFileNameWithoutExtension()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Field/=CHARACTERID/Order/@EntryValue">3</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Field/=COLOR/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Field/=COLOR/Expression/@EntryValue">constant("4a90e2")</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Field/=COLOR/Order/@EntryValue">4</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Field/=GENDER/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Field/=GENDER/Expression/@EntryValue">list("Feminine,Masculine,Neutral")</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Field/=GENDER/Order/@EntryValue">5</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Field/=HP/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Field/=HP/Expression/@EntryValue">constant("60")</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Field/=HP/Order/@EntryValue">6</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Field/=NAMESPACE/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Field/=NAMESPACE/Expression/@EntryValue">fileDefaultNamespace()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Field/=NAMESPACE/InitialRange/@EntryValue">-1</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Field/=NAMESPACE/Order/@EntryValue">0</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Field/=SHORTNAME/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Field/=SHORTNAME/Expression/@EntryValue">constant("Full Name")</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Field/=SHORTNAME/Order/@EntryValue">1</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Reformat/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Scope/=E8F0594528C33E45BBFEC6CFE851095D/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Scope/=E8F0594528C33E45BBFEC6CFE851095D/Type/@EntryValue">InCSharpProjectFile</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=9D5C4E1B7F2A8D9E/Text/@EntryValue">using BaseLib.Abstracts;
+using BaseLib.Patches.UI;
+using BaseLib.Utils.NodeFactories;
+using ShionTheBruiser.ShionTheBruiserCode.Extensions;
+using Godot;
+using MegaCrit.Sts2.Core.Entities.Characters;
+using MegaCrit.Sts2.Core.Helpers;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.Combat;
+using ShionTheBruiser.ShionTheBruiserCode.Cards;
+using ShionTheBruiser.ShionTheBruiserCode.Relics;
+
+namespace $NAMESPACE$;
+
+public class $CLASS$ : PlaceholderCharacterModel
+{
+    public const string CharacterId = "$CHARACTERID$";
+
+    public static readonly Color Color = new("$COLOR$");
+
+    public override Color NameColor =&gt; Color;
+    public override CharacterGender Gender =&gt; CharacterGender.$GENDER$;
+    public override int StartingHp =&gt; $HP$;
+
+    public override IEnumerable&lt;CardModel&gt; StartingDeck =&gt;
+    [
+        ModelDb.Card&lt;ShionStrike&gt;(),
+        ModelDb.Card&lt;ShionStrike&gt;(),
+        ModelDb.Card&lt;ShionStrike&gt;(),
+        ModelDb.Card&lt;ShionStrike&gt;(),
+        ModelDb.Card&lt;ShionDefend&gt;(),
+        ModelDb.Card&lt;ShionDefend&gt;(),
+        ModelDb.Card&lt;ShionDefend&gt;(),
+        ModelDb.Card&lt;ShionDefend&gt;(),
+        ModelDb.Card&lt;ShionFlood&gt;(),
+        ModelDb.Card&lt;ShionBluff&gt;(),
+    ];
+
+    public override IReadOnlyList&lt;RelicModel&gt; StartingRelics =&gt;
+    [
+        ModelDb.Relic&lt;BattleRags&gt;(),
+    ];
+
+    public override CardPoolModel CardPool =&gt; ModelDb.CardPool&lt;$CLASS$CardPool&gt;();
+    public override RelicPoolModel RelicPool =&gt; ModelDb.RelicPool&lt;$CLASS$RelicPool&gt;();
+    public override PotionPoolModel PotionPool =&gt; ModelDb.PotionPool&lt;$CLASS$PotionPool&gt;();
+
+    // TODO: Customize character appearance, animations, and properties
+    // - Override CustomIcon methods for UI icons
+    // - Override CreateCustomVisuals() for battle visuals
+    // - Override Custom*Path properties for sprite locations
+}
+</s:String>
+</wpf:ResourceDictionary>

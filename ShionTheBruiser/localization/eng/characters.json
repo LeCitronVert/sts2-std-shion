@@ -12,5 +12,20 @@
   "SHIONTHEBRUISER-SHION_THE_BRUISER.pronounPossessive": "hers",
   "SHIONTHEBRUISER-SHION_THE_BRUISER.pronounSubject": "she",
   "SHIONTHEBRUISER-SHION_THE_BRUISER.title": "The Bruiser",
-  "SHIONTHEBRUISER-SHION_THE_BRUISER.titleObject": "The Bruiser"
+  "SHIONTHEBRUISER-SHION_THE_BRUISER.titleObject": "The Bruiser",
+
+  "SHIONTHEBRUISER-SLAL_THE_ENDLESS.aromaPrinciple": "Lore",
+  "SHIONTHEBRUISER-SLAL_THE_ENDLESS.banter.alive.endTurnPing": "Co-op hurry up end turn ping message",
+  "SHIONTHEBRUISER-SLAL_THE_ENDLESS.banter.dead.endTurnPing": "...",
+  "SHIONTHEBRUISER-SLAL_THE_ENDLESS.cardsModifierDescription": "The Endless cards will now appear in rewards and shops.",
+  "SHIONTHEBRUISER-SLAL_THE_ENDLESS.cardsModifierTitle": "The Endless Cards",
+  "SHIONTHEBRUISER-SLAL_THE_ENDLESS.description": "A curious and over-sharing shape-shifter.\nLooks harmless, but may prove cartoonishly resilient.",
+  "SHIONTHEBRUISER-SLAL_THE_ENDLESS.eventDeathPrevention": "Co-op survival line",
+  "SHIONTHEBRUISER-SLAL_THE_ENDLESS.goldMonologue": "Line spoken when obtaining a large amount of gold",
+  "SHIONTHEBRUISER-SLAL_THE_ENDLESS.possessiveAdjective": "his/her/its",
+  "SHIONTHEBRUISER-SLAL_THE_ENDLESS.pronounObject": "him/her/it",
+  "SHIONTHEBRUISER-SLAL_THE_ENDLESS.pronounPossessive": "his/hers/its",
+  "SHIONTHEBRUISER-SLAL_THE_ENDLESS.pronounSubject": "he/she/it",
+  "SHIONTHEBRUISER-SLAL_THE_ENDLESS.title": "The Endless",
+  "SHIONTHEBRUISER-SLAL_THE_ENDLESS.titleObject": "The Endless"
 }
