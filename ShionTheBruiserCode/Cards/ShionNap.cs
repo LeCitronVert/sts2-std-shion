@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -26,7 +27,10 @@ public class ShionNap() : ShionTheBruiserCard(0,
         var card = this;
         var xAmount = card.ResolveEnergyXValue() * PatchUpMultiplier;
         if (xAmount == 0) return;
-        await ShionMechanicsHelper.PatchUpCreature(xAmount, card.Owner.Creature);
+        await CreatureCmd.Heal(
+            card.Owner.Creature,
+            xAmount
+        );
     }
 
     protected override void OnUpgrade()

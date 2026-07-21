@@ -18,6 +18,8 @@ public class ShionFlowGuard() : ShionBerserkCard(1,
 {
     public override bool GainsBlock => true;
     
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [ShionCardKeywords.Defensive];
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
         HoverTipFactory.FromKeyword(ShionCardKeywords.Defensive)

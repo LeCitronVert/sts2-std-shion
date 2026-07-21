@@ -9,7 +9,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
-public class SpiritBreak : CritContributorPower, ICritAttackRateContributor
+public class SpiritBreak : CritContributorPower, ICritHitRateContributor
 {
     public override PowerType Type =>
         PowerType.Buff;
@@ -20,14 +20,6 @@ public class SpiritBreak : CritContributorPower, ICritAttackRateContributor
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CritDisplayTooltipVar(),
     ];
-    
-    public decimal GetCritAttackRateBonus(CardModel? sourceCard)
-    {
-        if (sourceCard == null) return 1;
-        
-        // Only apply to Attack cards from the owner
-        return sourceCard.Owner.Creature == Owner && sourceCard.Type == CardType.Attack ? 1 : 0;
-    }
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -35,5 +27,12 @@ public class SpiritBreak : CritContributorPower, ICritAttackRateContributor
         {
             await PowerCmd.Decrement(this);
         }
+    }
+
+    public decimal GetCritHitRateBonus(CardModel? sourceCard)
+    {
+        if (sourceCard == null) return 1;
+        
+        return sourceCard.Owner.Creature == Owner && sourceCard.Type == CardType.Attack ? 1 : 0;    
     }
 }

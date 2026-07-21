@@ -26,7 +26,7 @@ public class DraconicJuice: ShionTheBruiserPotion
     public override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<StrengthPower>(),
         HoverTipFactory.FromPower<DexterityPower>(),
-        HoverTipFactory.FromPower<CritAttackUp>(),
+        HoverTipFactory.FromPower<CritRateUp>(),
         HoverTipFactory.FromPower<VigorPower>(),
         HoverTipFactory.FromPower<RegenPower>()
     ];
@@ -51,7 +51,7 @@ public class DraconicJuice: ShionTheBruiserPotion
             potion.Owner.Creature,
             null
         );
-        await PowerCmd.Apply<CritAttackUp>(
+        await PowerCmd.Apply<CritRateUp>(
             choiceContext,
             target,
             BuffAmount,

@@ -3,4 +3,4 @@ using ShionTheBruiser.ShionTheBruiserCode.Potions;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
-public class UltraSpicyBrewPower : CustomTemporaryPowerModelWrapper<UltraSpicyBrew, CritAttackUp>;
+public class UltraSpicyBrewPower : CustomTemporaryPowerModelWrapper<UltraSpicyBrew, CritRateUp>;

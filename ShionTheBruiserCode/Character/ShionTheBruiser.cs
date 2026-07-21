@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using BaseLib.Abstracts;
+using BaseLib.Patches.UI;
 using BaseLib.Utils.NodeFactories;
 using ShionTheBruiser.ShionTheBruiserCode.Extensions;
 using Godot;
@@ -85,7 +86,7 @@ public class ShionTheBruiser : PlaceholderCharacterModel
     public override string CustomCharacterSelectLockedIconPath => "char_select_char_name_locked.png".CharacterUiPath();
     public override string CustomMapMarkerPath => "shion/ui_map_taco.png".CharacterUiPath();
     
-    public override string? CustomIconOutlineTexturePath => CustomIconTexturePath;
+    public override string? CustomIconOutlineTexturePath => "shion/ui_icon_shion_white.png".CharacterUiPath();
 
     public override List<string> GetArchitectAttackVfx()
     {
@@ -108,4 +109,13 @@ public class ShionTheBruiser : PlaceholderCharacterModel
 
     public override string CustomMerchantAnimPath => Path.Join(MainFile.ResPath, "scenes",
         "shion_merchant.tscn");
+
+    public override RelicIconData CustomYummyCookie => new(
+        "shion.png".CookieImagePath(),
+        "shion.png".CookieImagePath(),
+        "shion_outline.png".CookieImagePath()
+    );
+    
+    public override string CustomEnergyCounterPath => Path.Join(MainFile.ResPath, "scenes", "shion_energy.tscn");
+    
 }

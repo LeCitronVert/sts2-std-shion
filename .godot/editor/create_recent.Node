@@ -1,5 +1,8 @@
-AnimationTree
+TextureRect
+Label
+Node2D
 Control
+AnimationTree
 AnimationPlayer
 AnimatedSprite2D
 Sprite2D

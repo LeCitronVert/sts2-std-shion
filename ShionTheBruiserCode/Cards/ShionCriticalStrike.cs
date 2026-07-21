@@ -16,7 +16,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 public class ShionCriticalStrike() : CritContributorCard(2,
     CardType.Attack, CardRarity.Common,
-    TargetType.AnyEnemy), ICritAttackRateContributor
+    TargetType.AnyEnemy), ICritHitRateContributor
 {
     protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
@@ -24,10 +24,6 @@ public class ShionCriticalStrike() : CritContributorCard(2,
         new CritDisplayTooltipVar(),
         new CritAttackRateVar(100)
     ];
-    
-    public decimal GetCritAttackRateBonus(CardModel? sourceCard) =>
-        sourceCard == this && ShionMechanicsHelper.IsBerserk(sourceCard.Owner.Creature) ? DynamicVars[CritAttackRateVar.Key].BaseValue / 100 : 0m;
-
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
@@ -67,4 +63,7 @@ public class ShionCriticalStrike() : CritContributorCard(2,
     }
     
     protected override bool ShouldGlowGoldInternal => ShionMechanicsHelper.IsBerserk(this.Owner.Creature);
+    public decimal GetCritHitRateBonus(CardModel? sourceCard) =>
+        sourceCard == this && ShionMechanicsHelper.IsBerserk(sourceCard.Owner.Creature) ? DynamicVars[CritAttackRateVar.Key].BaseValue / 100 : 0m;
+
 }

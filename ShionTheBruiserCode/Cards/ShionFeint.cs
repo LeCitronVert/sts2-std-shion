@@ -15,7 +15,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 public class ShionFeint() : CritContributorCard(2,
     CardType.Attack, CardRarity.Common,
-    TargetType.AnyEnemy), IOnCriticalHitListener, IOnCriticalFailListener, ICritAttackRateContributor
+    TargetType.AnyEnemy), IOnCriticalHitListener, IOnCriticalFailListener, ICritHitRateContributor
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(10, ValueProp.Move),
@@ -97,6 +97,6 @@ public class ShionFeint() : CritContributorCard(2,
         return Task.CompletedTask;
     }
 
-    public decimal GetCritAttackRateBonus(CardModel? sourceCard) =>
+    public decimal GetCritHitRateBonus(CardModel? sourceCard)=>
         sourceCard == this ? DynamicVars[CritHitRateVar.Key].BaseValue / 100 : 0m;
 }

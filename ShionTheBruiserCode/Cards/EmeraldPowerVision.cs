@@ -19,6 +19,9 @@ public class EmeraldPowerVision() : ShionTheBruiserCard(0,
     ];
     
     public override IEnumerable<CardKeyword> CanonicalKeywords => [DreamersKeywords.EmeraldPower];
+    public override bool CanBeGeneratedInCombat => false;
+    public override bool CanBeGeneratedByModifiers => false;
+
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<CounterStance>(),

@@ -13,7 +13,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
-public class Endure() : CritContributorPower, ICritAttackRateContributor
+public class Endure() : CritContributorPower, ICritHitRateContributor
 {
     public override PowerType Type =>
         PowerType.Buff;
@@ -76,12 +76,11 @@ public class Endure() : CritContributorPower, ICritAttackRateContributor
             StopPulsing();
         }
     }
-    
-    public decimal GetCritAttackRateBonus(CardModel? sourceCard)
+
+    public decimal GetCritHitRateBonus(CardModel? sourceCard)
     {
         if (sourceCard == null || sourceCard.Owner.Creature == Owner)
             return ShionMechanicsHelper.IsBerserk(Owner) ? DynamicVars[CritHitRateVar.Key].BaseValue : 0M;
         
-        return 0;
-    }
+        return 0;    }
 }
