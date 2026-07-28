@@ -16,15 +16,13 @@ public class Confusion(): SlalTheEndlessPower
   public override PowerStackType StackType => PowerStackType.Counter;
   public override Color AmountLabelColor => PowerModel._normalAmountLabelColor;
 
-  public override async Task BeforeSideTurnStart(
-    PlayerChoiceContext choiceContext,
-    CombatSide side,
-    IReadOnlyList<Creature> participants,
-    ICombatState combatState)
+  public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
   {
     var power = this;
-    if (!participants.Contains<Creature>(power.Owner))
+    if (side != CombatSide.Player)
+    {
       return;
+    }
     var canBeLethal = Owner.CurrentHp == 1;
     var damageAmount = Amount;
     if (!canBeLethal)

@@ -5,7 +5,7 @@ ShionTheBruiser.json::JSON::-1::1783257731::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1785218100
+::res://bin/ExportRelease/net9.0/publish/::1785246668
 ShionTheBruiser.deps.json::JSON::-1::1785182720::0::1::::<><><>0<>0<><>::
 ::res://exportToHTML/::1782829109
 ::res://ShionTheBruiser/::1783259216
@@ -14,7 +14,7 @@ mod_image.png::CompressedTexture2D::8120906206059877335::1781940056::1782158780:
 ::res://ShionTheBruiser/audio/monsters/::1783257373
 abby_cry.mp3::AudioStreamMP3::5378262688525908553::1783257218::1783257373::1::::<><><>0<>0<>18ae4e70743613656c80bd98369a5fbe<>res://.godot/imported/abby_cry.mp3-ae38cbe1b620798428d3ef3470f24654.mp3str::
 ::res://ShionTheBruiser/images/::1784594040
-::res://ShionTheBruiser/images/card_portraits/::1785189365
+::res://ShionTheBruiser/images/card_portraits/::1785218102
 card.png::CompressedTexture2D::1049500711854334682::1781940056::1782158780::1::::<><><>0<>0<>e86ff99e55e178dfa257e115aff98269<>res://.godot/imported/card.png-ed4193b7714d803835eb3395cc67803f.ctex::
 cosmo_determination.png::CompressedTexture2D::7370259231145839813::1783264288::1783268294::1::::<><><>0<>0<>92d0180d2bcae8f7dae36e08a69a2fc2<>res://.godot/imported/cosmo_determination.png-de16beb2149397672a3cc958560a33b9.ctex::
 cosmo_guidance.png::CompressedTexture2D::2493547857642524238::1783264292::1783268294::1::::<><><>0<>0<>07f4a01856c0f20e031eb65f2bd43687<>res://.godot/imported/cosmo_guidance.png-0ad46f64033753485063848d8d132a4a.ctex::
@@ -118,7 +118,7 @@ slal_running_joke.png::CompressedTexture2D::5582336126353139655::1785187120::178
 slal_strike.png::CompressedTexture2D::8989882973989947529::1785182956::1785183021::1::::<><><>0<>0<>64d72bb32ea1ef14e3ef638c75729752<>res://.godot/imported/slal_strike.png-10ea9505cb24c9bfe737f653408c9f1d.ctex::
 slal_wall_of_text.png::CompressedTexture2D::443642491047273933::1785189360::1785218102::1::::<><><>0<>0<>809107e90e8fa2f7275be5b0982b6d64<>res://.godot/imported/slal_wall_of_text.png-69f72e26cfcd96943ff37fc11a1ce02c.ctex::
 yes.png::CompressedTexture2D::712160989269267689::1783248434::1783250447::1::::<><><>0<>0<>db034b26dd7253ea427f5f2bd7f9bb15<>res://.godot/imported/yes.png-3073bf59eed0d2cc40cceae385821e36.ctex::
-::res://ShionTheBruiser/images/card_portraits/beta/::1785189363
+::res://ShionTheBruiser/images/card_portraits/beta/::1785218102
 cosmo_determination.png::CompressedTexture2D::6405435604252795001::1783264288::1783268294::1::::<><><>0<>0<>6fd58239f63dafd620559a0587492cbe<>res://.godot/imported/cosmo_determination.png-4126b24ee606566b862812dba7366d12.ctex::
 cosmo_guidance.png::CompressedTexture2D::4540496459602940542::1783264292::1783268294::1::::<><><>0<>0<>5a60aa165b85b104343bc6338a361053<>res://.godot/imported/cosmo_guidance.png-2aa72ffc1dc0e65e0a7947ee887d18d7.ctex::
 cosmo_kindness.png::CompressedTexture2D::2192685961839725829::1783264296::1783268294::1::::<><><>0<>0<>0665c4b945f5ddf858d1a0efd432c161<>res://.godot/imported/cosmo_kindness.png-1fac1bafe062cb66aa28a4a2b04ba183.ctex::
@@ -220,7 +220,7 @@ slal_running_joke.png::CompressedTexture2D::6814497511793368325::1785187120::178
 slal_strike.png::CompressedTexture2D::5918578733995773492::1785182956::1785183021::1::::<><><>0<>0<>dbd5ad63dab53b0a0e0c0b811040b3cf<>res://.godot/imported/slal_strike.png-4eea00f202b4700adf5c0a504cb8156c.ctex::
 slal_wall_of_text.png::CompressedTexture2D::6096153770101103649::1785189360::1785218102::1::::<><><>0<>0<>1e432662ce6d45f0e34680b5b23a1b9e<>res://.godot/imported/slal_wall_of_text.png-bb6e44530c48e57502c53b65e98b7223.ctex::
 yes.png::CompressedTexture2D::5279192743463950200::1783248434::1783250447::1::::<><><>0<>0<>87bbd865506a411f480cb67c509dc39c<>res://.godot/imported/yes.png-816f261255c7e33f7f4cf5b55e6f45af.ctex::
-::res://ShionTheBruiser/images/card_portraits/big/::1785189363
+::res://ShionTheBruiser/images/card_portraits/big/::1785218103
 berserk_drive.png::CompressedTexture2D::1173516633182531861::1783421669::1783421693::1::::<><><>0<>0<>a0e7ab2b45a81d3fbcd341103134a846<>res://.godot/imported/berserk_drive.png-005441c15d646c8791a92b1851669ba4.ctex::
 card.png::CompressedTexture2D::5376909193275950955::1783421669::1783421693::1::::<><><>0<>0<>e9bc5581e7060e2b238b6e16f552b620<>res://.godot/imported/card.png-f2bdec99a9547bf841f67e1ad99b4423.ctex::
 cosmo_determination.png::CompressedTexture2D::4653851150383875096::1783421669::1783421693::1::::<><><>0<>0<>9141471787ccae1a9089871bfa36aad5<>res://.godot/imported/cosmo_determination.png-13a65723f9f7f99a5ee796a5390a2660.ctex::
@@ -501,14 +501,14 @@ character_slal_merchant.png::CompressedTexture2D::2659814132170291424::178401905
 ::res://ShionTheBruiser/images/ui/rest/::1783267487
 lull.png::CompressedTexture2D::1267024042070092315::1783267457::1783267487::1::::<><><>0<>0<>46ca43c57aac12a6d7ea8ace1d934f9d<>res://.godot/imported/lull.png-a7714865cfaf878a1f7a05dec126e0c0.ctex::
 ::res://ShionTheBruiser/localization/::1781940056
-::res://ShionTheBruiser/localization/eng/::1785189219
+::res://ShionTheBruiser/localization/eng/::1785246224
 ancients.json::JSON::-1::1784598604::0::1::::<><><>0<>0<><>::
-cards.json::JSON::-1::1785183836::0::1::::<><><>0<>0<><>::
+cards.json::JSON::-1::1785245652::0::1::::<><><>0<>0<><>::
 card_keywords.json::JSON::-1::1784600374::0::1::::<><><>0<>0<><>::
 characters.json::JSON::-1::1784845582::0::1::::<><><>0<>0<><>::
 combat_messages.json::JSON::-1::1782426298::0::1::::<><><>0<>0<><>::
 potions.json::JSON::-1::1784496282::0::1::::<><><>0<>0<><>::
-powers.json::JSON::-1::1785189219::0::1::::<><><>0<>0<><>::
+powers.json::JSON::-1::1785246224::0::1::::<><><>0<>0<><>::
 relics.json::JSON::-1::1784602154::0::1::::<><><>0<>0<><>::
 rest_site_ui.json::JSON::-1::1783267882::0::1::::<><><>0<>0<><>::
 static_hover_tips.json::JSON::-1::1784501416::0::1::::<><><>0<>0<><>::
@@ -523,7 +523,7 @@ slal_energy.tscn::PackedScene::538628958860881497::1784852634::0::1::::<><><>0<>
 slal_merchant.tscn::PackedScene::6725568957768718793::1784855330::0::1::::<><><>0<>0<><>::uid://c6vfy78d2khfw::::res://ShionTheBruiser/images/sprites/slal/character_slal_attack.png<>uid://bhvn1av8sooia::::res://ShionTheBruiser/images/sprites/slal/character_slal_cast.png<>uid://by6n0gbv8r4jh::::res://ShionTheBruiser/images/sprites/slal/character_slal_die.png<>uid://0ek8m7ogqlt0::::res://ShionTheBruiser/images/sprites/slal/character_slal_hit.png<>uid://sie827hbb177::::res://ShionTheBruiser/images/sprites/slal/character_slal_idle.png<>uid://bd5o0rgav3d6g::::res://ShionTheBruiser/images/sprites/slal/character_slal_merchant.png<>uid://3n7cbrpur4ou::::res://ShionTheBruiser/scenes/shion_visuals.gd
 ::res://ShionTheBruiserCode/::1785001003
 MainFile.cs::CSharpScript::2954314548483070873::1781940058::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Cards/::1785184475
+::res://ShionTheBruiserCode/Cards/::1785246665
 CosmoDetermination.cs::CSharpScript::4903082444639403780::1784496899::0::1::::<><><>0<>0<><>::
 CosmoGuidance.cs::CSharpScript::4895954223051435257::1784496944::0::1::::<><><>0<>0<><>::
 CosmoKindness.cs::CSharpScript::2527117697509655675::1784496851::0::1::::<><><>0<>0<><>::
@@ -627,13 +627,14 @@ SlalDefend.cs::CSharpScript::5008996876013295517::1785182600::0::1::::<><><>0<>0
 SlalRunningJoke.cs::CSharpScript::1629784146660589987::1785184475::0::1::::<><><>0<>0<><>::
 SlalStrike.cs::CSharpScript::9185886012061968931::1785182398::0::1::::<><><>0<>0<><>::
 SlalTheEndlessCard.cs::CSharpScript::3792054219534233841::1784597686::0::1::::<><><>0<>0<><>::
+SlalWallOfText.cs::CSharpScript::2191618882358923795::1785246665::0::1::::<><><>0<>0<><>::
 Yes.cs::CSharpScript::1548182700875497738::1783248701::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Character/::1785218096
+::res://ShionTheBruiserCode/Character/::1785245709
 ShionTheBruiser.cs::CSharpScript::5230343434016276755::1784857998::0::1::::<><><>0<>0<><>::
 ShionTheBruiserCardPool.cs::CSharpScript::5768901081701376971::1782984673::0::1::::<><><>0<>0<><>::
 ShionTheBruiserPotionPool.cs::CSharpScript::8942352038865602766::1782984673::0::1::::<><><>0<>0<><>::
 ShionTheBruiserRelicPool.cs::CSharpScript::7291834671674422082::1782984673::0::1::::<><><>0<>0<><>::
-SlalTheEndless.cs::CSharpScript::4554641734012447028::1785218096::0::1::::<><><>0<>0<><>::
+SlalTheEndless.cs::CSharpScript::4554641734012447028::1785245709::0::1::::<><><>0<>0<><>::
 SlalTheEndlessCardPool.cs::CSharpScript::1155078169278971460::1784598738::0::1::::<><><>0<>0<><>::
 SlalTheEndlessPotionPool.cs::CSharpScript::1063035968602241197::1784597381::0::1::::<><><>0<>0<><>::
 SlalTheEndlessRelicPool.cs::CSharpScript::8094257831437862881::1784597373::0::1::::<><><>0<>0<><>::
@@ -670,7 +671,7 @@ DraconicJuice.cs::CSharpScript::9211876073659952205::1784560287::0::1::::<><><>0
 ShionTheBruiserPotion.cs::CSharpScript::9201725349623556408::1783339625::0::1::::<><><>0<>0<><>::
 SlalTheEndlessPotion.cs::CSharpScript::8376483660968667012::1784597711::0::1::::<><><>0<>0<><>::
 UltraSpicyBrew.cs::CSharpScript::9048578971562818039::1784853353::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Powers/::1785189093
+::res://ShionTheBruiserCode/Powers/::1785246274
 BattleTempo.cs::CSharpScript::8564905511811489123::1784398978::0::1::::<><><>0<>0<><>::
 BerserkCharge.cs::CSharpScript::8895171129478005530::1784131250::0::1::::<><><>0<>0<><>::
 BerserkDrive.cs::CSharpScript::4397575169758918708::1784131345::0::1::::<><><>0<>0<><>::
@@ -679,7 +680,7 @@ BerserkIndicator.cs::CSharpScript::5679451472385701625::1784553407::0::1::::<><>
 BreakMeIfYouCan.cs::CSharpScript::6839460217314529791::1784459393::0::1::::<><><>0<>0<><>::
 Codependency.cs::CSharpScript::1253849210403718167::1784857685::0::1::::<><><>0<>0<><>::
 CompetitiveSpirit.cs::CSharpScript::6760749595507080196::1784674344::0::1::::<><><>0<>0<><>::
-Confusion.cs::CSharpScript::8048853769951691982::1785189093::0::1::::<><><>0<>0<><>::
+Confusion.cs::CSharpScript::8048853769951691982::1785246274::0::1::::<><><>0<>0<><>::
 CounterStance.cs::CSharpScript::7633700097038938229::1784456400::0::1::::<><><>0<>0<><>::
 CriticalAttackNext.cs::CSharpScript::3045316320708616909::1784560211::0::1::::<><><>0<>0<><>::
 CriticalDraw.cs::CSharpScript::1437147261964541114::1784496083::0::1::::<><><>0<>0<><>::

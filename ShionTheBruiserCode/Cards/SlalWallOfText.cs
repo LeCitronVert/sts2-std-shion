@@ -51,7 +51,7 @@ public class SlalWallOfText(): SlalTheEndlessCard(1,
         PileType pileTypeForCardPlay = base.GetResultPileTypeForCardPlay();
         if (IsUpgraded &&  pileTypeForCardPlay == PileType.Discard)
         {
-            return PileType.Hand;
+            return PileType.Draw;
         }
         return pileTypeForCardPlay;
     }
