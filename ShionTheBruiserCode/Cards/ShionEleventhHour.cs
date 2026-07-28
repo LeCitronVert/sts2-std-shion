@@ -26,7 +26,7 @@ public class ShionEleventhHour() : ShionTheBruiserCard(0,
         CardPlay play)
     {
         var card = this;
-        ShionMechanicsHelper.EnsureCreatureHasCritTracker(card.Owner.Creature);
+        await ShionMechanicsHelper.EnsureCreatureHasCritTracker(card.Owner.Creature);
         CardModel? card2 = (PileType
                 .Draw
                 .GetPile(card.Owner)
@@ -50,12 +50,11 @@ public class ShionEleventhHour() : ShionTheBruiserCard(0,
         RemoveKeyword(CardKeyword.Exhaust);
     }
 
-    public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
     {
-        ShionMechanicsHelper.ApplyCriticalDraw(this, choiceContext, card);
-        
-        return Task.CompletedTask;
+        await ShionMechanicsHelper.ApplyCriticalDraw(this, choiceContext, card);
     }
+
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 }

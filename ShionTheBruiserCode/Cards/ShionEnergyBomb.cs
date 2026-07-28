@@ -42,10 +42,8 @@ public class ShionEnergyBomb() : CritContributorCard(3,
     public decimal GetCritHitRateBonus(CardModel? sourceCard) =>
         sourceCard == this ? DynamicVars[CriticalDrawVar.Key].BaseValue / 100 : 0m;
     
-    public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
     {
-        ShionMechanicsHelper.ApplyCriticalDraw(this, choiceContext, card);
-        
-        return Task.CompletedTask;
+        await ShionMechanicsHelper.ApplyCriticalDraw(this, choiceContext, card);
     }
 }

@@ -54,10 +54,8 @@ public class ShionPsychoCut() : ShionTheBruiserCard(1,
         DynamicVars["CriticalDraw"].UpgradeValueBy(17);
     }
     
-    public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
     {
-        ShionMechanicsHelper.ApplyCriticalDraw(this, choiceContext, card);
-        
-        return Task.CompletedTask;
+        await ShionMechanicsHelper.ApplyCriticalDraw(this, choiceContext, card);
     }
 }

@@ -49,11 +49,9 @@ public class ShionCrunch() : ShionTheBruiserCard(0,
         DynamicVars["DebuffAmount"].UpgradeValueBy(1);
     }
     
-    public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
     {
-        ShionMechanicsHelper.ApplyCriticalDraw(this, choiceContext, card);
-        
-        return Task.CompletedTask;
+        await ShionMechanicsHelper.ApplyCriticalDraw(this, choiceContext, card);
     }
     
     protected override PileType GetResultPileTypeForCardPlay()

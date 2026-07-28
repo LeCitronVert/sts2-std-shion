@@ -53,23 +53,19 @@ public class ShionPleasureInPain() : ShionDefensiveCard(0,
         DynamicVars["PleasureInPain"].UpgradeValueBy(20);
     }
     
-    public override Task BeforeCombatStart()    
+    public override async Task BeforeCombatStart()    
     {
         if (!Owner.Creature.HasPower<ShionCritTrackerPower>())
         {
-            ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(Owner.Creature);
+            await ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(Owner.Creature);
         }
-        
-        return Task.CompletedTask;
     }
 
-    public override Task AfterCardEnteredCombat(CardModel card)
+    public override async Task AfterCardEnteredCombat(CardModel card)
     {
-        if (card != this) return Task.CompletedTask;
+        if (card != this) return;
         
-        ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(card.Owner.Creature);
-        
-        return Task.CompletedTask;
+        await ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(card.Owner.Creature);
     }
     
     protected override bool ShouldGlowGoldInternal => ShionMechanicsHelper.IsBerserk(this.Owner.Creature);

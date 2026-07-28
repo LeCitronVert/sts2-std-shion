@@ -32,7 +32,7 @@ public class ShionEndure() : ShionBerserkCard(2,
         CardPlay play)
     {
         var card = this;
-        ShionMechanicsHelper.EnsureCreatureHasCritTracker(card.Owner.Creature);
+        await ShionMechanicsHelper.EnsureCreatureHasCritTracker(card.Owner.Creature);
         await PowerCmd.Apply<Endure>(
             choiceContext,
             card.Owner.Creature,

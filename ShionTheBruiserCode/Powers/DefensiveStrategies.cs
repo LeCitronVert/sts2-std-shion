@@ -29,18 +29,16 @@ public class DefensiveStrategies : ShionTheBruiserPower
         new CritDisplayTooltipVar(),
     ];
 
-    public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (
             cardPlay.Card.Owner.Creature != Owner
             || !cardPlay.Card.Keywords.Contains(ShionCardKeywords.Defensive)
-        ) return Task.CompletedTask;
+        ) return;
 
         var power = this;
-        PowerCmd.Apply<VigorPower>(new ThrowingPlayerChoiceContext(), power.Owner, Amount, power.Owner, null!);
-        ShionMechanicsHelper.EnsureCreatureHasCritTracker(power.Owner);
-        PowerCmd.Apply<CritRateUp>(new ThrowingPlayerChoiceContext(), power.Owner, Amount, power.Owner, null!);
-        
-        return Task.CompletedTask;
+        await PowerCmd.Apply<VigorPower>(new ThrowingPlayerChoiceContext(), power.Owner, Amount, power.Owner, null!);
+        await ShionMechanicsHelper.EnsureCreatureHasCritTracker(power.Owner);
+        await PowerCmd.Apply<CritRateUp>(new ThrowingPlayerChoiceContext(), power.Owner, Amount, power.Owner, null!);
     }
 }

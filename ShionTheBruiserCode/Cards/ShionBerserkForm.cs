@@ -27,7 +27,7 @@ public class ShionBerserkForm() : ShionBerserkCard(3,
     {
         var card = this;
         await PowerCmd.Apply<BerserkForm>(choiceContext, card.Owner.Creature, DynamicVars["BerserkForm"].BaseValue, card.Owner.Creature, card);
-        ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(Owner.Creature);
+        await ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(Owner.Creature);
         
         var randomOptions = ShionMechanicsHelper.GetRandomCardOptionsForPool([ModelDb.CardPool<ShionTheBruiserCardPool>(), ModelDb.CardPool<ColorlessCardPool>()
         ], card.Owner).Where(c => c.Type == CardType.Attack && c.Rarity != CardRarity.Ancient).ToList();

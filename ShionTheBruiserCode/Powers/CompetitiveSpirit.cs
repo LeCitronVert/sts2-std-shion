@@ -41,7 +41,7 @@ public class CompetitiveSpirit() : ShionTheBruiserPower
         else Initialize();
     }
     
-    public async void GainStrengthIfOtherBuff()
+    public async Task GainStrengthIfOtherBuff()
     {
         if (AmountThisTurn <= 0) return;
         await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), Owner, 1, Owner, null!);
@@ -63,7 +63,7 @@ public class CompetitiveSpirit() : ShionTheBruiserPower
         
         if (Owner != power.Owner && power.Type == PowerType.Buff)
         {
-            GainStrengthIfOtherBuff();
+            await GainStrengthIfOtherBuff();
         }
     }
     

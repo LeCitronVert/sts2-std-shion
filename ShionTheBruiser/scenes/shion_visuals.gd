@@ -6,4 +6,3 @@ func _ready() -> void:
 func _on_animation_finished() -> void:
 	if animation != &"idle" and animation != &"merchant_idle" and animation != &"die":
 		play(&"idle")
-

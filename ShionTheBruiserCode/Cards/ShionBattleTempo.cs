@@ -25,7 +25,7 @@ public class ShionBattleTempo() : ShionBerserkCard(1,
     {
         var card = this;
         await PowerCmd.Apply<BattleTempo>(choiceContext, card.Owner.Creature, PowerAmount, card.Owner.Creature, card);
-        ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(Owner.Creature);
+        await ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(Owner.Creature);
     }
 
     protected override void OnUpgrade()

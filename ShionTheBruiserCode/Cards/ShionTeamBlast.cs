@@ -55,8 +55,8 @@ public class ShionTeamBlast() : ShionLatentCard(3,
                 play
             );
             
-            ShionMechanicsHelper.EnsureCreatureHasCritTracker(target);
-            ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(target);
+            await ShionMechanicsHelper.EnsureCreatureHasCritTracker(target);
+            await ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(target);
             
             await PowerCmd.Apply<DragonCheer>(
                 choiceContext,

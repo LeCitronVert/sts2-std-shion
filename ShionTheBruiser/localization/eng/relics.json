@@ -69,5 +69,9 @@
   "SHIONTHEBRUISER-TRAINING_MANUAL.title": "Training Manual",
   "SHIONTHEBRUISER-SIGNATURE_RACEWEAR.description": "When you play a [gold]Non-Native[/gold] card, gain [blue]{Block::diff()}[/blue] [gold]Block[/gold].",
   "SHIONTHEBRUISER-SIGNATURE_RACEWEAR.flavor": "A certain racer's signature outfit. Whatever you do, do NOT let Shion wear it. It makes her incredibly worse as a person.",
-  "SHIONTHEBRUISER-SIGNATURE_RACEWEAR.title": "Signature Racewear"
+  "SHIONTHEBRUISER-SIGNATURE_RACEWEAR.title": "Signature Racewear",
+  
+  "SHIONTHEBRUISER-CREATIVE_SPARK.description": "Adds [gold]Novel[/gold] to ALL your cards and the ones you create.",
+  "SHIONTHEBRUISER-CREATIVE_SPARK.flavor": "Adds [gold]Novel[/gold] to ALL your cards and the ones you create.",
+  "SHIONTHEBRUISER-CREATIVE_SPARK.title": "Creative Spark"
 }

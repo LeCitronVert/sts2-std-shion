@@ -12,5 +12,9 @@
   "SHIONTHEBRUISER-TEAMBLAST.description": "Exhausts ALL others Team Blasts in ALL PLAYERS' possession upon play.",
   "SHIONTHEBRUISER-TEAMBLAST.title": "Team Blast",
   "SHIONTHEBRUISER-BERSERK.description": "Gains additional effects if your HP is equal or lower to half of your Max HP.",
-  "SHIONTHEBRUISER-BERSERK.title": "Berserk"
+  "SHIONTHEBRUISER-BERSERK.title": "Berserk",
+
+  
+  "SHIONTHEBRUISER-NOVEL.description": "Gain [blue]1[/blue] [gold]Random[/gold].\nRemove [gold]Novel[/gold] on ALL identical cards.\nAfterwards, [gold]Novel[/gold] can't be applied on identical cards this combat.",
+  "SHIONTHEBRUISER-NOVEL.title": "Novel"
 }

@@ -64,11 +64,9 @@ public class ShionRageStrike() : ShionBerserkCard(2,
     public decimal GetCritHitRateBonus(CardModel? sourceCard) =>
         sourceCard == this ? DynamicVars[CritHitRateVar.Key].BaseValue / 100 : 0m;
     
-    public override Task BeforeCombatStart()    
+    public override async Task BeforeCombatStart()    
     {
-        ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(Owner.Creature);
-        ShionMechanicsHelper.EnsureCreatureHasCritTracker(Owner.Creature);
-        
-        return Task.CompletedTask;
+        await ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(Owner.Creature);
+        await ShionMechanicsHelper.EnsureCreatureHasCritTracker(Owner.Creature);
     }
 }

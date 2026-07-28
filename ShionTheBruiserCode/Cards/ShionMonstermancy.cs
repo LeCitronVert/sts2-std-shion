@@ -28,7 +28,7 @@ public class ShionMonstermancy() : ShionBerserkCard(1,
     {
         var card = this;
         await PowerCmd.Apply<Monstermancy>(choiceContext, card.Owner.Creature, 1, card.Owner.Creature, card);
-        ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(Owner.Creature);
+        await ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(Owner.Creature);
     }
 
     protected override void OnUpgrade()

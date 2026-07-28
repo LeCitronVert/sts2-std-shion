@@ -1,10 +1,10 @@
 {
-  "SHIONTHEBRUISER-SHION_THE_BRUISER.aromaPrinciple": "Lore",
+  "SHIONTHEBRUISER-SHION_THE_BRUISER.aromaPrinciple": "[sine][purple]I've gotta do this... With my own two hands, with my own power...[/purple][/sine]",
   "SHIONTHEBRUISER-SHION_THE_BRUISER.banter.alive.endTurnPing": "Everything okay?",
   "SHIONTHEBRUISER-SHION_THE_BRUISER.banter.dead.endTurnPing": "Just... get it over with, already...",
-  "SHIONTHEBRUISER-SHION_THE_BRUISER.cardsModifierDescription": "Shion's cards will now appear in rewards and shops.",
+  "SHIONTHEBRUISER-SHION_THE_BRUISER.cardsModifierDescription": "The Bruiser's cards will now appear in rewards and shops.",
   "SHIONTHEBRUISER-SHION_THE_BRUISER.cardsModifierTitle": "Shion's Cards",
-  "SHIONTHEBRUISER-SHION_THE_BRUISER.description": "A scrappy adventurer from a distant world.\nStays on the defensive while powering up until she can deliver a decisive blow.",
+  "SHIONTHEBRUISER-SHION_THE_BRUISER.description": "A scrappy adventurer from a distant world.\nHer strength shines when her back is against the wall.",
   "SHIONTHEBRUISER-SHION_THE_BRUISER.eventDeathPrevention": "I'm foolish, not stupid...",
   "SHIONTHEBRUISER-SHION_THE_BRUISER.goldMonologue": "I can buy all the tacos in the multiverse...",
   "SHIONTHEBRUISER-SHION_THE_BRUISER.possessiveAdjective": "her",

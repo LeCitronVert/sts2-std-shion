@@ -25,7 +25,7 @@ public class Endure() : CritContributorPower, ICritHitRateContributor
         new HealVar(50),
         new DynamicVar("DebuffAmount", 5),
         new CritDisplayTooltipVar(),
-        new CritHitRateVar(0.33M)
+        new CritHitRateVar(0.2M)
     ];
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [

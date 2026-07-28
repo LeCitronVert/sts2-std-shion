@@ -119,7 +119,7 @@
   "SHIONTHEBRUISER-SHION_MONSTERMANCY.title": "Monstermancy",
   "SHIONTHEBRUISER-SHION_BATTLE_TEMPO.description": "Gain [blue]{PowerAmount}[/blue] Scrappy at the start of the turn.\nGain [blue]double[/blue] that amount if you are [gold]Berserk[/gold].",
   "SHIONTHEBRUISER-SHION_BATTLE_TEMPO.title": "Battle Tempo",
-  "SHIONTHEBRUISER-SHION_ENDURE.description": "Gain [blue]{Endure}[/blue] Endure.\nGain 33% [gold]Critical Attack[/gold] chance when you are [gold]Berserk[/gold].",
+  "SHIONTHEBRUISER-SHION_ENDURE.description": "Gain [blue]{Endure}[/blue] Endure.\nGain 20% [gold]Critical Attack[/gold] chance when you are [gold]Berserk[/gold].",
   "SHIONTHEBRUISER-SHION_ENDURE.title": "Endure",
   "SHIONTHEBRUISER-SHION_EXTREME_SPEED.description": "Apply 1 Slow on the enemy this turn.\n[gold]Critical Draw:[/gold] [blue]{CriticalDraw}%[/blue]",
   "SHIONTHEBRUISER-SHION_EXTREME_SPEED.title": "Extreme Speed",
@@ -141,7 +141,7 @@
   "SHIONTHEBRUISER-SHION_STELLAR_STRIKE.title": "Stellar Strike",
   "SHIONTHEBRUISER-SHION_PLEASURE_IN_PAIN.description": "Until your next turn:\nTake [blue]{PleasureInPain}[/blue]% more damage from attacks.\nConvert [blue]{PleasureInPain}[/blue]% of the Blocked damage to Strength.\nConvert [blue]{PleasureInPain}[/blue]% of Unblocked damage to Vigor.\n[gold]Berserk[/gold]: [gold]Patch Up[/gold] [blue]{PleasureInPain}[/blue]% of the total Damage.",
   "SHIONTHEBRUISER-SHION_PLEASURE_IN_PAIN.title": "Pleasure In Pain",
-  "SHIONTHEBRUISER-SHION_INSTINCTUAL_PREMONITIONS.description": "Get a bonus depending on each enemy's intent:\n[blue]{BlockBonusAgainstAttacks}[/blue] [gold]Block[/gold] for Attacks.\n[blue]{CounterStanceAgainstDebuffs}[/blue] [gold]Artifact[/gold] for negative effects.\n[blue]{VigorBonusAgainstBlock}[/blue] [gold]Vigor[/gold] for Blocking, [blue]{EnergyBonusAgainstOthers::energyIcons()}[/blue] for other intents.\n[gold]Berserk[/gold]: Cost [blue]{CostReductionWhenBerserk::energyIcons()}[/blue] less.",
+  "SHIONTHEBRUISER-SHION_INSTINCTUAL_PREMONITIONS.description": "Get a bonus depending on each enemy's intent:\n[blue]{BlockBonusAgainstAttacks}[/blue] [gold]Block[/gold] for Attacks.\n[blue]{CounterStanceAgainstDebuffs}[/blue] [gold]Artifact[/gold] for negative effects.\n[blue]{VigorBonusAgainstBlock}[/blue] [gold]Vigor[/gold] for Blocking.\n[blue]{EnergyBonusAgainstOthers::energyIcons()}[/blue] Energy for other intents.\n[gold]Berserk[/gold]: Cost [blue]{CostReductionWhenBerserk::energyIcons()}[/blue] less.",
   "SHIONTHEBRUISER-SHION_INSTINCTUAL_PREMONITIONS.title": "Instinctual Premonitions",
   "SHIONTHEBRUISER-SHION_SPIRIT_BURST.description": "For the next [blue]{SpiritBurst}[/blue] turns, auto-play any Strike or Energy card you draw; and draw one more card when you draw an Energy card.\nWhen Spirit Burst fades, you will be unable to block or heal for the rest of the fight.",
   "SHIONTHEBRUISER-SHION_SPIRIT_BURST.title": "Spirit Burst",
@@ -198,5 +198,16 @@
   "SHIONTHEBRUISER-SHION_FEINT.description": "Deal {Damage::diff()} damage.\nHas a [blue]{CriticalHitRate}[/blue]% chance to deal a [gold]Critical Hit[/gold].\nIf it deals a [gold]Critical Hit[/gold], gain [blue]{StrengthPower}[/blue] [gold]Strength[/gold] and [blue]{VigorPower}[/blue] [gold]Vigor[/gold].\nIf it doesn't, gain [blue]{WeakPower}[/blue] [gold]Weak[/gold].",
   "SHIONTHEBRUISER-SHION_FEINT.title": "Feint",
   "SHIONTHEBRUISER-SHION_ELEVENTH_HOUR.description": "If your next Attack deals a [gold]Critical Hit[/gold], gain [blue]{Bonus}[/blue] [gold]Strength[/gold].\nIf it doesn't, gain [blue]{Malus}[/blue] [gold]Weak[/gold], [gold]Vulnerable[/gold], [gold]Debilitate[/gold], and end your turn.\n[gold]Critical Draw:[/gold] [blue]{CriticalDraw}%[/blue]",
-  "SHIONTHEBRUISER-SHION_ELEVENTH_HOUR.title": "Eleventh Hour"
+  "SHIONTHEBRUISER-SHION_ELEVENTH_HOUR.title": "Eleventh Hour",
+
+
+
+  "SHIONTHEBRUISER-SLAL_STRIKE.description": "Deal {Damage:diff()} damage.",
+  "SHIONTHEBRUISER-SLAL_STRIKE.title": "Strike",
+  "SHIONTHEBRUISER-SLAL_DEFEND.description": "Gain {Block:diff()} [gold]Block[/gold].",
+  "SHIONTHEBRUISER-SLAL_DEFEND.title": "Defend",
+  "SHIONTHEBRUISER-SLAL_RUNNING_JOKE.description": "Deal {Damage:diff()} damage.\nAdd {DiscardCard::diff()} {DiscardCard:plural:copy|copies} of this card in your Discard Pile, and {DrawCard::diff()} {DrawCard:plural:copy|copies} of this card in your Draw Pile.",
+  "SHIONTHEBRUISER-SLAL_RUNNING_JOKE.title": "Running Joke",
+  "SHIONTHEBRUISER-SLAL_WALL_OF_TEXT.description": "Apply [gold]Confusion[/gold] equal to the number of cards in your Discard Pile to a random enemy.{InCombat:\n(Apply {DebuffAmount:diff()} [gold]Confusion[/gold])|}{IfUpgraded:show:\n[green]Shuffle this card into your Draw Pile.[/green]|}",
+  "SHIONTHEBRUISER-SLAL_WALL_OF_TEXT.title": "Wall Of Text"
 }

@@ -60,20 +60,16 @@ public class ShionFullNelson() : ShionDefensiveCard(2,
     // Shion Berserk Stuff
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk)];
     
-    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
+    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
-        ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(Owner.Creature);
-        
-        return Task.CompletedTask;
+        await ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(Owner.Creature);
     }
     
-    public override Task AfterCardEnteredCombat(CardModel card)
+    public override async Task AfterCardEnteredCombat(CardModel card)
     {
-        if (card != this) return Task.CompletedTask;
+        if (card != this) return;
         
-        ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(card.Owner.Creature);
-        
-        return Task.CompletedTask;
+        await ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(card.Owner.Creature);
     }
     
     protected override bool ShouldGlowGoldInternal => ShionMechanicsHelper.IsBerserk(this.Owner.Creature);

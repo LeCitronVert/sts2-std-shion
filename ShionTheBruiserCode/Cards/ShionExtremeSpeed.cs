@@ -46,10 +46,8 @@ public class ShionExtremeSpeed() : ShionTheBruiserCard(0,
         RemoveKeyword(CardKeyword.Exhaust);
     }
 
-    public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
     {
-        ShionMechanicsHelper.ApplyCriticalDraw(this, choiceContext, card);
-        
-        return Task.CompletedTask;
+        await ShionMechanicsHelper.ApplyCriticalDraw(this, choiceContext, card);
     }
 }

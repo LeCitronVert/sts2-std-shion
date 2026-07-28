@@ -35,7 +35,7 @@ public class CriticalPotion: ShionTheBruiserPotion
         PotionModel.AssertValidForTargetedPotion(target);
         NCombatRoom.Instance?.PlaySplashVfx(target, new Color("fd2155"));
         
-        ShionMechanicsHelper.EnsureCreatureHasCritTracker(target);
+        await ShionMechanicsHelper.EnsureCreatureHasCritTracker(target);
         await PowerCmd.Apply<CritRateUp>(
             choiceContext,
             target,

@@ -67,7 +67,7 @@ public class Codependency : ShionTheBruiserPower
     
     public override Task AfterApplied(Creature? applier, CardModel? cardSource)
     {
-        ((StringVar) this.DynamicVars["Partner"]).StringValue = PlatformUtil.GetPlayerName(RunManager.Instance.NetService.Platform, this.Applier!.Player.NetId);
+        ((StringVar) this.DynamicVars["Partner"]).StringValue = PlatformUtil.GetPlayerName(RunManager.Instance.NetService.Platform, this.Applier!.Player!.NetId);
         InvokeDisplayAmountChanged();
         DynamicVars["DisplayAmount"].BaseValue = DisplayAmount;
         ChangePulse();

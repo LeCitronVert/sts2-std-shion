@@ -43,7 +43,7 @@ public class ShionInstinctualPremonitions() : ShionBerserkCard(2,
             
             foreach (var intent in enemy.Monster.NextMove.Intents)
             {
-                GainBonusBasedOnIntent(intent, card.Owner.Creature);
+                await GainBonusBasedOnIntent(intent, card.Owner.Creature);
             }
         }
         
@@ -54,7 +54,7 @@ public class ShionInstinctualPremonitions() : ShionBerserkCard(2,
         AddKeyword(CardKeyword.Retain);
     }
     
-    private async void GainBonusBasedOnIntent(AbstractIntent intent, Creature owner)
+    private async Task GainBonusBasedOnIntent(AbstractIntent intent, Creature owner)
     {
         if (owner.Player == null) return;
         

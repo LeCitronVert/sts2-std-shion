@@ -50,7 +50,7 @@ public class FellDragon : ShionTheBruiserPower
         Creature? dealer,
         CardModel? cardSource)
     {
-        return dealer != this.Owner && !this.Owner.Pets.Contains<Creature>(dealer) || !props.IsPoweredAttack() || cardSource == null || !ShionMechanicsHelper.IsBerserk(dealer) ? 1M : 1.5M;
+        return dealer != null && (dealer != this.Owner && !this.Owner.Pets.Contains<Creature>(dealer) || !props.IsPoweredAttack() || cardSource == null || !ShionMechanicsHelper.IsBerserk(dealer)) ? 1M : 1.5M;
     }
     
     public override Task AfterCurrentHpChanged(Creature creature, decimal delta)

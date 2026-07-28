@@ -36,7 +36,7 @@ public class ShionFeint() : CritContributorCard(2,
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        ShionMechanicsHelper.EnsureCreatureHasCritTracker(Owner.Creature);
+        await ShionMechanicsHelper.EnsureCreatureHasCritTracker(Owner.Creature);
         var card = this;
         var target = play.Target;
         ArgumentNullException.ThrowIfNull(target);

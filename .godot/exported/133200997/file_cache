@@ -1,4 +1,7 @@
 res://ShionTheBruiser/scenes/abby_monster.tscn::07c9176a22ef272cce8ab1a837dc21f9::1783261259::res://.godot/exported/133200997/export-9f755e90b846d45bcc4fce54b72c8bb5-abby_monster.scn
 res://ShionTheBruiser/scenes/shion_character.tscn::1eafa9a060f336585b5b894d6dabe30a::1783931462::res://.godot/exported/133200997/export-fd6ddcf4e5d25cdc671feb7618e43d15-shion_character.scn
 res://ShionTheBruiser/scenes/shion_merchant.tscn::bf6947f6e057e72dbdc6405493a1d7a8::1783893074::res://.godot/exported/133200997/export-cd26794a6eaff2495d57120700afc0a6-shion_merchant.scn
-res://ShionTheBruiser/scenes/shion_energy.tscn::094cd0a6fd6acee3a608bb09bbc848b6::1784596461::res://.godot/exported/133200997/export-c97dca098f249270034db915c094ce5e-shion_energy.scn
+res://ShionTheBruiser/scenes/shion_energy.tscn::a1f026ae598b832c2b7f323058a8a2dd::1784628730::res://.godot/exported/133200997/export-c97dca098f249270034db915c094ce5e-shion_energy.scn
+res://ShionTheBruiser/scenes/slal_character.tscn::1812ba754c2abf8268e606c9ffc2fa8f::1784857059::res://.godot/exported/133200997/export-5d0ecf0c6b12c4452d47412617129cb9-slal_character.scn
+res://ShionTheBruiser/scenes/slal_energy.tscn::10b8532ae0c96b6a3db6394c4c7b68d7::1784852634::res://.godot/exported/133200997/export-8aa72712c7b7ec994eb6c8e57e480cd1-slal_energy.scn
+res://ShionTheBruiser/scenes/slal_merchant.tscn::199e27317b50cab0a24a614cf0baea31::1784855330::res://.godot/exported/133200997/export-60722d4462ac125f027aaac87773419c-slal_merchant.scn

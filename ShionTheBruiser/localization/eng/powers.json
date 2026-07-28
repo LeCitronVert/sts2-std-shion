@@ -137,5 +137,18 @@
   "SHIONTHEBRUISER-ELEVENTH_HOUR.title": "Eleventh Hour",
   "SHIONTHEBRUISER-CRITICAL_DRAW_POWER.description": "Increases the chances of [gold]Critical Hits[/gold] occuring this turn, dealing 50% more damage, up to 50% more chances.",
   "SHIONTHEBRUISER-CRITICAL_DRAW_POWER.smartDescription": "Increases the chance of your attacks dealing [gold]Critical Hits[/gold] this turn, dealing 50% more damage. This effect can only contribute to up to 50% of your Critical Hit chances..",
-  "SHIONTHEBRUISER-CRITICAL_DRAW_POWER.title": "Critical Draw"
+  "SHIONTHEBRUISER-CRITICAL_DRAW_POWER.title": "Critical Draw",
+
+
+
+
+  "SHIONTHEBRUISER-NOVEL_TRACKER.description": "Making up all kinds of [gold]Novel[/gold] ideas.",
+  "SHIONTHEBRUISER-NOVEL_TRACKER.smartDescription": "Making up all kinds of [gold]Novel[/gold] ideas.",
+  "SHIONTHEBRUISER-NOVEL_TRACKER.title": "Brainstorming",
+  "SHIONTHEBRUISER-RANDOM.description": "Every [blue]10[/blue] Random you gain, add a Random card to your Hand.",
+  "SHIONTHEBRUISER-RANDOM.smartDescription": "Every [blue]10[/blue] Random you gain, add a Random card to your Hand.\n(Total Random gained this fight: [blue]{Amount}[/blue])",
+  "SHIONTHEBRUISER-RANDOM.title": "Random",
+  "SHIONTHEBRUISER-CONFUSION.description": "At the start of its turn, loses HP and remove this.\nCan only be lethal if the target is already at [blue]1[/blue] HP.",
+  "SHIONTHEBRUISER-CONFUSION.smartDescription": "At the start of its turn, loses [blue]{Amount}[/blue] HP and remove this.\nCan only be lethal if the target is already at [blue]1[/blue] HP.",
+  "SHIONTHEBRUISER-CONFUSION.title": "Confusion"
 }

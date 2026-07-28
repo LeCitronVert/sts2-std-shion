@@ -21,7 +21,7 @@ public class ShionTheBruiser : PlaceholderCharacterModel
 
     public override Color NameColor => Color;
     public override CharacterGender Gender => CharacterGender.Feminine;
-    public override int StartingHp => 60;
+    public override int StartingHp => 70;
 
     public override IEnumerable<CardModel> StartingDeck =>
     [
@@ -118,4 +118,11 @@ public class ShionTheBruiser : PlaceholderCharacterModel
     
     public override string CustomEnergyCounterPath => Path.Join(MainFile.ResPath, "scenes", "shion_energy.tscn");
     
+    // Couleurs
+    public override Color MapDrawingColor => Color;
+
+    public override Color RemoteTargetingLineColor => Color;
+
+    public override Color RemoteTargetingLineOutline => Color;
+    public override Color DialogueColor => Color;
 }

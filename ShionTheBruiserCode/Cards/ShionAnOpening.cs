@@ -27,7 +27,7 @@ public class ShionAnOpening() : CritContributorCard(1,
         CardPlay play)
     {
         var card = play.Card;
-        ShionMechanicsHelper.EnsureCreatureHasCritTracker(card.Owner.Creature);
+        await ShionMechanicsHelper.EnsureCreatureHasCritTracker(card.Owner.Creature);
         await PowerCmd.Apply<CritRateUp>(
             choiceContext,
             card.Owner.Creature,
@@ -51,10 +51,8 @@ public class ShionAnOpening() : CritContributorCard(1,
         DynamicVars.Power<CritRateUp>().UpgradeValueBy(5);
     }
     
-    public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
     {
-        ShionMechanicsHelper.ApplyCriticalDraw(this, choiceContext, card);
-        
-        return Task.CompletedTask;
+        await ShionMechanicsHelper.ApplyCriticalDraw(this, choiceContext, card);
     }
 }

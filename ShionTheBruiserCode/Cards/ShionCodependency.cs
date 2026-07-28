@@ -28,8 +28,8 @@ public class ShionCodependency() : ShionTheBruiserCard(2,
         var target = play.Target;
         ArgumentNullException.ThrowIfNull(target);
         
-        ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(applier);
-        ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(target);
+        await ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(applier);
+        await ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(target);
         await PowerCmd.Apply<Codependency>(
             choiceContext,
             applier,

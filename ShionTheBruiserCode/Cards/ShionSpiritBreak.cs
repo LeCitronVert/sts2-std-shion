@@ -22,7 +22,7 @@ public class ShionSpiritBreak() : ShionBerserkCard(2,
         CardPlay play)
     {
         var card = this;
-        ShionMechanicsHelper.EnsureCreatureHasCritTracker(card.Owner.Creature);
+        await ShionMechanicsHelper.EnsureCreatureHasCritTracker(card.Owner.Creature);
         var critAmount = DynamicVars["SpiritBreak"].BaseValue;
         if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature))
         {

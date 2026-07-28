@@ -58,11 +58,9 @@ public class ShionBreakDown() : ShionBerserkCard(1,
         this.DynamicVars.Repeat.UpgradeValueBy(2M);
     }
     
-    public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
     {
-        ShionMechanicsHelper.ApplyCriticalDraw(this, choiceContext, card);
-        
-        return Task.CompletedTask;
+        await ShionMechanicsHelper.ApplyCriticalDraw(this, choiceContext, card);
     }
     
     protected override bool ShouldGlowGoldInternal => ShionMechanicsHelper.IsBerserk(this.Owner.Creature) || ShionMechanicsHelper.HasVigor(this.Owner.Creature) || ShionMechanicsHelper.GetDragonUniqueBuffCount(this.Owner.Creature) >= 3;

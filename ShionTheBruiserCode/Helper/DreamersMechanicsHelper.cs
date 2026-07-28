@@ -24,15 +24,17 @@ public static class DreamersMechanicsHelper
     public static async Task ExhaustAllTeamBlasts(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var card = cardPlay.Card;
-        foreach (Creature creature in card.CombatState?.GetTeammatesOf(card.Owner.Creature).Where(c => c?.IsPlayer ?? false))
+        foreach (Creature creature in card.CombatState?.GetTeammatesOf(card.Owner.Creature).Where(c => c?.IsPlayer ?? false)!)
         {
-            ShionMechanicsHelper.GetAllCombatCards(creature.Player).Where(c => c.Keywords.Contains(DreamersKeywords.TeamBlast)).ToList().ForEach(c =>
-            {
-                CardCmd.Exhaust(
-                    choiceContext,
-                    c
-                );
-            });
+            if (creature.Player != null)
+                ShionMechanicsHelper.GetAllCombatCards(creature.Player)
+                    .Where(c => c.Keywords.Contains(DreamersKeywords.TeamBlast)).ToList().ForEach(c =>
+                    {
+                        CardCmd.Exhaust(
+                            choiceContext,
+                            c
+                        );
+                    });
         }
     }
 }

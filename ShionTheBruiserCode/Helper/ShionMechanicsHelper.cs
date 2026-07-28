@@ -61,7 +61,7 @@ public static class ShionMechanicsHelper
         return randomOptions;
     }
 
-    public static async void EnsureCreatureHasCritTracker(Creature creature)
+    public static async Task EnsureCreatureHasCritTracker(Creature creature)
     {
         try
         {
@@ -83,7 +83,7 @@ public static class ShionMechanicsHelper
         }
     }
     
-    public static async void EnsureCreatureHasBerserkIndicator(Creature creature)
+    public static async Task EnsureCreatureHasBerserkIndicator(Creature creature)
     {
         try
         {
@@ -105,7 +105,7 @@ public static class ShionMechanicsHelper
         }
     }
 
-    public static async void ApplyCriticalDraw(CardModel criticalDrawCard, PlayerChoiceContext choiceContext, CardModel cardDrawn)
+    public static async Task ApplyCriticalDraw(CardModel criticalDrawCard, PlayerChoiceContext choiceContext, CardModel cardDrawn)
     {
         if (criticalDrawCard != cardDrawn) return;
 
@@ -114,7 +114,7 @@ public static class ShionMechanicsHelper
         
         if (critDrawAmount <= 0) return;
         
-        EnsureCreatureHasCritTracker(owner);
+        await EnsureCreatureHasCritTracker(owner);
         
         await PowerCmd.Apply<CriticalDraw>(
             choiceContext,
