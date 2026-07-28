@@ -20,8 +20,8 @@ public class SlalSlimeRain(): SlalSlimyCard(2,
     ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CalculationBaseVar(6M),
-        new ExtraDamageVar(2M),
+        new CalculationBaseVar(0),
+        new ExtraDamageVar(1),
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier(((Func<CardModel, Creature, Decimal>) ((card, _) =>
         {
             return card.Owner.PlayerCombatState != null

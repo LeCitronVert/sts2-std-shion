@@ -217,5 +217,7 @@
   "SHIONTHEBRUISER-SLAL_SLIME_STRIKES.description": "Deal {Damage:diff()} damage {Repeat:diff()} times.",
   "SHIONTHEBRUISER-SLAL_SLIME_STRIKES.title": "Slime Strikes",
   "SHIONTHEBRUISER-SLAL_SLIME_RAIN.description": "Deal damage equal to ALL your Slimy cards to ALL enemies.{InCombat:\n(Deal {CalculatedDamage:diff()} damage.)|}",
-  "SHIONTHEBRUISER-SLAL_SLIME_RAIN.title": "Slime Rain"
+  "SHIONTHEBRUISER-SLAL_SLIME_RAIN.title": "Slime Rain",
+  "SHIONTHEBRUISER-SLAL_BELL_MEMORY.description": "Deal {Damage:diff()} damage {Repeat:diff()} times.\nPlay a random Attack in your Discard Pile.",
+  "SHIONTHEBRUISER-SLAL_BELL_MEMORY.title": "Bell Memory"
 }
