@@ -1,5 +1,7 @@
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
@@ -45,5 +47,16 @@ public static class SlalMechanicsHelper
         }
 
         return Task.CompletedTask;
+    }
+
+    public static CardModel? ChooseRandomCardWithoutNovelIfPossible(Player player, PileType pile)
+    {
+        var cardList = PileType.Hand.GetPile(player);
+        var cardWithoutNovelList = cardList.Cards.Where(c => !c.Keywords.Contains(SlalCardKeywords.Novel)).ToList();
+        
+        return cardWithoutNovelList.Count > 0
+            ? player.RunState.Rng.CombatCardSelection.NextItem(cardWithoutNovelList)
+            : player.RunState.Rng.CombatCardSelection.NextItem(cardList.Cards)
+        ;
     }
 }

@@ -34,7 +34,7 @@ public class SlalTheEndless : PlaceholderCharacterModel
         ModelDb.Card<SlalDefend>(),
         ModelDb.Card<SlalDefend>(),
         ModelDb.Card<SlalWallOfText>(),
-        ModelDb.Card<SlalDefend>(),
+        ModelDb.Card<SlalSeeWhatSticks>(),
     ];
 
     public override IReadOnlyList<RelicModel> StartingRelics =>

@@ -7,4 +7,7 @@ public class SlalCardKeywords
 {
     [CustomEnum, KeywordProperties(AutoKeywordPosition.After)]
     public static CardKeyword Novel;
+    
+    [CustomEnum, KeywordProperties(AutoKeywordPosition.After)]
+    public static CardKeyword Slimy;
 }

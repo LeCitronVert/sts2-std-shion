@@ -209,5 +209,9 @@
   "SHIONTHEBRUISER-SLAL_RUNNING_JOKE.description": "Deal {Damage:diff()} damage.\nAdd {DiscardCard::diff()} {DiscardCard:plural:copy|copies} of this card in your Discard Pile, and {DrawCard::diff()} {DrawCard:plural:copy|copies} of this card in your Draw Pile.",
   "SHIONTHEBRUISER-SLAL_RUNNING_JOKE.title": "Running Joke",
   "SHIONTHEBRUISER-SLAL_WALL_OF_TEXT.description": "Apply [gold]Confusion[/gold] equal to the number of cards in your Discard Pile to a random enemy.{InCombat:\n(Apply {DebuffAmount:diff()} [gold]Confusion[/gold])|}{IfUpgraded:show:\n[green]Shuffle this card into your Draw Pile.[/green]|}",
-  "SHIONTHEBRUISER-SLAL_WALL_OF_TEXT.title": "Wall Of Text"
+  "SHIONTHEBRUISER-SLAL_WALL_OF_TEXT.title": "Wall Of Text",
+  "SHIONTHEBRUISER-SLAL_FRESH_IDEA.description": "Gain [blue]1[/blue] [gold]Random[/gold].\n{IfUpgraded:show:[green]Choose a card in your Hand to transform[/green]|Transform a random card in your Hand} into a random non-Rare card.",
+  "SHIONTHEBRUISER-SLAL_FRESH_IDEA.title": "Fresh Idea",
+  "SHIONTHEBRUISER-SLAL_SEE_WHAT_STICKS.description": "Add {IfUpgraded:show:[green]Fresh Idea+[/green]|Fresh Idea} to your Hand.",
+  "SHIONTHEBRUISER-SLAL_SEE_WHAT_STICKS.title": "See What Sticks"
 }

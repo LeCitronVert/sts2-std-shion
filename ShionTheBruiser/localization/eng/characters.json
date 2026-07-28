@@ -1,5 +1,5 @@
 {
-  "SHIONTHEBRUISER-SHION_THE_BRUISER.aromaPrinciple": "[sine][purple]I've gotta do this... With my own two hands, with my own power...[/purple][/sine]",
+  "SHIONTHEBRUISER-SHION_THE_BRUISER.aromaPrinciple": "[sine][purple]I won't stay weak... And I won't lose myself to power neither...[/purple][/sine]",
   "SHIONTHEBRUISER-SHION_THE_BRUISER.banter.alive.endTurnPing": "Everything okay?",
   "SHIONTHEBRUISER-SHION_THE_BRUISER.banter.dead.endTurnPing": "Just... get it over with, already...",
   "SHIONTHEBRUISER-SHION_THE_BRUISER.cardsModifierDescription": "The Bruiser's cards will now appear in rewards and shops.",
@@ -22,10 +22,10 @@
   "SHIONTHEBRUISER-SLAL_THE_ENDLESS.description": "A curious and over-sharing shape-shifter.\nLooks harmless, but may prove cartoonishly resilient.",
   "SHIONTHEBRUISER-SLAL_THE_ENDLESS.eventDeathPrevention": "Co-op survival line",
   "SHIONTHEBRUISER-SLAL_THE_ENDLESS.goldMonologue": "Line spoken when obtaining a large amount of gold",
-  "SHIONTHEBRUISER-SLAL_THE_ENDLESS.possessiveAdjective": "his/her/its",
-  "SHIONTHEBRUISER-SLAL_THE_ENDLESS.pronounObject": "him/her/it",
-  "SHIONTHEBRUISER-SLAL_THE_ENDLESS.pronounPossessive": "his/hers/its",
-  "SHIONTHEBRUISER-SLAL_THE_ENDLESS.pronounSubject": "he/she/it",
+  "SHIONTHEBRUISER-SLAL_THE_ENDLESS.possessiveAdjective": "his",
+  "SHIONTHEBRUISER-SLAL_THE_ENDLESS.pronounObject": "him/",
+  "SHIONTHEBRUISER-SLAL_THE_ENDLESS.pronounPossessive": "his",
+  "SHIONTHEBRUISER-SLAL_THE_ENDLESS.pronounSubject": "he",
   "SHIONTHEBRUISER-SLAL_THE_ENDLESS.title": "The Endless",
   "SHIONTHEBRUISER-SLAL_THE_ENDLESS.titleObject": "The Endless"
 }

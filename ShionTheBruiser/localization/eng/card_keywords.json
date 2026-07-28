@@ -16,5 +16,7 @@
 
   
   "SHIONTHEBRUISER-NOVEL.description": "Gain [blue]1[/blue] [gold]Random[/gold].\nRemove [gold]Novel[/gold] on ALL identical cards.\nAfterwards, [gold]Novel[/gold] can't be applied on identical cards this combat.",
-  "SHIONTHEBRUISER-NOVEL.title": "Novel"
+  "SHIONTHEBRUISER-NOVEL.title": "Novel",
+  "SHIONTHEBRUISER-SLIMY.description": "Add [gold]Slimed[/gold] to your Hand.",
+  "SHIONTHEBRUISER-SLIMY.title": "Slimy"
 }
