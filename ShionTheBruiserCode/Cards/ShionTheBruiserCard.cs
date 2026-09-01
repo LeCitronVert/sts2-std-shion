@@ -23,15 +23,4 @@ public abstract class ShionTheBruiserCard(int cost, CardType type, CardRarity ra
     public override string CustomPortraitPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".BigCardImagePath();
     public override string PortraitPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".CardImagePath();
     public override string BetaPortraitPath => $"beta/{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".CardImagePath();
-
-    // ── DamageCap (existing behaviour) ──────────────────────────────────────
-    public override decimal ModifyDamageCap(Creature? target, ValueProp props, Creature? dealer, CardModel? cardSource)
-    {
-        if (cardSource == null) return base.ModifyDamageCap(target, props, dealer, cardSource);
-
-        if (cardSource.DynamicVars.TryGetValue(DamageCapVar.Key, out var damageCapVar) && damageCapVar is DamageCapVar capVar)
-            return capVar.BaseValue;
-
-        return base.ModifyDamageCap(target, props, dealer, cardSource);
-    }
 }

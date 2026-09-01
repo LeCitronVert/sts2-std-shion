@@ -7,7 +7,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Enums;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 public abstract class SlalSlimyCard(int cost, CardType type, CardRarity rarity, TargetType target) :
-    ShionTheBruiserCard(cost, type, rarity, target)
+    SlalTheEndlessCard(cost, type, rarity, target)
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [SlalCardKeywords.Slimy];
     

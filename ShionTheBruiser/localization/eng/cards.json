@@ -219,5 +219,13 @@
   "SHIONTHEBRUISER-SLAL_SLIME_RAIN.description": "Deal damage equal to ALL your Slimy cards to ALL enemies.{InCombat:\n(Deal {CalculatedDamage:diff()} damage.)|}",
   "SHIONTHEBRUISER-SLAL_SLIME_RAIN.title": "Slime Rain",
   "SHIONTHEBRUISER-SLAL_BELL_MEMORY.description": "Deal {Damage:diff()} damage {Repeat:diff()} times.\nPlay a random Attack in your Discard Pile.",
-  "SHIONTHEBRUISER-SLAL_BELL_MEMORY.title": "Bell Memory"
+  "SHIONTHEBRUISER-SLAL_BELL_MEMORY.title": "Bell Memory",
+  "SHIONTHEBRUISER-SLAL_BLOBBISH_CROUCH.description": "Gain {Block:diff()} [gold]Block[/gold].",
+  "SHIONTHEBRUISER-SLAL_BLOBBISH_CROUCH.title": "Blobbish Crouch",
+  "SHIONTHEBRUISER-SLAL_PUNCHING_BALL.description": "Gain {Block:diff()} [gold]Block[/gold]. If the enemy intends to attack, apply [blue]{WeakPower::diff()}[/blue] [gold]Weak[/gold].",
+  "SHIONTHEBRUISER-SLAL_PUNCHING_BALL.title": "Punching Ball",
+  "SHIONTHEBRUISER-SLAL_SLIME_IT_OFF.description": "Gain {Block:diff()} [gold]Block[/gold]. The next {FreeStatus:plural:Status you play costs|[blue]{}[/blue] Status you play cost} [blue]0[/blue] {energyPrefix:energyIcons(1)}",
+  "SHIONTHEBRUISER-SLAL_SLIME_IT_OFF.title": "Slime It Off",
+  "SHIONTHEBRUISER-SLAL_QUICK_MEAL.description": "[gold]Exhaust[/gold] your Hand. Heal {Heal:diff()} HP per card exhausted this way.",
+  "SHIONTHEBRUISER-SLAL_QUICK_MEAL.title": "Quick Meal"
 }

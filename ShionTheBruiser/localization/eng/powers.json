@@ -150,5 +150,8 @@
   "SHIONTHEBRUISER-RANDOM.title": "Random",
   "SHIONTHEBRUISER-CONFUSION.description": "At the end of your turn, loses HP and remove this.\nCan only be lethal if the target is already at [blue]1[/blue] HP.",
   "SHIONTHEBRUISER-CONFUSION.smartDescription": "At the end of your turn, loses [blue]{Amount}[/blue] HP and remove this.\nCan only be lethal if the target is already at [blue]1[/blue] HP.",
-  "SHIONTHEBRUISER-CONFUSION.title": "Confusion"
+  "SHIONTHEBRUISER-CONFUSION.title": "Confusion",
+  "SHIONTHEBRUISER-FREE_STATUS.description": "Your next Status costs [blue]0[/blue] {energyPrefix:energyIcons(1)}.",
+  "SHIONTHEBRUISER-FREE_STATUS.smartDescription": "Your next {Amount:plural:Status costs|[blue]{}[/blue] Status cost} [blue]0[/blue] {energyPrefix:energyIcons(1)}.",
+  "SHIONTHEBRUISER-FREE_STATUS.title": "Free Status"
 }
