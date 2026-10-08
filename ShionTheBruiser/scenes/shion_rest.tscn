@@ -1,0 +1,37 @@
+[gd_scene load_steps=2 format=3 uid="uid://1trcivaba6ug"]
+
+[ext_resource type="Texture2D" uid="uid://d1ox7irp7bvcm" path="res://ShionTheBruiser/images/sprites/shion/character_shion_rest.png" id="1_2sovr"]
+
+[node name="ShionRest" type="Node2D"]
+
+[node name="ControlRoot" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="ControlRoot"]
+position = Vector2(100, 100)
+texture = ExtResource("1_2sovr")
+
+[node name="Hitbox" type="Control" parent="ControlRoot"]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_left = -220.0
+offset_top = -184.0
+offset_right = 190.0
+offset_bottom = 210.0
+
+[node name="ThoughtBubbleRight" type="Control" parent="ControlRoot"]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_left = -12.751
+offset_top = -145.313
+offset_right = -12.751
+offset_bottom = -145.313
+
+[node name="ThoughtBubbleLeft" type="Control" parent="ControlRoot"]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_left = -182.464
+offset_top = -78.107
+offset_right = -182.464
+offset_bottom = -78.107
