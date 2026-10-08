@@ -153,5 +153,11 @@
   "SHIONTHEBRUISER-CONFUSION.title": "Confusion",
   "SHIONTHEBRUISER-FREE_STATUS.description": "Your next Status costs [blue]0[/blue] {energyPrefix:energyIcons(1)}.",
   "SHIONTHEBRUISER-FREE_STATUS.smartDescription": "Your next {Amount:plural:Status costs|[blue]{}[/blue] Status cost} [blue]0[/blue] {energyPrefix:energyIcons(1)}.",
-  "SHIONTHEBRUISER-FREE_STATUS.title": "Free Status"
+  "SHIONTHEBRUISER-FREE_STATUS.title": "Free Status",
+  "SHIONTHEBRUISER-GORILLA_FORM.description": "Gain [gold]Vigor[/gold] at the start of your turn if you have [gold]Random[/gold].",
+  "SHIONTHEBRUISER-GORILLA_FORM.smartDescription": "Gain [gold]Vigor[/gold] equal to {Amount:cond:>1?[blue]{Amount}[/blue] times|} your [gold]Random[/gold] at the start of your turn.",
+  "SHIONTHEBRUISER-GORILLA_FORM.title": "Gorilla Form",
+  "SHIONTHEBRUISER-BURLESQUE_WIND_UP.description": "Gain [gold]Vigor[/gold] when you play a card, until you play an Attack.",
+  "SHIONTHEBRUISER-BURLESQUE_WIND_UP.smartDescription": "Gain [blue]{Amount}[/blue] [gold]Vigor[/gold] when you play a card, until you play an Attack.",
+  "SHIONTHEBRUISER-BURLESQUE_WIND_UP.title": "Burlesque Wind-Up"
 }

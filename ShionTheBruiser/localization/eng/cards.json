@@ -227,5 +227,17 @@
   "SHIONTHEBRUISER-SLAL_SLIME_IT_OFF.description": "Gain {Block:diff()} [gold]Block[/gold]. The next {FreeStatus:plural:Status you play costs|[blue]{}[/blue] Status you play cost} [blue]0[/blue] {energyPrefix:energyIcons(1)}",
   "SHIONTHEBRUISER-SLAL_SLIME_IT_OFF.title": "Slime It Off",
   "SHIONTHEBRUISER-SLAL_QUICK_MEAL.description": "[gold]Exhaust[/gold] your Hand. Heal {Heal:diff()} HP per card exhausted this way.",
-  "SHIONTHEBRUISER-SLAL_QUICK_MEAL.title": "Quick Meal"
+  "SHIONTHEBRUISER-SLAL_QUICK_MEAL.title": "Quick Meal",
+  "SHIONTHEBRUISER-SLAL_DRAFT_PHASE.description": "Add {IfUpgraded:show:[green]Fresh Idea+[/green]|Fresh Idea} to your Hand.\nNext turn, gain {Energy:energyIcons()}.",
+  "SHIONTHEBRUISER-SLAL_DRAFT_PHASE.title": "Draft Phase",
+  "SHIONTHEBRUISER-SLAL_GORILLA_FORM.description": "Lose {DexterityPower:diff()} [gold]Dexterity[/gold]. Gain [blue]{StrengthPower::diff()}[/blue] [gold]Strength[/gold].\nAt the start of your turn, gain [gold]Vigor[/gold] equal to {RandomMult:cond:>1?[blue]{RandomMult}[/blue] times|} your [gold]Random[/gold].",
+  "SHIONTHEBRUISER-SLAL_GORILLA_FORM.title": "Gorilla Form",
+  "SHIONTHEBRUISER-SLAL_DISTRACTION.description": "Apply [blue]{WeakPower::diff()} [gold]Weak[/gold]. Gain [gold]Dexterity[/gold] equal to the enemy's Weak until the end of your turn.",
+  "SHIONTHEBRUISER-SLAL_DISTRACTION.title": "Distraction",
+  "SHIONTHEBRUISER-SLAL_RESHAPE.description": "Transform all cards in your Hand into [gold]Slimed[/gold].",
+  "SHIONTHEBRUISER-SLAL_RESHAPE.title": "Reshape",
+  "SHIONTHEBRUISER-SLAL_BURLESQUE_WIND_UP.description": "Until the next time you play an Attack, whenever you play a card, gain {BurlesqueWindUp::diff()} [gold]Vigor[/gold].",
+  "SHIONTHEBRUISER-SLAL_BURLESQUE_WIND_UP.title": "Burlesque Wind-Up",
+  "SHIONTHEBRUISER-SLAL_FALSE_CON_PUNCH.description": "Apply {Confusion::diff()} [gold]Confusion[/gold] to a random enemy {Repeat::diff()} times.\nIncrease the number of hits by {Scale::diff()} this combat.",
+  "SHIONTHEBRUISER-SLAL_FALSE_CON_PUNCH.title": "False-Con Punch"
 }

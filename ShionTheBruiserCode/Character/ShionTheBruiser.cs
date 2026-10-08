@@ -109,6 +109,10 @@ public class ShionTheBruiser : PlaceholderCharacterModel
 
     public override string CustomMerchantAnimPath => Path.Join(MainFile.ResPath, "scenes",
         "shion_merchant.tscn");
+    
+    public override string CustomRestSiteAnimPath => Path.Join(MainFile.ResPath, "scenes",
+        "shion_rest.tscn");
+    
 
     public override RelicIconData CustomYummyCookie => new(
         "shion.png".CookieImagePath(),
