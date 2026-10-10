@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Critical;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
@@ -23,7 +24,7 @@ public class CriticalAttackNext : CritContributorPower, ICritHitRateContributor
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (cardPlay.Card.Type == CardType.Attack && cardPlay.Card.Owner.Creature == Owner)
+        if (cardPlay.Card.Type == CardType.Attack && cardPlay.Card.Owner.Creature == Owner && cardPlay.Card.DynamicVars.Damage.Props.IsPoweredAttack())
         {
             await PowerCmd.Decrement(this);
         }

@@ -23,7 +23,7 @@ public class RestSiteOptionPatches
             _selectingPlayer = player;
         }
     }
-    
+
     public static void Postfix(Task<bool> __result)
     {
         var selectedOption = _selectedOption;
@@ -34,7 +34,7 @@ public class RestSiteOptionPatches
 
         if (selectedOption == null || selectingPlayer == null)
             return;
-        
+
         _ = HandleRestSiteResult(__result, selectingPlayer, selectedOption);
     }
 

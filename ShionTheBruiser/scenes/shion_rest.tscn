@@ -9,7 +9,7 @@ layout_mode = 3
 anchors_preset = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="ControlRoot"]
-position = Vector2(100, 100)
+position = Vector2(80, 100)
 texture = ExtResource("1_2sovr")
 
 [node name="Hitbox" type="Control" parent="ControlRoot"]
