@@ -57,7 +57,7 @@
   "SHIONTHEBRUISER-SHION_DRAGON_CLAW.title": "Dragon Claw",
   "SHIONTHEBRUISER-SHION_BERSERK_CHARGE.description": "Gain [blue]{BerserkCharge}[/blue] [gold]Vigor[/gold] each turn.\nGain double that amount when you are [gold]Berserk[/gold].",
   "SHIONTHEBRUISER-SHION_BERSERK_CHARGE.title": "Berserk Charge",
-  "SHIONTHEBRUISER-SHION_DEFENSIVE_STRATEGIES.description": "Gain [blue]{DefensiveStrategies}[/blue] [gold]Vigor[/gold] and [blue]{DefensiveStrategies}[/blue]% [gold]Critical Hit[/gold] chance whenever you use a Defensive card.",
+  "SHIONTHEBRUISER-SHION_DEFENSIVE_STRATEGIES.description": "Enter [gold]Counter Stance[/gold] for the rest of the fight.\nGain [blue]{DefensiveStrategies}[/blue] [gold]Vigor[/gold] and [blue]{DefensiveStrategies}[/blue]% [gold]Critical Hit[/gold] chance whenever you use a Defensive card.",
   "SHIONTHEBRUISER-SHION_DEFENSIVE_STRATEGIES.title": "Defensive Strategies",
   "SHIONTHEBRUISER-SHION_SHIELD_BREAKER.description": "Whenever you play an Attack against an enemy with [gold]Block[/gold], replay that attack [blue]{ShieldBreaker}[/blue] {ShieldBreaker:plural:time|times}.\nIf you are [gold]Berserk[/gold], applies [blue]{ShieldBreaker}[/blue] [gold]Vulnerable[/gold] when you attack enemies with Block.",
   "SHIONTHEBRUISER-SHION_SHIELD_BREAKER.title": "Shield Breaker",
@@ -239,5 +239,13 @@
   "SHIONTHEBRUISER-SLAL_BURLESQUE_WIND_UP.description": "Until the next time you play an Attack, whenever you play a card, gain {BurlesqueWindUp::diff()} [gold]Vigor[/gold].",
   "SHIONTHEBRUISER-SLAL_BURLESQUE_WIND_UP.title": "Burlesque Wind-Up",
   "SHIONTHEBRUISER-SLAL_FALSE_CON_PUNCH.description": "Apply {Confusion::diff()} [gold]Confusion[/gold] to a random enemy {Repeat::diff()} times.\nIncrease the number of hits by {Scale::diff()} this combat.",
-  "SHIONTHEBRUISER-SLAL_FALSE_CON_PUNCH.title": "False-Con Punch"
+  "SHIONTHEBRUISER-SLAL_FALSE_CON_PUNCH.title": "False-Con Punch",
+  "SHIONTHEBRUISER-SLAL_FAVOURITE_BUCKET.description": "Gain Plating equal to the number of Status and Curses in your Hand.",
+  "SHIONTHEBRUISER-SLAL_FAVOURITE_BUCKET.title": "Favourite Bucket",
+   "SHIONTHEBRUISER-SLAL_TURN_THE_TABLES.description": "Apply {WeakPower::diff()} [gold]Weak[/gold].\nGain {VigorPower::diff()} [gold]Vigor[/gold] for each [gold]Weak[/gold] on the enemy.\n",
+   "SHIONTHEBRUISER-SLAL_TURN_THE_TABLES.title": "Turn The Tables",
+   "SHIONTHEBRUISER-SLAL_CREATIVE_SPIRIT.description": "At the start of your Turn, add 1 Fresh Idea into your Hand.\nFresh Ideas can now transform cards into [gold]Rare[/gold] cards as well.",
+   "SHIONTHEBRUISER-SLAL_CREATIVE_SPIRIT.title": "Creative Spirit",
+   "SHIONTHEBRUISER-SLAL_FRESH_IDEA.description": "Gain [blue]1[/blue] [gold]Random[/gold].\n{IfUpgraded:show:[green]Choose a card in your Hand to transform[/green]|Transform a random card in your Hand} into a random {InCombatHasCreativeSpirit:cond:>0?|non-Rare }card.",
+   "SHIONTHEBRUISER-SLAL_FRESH_IDEA.title": "Fresh Idea"
 }

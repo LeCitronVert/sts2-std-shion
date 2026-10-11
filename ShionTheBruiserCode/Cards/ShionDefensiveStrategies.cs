@@ -22,6 +22,7 @@ public class ShionDefensiveStrategies() : ShionTheBruiserCard(2,
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(ShionCardKeywords.Defensive),
         HoverTipFactory.FromPower<VigorPower>(),
+        HoverTipFactory.FromPower<CounterStance>()
     ];
     
     protected override async Task OnPlay(
@@ -29,6 +30,14 @@ public class ShionDefensiveStrategies() : ShionTheBruiserCard(2,
         CardPlay play)
     {
         var card = this;
+        
+        await PowerCmd.Apply<CounterStance>(
+            choiceContext,
+            card.Owner.Creature,
+            999,
+            card.Owner.Creature,
+            card
+        );
 
         await PowerCmd.Apply<DefensiveStrategies>(
             choiceContext,

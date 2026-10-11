@@ -65,6 +65,12 @@
       <Folder Include="ShionTheBruiser\images\sprites\slal\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include="ShionTheBruiserCode\Cards\ShionCreativeSpirit.cs.uid" />
+      <Content Include="ShionTheBruiserCode\Powers\CreativeSpirit.cs.uid" />
+      <Content Include="ShionTheBruiserCode\Variables\InCombatHasCreativeSpiritVar.cs.uid" />
+    </ItemGroup>
+
     <Target Name="CheckDependencyPaths">
         <Error
                 Text=" Slay the Spire 2 data not found at path '$(Sts2DataDir)'"

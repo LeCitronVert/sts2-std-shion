@@ -110,7 +110,7 @@
   "SHIONTHEBRUISER-FRONTLINER.title": "Frontliner",
   "SHIONTHEBRUISER-FULL_NELSON.description": "Take double the Attack damage this turn.",
   "SHIONTHEBRUISER-FULL_NELSON.smartDescription": "Take double the Attack damage {Amount:plural:this turn|for [blue]{}[/blue] turns}.",
-  "SHIONTHEBRUISER-FULL_NELSON.title": "FullNelson",
+  "SHIONTHEBRUISER-FULL_NELSON.title": "Full Nelson",
   "SHIONTHEBRUISER-CODEPENDENCY.description": "Partner up with a friend to increase attack damage, even more if your partner is [gold]Berserk[/gold].\nDie if your partner dies.",
   "SHIONTHEBRUISER-CODEPENDENCY.smartDescription": "Partnered up with [gold]{Partner}[/gold] to increase attack damage by [blue]{Amount}%[/blue].\nThis amount is doubled if [gold]{Partner}[/gold] is [gold]Berserk[/gold].\nDie if [gold]{Partner}[/gold] dies.",
   "SHIONTHEBRUISER-CODEPENDENCY.title": "Codependency",
@@ -159,5 +159,8 @@
   "SHIONTHEBRUISER-GORILLA_FORM.title": "Gorilla Form",
   "SHIONTHEBRUISER-BURLESQUE_WIND_UP.description": "Gain [gold]Vigor[/gold] when you play a card, until you play an Attack.",
   "SHIONTHEBRUISER-BURLESQUE_WIND_UP.smartDescription": "Gain [blue]{Amount}[/blue] [gold]Vigor[/gold] when you play a card, until you play an Attack.",
-  "SHIONTHEBRUISER-BURLESQUE_WIND_UP.title": "Burlesque Wind-Up"
+  "SHIONTHEBRUISER-BURLESQUE_WIND_UP.title": "Burlesque Wind-Up",
+  "SHIONTHEBRUISER-CREATIVE_SPIRIT.description": "Add [blue]{Amount}[/blue] Fresh Idea to your hand at the start of your turn.\nAll Fresh Idea cards you play can create Random cards.",
+  "SHIONTHEBRUISER-CREATIVE_SPIRIT.smartDescription": "Add Fresh Idea to your hand at the start of your turn.\nAll Fresh Idea cards you play can create Random cards.",
+  "SHIONTHEBRUISER-CREATIVE_SPIRIT.title": "Creative Spirit"
 }

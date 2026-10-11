@@ -2,8 +2,11 @@ using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Variables;
 using Random = ShionTheBruiser.ShionTheBruiserCode.Powers.Random;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
@@ -13,6 +16,10 @@ public class SlalFreshIdea(): SlalTheEndlessCard(0,
     TargetType.Self)
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new InCombatHasCreativeSpiritVar(this),
+    ];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -49,9 +56,14 @@ public class SlalFreshIdea(): SlalTheEndlessCard(0,
 
         if (chosenCard == null) return;
         
+        // Check if CreativeSpirit power is active to allow Rare cards
+        var hasCreativeSpiritPower = Owner.Creature.Powers.Any(p => p is CreativeSpirit);
+        
         var cardOptions = Owner.Character.CardPool
             .GetUnlockedCards(Owner.UnlockState, Owner.RunState.CardMultiplayerConstraint)
-            .Where(c => c.CanBeGeneratedInCombat && c.Rarity is CardRarity.Common or CardRarity.Uncommon)
+            .Where(c => c.CanBeGeneratedInCombat && (hasCreativeSpiritPower 
+                ? c.Rarity is CardRarity.Common or CardRarity.Uncommon or CardRarity.Rare
+                : c.Rarity is CardRarity.Common or CardRarity.Uncommon))
             .ToList()
         ;
         
