@@ -7,6 +7,8 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using MegaCrit.Sts2.Core.HoverTips;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -24,6 +26,11 @@ public class BerserkCharge : ShionTheBruiserPower
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("BerserkMultiplier", 2),
         new DynamicVar("DisplayAmount", 0)
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<VigorPower>(),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
     ];
 
     public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)

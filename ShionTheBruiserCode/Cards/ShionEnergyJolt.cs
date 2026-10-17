@@ -25,6 +25,7 @@ public class ShionEnergyJolt() : ShionBerserkCard(2,
         HoverTipFactory.FromPower<WeakPower>(),
         HoverTipFactory.FromPower<VulnerablePower>(),
         HoverTipFactory.FromPower<DebilitatePower>(),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
     ];
 
     protected override async Task OnPlay(

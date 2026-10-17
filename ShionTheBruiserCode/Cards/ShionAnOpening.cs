@@ -19,7 +19,8 @@ public class ShionAnOpening() : CritContributorCard(1,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<CritRateUp>(5),
         new CardsVar(1),
-        new CriticalDrawVar(15)
+        new CriticalDrawVar(15),
+        new CritDisplayTooltipVar()
     ];
 
     protected override async Task OnPlay(

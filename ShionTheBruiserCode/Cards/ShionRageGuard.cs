@@ -23,7 +23,10 @@ public class ShionRageGuard() : ShionDefensiveCard(1,
         new PowerVar<Guard>(1),
         new PatchUpVar(3)
     ];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk)];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<Guard>(),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
+    ];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,

@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -14,7 +15,8 @@ public class ShionSpiritBreak() : ShionBerserkCard(2,
     public const int BerserkCritAttacks = 3;
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<SpiritBreak>(1),
-        new DynamicVar("BerserkCritAttacks", BerserkCritAttacks)
+        new DynamicVar("BerserkCritAttacks", BerserkCritAttacks),
+        new CritDisplayTooltipVar()
     ];
 
     protected override async Task OnPlay(

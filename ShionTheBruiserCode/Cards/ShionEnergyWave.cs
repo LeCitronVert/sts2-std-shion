@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -20,6 +21,11 @@ public class ShionEnergyWave() : ShionTheBruiserCard(1,
         new ExtraDamageVar(2),
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier(((model, creature) => model.Owner.Creature.GetPowerAmount<VigorPower>() > 0 ? 1 : 0)),
         new PowerVar<VulnerablePower>(2)
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<VigorPower>(),
+        HoverTipFactory.FromPower<VulnerablePower>(),
     ];
     
     protected override HashSet<CardTag> CanonicalTags => [ShionCardTags.Energy];

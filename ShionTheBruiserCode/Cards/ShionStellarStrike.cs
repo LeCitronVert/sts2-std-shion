@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -21,6 +22,10 @@ public class ShionStellarStrike() : ShionLatentCard(3,
         new CalculationBaseVar(24),
         new ExtraDamageVar(1M),
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier((model, _) => model.Owner.Creature.GetPower<VigorPower>()?.Amount ?? 0),
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<VigorPower>(),
     ];
 
     protected override async Task OnPlay(

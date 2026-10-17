@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -32,17 +33,31 @@ public class ShionMonsterSpell() : ShionTheBruiserCard(3,
     ];
     
     protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new DynamicVar("IsEmpty", IsEmpty ? 1 : 0),
         new DynamicVar("HasAttack", _hasAttack ? 1 : 0),
         new DamageVar(_damagePerHit, ValueProp.Move),
         new RepeatVar(_hitCount),
         new DynamicVar("HasBlock", _hasBlock ? 1 : 0),
         new BlockVar(_blockAmount, ValueProp.Move),
         new DynamicVar("PowersOnSelfAmount", _powersOnSelf.Count),
-        new DynamicVar("PowersOnTargetAmount", _powersOnTarget.Count)
+        new DynamicVar("PowersOnTargetAmount", _powersOnTarget.Count),
+        new StringVar("PowersOnSelf", DescribePowers(_powersOnSelf)),
+        new StringVar("PowersOnTarget", DescribePowers(_powersOnTarget))
     ];
+
+    // One tooltip per power this spell actually applies (copied powers can be converted, e.g. Frail -> Vulnerable).
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        _powersOnTarget.Concat(_powersOnSelf)
+            .Select(p => MonsterPowersHelper.GetAppliedPower(p.PowerType))
+            .DistinctBy(p => p.Id)
+            .Select(p => HoverTipFactory.FromPower(p))
+            .ToList();
+
+    private bool IsEmpty => !_hasAttack && !_hasBlock && _powersOnSelf.Count == 0 && _powersOnTarget.Count == 0;
 
     private void UpdateDynamicVars()
     {
+        DynamicVars["IsEmpty"].BaseValue = IsEmpty ? 1 : 0;
         DynamicVars["HasAttack"].BaseValue = _hasAttack ? 1 : 0;
         DynamicVars.Damage.BaseValue = _damagePerHit;
         DynamicVars.Repeat.BaseValue = _hitCount;
@@ -50,6 +65,28 @@ public class ShionMonsterSpell() : ShionTheBruiserCard(3,
         DynamicVars.Block.BaseValue = _blockAmount;
         DynamicVars["PowersOnSelfAmount"].BaseValue = _powersOnSelf.Count;
         DynamicVars["PowersOnTargetAmount"].BaseValue = _powersOnTarget.Count;
+        ((StringVar) DynamicVars["PowersOnSelf"]).StringValue = DescribePowers(_powersOnSelf);
+        ((StringVar) DynamicVars["PowersOnTarget"]).StringValue = DescribePowers(_powersOnTarget);
+    }
+
+    /// <summary>
+    /// Lists the powers that will actually be applied, e.g. "2 Weak, 1 Vulnerable and 3 Strength".
+    /// Copies of the same power are merged into a single entry.
+    /// </summary>
+    private static string DescribePowers(List<(Type PowerType, int Amount)> powers)
+    {
+        var entries = powers
+            .GroupBy(p => MonsterPowersHelper.GetAppliedPower(p.PowerType).Id)
+            .Select(g =>
+            {
+                var power = MonsterPowersHelper.GetAppliedPower(g.First().PowerType);
+                return $"[blue]{g.Sum(p => p.Amount)}[/blue] [gold]{power.Title.GetFormattedText()}[/gold]";
+            })
+            .ToList();
+
+        return entries.Count <= 1
+            ? string.Join("", entries)
+            : $"{string.Join(", ", entries.Take(entries.Count - 1))} and {entries[^1]}";
     }
 
 

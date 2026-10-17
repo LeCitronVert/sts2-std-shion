@@ -7,6 +7,10 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using MegaCrit.Sts2.Core.HoverTips;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Variables;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -17,6 +21,16 @@ public class PleasureInPain() : ShionTheBruiserPower
 
     public override PowerStackType StackType =>
         PowerStackType.Counter;
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new PatchUpVar(0)
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<StrengthPower>(),
+        HoverTipFactory.FromPower<VigorPower>(),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
+    ];
 
     public override Decimal ModifyDamageMultiplicative(
         Creature? target,

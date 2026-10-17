@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Patches;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -22,6 +23,11 @@ public class CounterStance() : ShionTheBruiserPower, ICardAfflictionListener
     
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("StatsGain", StatsGain)
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<StrengthPower>(),
+        HoverTipFactory.FromPower<DexterityPower>(),
     ];
 
     public const int StatsGain = 1;

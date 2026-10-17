@@ -8,6 +8,8 @@ using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
+using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -18,7 +20,15 @@ public class ShionEleventhHour() : ShionTheBruiserCard(0,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("Bonus", EleventhHour.StrengthBonus),
         new DynamicVar("Malus", EleventhHour.StatsMalus),
-        new CriticalDrawVar(5)
+        new CriticalDrawVar(5),
+        new CritDisplayTooltipVar()
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<StrengthPower>(),
+        HoverTipFactory.FromPower<WeakPower>(),
+        HoverTipFactory.FromPower<VulnerablePower>(),
+        HoverTipFactory.FromPower<DebilitatePower>(),
     ];
 
     protected override async Task OnPlay(

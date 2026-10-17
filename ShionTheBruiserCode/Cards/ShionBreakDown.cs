@@ -24,14 +24,18 @@ public class ShionBreakDown() : ShionBerserkCard(1,
         new CalculationBaseVar(5),
         new ExtraDamageVar(5),
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier((model, _) =>
-            (model.Owner.Creature.GetPower<VigorPower>()?.Amount ?? 0) > 0 ? 1 : 0
-        +   ShionMechanicsHelper.GetDragonUniqueBuffCount(model.Owner.Creature) >= 3 ? 1 : 0
+            ((model.Owner.Creature.GetPower<VigorPower>()?.Amount ?? 0) > 0 ? 1 : 0)
+        +   (ShionMechanicsHelper.GetDragonUniqueBuffCount(model.Owner.Creature) >= 3 ? 1 : 0)
         )
     ];
     
     protected override HashSet<CardTag> CanonicalTags => [ShionCardTags.Energy];
     
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk)];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<VigorPower>(),
+        HoverTipFactory.FromPower<VulnerablePower>(),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
+    ];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,

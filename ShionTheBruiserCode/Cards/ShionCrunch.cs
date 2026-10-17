@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -17,6 +18,14 @@ public class ShionCrunch() : ShionTheBruiserCard(0,
         new DynamicVar("DebuffAmount", 1),
         new DynamicVar("VigorNeeded", 5),
         new CriticalDrawVar(10)
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<VigorPower>(),
+        HoverTipFactory.FromPower<WeakPower>(),
+        HoverTipFactory.FromPower<VulnerablePower>(),
+        HoverTipFactory.FromPower<DebilitatePower>(),
+        HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
     ];
     
     protected override bool ShouldGlowGoldInternal => Owner.Creature.GetPowerAmount<VigorPower>() >= DynamicVars["VigorNeeded"].BaseValue;

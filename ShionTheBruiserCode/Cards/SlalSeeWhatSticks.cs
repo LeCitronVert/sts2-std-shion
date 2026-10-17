@@ -14,7 +14,9 @@ public class SlalSeeWhatSticks(): SlalSlimyCard(0,
     CardType.Skill, CardRarity.Basic,
     TargetType.Self)
 {
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<SlalFreshIdea>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromCard<SlalFreshIdea>(IsUpgraded),
+    ];
     
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,

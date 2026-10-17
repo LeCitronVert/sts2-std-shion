@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -18,14 +19,38 @@ public class Random : SlalTheEndlessPower
 
     public override int DisplayAmount => GetCurrentAmount();
 
+    /// <summary>
+    /// Number of times Random was gained this combat (used by Conclusion).
+    /// </summary>
+    private int _timesGained;
+    public int TimesGained
+    {
+        get => _timesGained;
+        private set
+        {
+            AssertMutable();
+            _timesGained = value;
+        }
+    }
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("DisplayAmount", 0)
     ];
-    
+
     public int GetCurrentAmount()
     {
         var mod = (int)Amount % GetCardAt;
         return mod == 0 ? GetCardAt : mod;
+    }
+
+    /// <summary>
+    /// Sets the Random back to the given amount (Tabula Rasa).
+    /// </summary>
+    public async Task DropTo(PlayerChoiceContext choiceContext, int amount)
+    {
+        var offset = amount - Amount;
+        if (offset == 0) return;
+        await PowerCmd.ModifyAmount(choiceContext, this, offset, Owner, null);
     }
 
     public override Task AfterApplied(Creature? applier, CardModel? cardSource)
@@ -38,14 +63,22 @@ public class Random : SlalTheEndlessPower
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power,
         decimal amount, Creature? applier, CardModel? cardSource)
     {
+        // This hook is called for every power in combat, only react to this one.
+        if (power != this) return;
+
         DynamicVars["DisplayAmount"].BaseValue = DisplayAmount;
         InvokeDisplayAmountChanged();
-        
+
+        if (amount <= 0) return;
+
+        TimesGained++;
+        await SlalMechanicsHelper.TriggerRandomGained(choiceContext, Owner, amount);
+
         var previousAmount = Amount - amount;
-        await TriggerCardCreation(previousAmount, Amount);
+        await TriggerCardCreation(choiceContext, previousAmount, Amount);
     }
 
-    private async Task TriggerCardCreation(decimal previousAmount, decimal newAmount)
+    private async Task TriggerCardCreation(PlayerChoiceContext choiceContext, decimal previousAmount, decimal newAmount)
     {
         if (Owner.Player is null) return;
 
@@ -56,20 +89,14 @@ public class Random : SlalTheEndlessPower
         {
             var card = CardFactory.GetDistinctForCombat(
                 Owner.Player,
-                GetCharacterCardsForCreation(),
+                SlalMechanicsHelper.GetRandomCardOptions(Owner.Player),
                 1,
                 Owner.Player.RunState.Rng.CombatCardGeneration
             ).First();
             card.SetToFreeThisTurn();
             await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, Owner.Player);
+
+            await SlalMechanicsHelper.TriggerRandomThresholdReached(choiceContext, Owner);
         }
-    }
-
-    private IEnumerable<CardModel> GetCharacterCardsForCreation()
-    {
-        if (Owner.Player is null) return [];
-
-        return Owner.Player.Character.CardPool.GetUnlockedCards(Owner.Player.UnlockState,
-            Owner.Player.RunState.CardMultiplayerConstraint);
     }
 }

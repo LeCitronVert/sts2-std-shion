@@ -10,6 +10,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -32,8 +33,9 @@ public class BreakMeIfYouCan : ShionTheBruiserPower
     ];
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<PlatingPower>(),
+        HoverTipFactory.FromPower<Guard>(),
         HoverTipFactory.FromPower<VigorPower>(),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
     ];
 
     public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)

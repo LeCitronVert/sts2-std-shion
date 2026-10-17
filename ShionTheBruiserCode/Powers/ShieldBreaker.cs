@@ -7,6 +7,8 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using MegaCrit.Sts2.Core.HoverTips;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -14,6 +16,12 @@ public class ShieldBreaker : ShionTheBruiserPower
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.Static(StaticHoverTip.Block),
+        HoverTipFactory.FromPower<VulnerablePower>(),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
+    ];
     
     public override int ModifyCardPlayCount(CardModel card, Creature? target, int playCount)
     {

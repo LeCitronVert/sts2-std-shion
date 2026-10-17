@@ -18,7 +18,10 @@ public class Monstermancy() : ShionTheBruiserPower
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.None;
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk)];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromCard<ShionMonsterSpell>(),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
+    ];
 
 
     private readonly Dictionary<Creature, MonsterMagicHelper> _learningMagic = new();

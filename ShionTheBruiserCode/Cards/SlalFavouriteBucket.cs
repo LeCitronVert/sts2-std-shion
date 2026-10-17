@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -15,6 +16,10 @@ public class SlalFavouriteBucket(): SlalSlimyCard(2,
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
         SlalCardKeywords.Slimy,
         CardKeyword.Exhaust,
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<PlatingPower>(),
     ];
     
     protected override async Task OnPlay(
@@ -31,7 +36,7 @@ public class SlalFavouriteBucket(): SlalSlimyCard(2,
 
         if (amountOfBadCards <= 0) return;
         
-        await PowerCmd.Apply<BerserkForm>(
+        await PowerCmd.Apply<PlatingPower>(
             choiceContext, 
             card.Owner.Creature, 
             amountOfBadCards, 

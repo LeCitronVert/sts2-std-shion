@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -18,6 +19,11 @@ public class ShionFrontliner() : ShionDefensiveCard(1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new BlockVar(20, ValueProp.Move)
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<IntangiblePower>(),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
     ];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [ShionCardKeywords.Defensive];
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;

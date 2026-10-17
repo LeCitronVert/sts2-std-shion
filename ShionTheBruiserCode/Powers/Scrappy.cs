@@ -3,6 +3,8 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -20,6 +22,11 @@ public class Scrappy() : ShionTheBruiserPower
     
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new EnergyVar("EnergyUp", 1)
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<StrengthPower>(),
+        HoverTipFactory.FromPower<DexterityPower>(),
     ];
     
     public override async Task BeforeCardPlayed(CardPlay cardPlay)

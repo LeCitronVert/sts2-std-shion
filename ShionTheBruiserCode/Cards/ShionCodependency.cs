@@ -4,6 +4,8 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using MegaCrit.Sts2.Core.HoverTips;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -15,6 +17,10 @@ public class ShionCodependency() : ShionTheBruiserCard(2,
     
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("Amount",Amount)
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
     ];
     
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;

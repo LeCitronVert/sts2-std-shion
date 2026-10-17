@@ -8,6 +8,9 @@ using ShionTheBruiser.ShionTheBruiserCode.Character;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
+using MegaCrit.Sts2.Core.HoverTips;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -19,6 +22,15 @@ public class ShionBerserkForm() : ShionBerserkCard(3,
         new PowerVar<BerserkForm>(20),
         new DynamicVar("StrengthLoss", BerserkForm.StrengthLoss),
         new PatchUpVar(0)
+    ];
+    
+    protected override HashSet<CardTag> CanonicalTags => [SlalCardTags.Form];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.Static(StaticHoverTip.Transform),
+        HoverTipFactory.FromPower<StrengthPower>(),
+        HoverTipFactory.Static(StaticHoverTip.Block),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
     ];
     
     protected override async Task OnPlay(

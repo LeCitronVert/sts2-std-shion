@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -14,6 +15,10 @@ public class ShionHalfHearted() : ShionTheBruiserCard(0,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(CardKeyword.Ethereal),
+    ];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,

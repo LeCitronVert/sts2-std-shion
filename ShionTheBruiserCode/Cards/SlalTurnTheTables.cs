@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -16,6 +17,11 @@ public class SlalTurnTheTables(): SlalTheEndlessCard(1,
         new PowerVar<VigorPower>(1)
     ];
 
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<WeakPower>(),
+        HoverTipFactory.FromPower<VigorPower>(),
+    ];
+
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
@@ -24,7 +30,7 @@ public class SlalTurnTheTables(): SlalTheEndlessCard(1,
         ArgumentNullException.ThrowIfNull(play.Target);
         await PowerCmd.Apply<WeakPower>(
             choiceContext, 
-            card.Owner.Creature, 
+            play.Target, 
             DynamicVars["WeakPower"].BaseValue, 
             card.Owner.Creature, 
             card

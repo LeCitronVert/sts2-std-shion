@@ -9,6 +9,8 @@ using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using MegaCrit.Sts2.Core.HoverTips;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -28,6 +30,13 @@ public class ShionInstinctualPremonitions() : ShionBerserkCard(2,
         new EnergyVar("EnergyBonusAgainstOthers", EnergyBonusAgainstOthers),
         new DynamicVar("CounterStanceAgainstDebuffs", CounterStanceAgainstDebuffs),
         new EnergyVar("CostReductionWhenBerserk", CostReductionWhenBerserk)
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.Static(StaticHoverTip.Block),
+        HoverTipFactory.FromPower<CounterStance>(),
+        HoverTipFactory.ForEnergy(this),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
     ];
     
     protected override async Task OnPlay(

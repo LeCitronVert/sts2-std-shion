@@ -1,8 +1,15 @@
 {
-  "SHIONTHEBRUISER-CRITICAL_POTION.description": "Gain [gold]Critical Hit[/gold] [blue]+{CritHitRate}%[/blue].",
+  "SHIONTHEBRUISER-CRITICAL_POTION.description": "Gain {CritHitRate:diff()}% [gold]Critical Hit[/gold] chance.",
   "SHIONTHEBRUISER-CRITICAL_POTION.title": "Critical Potion",
-  "SHIONTHEBRUISER-DRACONIC_JUICE.description": "Gain +1 Strength, +1 Dexterity, +1% Critical Attack, +1 Vigor and +1 Regen.",
+  "SHIONTHEBRUISER-DRACONIC_JUICE.description": "Gain [blue]1[/blue] [gold]Strength[/gold], [blue]1[/blue] [gold]Dexterity[/gold], [blue]1%[/blue] [gold]Critical Hit[/gold] chance, [blue]1[/blue] [gold]Vigor[/gold] and [blue]1[/blue] [gold]Regen[/gold].",
   "SHIONTHEBRUISER-DRACONIC_JUICE.title": "Draconic Juice",
-  "SHIONTHEBRUISER-ULTRA_SPICY_BREW.description": "Gain +100% [gold]Critical Hit[/gold] chance for 1 turn.",
-  "SHIONTHEBRUISER-ULTRA_SPICY_BREW.title": "Ultra Spicy Brew"
+  "SHIONTHEBRUISER-ULTRA_SPICY_BREW.description": "Gain [blue]100%[/blue] [gold]Critical Hit[/gold] chance this turn.",
+  "SHIONTHEBRUISER-ULTRA_SPICY_BREW.title": "Ultra Spicy Brew",
+  "SHIONTHEBRUISER-SLIME_POTION.title": "Slime Potion",
+  "SHIONTHEBRUISER-SLIME_POTION.description": "[gold]Transform[/gold] a card in your [gold]Hand[/gold] into [gold]Slimed[/gold]. It's free to play this turn.",
+  "SHIONTHEBRUISER-SLIME_POTION.selectionScreenPrompt": "Choose a card to Transform into Slimed.",
+  "SHIONTHEBRUISER-COTTON_CANDY.title": "Cotton Candy",
+  "SHIONTHEBRUISER-COTTON_CANDY.description": "Raise your [gold]Random[/gold] until it reaches [blue]9[/blue].",
+  "SHIONTHEBRUISER-FLOS_BREW.title": "Flo's Brew",
+  "SHIONTHEBRUISER-FLOS_BREW.description": "Choose [blue]1[/blue] of [blue]3[/blue] random [gold]Form[/gold] cards to add into your [gold]Hand[/gold]. It's free to play this turn."
 }

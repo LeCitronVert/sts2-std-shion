@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -33,6 +34,10 @@ public class SlalFalseConPunch() : SlalTheEndlessCard(1,
         new PowerVar<Confusion>(4),
         new RepeatVar(2),
         new DynamicVar("Scale", 1)
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<Confusion>(),
     ];
 
     protected override async Task OnPlay(

@@ -9,81 +9,47 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 public static class MonsterPowersHelper
 {
-    // One entry per power you want Monstermancy to be able to copy.
+    private record Applicator(Type AppliedType, Func<PlayerChoiceContext, Creature, int, Creature, CardModel, Task> Apply);
+
+    private static Applicator As<T>() where T : PowerModel =>
+        new(typeof(T), (ctx, target, amount, applier, card) => PowerCmd.Apply<T>(ctx, target, amount, applier, card));
+
+    // One entry per power you want Monstermancy to be able to copy, mapped to the power the copy actually applies.
     // Anything not in here is implicitly "can't be copied that way."
-    private static readonly Dictionary<Type, Func<PlayerChoiceContext, Creature, int, Creature, CardModel, Task>> _applicators = new()
+    private static readonly Dictionary<Type, Applicator> _applicators = new()
     {
-        [typeof(WeakPower)] = (ctx, target, amount, applier, card) =>
-            PowerCmd.Apply<WeakPower>(ctx, target, amount, applier, card),
-        
-        [typeof(FrailPower)] = (ctx, target, amount, applier, card) =>
-            PowerCmd.Apply<VulnerablePower>(ctx, target, amount, applier, card),
-
-        [typeof(VulnerablePower)] = (ctx, target, amount, applier, card) =>
-            PowerCmd.Apply<VulnerablePower>(ctx, target, amount, applier, card),
-
-        [typeof(StrengthPower)] = (ctx, target, amount, applier, card) =>
-            PowerCmd.Apply<StrengthPower>(ctx, target, amount, applier, card),
-        
-        [typeof(DexterityPower)] = (ctx, target, amount, applier, card) =>
-            PowerCmd.Apply<DexterityPower>(ctx, target, amount, applier, card),
-        
-        [typeof(VigorPower)] = (ctx, target, amount, applier, card) =>
-            PowerCmd.Apply<VigorPower>(ctx, target, amount, applier, card),
-        
-        [typeof(RitualPower)] = (ctx, target, amount, applier, card) =>
-            PowerCmd.Apply<RitualPower>(ctx, target, amount, applier, card),
-        
-        [typeof(RegenPower)] = (ctx, target, amount, applier, card) =>
-            PowerCmd.Apply<RegenPower>(ctx, target, amount, applier, card),
-        
-        [typeof(ArtifactPower)] = (ctx, target, amount, applier, card) =>
-            PowerCmd.Apply<ArtifactPower>(ctx, target, amount, applier, card),
-        
-        [typeof(IntangiblePower)] = (ctx, target, amount, applier, card) =>
-            PowerCmd.Apply<IntangiblePower>(ctx, target, amount, applier, card),
-        
-        [typeof(ThornsPower)] = (ctx, target, amount, applier, card) =>
-            PowerCmd.Apply<ThornsPower>(ctx, target, amount, applier, card),
-        
-        [typeof(BufferPower)] = (ctx, target, amount, applier, card) =>
-            PowerCmd.Apply<BufferPower>(ctx, target, amount, applier, card),
-        
-        [typeof(PersonalHivePower)] = (ctx, target, amount, applier, card) =>
-            PowerCmd.Apply<ThornsPower>(ctx, target, amount, applier, card),
-        
-        [typeof(PlatingPower)] = (ctx, target, amount, applier, card) =>
-            PowerCmd.Apply<PlatingPower>(ctx, target, amount, applier, card),
-
-        [typeof(SteamEruptionPower)] = (ctx, target, amount, applier, card) =>
-            PowerCmd.Apply<VigorPower>(ctx, target, amount, applier, card),
-        
-        [typeof(PlowPower)] = (ctx, target, amount, applier, card) =>
-            PowerCmd.Apply<RitualPower>(ctx, target, amount, applier, card),
-        
-        [typeof(SandpitPower)] = (ctx, target, amount, applier, card) =>
-            PowerCmd.Apply<PlatingPower>(ctx, target, amount, applier, card),
-        
-        [typeof(ChainsOfBindingPower)] = (ctx, target, amount, applier, card) =>
-            PowerCmd.Apply<NeurosurgePower>(ctx, target, amount, applier, card),
-        
-        [typeof(VitalSparkPower)] = (ctx, target, amount, applier, card) =>
-            PowerCmd.Apply<RegenPower>(ctx, target, amount, applier, card),
-        
-        [typeof(HexPower)] = (ctx, target, amount, applier, card) =>
-            PowerCmd.Apply<NeurosurgePower>(ctx, target, amount, applier, card),
-        
-        [typeof(DampenPower)] = (ctx, target, amount, applier, card) =>
-            PowerCmd.Apply<NeurosurgePower>(ctx, target, amount, applier, card),
-        
-        [typeof(BurrowedPower)] = (ctx, target, amount, applier, card) =>
-            PowerCmd.Apply<BarricadePower>(ctx, target, amount, applier, card),
-        
-        [typeof(HighVoltagePower)] = (ctx, target, amount, applier, card) =>
-            PowerCmd.Apply<RitualPower>(ctx, target, amount, applier, card),
+        [typeof(WeakPower)] = As<WeakPower>(),
+        [typeof(FrailPower)] = As<VulnerablePower>(),
+        [typeof(VulnerablePower)] = As<VulnerablePower>(),
+        [typeof(StrengthPower)] = As<StrengthPower>(),
+        [typeof(DexterityPower)] = As<DexterityPower>(),
+        [typeof(VigorPower)] = As<VigorPower>(),
+        [typeof(RitualPower)] = As<RitualPower>(),
+        [typeof(RegenPower)] = As<RegenPower>(),
+        [typeof(ArtifactPower)] = As<ArtifactPower>(),
+        [typeof(IntangiblePower)] = As<IntangiblePower>(),
+        [typeof(ThornsPower)] = As<ThornsPower>(),
+        [typeof(BufferPower)] = As<BufferPower>(),
+        [typeof(PersonalHivePower)] = As<ThornsPower>(),
+        [typeof(PlatingPower)] = As<PlatingPower>(),
+        [typeof(SteamEruptionPower)] = As<VigorPower>(),
+        [typeof(PlowPower)] = As<RitualPower>(),
+        [typeof(SandpitPower)] = As<PlatingPower>(),
+        [typeof(ChainsOfBindingPower)] = As<NeurosurgePower>(),
+        [typeof(VitalSparkPower)] = As<RegenPower>(),
+        [typeof(HexPower)] = As<NeurosurgePower>(),
+        [typeof(DampenPower)] = As<NeurosurgePower>(),
+        [typeof(BurrowedPower)] = As<BarricadePower>(),
+        [typeof(HighVoltagePower)] = As<RitualPower>(),
     };
 
     public static bool IsCopyable(Type powerType) => _applicators.ContainsKey(powerType);
+
+    /// <summary>
+    /// The power a copied enemy power turns into when Monstermancy applies it (e.g. Frail becomes Vulnerable).
+    /// </summary>
+    public static PowerModel GetAppliedPower(Type powerType) =>
+        ModelDb.GetById<PowerModel>(ModelDb.GetId(GetApplicator(powerType).AppliedType));
 
     public static Task Apply(
         PlayerChoiceContext choiceContext,
@@ -93,6 +59,11 @@ public static class MonsterPowersHelper
         Creature applier,
         CardModel cardSource)
     {
-        return !_applicators.TryGetValue(powerType, out var apply) ? throw new InvalidOperationException($"Power {powerType.Name} is not registered as copyable by Monstermancy.") : apply(choiceContext, target, amount, applier, cardSource);
+        return GetApplicator(powerType).Apply(choiceContext, target, amount, applier, cardSource);
     }
+
+    private static Applicator GetApplicator(Type powerType) =>
+        _applicators.TryGetValue(powerType, out var applicator)
+            ? applicator
+            : throw new InvalidOperationException($"Power {powerType.Name} is not registered as copyable by Monstermancy.");
 }

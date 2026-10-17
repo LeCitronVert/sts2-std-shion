@@ -8,6 +8,8 @@ using MegaCrit.Sts2.Core.Platform;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using MegaCrit.Sts2.Core.HoverTips;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -42,6 +44,10 @@ public class Codependency : ShionTheBruiserPower
         new StringVar("Partner"),
         new DynamicVar("MaxDamage", Amount),
         new DynamicVar("DisplayAmount", 0)
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
     ];
     
     public override Decimal ModifyDamageMultiplicative(

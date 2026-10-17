@@ -7,6 +7,8 @@ using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
+using MegaCrit.Sts2.Core.HoverTips;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -17,7 +19,13 @@ public class ShionRageCharge() : ShionBerserkCard(2,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new HpLossVar(3),
         new DynamicVar("BuffAmount", 5),
-        new PatchUpVar(3)
+        new PatchUpVar(3),
+        new CritDisplayTooltipVar()
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<VigorPower>(),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
     ];
 
     protected override async Task OnPlay(
@@ -27,7 +35,7 @@ public class ShionRageCharge() : ShionBerserkCard(2,
         var card = this;
         if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature))
         {
-            await ShionMechanicsHelper.PatchUpCreature(card.DynamicVars.HpLoss.IntValue, card.Owner.Creature);
+            await ShionMechanicsHelper.PatchUpCreature(card.DynamicVars[PatchUpVar.Key].IntValue, card.Owner.Creature);
         }
         else
         {

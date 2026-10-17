@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -16,6 +17,10 @@ public class ShionShieldBuster() : ShionTheBruiserCard(1,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(1, ValueProp.Move),
         new CriticalDrawVar(20)
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.Static(StaticHoverTip.Block),
     ];
     
     public override IEnumerable<CardKeyword> CanonicalKeywords => [

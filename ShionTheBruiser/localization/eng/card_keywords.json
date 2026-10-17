@@ -1,22 +1,20 @@
 {
-  "SHIONTHEBRUISER-DEFENSIVE.description": "Can only be played if you have played no Attacks this turn, and will stop you from doing so for the rest of it.",
+  "SHIONTHEBRUISER-DEFENSIVE.description": "Can only be played if you haven't played an Attack this turn. You can't play Attacks for the rest of the turn.",
   "SHIONTHEBRUISER-DEFENSIVE.title": "Defensive",
-  "SHIONTHEBRUISER-NONNATIVE.description": "Cards from other characters, or colourless cards.",
+  "SHIONTHEBRUISER-NONNATIVE.description": "Cards from other characters, or Colorless cards.",
   "SHIONTHEBRUISER-NONNATIVE.title": "Non-Native",
   "SHIONTHEBRUISER-STALE.description": "Doesn't offer any advantages when upgraded.",
   "SHIONTHEBRUISER-STALE.title": "Stale",
-  "SHIONTHEBRUISER-LATENT.description": "Shuffled at the end of your Deck at the beginning of each fight.",
+  "SHIONTHEBRUISER-LATENT.description": "Shuffled to the end of your [gold]Draw Pile[/gold] at the start of each combat.",
   "SHIONTHEBRUISER-LATENT.title": "Latent",
-  "SHIONTHEBRUISER-EMERALDPOWER.description": "Exhausts ALL others Emerald Powers in your possession upon play.",
+  "SHIONTHEBRUISER-EMERALDPOWER.description": "When played, [gold]Exhaust[/gold] ALL your other [gold]Emerald Powers[/gold].",
   "SHIONTHEBRUISER-EMERALDPOWER.title": "Emerald Power",
-  "SHIONTHEBRUISER-TEAMBLAST.description": "Exhausts ALL others Team Blasts in ALL PLAYERS' possession upon play.",
+  "SHIONTHEBRUISER-TEAMBLAST.description": "When played, [gold]Exhaust[/gold] ALL other [gold]Team Blasts[/gold] of ALL players.",
   "SHIONTHEBRUISER-TEAMBLAST.title": "Team Blast",
-  "SHIONTHEBRUISER-BERSERK.description": "Gains additional effects if your HP is equal or lower to half of your Max HP.",
+  "SHIONTHEBRUISER-BERSERK.description": "Gains additional effects while your HP is at or below [blue]50%[/blue] of your Max HP.",
   "SHIONTHEBRUISER-BERSERK.title": "Berserk",
-
-  
   "SHIONTHEBRUISER-NOVEL.description": "Gain [blue]1[/blue] [gold]Random[/gold].\nRemove [gold]Novel[/gold] on ALL identical cards.\nAfterwards, [gold]Novel[/gold] can't be applied on identical cards this combat.",
   "SHIONTHEBRUISER-NOVEL.title": "Novel",
-  "SHIONTHEBRUISER-SLIMY.description": "Add [gold]Slimed[/gold] to your Hand.",
+  "SHIONTHEBRUISER-SLIMY.description": "After playing this card, add a [gold]Slimed[/gold] into your [gold]Hand[/gold].",
   "SHIONTHEBRUISER-SLIMY.title": "Slimy"
 }

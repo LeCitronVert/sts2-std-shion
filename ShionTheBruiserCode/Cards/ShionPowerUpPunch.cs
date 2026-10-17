@@ -5,6 +5,8 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using MegaCrit.Sts2.Core.HoverTips;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -16,6 +18,12 @@ public class ShionPowerUpPunch() : ShionBerserkCard(1,
         new DamageVar(1, ValueProp.Move),
         new PowerVar<StrengthPower>(1),
         new PowerVar<VigorPower>(3)
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<StrengthPower>(),
+        HoverTipFactory.FromPower<VigorPower>(),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
     ];
 
     protected override async Task OnPlay(

@@ -24,6 +24,7 @@ public class ShionBluff() : ShionBerserkCard(0,
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
         HoverTipFactory.FromPower<StrengthPower>(),
+        HoverTipFactory.FromPower<VigorPower>(),
         HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
     ];
 

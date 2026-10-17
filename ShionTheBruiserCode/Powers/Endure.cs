@@ -25,10 +25,12 @@ public class Endure() : CritContributorPower, ICritHitRateContributor
         new HealVar(50),
         new DynamicVar("DebuffAmount", 5),
         new CritDisplayTooltipVar(),
-        new CritHitRateVar(0.2M)
+        new CritHitRateVar(20)
     ];
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<StrengthPower>(),
+        HoverTipFactory.FromPower<DexterityPower>(),
         HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
     ];
     
@@ -80,7 +82,7 @@ public class Endure() : CritContributorPower, ICritHitRateContributor
     public decimal GetCritHitRateBonus(CardModel? sourceCard)
     {
         if (sourceCard == null || sourceCard.Owner.Creature == Owner)
-            return ShionMechanicsHelper.IsBerserk(Owner) ? DynamicVars[CritHitRateVar.Key].BaseValue : 0M;
+            return ShionMechanicsHelper.IsBerserk(Owner) ? DynamicVars[CritHitRateVar.Key].BaseValue / 100 : 0M;
         
         return 0;    }
 }

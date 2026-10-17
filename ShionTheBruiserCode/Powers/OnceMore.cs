@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Models;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -14,6 +15,10 @@ public class OnceMore: ShionTheBruiserPower
 
     public override PowerStackType StackType =>
         PowerStackType.Counter;
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Defensive),
+    ];
     
     public override int ModifyCardPlayCount(CardModel card, Creature? target, int playCount)
     {

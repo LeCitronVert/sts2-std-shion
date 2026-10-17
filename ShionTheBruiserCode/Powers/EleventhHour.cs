@@ -9,6 +9,8 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Critical;
+using MegaCrit.Sts2.Core.HoverTips;
+using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -25,7 +27,15 @@ public class EleventhHour() : ShionTheBruiserPower, IOnCriticalHitListener, IOnC
     
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("Bonus", StrengthBonus),
-        new DynamicVar("Malus", StatsMalus)
+        new DynamicVar("Malus", StatsMalus),
+        new CritDisplayTooltipVar()
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<StrengthPower>(),
+        HoverTipFactory.FromPower<WeakPower>(),
+        HoverTipFactory.FromPower<VulnerablePower>(),
+        HoverTipFactory.FromPower<DebilitatePower>(),
     ];
     
     public Task OnCriticalHit(Creature attacker, Creature target, DamageResult damageResult, ValueProp props,

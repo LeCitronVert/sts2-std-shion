@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -28,7 +29,8 @@ public class FellDragon : ShionTheBruiserPower
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<VigorPower>(),
-        HoverTipFactory.Static(StaticHoverTip.Block)
+        HoverTipFactory.Static(StaticHoverTip.Block),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
     ];
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)

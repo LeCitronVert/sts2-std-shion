@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -18,6 +19,11 @@ public class ShionSilentSorrow() : ShionBerserkCard(1,
         new CalculationExtraVar(8),
         new CalculatedBlockVar(ValueProp.Move).WithMultiplier((model, _) => ShionMechanicsHelper.IsBerserk(model.Owner.Creature) ? 1 : 0),
         new PowerVar<Guard>(1),
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<Guard>(),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
     ];
     
     protected override async Task OnPlay(

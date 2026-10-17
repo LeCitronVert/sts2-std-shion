@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
@@ -55,4 +56,6 @@ public class SlalWallOfText(): SlalTheEndlessCard(1,
         }
         return pileTypeForCardPlay;
     }
+    
+    public CardModel GetTranscendenceTransformedCard() => ModelDb.Card<SlalBreakContinuity>();
 }

@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -19,6 +20,11 @@ public class SpiritBurst: ShionTheBruiserPower
 
     public override PowerStackType StackType =>
         PowerStackType.Counter;
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<NoBlockPower>(),
+        HoverTipFactory.FromPower<NoHealPower>(),
+    ];
     
     private const int _infiniteAutoPlayCap = 9;
     protected override object InitInternalData() => new Data();

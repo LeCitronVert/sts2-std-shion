@@ -28,7 +28,7 @@ public class ShionBreakMeIfYouCan() : ShionDefensiveCard(2,
     ];
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<PlatingPower>(),
+        HoverTipFactory.FromPower<Guard>(),
         HoverTipFactory.FromPower<VigorPower>(),
         HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
     ];

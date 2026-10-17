@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -16,6 +17,10 @@ public class LurkingIntensity : ShionTheBruiserPower
 
     public override PowerStackType StackType =>
         PowerStackType.Counter;
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.Static(StaticHoverTip.Transform),
+    ];
     
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {

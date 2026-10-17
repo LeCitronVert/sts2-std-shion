@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -15,6 +16,12 @@ public class ShionEnergySurge() : ShionBerserkCard(1,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<StrengthPower>(1),
         new PowerVar<VigorPower>(6),
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<VigorPower>(),
+        HoverTipFactory.FromPower<StrengthPower>(),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
     ];
     
     protected override HashSet<CardTag> CanonicalTags => [ShionCardTags.Energy];

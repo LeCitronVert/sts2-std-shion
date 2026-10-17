@@ -5,6 +5,8 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using MegaCrit.Sts2.Core.HoverTips;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -23,6 +25,10 @@ public class BerserkDrive : ShionTheBruiserPower
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("DisplayAmount", 0)
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
     ];
 
     public override decimal ModifyDamageMultiplicative(

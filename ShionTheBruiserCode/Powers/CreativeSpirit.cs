@@ -21,7 +21,10 @@ public class CreativeSpirit : ShionTheBruiserPower
     public override PowerStackType StackType =>
         PowerStackType.Counter;
     
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk)];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromCard<SlalFreshIdea>(),
+        HoverTipFactory.Static(StaticHoverTip.Transform),
+    ];
     
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {

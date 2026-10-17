@@ -25,6 +25,7 @@ public class ShionPleasureInPain() : ShionDefensiveCard(0,
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<StrengthPower>(),
         HoverTipFactory.FromPower<VigorPower>(),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
     ];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
         ShionCardKeywords.Defensive,

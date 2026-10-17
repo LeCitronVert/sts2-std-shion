@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -16,6 +17,13 @@ public class SlalGorillaForm(): SlalTheEndlessCard(3,
         new PowerVar<StrengthPower>(1),
         new PowerVar<DexterityPower>(1),
         new DynamicVar("RandomMult", 1)
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<DexterityPower>(),
+        HoverTipFactory.FromPower<StrengthPower>(),
+        HoverTipFactory.FromPower<VigorPower>(),
+        HoverTipFactory.FromPower<Powers.Random>(),
     ];
     
     protected override HashSet<CardTag> CanonicalTags => [SlalCardTags.Form];

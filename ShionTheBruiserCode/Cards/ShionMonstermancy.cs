@@ -18,8 +18,9 @@ public class ShionMonstermancy() : ShionBerserkCard(1,
     ];
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromCard<ShionMonsterSpell>(),
         HoverTipFactory.FromKeyword(CardKeyword.Ethereal),
-        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk)
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
     ];
 
     protected override async Task OnPlay(

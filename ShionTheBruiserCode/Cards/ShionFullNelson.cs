@@ -58,7 +58,9 @@ public class ShionFullNelson() : ShionDefensiveCard(2,
     }
     
     // Shion Berserk Stuff
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk)];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<FullNelson>(),
+    ];
     
     public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {

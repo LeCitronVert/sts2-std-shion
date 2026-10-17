@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Critical;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -21,6 +22,10 @@ public class ShowOfStrength() : ShionTheBruiserPower, IOnCriticalHitListener
     
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CritDisplayTooltipVar()
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<StrengthPower>(),
     ];
 
     public async Task OnCriticalHit(Creature attacker, Creature target, DamageResult damageResult, ValueProp props,

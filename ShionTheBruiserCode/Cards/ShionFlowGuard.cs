@@ -21,8 +21,9 @@ public class ShionFlowGuard() : ShionBerserkCard(1,
     public override IEnumerable<CardKeyword> CanonicalKeywords => [ShionCardKeywords.Defensive];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<Guard>(),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Defensive),
         HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
-        HoverTipFactory.FromKeyword(ShionCardKeywords.Defensive)
     ];
     
     protected override IEnumerable<DynamicVar> CanonicalVars => [

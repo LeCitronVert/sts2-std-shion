@@ -29,7 +29,11 @@ public class BerserkForm : ShionTheBruiserPower
         new DynamicVar("StrengthLoss", StrengthLoss),
         new PatchUpVar(0)
     ];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk)];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<StrengthPower>(),
+        HoverTipFactory.Static(StaticHoverTip.Block),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
+    ];
     
     public override async Task AfterDamageGiven(PlayerChoiceContext choiceContext, Creature? dealer, DamageResult result, ValueProp props,
         Creature target, CardModel? cardSource)

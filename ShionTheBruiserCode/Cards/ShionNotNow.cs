@@ -4,6 +4,8 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using MegaCrit.Sts2.Core.HoverTips;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -13,6 +15,11 @@ public class ShionNotNow() : ShionBerserkCard(0,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new EnergyVar("BerserkEnergy", 1)
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.ForEnergy(this),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
     ];
     
     public override IEnumerable<CardKeyword> CanonicalKeywords => [

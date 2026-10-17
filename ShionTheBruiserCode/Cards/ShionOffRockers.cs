@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -16,6 +17,10 @@ public class ShionOffRockers() : ShionTheBruiserCard(1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(3),
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.Static(StaticHoverTip.Transform),
     ];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
         CardKeyword.Exhaust,

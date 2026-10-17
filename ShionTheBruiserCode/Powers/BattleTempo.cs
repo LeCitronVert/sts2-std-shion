@@ -19,7 +19,10 @@ public class BattleTempo : ShionTheBruiserPower
     public override PowerStackType StackType =>
         PowerStackType.Counter;
     
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk)];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<Scrappy>(),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
+    ];
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("BerserkMultiplier", BerserkMultiplier)];
     
     public const int BerserkMultiplier = 2;

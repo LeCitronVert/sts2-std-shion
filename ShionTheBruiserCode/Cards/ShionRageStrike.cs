@@ -22,6 +22,7 @@ public class ShionRageStrike() : ShionBerserkCard(2,
         new HpLossVar(3),
         new CritDisplayTooltipVar(),
         new CritHitRateVar(40),
+        new PatchUpVar(3),
     ];
 
     protected override async Task OnPlay(
@@ -33,7 +34,7 @@ public class ShionRageStrike() : ShionBerserkCard(2,
         
         if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature))
         {
-            await ShionMechanicsHelper.PatchUpCreature(card.DynamicVars.HpLoss.IntValue, card.Owner.Creature);
+            await ShionMechanicsHelper.PatchUpCreature(card.DynamicVars[PatchUpVar.Key].IntValue, card.Owner.Creature);
         }
         else
         {

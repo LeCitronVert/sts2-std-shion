@@ -12,7 +12,8 @@ public class SlalReshape(): SlalTheEndlessCard(1,
     TargetType.Self)
 {
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromCard<Slimed>()
+        HoverTipFactory.Static(StaticHoverTip.Transform),
+        HoverTipFactory.FromCard<Slimed>(),
     ];
     
     protected override async Task OnPlay(
