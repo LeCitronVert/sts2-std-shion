@@ -10,7 +10,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionCriticalDrive() : CritContributorCard(2,
+public class ShionCriticalDrive() : CritContributorCard(1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
