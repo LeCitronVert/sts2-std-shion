@@ -47,5 +47,5 @@ public class CreativeSpark : SlalTheEndlessRelic
     }
 
 
-    public override RelicModel GetUpgradeReplacement() => ModelDb.Relic<BattleGloves>();
+    public override RelicModel GetUpgradeReplacement() => ModelDb.Relic<CreativeFlow>();
 }

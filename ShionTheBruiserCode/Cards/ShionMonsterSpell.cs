@@ -26,6 +26,7 @@ public class ShionMonsterSpell() : ShionTheBruiserCard(3,
     private List<(Type PowerType, int Amount)> _powersOnTarget = [];
     
     public override bool CanBeGeneratedInCombat => false;
+    public override bool CanBeGeneratedByModifiers => false;
     
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
         CardKeyword.Ethereal,
