@@ -12,7 +12,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionRageCharge() : ShionBerserkCard(2,
+public class ShionRageCharge() : ShionBerserkCard(1,
     CardType.Skill, CardRarity.Common,
     TargetType.Self)
 {

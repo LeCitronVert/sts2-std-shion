@@ -6,7 +6,7 @@ ShionTheBruiser.json::JSON::-1::1791312103::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1792361461
+::res://bin/ExportRelease/net9.0/publish/::1792364109
 ShionTheBruiser.deps.json::JSON::-1::1792361461::0::1::::<><><>0<>0<><>::
 ::res://exportToHTML/::1782829109
 ::res://ShionTheBruiser/::1783259216
@@ -823,7 +823,7 @@ slal_energy.tscn::PackedScene::538628958860881497::1784852634::0::1::::<><><>0<>
 slal_merchant.tscn::PackedScene::6725568957768718793::1784855330::0::1::::<><><>0<>0<><>::uid://c6vfy78d2khfw::::res://ShionTheBruiser/images/sprites/slal/character_slal_attack.png<>uid://bhvn1av8sooia::::res://ShionTheBruiser/images/sprites/slal/character_slal_cast.png<>uid://by6n0gbv8r4jh::::res://ShionTheBruiser/images/sprites/slal/character_slal_die.png<>uid://0ek8m7ogqlt0::::res://ShionTheBruiser/images/sprites/slal/character_slal_hit.png<>uid://sie827hbb177::::res://ShionTheBruiser/images/sprites/slal/character_slal_idle.png<>uid://bd5o0rgav3d6g::::res://ShionTheBruiser/images/sprites/slal/character_slal_merchant.png<>uid://3n7cbrpur4ou::::res://ShionTheBruiser/scenes/shion_visuals.gd
 ::res://ShionTheBruiserCode/::1791501155
 MainFile.cs::CSharpScript::2954314548483070873::1791501155::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Cards/::1792278680
+::res://ShionTheBruiserCode/Cards/::1792363961
 CosmoDetermination.cs::CSharpScript::4903082444639403780::1784496899::0::1::::<><><>0<>0<><>::
 CosmoGuidance.cs::CSharpScript::4895954223051435257::1784496944::0::1::::<><><>0<>0<><>::
 CosmoKindness.cs::CSharpScript::2527117697509655675::1784496851::0::1::::<><><>0<>0<><>::
@@ -903,7 +903,7 @@ ShionOnceMore.cs::CSharpScript::753931265568097025::1784402704::0::1::::<><><>0<
 ShionPleasureInPain.cs::CSharpScript::4831765009823823566::1792264217::0::1::::<><><>0<>0<><>::
 ShionPout.cs::CSharpScript::1982920751008973386::1783419531::0::1::::<><><>0<>0<><>::
 ShionPowerUpPunch.cs::CSharpScript::8869673857474517151::1792264217::0::1::::<><><>0<>0<><>::
-ShionPressTheAdvantage.cs::CSharpScript::7447344246486165575::1784491777::0::1::::<><><>0<>0<><>::
+ShionPressTheAdvantage.cs::CSharpScript::7447344246486165575::1792363610::0::1::::<><><>0<>0<><>::
 ShionPsychoCut.cs::CSharpScript::7312932429747434265::1784857580::0::1::::<><><>0<>0<><>::
 ShionRageCharge.cs::CSharpScript::7354009722041723595::1792264242::0::1::::<><><>0<>0<><>::
 ShionRageGuard.cs::CSharpScript::7659539389294217245::1792264217::0::1::::<><><>0<>0<><>::
@@ -911,9 +911,9 @@ ShionRageStrike.cs::CSharpScript::2118770799030977423::1792264242::0::1::::<><><
 ShionRevengeDrive.cs::CSharpScript::5153994710195684845::1792264217::0::1::::<><><>0<>0<><>::
 ShionShieldBreaker.cs::CSharpScript::386499049932867990::1792264217::0::1::::<><><>0<>0<><>::
 ShionShieldBuster.cs::CSharpScript::1596829243783275782::1792264217::0::1::::<><><>0<>0<><>::
-ShionShowOfStrength.cs::CSharpScript::483490524635457888::1784489349::0::1::::<><><>0<>0<><>::
+ShionShowOfStrength.cs::CSharpScript::483490524635457888::1792363610::0::1::::<><><>0<>0<><>::
 ShionSilentSorrow.cs::CSharpScript::644383000453763538::1792264217::0::1::::<><><>0<>0<><>::
-ShionSpiritBreak.cs::CSharpScript::370282619846393119::1792264242::0::1::::<><><>0<>0<><>::
+ShionSpiritBreak.cs::CSharpScript::370282619846393119::1792363961::0::1::::<><><>0<>0<><>::
 ShionSpiritBurst.cs::CSharpScript::6688252339549327116::1792264217::0::1::::<><><>0<>0<><>::
 ShionStartingGate.cs::CSharpScript::8562619483509781257::1782775793::0::1::::<><><>0<>0<><>::
 ShionStellarStrike.cs::CSharpScript::4309172699459210992::1792264217::0::1::::<><><>0<>0<><>::
@@ -1175,7 +1175,7 @@ UnusualStrategies.cs::CSharpScript::5152194611686798018::1783149926::0::1::::<><
 VentilatorForm.cs::CSharpScript::226459402343358895::1792257404::0::1::::<><><>0<>0<><>::
 VentilatorFormStrengthDown.cs::CSharpScript::8127960794993664409::1792257404::0::1::::<><><>0<>0<><>::
 VolatileForm.cs::CSharpScript::4395139874624335588::1792257788::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Relics/::1792361288
+::res://ShionTheBruiserCode/Relics/::1792361465
 AbbyTheAbsol.cs::CSharpScript::4933717058365350120::1784496720::0::1::::<><><>0<>0<><>::
 AppleSauce.cs::CSharpScript::6128642512040451757::1792270085::0::1::::<><><>0<>0<><>::
 BattleGloves.cs::CSharpScript::8565195483457157643::1784413134::0::1::::<><><>0<>0<><>::
