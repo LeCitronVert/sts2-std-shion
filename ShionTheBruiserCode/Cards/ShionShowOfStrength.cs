@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
@@ -31,6 +32,7 @@ public class ShionShowOfStrength() : ShionTheBruiserCard(2,
         CardPlay play)
     {
         var card = this;
+        await ShionMechanicsHelper.EnsureCreatureHasCritTracker(card.Owner.Creature);
         await PowerCmd.Apply<CritRateUp>(choiceContext, card.Owner.Creature, BonusRate, card.Owner.Creature, card);
         await PowerCmd.Apply<ShowOfStrength>(choiceContext, card.Owner.Creature, DynamicVars["ShowOfStrength"].IntValue, card.Owner.Creature, card);
     }

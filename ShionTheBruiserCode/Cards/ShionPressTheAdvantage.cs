@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
@@ -28,6 +29,7 @@ public class ShionPressTheAdvantage() : ShionTheBruiserCard(2,
         CardPlay play)
     {
         var card = this;
+        await ShionMechanicsHelper.EnsureCreatureHasCritTracker(card.Owner.Creature);
         await PowerCmd.Apply<CritRateUp>(choiceContext, card.Owner.Creature, BonusRate, card.Owner.Creature, card);
         await PowerCmd.Apply<PressTheAdvantage>(choiceContext, card.Owner.Creature, DynamicVars["PressTheAdvantage"].IntValue, card.Owner.Creature, card);
     }
