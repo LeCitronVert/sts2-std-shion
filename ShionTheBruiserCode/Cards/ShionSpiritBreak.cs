@@ -8,8 +8,8 @@ using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionSpiritBreak() : ShionBerserkCard(2,
-    CardType.Power, CardRarity.Rare,
+public class ShionSpiritBreak() : ShionBerserkCard(1,
+    CardType.Skill, CardRarity.Rare,
     TargetType.Self)
 {
     public const int BerserkCritAttacks = 3;
