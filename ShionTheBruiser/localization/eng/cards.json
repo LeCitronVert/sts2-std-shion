@@ -157,7 +157,7 @@
     "SHIONTHEBRUISER-SHION_PSYCHO_CUT.title": "Psycho Cut",
     "SHIONTHEBRUISER-SHION_CHILD_OF_MANY.description": "Choose [blue]1[/blue] of [blue]3[/blue] random Powers from other characters and play it.",
     "SHIONTHEBRUISER-SHION_CHILD_OF_MANY.title": "Child Of Many",
-    "SHIONTHEBRUISER-SHION_NIGHT_SLASH.description": "Deal {Damage:diff()} damage.\n[gold]Critical Draw:[/gold] {CriticalDraw:diff()}%",
+    "SHIONTHEBRUISER-SHION_NIGHT_SLASH.description": "Deal {Damage:diff()} damage.\nIs a [gold]Critical Hit[/gold].\n[gold]Critical Draw:[/gold] {CriticalDraw:diff()}%",
     "SHIONTHEBRUISER-SHION_NIGHT_SLASH.title": "Night Slash",
     "SHIONTHEBRUISER-SHION_UNUSUAL_STRATEGIES.description": "Your Strikes cost {Energy:energyIcons()} less.",
     "SHIONTHEBRUISER-SHION_UNUSUAL_STRATEGIES.title": "Unusual Strategies",
