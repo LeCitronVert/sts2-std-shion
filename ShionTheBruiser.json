@@ -1,8 +1,8 @@
 ﻿{
   "id": "ShionTheBruiser",
-  "name": "STD : Shion The Bruiser",
-  "author": "ShionV",
-  "description": "lol it me",
+  "name": "Slay the Dreamers",
+  "author": "ShionP",
+  "description": "Includes 4 characters you've never heard of.",
   "version": "v0.0.1",
   "min_game_version": "0.107.0",
   "has_pck": true,

@@ -12,7 +12,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionMonsterSpell() : ShionTheBruiserCard(3,
+public class ShionMonsterSpell() : ShionTheBruiserCard(2,
     CardType.Attack, CardRarity.Token, TargetType.AnyEnemy)
 {
     private bool _hasAttack;
