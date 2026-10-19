@@ -1,33 +1,31 @@
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Powers;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using ShionTheBruiser.ShionTheBruiserCode.Critical;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
+// All your Attacks deal Critical Hits.
+// Galvanised effects no longer apply (see ShionMechanicsHelper.IsGalvanised)
 public class SpiritBreak : CritContributorPower, ICritHitRateContributor
 {
     public override PowerType Type =>
         PowerType.Buff;
 
     public override PowerStackType StackType =>
-        PowerStackType.Counter;
+        PowerStackType.Single;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CritDisplayTooltipVar(),
     ];
-
-    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        if (cardPlay.Card.Type == CardType.Attack && cardPlay.Card.Owner.Creature == Owner)
-        {
-            await PowerCmd.Decrement(this);
-        }
-    }
+    
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Galvanised),
+    ];
 
     public decimal GetCritHitRateBonus(CardModel? sourceCard)
     {

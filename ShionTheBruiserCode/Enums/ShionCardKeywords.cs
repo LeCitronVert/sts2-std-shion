@@ -19,4 +19,7 @@ public static class ShionCardKeywords
 
     [CustomEnum, KeywordProperties(AutoKeywordPosition.Before)]
     public static CardKeyword Berserk;
+
+    [CustomEnum, KeywordProperties(AutoKeywordPosition.Before)]
+    public static CardKeyword Galvanised;
 }

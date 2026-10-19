@@ -20,7 +20,8 @@ public class ShionStellarStrike() : ShionLatentCard(3,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CriticalDrawVar(30),
         new CalculationBaseVar(24),
-        new ExtraDamageVar(1M),
+        // Additional damage equal to 2x (3x upgraded) your Vigor
+        new ExtraDamageVar(2M),
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier((model, _) => model.Owner.Creature.GetPower<VigorPower>()?.Amount ?? 0),
     ];
 
@@ -44,7 +45,8 @@ public class ShionStellarStrike() : ShionLatentCard(3,
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars.ExtraDamage.UpgradeValueBy(1M);
+        AddKeyword(CardKeyword.Exhaust);
     }
     
     public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)

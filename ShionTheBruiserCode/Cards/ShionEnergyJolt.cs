@@ -10,12 +10,14 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionEnergyJolt() : ShionBerserkCard(2,
+public class ShionEnergyJolt() : ShionTheBruiserCard(2,
     CardType.Attack, CardRarity.Uncommon,
     TargetType.AnyEnemy)
 {
+    public const int GalvanisedThreshold = 7;
+    
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(3, ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move),
+        new DamageVar(3, ValueProp.Move),
         new DynamicVar("DebuffAmount", 2)
     ];
     
@@ -25,8 +27,11 @@ public class ShionEnergyJolt() : ShionBerserkCard(2,
         HoverTipFactory.FromPower<WeakPower>(),
         HoverTipFactory.FromPower<VulnerablePower>(),
         HoverTipFactory.FromPower<DebilitatePower>(),
-        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
+        HoverTipFactory.FromPower<VigorPower>(),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Galvanised),
     ];
+    
+    protected override bool ShouldGlowGoldInternal => ShionMechanicsHelper.IsGalvanised(this.Owner.Creature, GalvanisedThreshold);
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -39,12 +44,14 @@ public class ShionEnergyJolt() : ShionBerserkCard(2,
             Character.ShionTheBruiser.GetEnergyCastAnimIfApplicable(card.Owner.Character),
             Character.ShionTheBruiser.GetEnergyCastDelayIfApplicable(card.Owner.Character)
         );
-        await CreatureCmd.Damage(
-            choiceContext, 
-            play.Target, 
-            DynamicVars.Damage, 
-            card
-        );
+        // Checked before the Attack resolves, since it consumes Vigor
+        var isGalvanised = ShionMechanicsHelper.IsGalvanised(card.Owner.Creature, GalvanisedThreshold);
+        await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
+            .FromCard(card)
+            .Targeting(play.Target)
+            .WithHitFx("vfx/vfx_attack_slash")
+            .WithAttackerAnim(Character.ShionTheBruiser.GetEnergyAnimIfApplicable(card.Owner.Character), Character.ShionTheBruiser.GetEnergyDelayIfApplicable(card.Owner.Character))
+            .Execute(choiceContext);
         await PowerCmd.Apply<WeakPower>(
             choiceContext,
             play.Target,
@@ -60,7 +67,7 @@ public class ShionEnergyJolt() : ShionBerserkCard(2,
             card
         );
         
-        if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature))
+        if (isGalvanised)
         {
             await PowerCmd.Apply<DebilitatePower>(
                 choiceContext,

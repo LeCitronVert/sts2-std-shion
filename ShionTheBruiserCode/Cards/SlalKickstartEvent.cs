@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.Models.Enchantments;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 public class SlalKickstartEvent() : SlalTheEndlessCard(1,
-    CardType.Attack, CardRarity.Rare,
+    CardType.Skill, CardRarity.Rare,
     TargetType.AllEnemies)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [

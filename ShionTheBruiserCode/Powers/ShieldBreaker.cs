@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -17,10 +18,18 @@ public class ShieldBreaker : ShionTheBruiserPower
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
+    public const int GalvanisedThreshold = 15;
+    public const int VulnerableAmount = 2;
+    
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new DynamicVar("VulnerableAmount", VulnerableAmount)
+    ];
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.Static(StaticHoverTip.Block),
+        HoverTipFactory.FromPower<VigorPower>(),
         HoverTipFactory.FromPower<VulnerablePower>(),
-        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Galvanised),
     ];
     
     public override int ModifyCardPlayCount(CardModel card, Creature? target, int playCount)
@@ -28,6 +37,42 @@ public class ShieldBreaker : ShionTheBruiserPower
         return card.Owner.Creature == this.Owner && card.Type == CardType.Attack && target?.Block > 0 ? playCount + Amount : playCount;
     }
 
+    // Random-target Attacks only know their targets once they hit
+    private CardModel? _galvanisedRandomAttack;
+    private readonly HashSet<Creature> _randomTargetsAffected = [];
+
+    // Checked before the Attack resolves, since it consumes Vigor
+    public override async Task BeforeCardPlayed(CardPlay cardPlay)
+    {
+        var card = cardPlay.Card;
+        if (card.Owner.Creature != Owner || card.Type != CardType.Attack || !ShionMechanicsHelper.IsGalvanised(Owner, GalvanisedThreshold))
+            return;
+
+        if (cardPlay.Target == null && card.TargetType == TargetType.RandomEnemy)
+        {
+            _galvanisedRandomAttack = card;
+            _randomTargetsAffected.Clear();
+            return;
+        }
+
+        List<Creature> targets = cardPlay.Target != null
+            ? [cardPlay.Target]
+            : card.TargetType == TargetType.AllEnemies
+                ? card.CombatState?.HittableEnemies.ToList() ?? []
+                : [];
+        
+        if (targets.Count == 0) return;
+        
+        Flash();
+        await PowerCmd.Apply<VulnerablePower>(
+            new ThrowingPlayerChoiceContext(),
+            targets,
+            VulnerableAmount,
+            Owner,
+            null
+        );
+    }
+    
     public override async Task AfterDamageGiven(
         PlayerChoiceContext choiceContext,
         Creature? dealer,
@@ -36,24 +81,31 @@ public class ShieldBreaker : ShionTheBruiserPower
         Creature target,
         CardModel? cardSource)
     {
-        if (dealer != Owner && dealer?.PetOwner != Owner.Player || target.IsPlayer || (!result.WasBlockBroken && target.Block <= 0) || !ShionMechanicsHelper.IsBerserk(Owner))
+        if (cardSource == null || cardSource != _galvanisedRandomAttack || target.IsPlayer || !_randomTargetsAffected.Add(target))
             return;
+        
         Flash();
-        await PowerCmd.Apply<VulnerablePower>(
-            choiceContext, 
-            target, 
-            Amount, 
-            Owner, 
-             null
-        );
+        await PowerCmd.Apply<VulnerablePower>(choiceContext, target, VulnerableAmount, Owner, null);
+    }
+
+    public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        if (cardPlay.Card == _galvanisedRandomAttack)
+        {
+            _galvanisedRandomAttack = null;
+            _randomTargetsAffected.Clear();
+        }
+        return Task.CompletedTask;
     }
     
-    // Berserk Power stuff
-    public override Task AfterCurrentHpChanged(Creature creature, decimal delta)
+    // Galvanised Power stuff
+    public override Task AfterPowerAmountChanged(
+        PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
-        if (creature != Owner) return Task.CompletedTask;
-        
-        ChangePulse();
+        if (power.Owner == Owner)
+        {
+            ChangePulse();
+        }
         return Task.CompletedTask;
     }
 
@@ -67,7 +119,7 @@ public class ShieldBreaker : ShionTheBruiserPower
 
     public void ChangePulse()
     {
-        var shouldPulse = ShionMechanicsHelper.IsBerserk(Owner);
+        var shouldPulse = ShionMechanicsHelper.IsGalvanised(Owner, GalvanisedThreshold);
 
         if (shouldPulse)
         {
@@ -79,5 +131,3 @@ public class ShieldBreaker : ShionTheBruiserPower
         }
     }
 }
-
-

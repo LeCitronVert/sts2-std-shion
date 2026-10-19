@@ -1,22 +1,25 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionSpiritBreak() : ShionBerserkCard(1,
-    CardType.Skill, CardRarity.Rare,
+public class ShionSpiritBreak() : ShionTheBruiserCard(1,
+    CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
-    public const int BerserkCritAttacks = 3;
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<SpiritBreak>(1),
-        new DynamicVar("BerserkCritAttacks", BerserkCritAttacks),
         new CritDisplayTooltipVar()
+    ];
+    
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Galvanised),
     ];
 
     protected override async Task OnPlay(
@@ -25,16 +28,10 @@ public class ShionSpiritBreak() : ShionBerserkCard(1,
     {
         var card = this;
         await ShionMechanicsHelper.EnsureCreatureHasCritTracker(card.Owner.Creature);
-        var critAmount = DynamicVars["SpiritBreak"].BaseValue;
-        if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature))
-        {
-            critAmount = BerserkCritAttacks;
-        }
-        
-        await PowerCmd.Apply<CriticalAttackNext>(
+        await PowerCmd.Apply<SpiritBreak>(
             choiceContext,
             card.Owner.Creature,
-            critAmount,
+            1M,
             card.Owner.Creature,
             card
         );

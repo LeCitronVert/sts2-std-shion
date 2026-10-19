@@ -52,7 +52,7 @@ public class Confusion(): SlalTheEndlessPower
     {
       Amount = fragmentAmount,
       Color = new Color("#40E0D0", 1f),
-      Direction = HealthBarForecastDirection.FromLeft,
+      Direction = HealthBarForecastDirection.FromRight,
       Order = 0,
     };
         

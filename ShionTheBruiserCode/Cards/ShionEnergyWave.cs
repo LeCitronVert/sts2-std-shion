@@ -16,16 +16,19 @@ public class ShionEnergyWave() : ShionTheBruiserCard(1,
     CardType.Attack, CardRarity.Common,
     TargetType.AllEnemies)
 {
+    public const int GalvanisedThreshold = 1;
+    
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CalculationBaseVar(3),
         new ExtraDamageVar(2),
-        new CalculatedDamageVar(ValueProp.Move).WithMultiplier(((model, creature) => model.Owner.Creature.GetPowerAmount<VigorPower>() > 0 ? 1 : 0)),
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier(((model, creature) => ShionMechanicsHelper.IsGalvanised(model.Owner.Creature, GalvanisedThreshold) ? 1 : 0)),
         new PowerVar<VulnerablePower>(2)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<VigorPower>(),
         HoverTipFactory.FromPower<VulnerablePower>(),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Galvanised),
     ];
     
     protected override HashSet<CardTag> CanonicalTags => [ShionCardTags.Energy];
@@ -35,7 +38,7 @@ public class ShionEnergyWave() : ShionTheBruiserCard(1,
         CardPlay play)
     {
         var card = this;
-        var alsoApplyVulnerable = card.Owner.Creature.GetPowerAmount<VigorPower>() > 0;
+        var alsoApplyVulnerable = ShionMechanicsHelper.IsGalvanised(card.Owner.Creature, GalvanisedThreshold);
         
         if (card.CombatState != null)
             await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
@@ -63,5 +66,5 @@ public class ShionEnergyWave() : ShionTheBruiserCard(1,
         DynamicVars["VulnerablePower"].UpgradeValueBy(1);
     }
     
-    protected override bool ShouldGlowGoldInternal => ShionMechanicsHelper.HasVigor(this.Owner.Creature);
+    protected override bool ShouldGlowGoldInternal => ShionMechanicsHelper.IsGalvanised(this.Owner.Creature, GalvanisedThreshold);
 }

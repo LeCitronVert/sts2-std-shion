@@ -9,18 +9,20 @@ using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionShieldBreaker() : ShionBerserkCard(2,
+public class ShionShieldBreaker() : ShionTheBruiserCard(2,
     CardType.Power, CardRarity.Uncommon,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<ShieldBreaker>(1),
+        new DynamicVar("VulnerableAmount", ShieldBreaker.VulnerableAmount),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.Static(StaticHoverTip.Block),
+        HoverTipFactory.FromPower<VigorPower>(),
         HoverTipFactory.FromPower<VulnerablePower>(),
-        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Galvanised),
     ];
 
     protected override async Task OnPlay(

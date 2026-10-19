@@ -18,13 +18,15 @@ public class ShionBreakDown() : ShionBerserkCard(1,
     CardType.Attack, CardRarity.Ancient,
     TargetType.AnyEnemy)
 {
+    public const int GalvanisedThreshold = 1;
+    
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new RepeatVar(3),
         new CriticalDrawVar(20),
         new CalculationBaseVar(5),
         new ExtraDamageVar(5),
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier((model, _) =>
-            ((model.Owner.Creature.GetPower<VigorPower>()?.Amount ?? 0) > 0 ? 1 : 0)
+            (ShionMechanicsHelper.IsGalvanised(model.Owner.Creature, GalvanisedThreshold) ? 1 : 0)
         +   (ShionMechanicsHelper.GetDragonUniqueBuffCount(model.Owner.Creature) >= 3 ? 1 : 0)
         )
     ];
@@ -34,6 +36,7 @@ public class ShionBreakDown() : ShionBerserkCard(1,
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<VigorPower>(),
         HoverTipFactory.FromPower<VulnerablePower>(),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Galvanised),
         HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
     ];
 
@@ -67,5 +70,5 @@ public class ShionBreakDown() : ShionBerserkCard(1,
         await ShionMechanicsHelper.ApplyCriticalDraw(this, choiceContext, card);
     }
     
-    protected override bool ShouldGlowGoldInternal => ShionMechanicsHelper.IsBerserk(this.Owner.Creature) || ShionMechanicsHelper.HasVigor(this.Owner.Creature) || ShionMechanicsHelper.GetDragonUniqueBuffCount(this.Owner.Creature) >= 3;
+    protected override bool ShouldGlowGoldInternal => ShionMechanicsHelper.IsBerserk(this.Owner.Creature) || ShionMechanicsHelper.IsGalvanised(this.Owner.Creature, GalvanisedThreshold) || ShionMechanicsHelper.GetDragonUniqueBuffCount(this.Owner.Creature) >= 3;
 }

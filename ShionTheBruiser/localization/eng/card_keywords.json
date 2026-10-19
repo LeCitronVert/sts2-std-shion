@@ -16,5 +16,7 @@
   "SHIONTHEBRUISER-NOVEL.description": "Gain [blue]1[/blue] [gold]Random[/gold].\nRemove [gold]Novel[/gold] on ALL identical cards.\nAfterwards, [gold]Novel[/gold] can't be applied on identical cards this combat.",
   "SHIONTHEBRUISER-NOVEL.title": "Novel",
   "SHIONTHEBRUISER-SLIMY.description": "After playing this card, add a [gold]Slimed[/gold] into your [gold]Hand[/gold].",
-  "SHIONTHEBRUISER-SLIMY.title": "Slimy"
+  "SHIONTHEBRUISER-SLIMY.title": "Slimy",
+  "SHIONTHEBRUISER-GALVANISED.title": "Galvanised",
+  "SHIONTHEBRUISER-GALVANISED.description": "Gains additional effects while you have at least the specified amount of [gold]Vigor[/gold]."
 }

@@ -11,13 +11,12 @@ using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionEndure() : ShionBerserkCard(2,
+public class ShionEndure() : ShionTheBruiserCard(2,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<Endure>(1),
-        new CritDisplayTooltipVar()
+        new PowerVar<Endure>(1)
     ];
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -32,7 +31,6 @@ public class ShionEndure() : ShionBerserkCard(2,
         CardPlay play)
     {
         var card = this;
-        await ShionMechanicsHelper.EnsureCreatureHasCritTracker(card.Owner.Creature);
         await PowerCmd.Apply<Endure>(
             choiceContext,
             card.Owner.Creature,

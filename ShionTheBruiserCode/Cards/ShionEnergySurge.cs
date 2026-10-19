@@ -9,10 +9,12 @@ using MegaCrit.Sts2.Core.HoverTips;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionEnergySurge() : ShionBerserkCard(1,
+public class ShionEnergySurge() : ShionTheBruiserCard(1,
     CardType.Skill, CardRarity.Common,
     TargetType.Self)
 {
+    public const int GalvanisedThreshold = 12;
+    
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<StrengthPower>(1),
         new PowerVar<VigorPower>(6),
@@ -21,8 +23,11 @@ public class ShionEnergySurge() : ShionBerserkCard(1,
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<VigorPower>(),
         HoverTipFactory.FromPower<StrengthPower>(),
-        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Galvanised),
     ];
+    
+    // The Vigor gained by this card counts towards its Galvanised condition
+    protected override bool ShouldGlowGoldInternal => ShionMechanicsHelper.IsGalvanised(this.Owner.Creature, GalvanisedThreshold, DynamicVars["VigorPower"].IntValue);
     
     protected override HashSet<CardTag> CanonicalTags => [ShionCardTags.Energy];
 
@@ -45,7 +50,7 @@ public class ShionEnergySurge() : ShionBerserkCard(1,
             card)
         ;
         
-        if (!ShionMechanicsHelper.IsBerserk(card.Owner.Creature))
+        if (!ShionMechanicsHelper.IsGalvanised(card.Owner.Creature, GalvanisedThreshold))
         {
             return;
         }

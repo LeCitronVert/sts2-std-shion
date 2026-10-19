@@ -18,13 +18,12 @@ public class ShionPleasureInPain() : ShionDefensiveCard(0,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<PleasureInPain>(30),
+        new PowerVar<PleasureInPain>(20),
+        new DynamicVar("DamageTakenIncrease", PleasureInPain.DamageTakenIncrease),
         new PatchUpVar(0)
     ];
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<StrengthPower>(),
-        HoverTipFactory.FromPower<VigorPower>(),
         HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
     ];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
@@ -51,7 +50,7 @@ public class ShionPleasureInPain() : ShionDefensiveCard(0,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["PleasureInPain"].UpgradeValueBy(20);
+        DynamicVars["PleasureInPain"].UpgradeValueBy(5);
     }
     
     public override async Task BeforeCombatStart()    

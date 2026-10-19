@@ -2,9 +2,9 @@
   "SHIONTHEBRUISER-DAMAGE_CAP.title": "Damage Cap",
   "SHIONTHEBRUISER-DAMAGE_CAP.description": "Each hit of this Attack can only deal up to [blue]{DamageCap}[/blue] damage.",
   "SHIONTHEBRUISER-CRITICAL_HIT.title": "Critical",
-  "SHIONTHEBRUISER-CRITICAL_HIT.description": "[gold]Critical Hits[/gold] deal [blue]50%[/blue] more damage.\nCards, Powers and relics can increase your [gold]Critical Hit[/gold] chance, rolled for each hit, or your [gold]Critical Attack[/gold] chance, rolled once for the whole Attack.",
+  "SHIONTHEBRUISER-CRITICAL_HIT.description": "[gold]Critical Hits[/gold] deal [blue]50%[/blue] more damage.\nCards, Powers and relics can increase your [gold]Critical Hit[/gold] chance, rolled for each hit.",
   "SHIONTHEBRUISER-CRITICAL_DRAW.title": "Critical Draw",
   "SHIONTHEBRUISER-CRITICAL_DRAW.description": "When you draw this card from your [gold]Draw Pile[/gold], gain [blue]{CriticalDraw}%[/blue] [gold]Critical Hit[/gold] chance this turn.\n[gold]Critical Draw[/gold] can grant at most [blue]50%[/blue] [gold]Critical Hit[/gold] chance per turn.",
   "SHIONTHEBRUISER-PATCH_UP.title": "Patch Up",
-  "SHIONTHEBRUISER-PATCH_UP.description": "Heal for {PatchUp:cond:>0?[blue]{PatchUp}[/blue] HP|the amount specified}.\nThis healing cannot put you above [blue]50%[/blue] of your Max HP."
+  "SHIONTHEBRUISER-PATCH_UP.description": "Heal for {PatchUp:cond:>0?[blue]{PatchUp}[/blue] HP|the amount specified}.\nThis healing cannot put you above [blue]50%[/blue] of your Max HP, unless modified by other effects."
 }

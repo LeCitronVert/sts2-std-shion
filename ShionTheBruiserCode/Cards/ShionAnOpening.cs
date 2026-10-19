@@ -19,6 +19,7 @@ public class ShionAnOpening() : CritContributorCard(1,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<CritRateUp>(5),
         new CardsVar(1),
+        new DynamicVar("CostReduction", 1),
         new CriticalDrawVar(15),
         new CritDisplayTooltipVar()
     ];
@@ -45,6 +46,10 @@ public class ShionAnOpening() : CritContributorCard(1,
         if (card2 == null)
             return;
         await CardPileCmd.Add(card2, PileType.Hand);
+        if (!card2.EnergyCost.CostsX)
+        {
+            card2.EnergyCost.AddThisTurn(-DynamicVars["CostReduction"].IntValue, true);
+        }
     }
 
     protected override void OnUpgrade()
