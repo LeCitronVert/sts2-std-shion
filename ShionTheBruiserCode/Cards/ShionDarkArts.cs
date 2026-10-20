@@ -63,5 +63,5 @@ public class ShionDarkArts() : ShionBerserkCard(2,
         return Task.CompletedTask;
     }
 
-    private void ReduceCost() => this.EnergyCost.SetThisTurn(1);
+    private void ReduceCost() => this.EnergyCost.AddThisTurnOrUntilPlayed(-1);
 }
