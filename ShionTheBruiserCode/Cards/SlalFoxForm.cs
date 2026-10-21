@@ -17,7 +17,8 @@ public class SlalFoxForm() : SlalTheEndlessCard(2,
     protected override HashSet<CardTag> CanonicalTags => [SlalCardTags.Form];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<FoxForm>(1),
+        new EnergyVar(1),
+        new DynamicVar("Strength", 2),
         new PowerVar<WeakPower>(0),
     ];
 
@@ -36,13 +37,14 @@ public class SlalFoxForm() : SlalTheEndlessCard(2,
         {
             await PowerCmd.Apply<WeakPower>(choiceContext, card.Owner.Creature, card.DynamicVars.Weak.BaseValue, card.Owner.Creature, card);
         }
-        await PowerCmd.Apply<FoxForm>(
+        var power = await PowerCmd.Apply<FoxForm>(
             choiceContext,
             card.Owner.Creature,
-            card.DynamicVars["FoxForm"].BaseValue,
+            card.DynamicVars.Energy.BaseValue,
             card.Owner.Creature,
             card
         );
+        power?.AddToSecondaryValue("Strength", card.DynamicVars["Strength"].BaseValue);
     }
 
     protected override void OnUpgrade()

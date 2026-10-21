@@ -22,10 +22,15 @@ public class SlalFavouriteBucket(): SlalSlimyCard(2,
         HoverTipFactory.FromPower<PlatingPower>(),
     ];
     
+    protected override bool SlimesBeforeEffect => true;
+
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
+        // Slimy applies first, so the Slimed added count as Status cards
+        await AddSlimed();
+
         // Count amount of status and curses in player's hand
         var card = this;
         var amountOfBadCards = PileType

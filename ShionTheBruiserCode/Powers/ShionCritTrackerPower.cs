@@ -1,6 +1,7 @@
 // Powers/ShionCritTrackerPower.cs
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Rooms;
@@ -9,8 +10,9 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// Display-only power now: tracks and shows the cached crit-rate tooltip
-/// on the owning creature. All actual crit rolling, the attack stack, the
+/// Display-only power now: tracks the cached crit rate of the owning creature.
+/// It is hidden from the power bar: the rate is shown by the crit indicator above
+/// the energy counter instead (see <see cref="Visuals.CritIndicatorPatch"/>). All actual crit rolling, the attack stack, the
 /// damage multiplier, and the OnCriticalHit/OnCriticalFail dispatch have
 /// moved to <see cref="Critical.ShionCritSingleton"/>, which gates its
 /// global combat hooks on whether the attacker carries this power.
@@ -32,6 +34,21 @@ public class ShionCritTrackerPower : ShionTheBruiserPower
         new DynamicVar("HitRate", 0m),
         new DynamicVar("AttackRate", 0m),
     ];
+
+    protected override bool IsVisibleInternal => false;
+
+    /// <summary>Current crit chance per hit, in percent.</summary>
+    public int HitRatePercent => (int) DynamicVars["HitRate"].BaseValue;
+
+    /// <summary>
+    /// The tooltip this power would show if it was visible (<see cref="PowerModel.HoverTips"/> is empty while hidden).
+    /// </summary>
+    public HoverTip CreateIndicatorHoverTip()
+    {
+        var description = SmartDescription;
+        DynamicVars.AddTo(description);
+        return new HoverTip(this, description.GetFormattedText(), true);
+    }
 
     private void RecalculateCritRates()
     {

@@ -13,7 +13,7 @@ public class ShionDesperateCharge() : ShionTheBruiserCard(1,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<VigorPower>(7),
+        new PowerVar<VigorPower>(3),
         new BlockVar(7, ValueProp.Move),
     ];
     

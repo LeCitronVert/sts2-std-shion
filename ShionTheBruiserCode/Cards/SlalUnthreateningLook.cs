@@ -7,13 +7,17 @@ using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+/// <summary>
+/// Unthreatening Smile: apply 2 Weak. If you are Weak, apply 2 Vulnerable.
+/// (The class keeps its old name so existing saves still find it.)
+/// </summary>
 public class SlalUnthreateningLook() : SlalTheEndlessCard(0,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<WeakPower>(2),
-        new PowerVar<VulnerablePower>(5),
+        new PowerVar<VulnerablePower>(2),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -21,8 +25,7 @@ public class SlalUnthreateningLook() : SlalTheEndlessCard(0,
         HoverTipFactory.FromPower<VulnerablePower>(),
     ];
 
-    protected override bool ShouldGlowGoldInternal =>
-        CombatState != null && Owner.Creature.GetPowerAmount<WeakPower>() > Owner.Creature.CurrentHp;
+    protected override bool ShouldGlowGoldInternal => CombatState != null && Owner.Creature.HasPower<WeakPower>();
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -32,10 +35,9 @@ public class SlalUnthreateningLook() : SlalTheEndlessCard(0,
         ArgumentNullException.ThrowIfNull(play.Target);
         await PowerCmd.Apply<WeakPower>(choiceContext, play.Target, card.DynamicVars.Weak.BaseValue, card.Owner.Creature, card);
 
-        var owner = card.Owner.Creature;
-        if (owner.GetPowerAmount<WeakPower>() <= owner.CurrentHp || card.CombatState is null) return;
+        if (!card.Owner.Creature.HasPower<WeakPower>() || !play.Target.IsAlive) return;
 
-        await PowerCmd.Apply<VulnerablePower>(choiceContext, card.CombatState.HittableEnemies.ToList(), card.DynamicVars.Vulnerable.BaseValue, owner, card);
+        await PowerCmd.Apply<VulnerablePower>(choiceContext, play.Target, card.DynamicVars.Vulnerable.BaseValue, card.Owner.Creature, card);
     }
 
     protected override void OnUpgrade()

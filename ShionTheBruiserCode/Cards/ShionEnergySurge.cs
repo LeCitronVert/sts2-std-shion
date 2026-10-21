@@ -17,7 +17,7 @@ public class ShionEnergySurge() : ShionTheBruiserCard(1,
     
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<StrengthPower>(1),
-        new PowerVar<VigorPower>(6),
+        new PowerVar<VigorPower>(3),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [

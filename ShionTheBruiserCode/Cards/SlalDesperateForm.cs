@@ -19,11 +19,12 @@ public class SlalDesperateForm() : SlalTheEndlessCard(3,
     public override bool CanBeGeneratedInCombat => false;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<DesperateForm>(1),
+        new PowerVar<DesperateForm>(2),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<StrengthPower>(),
+        HoverTipFactory.FromPower<VigorPower>(),
     ];
 
     protected override async Task OnPlay(

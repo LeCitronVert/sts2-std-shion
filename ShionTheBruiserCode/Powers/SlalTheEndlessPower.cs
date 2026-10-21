@@ -28,6 +28,17 @@ public abstract class SlalTheEndlessPower : CustomPowerModel
     /// Single, but you're suggested to use Single as it is more explicit about how it will work.
     /// </summary>
     public abstract override PowerStackType StackType { get; }
+
+    /// <summary>
+    /// For powers with a second stacking value (besides Amount), stored in one of their DynamicVars.
+    /// Cards call this after applying the power so the second value stacks too.
+    /// </summary>
+    public void AddToSecondaryValue(string varName, decimal amount)
+    {
+        AssertMutable();
+        DynamicVars[varName].BaseValue += amount;
+        InvokeDisplayAmountChanged();
+    }
 }
 
 

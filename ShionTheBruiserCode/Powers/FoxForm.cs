@@ -4,12 +4,14 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// At the end of your turn, gain 2 Weak if you have none, otherwise gain X Strength and X energy next turn.
+/// At the end of your turn, gain 2 Weak if you have none, otherwise gain X energy next turn and Y Strength.
+/// Amount is the energy, the "Strength" var is stacked by the card.
 /// </summary>
 public class FoxForm : SlalTheEndlessPower
 {
@@ -17,6 +19,8 @@ public class FoxForm : SlalTheEndlessPower
 
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Strength", 0)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<WeakPower>(),
@@ -35,7 +39,11 @@ public class FoxForm : SlalTheEndlessPower
             return;
         }
 
-        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, Amount, Owner, null);
         await PowerCmd.Apply<EnergyNextTurnPower>(choiceContext, Owner, Amount, Owner, null);
+        var strength = DynamicVars["Strength"].BaseValue;
+        if (strength > 0)
+        {
+            await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, strength, Owner, null);
+        }
     }
 }

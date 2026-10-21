@@ -19,7 +19,7 @@ public class BreakMeIfYouCan : ShionTheBruiserPower
         PowerStackType.None;
 
     public const int GuardAmount = 1;
-    public const int VigorAmount = 5;
+    public const int VigorAmount = 3;
     public const int BlockAmount = 5;
     
     protected override IEnumerable<DynamicVar> CanonicalVars => [

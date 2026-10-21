@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
 using MegaCrit.Sts2.Core.HoverTips;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -16,6 +17,8 @@ public class ShionStellarStrike() : ShionLatentCard(3,
     TargetType.AnyEnemy)
 {
     protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];
+    
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [ShionCardKeywords.Latent, CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CriticalDrawVar(30),
@@ -24,6 +27,8 @@ public class ShionStellarStrike() : ShionLatentCard(3,
         new ExtraDamageVar(2M),
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier((model, _) => model.Owner.Creature.GetPower<VigorPower>()?.Amount ?? 0),
     ];
+    
+    
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<VigorPower>(),
@@ -46,7 +51,6 @@ public class ShionStellarStrike() : ShionLatentCard(3,
     protected override void OnUpgrade()
     {
         DynamicVars.ExtraDamage.UpgradeValueBy(1M);
-        AddKeyword(CardKeyword.Exhaust);
     }
     
     public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)

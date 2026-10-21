@@ -14,7 +14,7 @@ public class SlalTurnTheTables(): SlalTheEndlessCard(1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<WeakPower>(2),
-        new PowerVar<VigorPower>(1)
+        new PowerVar<VigorPower>(2)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -22,35 +22,43 @@ public class SlalTurnTheTables(): SlalTheEndlessCard(1,
         HoverTipFactory.FromPower<VigorPower>(),
     ];
 
+    protected override bool ShouldGlowGoldInternal => CombatState != null && Owner.Creature.HasPower<WeakPower>();
+
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
-        await PowerCmd.Apply<WeakPower>(
-            choiceContext, 
-            play.Target, 
-            DynamicVars["WeakPower"].BaseValue, 
-            card.Owner.Creature, 
-            card
-        );
-
-        var weakOnTargetAmount = play.Target.GetPowerAmount<WeakPower>();
-        if (weakOnTargetAmount > 0)
+        // If you are Weak, apply Weak and gain Vigor twice
+        var repeats = card.Owner.Creature.HasPower<WeakPower>() ? 2 : 1;
+        for (var i = 0; i < repeats; i++)
         {
-            await PowerCmd.Apply<VigorPower>(
-                choiceContext, 
-                card.Owner.Creature, 
-                DynamicVars["VigorPower"].BaseValue * weakOnTargetAmount, 
-                card.Owner.Creature, 
+            await PowerCmd.Apply<WeakPower>(
+                choiceContext,
+                play.Target,
+                DynamicVars["WeakPower"].BaseValue,
+                card.Owner.Creature,
                 card
             );
+
+            var weakOnTargetAmount = play.Target.GetPowerAmount<WeakPower>();
+            if (weakOnTargetAmount > 0)
+            {
+                await PowerCmd.Apply<VigorPower>(
+                    choiceContext,
+                    card.Owner.Creature,
+                    DynamicVars["VigorPower"].BaseValue * weakOnTargetAmount,
+                    card.Owner.Creature,
+                    card
+                );
+            }
         }
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars["WeakPower"].UpgradeValueBy(1);
+        DynamicVars["VigorPower"].UpgradeValueBy(1);
     }
 }

@@ -1,4 +1,3 @@
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Models;
@@ -23,10 +22,5 @@ public class OnceMore: ShionTheBruiserPower
     public override int ModifyCardPlayCount(CardModel card, Creature? target, int playCount)
     {
         return card.Owner.Creature == this.Owner && card.Keywords.Contains(ShionCardKeywords.Defensive) ? playCount + Amount : playCount;
-    }
-    
-    public override async Task AfterModifyingCardPlayCount(CardModel card)
-    {
-        await PowerCmd.Remove(this);
     }
 }

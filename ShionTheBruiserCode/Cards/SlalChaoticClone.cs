@@ -1,4 +1,3 @@
-using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Extensions;
@@ -7,21 +6,29 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+/// <summary>
+/// Gain 6 Block. Play a random Slimed in your Hand. If you do, gain 1 Weak.
+/// Upgraded: gain 8 Block. Play ALL Slimed in your Hand. Gain 1 Weak for each card played this way.
+/// </summary>
 public class SlalChaoticClone() : SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Common,
     TargetType.Self)
 {
     public override bool GainsBlock => true;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(6M, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new BlockVar(6M, ValueProp.Move),
+        new PowerVar<WeakPower>(1),
+    ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromCard<Slimed>(),
-        HoverTipFactory.FromKeyword(CardKeyword.Retain),
+        HoverTipFactory.FromPower<WeakPower>(),
     ];
 
     protected override async Task OnPlay(
@@ -41,22 +48,12 @@ public class SlalChaoticClone() : SlalTheEndlessCard(1,
             await CardCmd.AutoPlay(choiceContext, slimed, null);
         }
 
-        // Retain is added after the cards are played.
         if (toPlay.Count == 0) return;
-        var chosenCards = await CardSelectCmd.FromHand(
-            choiceContext,
-            card.Owner,
-            new CardSelectorPrefs(card.SelectionScreenPrompt, toPlay.Count),
-            c => !c.Keywords.Contains(CardKeyword.Retain),
-            card
-        );
-        foreach (var chosenCard in chosenCards)
-        {
-            chosenCard.AddKeyword(CardKeyword.Retain);
-        }
+        await PowerCmd.Apply<WeakPower>(choiceContext, card.Owner.Creature, card.DynamicVars.Weak.BaseValue * toPlay.Count, card.Owner.Creature, card);
     }
 
     protected override void OnUpgrade()
     {
+        DynamicVars.Block.UpgradeValueBy(2M);
     }
 }

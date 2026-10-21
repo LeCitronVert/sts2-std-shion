@@ -9,31 +9,17 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain 1 Random. Deal damage to a random enemy Random times.
-/// Whenever a hit makes an enemy lose no HP, increase this card's damage this combat.
+/// Gain Random equal to the number of cards in your Hand.
+/// Deal damage equal to your Random to ALL enemies.
 /// </summary>
 public class SlalDiceShotgun() : SlalTheEndlessCard(1,
     CardType.Attack, CardRarity.Uncommon,
-    TargetType.RandomEnemy)
+    TargetType.AllEnemies)
 {
-    private decimal _extraDamageFromWhiffs;
-
-    /// <summary>
-    /// Required so we can restore the extra damage amount after a downgrade (see Rampage).
-    /// </summary>
-    private decimal ExtraDamageFromWhiffs
-    {
-        get => _extraDamageFromWhiffs;
-        set
-        {
-            AssertMutable();
-            _extraDamageFromWhiffs = value;
-        }
-    }
-
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(1M, ValueProp.Move),
-        new DynamicVar("Increase", 2),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("RandomGain").WithMultiplier((card, _) => PileType.Hand.GetPile(card.Owner).Cards.Count(c => c != card) + 1),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Powers.Random>()];
@@ -45,37 +31,21 @@ public class SlalDiceShotgun() : SlalTheEndlessCard(1,
         var card = this;
         if (card.CombatState is null) return;
 
-        await SlalMechanicsHelper.GainRandom(choiceContext, card.Owner.Creature, 1, card);
+        // + 1 for this card, which has already left the Hand
+        await SlalMechanicsHelper.GainRandom(choiceContext, card.Owner.Creature, PileType.Hand.GetPile(card.Owner).Cards.Count + 1, card);
 
-        var hits = SlalMechanicsHelper.GetRandom(card.Owner.Creature);
-        for (var i = 0; i < hits; i++)
-        {
-            var enemy = card.Owner.RunState.Rng.CombatTargets.NextItem(card.CombatState.HittableEnemies);
-            if (enemy == null) break;
+        var damage = SlalMechanicsHelper.GetRandom(card.Owner.Creature);
+        if (damage <= 0) return;
 
-            var attack = await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
-                .FromCard(card)
-                .Targeting(enemy)
-                .WithHitFx("vfx/vfx_attack_blunt")
-                .Execute(choiceContext);
-
-            var whiffs = attack.Results.SelectMany(r => r).Count(r => r.UnblockedDamage <= 0);
-            if (whiffs <= 0) continue;
-
-            var increase = whiffs * card.DynamicVars["Increase"].BaseValue;
-            card.DynamicVars.Damage.BaseValue += increase;
-            card.ExtraDamageFromWhiffs += increase;
-        }
-    }
-
-    protected override void AfterDowngraded()
-    {
-        base.AfterDowngraded();
-        DynamicVars.Damage.BaseValue += ExtraDamageFromWhiffs;
+        await DamageCmd.Attack(damage)
+            .FromCard(card)
+            .TargetingAllOpponents(card.CombatState)
+            .WithHitFx("vfx/vfx_attack_blunt")
+            .Execute(choiceContext);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Increase"].UpgradeValueBy(1);
+        EnergyCost.UpgradeBy(-1);
     }
 }

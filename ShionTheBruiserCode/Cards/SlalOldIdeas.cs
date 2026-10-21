@@ -20,7 +20,6 @@ public class SlalOldIdeas() : SlalTheEndlessCard(1,
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(SlalCardKeywords.Novel),
-        HoverTipFactory.FromCard<SlalMaybeLater>(IsUpgraded),
     ];
 
     protected override async Task OnPlay(
@@ -45,7 +44,6 @@ public class SlalOldIdeas() : SlalTheEndlessCard(1,
             await CardPileCmd.Add(chosenCard, PileType.Hand);
         }
 
-        await CardPileCmd.AddGeneratedCardToCombat(SlalMechanicsHelper.CreateCard<SlalMaybeLater>(card.Owner, IsUpgraded), PileType.Hand, card.Owner);
     }
 
     protected override void OnUpgrade()

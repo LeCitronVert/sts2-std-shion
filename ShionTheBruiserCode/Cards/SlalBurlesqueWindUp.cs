@@ -14,10 +14,12 @@ public class SlalBurlesqueWindUp() : SlalTheEndlessCard(0,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<BurlesqueWindUp>(1),
+        new PowerVar<BurlesqueWindUp>(2),
+        new PowerVar<WeakPower>(1),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<WeakPower>(),
         HoverTipFactory.FromPower<VigorPower>(),
     ];
 
@@ -26,6 +28,7 @@ public class SlalBurlesqueWindUp() : SlalTheEndlessCard(0,
         CardPlay play)
     {
         var card = this;
+        await PowerCmd.Apply<WeakPower>(choiceContext, card.Owner.Creature, card.DynamicVars.Weak.BaseValue, card.Owner.Creature, card);
         await PowerCmd.Apply<BurlesqueWindUp>(
             choiceContext,
             card.Owner.Creature,

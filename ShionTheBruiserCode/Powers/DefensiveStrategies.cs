@@ -3,15 +3,13 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
-using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
-using ShionTheBruiser.ShionTheBruiserCode.Helper;
-using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
+/// <summary>
+/// Whenever you play a Defensive card, your Guard and Mighty Guard last X more turns.
+/// </summary>
 public class DefensiveStrategies : ShionTheBruiserPower
 {
     public override PowerType Type =>
@@ -22,11 +20,8 @@ public class DefensiveStrategies : ShionTheBruiserPower
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(ShionCardKeywords.Defensive),
-        HoverTipFactory.FromPower<VigorPower>(),
-    ];
-    
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CritDisplayTooltipVar(),
+        HoverTipFactory.FromPower<Guard>(),
+        HoverTipFactory.FromPower<MightyGuard>(),
     ];
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -37,8 +32,17 @@ public class DefensiveStrategies : ShionTheBruiserPower
         ) return;
 
         var power = this;
-        await PowerCmd.Apply<VigorPower>(new ThrowingPlayerChoiceContext(), power.Owner, Amount, power.Owner, null!);
-        await ShionMechanicsHelper.EnsureCreatureHasCritTracker(power.Owner);
-        await PowerCmd.Apply<CritRateUp>(new ThrowingPlayerChoiceContext(), power.Owner, Amount, power.Owner, null!);
+        var extended = false;
+        if (power.Owner.HasPower<Guard>())
+        {
+            await PowerCmd.Apply<Guard>(choiceContext, power.Owner, Amount, power.Owner, null);
+            extended = true;
+        }
+        if (power.Owner.HasPower<MightyGuard>())
+        {
+            await PowerCmd.Apply<MightyGuard>(choiceContext, power.Owner, Amount, power.Owner, null);
+            extended = true;
+        }
+        if (extended) Flash();
     }
 }

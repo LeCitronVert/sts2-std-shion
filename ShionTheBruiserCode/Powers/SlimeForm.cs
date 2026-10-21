@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -26,7 +27,7 @@ public class SlimeForm : SlalTheEndlessPower
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (cardPlay.Card.Owner != Owner.Player || !cardPlay.Card.Keywords.Contains(SlalCardKeywords.Slimy) || CombatState is null)
+        if (cardPlay.Card.Owner != Owner.Player || !SlalMechanicsHelper.IsSlimy(cardPlay.Card) || CombatState is null)
             return;
 
         Flash();

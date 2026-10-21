@@ -18,10 +18,12 @@ public class SlalSarcophagusForm() : SlalTheEndlessCard(1,
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<SarcophagusForm>(2),
+        new EnergyVar(1),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<WeakPower>(),
+        HoverTipFactory.ForEnergy(this),
     ];
 
     protected override async Task OnPlay(
@@ -29,17 +31,18 @@ public class SlalSarcophagusForm() : SlalTheEndlessCard(1,
         CardPlay play)
     {
         var card = this;
-        await PowerCmd.Apply<SarcophagusForm>(
+        var power = await PowerCmd.Apply<SarcophagusForm>(
             choiceContext,
             card.Owner.Creature,
             card.DynamicVars["SarcophagusForm"].BaseValue,
             card.Owner.Creature,
             card
         );
+        power?.AddToSecondaryValue("Energy", card.DynamicVars.Energy.BaseValue);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["SarcophagusForm"].UpgradeValueBy(1);
+        DynamicVars["SarcophagusForm"].UpgradeValueBy(2);
     }
 }

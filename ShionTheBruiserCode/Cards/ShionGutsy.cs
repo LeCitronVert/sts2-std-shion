@@ -14,7 +14,7 @@ public class ShionGutsy() : ShionBerserkCard(1,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<Gutsy>(75)
+        new PowerVar<Gutsy>(50)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [

@@ -1,80 +1,72 @@
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+/// <summary>
+/// Deal 5 damage and apply 1 Weak to ALL enemies and yourself.
+/// If you lost HP this turn, ALL enemies gain 5 Confusion.
+/// </summary>
 public class SlalFrontflipAndAHalf() : SlalTheEndlessCard(2,
-    CardType.Skill, CardRarity.Common,
-    TargetType.AnyEnemy)
+    CardType.Attack, CardRarity.Common,
+    TargetType.AllEnemies)
 {
-    public override bool GainsBlock => true;
-
-    private static IReadOnlyList<CardModel> PowerOptions => [
-        ModelDb.Card<SlalBumperForm>(),
-        ModelDb.Card<SlalVentilatorForm>(),
-        ModelDb.Card<SlalSqueakySquirrelForm>(),
-        ModelDb.Card<SlalSlideForm>(),
-    ];
-
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(5M, ValueProp.Move),
-        new PowerVar<BlockNextTurnPower>(5),
+        new DamageVar(5M, ValueProp.Move),
+        new PowerVar<WeakPower>(1),
         new PowerVar<Confusion>(5),
-        new CardsVar(2),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<WeakPower>(),
         HoverTipFactory.FromPower<Confusion>(),
-        HoverTipFactory.FromCard<SlalBumperForm>(IsUpgraded),
-        HoverTipFactory.FromCard<SlalVentilatorForm>(IsUpgraded),
-        HoverTipFactory.FromCard<SlalSqueakySquirrelForm>(IsUpgraded),
-        HoverTipFactory.FromCard<SlalSlideForm>(IsUpgraded),
     ];
+
+    protected override bool ShouldGlowGoldInternal => CombatState != null && LostHpThisTurn(this);
+
+    private static bool LostHpThisTurn(CardModel card)
+    {
+        return CombatManager.Instance.History.Entries
+            .OfType<DamageReceivedEntry>()
+            .Any(e => e.Receiver == card.Owner.Creature && e.Result.UnblockedDamage > 0 && e.HappenedThisTurn(card.CombatState));
+    }
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
         var card = this;
-        ArgumentNullException.ThrowIfNull(play.Target);
-        await CreatureCmd.GainBlock(card.Owner.Creature, card.DynamicVars.Block, play);
-        await PowerCmd.Apply<BlockNextTurnPower>(
-            choiceContext,
-            card.Owner.Creature,
-            card.DynamicVars["BlockNextTurnPower"].BaseValue,
-            card.Owner.Creature,
-            card
-        );
-        await PowerCmd.Apply<Confusion>(
-            choiceContext,
-            play.Target,
-            card.DynamicVars["Confusion"].BaseValue,
-            card.Owner.Creature,
-            card
-        );
+        if (card.CombatState is null) return;
 
-        var powers = PowerOptions
-            .TakeRandom(card.DynamicVars.Cards.IntValue, card.Owner.RunState.Rng.CombatCardGeneration)
-            .Select(p =>
-            {
-                var power = card.CombatState!.CreateCard(p, card.Owner);
-                if (IsUpgraded && power.IsUpgradable) CardCmd.Upgrade(power);
-                return power;
-            })
-            .ToList();
-        CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardsToCombat(powers, PileType.Draw, card.Owner, CardPilePosition.Random));
+        await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
+            .FromCard(card)
+            .TargetingAllOpponents(card.CombatState)
+            .WithHitFx("vfx/vfx_attack_blunt")
+            .Execute(choiceContext);
+
+        await SlalMechanicsHelper.ApplyToAllEnemies<WeakPower>(choiceContext, card.Owner.Creature, card.DynamicVars.Weak.BaseValue, card);
+        await PowerCmd.Apply<WeakPower>(choiceContext, card.Owner.Creature, card.DynamicVars.Weak.BaseValue, card.Owner.Creature, card);
+
+        if (LostHpThisTurn(card))
+        {
+            await SlalMechanicsHelper.ApplyToAllEnemies<Confusion>(choiceContext, card.Owner.Creature, card.DynamicVars["Confusion"].BaseValue, card);
+        }
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(2M);
+        DynamicVars.Damage.UpgradeValueBy(2M);
+        DynamicVars["Confusion"].UpgradeValueBy(2);
+        DynamicVars.Weak.UpgradeValueBy(1);
     }
 }

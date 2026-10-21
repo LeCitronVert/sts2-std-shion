@@ -23,7 +23,6 @@ public class SlalStreetLightForm() : SlalTheEndlessCard(2,
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromCard<SlalFreshIdea>(),
-        HoverTipFactory.FromCard<SlalMaybeLater>(),
         HoverTipFactory.ForEnergy(this),
     ];
 

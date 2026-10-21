@@ -4,18 +4,25 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using MegaCrit.Sts2.Core.Models.Enchantments;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+/// <summary>
+/// Fill your Hand with Steady Fresh Ideas.
+/// Deal damage and apply Confusion to ALL enemies equal to the number of cards created this way.
+/// </summary>
 public class SlalKickstartEvent() : SlalTheEndlessCard(1,
-    CardType.Skill, CardRarity.Rare,
+    CardType.Attack, CardRarity.Rare,
     TargetType.AllEnemies)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<Confusion>(10),
+        new CalculationBaseVar(0),
+        new ExtraDamageVar(1),
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => FreeSlots(card)),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -24,14 +31,17 @@ public class SlalKickstartEvent() : SlalTheEndlessCard(1,
         ..HoverTipFactory.FromEnchantment<Steady>(),
     ];
 
+    private static int FreeSlots(CardModel card) =>
+        Math.Max(0, CardPile.MaxCardsInHand - PileType.Hand.GetPile(card.Owner).Cards.Count(c => c != card));
+
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
         var card = this;
-        await SlalMechanicsHelper.ApplyToAllEnemies<Confusion>(choiceContext, card.Owner.Creature, card.DynamicVars["Confusion"].BaseValue, card);
+        if (card.CombatState is null) return;
 
-        var amount = CardPile.MaxCardsInHand - PileType.Hand.GetPile(card.Owner).Cards.Count;
+        var amount = FreeSlots(card);
         List<CardModel> ideas = [];
         for (var i = 0; i < amount; i++)
         {
@@ -40,6 +50,16 @@ public class SlalKickstartEvent() : SlalTheEndlessCard(1,
             ideas.Add(idea);
         }
         await CardPileCmd.AddGeneratedCardsToCombat(ideas, PileType.Hand, card.Owner);
+
+        if (ideas.Count == 0) return;
+
+        await DamageCmd.Attack(ideas.Count)
+            .FromCard(card)
+            .TargetingAllOpponents(card.CombatState)
+            .WithHitFx("vfx/vfx_attack_blunt")
+            .Execute(choiceContext);
+
+        await SlalMechanicsHelper.ApplyToAllEnemies<Confusion>(choiceContext, card.Owner.Creature, ideas.Count, card);
     }
 
     protected override void OnUpgrade()

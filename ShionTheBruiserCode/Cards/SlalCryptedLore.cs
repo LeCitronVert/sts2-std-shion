@@ -3,17 +3,24 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+/// <summary>
+/// Deal 8 damage and double the enemy's Confusion. If it has 20 Confusion or more, Stun it. Exhaust.
+/// </summary>
 public class SlalCryptedLore() : SlalTheEndlessCard(0,
-    CardType.Skill, CardRarity.Rare,
+    CardType.Attack, CardRarity.Rare,
     TargetType.AnyEnemy)
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("StunThreshold", 20)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new DamageVar(8M, ValueProp.Move),
+        new DynamicVar("StunThreshold", 20),
+    ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<Confusion>(),
@@ -26,6 +33,14 @@ public class SlalCryptedLore() : SlalTheEndlessCard(0,
     {
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
+
+        await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
+            .FromCard(card)
+            .Targeting(play.Target)
+            .WithHitFx("vfx/vfx_attack_slash")
+            .Execute(choiceContext);
+
+        if (!play.Target.IsAlive) return;
 
         var confusion = play.Target.GetPowerAmount<Confusion>();
         if (confusion > 0)

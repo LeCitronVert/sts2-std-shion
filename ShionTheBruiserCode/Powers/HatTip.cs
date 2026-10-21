@@ -24,7 +24,7 @@ public class HatTip : SlalTheEndlessPower
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (cardPlay.Card.Owner != Owner.Player || !cardPlay.Card.Keywords.Contains(SlalCardKeywords.Slimy)) return;
+        if (cardPlay.Card.Owner != Owner.Player || !SlalMechanicsHelper.IsSlimy(cardPlay.Card)) return;
 
         Flash();
         var slimed = Enumerable.Range(0, Amount).Select(_ => SlalMechanicsHelper.CreateCard<Slimed>(Owner.Player)).ToList();

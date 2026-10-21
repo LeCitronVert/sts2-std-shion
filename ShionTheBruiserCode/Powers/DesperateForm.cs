@@ -10,14 +10,17 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// Whenever a Status card is exhausted, gain X Strength and take damage equal to your Strength.
+/// Whenever a Status card is exhausted, gain X Strength, then take damage and gain Vigor equal to your Strength.
 /// </summary>
 public class DesperateForm : SlalTheEndlessPower
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<StrengthPower>(),
+        HoverTipFactory.FromPower<VigorPower>(),
+    ];
 
     public override async Task AfterCardExhausted(PlayerChoiceContext choiceContext, CardModel card, bool causedByEthereal)
     {
@@ -30,6 +33,10 @@ public class DesperateForm : SlalTheEndlessPower
         if (strength > 0)
         {
             await CreatureCmd.Damage(choiceContext, Owner, strength, ValueProp.Unpowered, Owner, null);
+            if (Owner.IsAlive)
+            {
+                await PowerCmd.Apply<VigorPower>(choiceContext, Owner, strength, Owner, null);
+            }
         }
     }
 }

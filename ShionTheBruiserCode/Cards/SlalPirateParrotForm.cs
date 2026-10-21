@@ -17,12 +17,12 @@ public class SlalPirateParrotForm() : SlalTheEndlessCard(2,
     protected override HashSet<CardTag> CanonicalTags => [SlalCardTags.Form];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<PirateParrotForm>(1),
+        new EnergyVar(1),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<WeakPower>(),
-        HoverTipFactory.FromPower<Confusion>(),
+        HoverTipFactory.ForEnergy(this),
     ];
 
     protected override async Task OnPlay(
@@ -33,7 +33,7 @@ public class SlalPirateParrotForm() : SlalTheEndlessCard(2,
         await PowerCmd.Apply<PirateParrotForm>(
             choiceContext,
             card.Owner.Creature,
-            card.DynamicVars["PirateParrotForm"].BaseValue,
+            card.DynamicVars.Energy.BaseValue,
             card.Owner.Creature,
             card
         );

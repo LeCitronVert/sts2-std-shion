@@ -18,7 +18,7 @@ public class ShionFlowCharge() : ShionBerserkCard(1,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<FlowCharge>(3),
         new("VigorAmount", FlowCharge.VigorAmount),
-        new ("BerserkAmount", 9)
+        new ("BerserkAmount", 6)
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [

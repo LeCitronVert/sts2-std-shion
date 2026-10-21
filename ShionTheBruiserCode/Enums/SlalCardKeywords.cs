@@ -10,4 +10,8 @@ public class SlalCardKeywords
     
     [CustomEnum, KeywordProperties(AutoKeywordPosition.After)]
     public static CardKeyword Slimy;
+
+    /// <summary>Fills your Hand with Slimed. Counts as Slimy.</summary>
+    [CustomEnum, KeywordProperties(AutoKeywordPosition.After)]
+    public static CardKeyword VerySlimy;
 }

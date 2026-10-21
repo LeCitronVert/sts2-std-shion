@@ -9,8 +9,8 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionOnceMore() : ShionTheBruiserCard(1,
-    CardType.Skill, CardRarity.Rare,
+public class ShionOnceMore() : ShionTheBruiserCard(2,
+    CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
@@ -19,10 +19,6 @@ public class ShionOnceMore() : ShionTheBruiserCard(1,
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(ShionCardKeywords.Defensive),
-    ];
-    
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [
-        CardKeyword.Exhaust
     ];
 
     protected override async Task OnPlay(
@@ -35,6 +31,6 @@ public class ShionOnceMore() : ShionTheBruiserCard(1,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["OnceMore"].UpgradeValueBy(1);
+        AddKeyword(CardKeyword.Innate);
     }
 }

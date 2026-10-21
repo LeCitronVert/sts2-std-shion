@@ -3,20 +3,19 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class SlalAnchorThrow() : SlalTheEndlessCard(2,
+/// <summary>
+/// Whenever you play a card that puts a card into your Draw Pile, this enemy gains 5 Confusion.
+/// </summary>
+public class SlalAnchorThrow() : SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Uncommon,
-    TargetType.Self)
+    TargetType.AnyEnemy)
 {
-    public override bool GainsBlock => true;
-
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(12M, ValueProp.Move),
-        new PowerVar<AnchorThrow>(1),
+        new PowerVar<AnchoredDown>(5),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Confusion>()];
@@ -26,12 +25,12 @@ public class SlalAnchorThrow() : SlalTheEndlessCard(2,
         CardPlay play)
     {
         var card = this;
-        await CreatureCmd.GainBlock(card.Owner.Creature, card.DynamicVars.Block, play);
-        await PowerCmd.Apply<AnchorThrow>(choiceContext, card.Owner.Creature, card.DynamicVars["AnchorThrow"].BaseValue, card.Owner.Creature, card);
+        ArgumentNullException.ThrowIfNull(play.Target);
+        await PowerCmd.Apply<AnchoredDown>(choiceContext, play.Target, card.DynamicVars["AnchoredDown"].BaseValue, card.Owner.Creature, card);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(4M);
+        EnergyCost.UpgradeBy(-1);
     }
 }

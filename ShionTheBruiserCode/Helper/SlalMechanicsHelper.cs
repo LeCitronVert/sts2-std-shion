@@ -155,6 +155,14 @@ public static class SlalMechanicsHelper
         return card.Type is not (CardType.Status or CardType.Curse) && !card.Pool.IsColorless;
     }
 
+    /// <summary>
+    /// Slimy or Very Slimy (Very Slimy cards count as Slimy).
+    /// </summary>
+    public static bool IsSlimy(CardModel card)
+    {
+        return card.Keywords.Contains(SlalCardKeywords.Slimy) || card.Keywords.Contains(SlalCardKeywords.VerySlimy);
+    }
+
     public static bool IsFormPower(CardModel card)
     {
         return card.Type == CardType.Power && card.Tags.Contains(SlalCardTags.Form);

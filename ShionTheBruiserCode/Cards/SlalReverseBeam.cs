@@ -2,20 +2,19 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+/// <summary>
+/// Add Incoming Beam (+) into your Draw Pile. Add a copy of each card in your Hand into your Discard Pile.
+/// Incoming Beam is added first, so the copies increase its damage.
+/// </summary>
 public class SlalReverseBeam() : SlalTheEndlessCard(2,
     CardType.Skill, CardRarity.Rare,
     TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<WeakPower>(2)];
-
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<WeakPower>(),
         HoverTipFactory.FromCard<SlalIncomingBeam>(IsUpgraded),
     ];
 
@@ -25,9 +24,12 @@ public class SlalReverseBeam() : SlalTheEndlessCard(2,
     {
         var card = this;
         await CreatureCmd.TriggerAnim(card.Owner.Creature, "Cast", card.Owner.Character.CastAnimDelay);
-        await PowerCmd.Apply<WeakPower>(choiceContext, card.Owner.Creature, card.DynamicVars.Weak.BaseValue, card.Owner.Creature, card);
         CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(
             SlalMechanicsHelper.CreateCard<SlalIncomingBeam>(card.Owner, IsUpgraded), PileType.Draw, card.Owner, CardPilePosition.Random));
+
+        var copies = PileType.Hand.GetPile(card.Owner).Cards.Select(c => c.CreateClone()).ToList();
+        if (copies.Count == 0) return;
+        CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardsToCombat(copies, PileType.Discard, card.Owner));
     }
 
     protected override void OnUpgrade()

@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://ShionTheBruiser/scenes/fx/crit_indicator.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://ShionTheBruiser/images/powers/shion_crit_tracker_power.png" id="2_icon"]
+
+[node name="CritIndicator" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 86.0
+offset_bottom = 46.0
+mouse_filter = 0
+script = ExtResource("1_script")
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("2_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Digits" type="Control" parent="."]
+layout_mode = 0
+offset_left = 40.0
+offset_right = 86.0
+offset_bottom = 46.0
+mouse_filter = 2

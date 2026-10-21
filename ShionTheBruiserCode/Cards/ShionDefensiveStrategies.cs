@@ -3,10 +3,8 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
-using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -15,13 +13,13 @@ public class ShionDefensiveStrategies() : ShionTheBruiserCard(2,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<DefensiveStrategies>(5),
-        new CritDisplayTooltipVar()
+        new PowerVar<DefensiveStrategies>(1),
     ];
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(ShionCardKeywords.Defensive),
-        HoverTipFactory.FromPower<VigorPower>(),
+        HoverTipFactory.FromPower<Guard>(),
+        HoverTipFactory.FromPower<MightyGuard>(),
         HoverTipFactory.FromPower<CounterStance>()
     ];
     
@@ -50,6 +48,6 @@ public class ShionDefensiveStrategies() : ShionTheBruiserCard(2,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["DefensiveStrategies"].UpgradeValueBy(2);
+        DynamicVars["DefensiveStrategies"].UpgradeValueBy(1);
     }
 }

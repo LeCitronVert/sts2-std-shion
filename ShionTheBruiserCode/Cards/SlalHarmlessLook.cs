@@ -8,6 +8,9 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+/// <summary>
+/// Gain 7 Block. If you are Weak, gain Block an additional time.
+/// </summary>
 public class SlalHarmlessLook() : SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Common,
     TargetType.Self)
@@ -15,25 +18,29 @@ public class SlalHarmlessLook() : SlalTheEndlessCard(1,
     public override bool GainsBlock => true;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CalculationBaseVar(7),
-        new CalculationExtraVar(1),
-        new CalculatedBlockVar(ValueProp.Move).WithMultiplier((card, _) => card.Owner.Creature.GetPowerAmount<WeakPower>()),
+        new BlockVar(7M, ValueProp.Move),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<WeakPower>(),
     ];
 
+    protected override bool ShouldGlowGoldInternal => CombatState != null && Owner.Creature.HasPower<WeakPower>();
+
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
         var card = this;
-        await CreatureCmd.GainBlock(card.Owner.Creature, card.DynamicVars.CalculatedBlock.Calculate(play.Target), card.DynamicVars.CalculatedBlock.Props, play);
+        await CreatureCmd.GainBlock(card.Owner.Creature, card.DynamicVars.Block, play);
+        if (card.Owner.Creature.HasPower<WeakPower>())
+        {
+            await CreatureCmd.GainBlock(card.Owner.Creature, card.DynamicVars.Block, play);
+        }
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.CalculationExtra.UpgradeValueBy(1);
+        DynamicVars.Block.UpgradeValueBy(3M);
     }
 }

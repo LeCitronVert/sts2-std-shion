@@ -8,6 +8,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Critical;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -29,8 +30,8 @@ public class ShionEnergyBomb() : CritContributorCard(3,
         var card = this;
         if (card.CombatState != null)
             await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue).FromCard(card)
-                .TargetingAllOpponents(card.CombatState).WithHitFx("vfx/vfx_attack_blunt", tmpSfx: "heavy_attack.mp3")
-                .WithAttackerAnim(Character.ShionTheBruiser.GetEnergyAnimIfApplicable(card.Owner.Character), Character.ShionTheBruiser.GetEnergyDelayIfApplicable(card.Owner.Character))
+                .TargetingAllOpponents(card.CombatState).WithHitFx(tmpSfx: "heavy_attack.mp3")
+                .WithEnergyBlast(card, "vfx/vfx_attack_blunt")
                 .Execute(choiceContext);
     }
 

@@ -6,11 +6,12 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
+using ShionTheBruiser.ShionTheBruiserCode.Patches;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// The first X Slimed cards you play each turn are played an additional time and grant 1 energy.
+/// The first X Slimed cards you play from your Hand each turn are played an additional time and grant 1 energy.
 /// The additional play doesn't grant energy.
 /// </summary>
 public class AppleJuiceStocks : SlalTheEndlessPower
@@ -29,9 +30,13 @@ public class AppleJuiceStocks : SlalTheEndlessPower
     {
         if (card.Owner.Creature != Owner || card is not Slimed) return playCount;
 
+        // Only Slimed played from the Hand count (not auto-played ones, like with Chaotic Clone)
+        if (CardAutoPlayTracker.IsBeingAutoPlayed(card)) return playCount;
+
         var slimedPlayedThisTurn = CombatManager.Instance.History.CardPlaysStarted.Count(e =>
             e.Actor == Owner
             && e.CardPlay.IsFirstInSeries
+            && !e.CardPlay.IsAutoPlay
             && e.CardPlay.Card is Slimed
             && e.HappenedThisTurn(CombatState));
 

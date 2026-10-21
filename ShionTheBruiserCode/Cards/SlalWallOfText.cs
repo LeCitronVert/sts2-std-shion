@@ -10,7 +10,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 public class SlalWallOfText(): SlalTheEndlessCard(1,
-    CardType.Skill, CardRarity.Basic,
+    CardType.Skill, CardRarity.Uncommon,
     TargetType.RandomEnemy)
 {
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Confusion>()];

@@ -17,7 +17,7 @@ public class FlowCharge : ShionTheBruiserPower
     public override PowerStackType StackType =>
         PowerStackType.Counter;
     
-    public static readonly int VigorAmount = 3;
+    public static readonly int VigorAmount = 2;
     
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<VigorPower>(VigorAmount),

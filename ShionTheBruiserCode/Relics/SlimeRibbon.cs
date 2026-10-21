@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.HoverTips;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
@@ -19,7 +20,7 @@ public class SlimeRibbon : SlalTheEndlessRelic
 
     public override Task BeforeCombatStart()
     {
-        foreach (var card in (Owner.PlayerCombatState?.AllCards ?? []).Where(c => c.Keywords.Contains(SlalCardKeywords.Slimy)))
+        foreach (var card in (Owner.PlayerCombatState?.AllCards ?? []).Where(c => SlalMechanicsHelper.IsSlimy(c)))
         {
             card.BaseReplayCount++;
         }

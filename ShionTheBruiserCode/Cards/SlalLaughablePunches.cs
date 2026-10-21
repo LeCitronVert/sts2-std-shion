@@ -16,6 +16,7 @@ public class SlalLaughablePunches() : SlalTheEndlessCard(1,
         new DamageVar(3M, ValueProp.Move),
         new RepeatVar(2),
         new PowerVar<WeakPower>(2),
+        new DynamicVar("SelfWeak", 1),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -28,6 +29,8 @@ public class SlalLaughablePunches() : SlalTheEndlessCard(1,
     {
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
+        await PowerCmd.Apply<WeakPower>(choiceContext, card.Owner.Creature, card.DynamicVars["SelfWeak"].BaseValue, card.Owner.Creature, card);
+
         var attack = await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .WithHitCount(card.DynamicVars.Repeat.IntValue)
             .FromCard(card)

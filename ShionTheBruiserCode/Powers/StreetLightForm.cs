@@ -18,7 +18,6 @@ public class StreetLightForm : SlalTheEndlessPower
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromCard<SlalFreshIdea>(),
-        HoverTipFactory.FromCard<SlalMaybeLater>(),
         HoverTipFactory.ForEnergy(this),
     ];
 
@@ -27,7 +26,6 @@ public class StreetLightForm : SlalTheEndlessPower
         if (cardPlay.Card.Owner != Owner.Player || cardPlay.Card is not SlalFreshIdea) return;
 
         Flash();
-        await CardPileCmd.AddGeneratedCardToCombat(SlalMechanicsHelper.CreateCard<SlalMaybeLater>(Owner.Player), PileType.Hand, Owner.Player);
         await PlayerCmd.GainEnergy(Amount, Owner.Player);
     }
 }

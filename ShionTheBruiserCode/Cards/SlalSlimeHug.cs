@@ -1,28 +1,35 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
-using MegaCrit.Sts2.Core.HoverTips;
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+/// <summary>
+/// Apply 2 Weak. If you are Weak, double (triple) the enemy's Weak. Apply Confusion equal to the enemy's Weak.
+/// </summary>
 public class SlalSlimeHug(): SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.AnyEnemy)
 {
     public const int NormalMultiplier = 2;
     public const int UpgradedMultiplier = 3;
-    
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<WeakPower>(2),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<WeakPower>(),
+        HoverTipFactory.FromPower<Confusion>(),
     ];
-    
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
+    protected override bool ShouldGlowGoldInternal => CombatState != null && Owner.Creature.HasPower<WeakPower>();
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -30,27 +37,24 @@ public class SlalSlimeHug(): SlalTheEndlessCard(1,
     {
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
-        
-        await PowerCmd.Apply<WeakPower>(
-            choiceContext,
-            Owner.Creature,
-            DynamicVars["WeakPower"].BaseValue,
-            Owner.Creature,
-            null
-        );
-        
-        var amountOfWeak = play.Target.GetPowerAmount<WeakPower>();
-        if (amountOfWeak == 0) return;
-        
-        var amountToApply = amountOfWeak * (IsUpgraded ? UpgradedMultiplier : NormalMultiplier) - amountOfWeak;
-        
-        await PowerCmd.Apply<WeakPower>(
-            choiceContext,
-            play.Target,
-            amountToApply,
-            Owner.Creature,
-            card
-        );
+
+        await PowerCmd.Apply<WeakPower>(choiceContext, play.Target, card.DynamicVars.Weak.BaseValue, card.Owner.Creature, card);
+
+        if (card.Owner.Creature.HasPower<WeakPower>())
+        {
+            var amountOfWeak = play.Target.GetPowerAmount<WeakPower>();
+            if (amountOfWeak > 0)
+            {
+                var amountToApply = amountOfWeak * (IsUpgraded ? UpgradedMultiplier : NormalMultiplier) - amountOfWeak;
+                await PowerCmd.Apply<WeakPower>(choiceContext, play.Target, amountToApply, card.Owner.Creature, card);
+            }
+        }
+
+        var confusion = play.Target.GetPowerAmount<WeakPower>();
+        if (confusion > 0 && play.Target.IsAlive)
+        {
+            await PowerCmd.Apply<Confusion>(choiceContext, play.Target, confusion, card.Owner.Creature, card);
+        }
     }
 
     protected override void OnUpgrade()

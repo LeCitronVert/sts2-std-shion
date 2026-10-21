@@ -17,7 +17,7 @@ public class SlalVolatileForm() : SlalTheEndlessCard(2,
     protected override HashSet<CardTag> CanonicalTags => [SlalCardTags.Form];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<VolatileForm>(2),
+        new PowerVar<VolatileForm>(3),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -39,6 +39,6 @@ public class SlalVolatileForm() : SlalTheEndlessCard(2,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["VolatileForm"].UpgradeValueBy(1);
+        DynamicVars["VolatileForm"].UpgradeValueBy(2);
     }
 }

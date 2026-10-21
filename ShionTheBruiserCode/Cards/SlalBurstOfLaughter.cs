@@ -13,13 +13,14 @@ public class SlalBurstOfLaughter() : SlalTheEndlessCard(0,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<WeakPower>(2),
+        new PowerVar<WeakPower>(1),
         new EnergyVar(1),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<WeakPower>(),
         HoverTipFactory.ForEnergy(this),
+        HoverTipFactory.FromPower<Confusion>(),
     ];
 
     protected override async Task OnPlay(

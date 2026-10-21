@@ -10,7 +10,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 public class SlalCartoonStrike() : SlalTheEndlessCard(2,
-    CardType.Attack, CardRarity.Uncommon,
+    CardType.Attack, CardRarity.Basic,
     TargetType.AnyEnemy)
 {
     protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];

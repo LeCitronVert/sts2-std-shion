@@ -1,39 +1,27 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+/// <summary>
+/// Deal X damage and apply Y Confusion to a random enemy for each card in your Hand.
+/// </summary>
 public class SlalFalseConPunch() : SlalTheEndlessCard(1,
-    CardType.Skill, CardRarity.Uncommon,
+    CardType.Attack, CardRarity.Uncommon,
     TargetType.RandomEnemy)
 {
-    private const string _increaseKey = "Scale";
-    private Decimal _extraDamageFromPlays;
-
-    /// <summary>
-    /// Required so we can restore the extra damage amount after a downgrade (ie Magiknight)
-    /// @see Rampage
-    /// </summary>
-    private Decimal ExtraDamageFromPlays
-    {
-        get => this._extraDamageFromPlays;
-        set
-        {
-            this.AssertMutable();
-            this._extraDamageFromPlays = value;
-        }
-    }
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
+        new DamageVar(2M, ValueProp.Move),
         new PowerVar<Confusion>(4),
-        new RepeatVar(2),
-        new DynamicVar("Scale", 1)
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("Hits").WithMultiplier((card, _) => PileType.Hand.GetPile(card.Owner).Cards.Count(c => c != card) + 1),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -45,34 +33,31 @@ public class SlalFalseConPunch() : SlalTheEndlessCard(1,
         CardPlay play)
     {
         var card = this;
-        for (int i = 0; i < DynamicVars["Repeat"].BaseValue; i++)
+        if (card.CombatState is null) return;
+
+        // + 1 for this card, which has already left the Hand
+        var hits = PileType.Hand.GetPile(card.Owner).Cards.Count + 1;
+        for (var i = 0; i < hits; i++)
         {
-            Creature enemy = card.Owner.RunState.Rng.CombatTargets.NextItem<Creature>((IEnumerable<Creature>) CombatState.HittableEnemies);
-            if (enemy != null)
+            var enemy = card.Owner.RunState.Rng.CombatTargets.NextItem(card.CombatState.HittableEnemies);
+            if (enemy == null) break;
+
+            await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
+                .FromCard(card)
+                .Targeting(enemy)
+                .WithHitFx("vfx/vfx_attack_blunt")
+                .Execute(choiceContext);
+
+            if (enemy.IsAlive)
             {
-                await PowerCmd.Apply<Confusion>(
-                    choiceContext,
-                    enemy,
-                    DynamicVars["Confusion"].BaseValue,
-                    card.Owner.Creature,
-                    card
-                );
+                await PowerCmd.Apply<Confusion>(choiceContext, enemy, card.DynamicVars["Confusion"].BaseValue, card.Owner.Creature, card);
             }
-            enemy = (Creature) null;
         }
-
-        DynamicVars.Repeat.BaseValue += card.DynamicVars["Scale"].BaseValue;
-        card.ExtraDamageFromPlays += card.DynamicVars["Scale"].BaseValue;
-    }
-
-    protected override void AfterDowngraded()
-    {
-        base.AfterDowngraded();
-        DynamicVars.Repeat.BaseValue += ExtraDamageFromPlays;
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Scale"].UpgradeValueBy(1);
+        DynamicVars.Damage.UpgradeValueBy(2M);
+        DynamicVars["Confusion"].UpgradeValueBy(2);
     }
 }

@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -69,8 +70,7 @@ public class ShionEnergyVolley() : ShionTheBruiserCard(1,
             .WithHitCount((int) ((CalculatedVar) card.DynamicVars["HitCount"]).Calculate(card.Owner.Creature))
             .FromCard(card)
             .Targeting(play.Target)
-            .WithHitFx("vfx/vfx_attack_slash")
-            .WithAttackerAnim(Character.ShionTheBruiser.GetEnergyAnimIfApplicable(card.Owner.Character), Character.ShionTheBruiser.GetEnergyDelayIfApplicable(card.Owner.Character))
+            .WithEnergyBlast(card, "vfx/vfx_attack_slash")
             .Execute(choiceContext)
         ;
     }

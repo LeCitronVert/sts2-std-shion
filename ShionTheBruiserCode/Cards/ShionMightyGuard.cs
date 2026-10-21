@@ -8,7 +8,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionMightyGuard() : ShionDefensiveCard(3,
+public class ShionMightyGuard() : ShionDefensiveCard(2,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
@@ -19,7 +19,7 @@ public class ShionMightyGuard() : ShionDefensiveCard(3,
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<MightyGuard>(),
     ];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [ShionCardKeywords.Defensive];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [ShionCardKeywords.Defensive, CardKeyword.Exhaust];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -32,6 +32,6 @@ public class ShionMightyGuard() : ShionDefensiveCard(3,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["MightyGuard"].UpgradeValueBy(1);
+        RemoveKeyword(CardKeyword.Exhaust);
     }
 }
