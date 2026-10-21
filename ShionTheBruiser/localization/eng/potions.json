@@ -11,5 +11,12 @@
   "SHIONTHEBRUISER-COTTON_CANDY.title": "Cotton Candy",
   "SHIONTHEBRUISER-COTTON_CANDY.description": "Raise your [gold]Random[/gold] until it reaches [blue]9[/blue].",
   "SHIONTHEBRUISER-FLOS_BREW.title": "Flo's Brew",
-  "SHIONTHEBRUISER-FLOS_BREW.description": "Choose [blue]1[/blue] of [blue]3[/blue] random [gold]Form[/gold] cards to add into your [gold]Hand[/gold]. It's free to play this turn."
+  "SHIONTHEBRUISER-FLOS_BREW.description": "Choose [blue]1[/blue] of [blue]3[/blue] random [gold]Form[/gold] cards to add into your [gold]Hand[/gold]. It's free to play this turn.",
+
+  "SHIONTHEBRUISER-FRESH_LEMONADE.title": "Fresh Lemonade",
+  "SHIONTHEBRUISER-FRESH_LEMONADE.description": "[gold]Gamble[/gold] {Gamble:diff()}.\nDraw {Cards:diff()} cards.\nHeal HP equal to the energy cost of the cards drawn this way.",
+  "SHIONTHEBRUISER-EMPTY_BOTTLE.title": "Empty Bottle",
+  "SHIONTHEBRUISER-EMPTY_BOTTLE.description": "Add {Cards:diff()} upgraded [gold]Glass 2[/gold] [gold]Slashes[/gold] into your [gold]Hand[/gold].",
+  "SHIONTHEBRUISER-ELIXIR_OF_FERALITY.title": "Elixir of Ferality",
+  "SHIONTHEBRUISER-ELIXIR_OF_FERALITY.description": "Put ALL your [gold]Exhausted[/gold] [gold]Slashes[/gold] on top of your [gold]Draw Pile[/gold]."
 }

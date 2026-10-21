@@ -20,5 +20,22 @@
   "SHIONTHEBRUISER-VERYSLIMY.description": "After playing this card, fill your [gold]Hand[/gold] with [gold]Slimed[/gold].\nCounts as [gold]Slimy[/gold].",
   "SHIONTHEBRUISER-VERYSLIMY.title": "Very Slimy",
   "SHIONTHEBRUISER-GALVANISED.title": "Galvanised",
-  "SHIONTHEBRUISER-GALVANISED.description": "Gains additional effects while you have at least the specified amount of [gold]Vigor[/gold]."
+  "SHIONTHEBRUISER-GALVANISED.description": "Gains additional effects while you have at least the specified amount of [gold]Vigor[/gold].",
+
+  "SHIONTHEBRUISER-COOLDOWN.title": "Cooldown X",
+  "SHIONTHEBRUISER-COOLDOWN.description": "This card has [gold]Retain[/gold]. When played, it returns to your [gold]Hand[/gold] and is free to play for X turns.\nIf played during those X turns, it is discarded with no additional effect.",
+  "SHIONTHEBRUISER-REQUEST.title": "Request X",
+  "SHIONTHEBRUISER-REQUEST.description": "ALL effects of this card following [gold]Request X[/gold] trigger at the start of your turn in X turns (immediately when the counter reaches [blue]0[/blue]).",
+  "SHIONTHEBRUISER-REFUSE.title": "Refuse X",
+  "SHIONTHEBRUISER-REFUSE.description": "For the next X turns, do not trigger your [gold]Damage Debt[/gold].",
+  "SHIONTHEBRUISER-VALKYRS.title": "The Valkyrs",
+  "SHIONTHEBRUISER-VALKYRS.description": "The Valkyrs' effects are not affected by any of your modifiers.",
+  "SHIONTHEBRUISER-WOUNDING.title": "Wounding",
+  "SHIONTHEBRUISER-WOUNDING.description": "When played, add a [gold]Wound[/gold] into your [gold]Hand[/gold].",
+  "SHIONTHEBRUISER-ERRATIC.title": "Erratic",
+  "SHIONTHEBRUISER-ERRATIC.description": "When you draw this card, randomize its cost from [blue]0[/blue] to [blue]3[/blue].\nRemoves [gold]Unplayable[/gold].",
+  "SHIONTHEBRUISER-BLOODBEND.title": "Blood Bend X",
+  "SHIONTHEBRUISER-BLOODBEND.description": "Consumes ALL your [gold]Blood[/gold] and converts it into X for the effect of the card.",
+  "SHIONTHEBRUISER-GAMBLE.title": "Gamble X",
+  "SHIONTHEBRUISER-GAMBLE.description": "Choose X cards in your [gold]Hand[/gold], add [gold]Erratic[/gold] to them this combat and put them on top of your [gold]Draw Pile[/gold].\nStatuses and Curses can be chosen."
 }
