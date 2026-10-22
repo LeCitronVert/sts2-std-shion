@@ -1,7 +1,6 @@
 using BaseLib.Extensions;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -11,6 +10,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Character;
 using ShionTheBruiser.ShionTheBruiserCode.Extensions;
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
@@ -36,20 +36,11 @@ public class EdgeTheChao() : ShionTheBruiserRelic
     ];
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<VigorPower>()
+        HoverTipFactory.FromPower<VigorPower>(),
+        HoverTipFactory.FromPower<VigorNextTurn>()
     ];
 
-    // Accumulates the vigor to refund until after the attack fully resolves.
-    // Applying the refund directly inside AfterPowerAmountChanged would happen
-    // while VigorPower.AfterAttack still holds a reference to the spent attack
-    // command in its internal Data.commandToModify. Because VigorPower only
-    // latches a new attack when commandToModify is null, any subsequent attack
-    // would find it non-null and skip vigor application entirely.
-    // Deferring to AfterAttack ensures VigorPower has already finished its own
-    // AfterAttack (and cleared / consumed that reference) before new vigor lands.
-    private decimal _pendingVigorRefund;
-
-    public override Task AfterPowerAmountChanged(
+    public override async Task AfterPowerAmountChanged(
         PlayerChoiceContext context,
         PowerModel power,
         decimal amount,
@@ -57,29 +48,16 @@ public class EdgeTheChao() : ShionTheBruiserRelic
         CardModel? cardSource)
     {
         if (power.Owner != Owner.Creature || power is not VigorPower || amount >= 0)
-            return Task.CompletedTask;
-
-        _pendingVigorRefund += Math.Min(
-            Math.Abs(amount) * (RefundPercent / 100M),
-            RefundCap
-        );
-
-        return Task.CompletedTask;
-    }
-
-    public override async Task AfterAttack(PlayerChoiceContext choiceContext, AttackCommand command)
-    {
-        if (command.Attacker != Owner.Creature || _pendingVigorRefund <= 0)
             return;
 
-        var refund = _pendingVigorRefund;
-        _pendingVigorRefund = 0;
+        // Rounded down per consumption so Vigor stays a whole number.
+        var vigorNextTurn = Math.Min(Math.Floor(-amount * RefundPercent / 100M), RefundCap);
+        if (vigorNextTurn <= 0)
+            return;
 
-        await PowerCmd.Apply<VigorPower>(
-            choiceContext,
-            Owner.Creature,
-            refund,
-            Owner.Creature,
-            null);
+        // Applying VigorNextTurn (not VigorPower) mid-attack is safe: it doesn't touch
+        // VigorPower's pending attack command, so no deferral to AfterAttack is needed.
+        Flash();
+        await PowerCmd.Apply<VigorNextTurn>(context, Owner.Creature, vigorNextTurn, Owner.Creature, null);
     }
 }

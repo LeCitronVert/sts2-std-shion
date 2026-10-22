@@ -10,7 +10,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 /// <summary>
 /// At the start of your next turn, gain X Vigor.
 /// </summary>
-public class VigorNextTurn : SeelsTheRecklessPower
+public class VigorNextTurn : ShionTheBruiserPower
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
@@ -21,8 +21,11 @@ public class VigorNextTurn : SeelsTheRecklessPower
     {
         if (player != Owner.Player) return;
 
-        Flash();
-        await PowerCmd.Apply<VigorPower>(choiceContext, Owner, Amount, Owner, null);
+        if (Amount > 0)
+        {
+            Flash();
+            await PowerCmd.Apply<VigorPower>(choiceContext, Owner, Amount, Owner, null);
+        }
         await PowerCmd.Remove(this);
     }
 }

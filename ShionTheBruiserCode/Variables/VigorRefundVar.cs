@@ -8,7 +8,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Cards;
 namespace ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 /// <summary>
-/// Display-only var showing how much Vigor Energy Ball will refund if played right now.
+/// Display-only var showing how much Vigor next turn Energy Ball will give if played right now.
 /// </summary>
 public class VigorRefundVar() : DynamicVar(Key, 0)
 {

@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
 using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
@@ -30,6 +31,7 @@ public class ShionEnergyBall() : ShionTheBruiserCard(1,
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<VigorPower>(),
+        HoverTipFactory.FromPower<VigorNextTurn>(),
         HoverTipFactory.FromKeyword(ShionCardKeywords.Galvanised),
     ];
     
@@ -58,11 +60,11 @@ public class ShionEnergyBall() : ShionTheBruiserCard(1,
         
         if (refundAmount <= 0) return;
         
-        await PowerCmd.Apply<VigorPower>(choiceContext, card.Owner.Creature, refundAmount, card.Owner.Creature, null);
+        await PowerCmd.Apply<VigorNextTurn>(choiceContext, card.Owner.Creature, refundAmount, card.Owner.Creature, null);
     }
 
     /// <summary>
-    /// Vigor that would be refunded if this card were played right now (0 when not Galvanised).
+    /// Vigor gained next turn if this card were played right now (0 when not Galvanised).
     /// </summary>
     public static decimal GetVigorRefund(CardModel card)
     {
@@ -71,7 +73,7 @@ public class ShionEnergyBall() : ShionTheBruiserCard(1,
     }
 
     private static decimal CalculateVigorRefund(CardModel card, decimal vigorAmount) =>
-        Math.Floor(vigorAmount * card.DynamicVars["VigorRefundPercent"].BaseValue / 100);
+        vigorAmount <= 0 ? 0 : Math.Floor(vigorAmount * card.DynamicVars["VigorRefundPercent"].BaseValue / 100);
 
     protected override void OnUpgrade()
     {
