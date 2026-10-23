@@ -1,13 +1,13 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1792681696
+::res://::1792757132
 BETA_TEST_TODO.md::TextFile::-1::1792676842::0::1::::<><><>0<>0<><>::
 export_presets.cfg::TextFile::-1::1781940056::0::1::::<><><>0<>0<><>::
 ShionTheBruiser.json::JSON::-1::1792433998::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1792756647
-ShionTheBruiser.deps.json::JSON::-1::1792756647::0::1::::<><><>0<>0<><>::
+::res://bin/ExportRelease/net9.0/publish/::1792757169
+ShionTheBruiser.deps.json::JSON::-1::1792757169::0::1::::<><><>0<>0<><>::
 ::res://exportToHTML/::1782829109
 ::res://ShionTheBruiser/::1792675405
 mod_image.png::CompressedTexture2D::8120906206059877335::1781940056::1782158780::1::::<><><>0<>0<>981796944b721321e967a9a00a87ee4e<>res://.godot/imported/mod_image.png-42cee5b6b030b953b3c956b7ca85a956.ctex::
@@ -829,7 +829,7 @@ lull.png::CompressedTexture2D::1267024042070092315::1783267457::1783267487::1:::
 ::res://ShionTheBruiser/localization/::1781940056
 ::res://ShionTheBruiser/localization/eng/::1792690264
 ancients.json::JSON::-1::1792675405::0::1::::<><><>0<>0<><>::
-cards.json::JSON::-1::1792690264::0::1::::<><><>0<>0<><>::
+cards.json::JSON::-1::1792757140::0::1::::<><><>0<>0<><>::
 card_keywords.json::JSON::-1::1792675405::0::1::::<><><>0<>0<><>::
 card_selection.json::JSON::-1::1792675405::0::1::::<><><>0<>0<><>::
 characters.json::JSON::-1::1792681383::0::1::::<><><>0<>0<><>::
@@ -862,7 +862,7 @@ shion_auras.gd::GDScript::4576563140771859101::1792503904::0::1::::<>Node2D<><>0
 shion_auras.tscn::PackedScene::-1::1792503896::0::1::::<><><>0<>0<><>::res://ShionTheBruiser/scenes/fx/shion_auras.gd
 ::res://ShionTheBruiserCode/::1792675405
 MainFile.cs::CSharpScript::2954314548483070873::1791501155::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Cards/::1792739965
+::res://ShionTheBruiserCode/Cards/::1792757140
 CosmoDetermination.cs::CSharpScript::4903082444639403780::1792756623::0::1::::<><><>0<>0<><>::
 CosmoGuidance.cs::CSharpScript::4895954223051435257::1792756623::0::1::::<><><>0<>0<><>::
 CosmoKindness.cs::CSharpScript::2527117697509655675::1792756623::0::1::::<><><>0<>0<><>::
@@ -1199,7 +1199,7 @@ SlalEnthusiasticWave.cs::CSharpScript::4199337619944911609::1792676287::0::1::::
 SlalFalseConPunch.cs::CSharpScript::8884388342257623712::1792607539::0::1::::<><><>0<>0<><>::
 SlalFavouriteBucket.cs::CSharpScript::8579979158152694632::1792689303::0::1::::<><><>0<>0<><>::
 SlalFoxForm.cs::CSharpScript::4848200294076538056::1792607539::0::1::::<><><>0<>0<><>::
-SlalFreshIdea.cs::CSharpScript::4368751252289004731::1792756623::0::1::::<><><>0<>0<><>::
+SlalFreshIdea.cs::CSharpScript::4368751252289004731::1792757140::0::1::::<><><>0<>0<><>::
 SlalFridgeForm.cs::CSharpScript::4395681341229690915::1792676300::0::1::::<><><>0<>0<><>::
 SlalFrontflipAndAHalf.cs::CSharpScript::4828609743472144277::1792676319::0::1::::<><><>0<>0<><>::
 SlalGenieForm.cs::CSharpScript::758916499353822600::1792257956::0::1::::<><><>0<>0<><>::
@@ -1297,7 +1297,7 @@ SlalCardKeywords.cs::CSharpScript::6802432698703623791::1792504349::0::1::::<><>
 SlalCardTags.cs::CSharpScript::1358202875028359775::1791312131::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiserCode/Extensions/::1784594829
 StringExtensions.cs::CSharpScript::7657938563527260869::1784594829::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Helper/::1792690112
+::res://ShionTheBruiserCode/Helper/::1792756682
 DreamersMechanicsHelper.cs::CSharpScript::1367708701330932763::1784857223::0::1::::<><><>0<>0<><>::
 FryMechanicsHelper.cs::CSharpScript::5896359720773048801::1792675405::0::1::::<><><>0<>0<><>::
 MonsterMagicHelper.cs::CSharpScript::2424719276935796326::1782837107::0::1::::<><><>0<>0<><>::
@@ -1306,7 +1306,7 @@ PreviewHelper.cs::CSharpScript::6436008676017542931::1792689968::0::1::::<><><>0
 SeelsMechanicsHelper.cs::CSharpScript::8100201785959170499::1792675405::0::1::::<><><>0<>0<><>::
 ShionHooksHelper.cs::CSharpScript::7312245568866882451::1783231394::0::1::::<><><>0<>0<><>::
 ShionMechanicsHelper.cs::CSharpScript::2990478697957247076::1792689718::0::1::::<><><>0<>0<><>::
-SlalMechanicsHelper.cs::CSharpScript::3955379173374721020::1792689968::0::1::::<><><>0<>0<><>::
+SlalMechanicsHelper.cs::CSharpScript::3955379173374721020::1792756682::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiserCode/Monsters/::1783259594
 AbbyMonster.cs::CSharpScript::7065894295935417984::1783259594::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiserCode/Patches/::1792505191
@@ -1555,7 +1555,7 @@ Lull.cs::CSharpScript::1804038520924471915::1783271867::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiserCode/Singletons/::1785182723
 ShionCritSingleton.cs::CSharpScript::3951621572379558951::1785149325::0::1::::<><><>0<>0<><>::
 SlalApparenceSingleton.cs::CSharpScript::6424703020693251239::1785070563::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Variables/::1792690112
+::res://ShionTheBruiserCode/Variables/::1792757132
 CritAttackRateVar.cs::CSharpScript::3230034280361743181::1782405235::0::1::::<><><>0<>0<><>::
 CritHitRateVar.cs::CSharpScript::8635812020860143973::1782405249::0::1::::<><><>0<>0<><>::
 CriticalDrawVar.cs::CSharpScript::8573534179023296085::1783943557::0::1::::<><><>0<>0<><>::
@@ -1563,7 +1563,7 @@ CritRateCardDisplayVar.cs::CSharpScript::6317510679910752903::1782760933::0::1::
 CritRateDisplayVar.cs::CSharpScript::2817824445694793037::1783231604::0::1::::<><><>0<>0<><>::
 DamageCapVar.cs::CSharpScript::6621522850874298219::1782151646::0::1::::<><><>0<>0<><>::
 HasTargetVar.cs::CSharpScript::3245866986048990123::1792689672::0::1::::<><><>0<>0<><>::
-InCombatHasCreativeSpiritVar.cs::CSharpScript::5840951325251575542::1791669762::0::1::::<><><>0<>0<><>::
+InCombatPowerAmountVar.cs::CSharpScript::2379550944823328950::1792757131::0::1::::<><><>0<>0<><>::
 PatchUpVar.cs::CSharpScript::3704163300152184645::1784400986::0::1::::<><><>0<>0<><>::
 VigorRefundVar.cs::CSharpScript::2659734043316397022::1792675405::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiserCode/Visuals/::1792505191

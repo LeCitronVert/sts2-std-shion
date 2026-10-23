@@ -22,7 +22,13 @@ public class SlalFreshIdea(): SlalTheEndlessCard(0,
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new InCombatHasCreativeSpiritVar(this),
+        new InCombatPowerAmountVar<CreativeSpirit>("InCombatHasCreativeSpirit"),
+        new InCombatPowerAmountVar<TelevisionForm>("InCombatTelevisionForm"),
+        // Television Form grants additional Random
+        new CalculationBaseVar(1),
+        new CalculationExtraVar(1),
+        new CalculatedVar("RandomAmount").WithMultiplier((card, _) =>
+            card.CombatState == null ? 0 : card.Owner.Creature.GetPowerAmount<TelevisionForm>()),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [

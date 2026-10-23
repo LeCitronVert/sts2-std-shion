@@ -68,7 +68,6 @@
     <ItemGroup>
       <Content Include="ShionTheBruiserCode\Cards\ShionCreativeSpirit.cs.uid" />
       <Content Include="ShionTheBruiserCode\Powers\CreativeSpirit.cs.uid" />
-      <Content Include="ShionTheBruiserCode\Variables\InCombatHasCreativeSpiritVar.cs.uid" />
     </ItemGroup>
 
     <Target Name="CheckDependencyPaths">

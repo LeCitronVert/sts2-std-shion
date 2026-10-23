@@ -239,7 +239,7 @@
     "SHIONTHEBRUISER-SLAL_TURN_THE_TABLES.title": "Turn The Tables",
     "SHIONTHEBRUISER-SLAL_CREATIVE_SPIRIT.description": "At the start of your turn, add a [gold]Fresh Idea[/gold] into your [gold]Hand[/gold].\n[gold]Fresh Ideas[/gold] can also [gold]Transform[/gold] cards into [gold]Rare[/gold] cards.",
     "SHIONTHEBRUISER-SLAL_CREATIVE_SPIRIT.title": "Creative Spirit",
-    "SHIONTHEBRUISER-SLAL_FRESH_IDEA.description": "Gain [blue]1[/blue] [gold]Random[/gold].\n{IfUpgraded:show:Choose a card in your [gold]Hand[/gold] to [gold]Transform[/gold]|[gold]Transform[/gold] a random card in your [gold]Hand[/gold]} into a random {InCombatHasCreativeSpirit:cond:>0?|non-[gold]Rare[/gold] }card.",
+    "SHIONTHEBRUISER-SLAL_FRESH_IDEA.description": "Gain {RandomAmount:diff()} [gold]Random[/gold].\n{InCombatTelevisionForm:cond:>0?[gold]Transform[/gold] ALL cards in your [gold]Hand[/gold] into random {InCombatHasCreativeSpirit:cond:>0?|non-[gold]Rare[/gold] }cards.|{IfUpgraded:show:Choose a card in your [gold]Hand[/gold] to [gold]Transform[/gold]|[gold]Transform[/gold] a random card in your [gold]Hand[/gold]} into a random {InCombatHasCreativeSpirit:cond:>0?|non-[gold]Rare[/gold] }card.}",
     "SHIONTHEBRUISER-SLAL_FRESH_IDEA.title": "Fresh Idea",
     "SHIONTHEBRUISER-SLAL_SLIME_HUG.description": "Apply {WeakPower:diff()} [gold]Weak[/gold].\nIf you are [gold]Weak[/gold], {IfUpgraded:show:triple|double} the enemy's [gold]Weak[/gold].\nApply [gold]Confusion[/gold] equal to the enemy's [gold]Weak[/gold].{InCombat:{HasTarget:cond:>0?\n(Apply {ConfusionAmount:diff()} [gold]Confusion[/gold])|}|}",
     "SHIONTHEBRUISER-SLAL_SLIME_HUG.title": "Slime Hug",
