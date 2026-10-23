@@ -39,7 +39,14 @@ public class ShieldBreaker : ShionTheBruiserPower
 
     // Random-target Attacks only know their targets once they hit
     private CardModel? _galvanisedRandomAttack;
-    private readonly HashSet<Creature> _randomTargetsAffected = [];
+    private HashSet<Creature> _randomTargetsAffected = [];
+
+    // MemberwiseClone shares the set with the canonical model, so give each instance its own.
+    protected override void DeepCloneFields()
+    {
+        base.DeepCloneFields();
+        _randomTargetsAffected = [];
+    }
 
     // Checked before the Attack resolves, since it consumes Vigor
     public override async Task BeforeCardPlayed(CardPlay cardPlay)

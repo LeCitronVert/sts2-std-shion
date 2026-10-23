@@ -16,7 +16,14 @@ public class SeelsTracker : SeelsTheRecklessPower
     public override PowerStackType StackType => PowerStackType.None;
     protected override bool IsVisibleInternal => false;
 
-    public readonly HashSet<CardModel> ModifiedCards = [];
+    public HashSet<CardModel> ModifiedCards { get; private set; } = [];
+
+    // MemberwiseClone shares the set with the canonical model, so give each instance its own.
+    protected override void DeepCloneFields()
+    {
+        base.DeepCloneFields();
+        ModifiedCards = [];
+    }
 
     public void CountModification(CardModel card)
     {

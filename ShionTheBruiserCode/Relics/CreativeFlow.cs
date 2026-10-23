@@ -42,6 +42,9 @@ public class CreativeFlow : SlalTheEndlessRelic
             cardModel.AddKeyword(SlalCardKeywords.Novel);
         }
 
+        // Cards created before the first turn starts also need the tracker to gain Novel.
+        await SlalMechanicsHelper.EnsureCreatureHasNovelTracker(Owner.Creature);
+
         Flash();
         await SlalMechanicsHelper.GainRandom(new ThrowingPlayerChoiceContext(), Owner.Creature, DynamicVars["StartingRandom"].IntValue);
     }
@@ -59,9 +62,7 @@ public class CreativeFlow : SlalTheEndlessRelic
 
     public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
-        SlalMechanicsHelper.EnsureCreatureHasNovelTracker(Owner.Creature);
-
-        return Task.CompletedTask;
+        return SlalMechanicsHelper.EnsureCreatureHasNovelTracker(Owner.Creature);
     }
 
     public override Task BeforeCardPlayed(CardPlay cardPlay)

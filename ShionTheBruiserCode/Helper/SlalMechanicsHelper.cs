@@ -51,11 +51,11 @@ public static class SlalMechanicsHelper
         return Task.CompletedTask;
     }
 
-    public static Task EnsureCreatureHasNovelTracker(Creature creature)
+    public static async Task EnsureCreatureHasNovelTracker(Creature creature)
     {
         if (!creature.HasPower<NovelTracker>())
         {
-            PowerCmd.Apply<NovelTracker>(
+            await PowerCmd.Apply<NovelTracker>(
                 new ThrowingPlayerChoiceContext(),
                 creature,
                 1,
@@ -64,8 +64,6 @@ public static class SlalMechanicsHelper
                 true
             );
         }
-
-        return Task.CompletedTask;
     }
 
     public static CardModel? ChooseRandomCardWithoutNovelIfPossible(Player player, PileType pile)

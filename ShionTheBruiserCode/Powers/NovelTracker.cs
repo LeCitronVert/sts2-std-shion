@@ -17,16 +17,23 @@ public class NovelTracker : SlalTheEndlessPower
     protected override bool IsVisibleInternal => false;
     
     public List<ModelId> CardsUsedThisFight = [];
-    
+
+    // MemberwiseClone shares the list with the canonical model, so give each instance its own.
+    protected override void DeepCloneFields()
+    {
+        base.DeepCloneFields();
+        CardsUsedThisFight = [];
+    }
+
     public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var card = cardPlay.Card;
         if (card.Owner != Owner.Player) return Task.CompletedTask;
         
-        if (!CardsUsedThisFight.Contains(card.Id)) CardsUsedThisFight.Add(card.Id);
-        
+        // Only a triggered Novel locks identical cards out of Novel for the rest of the combat.
         if (card.Keywords.Contains(SlalCardKeywords.Novel))
         {
+            if (!CardsUsedThisFight.Contains(card.Id)) CardsUsedThisFight.Add(card.Id);
             SlalMechanicsHelper.TriggerNovel(card, Owner);
         }
 
