@@ -33,13 +33,17 @@ public class SlalConclusion() : SlalTheEndlessCard(3,
         CardPlay play)
     {
         var card = this;
-        await PowerCmd.Apply<Conclusion>(
+        var power = await PowerCmd.Apply<Conclusion>(
             choiceContext,
             card.Owner.Creature,
             card.DynamicVars["Conclusion"].BaseValue,
             card.Owner.Creature,
             card
         );
+        if (power != null)
+        {
+            await power.Trigger(choiceContext);
+        }
     }
 
     protected override void OnUpgrade()

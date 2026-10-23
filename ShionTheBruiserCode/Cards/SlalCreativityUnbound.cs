@@ -7,8 +7,11 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+/// <summary>
+/// Power with no lasting effect: add 1 random of Walking Encyclopedia, Television or Sparrow Form into your Hand.
+/// </summary>
 public class SlalCreativityUnbound() : SlalTheEndlessCard(3,
-    CardType.Skill, CardRarity.Rare,
+    CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
     private ModelId? _lastGivenPower;
@@ -27,15 +30,13 @@ public class SlalCreativityUnbound() : SlalTheEndlessCard(3,
     }
 
     private static IReadOnlyList<CardModel> PowerOptions => [
-        ModelDb.Card<SlalPonyForm>(),
+        ModelDb.Card<SlalWalkingEncyclopedia>(),
         ModelDb.Card<SlalTelevisionForm>(),
         ModelDb.Card<SlalSparrowForm>(),
     ];
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromCard<SlalPonyForm>(IsUpgraded),
+        HoverTipFactory.FromCard<SlalWalkingEncyclopedia>(IsUpgraded),
         HoverTipFactory.FromCard<SlalTelevisionForm>(IsUpgraded),
         HoverTipFactory.FromCard<SlalSparrowForm>(IsUpgraded),
     ];

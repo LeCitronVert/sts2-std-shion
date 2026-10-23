@@ -9,12 +9,16 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain 1 (2) Memory. You can now choose the cards Memory plays from your Discard Pile.
+/// Gain 1 Memory. You choose the cards Memory plays from your Discard Pile, but they are Exhausted. Ethereal (upgrade: not Ethereal).
 /// </summary>
 public class SlalContinuityThread() : SlalTheEndlessCard(3,
-    CardType.Power, CardRarity.Rare,
+    CardType.Power, CardRarity.Ancient,
     TargetType.Self)
 {
+    public override bool CanBeGeneratedInCombat => false;
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Ethereal];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<Memory>(1)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Memory>()];
@@ -31,6 +35,6 @@ public class SlalContinuityThread() : SlalTheEndlessCard(3,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Memory"].UpgradeValueBy(1);
+        RemoveKeyword(CardKeyword.Ethereal);
     }
 }

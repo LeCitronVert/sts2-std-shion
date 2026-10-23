@@ -3,13 +3,15 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+/// <summary>
+/// At the end of your turn, lose up to 2 (3) energy. Gain 1 Thorns for each energy lost this way.
+/// </summary>
 public class SlalCactusForm() : SlalTheEndlessCard(2,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
@@ -18,11 +20,9 @@ public class SlalCactusForm() : SlalTheEndlessCard(2,
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<CactusForm>(2),
-        new PowerVar<WeakPower>(9),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<WeakPower>(),
         HoverTipFactory.FromPower<ThornsPower>(),
     ];
 
@@ -31,7 +31,6 @@ public class SlalCactusForm() : SlalTheEndlessCard(2,
         CardPlay play)
     {
         var card = this;
-        await PowerCmd.Apply<WeakPower>(choiceContext, card.Owner.Creature, card.DynamicVars.Weak.BaseValue, card.Owner.Creature, card);
         await PowerCmd.Apply<CactusForm>(
             choiceContext,
             card.Owner.Creature,
@@ -43,7 +42,6 @@ public class SlalCactusForm() : SlalTheEndlessCard(2,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Weak.UpgradeValueBy(5);
         DynamicVars["CactusForm"].UpgradeValueBy(1);
     }
 }

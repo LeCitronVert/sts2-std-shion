@@ -1,22 +1,34 @@
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Powers;
-using MegaCrit.Sts2.Core.HoverTips;
-using ShionTheBruiser.ShionTheBruiserCode.Cards;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// Fresh Ideas transform ALL cards in your Hand and grant X additional Random.
-/// Random cards you create can be Colorless.
-/// Effects are handled in <see cref="SlalFreshIdea"/> and <see cref="Helper.SlalMechanicsHelper.GetRandomCardOptions"/>.
+/// Whenever you play a card from your Hand, play up to X identical cards from your Discard Pile
+/// (a card and its upgrade count as identical, upgraded ones first).
+/// Random cards you create can be Colorless (see <see cref="SlalMechanicsHelper.GetRandomCardOptions"/>).
 /// </summary>
 public class TelevisionForm : SlalTheEndlessPower
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromCard<SlalFreshIdea>(),
-        HoverTipFactory.Static(StaticHoverTip.Transform),
-        HoverTipFactory.FromPower<Random>(),
-    ];
+    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        var played = cardPlay.Card;
+        if (played.Owner != Owner.Player || cardPlay.IsAutoPlay || !cardPlay.IsLastInSeries) return;
+
+        var copies = PileType.Discard.GetPile(Owner.Player).Cards
+            .Where(c => c != played && c.Id == played.Id && !c.Keywords.Contains(CardKeyword.Unplayable))
+            .OrderByDescending(c => c.IsUpgraded)
+            .Take(Amount)
+            .ToList();
+        if (copies.Count == 0) return;
+
+        Flash();
+        await SlalMechanicsHelper.AutoPlayFromDiscard(choiceContext, Owner.Player, copies);
+    }
 }

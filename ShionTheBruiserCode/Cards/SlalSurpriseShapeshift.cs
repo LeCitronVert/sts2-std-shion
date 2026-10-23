@@ -10,6 +10,9 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+/// <summary>
+/// Deal 5 damage. Apply 5 Confusion. Add a random Goofball Token Power into your Draw Pile.
+/// </summary>
 public class SlalSurpriseShapeshift() : SlalTheEndlessCard(1,
     CardType.Attack, CardRarity.Common,
     TargetType.AnyEnemy)
@@ -29,12 +32,6 @@ public class SlalSurpriseShapeshift() : SlalTheEndlessCard(1,
         }
     }
 
-    private static IReadOnlyList<CardModel> PowerOptions => [
-        ModelDb.Card<SlalBumperForm>(),
-        ModelDb.Card<SlalVentilatorForm>(),
-        ModelDb.Card<SlalSqueakySquirrelForm>(),
-    ];
-
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(5M, ValueProp.Move),
         new PowerVar<Confusion>(5),
@@ -42,9 +39,6 @@ public class SlalSurpriseShapeshift() : SlalTheEndlessCard(1,
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<Confusion>(),
-        HoverTipFactory.FromCard<SlalBumperForm>(IsUpgraded),
-        HoverTipFactory.FromCard<SlalVentilatorForm>(IsUpgraded),
-        HoverTipFactory.FromCard<SlalSqueakySquirrelForm>(IsUpgraded),
     ];
 
     protected override async Task OnPlay(
@@ -53,6 +47,7 @@ public class SlalSurpriseShapeshift() : SlalTheEndlessCard(1,
     {
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
+
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .FromCard(card)
             .Targeting(play.Target)
@@ -67,7 +62,7 @@ public class SlalSurpriseShapeshift() : SlalTheEndlessCard(1,
             card
         );
 
-        var power = SlalMechanicsHelper.CreateTokenAvoiding(card.Owner, PowerOptions, LastGivenPower, IsUpgraded);
+        var power = SlalMechanicsHelper.CreateGoofballTokenPower(card.Owner, IsUpgraded, LastGivenPower);
         LastGivenPower = power.Id;
         CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(power, PileType.Draw, card.Owner, CardPilePosition.Random));
     }

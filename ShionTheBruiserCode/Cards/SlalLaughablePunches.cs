@@ -13,7 +13,7 @@ public class SlalLaughablePunches() : SlalTheEndlessCard(1,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(3M, ValueProp.Move),
+        new DamageVar(1M, ValueProp.Move),
         new RepeatVar(2),
         new PowerVar<WeakPower>(2),
         new DynamicVar("SelfWeak", 1),
@@ -52,6 +52,6 @@ public class SlalLaughablePunches() : SlalTheEndlessCard(1,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Weak.UpgradeValueBy(2);
+        DynamicVars.Repeat.UpgradeValueBy(1);
     }
 }

@@ -3,27 +3,25 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
-using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Apply 1 Weak to ALL enemies and yourself. Deal 5 (7) damage to ALL enemies. Take 5 damage.
-/// If that damage made you lose HP, ALL enemies gain 10 (15) Confusion.
+/// Gain 1 Weak. Apply 1 Weak, and Confusion equal to your Block, to ALL enemies. Lose all your Block.
 /// </summary>
-public class SlalFrontflipAndAHalf() : SlalTheEndlessCard(2,
+public class SlalFrontflipAndAHalf() : SlalTheEndlessCard(1,
     CardType.Attack, CardRarity.Uncommon,
     TargetType.AllEnemies)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(5M, ValueProp.Move),
         new PowerVar<WeakPower>(1),
-        new DynamicVar("SelfDamage", 5M),
-        new PowerVar<Confusion>(10),
+        new DynamicVar("SelfWeak", 1),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("ConfusionAmount").WithMultiplier((card, _) => card.Owner.Creature.Block),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -36,36 +34,18 @@ public class SlalFrontflipAndAHalf() : SlalTheEndlessCard(2,
         CardPlay play)
     {
         var card = this;
-        if (card.CombatState is null) return;
-
+        await PowerCmd.Apply<WeakPower>(choiceContext, card.Owner.Creature, card.DynamicVars["SelfWeak"].BaseValue, card.Owner.Creature, card);
         await SlalMechanicsHelper.ApplyToAllEnemies<WeakPower>(choiceContext, card.Owner.Creature, card.DynamicVars.Weak.BaseValue, card);
-        await PowerCmd.Apply<WeakPower>(choiceContext, card.Owner.Creature, card.DynamicVars.Weak.BaseValue, card.Owner.Creature, card);
 
-        await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
-            .FromCard(card)
-            .TargetingAllOpponents(card.CombatState)
-            .WithHitFx("vfx/vfx_attack_blunt")
-            .Execute(choiceContext);
+        var block = card.Owner.Creature.Block;
+        if (block <= 0) return;
 
-        // Blockable, so Block can prevent the Confusion
-        var selfDamage = await CreatureCmd.Damage(
-            choiceContext,
-            card.Owner.Creature,
-            card.DynamicVars["SelfDamage"].BaseValue,
-            ValueProp.Unpowered,
-            card.Owner.Creature,
-            card
-        );
-
-        if (selfDamage.Any(r => r.UnblockedDamage > 0))
-        {
-            await SlalMechanicsHelper.ApplyToAllEnemies<Confusion>(choiceContext, card.Owner.Creature, card.DynamicVars["Confusion"].BaseValue, card);
-        }
+        await SlalMechanicsHelper.ApplyToAllEnemies<Confusion>(choiceContext, card.Owner.Creature, block, card);
+        await CreatureCmd.LoseBlock(card.Owner.Creature, block);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(2M);
-        DynamicVars["Confusion"].UpgradeValueBy(5);
+        EnergyCost.UpgradeBy(-1);
     }
 }

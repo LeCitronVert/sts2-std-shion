@@ -8,14 +8,24 @@ using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+/// <summary>
+/// Gain 1 Weak. Draw as many cards as your Weak. This turn, whenever you play a card, gain 1 Vigor. Exhaust (upgrade: no Exhaust).
+/// </summary>
 public class SlalBurlesqueWindUp() : SlalTheEndlessCard(0,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<BurlesqueWindUp>(2),
+        new PowerVar<BurlesqueWindUp>(1),
         new PowerVar<WeakPower>(1),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        // Counts the Weak gained first
+        new CalculatedVar("DrawAmount").WithMultiplier((card, _) =>
+            card.Owner.Creature.GetPowerAmount<WeakPower>() + card.DynamicVars.Weak.BaseValue),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -29,6 +39,13 @@ public class SlalBurlesqueWindUp() : SlalTheEndlessCard(0,
     {
         var card = this;
         await PowerCmd.Apply<WeakPower>(choiceContext, card.Owner.Creature, card.DynamicVars.Weak.BaseValue, card.Owner.Creature, card);
+
+        var weak = card.Owner.Creature.GetPowerAmount<WeakPower>();
+        if (weak > 0)
+        {
+            await CardPileCmd.Draw(choiceContext, weak, card.Owner);
+        }
+
         await PowerCmd.Apply<BurlesqueWindUp>(
             choiceContext,
             card.Owner.Creature,
@@ -40,6 +57,6 @@ public class SlalBurlesqueWindUp() : SlalTheEndlessCard(0,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["BurlesqueWindUp"].UpgradeValueBy(1);
+        RemoveKeyword(CardKeyword.Exhaust);
     }
 }

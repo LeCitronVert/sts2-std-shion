@@ -4,16 +4,15 @@ using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
-using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain 6 Block. Play a random Slimed in your Hand. If you do, gain 1 Weak.
-/// Upgraded: gain 8 Block. Play ALL Slimed in your Hand. Gain 1 Weak if you played a card this way.
+/// Gain 6 Block. Play a random Slimed in your Hand. If you do, choose 1 of 2 (upgraded) non-Rare cards from any character
+/// to add into your Hand. Creative Spirit allows Rare cards, Television Form allows Colorless cards.
 /// </summary>
 public class SlalChaoticClone() : SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Common,
@@ -23,12 +22,11 @@ public class SlalChaoticClone() : SlalTheEndlessCard(1,
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new BlockVar(6M, ValueProp.Move),
-        new PowerVar<WeakPower>(1),
+        new CardsVar(2),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromCard<Slimed>(),
-        HoverTipFactory.FromPower<WeakPower>(),
     ];
 
     protected override async Task OnPlay(
@@ -38,22 +36,20 @@ public class SlalChaoticClone() : SlalTheEndlessCard(1,
         var card = this;
         await CreatureCmd.GainBlock(card.Owner.Creature, card.DynamicVars.Block, play);
 
-        var slimedCards = PileType.Hand.GetPile(card.Owner).Cards.Where(c => c is Slimed).ToList();
-        List<CardModel> toPlay = IsUpgraded
-            ? slimedCards
-            : slimedCards.TakeRandom(1, card.Owner.RunState.Rng.CombatCardSelection).ToList();
+        var slimed = PileType.Hand.GetPile(card.Owner).Cards
+            .Where(c => c is Slimed)
+            .TakeRandom(1, card.Owner.RunState.Rng.CombatCardSelection)
+            .FirstOrDefault();
+        if (slimed == null) return;
 
-        foreach (var slimed in toPlay)
-        {
-            await CardCmd.AutoPlay(choiceContext, slimed, null);
-        }
+        await CardCmd.AutoPlay(choiceContext, slimed, null);
 
-        if (toPlay.Count == 0) return;
-        await PowerCmd.Apply<WeakPower>(choiceContext, card.Owner.Creature, card.DynamicVars.Weak.BaseValue, card.Owner.Creature, card);
+        var options = SlalMechanicsHelper.GetCharacterCardOptions(card.Owner, includeOwnCharacter: true)
+            .Where(c => SlalMechanicsHelper.HasRandomCardRarity(card.Owner, c));
+        await SlalMechanicsHelper.ChooseCardToAddToHand(choiceContext, card.Owner, options, card.DynamicVars.Cards.IntValue, IsUpgraded);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(2M);
     }
 }

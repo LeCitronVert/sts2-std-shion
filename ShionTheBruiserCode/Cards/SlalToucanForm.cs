@@ -17,7 +17,7 @@ public class SlalToucanForm() : SlalTheEndlessCard(1,
     protected override HashSet<CardTag> CanonicalTags => [SlalCardTags.Form];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<ToucanForm>(10),
+        new PowerVar<ToucanForm>(8),
         new PowerVar<WeakPower>(3),
     ];
 
@@ -42,6 +42,6 @@ public class SlalToucanForm() : SlalTheEndlessCard(1,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["ToucanForm"].UpgradeValueBy(5);
+        DynamicVars["ToucanForm"].UpgradeValueBy(4);
     }
 }

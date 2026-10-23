@@ -23,12 +23,11 @@ public class SlalFreshIdea(): SlalTheEndlessCard(0,
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new InCombatPowerAmountVar<CreativeSpirit>("InCombatHasCreativeSpirit"),
-        new InCombatPowerAmountVar<TelevisionForm>("InCombatTelevisionForm"),
-        // Television Form grants additional Random
+        // Pony Form grants additional Random
         new CalculationBaseVar(1),
         new CalculationExtraVar(1),
         new CalculatedVar("RandomAmount").WithMultiplier((card, _) =>
-            card.CombatState == null ? 0 : card.Owner.Creature.GetPowerAmount<TelevisionForm>()),
+            card.CombatState == null ? 0 : card.Owner.Creature.GetPowerAmount<PonyForm>()),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -44,22 +43,17 @@ public class SlalFreshIdea(): SlalTheEndlessCard(0,
         
         await CreatureCmd.TriggerAnim(card.Owner.Creature, "Cast", card.Owner.Character.CastAnimDelay);
 
-        // Television Form: grant additional Random and transform ALL cards in Hand.
-        var televisionAmount = Owner.Creature.GetPowerAmount<TelevisionForm>();
+        // Pony Form grants additional Random
         await PowerCmd.Apply<Random>(
             choiceContext,
             Owner.Creature,
-            1 + televisionAmount,
+            1 + Owner.Creature.GetPowerAmount<PonyForm>(),
             Owner.Creature,
             null
         );
 
         List<CardModel> chosenCards;
-        if (televisionAmount > 0)
-        {
-            chosenCards = PileType.Hand.GetPile(Owner).Cards.Where(c => c.IsTransformable).ToList();
-        }
-        else if (!IsUpgraded)
+        if (!IsUpgraded)
         {
             var randomCard = SlalMechanicsHelper.ChooseRandomCardWithoutNovelIfPossible(Owner, PileType.Hand);
             chosenCards = randomCard == null ? [] : [randomCard];
@@ -77,17 +71,12 @@ public class SlalFreshIdea(): SlalTheEndlessCard(0,
 
         if (chosenCards.Count == 0) return;
         
-        // Check if CreativeSpirit power is active to allow Rare cards
-        var hasCreativeSpiritPower = Owner.Creature.Powers.Any(p => p is CreativeSpirit);
-        
         // Slal's generable tokens (Bumper, Ventilator, Squeaky Squirrel Form...) can also be created.
         // Tokens live in the TokenCardPool, so they are added separately from the regular options.
         var cardOptions = SlalMechanicsHelper.GetRandomCardOptions(Owner)
             .Concat(ModelDb.CardPool<TokenCardPool>().GetUnlockedCards(Owner.UnlockState, Owner.RunState.CardMultiplayerConstraint))
             .Where(c => c.CanBeGeneratedInCombat && c is not SlalFreshIdea && (
-                (hasCreativeSpiritPower 
-                    ? c.Rarity is CardRarity.Common or CardRarity.Uncommon or CardRarity.Rare
-                    : c.Rarity is CardRarity.Common or CardRarity.Uncommon)
+                SlalMechanicsHelper.HasRandomCardRarity(Owner, c)
                 || (c.Rarity == CardRarity.Token && SlalMechanicsHelper.IsNativeToSlal(c))))
             .ToList()
         ;

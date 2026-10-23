@@ -9,7 +9,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
 /// Slimy: after playing this card, add a Slimed into your Hand.
-/// Very Slimy: after playing this card, fill your Hand with Slimed.
+/// Very Slimy: after playing this card, add 3 Slimed into your Hand.
 /// </summary>
 public abstract class SlalSlimyCard(int cost, CardType type, CardRarity rarity, TargetType target) :
     SlalTheEndlessCard(cost, type, rarity, target)
@@ -22,6 +22,8 @@ public abstract class SlalSlimyCard(int cost, CardType type, CardRarity rarity, 
     /// </summary>
     protected virtual bool SlimesBeforeEffect => false;
 
+    public const int VerySlimyAmount = 3;
+
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (cardPlay.Card != this || SlimesBeforeEffect) return;
@@ -33,7 +35,7 @@ public abstract class SlalSlimyCard(int cost, CardType type, CardRarity rarity, 
     /// </summary>
     protected int SlimedToAdd(int cardsInHand) =>
         Keywords.Contains(SlalCardKeywords.VerySlimy)
-            ? CardPile.MaxCardsInHand - cardsInHand
+            ? VerySlimyAmount
             : Keywords.Contains(SlalCardKeywords.Slimy) ? 1 : 0;
 
     protected async Task AddSlimed()

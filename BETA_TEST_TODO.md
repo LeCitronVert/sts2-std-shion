@@ -757,3 +757,103 @@ Everything compiles (`dotnet build`, 0 errors, every localization key present). 
 
 - [ ] **Remember** (struck out in the sheet) and the "Ideas (ne pas implémenter encore)" list.
 - [ ] Memory light bulbs (see 5.1).
+
+---
+
+## 6. Slal card changes, round 2 (from the "Al notes" PDF, change sheet pages 20–22)
+
+To-do list of what changes. Values are base (upgraded). ⚠️ = my own pick where the sheet is silent (flagged `//todo` in code). Not committed.
+
+**Status:** everything below is implemented and compiles (`dotnet build`, 0 errors, 0 new warnings, every localization key present). **Nothing tested in game yet**: tick each box once it behaves as described in game.
+
+### 6.0 Shared changes
+
+- [ ] **Goofball Token Powers**: one shared pool of 9: Sword, Octopus, Box of Nails, Bumper, Ventilator, Squeaky Squirrel, Walking Encyclopedia, Television, Sparrow Form. Every "random Goofball Token Power" effect draws from it.
+- [ ] **Very Slimy**: add **3** Slimed into your Hand (no longer fills the Hand). Update the keyword text.
+- [ ] **Confusion**: the execute no longer needs a Weak attacker (any attack that leaves Confusion ≥ HP executes). Update the text. The spinning-away death animation isn't done (needs Godot).
+- [ ] **Random** wording: "Whenever you reach 10 Random, gain 1 Memory. At 11 Random, drop back to 1."
+- [ ] **Trashed** (kept in code, removed from rewards, shops and random generation): **Anchor Throw**, **Break Continuity**.
+- [ ] **Creative Spirit**: "Cards that create random non-Rare cards can now create Rare cards." Affects Fresh Idea, Plot Twist, Reshape and Chaotic Clone.
+- [ ] **Television Form** colorless rule also affects Plot Twist, Reshape, Fresh Idea and Chaotic Clone.
+
+### 6.1 Cards
+
+- [ ] **Absorption**: Transform up to 2 (3) cards in your Hand (your choice) into Slimed. Gain 1 Max HP per card transformed. Exhaust. No more Very Slimy or Retain.
+- [ ] **Bell Memory**: Deal 6 (8) damage twice. Gain 1 Memory **this turn**.
+- [ ] **Burlesque Wind-Up**: Gain 1 Weak. Draw as many cards as your Weak. This turn, whenever you play a card, gain 1 Vigor. Exhaust (upgrade: no Exhaust). It no longer stops Memory from playing Attacks.
+- [ ] **Cactus Form**: At the end of your turn, lose up to 2 (3) energy and gain 1 Thorn per energy lost. No more Weak on play.
+- [ ] **Camouflaged Trap**: Rare → Uncommon. Gains Very Slimy.
+- [ ] **Cartoon Strike**: upgrade = damage equal to **double** your Random (replaces Retain). Weak stays equal to Random.
+- [ ] **Cartoonish Mimickery**: Exhaust a card in your Hand. Gain Weak and Random equal to its cost, and 1 Slippery if it's a Status or unplayable. Exhaust (upgrade: no Exhaust). Check that the chosen card really goes to the Exhaust Pile.
+- [ ] **Cartoony Dodge**: Gain Block and Random equal to the number of cards played this turn. Memory doesn't play cards this turn. Upgrade: 1 → 0 energy ⚠️.
+- [ ] **Chaotic Clone**: Gain 6 Block. Play a random Slimed in your Hand. If you do, choose 1 of 2 non-Rare cards from any character to add to your Hand (can be skipped). Upgrade: the offered cards are upgraded (no more +2 Block / play all).
+- [ ] **Conclusion**: applies its Confusion **now** (on play) and at the **start** of each turn (was end of turn).
+- [ ] **Continuity Thread**: Rare → Ancient. Gain 1 Memory. You choose the cards Memory plays, but they're Exhausted. Ethereal (upgrade: not Ethereal). The choice screen shows how many cards to pick.
+- [ ] **Creative Spirit**: At the start of your turn, add 1 Fresh Idea into your Hand. Cards that create random non-Rare cards can now create Rare cards.
+- [ ] **Creativity Unbound**: Skill → Power (one-shot, no lasting buff). Add 1 random of Walking Encyclopedia / Television / Sparrow Form into your Hand.
+- [ ] **Crypted Lore**: 1 (0) energy. Upgrade no longer adds Retain.
+- [ ] **Description**: Add Fresh Ideas into your Hand equal to your Random. Add Conclusion and 3 random Goofball Token Powers into your Draw Pile. Upgrade: everything it creates is upgraded. No more Weak, no target.
+- [ ] **Desperate Form → Human Form** (class, ID, loc key and portrait renamed): Ancient 3 → Rare 2 (1) energy. At the end of your turn, gain Random equal to the number of different cards in your Hand.
+- [ ] **Dice Shotgun**: For each card in your Hand, gain 1 Random and deal damage equal to its cost to a random enemy.
+- [ ] **Distraction**: 0 energy. Add a random Goofball Token Power (upgraded) into your Hand. Exhaust. The old Weak/Dexterity effect is gone.
+- [ ] **Elaborate Flourish** (new): Common Skill, 1 energy. Apply 3 (4) Confusion. If you are Weak, apply it again. If the target is Weak, apply it again.
+- [ ] **Emergency Shapeshift**: X cost. **Choose** up to X cards in your Hand and Transform them into random Goofball Token Powers (upgraded when upgraded). They are free to play this turn.
+- [ ] **Frontflip and a Half**: 1 (0) energy. Gain 1 Weak. Apply 1 Weak, and Confusion equal to your Block, to ALL enemies. Lose all your Block.
+- [ ] **Genie Form**: Whenever you reach 10 Random, and whenever you play a card from your Hand that creates a card, choose 1 of 3 cards from any character to add to your Hand (can be skipped). The old Weak and any-color effects are gone.
+- [ ] **Hat Tip**: Uncommon Attack → Rare Power, 2 (1) energy. Whenever you play a card that creates Goofball Token Powers, add 1 random Goofball Token Power into your Hand. It's free to play this turn.
+- [ ] **Introduction**: Uncommon → Rare.
+- [ ] **Kickstart Event**: Deal 10 damage to ALL enemies. Fill your Hand with Fresh Idea+. This turn, whenever you play a Novel card, gain 1 energy. Exhaust (upgrade: no Exhaust).
+- [ ] **Laughable Punches**: 1 damage twice (three times). Weak upgrade removed.
+- [ ] **Logic Shift**: 0 energy. Gain 1 (2) Random. Gain Block equal to your Random. This card costs 1 more for the rest of combat.
+- [ ] **Old Ideas**: no "colored" requirement. Shows the number of Novel cards in the Discard Pile (other Novel Old Ideas not counted), red glow when there are none. Upgrade: Retain (replaces "2 cards").
+- [ ] **Plot Twist**: Apply 3 Confusion. Choose 1 of 2 (3) non-Rare cards (upgraded when upgraded) from another character to add to your Hand. Exhaust.
+- [ ] **Pony Form**: Token 0 → Rare 3 (2) energy. Add Novel to ALL your cards. Fresh Ideas grant 1 more Random. The first time you play a Novel card each turn, add a Fresh Idea into your Hand.
+- [ ] **Proof Reading**: Gain 1 Memory this turn. Gain 1 energy and draw 1 card per Memory you have. Memory doesn't play cards this turn. Exhaust (upgrade: no Exhaust). No longer upgrades a card.
+- [ ] **Reshape**: affected by Creative Spirit and Television Form.
+- [ ] **Running Joke**: Gain 1 Random. Deal 4 (5) damage. Add a copy into your Draw Pile (upgrade: and one into your Discard Pile).
+- [ ] **Slime Appetite**: keeps its effect (create a Slimed → 4 (5) Block; play a Slimed → 1 Dexterity this turn) and adds: whenever you play a Slimy card, apply 1 Weak to a random enemy and gain 1 Plating. Dexterity no longer upgrades.
+- [ ] **Slime Form**: At the start of your turn, add 1 Slimed into your Hand. Whenever you create a Slimed, gain 3 Block.
+- [ ] **Slime Hug**: gains Slimy.
+- [ ] **Television Form**: Whenever you play a card from your Hand, play up to 2 identical cards (upgrades count, upgraded ones first) from your Discard Pile. Random cards you create can be Colorless. The old Fresh Idea bonus is gone.
+- [ ] **Toucan Form**: 8 (12) Block.
+- [ ] **Volatile Form**: also triggers when a Token, Status or Curse is **played**.
+- [ ] **Wait a Second**: Common → Uncommon, X cost. Gain 1 Weak and X (X+1) Memory this turn. Retain your Hand this turn.
+- [ ] **Walking Encyclopedia**: Rare 2 → Token 0. Gain 1 Memory. For the rest of combat, Memory no longer plays cards: each Memory gives 1 energy and 1 card draw next turn instead. Upgrade: Replay.
+
+### 6.2 Relics & potions
+
+- [ ] **Champagne**: Once per turn, after you've played a Common, an Uncommon and a Rare card, gain 1 Slippery (like Rainbow Ring).
+- [ ] **Cotton Candy**: Gain 1 energy. Gain Random equal to the number of cards in your Hand.
+
+### 6.3 Not done on purpose
+
+- [ ] The "Ideas (ne pas implémenter encore)" list.
+- [ ] Confusion's spin-away death animation and Memory light bulbs (Godot visuals).
+- [ ] **Squeaky Squirrel Form** change (struck out in the sheet).
+
+### 6.4 Setup & things to check in game
+
+- [ ] Re-export the `.pck` with Godot. Desperate Form art was renamed to `slal_human_form.png` (card, normal + `big/`) and `human_form.png` (power, normal + `big/`). I deleted their `.import` files so Godot re-imports them.
+- [ ] Renamed class = new card ID: **saves or runs that have Desperate Form** may break. Start a fresh run.
+- [ ] Art still needed (fallback art for now): Elaborate Flourish portrait, **Kickstart Event** and **Blank Mind** power icons. Hat Tip reuses the old `powers/hat_tip.png`.
+- [ ] Novel fix: playing a Novel card now waits for its +1 Random (it used to fire and forget). This was needed for Genie Form's choice screen at 10 Random. Check that Novel still feels the same.
+
+Interpretations to confirm:
+- [ ] **Cartoony Dodge** counts itself (first card of the turn = 1).
+- [ ] **Blank Mind** (from Proof Reading / Cartoony Dodge) stops Memory completely that turn, including Walking Encyclopedia's energy and draw. It's a debuff, so Artifact can block it.
+- [ ] **Walking Encyclopedia**: each Memory (permanent and this turn) → +1 energy and +1 card next turn. Continuity Thread's choice screen is skipped while it's active.
+- [ ] **Continuity Thread**: the chosen cards are played, then Exhausted (they go straight to the Exhaust Pile).
+- [ ] **Genie Form**: "from your Hand" means not auto-played (Memory, Television Form and Replay plays don't count). Cards the Genie gives don't trigger it again. Slimy's Slimed is added after the card resolves, so it **may not count** as "creating a card", depending on hook order. Choices can be skipped.
+- [ ] **Hat Tip** counts every play (auto-plays too). Cards that create Goofball powers: Surprise Shapeshift, Emergency Shapeshift, Description, Distraction, Creativity Unbound. The powers Hat Tip adds don't trigger it again.
+- [ ] "Any character" (Chaotic Clone, Genie Form) = every character pool including Shion, Slal, Seels and Fry. "Another character" (Plot Twist) = all of them except Slal. Television Form adds Colorless to both.
+- [ ] **Television Form** only copies cards played from the Hand, so the copies don't chain. Unplayable copies are skipped.
+- [ ] **Volatile Form**: a Token that Exhausts itself when played (Fresh Idea, Distraction…) triggers it **twice** (played + exhausted).
+- [ ] **Pony Form** adds Novel to every card in Hand, Draw and Discard Piles, even cards whose Novel was already used this combat (same as Tabula Rasa).
+- [ ] **Human Form**: a card and its upgrade count as the same card.
+- [ ] **Dice Shotgun** now targets random enemies. 0-cost and X-cost cards give Random but no hit.
+- [ ] **Burlesque Wind-Up** doesn't give Vigor for itself.
+- [ ] **Kickstart Event**'s Fresh Ideas are no longer Steady.
+- [ ] **Champagne** only counts Common, Uncommon and Rare cards (Basic, Token, Status and Curse don't count).
+- [ ] **Anchor Throw** and **Break Continuity** now show as Token cards in the card library.
+- [ ] **Walking Encyclopedia**, **Television Form** and **Sparrow Form** still can't come from Fresh Idea (only from Goofball effects, Creativity Unbound and Flo's Brew). Flo's Brew now offers Walking Encyclopedia instead of Pony Form.
+- [ ] Old unused powers kept for now: **Distraction** (Dexterity loss) and **Weak Next Turn**.

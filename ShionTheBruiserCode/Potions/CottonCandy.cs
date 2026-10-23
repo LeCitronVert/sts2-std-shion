@@ -1,23 +1,27 @@
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Potions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using Random = ShionTheBruiser.ShionTheBruiserCode.Powers.Random;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Potions;
 
 /// <summary>
-/// Raise your Random until it reaches 9.
+/// Gain 1 energy. Gain Random equal to the number of cards in your Hand.
 /// </summary>
 public class CottonCandy : SlalTheEndlessPotion
 {
-    public const int TargetRandom = 9;
-
     public override PotionRarity Rarity => PotionRarity.Uncommon;
     public override PotionUsage Usage => PotionUsage.CombatOnly;
     public override TargetType TargetType => TargetType.Self;
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new EnergyVar(1),
+    ];
 
     public override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<Random>(),
@@ -25,10 +29,7 @@ public class CottonCandy : SlalTheEndlessPotion
 
     protected override async Task OnUse(PlayerChoiceContext choiceContext, Creature? target)
     {
-        // Random is displayed from 1 to 10 (0 without the power), so count up to the next 9 without crossing a 10.
-        var current = SlalMechanicsHelper.GetRandom(Owner.Creature);
-        var amount = (Random.GetCardAt + TargetRandom - current) % Random.GetCardAt;
-
-        await SlalMechanicsHelper.GainRandom(choiceContext, Owner.Creature, amount);
+        await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
+        await SlalMechanicsHelper.GainRandom(choiceContext, Owner.Creature, PileType.Hand.GetPile(Owner).Cards.Count);
     }
 }

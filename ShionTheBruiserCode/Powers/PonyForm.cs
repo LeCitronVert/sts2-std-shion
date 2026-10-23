@@ -1,61 +1,61 @@
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
+using ShionTheBruiser.ShionTheBruiserCode.Cards;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// At the end of your turn, put ALL non-Ethereal cards in your Hand into your Draw Pile.
-/// They gain Ethereal and cost X less until played.
+/// Fresh Ideas grant X additional Random (handled in <see cref="SlalFreshIdea"/>).
+/// The first time you play a Novel card each turn, add a Fresh Idea into your Hand.
 /// </summary>
 public class PonyForm : SlalTheEndlessPower
 {
-    private class Data
-    {
-        public readonly HashSet<CardModel> etherealizedCards = [];
-    }
-
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CardKeyword.Ethereal)];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(SlalCardKeywords.Novel),
+        HoverTipFactory.FromCard<SlalFreshIdea>(),
+    ];
+
+    private class Data
+    {
+        /// <summary>Novel is removed when the card is played, so remember it before the play resolves.</summary>
+        public readonly HashSet<CardModel> novelCardsBeingPlayed = [];
+        public bool triggeredThisTurn;
+    }
 
     protected override object InitInternalData() => new Data();
 
-    public override async Task BeforeFlush(PlayerChoiceContext choiceContext, Player player)
+    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
-        if (player != Owner.Player) return;
-
-        var cards = PileType.Hand.GetPile(player).Cards
-            .Where(c => !c.Keywords.Contains(CardKeyword.Ethereal))
-            .ToList();
-        if (cards.Count == 0) return;
-
-        Flash();
-        var data = GetInternalData<Data>();
-        foreach (var card in cards)
-        {
-            card.AddKeyword(CardKeyword.Ethereal);
-            data.etherealizedCards.Add(card);
-            if (!card.EnergyCost.CostsX)
-            {
-                card.EnergyCost.AddUntilPlayed(-Amount, true);
-            }
-            await CardPileCmd.Add(card, PileType.Draw, CardPilePosition.Random);
-        }
+        if (participants.Contains(Owner)) GetInternalData<Data>().triggeredThisTurn = false;
+        return Task.CompletedTask;
     }
 
-    public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    public override Task BeforeCardPlayed(CardPlay cardPlay)
     {
-        // Ethereal only lasts until the card is played.
-        if (GetInternalData<Data>().etherealizedCards.Remove(cardPlay.Card))
+        if (cardPlay.Card.Owner == Owner.Player && cardPlay.Card.Keywords.Contains(SlalCardKeywords.Novel))
         {
-            cardPlay.Card.RemoveKeyword(CardKeyword.Ethereal);
+            GetInternalData<Data>().novelCardsBeingPlayed.Add(cardPlay.Card);
         }
         return Task.CompletedTask;
+    }
+
+    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        var data = GetInternalData<Data>();
+        if (!data.novelCardsBeingPlayed.Remove(cardPlay.Card) || data.triggeredThisTurn || Owner.Player is null || CombatState is null) return;
+
+        data.triggeredThisTurn = true;
+        Flash();
+        await CardPileCmd.AddGeneratedCardToCombat(CombatState.CreateCard<SlalFreshIdea>(Owner.Player), PileType.Hand, Owner.Player);
     }
 }

@@ -17,13 +17,11 @@ public class SlalSlimeForm() : SlalTheEndlessCard(2,
     protected override HashSet<CardTag> CanonicalTags => [SlalCardTags.Form];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<SlimeForm>(1),
+        new PowerVar<SlimeForm>(3),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromKeyword(SlalCardKeywords.Slimy),
-        HoverTipFactory.FromPower<WeakPower>(),
-        HoverTipFactory.FromPower<PlatingPower>(),
+        HoverTipFactory.FromCard<Slimed>(),
     ];
 
     protected override async Task OnPlay(

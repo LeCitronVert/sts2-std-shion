@@ -1,41 +1,46 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Models.Powers;
-using ShionTheBruiser.ShionTheBruiserCode.Enums;
-using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Cards;
+using MegaCrit.Sts2.Core.ValueProps;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// Whenever you play a Slimy card, apply X Weak to a random enemy and gain 1 Plating.
+/// At the start of your turn, add 1 Slimed into your Hand. Whenever you create a Slimed, gain X Block.
 /// </summary>
 public class SlimeForm : SlalTheEndlessPower
 {
-    public const int PlatingAmount = 1;
+    public const int SlimedPerTurn = 1;
 
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromKeyword(SlalCardKeywords.Slimy),
-        HoverTipFactory.FromPower<WeakPower>(),
-        HoverTipFactory.FromPower<PlatingPower>(),
+        HoverTipFactory.FromCard<Slimed>(),
+        HoverTipFactory.Static(StaticHoverTip.Block),
     ];
 
-    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
-        if (cardPlay.Card.Owner != Owner.Player || !SlalMechanicsHelper.IsSlimy(cardPlay.Card) || CombatState is null)
-            return;
+        if (player != Owner.Player || CombatState is null) return;
 
         Flash();
-        var enemy = Owner.Player.RunState.Rng.CombatTargets.NextItem(CombatState.HittableEnemies);
-        if (enemy != null)
+        for (var i = 0; i < SlimedPerTurn; i++)
         {
-            await PowerCmd.Apply<WeakPower>(choiceContext, enemy, Amount, Owner, null);
+            await CardPileCmd.AddGeneratedCardToCombat(CombatState.CreateCard<Slimed>(player), PileType.Hand, player);
         }
-        await PowerCmd.Apply<PlatingPower>(choiceContext, Owner, PlatingAmount, Owner, null);
+    }
+
+    public override async Task AfterCardGeneratedForCombat(CardModel card, Player? creator)
+    {
+        if (card is not Slimed || card.Owner != Owner.Player) return;
+
+        Flash();
+        await CreatureCmd.GainBlock(Owner, Amount, ValueProp.Unpowered, null);
     }
 }

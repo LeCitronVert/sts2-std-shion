@@ -10,8 +10,8 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain 1 Weak. Discard a card in your Hand. Gain 1 Random if it is playable, and 1 Slippery if it is a Status or unplayable.
-/// A playable Status (like Slimed) grants both.
+/// Exhaust a card in your Hand. Gain as much Weak and Random as its energy cost (0 for X-cost),
+/// and 1 Slippery if it is a Status or unplayable.
 /// </summary>
 public class SlalCartoonishMimickery() : SlalTheEndlessCard(0,
     CardType.Skill, CardRarity.Uncommon,
@@ -20,8 +20,6 @@ public class SlalCartoonishMimickery() : SlalTheEndlessCard(0,
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<WeakPower>(1),
-        new PowerVar<Powers.Random>(1),
         new PowerVar<SlipperyPower>(1),
     ];
 
@@ -36,24 +34,25 @@ public class SlalCartoonishMimickery() : SlalTheEndlessCard(0,
         CardPlay play)
     {
         var card = this;
-        await PowerCmd.Apply<WeakPower>(choiceContext, card.Owner.Creature, card.DynamicVars.Weak.BaseValue, card.Owner.Creature, card);
-
-        var discarded = (await CardSelectCmd.FromHandForDiscard(
+        var exhausted = (await CardSelectCmd.FromHand(
             choiceContext,
             card.Owner,
-            new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 1),
+            new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, 1),
             null,
             card
         )).FirstOrDefault();
-        if (discarded == null) return;
+        if (exhausted == null) return;
 
-        var isPlayable = !discarded.Keywords.Contains(CardKeyword.Unplayable);
-        var isStatusOrUnplayable = discarded.Type == CardType.Status || !isPlayable;
-        await CardCmd.Discard(choiceContext, discarded);
+        // Read everything before the card leaves the Hand
+        var cost = SlalMechanicsHelper.GetEnergyCost(exhausted);
+        var isStatusOrUnplayable = exhausted.Type == CardType.Status || exhausted.Keywords.Contains(CardKeyword.Unplayable);
 
-        if (isPlayable)
+        await CardCmd.Exhaust(choiceContext, exhausted);
+
+        if (cost > 0)
         {
-            await SlalMechanicsHelper.GainRandom(choiceContext, card.Owner.Creature, card.DynamicVars["Random"].BaseValue, card);
+            await PowerCmd.Apply<WeakPower>(choiceContext, card.Owner.Creature, cost, card.Owner.Creature, card);
+            await SlalMechanicsHelper.GainRandom(choiceContext, card.Owner.Creature, cost, card);
         }
         if (isStatusOrUnplayable)
         {

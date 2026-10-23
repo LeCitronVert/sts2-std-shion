@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
@@ -12,7 +13,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Apply 2 Weak. If you are Weak, double (triple) the enemy's Weak. Apply Confusion equal to the enemy's Weak.
 /// </summary>
-public class SlalSlimeHug(): SlalTheEndlessCard(1,
+public class SlalSlimeHug(): SlalSlimyCard(1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.AnyEnemy)
 {
@@ -41,7 +42,7 @@ public class SlalSlimeHug(): SlalTheEndlessCard(1,
         HoverTipFactory.FromPower<Confusion>(),
     ];
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [SlalCardKeywords.Slimy, CardKeyword.Exhaust];
 
     protected override bool ShouldGlowGoldInternal => CombatState != null && Owner.Creature.HasPower<WeakPower>();
 

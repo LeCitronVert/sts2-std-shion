@@ -3,34 +3,43 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
-using BaseLib.Utils;
-using MegaCrit.Sts2.Core.Models.CardPools;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-[Pool(typeof(TokenCardPool))]
-public class SlalPonyForm() : SlalTheEndlessCard(0,
-    CardType.Power, CardRarity.Token,
+/// <summary>
+/// Add Novel to ALL your cards. Fresh Ideas grant 1 additional Random.
+/// The first time you play a Novel card each turn, add a Fresh Idea into your Hand.
+/// </summary>
+public class SlalPonyForm() : SlalTheEndlessCard(3,
+    CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
     protected override HashSet<CardTag> CanonicalTags => [SlalCardTags.Form];
-
-    public override bool CanBeGeneratedInCombat => false;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<PonyForm>(1),
     ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CardKeyword.Ethereal)];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(SlalCardKeywords.Novel),
+        HoverTipFactory.FromCard<SlalFreshIdea>(),
+        HoverTipFactory.FromPower<Powers.Random>(),
+    ];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
         var card = this;
+        await SlalMechanicsHelper.EnsureCreatureHasNovelTracker(card.Owner.Creature);
+        foreach (var other in ShionMechanicsHelper.GetAllCombatCards(card.Owner).ToList())
+        {
+            other.AddKeyword(SlalCardKeywords.Novel);
+        }
+
         await PowerCmd.Apply<PonyForm>(
             choiceContext,
             card.Owner.Creature,
@@ -42,6 +51,6 @@ public class SlalPonyForm() : SlalTheEndlessCard(0,
 
     protected override void OnUpgrade()
     {
-        BaseReplayCount += 1;
+        EnergyCost.UpgradeBy(-1);
     }
 }

@@ -16,10 +16,10 @@ public class SlalBellMemory(): SlalTheEndlessCard(2,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(6M, ValueProp.Move),
         new RepeatVar(2),
-        new PowerVar<Memory>(1),
+        new PowerVar<MemoryThisTurn>(1),
     ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Memory>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<MemoryThisTurn>()];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -34,7 +34,7 @@ public class SlalBellMemory(): SlalTheEndlessCard(2,
             .WithHitCount(DynamicVars.Repeat.IntValue)
             .Execute(choiceContext)
         ;
-        await SlalMechanicsHelper.GainMemory(choiceContext, card.Owner.Creature, card.DynamicVars["Memory"].BaseValue, card);
+        await SlalMechanicsHelper.GainMemoryThisTurn(choiceContext, card.Owner.Creature, card.DynamicVars["MemoryThisTurn"].BaseValue, card);
     }
 
     protected override void OnUpgrade()

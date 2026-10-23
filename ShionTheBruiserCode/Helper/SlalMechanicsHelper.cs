@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Enchantments;
+using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Character;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
@@ -31,7 +32,7 @@ public interface ISlalRandomListener
 
 public static class SlalMechanicsHelper
 {
-    public static Task TriggerNovel(CardModel card, Creature character)
+    public static async Task TriggerNovel(PlayerChoiceContext choiceContext, CardModel card, Creature character)
     {
         card.RemoveKeyword(SlalCardKeywords.Novel);
 
@@ -40,15 +41,13 @@ public static class SlalMechanicsHelper
             copy.RemoveKeyword(SlalCardKeywords.Novel);
         }
 
-        PowerCmd.Apply<Random>(
-            new ThrowingPlayerChoiceContext(),
+        await PowerCmd.Apply<Random>(
+            choiceContext,
             character,
             1,
             character,
             null
         );
-
-        return Task.CompletedTask;
     }
 
     public static async Task EnsureCreatureHasNovelTracker(Creature creature)
@@ -134,35 +133,54 @@ public static class SlalMechanicsHelper
     }
 
     /// <summary>
-    /// Colored, non-Novel, playable cards. Burlesque Wind-Up prevents Attacks from being played this way.
+    /// Colored, non-Novel, playable cards.
     /// </summary>
     public static bool CanBePlayedByMemory(Player player, CardModel card)
     {
         return IsColored(card)
             && !card.Keywords.Contains(SlalCardKeywords.Novel)
-            && !card.Keywords.Contains(CardKeyword.Unplayable)
-            && !(card.Type == CardType.Attack && player.Creature.HasPower<BurlesqueWindUp>());
+            && !card.Keywords.Contains(CardKeyword.Unplayable);
+    }
+
+    /// <summary>
+    /// Total Memory (permanent and this turn).
+    /// </summary>
+    public static int GetMemory(Creature creature)
+    {
+        return creature.GetPowerAmount<Memory>() + creature.GetPowerAmount<MemoryThisTurn>();
     }
 
     /// <summary>
     /// Plays up to <paramref name="count"/> cards from the Discard Pile (random, or chosen with Continuity Thread).
+    /// Memory Blocked stops it this turn. Walking Encyclopedia turns it into energy and card draw next turn.
     /// </summary>
     public static async Task PlayFromMemory(PlayerChoiceContext choiceContext, Player player, int count)
     {
         if (count <= 0 || CombatManager.Instance.IsOverOrEnding) return;
+        if (player.Creature.HasPower<MemoryBlocked>()) return;
+
+        if (player.Creature.HasPower<EncyclopediaForm>())
+        {
+            await PowerCmd.Apply<EnergyNextTurnPower>(choiceContext, player.Creature, count, player.Creature, null);
+            await PowerCmd.Apply<DrawCardsNextTurnPower>(choiceContext, player.Creature, count, player.Creature, null);
+            return;
+        }
 
         var continuityThread = player.Creature.GetPower<ContinuityThread>();
-        var cards = continuityThread != null
-            ? await continuityThread.SelectCardsForMemory(choiceContext, player, count, c => CanBePlayedByMemory(player, c))
-            : PickRandomColoredCards(player, PileType.Discard, count, c => CanBePlayedByMemory(player, c));
+        if (continuityThread != null)
+        {
+            var chosen = await continuityThread.SelectCardsForMemory(choiceContext, player, count, c => CanBePlayedByMemory(player, c));
+            await AutoPlayFromDiscard(choiceContext, player, chosen, exhaust: true);
+            return;
+        }
 
-        await AutoPlayFromDiscard(choiceContext, player, cards);
+        await AutoPlayFromDiscard(choiceContext, player, PickRandomColoredCards(player, PileType.Discard, count, c => CanBePlayedByMemory(player, c)));
     }
 
     /// <summary>
     /// Plays the given cards from the Discard Pile, skipping those that left it in the meantime.
     /// </summary>
-    public static async Task AutoPlayFromDiscard(PlayerChoiceContext choiceContext, Player player, IEnumerable<CardModel> cards)
+    public static async Task AutoPlayFromDiscard(PlayerChoiceContext choiceContext, Player player, IEnumerable<CardModel> cards, bool exhaust = false)
     {
         foreach (var card in cards.ToList())
         {
@@ -171,6 +189,8 @@ public static class SlalMechanicsHelper
             if (card.Pile?.Type != PileType.Discard) continue;
 
             await CardPileCmd.Add(card, PileType.Play);
+            // Continuity Thread: the played card ends up Exhausted
+            if (exhaust) card.ExhaustOnNextPlay = true;
             await CardCmd.AutoPlay(choiceContext, card, null);
         }
     }
@@ -268,28 +288,97 @@ public static class SlalMechanicsHelper
 
     /// <summary>
     /// The cards a random card creation can pick from for this player.
-    /// Normally the character's own cards. Genie Form allows any character's cards, Television Form allows Colorless cards.
+    /// Normally the character's own cards. Television Form allows Colorless cards.
     /// </summary>
     public static IEnumerable<CardModel> GetRandomCardOptions(Player player)
     {
-        List<CardPoolModel> pools = [player.Character.CardPool];
+        return GetCardsFromPools(player, [player.Character.CardPool]);
+    }
 
-        if (player.Creature.HasPower<GenieForm>())
-        {
-            pools.AddRange(ModelDb.AllCharacterCardPools);
-            pools.Add(ModelDb.CardPool<ShionTheBruiserCardPool>());
-            pools.Add(ModelDb.CardPool<SlalTheEndlessCardPool>());
-        }
+    /// <summary>
+    /// Every character's card pool, including the modded characters.
+    /// </summary>
+    public static IEnumerable<CardPoolModel> AllCharacterCardPools => [
+        ..ModelDb.AllCharacterCardPools,
+        ModelDb.CardPool<ShionTheBruiserCardPool>(),
+        ModelDb.CardPool<SlalTheEndlessCardPool>(),
+        ModelDb.CardPool<SeelsTheRecklessCardPool>(),
+        ModelDb.CardPool<FryTheCommanderCardPool>(),
+    ];
 
+    /// <summary>
+    /// Cards from any character (or only the other characters), plus Colorless cards with Television Form.
+    /// </summary>
+    public static IEnumerable<CardModel> GetCharacterCardOptions(Player player, bool includeOwnCharacter)
+    {
+        var pools = AllCharacterCardPools.Where(p => includeOwnCharacter || p.Id != player.Character.CardPool.Id);
+        return GetCardsFromPools(player, pools);
+    }
+
+    private static IEnumerable<CardModel> GetCardsFromPools(Player player, IEnumerable<CardPoolModel> pools)
+    {
+        List<CardPoolModel> allPools = [..pools];
         if (player.Creature.HasPower<TelevisionForm>())
         {
-            pools.Add(ModelDb.CardPool<ColorlessCardPool>());
+            allPools.Add(ModelDb.CardPool<ColorlessCardPool>());
         }
 
-        return pools
+        return allPools
             .DistinctBy(p => p.Id)
             .SelectMany(p => p.GetUnlockedCards(player.UnlockState, player.RunState.CardMultiplayerConstraint))
             .Distinct();
+    }
+
+    /// <summary>
+    /// "Random non-Rare card": Common or Uncommon, and also Rare with Creative Spirit.
+    /// </summary>
+    public static bool HasRandomCardRarity(Player player, CardModel card)
+    {
+        return card.Rarity is CardRarity.Common or CardRarity.Uncommon
+            || (card.Rarity == CardRarity.Rare && player.Creature.HasPower<CreativeSpirit>());
+    }
+
+    /// <summary>
+    /// Shows <paramref name="count"/> random cards from the options (skippable) and adds the chosen one into the Hand.
+    /// </summary>
+    public static async Task<CardModel?> ChooseCardToAddToHand(PlayerChoiceContext choiceContext, Player player, IEnumerable<CardModel> options, int count, bool upgraded)
+    {
+        var cards = CreateRandomCards(player, count, upgraded, options.Where(c => c.CanBeGeneratedInCombat));
+        if (cards.Count == 0) return null;
+
+        var chosen = await CardSelectCmd.FromChooseACardScreen(choiceContext, cards, player, canSkip: true);
+        if (chosen != null)
+        {
+            await CardPileCmd.AddGeneratedCardToCombat(chosen, PileType.Hand, player);
+        }
+        return chosen;
+    }
+
+    // ── Goofball Token Powers ───────────────────────────────────────────────
+
+    public static IReadOnlyList<CardModel> GoofballTokenPowers => [
+        ModelDb.Card<SlalSwordForm>(),
+        ModelDb.Card<SlalOctopusForm>(),
+        ModelDb.Card<SlalBoxOfNailsForm>(),
+        ModelDb.Card<SlalBumperForm>(),
+        ModelDb.Card<SlalVentilatorForm>(),
+        ModelDb.Card<SlalSqueakySquirrelForm>(),
+        ModelDb.Card<SlalWalkingEncyclopedia>(),
+        ModelDb.Card<SlalTelevisionForm>(),
+        ModelDb.Card<SlalSparrowForm>(),
+    ];
+
+    public static bool IsGoofballTokenPower(CardModel card)
+    {
+        return GoofballTokenPowers.Any(c => c.Id == card.Id);
+    }
+
+    /// <summary>
+    /// Creates a random Goofball Token Power, avoiding the last one given if possible.
+    /// </summary>
+    public static CardModel CreateGoofballTokenPower(Player player, bool upgraded, ModelId? lastGiven = null)
+    {
+        return CreateTokenAvoiding(player, GoofballTokenPowers, lastGiven, upgraded);
     }
 
     /// <summary>

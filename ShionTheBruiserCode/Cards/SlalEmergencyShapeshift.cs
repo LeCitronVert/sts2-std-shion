@@ -1,27 +1,23 @@
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Models;
-using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Transform 3 random cards in your Hand into Sword Form, Octopus Form and Box of Nails Form, in this order.
-/// Doesn't create more Forms than there are cards in Hand. Playable Novel cards are picked last.
+/// Choose up to X cards in your Hand and Transform them into random Goofball Token Powers. They are free to play this turn.
 /// </summary>
-public class SlalEmergencyShapeshift() : SlalTheEndlessCard(1,
+public class SlalEmergencyShapeshift() : SlalTheEndlessCard(0,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
+    protected override bool HasEnergyCostX => true;
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.Static(StaticHoverTip.Transform),
-        HoverTipFactory.FromCard<SlalSwordForm>(IsUpgraded),
-        HoverTipFactory.FromCard<SlalOctopusForm>(IsUpgraded),
-        HoverTipFactory.FromCard<SlalBoxOfNailsForm>(IsUpgraded),
     ];
 
     protected override async Task OnPlay(
@@ -29,26 +25,25 @@ public class SlalEmergencyShapeshift() : SlalTheEndlessCard(1,
         CardPlay play)
     {
         var card = this;
-        var rng = card.Owner.RunState.Rng.CombatCardSelection;
-        var hand = PileType.Hand.GetPile(card.Owner).Cards.Where(c => c.IsTransformable).ToList();
+        var amount = card.ResolveEnergyXValue();
+        if (amount <= 0) return;
 
-        bool IsPlayableNovel(CardModel c) =>
-            c.Keywords.Contains(SlalCardKeywords.Novel) && !c.Keywords.Contains(CardKeyword.Unplayable);
+        var targets = (await CardSelectCmd.FromHand(
+            choiceContext,
+            card.Owner,
+            new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 0, amount),
+            c => c.IsTransformable,
+            card
+        )).ToList();
 
-        var targets = hand.Where(c => !IsPlayableNovel(c)).TakeRandom(3, rng)
-            .Concat(hand.Where(IsPlayableNovel).TakeRandom(3, rng))
-            .Take(3)
-            .ToList();
-
-        List<CardModel> forms = [
-            SlalMechanicsHelper.CreateCard<SlalSwordForm>(card.Owner, IsUpgraded),
-            SlalMechanicsHelper.CreateCard<SlalOctopusForm>(card.Owner, IsUpgraded),
-            SlalMechanicsHelper.CreateCard<SlalBoxOfNailsForm>(card.Owner, IsUpgraded),
-        ];
-
-        for (var i = 0; i < targets.Count; i++)
+        foreach (var target in targets)
         {
-            await CardCmd.Transform(targets[i], forms[i]);
+            var power = SlalMechanicsHelper.CreateGoofballTokenPower(card.Owner, IsUpgraded);
+            if (!power.EnergyCost.CostsX)
+            {
+                power.SetToFreeThisTurn();
+            }
+            await CardCmd.Transform(target, power);
         }
     }
 

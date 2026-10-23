@@ -47,6 +47,6 @@ public class SlalCartoonStrike() : SlalTheEndlessCard(2,
 
     protected override void OnUpgrade()
     {
-        AddKeyword(CardKeyword.Retain);
+        DynamicVars.ExtraDamage.UpgradeValueBy(1);
     }
 }

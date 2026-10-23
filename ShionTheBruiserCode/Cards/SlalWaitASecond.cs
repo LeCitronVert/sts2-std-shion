@@ -4,26 +4,31 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Apply 1 Weak. Next turn, gain 1 Weak and 1 (2) energy.
+/// Gain 1 Weak and X (X+1) Memory this turn. Retain your Hand this turn.
 /// </summary>
-public class SlalWaitASecond() : SlalTheEndlessCard(1,
-    CardType.Skill, CardRarity.Common,
-    TargetType.AnyEnemy)
+public class SlalWaitASecond() : SlalTheEndlessCard(0,
+    CardType.Skill, CardRarity.Uncommon,
+    TargetType.Self)
 {
+    protected override bool HasEnergyCostX => true;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<WeakPower>(1),
-        new PowerVar<WeakNextTurn>(1),
-        new EnergyVar(1),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("MemoryAmount").WithMultiplier((card, _) => PreviewHelper.XValue(card) + (card.IsUpgraded ? 1 : 0)),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<WeakPower>(),
-        HoverTipFactory.ForEnergy(this),
+        HoverTipFactory.FromPower<MemoryThisTurn>(),
+        HoverTipFactory.FromKeyword(CardKeyword.Retain),
     ];
 
     protected override async Task OnPlay(
@@ -31,15 +36,14 @@ public class SlalWaitASecond() : SlalTheEndlessCard(1,
         CardPlay play)
     {
         var card = this;
-        ArgumentNullException.ThrowIfNull(play.Target);
+        var memory = ResolveEnergyXValue() + (IsUpgraded ? 1 : 0);
 
-        await PowerCmd.Apply<WeakPower>(choiceContext, play.Target, card.DynamicVars.Weak.BaseValue, card.Owner.Creature, card);
-        await PowerCmd.Apply<WeakNextTurn>(choiceContext, card.Owner.Creature, card.DynamicVars["WeakNextTurn"].BaseValue, card.Owner.Creature, card);
-        await PowerCmd.Apply<EnergyNextTurnPower>(choiceContext, card.Owner.Creature, card.DynamicVars.Energy.BaseValue, card.Owner.Creature, card);
+        await PowerCmd.Apply<WeakPower>(choiceContext, card.Owner.Creature, card.DynamicVars.Weak.BaseValue, card.Owner.Creature, card);
+        await SlalMechanicsHelper.GainMemoryThisTurn(choiceContext, card.Owner.Creature, memory, card);
+        await PowerCmd.Apply<RetainHandPower>(choiceContext, card.Owner.Creature, 1, card.Owner.Creature, card);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Energy.UpgradeValueBy(1);
     }
 }

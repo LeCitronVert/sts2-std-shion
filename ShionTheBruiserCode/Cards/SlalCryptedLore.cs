@@ -12,7 +12,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Deal 8 damage and double the enemy's Confusion. If it has 20 Confusion or more, Stun it. Exhaust.
 /// </summary>
-public class SlalCryptedLore() : SlalTheEndlessCard(0,
+public class SlalCryptedLore() : SlalTheEndlessCard(1,
     CardType.Attack, CardRarity.Rare,
     TargetType.AnyEnemy)
 {
@@ -61,6 +61,6 @@ public class SlalCryptedLore() : SlalTheEndlessCard(0,
 
     protected override void OnUpgrade()
     {
-        AddKeyword(CardKeyword.Retain);
+        EnergyCost.UpgradeBy(-1);
     }
 }

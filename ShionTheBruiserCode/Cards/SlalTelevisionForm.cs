@@ -21,12 +21,10 @@ public class SlalTelevisionForm() : SlalTheEndlessCard(0,
     public override bool CanBeGeneratedInCombat => false;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<TelevisionForm>(1),
+        new PowerVar<TelevisionForm>(2),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromCard<SlalFreshIdea>(),
-        HoverTipFactory.FromPower<Powers.Random>(),
     ];
 
     protected override async Task OnPlay(

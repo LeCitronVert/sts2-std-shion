@@ -5,12 +5,13 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// You choose the cards Memory plays from your Discard Pile instead of picking them at random.
+/// You choose the cards Memory plays from your Discard Pile instead of picking them at random. They are Exhausted.
 /// </summary>
 public class ContinuityThread : SlalTheEndlessPower
 {
@@ -21,6 +22,13 @@ public class ContinuityThread : SlalTheEndlessPower
         HoverTipFactory.FromPower<Memory>(),
     ];
 
+    private LocString Prompt(int count)
+    {
+        var prompt = SelectionScreenPrompt;
+        prompt.Add("Cards", count);
+        return prompt;
+    }
+
     public async Task<List<CardModel>> SelectCardsForMemory(PlayerChoiceContext choiceContext, Player player, int count, Func<CardModel, bool> filter)
     {
         Flash();
@@ -28,7 +36,7 @@ public class ContinuityThread : SlalTheEndlessPower
             choiceContext,
             PileType.Discard.GetPile(player),
             player,
-            new CardSelectorPrefs(SelectionScreenPrompt, count),
+            new CardSelectorPrefs(Prompt(count), count),
             filter
         )).ToList();
     }

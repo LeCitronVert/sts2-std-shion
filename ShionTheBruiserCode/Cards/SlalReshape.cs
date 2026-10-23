@@ -12,7 +12,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Lose all Frail. Transform ALL Slimed in your Hand into random non-Rare cards.
+/// Lose all Frail. Transform ALL Slimed in your Hand into random non-Rare cards (Rare too with Creative Spirit).
 /// </summary>
 public class SlalReshape(): SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Uncommon,
@@ -35,7 +35,7 @@ public class SlalReshape(): SlalTheEndlessCard(1,
         if (slimedCards.Count == 0) return;
 
         var cardOptions = SlalMechanicsHelper.GetRandomCardOptions(card.Owner)
-            .Where(c => c.CanBeGeneratedInCombat && c.Rarity is CardRarity.Common or CardRarity.Uncommon)
+            .Where(c => c.CanBeGeneratedInCombat && SlalMechanicsHelper.HasRandomCardRarity(card.Owner, c))
             .ToList();
         await CardCmd.Transform(
             slimedCards.Select(c => new CardTransformation(c, cardOptions)),

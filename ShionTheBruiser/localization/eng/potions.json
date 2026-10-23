@@ -9,7 +9,7 @@
   "SHIONTHEBRUISER-SLIME_POTION.description": "[gold]Transform[/gold] a card in your [gold]Hand[/gold] into [gold]Slimed[/gold].\n[gold]Slimed[/gold] are free to play this turn.",
   "SHIONTHEBRUISER-SLIME_POTION.selectionScreenPrompt": "Choose a card to Transform into Slimed.",
   "SHIONTHEBRUISER-COTTON_CANDY.title": "Cotton Candy",
-  "SHIONTHEBRUISER-COTTON_CANDY.description": "Raise your [gold]Random[/gold] until it reaches [blue]9[/blue].",
+  "SHIONTHEBRUISER-COTTON_CANDY.description": "Gain {Energy:energyIcons()}.\nGain [gold]Random[/gold] equal to the number of cards in your [gold]Hand[/gold].",
   "SHIONTHEBRUISER-FLOS_BREW.title": "Flo's Brew",
   "SHIONTHEBRUISER-FLOS_BREW.description": "Add [blue]3[/blue] random [gold]Rare[/gold] [gold]Form[/gold] cards of any color into your [gold]Hand[/gold]. Choose one to be free to play this turn.",
 

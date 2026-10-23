@@ -5,13 +5,16 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class SlalCamouflagedTrap() : SlalTheEndlessCard(1,
-    CardType.Attack, CardRarity.Rare,
+public class SlalCamouflagedTrap() : SlalSlimyCard(1,
+    CardType.Attack, CardRarity.Uncommon,
     TargetType.AnyEnemy)
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [SlalCardKeywords.VerySlimy];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CalculationBaseVar(9),
         new ExtraDamageVar(2),

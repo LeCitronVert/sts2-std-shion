@@ -22,7 +22,6 @@ public class SlalGenieForm() : SlalTheEndlessCard(2,
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<Powers.Random>(),
-        HoverTipFactory.FromPower<WeakPower>(),
     ];
 
     protected override async Task OnPlay(

@@ -14,7 +14,7 @@ public class TrainingManual : ShionTheBruiserRelic
     public override RelicRarity Rarity =>
         RelicRarity.Uncommon;
 
-    public override async Task AfterRoomEntered(AbstractRoom room)
+    public override async Task BeforeRoomEntered(AbstractRoom room)
     {
         var relic = this;
         if (room.RoomType != RoomType.Elite && room.RoomType != RoomType.Boss)
