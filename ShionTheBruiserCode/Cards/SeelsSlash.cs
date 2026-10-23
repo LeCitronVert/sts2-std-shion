@@ -4,6 +4,8 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using BaseLib.Utils;
+using MegaCrit.Sts2.Core.Models.CardPools;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -11,6 +13,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// Token. Deal 3 damage to a random enemy. Draw 1 card. Exhaust.
 /// Untelegraph Attacks makes it hit a number of times equal to its energy cost + X.
 /// </summary>
+[Pool(typeof(TokenCardPool))]
 public class SeelsSlash() : SeelsTheRecklessCard(0,
     CardType.Attack, CardRarity.Token,
     TargetType.RandomEnemy)

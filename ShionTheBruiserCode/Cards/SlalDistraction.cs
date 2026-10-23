@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using MegaCrit.Sts2.Core.HoverTips;
+using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -14,7 +15,13 @@ public class SlalDistraction(): SlalTheEndlessCard(1,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<WeakPower>(1)
+        new PowerVar<WeakPower>(1),
+        new HasTargetVar(),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        // Counts the Weak applied first
+        new CalculatedVar("DexterityAmount").WithMultiplier((card, target) =>
+            target is null ? 0 : target.GetPowerAmount<WeakPower>() + card.DynamicVars.Weak.BaseValue),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -40,6 +47,14 @@ public class SlalDistraction(): SlalTheEndlessCard(1,
         var weakAmount = play.Target.GetPowerAmount<WeakPower>();
         if (weakAmount > 0)
         {
+            await PowerCmd.Apply<DexterityPower>(
+                choiceContext, 
+                card.Owner.Creature, 
+                weakAmount, 
+                card.Owner.Creature, 
+                card
+            );
+            // Takes the Dexterity back at the end of the turn if you are not Weak
             await PowerCmd.Apply<Distraction>(
                 choiceContext, 
                 card.Owner.Creature, 

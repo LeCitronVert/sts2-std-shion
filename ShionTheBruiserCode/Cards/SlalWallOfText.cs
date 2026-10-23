@@ -1,61 +1,51 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using MegaCrit.Sts2.Core.ValueProps;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+/// <summary>
+/// Add a copy of ALL cards in your Hand into your Draw Pile.
+/// Gain Block equal to double the number of cards created this way.
+/// </summary>
 public class SlalWallOfText(): SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Uncommon,
-    TargetType.RandomEnemy)
+    TargetType.Self)
 {
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Confusion>()];
-    
+    public override bool GainsBlock => true;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CalculationBaseVar(0),
-        new CalculationExtraVar(1),
-        new CalculatedVar("DebuffAmount").WithMultiplier((model, _) => 
-            PileType.Discard.GetPile(model.Owner).Cards.Count
+        new CalculationExtraVar(2),
+        // This card isn't copied (it's being played)
+        new CalculatedBlockVar(ValueProp.Move).WithMultiplier((model, _) =>
+            PileType.Hand.GetPile(model.Owner).Cards.Count(c => c != model)
         ),
     ];
-    
+
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        var cardSource = this;
-        
-        await CreatureCmd.TriggerAnim(cardSource.Owner.Creature, "Cast", cardSource.Owner.Character.CastAnimDelay);
-        var enemy = cardSource.Owner.RunState.Rng.CombatTargets.NextItem<Creature>((IEnumerable<Creature>) cardSource.CombatState?.HittableEnemies! ?? Array.Empty<Creature>());
-        if (enemy != null)
-        {
-            await PowerCmd.Apply<Confusion>(
-                choiceContext, 
-                enemy,
-                ((CalculatedVar) cardSource.DynamicVars["DebuffAmount"]).Calculate(enemy), 
-                cardSource.Owner.Creature, 
-                cardSource
-            );
-        }
+        var card = this;
+        await CreatureCmd.TriggerAnim(card.Owner.Creature, "Cast", card.Owner.Character.CastAnimDelay);
+
+        var copies = PileType.Hand.GetPile(card.Owner).Cards.Where(c => c != card).Select(c => c.CreateClone()).ToList();
+        if (copies.Count == 0) return;
+
+        CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardsToCombat(copies, PileType.Draw, card.Owner, CardPilePosition.Random));
+
+        var block = copies.Count * card.DynamicVars.CalculationExtra.BaseValue;
+        await CreatureCmd.GainBlock(card.Owner.Creature, block, card.DynamicVars.CalculatedBlock.Props, play);
     }
 
     protected override void OnUpgrade()
     {
+        EnergyCost.UpgradeBy(-1);
     }
-    
-    protected override PileType GetResultPileTypeForCardPlay()
-    {
-        PileType pileTypeForCardPlay = base.GetResultPileTypeForCardPlay();
-        if (IsUpgraded &&  pileTypeForCardPlay == PileType.Discard)
-        {
-            return PileType.Draw;
-        }
-        return pileTypeForCardPlay;
-    }
-    
-    public CardModel GetTranscendenceTransformedCard() => ModelDb.Card<SlalBreakContinuity>();
+
+    public CardModel GetTranscendenceTransformedCard() => ModelDb.Card<SlalAnvilStrike>();
 }

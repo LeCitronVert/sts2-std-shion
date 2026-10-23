@@ -8,7 +8,10 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class SlalLogicShift() : SlalTheEndlessCard(0,
+/// <summary>
+/// Gain Block equal to (twice) your Random. Play 1 (2) random colored cards from your Discard Pile.
+/// </summary>
+public class SlalLogicShift() : SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Common,
     TargetType.Self)
 {
@@ -18,11 +21,11 @@ public class SlalLogicShift() : SlalTheEndlessCard(0,
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
         new CalculatedBlockVar(ValueProp.Move).WithMultiplier((card, _) => SlalMechanicsHelper.GetRandom(card.Owner.Creature)),
+        new CardsVar(1),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<Powers.Random>(),
-        HoverTipFactory.FromCard<SlalMaybeLater>(IsUpgraded),
     ];
 
     protected override async Task OnPlay(
@@ -36,11 +39,14 @@ public class SlalLogicShift() : SlalTheEndlessCard(0,
             await CreatureCmd.GainBlock(card.Owner.Creature, block, card.DynamicVars.CalculatedBlock.Props, play);
         }
 
-        await CardPileCmd.AddGeneratedCardToCombat(SlalMechanicsHelper.CreateCard<SlalMaybeLater>(card.Owner, IsUpgraded), PileType.Hand, card.Owner);
+        var toPlay = SlalMechanicsHelper.PickRandomColoredCards(card.Owner, PileType.Discard, card.DynamicVars.Cards.IntValue,
+            c => !c.Keywords.Contains(CardKeyword.Unplayable));
+        await SlalMechanicsHelper.AutoPlayFromDiscard(choiceContext, card.Owner, toPlay);
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars.CalculationExtra.UpgradeValueBy(1);
+        DynamicVars.Cards.UpgradeValueBy(1);
     }
 }

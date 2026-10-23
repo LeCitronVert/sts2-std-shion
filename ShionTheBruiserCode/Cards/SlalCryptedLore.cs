@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -20,6 +21,10 @@ public class SlalCryptedLore() : SlalTheEndlessCard(0,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(8M, ValueProp.Move),
         new DynamicVar("StunThreshold", 20),
+        new HasTargetVar(),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("ConfusionAmount").WithMultiplier((_, target) => target?.GetPowerAmount<Confusion>() ?? 0),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [

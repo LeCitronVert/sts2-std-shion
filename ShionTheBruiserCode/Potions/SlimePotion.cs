@@ -8,10 +8,12 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
+
 namespace ShionTheBruiser.ShionTheBruiserCode.Potions;
 
 /// <summary>
-/// Transform a card in your Hand into Slimed. It's free to play this turn.
+/// Transform a card in your Hand into Slimed. Slimed are free to play this turn.
 /// </summary>
 public class SlimePotion : SlalTheEndlessPotion
 {
@@ -34,10 +36,12 @@ public class SlimePotion : SlalTheEndlessPotion
             this
         )).FirstOrDefault();
 
-        if (original is null || Owner.Creature.CombatState is null) return;
+        if (Owner.Creature.CombatState is null) return;
 
-        var slime = Owner.Creature.CombatState.CreateCard<Slimed>(Owner);
-        await CardCmd.Transform(original, slime);
-        slime.SetToFreeThisTurn();
+        if (original is not null)
+        {
+            await CardCmd.Transform(original, Owner.Creature.CombatState.CreateCard<Slimed>(Owner));
+        }
+        await PowerCmd.Apply<SlimedFreeThisTurn>(choiceContext, Owner.Creature, 1, Owner.Creature, null);
     }
 }

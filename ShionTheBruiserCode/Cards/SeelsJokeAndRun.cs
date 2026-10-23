@@ -23,6 +23,11 @@ public class SeelsJokeAndRun() : SeelsTheRecklessCard(1,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<VulnerablePower>(3M),
         new PowerVar<DexterityPower>(1M),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        // Counts the Vulnerable gained first
+        new CalculatedVar("HealAmount").WithMultiplier((card, _) =>
+            SeelsMechanicsHelper.GetVulnerable(card.Owner.Creature) + card.DynamicVars.Vulnerable.BaseValue),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [

@@ -29,6 +29,12 @@ public class FrySpinToDeflectStuff() : FryTheCommanderCard(0,
         new PowerVar<StrengthPower>(3M),
         new BlockVar(4M, ValueProp.Move),
         new CardsVar(4),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        // Block is gained once per discarded card, so modifiers apply to each gain
+        new CalculatedVar("BlockAmount").WithMultiplier((card, _) =>
+            PreviewHelper.OtherCardsInHand(card).Count
+            * PreviewHelper.ModifiedBlock(card, card.DynamicVars.Block.BaseValue, card.DynamicVars.Block.Props)),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)

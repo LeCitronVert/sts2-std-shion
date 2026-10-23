@@ -23,6 +23,17 @@ public class FryImplausibleDeniability() : FryTheCommanderCard(1, //todo : choos
     CardType.Skill, CardRarity.Common,
     TargetType.Self)
 {
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        // Mirrors LoseHalfDamageDebt: the debt left after losing half of it
+        new CalculatedVar("DamageAmount").WithMultiplier((card, _) =>
+        {
+            var debt = FryMechanicsHelper.GetDamageDebt(card.Owner.Creature);
+            return debt - debt / 2;
+        }),
+    ];
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<DamageDebt>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)

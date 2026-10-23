@@ -25,6 +25,17 @@ public class SeelsTornadoStance() : SeelsTheRecklessCard(1,
     CardType.Skill, CardRarity.Rare,
     TargetType.Self)
 {
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("VulnerableAmount").WithMultiplier((card, _) => GetSlashes(card).Count),
+    ];
+
+    private static List<CardModel> GetSlashes(CardModel card) =>
+        SeelsMechanicsHelper.GetAllCombatCards(card.Owner)
+            .Where(c => SeelsMechanicsHelper.IsSlash(c) && c.Pile?.Type != PileType.Exhaust)
+            .ToList();
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromCard<SeelsSlash>(),
         HoverTipFactory.FromPower<VulnerablePower>(),
@@ -32,9 +43,7 @@ public class SeelsTornadoStance() : SeelsTheRecklessCard(1,
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        var slashes = SeelsMechanicsHelper.GetAllCombatCards(Owner)
-            .Where(c => SeelsMechanicsHelper.IsSlash(c) && c.Pile?.Type != PileType.Exhaust)
-            .ToList();
+        var slashes = GetSlashes(this);
 
         foreach (var slash in slashes)
         {

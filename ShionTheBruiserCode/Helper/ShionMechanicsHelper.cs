@@ -168,10 +168,18 @@ public static class ShionMechanicsHelper
     }
     
     // Patch Up : Heals by X amount until you're at the Patch Up threshold (50%HP by default)
-    public static async Task PatchUpCreature(int amount, Creature creature)
+    /// <summary>
+    /// HP a Patch Up of this amount would actually restore (capped by the Patch Up limit).
+    /// </summary>
+    public static int GetPatchUpHealAmount(int amount, Creature creature)
     {
         var patchUpLimit = (int) (creature.MaxHp * GetPatchUpThreshold(creature));
-        var amountToHeal = Math.Min(amount, patchUpLimit - creature.CurrentHp);
+        return Math.Max(0, Math.Min(amount, patchUpLimit - creature.CurrentHp));
+    }
+
+    public static async Task PatchUpCreature(int amount, Creature creature)
+    {
+        var amountToHeal = GetPatchUpHealAmount(amount, creature);
         
         if (amountToHeal <= 0) return;
         

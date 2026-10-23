@@ -27,15 +27,23 @@ public class SeelsShedThePain() : SeelsTheRecklessCard(3,
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new HealVar(1M)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new HealVar(1M),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("HealAmount").WithMultiplier((card, _) => GetWoundsToExhaust(card).Count * card.DynamicVars.Heal.BaseValue),
+    ];
+
+    private static List<CardModel> GetWoundsToExhaust(CardModel card) =>
+        SeelsMechanicsHelper.GetAllCombatCards(card.Owner)
+            .Where(c => SeelsMechanicsHelper.IsWound(c) && c.Enchantment is not null && c.Pile?.Type != PileType.Exhaust)
+            .ToList();
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Wound>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        var wounds = SeelsMechanicsHelper.GetAllCombatCards(Owner)
-            .Where(c => SeelsMechanicsHelper.IsWound(c) && c.Enchantment is not null && c.Pile?.Type != PileType.Exhaust)
-            .ToList();
+        var wounds = GetWoundsToExhaust(this);
 
         foreach (var wound in wounds)
         {

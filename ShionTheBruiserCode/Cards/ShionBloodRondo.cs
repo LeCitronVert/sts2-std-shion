@@ -20,7 +20,10 @@ public class ShionBloodRondo() : ShionBerserkCard(1,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(1, ValueProp.Move),
         new PatchUpVar(0),
-        new DynamicVar("BerserkLifeSteal", 25)
+        new DynamicVar("BerserkLifeSteal", 25),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("HitAmount").WithMultiplier((card, _) => GetHits(card.Owner.Creature))
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -34,16 +37,17 @@ public class ShionBloodRondo() : ShionBerserkCard(1,
     {
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
-        var hits = (Owner.Creature.Powers.FirstOrDefault(p => p is StrengthPower)?.Amount ?? 0);
-        
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .FromCard(card)
             .Targeting(play.Target)
-            .WithHitCount(hits + 1)
+            .WithHitCount(GetHits(card.Owner.Creature))
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext)
         ;
     }
+
+    private static int GetHits(Creature creature) =>
+        (creature.Powers.FirstOrDefault(p => p is StrengthPower)?.Amount ?? 0) + 1;
 
     protected override void OnUpgrade()
     {

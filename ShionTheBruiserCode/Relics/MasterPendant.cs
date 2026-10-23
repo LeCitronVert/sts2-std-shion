@@ -3,11 +3,12 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Entities.RestSite;
 using MegaCrit.Sts2.Core.Models.RelicPools;
+using ShionTheBruiser.ShionTheBruiserCode.Character;
 using ShionTheBruiser.ShionTheBruiserCode.RestSiteOptions;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
-[Pool(typeof(SharedRelicPool))]
+[Pool(typeof(ShionTheBruiserRelicPool))]
 public class MasterPendant() : ShionTheBruiserRelic
 {
     public override RelicRarity Rarity =>

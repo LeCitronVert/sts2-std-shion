@@ -25,7 +25,15 @@ public class FryKindaBusyHere() : FryTheCommanderCard(1, //todo : choose cost
 {
     public override bool GainsBlock => true;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(5M, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new BlockVar(5M, ValueProp.Move),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        // Block is gained once per Requested counter, so modifiers apply to each gain
+        new CalculatedVar("BlockAmount").WithMultiplier((card, _) =>
+            FryMechanicsHelper.GetRequests(card.Owner.Creature).Count
+            * PreviewHelper.ModifiedBlock(card, card.DynamicVars.Block.BaseValue, card.DynamicVars.Block.Props)),
+    ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(FryCardKeywords.Request)];
 

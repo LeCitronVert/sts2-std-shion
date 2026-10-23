@@ -5,17 +5,26 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class SlalPinballMove() : SlalTheEndlessCard(2,
+/// <summary>
+/// X times twice (three times): deal 4 damage to a random enemy and apply 1 Weak to it.
+/// </summary>
+public class SlalPinballMove() : SlalTheEndlessCard(0,
     CardType.Attack, CardRarity.Uncommon,
     TargetType.RandomEnemy)
 {
+    protected override bool HasEnergyCostX => true;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(4M, ValueProp.Move),
         new PowerVar<WeakPower>(1),
-        new RepeatVar(3),
+        new RepeatVar(2),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("HitAmount").WithMultiplier((card, _) => PreviewHelper.XValue(card) * card.DynamicVars.Repeat.IntValue),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<WeakPower>()];
@@ -27,7 +36,8 @@ public class SlalPinballMove() : SlalTheEndlessCard(2,
         var card = this;
         if (card.CombatState is null) return;
 
-        for (var i = 0; i < card.DynamicVars.Repeat.IntValue; i++)
+        var hits = ResolveEnergyXValue() * card.DynamicVars.Repeat.IntValue;
+        for (var i = 0; i < hits; i++)
         {
             var enemy = card.Owner.RunState.Rng.CombatTargets.NextItem(card.CombatState.HittableEnemies);
             if (enemy == null) break;

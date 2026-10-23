@@ -11,7 +11,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-[Pool(typeof(ColorlessCardPool))]
+[Pool(typeof(TokenCardPool))]
 public class CosmoKindness() : ShionTheBruiserCard(2,
     CardType.Skill, CardRarity.Token,
     TargetType.Self)
@@ -21,7 +21,11 @@ public class CosmoKindness() : ShionTheBruiserCard(2,
 
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PatchUpVar(999)
+        new PatchUpVar(999),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("HealAmount").WithMultiplier((card, _) =>
+            ShionMechanicsHelper.GetPatchUpHealAmount(card.DynamicVars[PatchUpVar.Key].IntValue, card.Owner.Creature))
     ];
 
     protected override async Task OnPlay(

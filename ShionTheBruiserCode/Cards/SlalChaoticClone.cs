@@ -13,7 +13,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
 /// Gain 6 Block. Play a random Slimed in your Hand. If you do, gain 1 Weak.
-/// Upgraded: gain 8 Block. Play ALL Slimed in your Hand. Gain 1 Weak for each card played this way.
+/// Upgraded: gain 8 Block. Play ALL Slimed in your Hand. Gain 1 Weak if you played a card this way.
 /// </summary>
 public class SlalChaoticClone() : SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Common,
@@ -49,7 +49,7 @@ public class SlalChaoticClone() : SlalTheEndlessCard(1,
         }
 
         if (toPlay.Count == 0) return;
-        await PowerCmd.Apply<WeakPower>(choiceContext, card.Owner.Creature, card.DynamicVars.Weak.BaseValue * toPlay.Count, card.Owner.Creature, card);
+        await PowerCmd.Apply<WeakPower>(choiceContext, card.Owner.Creature, card.DynamicVars.Weak.BaseValue, card.Owner.Creature, card);
     }
 
     protected override void OnUpgrade()

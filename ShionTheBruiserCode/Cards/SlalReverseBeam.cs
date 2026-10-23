@@ -14,6 +14,8 @@ public class SlalReverseBeam() : SlalTheEndlessCard(2,
     CardType.Skill, CardRarity.Rare,
     TargetType.Self)
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromCard<SlalIncomingBeam>(IsUpgraded),
     ];

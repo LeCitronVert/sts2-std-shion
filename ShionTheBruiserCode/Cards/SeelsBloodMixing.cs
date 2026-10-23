@@ -32,6 +32,10 @@ public class SeelsBloodMixing() : SeelsTheRecklessCard(1,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new HpLossVar(1M),
         new PowerVar<StrengthPower>(1M),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("HpLossAmount").WithMultiplier((card, _) =>
+            card.CombatState!.HittableEnemies.Count * card.DynamicVars.HpLoss.BaseValue),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)

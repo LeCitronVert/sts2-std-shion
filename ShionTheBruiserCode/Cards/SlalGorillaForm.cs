@@ -1,29 +1,27 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
-using MegaCrit.Sts2.Core.HoverTips;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class SlalGorillaForm(): SlalTheEndlessCard(3,
+/// <summary>
+/// Whenever you play a Power, gain 2 Vigor.
+/// </summary>
+public class SlalGorillaForm(): SlalTheEndlessCard(2,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<StrengthPower>(1),
-        new PowerVar<DexterityPower>(1),
-        new DynamicVar("RandomMult", 1)
+        new PowerVar<GorillaForm>(2),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<DexterityPower>(),
-        HoverTipFactory.FromPower<StrengthPower>(),
         HoverTipFactory.FromPower<VigorPower>(),
-        HoverTipFactory.FromPower<Powers.Random>(),
     ];
     
     protected override HashSet<CardTag> CanonicalTags => [SlalCardTags.Form];
@@ -33,24 +31,10 @@ public class SlalGorillaForm(): SlalTheEndlessCard(3,
         CardPlay play)
     {
         var card = this;
-        await PowerCmd.Apply<DexterityPower>(
-            choiceContext, 
-            card.Owner.Creature, 
-            -DynamicVars.Dexterity.BaseValue, 
-            card.Owner.Creature, 
-            card
-        );
-        await PowerCmd.Apply<StrengthPower>(
-            choiceContext, 
-            card.Owner.Creature, 
-            DynamicVars.Strength.BaseValue, 
-            card.Owner.Creature, 
-            card
-        );
         await PowerCmd.Apply<GorillaForm>(
             choiceContext, 
             card.Owner.Creature, 
-            DynamicVars["RandomMult"].BaseValue, 
+            DynamicVars["GorillaForm"].BaseValue, 
             card.Owner.Creature, 
             card
         );
@@ -58,6 +42,6 @@ public class SlalGorillaForm(): SlalTheEndlessCard(3,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["RandomMult"].UpgradeValueBy(1);
+        EnergyCost.UpgradeBy(-1);
     }
 }

@@ -26,6 +26,17 @@ public class SeelsPaybackTime() : SeelsTheRecklessCard(2,
 
     protected override HashSet<CardTag> CanonicalTags => [SeelsCardTags.Blood];
 
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => GetMissingHp(card)),
+    ];
+
+    private static int GetMissingHp(CardModel card) =>
+        card.CombatState!.GetTeammatesOf(card.Owner.Creature)
+            .Where(c => c.IsPlayer && (card.IsUpgraded || c != card.Owner.Creature))
+            .Sum(c => c.MaxHp - c.CurrentHp);
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(SeelsCardKeywords.BloodBend),
         HoverTipFactory.FromPower<Blood>(),
@@ -37,9 +48,7 @@ public class SeelsPaybackTime() : SeelsTheRecklessCard(2,
         if (CombatState is null) return;
 
         var x = await SeelsMechanicsHelper.BloodBend(choiceContext, this);
-        var damage = CombatState.GetTeammatesOf(Owner.Creature)
-            .Where(c => c.IsPlayer && (IsUpgraded || c != Owner.Creature))
-            .Sum(c => c.MaxHp - c.CurrentHp);
+        var damage = GetMissingHp(this);
 
         if (x > 0 && damage > 0)
         {

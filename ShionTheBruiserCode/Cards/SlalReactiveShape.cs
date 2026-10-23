@@ -8,32 +8,33 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain Block. Whenever you play a Form Power, put this into your Hand and increase its Block this combat.
+/// Gain 8 (10) Block. Decrease this card's Block by 1 this combat (like Steam Barrier).
+/// Whenever you play a Form Power, put this into your Hand.
 /// </summary>
 public class SlalReactiveShape() : SlalTheEndlessCard(0,
     CardType.Skill, CardRarity.Rare,
     TargetType.Self)
 {
-    private decimal _extraBlockFromForms;
+    private decimal _blockLostFromPlays;
 
     /// <summary>
-    /// Required so we can restore the extra block amount after a downgrade (see Rampage).
+    /// Required so we can restore the lost block amount after a downgrade (see Rampage).
     /// </summary>
-    private decimal ExtraBlockFromForms
+    private decimal BlockLostFromPlays
     {
-        get => _extraBlockFromForms;
+        get => _blockLostFromPlays;
         set
         {
             AssertMutable();
-            _extraBlockFromForms = value;
+            _blockLostFromPlays = value;
         }
     }
 
     public override bool GainsBlock => true;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(5M, ValueProp.Move),
-        new DynamicVar("Increase", 1),
+        new BlockVar(8M, ValueProp.Move),
+        new DynamicVar("Decrease", 1),
     ];
 
     protected override async Task OnPlay(
@@ -41,16 +42,16 @@ public class SlalReactiveShape() : SlalTheEndlessCard(0,
         CardPlay play)
     {
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
+
+        var decrease = Math.Min(DynamicVars["Decrease"].BaseValue, DynamicVars.Block.BaseValue);
+        DynamicVars.Block.BaseValue -= decrease;
+        BlockLostFromPlays += decrease;
     }
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (cardPlay.Card.Owner != Owner || !SlalMechanicsHelper.IsFormPower(cardPlay.Card) || !cardPlay.IsLastInSeries) return;
         if (Pile?.Type is not (PileType.Draw or PileType.Discard or PileType.Hand)) return;
-
-        var increase = DynamicVars["Increase"].BaseValue;
-        DynamicVars.Block.BaseValue += increase;
-        ExtraBlockFromForms += increase;
 
         if (Pile.Type != PileType.Hand)
         {
@@ -61,11 +62,11 @@ public class SlalReactiveShape() : SlalTheEndlessCard(0,
     protected override void AfterDowngraded()
     {
         base.AfterDowngraded();
-        DynamicVars.Block.BaseValue += ExtraBlockFromForms;
+        DynamicVars.Block.BaseValue -= BlockLostFromPlays;
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Increase"].UpgradeValueBy(1);
+        DynamicVars.Block.UpgradeValueBy(2M);
     }
 }

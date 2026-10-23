@@ -7,6 +7,9 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
+/// <summary>
+/// Whenever you play a Power, gain X Memory this turn.
+/// </summary>
 public class SqueakySquirrelForm : SlalOnPowerPlayedPower
 {
     private const double PouicChance = 0.1;
@@ -18,8 +21,7 @@ public class SqueakySquirrelForm : SlalOnPowerPlayedPower
     {
         if (Owner.Player is null) return;
 
-        var cards = await SlalMechanicsHelper.PutRandomColoredCardsFromDiscardIntoHand(Owner.Player, amount);
-        if (cards.Count == 0) return;
+        await SlalMechanicsHelper.GainMemoryThisTurn(choiceContext, Owner, amount);
 
         // Purely cosmetic, so it doesn't use the combat RNG.
         if (!_hasPouiced || System.Random.Shared.NextDouble() < PouicChance)

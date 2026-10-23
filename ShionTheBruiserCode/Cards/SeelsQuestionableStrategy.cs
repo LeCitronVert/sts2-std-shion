@@ -30,6 +30,13 @@ public class SeelsQuestionableStrategy() : SeelsTheRecklessCard(0,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<VulnerablePower>(5M),
         new RepeatVar(1),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        // Counts the Vulnerable gained first; Block is gained once per repeat, so modifiers apply to each gain
+        new CalculatedVar("BlockAmount").WithMultiplier((card, _) =>
+            card.DynamicVars.Repeat.IntValue * PreviewHelper.ModifiedBlock(card,
+                SeelsMechanicsHelper.GetVulnerable(card.Owner.Creature) + card.DynamicVars.Vulnerable.BaseValue,
+                ValueProp.Move)),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<VulnerablePower>()];

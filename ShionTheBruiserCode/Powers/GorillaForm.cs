@@ -1,43 +1,22 @@
-using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
-public class GorillaForm(): SlalTheEndlessPower
+/// <summary>
+/// Whenever you play a Power, gain X Vigor.
+/// </summary>
+public class GorillaForm : SlalOnPowerPlayedPower
 {
-    public override PowerType Type =>
-        PowerType.Buff;
-
-    public override PowerStackType StackType =>
-        PowerStackType.Counter;
-
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<VigorPower>(),
-        HoverTipFactory.FromPower<Random>(),
     ];
-    
-    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
-    {
-        if (!participants.Contains(Owner))
-            return Task.CompletedTask;
 
-        var vigorAmount = Amount * Owner.GetPowerAmount<Random>();
-        if (0 == vigorAmount) return Task.CompletedTask;
-        
-        Flash();
-        PowerCmd.Apply<VigorPower>(
-            new ThrowingPlayerChoiceContext(),
-            Owner,
-            vigorAmount,
-            Owner,
-            null!
-        );
-        
-        return Task.CompletedTask;
+    protected override async Task OnPowerPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay, int amount)
+    {
+        await PowerCmd.Apply<VigorPower>(choiceContext, Owner, amount, Owner, null);
     }
 }

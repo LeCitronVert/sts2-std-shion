@@ -15,6 +15,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Enchantments;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -26,7 +27,26 @@ public class SeelsThreateningPromise() : SeelsTheRecklessCard(1,
     CardType.Skill, CardRarity.Rare,
     TargetType.AnyEnemy)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<VulnerablePower>(2M)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new PowerVar<VulnerablePower>(2M),
+        new HasTargetVar(),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        // One Slash per Vulnerable on the enemy after each application
+        new CalculatedVar("SlashesAmount").WithMultiplier((card, target) =>
+        {
+            if (target is null) return 0;
+            var repeats = card.Owner.Creature.HasPower<VulnerablePower>() ? 2 : 1;
+            var vulnerable = (decimal) SeelsMechanicsHelper.GetVulnerable(target);
+            decimal slashes = 0;
+            for (var i = 0; i < repeats; i++)
+            {
+                vulnerable += card.DynamicVars.Vulnerable.BaseValue;
+                slashes += vulnerable;
+            }
+            return slashes;
+        }),
+    ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<VulnerablePower>(),

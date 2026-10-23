@@ -3,43 +3,49 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using ShionTheBruiser.ShionTheBruiserCode.Helper;
-using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using MegaCrit.Sts2.Core.ValueProps;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class SlalBreakContinuity() : SlalTheEndlessCard(1,
-    CardType.Skill, CardRarity.Ancient,
+public class SlalBreakContinuity() : SlalTheEndlessCard(2,
+    CardType.Attack, CardRarity.Rare,
     TargetType.AllEnemies)
 {
-    public override bool CanBeGeneratedInCombat => false;
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<SlalFreshIdea>()];
+    
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
-        new CalculatedVar("DebuffAmount").WithMultiplier((card, _) => PileType.Discard.GetPile(card.Owner).Cards.Count),
+        new CalculatedVar("HpLossAmount").WithMultiplier((model, _) => 
+            PileType.Exhaust.GetPile(model.Owner).Cards.Count(c => c is SlalFreshIdea)
+        ),
     ];
-
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Confusion>()];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
         var card = this;
-        await CreatureCmd.TriggerAnim(card.Owner.Creature, "Cast", card.Owner.Character.CastAnimDelay);
+        if (card.CombatState is null) return;
 
-        var drawCards = PileType.Draw.GetPile(card.Owner).Cards.ToList();
-        var discardCards = PileType.Discard.GetPile(card.Owner).Cards.ToList();
+        var ideas = PileType.Exhaust.GetPile(card.Owner).Cards.Where(c => c is SlalFreshIdea).ToList();
+        if (ideas.Count == 0) return;
 
-        await SlalMechanicsHelper.ApplyToAllEnemies<Confusion>(choiceContext, card.Owner.Creature, discardCards.Count, card);
-
-        await CardPileCmd.Add(drawCards, PileType.Discard);
-        await CardPileCmd.Add(discardCards, PileType.Draw, CardPilePosition.Random);
+        await CardPileCmd.Add(ideas, PileType.Discard);
+        await CreatureCmd.Damage(
+            choiceContext,
+            card.CombatState.HittableEnemies.ToList(),
+            ideas.Count,
+            ValueProp.Unblockable | ValueProp.Unpowered,
+            card.Owner.Creature,
+            card
+        );
     }
 
     protected override void OnUpgrade()
     {
-        AddKeyword(CardKeyword.Retain);
+        RemoveKeyword(CardKeyword.Exhaust);
     }
 }

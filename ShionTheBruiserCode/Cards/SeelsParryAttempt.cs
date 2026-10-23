@@ -27,14 +27,25 @@ public class SeelsParryAttempt() : SeelsTheRecklessCard(1,
 {
     public override bool GainsBlock => true;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(8M, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new BlockVar(8M, ValueProp.Move),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("BlockAmount").WithMultiplier((card, _) =>
+            GetTimes(card) * PreviewHelper.ModifiedBlock(card, card.DynamicVars.Block.BaseValue, card.DynamicVars.Block.Props)),
+    ];
+
+    private static int GetTimes(CardModel card)
+    {
+        var cost = card.EnergyCost.GetResolved();
+        return cost >= 2 ? cost * 2 : cost;
+    }
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(SeelsCardKeywords.Erratic)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        var cost = EnergyCost.GetResolved();
-        var times = cost >= 2 ? cost * 2 : cost;
+        var times = GetTimes(this);
         for (var i = 0; i < times; i++)
         {
             await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);

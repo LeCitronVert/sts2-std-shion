@@ -6,9 +6,12 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using BaseLib.Utils;
+using MegaCrit.Sts2.Core.Models.CardPools;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+[Pool(typeof(TokenCardPool))]
 public class SlalSwordForm() : SlalTheEndlessCard(1,
     CardType.Power, CardRarity.Token,
     TargetType.Self)

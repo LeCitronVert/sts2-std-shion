@@ -29,8 +29,18 @@ public class ShionInstinctualPremonitions() : ShionBerserkCard(2,
         new DynamicVar("VigorBonusAgainstBlock", VigorBonusAgainstBlock),
         new EnergyVar("EnergyBonusAgainstOthers", EnergyBonusAgainstOthers),
         new DynamicVar("CounterStanceAgainstDebuffs", CounterStanceAgainstDebuffs),
-        new EnergyVar("CostReductionWhenBerserk", CostReductionWhenBerserk)
+        new EnergyVar("CostReductionWhenBerserk", CostReductionWhenBerserk),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("PremonitionBlock").WithMultiplier((card, _) =>
+            CountIntents(card, IntentCategory.Attack) * PreviewHelper.ModifiedBlock(card, BlockBonusAgainstAttacks, ValueProp.Move)),
+        new CalculatedVar("PremonitionCounterStance").WithMultiplier((card, _) =>
+            CountIntents(card, IntentCategory.Debuff) * CounterStanceAgainstDebuffs),
+        new CalculatedVar("PremonitionEnergy").WithMultiplier((card, _) =>
+            CountIntents(card, IntentCategory.Other) * EnergyBonusAgainstOthers),
     ];
+
+    private enum IntentCategory { Attack, Debuff, Other }
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.Static(StaticHoverTip.Block),
@@ -45,18 +55,44 @@ public class ShionInstinctualPremonitions() : ShionBerserkCard(2,
     {
         var card = this;
         
-        foreach (var enemy in CombatState?.Enemies ?? [])
+        foreach (var intent in GetEnemyIntents(card))
+        {
+            await GainBonusBasedOnIntent(intent, card.Owner.Creature);
+        }
+    }
+
+    private static List<AbstractIntent> GetEnemyIntents(CardModel card)
+    {
+        List<AbstractIntent> intents = [];
+        foreach (var enemy in card.CombatState?.Enemies ?? [])
         {
             if (!enemy.IsEnemy) continue;
             if (enemy.Monster == null) continue;
-            
-            foreach (var intent in enemy.Monster.NextMove.Intents)
-            {
-                await GainBonusBasedOnIntent(intent, card.Owner.Creature);
-            }
+
+            intents.AddRange(enemy.Monster.NextMove.Intents);
         }
-        
+        return intents;
     }
+
+    private static IntentCategory Categorize(AbstractIntent intent)
+    {
+        switch (intent.IntentType)
+        {
+            case IntentType.Attack:
+            case IntentType.DeathBlow:
+                return IntentCategory.Attack;
+            case IntentType.Debuff:
+            case IntentType.DebuffStrong:
+            case IntentType.StatusCard:
+            case IntentType.CardDebuff:
+                return IntentCategory.Debuff;
+            default:
+                return IntentCategory.Other;
+        }
+    }
+
+    private static int CountIntents(CardModel card, IntentCategory category) =>
+        GetEnemyIntents(card).Count(i => Categorize(i) == category);
 
     protected override void OnUpgrade()
     {
@@ -67,31 +103,19 @@ public class ShionInstinctualPremonitions() : ShionBerserkCard(2,
     {
         if (owner.Player == null) return;
         
-        switch (intent.IntentType)
+        switch (Categorize(intent))
         {
-            case IntentType.Attack:
-            case IntentType.DeathBlow:
+            case IntentCategory.Attack:
                 await CreatureCmd.GainBlock(
                     owner,
                     new BlockVar(BlockBonusAgainstAttacks, ValueProp.Move),
                     null
                 );
                 break;
-            case IntentType.Debuff:
-            case IntentType.DebuffStrong:
-            case IntentType.StatusCard:
-            case IntentType.CardDebuff:
+            case IntentCategory.Debuff:
                 await PowerCmd.Apply<CounterStance>(new ThrowingPlayerChoiceContext(), owner, CounterStanceAgainstDebuffs, owner, this);
                 break;
-            case IntentType.Buff:
-            case IntentType.Summon:
-            case IntentType.Escape:
-            case IntentType.Heal:
-            case IntentType.Defend:
-            case IntentType.Hidden:
-            case IntentType.Sleep:
-            case IntentType.Stun:
-            case IntentType.Unknown:
+            case IntentCategory.Other:
             default:
                 await PlayerCmd.GainEnergy(EnergyBonusAgainstOthers, owner.Player);
                 break;

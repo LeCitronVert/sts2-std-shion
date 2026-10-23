@@ -13,12 +13,15 @@ using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using BaseLib.Utils;
+using MegaCrit.Sts2.Core.Models.CardPools;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
 /// Ethereal. Exhaust. Does nothing.
 /// </summary>
+[Pool(typeof(TokenCardPool))]
 public class FryAllForNothing() : FryTheCommanderCard(0,
     CardType.Skill, CardRarity.Token,
     TargetType.Self)

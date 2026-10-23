@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-[Pool(typeof(ColorlessCardPool))]
+[Pool(typeof(TokenCardPool))]
 public class CosmoDetermination() : ShionTheBruiserCard(2,
     CardType.Skill, CardRarity.Token,
     TargetType.Self)

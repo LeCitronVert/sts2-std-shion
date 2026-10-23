@@ -1,32 +1,35 @@
 using MegaCrit.Sts2.Core.CardSelection;
-using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Models;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// Next turn, put X cards from your Discard Pile into your Hand (like Foregone Conclusion).
+/// You choose the cards Memory plays from your Discard Pile instead of picking them at random.
 /// </summary>
 public class ContinuityThread : SlalTheEndlessPower
 {
     public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Counter;
+    public override PowerStackType StackType => PowerStackType.Single;
 
-    public override async Task BeforeHandDraw(Player player, PlayerChoiceContext choiceContext, ICombatState combatState)
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<Memory>(),
+    ];
+
+    public async Task<List<CardModel>> SelectCardsForMemory(PlayerChoiceContext choiceContext, Player player, int count, Func<CardModel, bool> filter)
     {
-        if (player != Owner.Player) return;
-
-        var cards = await CardSelectCmd.FromCombatPile(
+        Flash();
+        return (await CardSelectCmd.FromCombatPile(
             choiceContext,
             PileType.Discard.GetPile(player),
             player,
-            new CardSelectorPrefs(SelectionScreenPrompt, Amount)
-        );
-        await CardPileCmd.Add(cards, PileType.Hand);
-        await PowerCmd.Remove(this);
+            new CardSelectorPrefs(SelectionScreenPrompt, count),
+            filter
+        )).ToList();
     }
 }

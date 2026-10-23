@@ -1,11 +1,11 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -15,8 +15,11 @@ public class SlalBellMemory(): SlalTheEndlessCard(2,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(6M, ValueProp.Move),
-        new RepeatVar(2)
+        new RepeatVar(2),
+        new PowerVar<Memory>(1),
     ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Memory>()];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -31,10 +34,7 @@ public class SlalBellMemory(): SlalTheEndlessCard(2,
             .WithHitCount(DynamicVars.Repeat.IntValue)
             .Execute(choiceContext)
         ;
-        CardModel? card2 = PileType.Discard.GetPile(card.Owner).Cards.Where<CardModel>((Func<CardModel, bool>) (c => c.Type == CardType.Attack && !c.Keywords.Contains(CardKeyword.Unplayable))).ToList<CardModel>().StableShuffle<CardModel>(card.Owner.RunState.Rng.Shuffle).FirstOrDefault<CardModel>() ?? PileType.Discard.GetPile(card.Owner).Cards.Where<CardModel>((Func<CardModel, bool>) (c => c.Type == CardType.Attack)).ToList<CardModel>().StableShuffle<CardModel>(card.Owner.RunState.Rng.Shuffle).FirstOrDefault<CardModel>();
-        if (card2 == null)
-            return;
-        await CardCmd.AutoPlay(choiceContext, card2, null);
+        await SlalMechanicsHelper.GainMemory(choiceContext, card.Owner.Creature, card.DynamicVars["Memory"].BaseValue, card);
     }
 
     protected override void OnUpgrade()

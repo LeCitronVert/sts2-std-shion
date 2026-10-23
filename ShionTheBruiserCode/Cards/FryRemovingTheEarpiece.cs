@@ -25,7 +25,13 @@ public class FryRemovingTheEarpiece() : FryTheCommanderCard(0,
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<StrengthPower>(2M)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new PowerVar<StrengthPower>(2M),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("StrengthAmount").WithMultiplier((card, _) =>
+            FryMechanicsHelper.GetRequests(card.Owner.Creature).Count * card.DynamicVars.Strength.BaseValue),
+    ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(FryCardKeywords.Request),

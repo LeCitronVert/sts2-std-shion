@@ -25,7 +25,13 @@ public class FryHealThyself() : FryTheCommanderCard(1,
 {
     public override int CanonicalStarCost => 2;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new HealVar(3M)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new HealVar(3M),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("HealAmount").WithMultiplier((card, _) =>
+            PreviewHelper.OtherCardsInHand(card).Count * card.DynamicVars.Heal.BaseValue),
+    ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {

@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -9,6 +10,12 @@ public class SlalChangeOfPlan() : SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Rare,
     TargetType.Self)
 {
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("CardsAmount").WithMultiplier((card, _) => PreviewHelper.OtherCardsInHand(card).Count),
+    ];
+
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)

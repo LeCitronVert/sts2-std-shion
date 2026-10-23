@@ -27,7 +27,11 @@ public class FryMidSeasonUpgrade() : FryCooldownCard(0,
 
     protected override int BaseCooldown => 3;
 
-    protected override IEnumerable<DynamicVar> CooldownCardVars => [];
+    protected override IEnumerable<DynamicVar> CooldownCardVars => [
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("StrengthAmount").WithMultiplier((card, _) => card.Owner.Creature.GetPowerAmount<StrengthPower>()),
+    ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>()];
 

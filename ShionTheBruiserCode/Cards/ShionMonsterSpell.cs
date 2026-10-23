@@ -9,9 +9,12 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using BaseLib.Utils;
+using MegaCrit.Sts2.Core.Models.CardPools;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+[Pool(typeof(TokenCardPool))]
 public class ShionMonsterSpell() : ShionTheBruiserCard(2,
     CardType.Attack, CardRarity.Token, TargetType.AnyEnemy)
 {

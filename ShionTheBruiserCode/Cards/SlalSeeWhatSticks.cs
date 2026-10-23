@@ -39,14 +39,4 @@ public class SlalSeeWhatSticks(): SlalSlimyCard(0,
     protected override void OnUpgrade()
     {
     }
-    
-    protected override PileType GetResultPileTypeForCardPlay()
-    {
-        PileType pileTypeForCardPlay = base.GetResultPileTypeForCardPlay();
-        if (IsUpgraded &&  pileTypeForCardPlay == PileType.Discard)
-        {
-            return PileType.Draw;
-        }
-        return pileTypeForCardPlay;
-    }
 }

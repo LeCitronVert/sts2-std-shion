@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c7piw2r2jsw3s"
-path="res://.godot/imported/slal_next_topic.png-522a238cfff5481546618802a3c8be91.ctex"
+uid="uid://dtpe8u8rie3vq"
+path="res://.godot/imported/slal_anvil_strike.png-bafdc2b670b366b378a317a1b1a048f2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ShionTheBruiser/images/card_portraits/big/slal_next_topic.png"
-dest_files=["res://.godot/imported/slal_next_topic.png-522a238cfff5481546618802a3c8be91.ctex"]
+source_file="res://ShionTheBruiser/images/card_portraits/big/slal_anvil_strike.png"
+dest_files=["res://.godot/imported/slal_anvil_strike.png-bafdc2b670b366b378a317a1b1a048f2.ctex"]
 
 [params]
 

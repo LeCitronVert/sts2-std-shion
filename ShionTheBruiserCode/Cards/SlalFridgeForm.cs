@@ -29,7 +29,7 @@ public class SlalFridgeForm() : SlalTheEndlessCard(3,
     {
         var card = this;
         await PlayerCmd.GainMaxPotionCount(1, card.Owner);
-        await FridgeForm.ProcureRandomPotion(card.Owner);
+        await FridgeForm.FillPotionSlots(card.Owner);
         await PowerCmd.Apply<FridgeForm>(
             choiceContext,
             card.Owner.Creature,

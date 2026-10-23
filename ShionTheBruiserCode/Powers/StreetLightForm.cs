@@ -9,7 +9,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// Whenever you play a Fresh Idea, add a Maybe Later into your Hand and gain X energy.
+/// Whenever you play a Fresh Idea, gain X energy.
 /// </summary>
 public class StreetLightForm : SlalTheEndlessPower
 {

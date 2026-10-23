@@ -28,13 +28,19 @@ public abstract class SlalSlimyCard(int cost, CardType type, CardRarity rarity, 
         await AddSlimed();
     }
 
+    /// <summary>
+    /// Number of Slimed this card adds, given how many cards are in the Hand at that moment.
+    /// </summary>
+    protected int SlimedToAdd(int cardsInHand) =>
+        Keywords.Contains(SlalCardKeywords.VerySlimy)
+            ? CardPile.MaxCardsInHand - cardsInHand
+            : Keywords.Contains(SlalCardKeywords.Slimy) ? 1 : 0;
+
     protected async Task AddSlimed()
     {
         if (CombatState is null) return;
 
-        var amount = Keywords.Contains(SlalCardKeywords.VerySlimy)
-            ? CardPile.MaxCardsInHand - PileType.Hand.GetPile(Owner).Cards.Count
-            : Keywords.Contains(SlalCardKeywords.Slimy) ? 1 : 0;
+        var amount = SlimedToAdd(PileType.Hand.GetPile(Owner).Cards.Count);
         if (amount <= 0) return;
 
         List<CardModel> slimed = [];

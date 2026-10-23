@@ -1,18 +1,29 @@
-using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using MegaCrit.Sts2.Core.Models.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class SlalWaitASecond() : SlalTheEndlessCard(0,
+/// <summary>
+/// Apply 1 Weak. Next turn, gain 1 Weak and 1 (2) energy.
+/// </summary>
+public class SlalWaitASecond() : SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Common,
-    TargetType.Self)
+    TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CardsVar(1),
+        new PowerVar<WeakPower>(1),
+        new PowerVar<WeakNextTurn>(1),
+        new EnergyVar(1),
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<WeakPower>(),
+        HoverTipFactory.ForEnergy(this),
     ];
 
     protected override async Task OnPlay(
@@ -20,25 +31,15 @@ public class SlalWaitASecond() : SlalTheEndlessCard(0,
         CardPlay play)
     {
         var card = this;
-        var amount = card.DynamicVars.Cards.IntValue;
+        ArgumentNullException.ThrowIfNull(play.Target);
 
-        await SlalMechanicsHelper.PutRandomColoredCardsFromDiscardIntoHand(card.Owner, amount);
-
-        var chosenCards = await CardSelectCmd.FromHand(
-            choiceContext,
-            card.Owner,
-            new CardSelectorPrefs(card.SelectionScreenPrompt, amount),
-            null,
-            card
-        );
-        foreach (var chosenCard in chosenCards)
-        {
-            await CardPileCmd.Add(chosenCard, PileType.Draw, CardPilePosition.Top);
-        }
+        await PowerCmd.Apply<WeakPower>(choiceContext, play.Target, card.DynamicVars.Weak.BaseValue, card.Owner.Creature, card);
+        await PowerCmd.Apply<WeakNextTurn>(choiceContext, card.Owner.Creature, card.DynamicVars["WeakNextTurn"].BaseValue, card.Owner.Creature, card);
+        await PowerCmd.Apply<EnergyNextTurnPower>(choiceContext, card.Owner.Creature, card.DynamicVars.Energy.BaseValue, card.Owner.Creature, card);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Cards.UpgradeValueBy(1);
+        DynamicVars.Energy.UpgradeValueBy(1);
     }
 }

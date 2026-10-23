@@ -5,9 +5,13 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using BaseLib.Utils;
+using MegaCrit.Sts2.Core.Models.CardPools;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+[Pool(typeof(TokenCardPool))]
 public class SlalDescription() : SlalTheEndlessCard(2,
     CardType.Skill, CardRarity.Token,
     TargetType.AnyEnemy)
@@ -15,6 +19,12 @@ public class SlalDescription() : SlalTheEndlessCard(2,
     public override bool CanBeGeneratedInCombat => false;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("WeakAmount").WithMultiplier((card, _) => SlalMechanicsHelper.GetRandom(card.Owner.Creature)),
+    ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<Powers.Random>(),

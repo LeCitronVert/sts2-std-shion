@@ -9,9 +9,12 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
 using Random = ShionTheBruiser.ShionTheBruiserCode.Powers.Random;
 using MegaCrit.Sts2.Core.HoverTips;
+using BaseLib.Utils;
+using MegaCrit.Sts2.Core.Models.CardPools;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+[Pool(typeof(TokenCardPool))]
 public class SlalFreshIdea(): SlalTheEndlessCard(0,
     CardType.Skill, CardRarity.Token,
     TargetType.Self)
@@ -72,7 +75,9 @@ public class SlalFreshIdea(): SlalTheEndlessCard(0,
         var hasCreativeSpiritPower = Owner.Creature.Powers.Any(p => p is CreativeSpirit);
         
         // Slal's generable tokens (Bumper, Ventilator, Squeaky Squirrel Form...) can also be created.
+        // Tokens live in the TokenCardPool, so they are added separately from the regular options.
         var cardOptions = SlalMechanicsHelper.GetRandomCardOptions(Owner)
+            .Concat(ModelDb.CardPool<TokenCardPool>().GetUnlockedCards(Owner.UnlockState, Owner.RunState.CardMultiplayerConstraint))
             .Where(c => c.CanBeGeneratedInCombat && c is not SlalFreshIdea && (
                 (hasCreativeSpiritPower 
                     ? c.Rarity is CardRarity.Common or CardRarity.Uncommon or CardRarity.Rare

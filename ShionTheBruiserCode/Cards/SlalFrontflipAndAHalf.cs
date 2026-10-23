@@ -1,5 +1,3 @@
-using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -14,32 +12,24 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Deal 5 damage and apply 1 Weak to ALL enemies and yourself.
-/// If you lost HP this turn, ALL enemies gain 5 Confusion.
+/// Apply 1 Weak to ALL enemies and yourself. Deal 5 (7) damage to ALL enemies. Take 5 damage.
+/// If that damage made you lose HP, ALL enemies gain 10 (15) Confusion.
 /// </summary>
 public class SlalFrontflipAndAHalf() : SlalTheEndlessCard(2,
-    CardType.Attack, CardRarity.Common,
+    CardType.Attack, CardRarity.Uncommon,
     TargetType.AllEnemies)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(5M, ValueProp.Move),
         new PowerVar<WeakPower>(1),
-        new PowerVar<Confusion>(5),
+        new DynamicVar("SelfDamage", 5M),
+        new PowerVar<Confusion>(10),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<WeakPower>(),
         HoverTipFactory.FromPower<Confusion>(),
     ];
-
-    protected override bool ShouldGlowGoldInternal => CombatState != null && LostHpThisTurn(this);
-
-    private static bool LostHpThisTurn(CardModel card)
-    {
-        return CombatManager.Instance.History.Entries
-            .OfType<DamageReceivedEntry>()
-            .Any(e => e.Receiver == card.Owner.Creature && e.Result.UnblockedDamage > 0 && e.HappenedThisTurn(card.CombatState));
-    }
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -48,16 +38,26 @@ public class SlalFrontflipAndAHalf() : SlalTheEndlessCard(2,
         var card = this;
         if (card.CombatState is null) return;
 
+        await SlalMechanicsHelper.ApplyToAllEnemies<WeakPower>(choiceContext, card.Owner.Creature, card.DynamicVars.Weak.BaseValue, card);
+        await PowerCmd.Apply<WeakPower>(choiceContext, card.Owner.Creature, card.DynamicVars.Weak.BaseValue, card.Owner.Creature, card);
+
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .FromCard(card)
             .TargetingAllOpponents(card.CombatState)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);
 
-        await SlalMechanicsHelper.ApplyToAllEnemies<WeakPower>(choiceContext, card.Owner.Creature, card.DynamicVars.Weak.BaseValue, card);
-        await PowerCmd.Apply<WeakPower>(choiceContext, card.Owner.Creature, card.DynamicVars.Weak.BaseValue, card.Owner.Creature, card);
+        // Blockable, so Block can prevent the Confusion
+        var selfDamage = await CreatureCmd.Damage(
+            choiceContext,
+            card.Owner.Creature,
+            card.DynamicVars["SelfDamage"].BaseValue,
+            ValueProp.Unpowered,
+            card.Owner.Creature,
+            card
+        );
 
-        if (LostHpThisTurn(card))
+        if (selfDamage.Any(r => r.UnblockedDamage > 0))
         {
             await SlalMechanicsHelper.ApplyToAllEnemies<Confusion>(choiceContext, card.Owner.Creature, card.DynamicVars["Confusion"].BaseValue, card);
         }
@@ -66,7 +66,6 @@ public class SlalFrontflipAndAHalf() : SlalTheEndlessCard(2,
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(2M);
-        DynamicVars["Confusion"].UpgradeValueBy(2);
-        DynamicVars.Weak.UpgradeValueBy(1);
+        DynamicVars["Confusion"].UpgradeValueBy(5);
     }
 }

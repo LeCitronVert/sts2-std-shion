@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -20,6 +21,19 @@ public class SlalSlimeHug(): SlalTheEndlessCard(1,
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<WeakPower>(2),
+        new HasTargetVar(),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("ConfusionAmount").WithMultiplier((card, target) =>
+        {
+            if (target is null) return 0;
+            var weak = target.GetPowerAmount<WeakPower>() + card.DynamicVars.Weak.BaseValue;
+            if (card.Owner.Creature.HasPower<WeakPower>())
+            {
+                weak *= card.IsUpgraded ? UpgradedMultiplier : NormalMultiplier;
+            }
+            return weak;
+        }),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [

@@ -11,13 +11,18 @@ using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.ValueProps;
 
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using BaseLib.Utils;
+using MegaCrit.Sts2.Core.Models.CardPools;
+
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Lose all Weak. Deal 10 damage to ALL enemies.
-/// Increase this card's damage by 2 (3) each time you create a card. Exhaust.
-/// Only cards created after this one count (not its own creation).
+/// Deal 10 damage to ALL enemies. Increase this card's damage by 2 (3) each time you create a card.
+/// Add Reverse Beam (+) into your Discard Pile. Exhaust.
+/// Only cards created after this one count (not its own creation, nor the Reverse Beam it adds after the damage).
 /// </summary>
+[Pool(typeof(TokenCardPool))]
 public class SlalIncomingBeam() : SlalTheEndlessCard(0,
     CardType.Attack, CardRarity.Token,
     TargetType.AllEnemies)
@@ -47,7 +52,7 @@ public class SlalIncomingBeam() : SlalTheEndlessCard(0,
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<WeakPower>(),
+        HoverTipFactory.FromCard<SlalReverseBeam>(IsUpgraded),
     ];
 
     protected override async Task OnPlay(
@@ -56,8 +61,6 @@ public class SlalIncomingBeam() : SlalTheEndlessCard(0,
     {
         var card = this;
         if (card.CombatState is null) return;
-
-        await PowerCmd.Remove<WeakPower>(card.Owner.Creature);
 
         var enemies = card.CombatState.HittableEnemies.ToList();
         if (enemies.Count > 0)
@@ -76,6 +79,9 @@ public class SlalIncomingBeam() : SlalTheEndlessCard(0,
             .TargetingAllOpponents(card.CombatState)
             .WithNoAttackerAnim()
             .Execute(choiceContext);
+
+        CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(
+            SlalMechanicsHelper.CreateCard<SlalReverseBeam>(card.Owner, IsUpgraded), PileType.Discard, card.Owner));
     }
 
     public override Task AfterCardGeneratedForCombat(CardModel card, Player? creator)

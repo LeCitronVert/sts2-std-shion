@@ -679,3 +679,81 @@ Content I skipped (incomplete in the spec):
 - [ ] Every `//todo : choose cost`, `//todo : upgrade not specified` and `//todo : type not specified` in `ShionTheBruiserCode/Cards/` (listed as ⚠️ above).
 - [ ] Art: character visuals and scenes, card portraits, power, relic and potion icons, energy counter, map marker, character-select portraits.
 - [ ] Architect dialogue lines (`ancients.json`) and Fry's character-select description (`characters.json`).
+
+---
+
+## 5. Slal card & potion changes (from "Slal - Cards to change")
+
+Everything compiles (`dotnet build`, 0 errors, every localization key present). **Nothing tested in game yet.** Not committed. Values are base (upgraded).
+
+### 5.0 Setup
+
+- [ ] Re-export the `.pck` with Godot. Card portraits were renamed: `slal_break_continuity.png` → `slal_anvil_strike.png` and `slal_next_topic.png` → `slal_break_continuity.png` (normal + `big/`). I deleted their `.import` files so Godot re-imports them; check both cards show the right art.
+- [ ] Renamed classes mean new card IDs: **saves or runs that have the old Break Continuity / Next Topic** may show the wrong card or fail to load. Start a fresh run.
+- [ ] Every new or changed card, power and potion has its hover tips (Memory, Memory This Turn, Weak Next Turn, Free Slimed, Distraction).
+
+### 5.1 Reworked mechanics
+
+- [ ] **Memory** (new power, permanent): at the end of your turn, plays X random colored, non-Novel, playable cards from your Discard Pile. Targeted cards pick a random enemy.
+- [ ] **Memory This Turn**: same thing, then it's removed at the end of the turn. If you have both, each one plays its own cards.
+- [ ] Memory plays its cards **before** Weak ticks down and before end-of-turn effects like Plating. Check that the order feels right.
+- [ ] **Random**: at 10 you now gain **1 Memory** instead of a free random card. 11 shows 1 again. Genie Form, Evil Waffle, Cotton Candy and Tabula Rasa still work.
+- [ ] **Confusion**: Weak attacks no longer deal double damage. The execute (Weak attack + Confusion ≥ HP) is still there.
+- [ ] Memory light bulbs (colored bulbs circling above the head and bouncing on each trigger): **not done**, needs Godot visuals.
+
+### 5.2 Cards
+
+- [ ] **Absorption** — now an Uncommon Skill, 2 energy, Very Slimy (Retain)  
+  Choose a card in your Hand and Transform it into Slimed. Gain 1 Max HP + that card's cost (0 for X-cost). Your Hand then fills with Slimed.
+- [ ] **Anvil Strike** (was Break Continuity) — Ancient Attack, 1 energy, single target (Retain)  
+  Gain 1 Random, then deal damage equal to the number of times you gained Random this combat, then apply Weak equal to your Random. The in-combat preview shows the count **before** the +1. Still Wall of Text's transformation.
+- [ ] **Break Continuity** (was Next Topic) — same effect as before, only the name changed.
+- [ ] **Bell Memory** — Deal 6 (8) damage twice. Gain 1 Memory. It no longer plays an Attack from the Discard Pile.
+- [ ] **Bold Announcement** — Deal 1 (3) damage and apply 6 Confusion to ALL enemies. Gain 1 Memory this turn **for each enemy**. The upgrade still gives +2 damage.
+- [ ] **Burlesque Wind-Up** — While it's active, Memory skips Attacks (2 (3) Vigor unchanged).
+- [ ] **Cartoonish Mimickery** — Gain 1 Weak. Choose a card to discard. Playable: +1 Random. Status or unplayable: +1 Slippery. Slimed (a playable Status) gives **both**. Exhaust (not when upgraded).
+- [ ] **Chaotic Clone+** — Plays ALL Slimed and gains 1 Weak in total (not 1 per card).
+- [ ] **Continuity Thread** — now a Rare Power, 3 energy. Gain 1 (2) Memory. From now on, you **choose** the cards Memory plays (choice screen at end of turn). Check that the screen works at end of turn and in multiplayer.
+- [ ] **Creative Break** — 2 energy. Gain 12 (15) Block. Add Fresh Idea (+) into your Draw Pile. Choose a card in your Hand: it gains Retain for the rest of combat (cards that already have Retain can't be picked).
+- [ ] **Crypted Lore** — no change needed (it was already an Attack).
+- [ ] **Distraction** — Apply 1 Weak, gain Dexterity equal to the enemy's Weak. At the end of your turn (before Weak ticks down), if you're not Weak you lose it. Otherwise it **stays for the rest of combat**.
+- [ ] **Enthusiastic Wave** (new, multiplayer only) — Skill, 1 energy, Uncommon ⚠️ (`//todo : choose cost (and rarity)`)  
+  Add 1 Steady Fresh Idea into another player's Hand. Upgraded: 2 into **every** player's Hand, including yours (target type switches to "all allies"). Check that the card goes into the right player's Hand.
+- [ ] **Favourite Bucket** — Counts Status and unplayable cards. An unplayable Status counts once. Curses only count if they're unplayable.
+- [ ] **Fridge Form** — Gain a potion slot and **fill all** your empty slots with random potions.
+- [ ] **Frontflip and a Half** — now Uncommon. Apply 1 Weak to ALL enemies and yourself, deal 5 (7) damage to ALL enemies, then take 5 damage (blockable). If that damage made you lose HP, ALL enemies gain 10 (15) Confusion. "EVERYONE" = enemies + you, not your allies.
+- [ ] **Gorilla Form** — 2 (1) energy. Whenever you play a Power, gain 2 Vigor (doesn't trigger on itself). The Strength/Dexterity/Random effects are gone.
+- [ ] **Hat Tip** — now an Uncommon Attack, 1 (0) energy. Deal damage equal to the enemy's Confusion. If, after playing it, your Hand has as many cards as your Random (and at least 1), upgrade them all. Glows gold when that's the case. The old Hat Tip power was deleted (its icon `powers/hat_tip.png` is still in the images, safe to remove).
+- [ ] **Incoming Beam** — No longer removes Weak. After the damage, adds Reverse Beam (Reverse Beam+ if upgraded) into your Discard Pile. Damage increase is 2 (3).
+- [ ] **Incoming Beam** damage counts: cards created after it, including Reverse Beam's copies in the Discard Pile. It doesn't count its own creation, or the Reverse Beam it adds after hitting.
+- [ ] **Reverse Beam** — now has Exhaust.
+- [ ] **Logic Shift** — 1 energy. Block = (2×) Random. Play 1 (2) random colored playable cards from your Discard Pile. No more Maybe Later.
+- [ ] **Maybe Later** — no card creates it anymore. The class is kept for later; check it isn't shown anywhere it shouldn't be (card library).
+- [ ] **Old Ideas** — 0 energy, Exhaust.
+- [ ] **Pinball Move** — X-cost. 2X (3X) times: deal 4 damage to a random enemy and apply 1 Weak to it.
+- [ ] **Pirate Parrot Form** — Your Attacks apply 2 Confusion (4 if the target lost no HP), once per Attack and per target. Check how it combines with the Confusion execute: both run right after the attack, so the extra Confusion may not count for that same attack.
+- [ ] **Plot Twist** — Add a random (upgraded) Colorless card into your Draw Pile. Gain Vigor equal to its cost (X-cost = 0).
+- [ ] **Proof Reading** — Gain 1 (2) Memory this turn. Upgrade a random card (upgraded: a card you choose) in your Hand.
+- [ ] **Puzzling Tip** — now a Common Skill, 1 energy, targeted. Apply 5 Confusion. Add a random (upgraded) Colorless card into your Hand. No upgrade bonus beyond that (the old +3 damage is gone with the damage).
+- [ ] **Quick Meal** — Transform ALL non-Slimed cards in your Hand into Slimed. Heal 2 HP for each one. Exhaust (Retain when upgraded).
+- [ ] **Reactive Shape** — Gain 8 (10) Block, then this card loses 1 Block for the rest of combat (like Steam Barrier, never below 0). Whenever you play a Form Power, it goes back into your Hand.
+- [ ] **Reshape** — Lose all Frail. Transform ALL Slimed in your Hand into random non-Rare cards (Common or Uncommon, same color rules as Fresh Idea: Genie/Television Form apply).
+- [ ] **See What Sticks+** — Only adds Fresh Idea+ (no longer shuffles itself into the Draw Pile).
+- [ ] **Slime It Off** — No longer Slimy.
+- [ ] **Squeaky Squirrel Form** — Whenever you play a Power, gain 1 Memory this turn. Upgraded: stays 1 energy and gains Replay. Replaying it may trigger the power on its own second play; check whether that's OK.
+- [ ] **Streetlight Form** — no change needed.
+- [ ] **Thinking Board** — Add X (X+1) Steady Fresh Idea+ into your Hand.
+- [ ] **Turn the Tables** — Apply 2 Weak (twice if you're Weak), then gain 1 Vigor for each Weak on the enemy, **once**. Exhaust (not when upgraded).
+- [ ] **True Size** — now Rare, 4 (3) energy. Plays ALL Slimy/Very Slimy cards from Draw Pile, Hand and Discard Pile (that order), then Exhausts them. Exhaust Pile not included. Slimed created by those cards are **not** played.
+- [ ] **Wait a Second** — 1 energy, targeted. Apply 1 Weak. Next turn, gain 1 Weak and 1 (2) energy.
+- [ ] **Wall of Text** — 1 (0) energy. Add a copy of every other card in your Hand into your Draw Pile (random positions). Gain Block equal to 2× the number of copies (Dexterity applies).
+
+### 5.3 Potions
+
+- [ ] **Slime Potion** — Transform a card in your Hand into Slimed. ALL Slimed cost 0 this turn, including Slimed created later this turn.
+- [ ] **Flo's Brew** — Shows 3 random Rare Forms (any color: Slal Form cards, plus any Power named "… Form" from the base game or Shion, plus Pony/Television/Sparrow Form). You pick the one that's free, then **all 3** go into your Hand. Check that the base-game Forms show up (detected by name, since only Slal cards have the Form tag).
+
+### 5.4 Not done on purpose
+
+- [ ] **Remember** (struck out in the sheet) and the "Ideas (ne pas implémenter encore)" list.
+- [ ] Memory light bulbs (see 5.1).

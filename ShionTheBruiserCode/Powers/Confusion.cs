@@ -14,13 +14,11 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
 /// At the start of its turn, loses X HP and loses all Confusion. Does not drop below 1 HP.
-/// Attacks from a Weak source deal double damage to it, and execute it if they leave it with
-/// as much Confusion as HP or more (even if the attack dealt no damage).
+/// Attacks from a Weak source execute it if they leave it with as much Confusion as HP or more
+/// (even if the attack dealt no damage).
 /// </summary>
 public class Confusion(): SlalTheEndlessPower
 {
-  public const decimal WeakAttackerMultiplier = 2m;
-
   public override PowerType Type => PowerType.Debuff;
   public override PowerStackType StackType => PowerStackType.Counter;
   public override Color AmountLabelColor => PowerModel._normalAmountLabelColor;
@@ -48,11 +46,6 @@ public class Confusion(): SlalTheEndlessPower
       );
     }
     await PowerCmd.Remove(this);
-  }
-
-  public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
-  {
-    return target == Owner && IsWeakAttack(dealer, props) ? WeakAttackerMultiplier : 1m;
   }
 
   public override async Task AfterAttack(PlayerChoiceContext choiceContext, AttackCommand command)

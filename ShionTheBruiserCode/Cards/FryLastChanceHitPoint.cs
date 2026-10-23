@@ -25,7 +25,12 @@ public class FryLastChanceHitPoint() : FryTheCommanderCard(2, //todo : choose co
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<Refuse>(1M)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new PowerVar<Refuse>(1M),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("ShellAmount").WithMultiplier((card, _) => Math.Max(0, card.Owner.Creature.CurrentHp - 1)),
+    ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<HardenedShellPower>(),

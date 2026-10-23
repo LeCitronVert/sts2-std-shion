@@ -2,10 +2,11 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
-using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
@@ -16,6 +17,11 @@ public class Random : SlalTheEndlessPower
     public override PowerStackType StackType => PowerStackType.Counter;
 
     public const int GetCardAt = 10;
+    public const int MemoryPerThreshold = 1;
+    
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<Memory>()
+    ];
 
     public override int DisplayAmount => GetCurrentAmount();
 
@@ -75,27 +81,20 @@ public class Random : SlalTheEndlessPower
         await SlalMechanicsHelper.TriggerRandomGained(choiceContext, Owner, amount);
 
         var previousAmount = Amount - amount;
-        await TriggerCardCreation(choiceContext, previousAmount, Amount);
+        await TriggerThresholds(choiceContext, previousAmount, Amount);
     }
 
-    private async Task TriggerCardCreation(PlayerChoiceContext choiceContext, decimal previousAmount, decimal newAmount)
+    /// <summary>
+    /// Each time Random reaches 10, gain 1 Memory (Random then drops back to 1 on the next gain).
+    /// </summary>
+    private async Task TriggerThresholds(PlayerChoiceContext choiceContext, decimal previousAmount, decimal newAmount)
     {
-        if (Owner.Player is null) return;
-
         var thresholdsCrossed = (int)(newAmount / GetCardAt) - (int)(previousAmount / GetCardAt);
         if (thresholdsCrossed <= 0) return;
 
         for (var i = 0; i < thresholdsCrossed; i++)
         {
-            var card = CardFactory.GetDistinctForCombat(
-                Owner.Player,
-                SlalMechanicsHelper.GetRandomCardOptions(Owner.Player),
-                1,
-                Owner.Player.RunState.Rng.CombatCardGeneration
-            ).First();
-            card.SetToFreeThisTurn();
-            await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, Owner.Player);
-
+            await SlalMechanicsHelper.GainMemory(choiceContext, Owner, MemoryPerThreshold);
             await SlalMechanicsHelper.TriggerRandomThresholdReached(choiceContext, Owner);
         }
     }

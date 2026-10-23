@@ -13,12 +13,15 @@ using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using BaseLib.Utils;
+using MegaCrit.Sts2.Core.Models.CardPools;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
 /// Retain. Deal 15 damage. Exhaust. If you keep this card in your Hand for 2 turns, transform it into Jet Pack.
 /// </summary>
+[Pool(typeof(TokenCardPool))]
 public class FryJettisonJetpackAttack() : FryTheCommanderCard(0,
     CardType.Attack, CardRarity.Token,
     TargetType.AnyEnemy)

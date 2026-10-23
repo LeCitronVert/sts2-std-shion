@@ -1,22 +1,23 @@
-using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Models;
-using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.CardPools;
+using MegaCrit.Sts2.Core.Models.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Not worded as "Transform" so it can work on Statuses and Curses.
+/// Add a random (upgraded) Colorless card into your Draw Pile. Gain Vigor equal to its energy cost (0 for X-cost cards).
 /// </summary>
 public class SlalPlotTwist() : SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Common,
     TargetType.Self)
 {
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
+        HoverTipFactory.FromPower<VigorPower>(),
     ];
 
     protected override async Task OnPlay(
@@ -24,30 +25,16 @@ public class SlalPlotTwist() : SlalTheEndlessCard(1,
         CardPlay play)
     {
         var card = this;
-        CardModel? toExhaust;
-        if (IsUpgraded)
+        var colorless = ModelDb.CardPool<ColorlessCardPool>().GetUnlockedCards(card.Owner.UnlockState, card.Owner.RunState.CardMultiplayerConstraint);
+        foreach (var newCard in SlalMechanicsHelper.CreateRandomCards(card.Owner, 1, IsUpgraded, colorless))
         {
-            toExhaust = (await CardSelectCmd.FromHand(
-                choiceContext,
-                card.Owner,
-                new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, 1),
-                null,
-                card
-            )).FirstOrDefault();
-        }
-        else
-        {
-            toExhaust = SlalMechanicsHelper.ChooseRandomCardWithoutNovelIfPossible(card.Owner, PileType.Hand);
-        }
+            CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(newCard, PileType.Draw, card.Owner, CardPilePosition.Random));
 
-        if (toExhaust != null)
-        {
-            await CardCmd.Exhaust(choiceContext, toExhaust);
-        }
-
-        foreach (var newCard in SlalMechanicsHelper.CreateRandomCards(card.Owner, 1, IsUpgraded))
-        {
-            await CardPileCmd.AddGeneratedCardToCombat(newCard, PileType.Hand, card.Owner);
+            var vigor = SlalMechanicsHelper.GetEnergyCost(newCard);
+            if (vigor > 0)
+            {
+                await PowerCmd.Apply<VigorPower>(choiceContext, card.Owner.Creature, vigor, card.Owner.Creature, card);
+            }
         }
     }
 

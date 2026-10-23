@@ -7,6 +7,9 @@ using MegaCrit.Sts2.Core.Models.Enchantments;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+/// <summary>
+/// Add X (X+1) Steady Fresh Idea+ into your Hand.
+/// </summary>
 public class SlalThinkingBoard() : SlalTheEndlessCard(0,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
@@ -14,7 +17,7 @@ public class SlalThinkingBoard() : SlalTheEndlessCard(0,
     protected override bool HasEnergyCostX => true;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromCard<SlalMaybeLater>(),
+        HoverTipFactory.FromCard<SlalFreshIdea>(true),
         ..HoverTipFactory.FromEnchantment<Steady>(),
     ];
 
@@ -26,9 +29,9 @@ public class SlalThinkingBoard() : SlalTheEndlessCard(0,
         var amount = ResolveEnergyXValue() + (IsUpgraded ? 1 : 0);
         for (var i = 0; i < amount; i++)
         {
-            var maybeLater = SlalMechanicsHelper.CreateCard<SlalMaybeLater>(card.Owner);
-            SlalMechanicsHelper.MakeSteady(maybeLater);
-            await CardPileCmd.AddGeneratedCardToCombat(maybeLater, PileType.Hand, card.Owner);
+            var freshIdea = SlalMechanicsHelper.CreateCard<SlalFreshIdea>(card.Owner, true);
+            SlalMechanicsHelper.MakeSteady(freshIdea);
+            await CardPileCmd.AddGeneratedCardToCombat(freshIdea, PileType.Hand, card.Owner);
         }
     }
 

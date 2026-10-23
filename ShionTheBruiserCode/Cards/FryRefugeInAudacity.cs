@@ -23,7 +23,12 @@ public class FryRefugeInAudacity() : FryTheCommanderCard(1,
     CardType.Skill, CardRarity.Basic,
     TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<BadFaith>(6M)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new PowerVar<BadFaith>(6M),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("DebtLossAmount").WithMultiplier((card, _) => FryMechanicsHelper.GetDamageDebt(card.Owner.Creature) / 2),
+    ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<BadFaith>(),

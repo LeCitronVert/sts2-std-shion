@@ -23,6 +23,13 @@ public class FryDoorSlamOfRage() : FryTheCommanderCard(1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("VigorAmount").WithMultiplier((card, _) =>
+            PileType.Discard.GetPile(card.Owner).Cards.Count(c => c.Type == CardType.Attack)),
+    ];
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<VigorPower>(),
         HoverTipFactory.FromCard<FryTheDoorSlamsYou>(IsUpgraded),

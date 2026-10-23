@@ -26,6 +26,19 @@ public class FridgeForm : SlalOnPowerPlayedPower
         );
     }
 
+    /// <summary>
+    /// Procures random potions until every potion slot is full.
+    /// </summary>
+    public static async Task FillPotionSlots(Player player)
+    {
+        // Bounded in case a potion can't be procured
+        var openSlots = player.PotionSlots.Count(p => p == null);
+        for (var i = 0; i < openSlots && player.HasOpenPotionSlots; i++)
+        {
+            await ProcureRandomPotion(player);
+        }
+    }
+
     protected override async Task OnPowerPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay, int amount)
     {
         if (Owner.Player is null) return;

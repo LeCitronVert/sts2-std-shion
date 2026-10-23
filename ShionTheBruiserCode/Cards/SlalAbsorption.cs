@@ -1,39 +1,34 @@
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Powers;
-using MegaCrit.Sts2.Core.ValueProps;
-using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using MegaCrit.Sts2.Core.Models.Cards;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain 1 Weak. Deal damage equal to the enemy's Weak. If Fatal, raise your Max HP by 3 (4). Exhaust.
-/// Gaining Weak first makes it a Weak attack, so it deals double damage to Confused enemies and can execute them.
+/// Transform a card in your Hand into Slimed. Gain 1 Max HP, plus Max HP equal to the energy cost of that card.
+/// Very Slimy. (Retain)
 /// </summary>
-public class SlalAbsorption() : SlalTheEndlessCard(2,
-    CardType.Attack, CardRarity.Rare,
-    TargetType.AnyEnemy)
+public class SlalAbsorption() : SlalSlimyCard(2,
+    CardType.Skill, CardRarity.Uncommon,
+    TargetType.Self)
 {
     public override bool CanBeGeneratedInCombat => false;
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [SlalCardKeywords.VerySlimy, CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<WeakPower>(1),
-        new CalculationBaseVar(0),
-        new ExtraDamageVar(1),
-        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((_, target) => target?.GetPowerAmount<WeakPower>() ?? 0),
-        new MaxHpVar(3),
+        new MaxHpVar(1),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<WeakPower>(),
-        HoverTipFactory.FromPower<Confusion>(),
-        HoverTipFactory.Static(StaticHoverTip.Fatal),
+        HoverTipFactory.Static(StaticHoverTip.Transform),
+        HoverTipFactory.FromCard<Slimed>(),
     ];
 
     protected override async Task OnPlay(
@@ -41,27 +36,29 @@ public class SlalAbsorption() : SlalTheEndlessCard(2,
         CardPlay play)
     {
         var card = this;
-        ArgumentNullException.ThrowIfNull(play.Target);
+        if (card.CombatState is null) return;
 
-        await PowerCmd.Apply<WeakPower>(choiceContext, card.Owner.Creature, card.DynamicVars.Weak.BaseValue, card.Owner.Creature, card);
+        var original = (await CardSelectCmd.FromHand(
+            choiceContext,
+            card.Owner,
+            new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 1),
+            c => c.IsTransformable,
+            card
+        )).FirstOrDefault();
 
-        var shouldTriggerFatal = play.Target.Powers.All((PowerModel p) => p.ShouldOwnerDeathTriggerFatal());
-        var attack = await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
-            .FromCard(card)
-            .Targeting(play.Target)
-            .WithHitFx("vfx/vfx_attack_blunt")
-            .Execute(choiceContext);
-
-        // Also counts the Confusion execute, which happens right after the hit
-        var killed = attack.Results.SelectMany(r => r).Any(r => r.WasTargetKilled) || play.Target.IsDead;
-        if (shouldTriggerFatal && killed)
+        var extraMaxHp = 0;
+        if (original != null)
         {
-            await CreatureCmd.GainMaxHp(card.Owner.Creature, card.DynamicVars.MaxHp.IntValue);
+            // Read the cost before the card is gone
+            extraMaxHp = SlalMechanicsHelper.GetEnergyCost(original);
+            await CardCmd.Transform(original, card.CombatState.CreateCard<Slimed>(card.Owner));
         }
+
+        await CreatureCmd.GainMaxHp(card.Owner.Creature, card.DynamicVars.MaxHp.IntValue + extraMaxHp);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.MaxHp.UpgradeValueBy(1);
+        AddKeyword(CardKeyword.Retain);
     }
 }

@@ -6,9 +6,12 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using BaseLib.Utils;
+using MegaCrit.Sts2.Core.Models.CardPools;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+[Pool(typeof(TokenCardPool))]
 public class SlalSqueakySquirrelForm() : SlalTheEndlessCard(1,
     CardType.Power, CardRarity.Token,
     TargetType.Self)
@@ -17,6 +20,10 @@ public class SlalSqueakySquirrelForm() : SlalTheEndlessCard(1,
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<SqueakySquirrelForm>(1),
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<Memory>(),
     ];
 
     protected override async Task OnPlay(
@@ -35,6 +42,6 @@ public class SlalSqueakySquirrelForm() : SlalTheEndlessCard(1,
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        BaseReplayCount += 1;
     }
 }

@@ -9,10 +9,12 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class SlalOldIdeas() : SlalTheEndlessCard(1,
+public class SlalOldIdeas() : SlalTheEndlessCard(0,
     CardType.Skill, CardRarity.Common,
     TargetType.Self)
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(1),
         new EnergyVar(1),

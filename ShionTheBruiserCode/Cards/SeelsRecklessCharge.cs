@@ -22,7 +22,13 @@ public class SeelsRecklessCharge() : SeelsTheRecklessCard(1,
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [SeelsCardKeywords.Wounding];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(5M, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new DamageVar(5M, ValueProp.Move),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        // Counts the Wound this card adds before attacking
+        new CalculatedVar("HitAmount").WithMultiplier((card, _) => SeelsMechanicsHelper.GetWoundsInHand(card.Owner).Count() + 1),
+    ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Wound>()];
 

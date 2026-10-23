@@ -25,7 +25,12 @@ public class SeelsIllusionOfRisk() : SeelsTheRecklessCard(1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<IllusionOfRisk>(2M)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new PowerVar<IllusionOfRisk>(2M),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("VulnerableAmount").WithMultiplier((card, _) => SeelsMechanicsHelper.GetVulnerable(card.Owner.Creature)),
+    ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<VulnerablePower>()];
 

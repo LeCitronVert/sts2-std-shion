@@ -31,7 +31,13 @@ public class FryWhatWereYouThinking() : FryTheCommanderCard(1, //todo : choose c
         new DynamicVar("Request", 5M),
         new DamageVar(20M, ValueProp.Unpowered),
         new PowerVar<WeakPower>(3M),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("RequestAmount").WithMultiplier((card, _) => GetRequestTurns(card)),
     ];
+
+    private static int GetRequestTurns(CardModel card) =>
+        card.DynamicVars["Request"].IntValue - FryMechanicsHelper.GetDamageDebt(card.Owner.Creature) / DebtPerTurn;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<DamageDebt>(),
@@ -40,7 +46,7 @@ public class FryWhatWereYouThinking() : FryTheCommanderCard(1, //todo : choose c
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        var turns = DynamicVars["Request"].IntValue - FryMechanicsHelper.GetDamageDebt(Owner.Creature) / DebtPerTurn;
+        var turns = GetRequestTurns(this);
         await FryMechanicsHelper.Request(choiceContext, this, turns, async ctx =>
         {
             if (CombatState is null) return;

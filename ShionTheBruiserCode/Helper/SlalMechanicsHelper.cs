@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -8,6 +9,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Enchantments;
+using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Character;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
@@ -23,7 +25,7 @@ public interface ISlalRandomListener
     /// <summary>Called whenever a creature gains Random.</summary>
     Task AfterRandomGained(PlayerChoiceContext choiceContext, Creature gainer, decimal amount) => Task.CompletedTask;
 
-    /// <summary>Called each time a creature's Random reaches 10 (a random card is created).</summary>
+    /// <summary>Called each time a creature's Random reaches 10 (it gains 1 Memory).</summary>
     Task AfterRandomThresholdReached(PlayerChoiceContext choiceContext, Creature gainer) => Task.CompletedTask;
 }
 
@@ -119,6 +121,62 @@ public static class SlalMechanicsHelper
         }
     }
 
+    // ── Memory ──────────────────────────────────────────────────────────────
+
+    public static async Task GainMemory(PlayerChoiceContext choiceContext, Creature creature, decimal amount, CardModel? source = null)
+    {
+        if (amount <= 0) return;
+        await PowerCmd.Apply<Memory>(choiceContext, creature, amount, creature, source);
+    }
+
+    public static async Task GainMemoryThisTurn(PlayerChoiceContext choiceContext, Creature creature, decimal amount, CardModel? source = null)
+    {
+        if (amount <= 0) return;
+        await PowerCmd.Apply<MemoryThisTurn>(choiceContext, creature, amount, creature, source);
+    }
+
+    /// <summary>
+    /// Colored, non-Novel, playable cards. Burlesque Wind-Up prevents Attacks from being played this way.
+    /// </summary>
+    public static bool CanBePlayedByMemory(Player player, CardModel card)
+    {
+        return IsColored(card)
+            && !card.Keywords.Contains(SlalCardKeywords.Novel)
+            && !card.Keywords.Contains(CardKeyword.Unplayable)
+            && !(card.Type == CardType.Attack && player.Creature.HasPower<BurlesqueWindUp>());
+    }
+
+    /// <summary>
+    /// Plays up to <paramref name="count"/> cards from the Discard Pile (random, or chosen with Continuity Thread).
+    /// </summary>
+    public static async Task PlayFromMemory(PlayerChoiceContext choiceContext, Player player, int count)
+    {
+        if (count <= 0 || CombatManager.Instance.IsOverOrEnding) return;
+
+        var continuityThread = player.Creature.GetPower<ContinuityThread>();
+        var cards = continuityThread != null
+            ? await continuityThread.SelectCardsForMemory(choiceContext, player, count, c => CanBePlayedByMemory(player, c))
+            : PickRandomColoredCards(player, PileType.Discard, count, c => CanBePlayedByMemory(player, c));
+
+        await AutoPlayFromDiscard(choiceContext, player, cards);
+    }
+
+    /// <summary>
+    /// Plays the given cards from the Discard Pile, skipping those that left it in the meantime.
+    /// </summary>
+    public static async Task AutoPlayFromDiscard(PlayerChoiceContext choiceContext, Player player, IEnumerable<CardModel> cards)
+    {
+        foreach (var card in cards.ToList())
+        {
+            if (player.Creature.IsDead || CombatManager.Instance.IsOverOrEnding) break;
+            // A previous card may have moved it
+            if (card.Pile?.Type != PileType.Discard) continue;
+
+            await CardPileCmd.Add(card, PileType.Play);
+            await CardCmd.AutoPlay(choiceContext, card, null);
+        }
+    }
+
     // ── Confusion ───────────────────────────────────────────────────────────
 
     /// <summary>
@@ -163,14 +221,26 @@ public static class SlalMechanicsHelper
         return card.Keywords.Contains(SlalCardKeywords.Slimy) || card.Keywords.Contains(SlalCardKeywords.VerySlimy);
     }
 
+    /// <summary>
+    /// Forms from this mod carry the Form tag; base game Forms (Demon Form, etc.) don't, so they are recognized by their name.
+    /// </summary>
     public static bool IsFormPower(CardModel card)
     {
-        return card.Type == CardType.Power && card.Tags.Contains(SlalCardTags.Form);
+        return card.Type == CardType.Power
+            && (card.Tags.Contains(SlalCardTags.Form) || card.Id.Entry.EndsWith("FORM", StringComparison.OrdinalIgnoreCase));
+    }
+
+    /// <summary>
+    /// The card's current energy cost (0 for X-cost cards).
+    /// </summary>
+    public static int GetEnergyCost(CardModel card)
+    {
+        return card.EnergyCost.CostsX ? 0 : Math.Max(0, card.EnergyCost.GetWithModifiers(CostModifiers.All));
     }
 
     public static bool IsNativeToSlal(CardModel card)
     {
-        return card.Pool.Id == ModelDb.CardPool<SlalTheEndlessCardPool>().Id;
+        return card is SlalTheEndlessCard;
     }
 
     /// <summary>
