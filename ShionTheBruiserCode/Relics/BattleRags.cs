@@ -21,20 +21,18 @@ public class BattleRags : ShionTheBruiserRelic
         HoverTipFactory.FromPower<Scrappy>(),
     ];
 
-    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
+    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (!participants.Contains(this.Owner.Creature))
-            return Task.CompletedTask;
+            return;
 
-        PowerCmd.Apply<Scrappy>(
+        await PowerCmd.Apply<Scrappy>(
             new ThrowingPlayerChoiceContext(),
             Owner.Creature,
             1,
             Owner.Creature,
             null!
         );
-        
-        return Task.CompletedTask;
     }
 
     public override RelicModel GetUpgradeReplacement() => ModelDb.Relic<BattleGloves>();

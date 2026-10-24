@@ -15,6 +15,9 @@
         <!-- Diasble architecture mismatch warning; mods are ideally built for all platforms (MSIL)
              while your local StS2 version will be for your specific platform. -->
         <NoWarn>$(NoWarn);MSB3270</NoWarn>
+        <!-- An un-awaited command (PowerCmd.Apply, CardCmd.Exhaust...) resolves at a time that depends on
+             each client's Fast Mode setting, which desyncs multiplayer. Only fires inside async methods. -->
+        <WarningsAsErrors>$(WarningsAsErrors);CS4014</WarningsAsErrors>
     </PropertyGroup>
 
     <ItemGroup Condition="Exists('$(Sts2DataDir)')">

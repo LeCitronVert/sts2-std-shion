@@ -27,22 +27,20 @@ public class BattleTempo : ShionTheBruiserPower
     
     public const int BerserkMultiplier = 2;
     
-    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
+    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (!participants.Contains(Owner))
-            return Task.CompletedTask;
+            return;
         
         var powerAmount = ShionMechanicsHelper.IsBerserk(Owner) ? Amount * BerserkMultiplier : Amount;
         Flash();
-        PowerCmd.Apply<Scrappy>(
+        await PowerCmd.Apply<Scrappy>(
             new ThrowingPlayerChoiceContext(),
             Owner,
             powerAmount,
             Owner,
             null!
         );
-        
-        return Task.CompletedTask;
     }
     
     // Berserk Power stuff

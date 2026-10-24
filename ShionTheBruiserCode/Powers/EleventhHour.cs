@@ -38,12 +38,12 @@ public class EleventhHour() : ShionTheBruiserPower, IOnCriticalHitListener, IOnC
         HoverTipFactory.FromPower<DebilitatePower>(),
     ];
     
-    public Task OnCriticalHit(Creature attacker, Creature target, DamageResult damageResult, ValueProp props,
+    public async Task OnCriticalHit(Creature attacker, Creature target, DamageResult damageResult, ValueProp props,
         CardModel? sourceCard, PlayerChoiceContext? choiceContext)
     {
         if (attacker == Owner && sourceCard is { Type: CardType.Attack } && props.IsPoweredAttack())
         {
-            PowerCmd.Apply<StrengthPower>(
+            await PowerCmd.Apply<StrengthPower>(
                 choiceContext ?? new ThrowingPlayerChoiceContext(), 
                 Owner, 
                 StrengthBonus, 
@@ -51,18 +51,16 @@ public class EleventhHour() : ShionTheBruiserPower, IOnCriticalHitListener, IOnC
                 null
             );
             
-            PowerCmd.Decrement(this);
+            await PowerCmd.Decrement(this);
         }
-
-        return Task.CompletedTask;
     }
 
-    public Task OnCriticalFail(Creature attacker, Creature target, DamageResult damageResult, ValueProp props,
+    public async Task OnCriticalFail(Creature attacker, Creature target, DamageResult damageResult, ValueProp props,
         CardModel? sourceCard, PlayerChoiceContext? choiceContext)
     {
         if (attacker == Owner && sourceCard is { Type: CardType.Attack } && props.IsPoweredAttack())
         {
-            PowerCmd.Apply<WeakPower>(
+            await PowerCmd.Apply<WeakPower>(
                 choiceContext ?? new ThrowingPlayerChoiceContext(), 
                 Owner, 
                 StatsMalus, 
@@ -70,7 +68,7 @@ public class EleventhHour() : ShionTheBruiserPower, IOnCriticalHitListener, IOnC
                 null
             );
             
-            PowerCmd.Apply<VulnerablePower>(
+            await PowerCmd.Apply<VulnerablePower>(
                 choiceContext ?? new ThrowingPlayerChoiceContext(), 
                 Owner, 
                 StatsMalus, 
@@ -78,7 +76,7 @@ public class EleventhHour() : ShionTheBruiserPower, IOnCriticalHitListener, IOnC
                 null
             );
             
-            PowerCmd.Apply<DebilitatePower>(
+            await PowerCmd.Apply<DebilitatePower>(
                 choiceContext ?? new ThrowingPlayerChoiceContext(), 
                 Owner, 
                 StatsMalus, 
@@ -86,10 +84,8 @@ public class EleventhHour() : ShionTheBruiserPower, IOnCriticalHitListener, IOnC
                 null
             );
 
-            PowerCmd.Decrement(this);
+            await PowerCmd.Decrement(this);
             PlayerCmd.EndTurn(sourceCard.Owner, false);
         }
-
-        return Task.CompletedTask;
     }
 }

@@ -118,8 +118,9 @@ public class ShionCritSingleton : CustomSingletonModel
     }
 
     /// <summary>
-    /// Applies the 1.5× critical multiplier per damage-calculation call,
-    /// performing the per-hit crit roll on first call for the hit.
+    /// Applies the 1.5× critical multiplier per damage-calculation call.
+    /// Must stay side-effect free: card previews call this too, at times that differ per client,
+    /// so rolling here desyncs multiplayer. The per-hit roll happens in <see cref="RollPendingHit"/>.
     /// </summary>
     public override decimal ModifyDamageMultiplicative(
         Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
@@ -127,10 +128,19 @@ public class ShionCritSingleton : CustomSingletonModel
         if (dealer == null || !dealer.HasPower<ShionCritTrackerPower>() || !props.IsPoweredAttack())
             return 1m;
 
+        return CurrentHitIsCrit ? 1.5m : 1m;
+    }
+
+    /// <summary>
+    /// Performs the per-hit crit roll, if one is pending. Only called from
+    /// <see cref="Patches.CritHitRollPatch"/> right before real damage is dealt, never from previews.
+    /// </summary>
+    public void RollPendingHit(Creature? dealer, ValueProp props, CardModel? cardSource)
+    {
+        if (dealer == null || !dealer.HasPower<ShionCritTrackerPower>() || !props.IsPoweredAttack())
+            return;
+
         EnsureHitRolled(dealer.CombatState!, cardSource);
-        decimal multiplier = CurrentHitIsCrit ? 1.5m : 1m;
-        MainFile.Logger.Info($"[ShionCritSingleton] CurrentHitIsCrit={CurrentHitIsCrit}, returning multiplier={multiplier}");
-        return multiplier;
     }
 
     private void EnsureHitRolled(ICombatState cs, CardModel? card)
@@ -143,11 +153,10 @@ public class ShionCritSingleton : CustomSingletonModel
 
         var state = _attackStack.Peek();
 
-        // STS2 recalculates card-preview damage for every card in hand immediately
-        // after an attack starts. Ignore any call whose source isn't the attacking card.
+        // Damage from another source (e.g. a crit listener's follow-up) doesn't get its own roll.
         if (card != state.Card)
         {
-            MainFile.Logger.Info($"[ShionCritSingleton] EnsureHitRolled SKIPPED (preview) — card={card?.GetType().Name ?? "null"}, expected={state.Card?.GetType().Name ?? "null"}");
+            MainFile.Logger.Info($"[ShionCritSingleton] EnsureHitRolled SKIPPED (other source) — card={card?.GetType().Name ?? "null"}, expected={state.Card?.GetType().Name ?? "null"}");
             return;
         }
 

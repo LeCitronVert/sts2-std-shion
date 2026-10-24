@@ -19,6 +19,7 @@ public class ShionGutsy() : ShionBerserkCard(1,
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<VigorPower>(),
+        HoverTipFactory.FromPower<VigorNextTurn>(),
         HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
     ];
 

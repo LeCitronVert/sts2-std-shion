@@ -32,62 +32,54 @@ public class CounterStance() : ShionTheBruiserPower, ICardAfflictionListener
 
     public const int StatsGain = 1;
 
-    public override Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier,
+    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier,
         CardModel? cardSource)
     {
         if (power.Type != PowerType.Debuff || power.Owner != Owner) 
         {
-            return Task.CompletedTask;
+            return;
         }
 
-        GainBonus();
-        
-        return Task.CompletedTask;
+        await GainBonus();
     }
 
-    public override Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side != CombatSide.Enemy) return Task.CompletedTask;
+        if (side != CombatSide.Enemy) return;
 
-        PowerCmd.Decrement(this);
-        
-        return Task.CompletedTask;
+        await PowerCmd.Decrement(this);
     }
 
-    public override Task AfterCardEnteredCombat(CardModel card)
+    public override async Task AfterCardEnteredCombat(CardModel card)
     {
-        if (card.Type != CardType.Status || card.Owner.Creature != Owner) return Task.CompletedTask;
+        if (card.Type != CardType.Status || card.Owner.Creature != Owner) return;
         
-        GainBonus();
-        
-        return Task.CompletedTask;  
+        await GainBonus();
     }
 
-    public Task GainBonus()
+    public async Task GainBonus()
     {
         Flash();
-        PowerCmd.Apply<StrengthPower>(
+        await PowerCmd.Apply<StrengthPower>(
             new ThrowingPlayerChoiceContext(),
             Owner,
             StatsGain,
             Owner,
             null
         );
-        PowerCmd.Apply<DexterityPower>(
+        await PowerCmd.Apply<DexterityPower>(
             new ThrowingPlayerChoiceContext(),
             Owner,
             StatsGain,
             Owner,
             null
         );
-        
-        return Task.CompletedTask;
     }
 
-    public void OnAfflictionApplied(AfflictionModel affliction, CardModel card)
+    public async Task OnAfflictionApplied(AfflictionModel affliction, CardModel card)
     {
         if (card.Owner.Creature != Owner) return;
         
-        GainBonus();
+        await GainBonus();
     }
 }

@@ -20,6 +20,7 @@ public class RevengeDrive : ShionTheBruiserPower
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<VigorPower>(),
+        HoverTipFactory.FromPower<VigorNextTurn>(),
     ];
     
     public override Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
@@ -31,8 +32,10 @@ public class RevengeDrive : ShionTheBruiserPower
         Creature? dealer, CardModel? cardSource)
     {
         if (target != Owner) return;
-        
-        await PowerCmd.Apply<VigorPower>(
+
+        // Can trigger mid-attack, so it goes through VigorNextTurn: adding VigorPower while
+        // it's tracking an attack leaves it stuck and never applied again.
+        await PowerCmd.Apply<VigorNextTurn>(
             choiceContext,
             Owner,
             Amount,

@@ -26,6 +26,7 @@ public class ShionRevengeDrive() : ShionDefensiveCard(1,
     public override IEnumerable<CardKeyword> CanonicalKeywords => [ShionCardKeywords.Defensive];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<VigorPower>(),
+        HoverTipFactory.FromPower<VigorNextTurn>(),
         HoverTipFactory.FromPower<Guard>(),
         HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
     ];

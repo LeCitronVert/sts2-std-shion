@@ -21,6 +21,7 @@ public class Gutsy : ShionTheBruiserPower
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<VigorPower>(),
+        HoverTipFactory.FromPower<VigorNextTurn>(),
         HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
     ];
 
@@ -37,10 +38,12 @@ public class Gutsy : ShionTheBruiserPower
         if (target != power.Owner || !props.IsPoweredAttack())
             return;
 
-        if (amountTaken > 0m)
+        // Can trigger mid-attack, so it goes through VigorNextTurn: adding VigorPower while
+        // it's tracking an attack leaves it stuck and never applied again.
+        var vigorAmount = (int)(amountTaken * Amount / 100m);
+        if (vigorAmount > 0)
         {
-            var vigorAmount = (int)(amountTaken * Amount / 100m);
-            await PowerCmd.Apply<VigorPower>(
+            await PowerCmd.Apply<VigorNextTurn>(
                 choiceContext,
                 Owner,
                 vigorAmount,
@@ -48,14 +51,15 @@ public class Gutsy : ShionTheBruiserPower
                 null
             );
         }
-        
+
         if (!ShionMechanicsHelper.IsBerserk(Owner))
         {
             return;
         }
-        
+
         var blockedVigorAmount = (int) (result.BlockedDamage * Amount / 2m / 100m);
-        await PowerCmd.Apply<VigorPower>(
+        if (blockedVigorAmount <= 0) return;
+        await PowerCmd.Apply<VigorNextTurn>(
             choiceContext,
             Owner,
             blockedVigorAmount,

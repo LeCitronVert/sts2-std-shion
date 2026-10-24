@@ -4,5 +4,5 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Patches;
 
 public interface ICardAfflictionListener
 {
-    public void OnAfflictionApplied(AfflictionModel affliction, CardModel card);
+    public Task OnAfflictionApplied(AfflictionModel affliction, CardModel card);
 }

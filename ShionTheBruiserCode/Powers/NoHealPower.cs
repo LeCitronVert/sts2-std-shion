@@ -15,20 +15,18 @@ public class NoHealPower() : ShionTheBruiserPower
     public override PowerStackType StackType =>
         PowerStackType.None;
 
-    public override Task AfterCurrentHpChanged(Creature creature, decimal delta)
+    public override async Task AfterCurrentHpChanged(Creature creature, decimal delta)
     {
         if (creature != Owner || delta <= 0M)
-            return Task.CompletedTask;
+            return;
 
         Flash();
-        CreatureCmd.Damage(
+        await CreatureCmd.Damage(
             new ThrowingPlayerChoiceContext(),
             Owner,
             new DamageVar(delta, ValueProp.Unblockable | ValueProp.Unpowered),
             null,
             null
         );
-        
-        return Task.CompletedTask;
     }
 }

@@ -1,6 +1,5 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
@@ -36,32 +35,14 @@ public class ShionDarkArts() : ShionBerserkCard(2,
         AddKeyword(CardKeyword.Retain);
     }
     
-    public override Task AfterCardEnteredCombat(CardModel card)
+    // Computed rather than stored as a local cost modifier: HP hooks also reach the deck copy outside combat,
+    // and modifiers stored there leak into the next combat's copy (and aren't synced, so they desync multiplayer).
+    public override bool TryModifyEnergyCostInCombat(CardModel card, decimal originalCost, out decimal modifiedCost)
     {
-        if (card != this || !ShionMechanicsHelper.IsBerserk(this.Owner.Creature)) return Task.CompletedTask;
-        this.ReduceCost();
-        return Task.CompletedTask;
-    }
-    
-    public override Task AfterCurrentHpChanged(Creature creature, decimal delta)
-    {
-        if (creature == Owner.Creature && ShionMechanicsHelper.IsBerserk(creature))
-        {
-            this.ReduceCost();
-        }
-        
-        return Task.CompletedTask;
-    }
+        modifiedCost = originalCost;
+        if (card != this || !ShionMechanicsHelper.IsBerserk(Owner.Creature)) return false;
 
-    public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
-    {
-        if (card == this && ShionMechanicsHelper.IsBerserk(card.Owner.Creature))
-        {
-            this.ReduceCost();
-        }
-        
-        return Task.CompletedTask;
+        modifiedCost = originalCost - 1;
+        return true;
     }
-
-    private void ReduceCost() => this.EnergyCost.AddThisTurnOrUntilPlayed(-1);
 }

@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Critical;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
@@ -29,6 +30,7 @@ public class ShionFeint() : CritContributorCard(2,
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<StrengthPower>(),
         HoverTipFactory.FromPower<VigorPower>(),
+        HoverTipFactory.FromPower<VigorNextTurn>(),
         HoverTipFactory.FromPower<WeakPower>(),
     ];
 
@@ -56,12 +58,14 @@ public class ShionFeint() : CritContributorCard(2,
         DynamicVars["WeakPower"].UpgradeValueBy(1);
     }
 
-    public Task OnCriticalHit(Creature attacker, Creature target, DamageResult damageResult, ValueProp props,
+    public async Task OnCriticalHit(Creature attacker, Creature target, DamageResult damageResult, ValueProp props,
         CardModel? sourceCard, PlayerChoiceContext? choiceContext)
     {
-        if (sourceCard != this) return Task.CompletedTask;
+        if (sourceCard != this) return;
         
-        PowerCmd.Apply<VigorPower>(
+        // Mid-attack, so it goes through VigorNextTurn: adding VigorPower while it's
+        // tracking an attack leaves it stuck and never applied again.
+        await PowerCmd.Apply<VigorNextTurn>(
                 choiceContext ?? new ThrowingPlayerChoiceContext(),
                 Owner.Creature,
                 DynamicVars["VigorPower"].BaseValue,
@@ -69,23 +73,21 @@ public class ShionFeint() : CritContributorCard(2,
                 this)
             ;
             
-        PowerCmd.Apply<StrengthPower>(
+        await PowerCmd.Apply<StrengthPower>(
                 choiceContext ?? new ThrowingPlayerChoiceContext(),
                 Owner.Creature,
                 DynamicVars["StrengthPower"].BaseValue,
                 Owner.Creature,
                 this)
             ;
-
-        return Task.CompletedTask;
     }
 
-    public Task OnCriticalFail(Creature attacker, Creature target, DamageResult damageResult, ValueProp props,
+    public async Task OnCriticalFail(Creature attacker, Creature target, DamageResult damageResult, ValueProp props,
         CardModel? sourceCard, PlayerChoiceContext? choiceContext)
     {
         if (sourceCard == this)
         {
-            PowerCmd.Apply<WeakPower>(
+            await PowerCmd.Apply<WeakPower>(
                 choiceContext ?? new ThrowingPlayerChoiceContext(),
                 Owner.Creature,
                 DynamicVars["WeakPower"].BaseValue,
@@ -93,8 +95,6 @@ public class ShionFeint() : CritContributorCard(2,
                 this)
             ;
         }
-
-        return Task.CompletedTask;
     }
 
     public decimal GetCritHitRateBonus(CardModel? sourceCard)=>
