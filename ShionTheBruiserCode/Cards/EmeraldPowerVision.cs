@@ -27,7 +27,7 @@ public class EmeraldPowerVision() : ShionTheBruiserCard(0,
 
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<CounterStance>(),
+        HoverTipFactory.FromPower<CounterStrategy>(),
         HoverTipFactory.FromPower<IntangiblePower>(),
     ];
 
@@ -44,7 +44,7 @@ public class EmeraldPowerVision() : ShionTheBruiserCard(0,
             card
         );
         
-        await PowerCmd.Apply<CounterStance>(
+        await PowerCmd.Apply<CounterStrategy>(
             choiceContext,
             card.Owner.Creature,
             1,

@@ -20,7 +20,7 @@ public class CosmoGuidance() : ShionTheBruiserCard(2,
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<Guard>(),
-        HoverTipFactory.FromPower<CounterStance>(),
+        HoverTipFactory.FromPower<CounterStrategy>(),
     ];
 
     protected override async Task OnPlay(
@@ -35,10 +35,10 @@ public class CosmoGuidance() : ShionTheBruiserCard(2,
             card.Owner.Creature, 
             card
         );
-        await PowerCmd.Apply<CounterStance>(
+        await PowerCmd.Apply<CounterStrategy>(
             choiceContext, 
             card.Owner.Creature, 
-            999, 
+            10, 
             card.Owner.Creature, 
             card
         );

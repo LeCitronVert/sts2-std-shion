@@ -38,7 +38,7 @@ public class ShionEnergyWave() : ShionTheBruiserCard(1,
         CardPlay play)
     {
         var card = this;
-        var alsoApplyVulnerable = ShionMechanicsHelper.IsGalvanised(card.Owner.Creature, GalvanisedThreshold);
+        var alsoApplyVulnerable = ShionMechanicsHelper.TriggerGalvanised(card.Owner.Creature, GalvanisedThreshold);
         
         if (card.CombatState != null)
             await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)

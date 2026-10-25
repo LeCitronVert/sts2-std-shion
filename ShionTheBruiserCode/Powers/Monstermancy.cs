@@ -133,6 +133,16 @@ public class Monstermancy() : ShionTheBruiserPower
         return true;
     }
     
+    // The cost reduction is a Modify hook, so the Berserk trigger is marked here
+    public override Task BeforeCardPlayed(CardPlay cardPlay)
+    {
+        if (cardPlay.Card is ShionMonsterSpell && cardPlay.Card.Owner.Creature == Owner)
+        {
+            ShionMechanicsHelper.TriggerBerserk(Owner);
+        }
+        return Task.CompletedTask;
+    }
+
     // Berserk Power stuff
     public override Task AfterCurrentHpChanged(Creature creature, decimal delta)
     {

@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -26,11 +28,12 @@ public static class ShionMechanicsHelper
     }
     
     // Galvanised X : active while you have at least X Vigor.
-    // Spirit Break disables Galvanised effects, Fell Dragon always applies them.
+    // Spirit Break and Defensive disable Galvanised effects, Fell Dragon always applies them.
     // bonusVigor lets cards check against Vigor they're about to gain (for glowing).
     public static bool IsGalvanised(Creature creature, int threshold, int bonusVigor = 0)
     {
         if (creature.HasPower<SpiritBreak>()) return false;
+        if (creature.HasPower<DefensiveDebuff>()) return false;
         if (creature.HasPower<FellDragon>()) return true;
         
         return creature.GetPowerAmount<VigorPower>() + bonusVigor >= threshold;
@@ -158,15 +161,61 @@ public static class ShionMechanicsHelper
     }
     
     // Checks whether creature is at or below its Berserk threshold.
-    // Endure disables Berserk effects, Fell Dragon always applies them.
-    public static bool IsBerserk(Creature creature)
+    // Endure and Defensive disable Berserk effects, Fell Dragon always applies them.
+    // Defensive cards pass ignoreDefensive for their own Berserk effects, so they still apply.
+    public static bool IsBerserk(Creature creature, bool ignoreDefensive = false)
     {
         if (creature.HasPower<Endure>()) return false;
+        if (!ignoreDefensive && creature.HasPower<DefensiveDebuff>()) return false;
         if (creature.HasPower<FellDragon>()) return true;
         
         return creature.CurrentHp <= creature.MaxHp * GetBerserkThreshold(creature);
     }
     
+    // Defensive cards can't be played in a turn where a Berserk or Galvanised effect triggered.
+    // Only call the Trigger* methods from real paths (OnPlay, After*/Before* hooks), never from previews,
+    // glows or Modify* hooks.
+    private sealed record SpecialEffectTrigger(WeakReference<ICombatState> Combat, int Turn);
+    private static readonly ConditionalWeakTable<Creature, SpecialEffectTrigger> _lastSpecialEffectTrigger = new();
+
+    public static void MarkSpecialEffectTriggered(Creature creature)
+    {
+        if (creature.CombatState is not { } combatState) return;
+        _lastSpecialEffectTrigger.AddOrUpdate(creature, new SpecialEffectTrigger(new WeakReference<ICombatState>(combatState), GetTurnNumber(creature, combatState)));
+    }
+
+    public static bool SpecialEffectTriggeredThisTurn(Creature creature)
+    {
+        if (creature.CombatState is not { } combatState) return false;
+        if (!_lastSpecialEffectTrigger.TryGetValue(creature, out var trigger)) return false;
+
+        return trigger.Combat.TryGetTarget(out var triggerCombat)
+            && triggerCombat == combatState
+            && trigger.Turn == GetTurnNumber(creature, combatState);
+    }
+
+    // The player's own turn count, so extra turns (which don't start a new round) count as new turns
+    private static int GetTurnNumber(Creature creature, ICombatState combatState)
+    {
+        return creature.Player?.PlayerCombatState?.TurnNumber ?? combatState.RoundNumber;
+    }
+
+    // IsBerserk, and marks the Berserk effect as triggered if it applies
+    public static bool TriggerBerserk(Creature creature)
+    {
+        if (!IsBerserk(creature)) return false;
+        MarkSpecialEffectTriggered(creature);
+        return true;
+    }
+
+    // IsGalvanised, and marks the Galvanised effect as triggered if it applies
+    public static bool TriggerGalvanised(Creature creature, int threshold)
+    {
+        if (!IsGalvanised(creature, threshold)) return false;
+        MarkSpecialEffectTriggered(creature);
+        return true;
+    }
+
     // Patch Up : Heals by X amount until you're at the Patch Up threshold (50%HP by default)
     /// <summary>
     /// HP a Patch Up of this amount would actually restore (capped by the Patch Up limit).

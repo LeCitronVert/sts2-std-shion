@@ -33,7 +33,7 @@ public class ShionRageGuard() : ShionDefensiveCard(1,
         CardPlay play)
     {
         var card = this;
-        if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature))
+        if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature, ignoreDefensive: true))
         {
             await ShionMechanicsHelper.PatchUpCreature(card.DynamicVars[PatchUpVar.Key].IntValue, card.Owner.Creature);
         }
@@ -73,5 +73,5 @@ public class ShionRageGuard() : ShionDefensiveCard(1,
         await ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(card.Owner.Creature);
     }
     
-    protected override bool ShouldGlowGoldInternal => ShionMechanicsHelper.IsBerserk(this.Owner.Creature);
+    protected override bool ShouldGlowGoldInternal => ShionMechanicsHelper.IsBerserk(this.Owner.Creature, ignoreDefensive: true);
 }

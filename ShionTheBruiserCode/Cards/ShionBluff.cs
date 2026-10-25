@@ -33,7 +33,7 @@ public class ShionBluff() : ShionBerserkCard(0,
         await CreatureCmd.TriggerAnim(source.Owner.Creature, "Cast", source.Owner.Character.CastAnimDelay);
         await PowerCmd.Apply<VigorPower>(choiceContext, source.Owner.Creature, source.DynamicVars["VigorPower"].BaseValue, source.Owner.Creature, source);
         
-        if (ShionMechanicsHelper.IsBerserk(source.Owner.Creature))
+        if (ShionMechanicsHelper.TriggerBerserk(source.Owner.Creature))
         {
             await PowerCmd.Apply<StrengthPower>(choiceContext, source.Owner.Creature, source.DynamicVars["StrengthPower"].BaseValue, source.Owner.Creature, source);
             return;

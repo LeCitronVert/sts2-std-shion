@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -39,6 +40,16 @@ public class DragonCheer() : CritContributorPower, ICritHitRateContributor
         return 0;
     }
     
+    // The crit bonus is read during the roll, so the Berserk trigger is marked here
+    public override Task BeforeCardPlayed(CardPlay cardPlay)
+    {
+        if (cardPlay.Card.Owner.Creature == Owner && cardPlay.Card.Type == CardType.Attack)
+        {
+            ShionMechanicsHelper.TriggerBerserk(Owner);
+        }
+        return Task.CompletedTask;
+    }
+
     // Berserk Power stuff
     public override Task AfterCurrentHpChanged(Creature creature, decimal delta)
     {

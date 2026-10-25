@@ -58,7 +58,7 @@ public class ShionBloodRondo() : ShionBerserkCard(1,
     public override async Task AfterDamageGiven(PlayerChoiceContext choiceContext, Creature? dealer, DamageResult result, ValueProp props,
         Creature target, CardModel? cardSource)
     {
-        if (cardSource == this && Owner.Creature == dealer && result.TotalDamage > 0 && cardSource?.Type == CardType.Attack && ShionMechanicsHelper.IsBerserk(Owner.Creature))
+        if (cardSource == this && Owner.Creature == dealer && result.TotalDamage > 0 && cardSource?.Type == CardType.Attack && ShionMechanicsHelper.TriggerBerserk(Owner.Creature))
         {
             var patchUpAmount = DynamicVars["BerserkLifeSteal"].IntValue * 0.01 * result.TotalDamage;
             await ShionMechanicsHelper.PatchUpCreature((int) patchUpAmount, Owner.Creature);

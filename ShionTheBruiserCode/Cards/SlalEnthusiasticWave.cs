@@ -13,12 +13,13 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// Add 1 Steady Fresh Idea into another player's Hand.
 /// Upgraded: add 2 Steady Fresh Ideas into ALL players' Hands (including yours).
 /// </summary>
-//todo : choose cost (and rarity)
-public class SlalEnthusiasticWave() : SlalTheEndlessCard(1,
+public class SlalEnthusiasticWave() : SlalTheEndlessCard(0,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.AnyAlly)
 {
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
+
+    public override bool CanBeGeneratedInCombat => false;
 
     public override TargetType TargetType => IsUpgraded ? TargetType.AllAllies : TargetType.AnyAlly;
 

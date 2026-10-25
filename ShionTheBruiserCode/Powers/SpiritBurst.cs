@@ -67,10 +67,7 @@ public class SpiritBurst: ShionTheBruiserPower
                 data.autoPlayingCards.Add(card);
                 await CardCmd.AutoPlay(choiceContext, card, null);
                 data.autoPlayingCards.Remove(card);
-                if (card.Tags.Contains(ShionCardTags.Energy))
-                {
-                    await CardPileCmd.Draw(choiceContext, 1, card.Owner);
-                }
+                await CardPileCmd.Draw(choiceContext, 1, card.Owner);
                 data = null;
             }
         }

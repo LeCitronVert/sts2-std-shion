@@ -74,5 +74,5 @@ public class ShionFullNelson() : ShionDefensiveCard(2,
         await ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(card.Owner.Creature);
     }
     
-    protected override bool ShouldGlowGoldInternal => ShionMechanicsHelper.IsBerserk(this.Owner.Creature);
+    protected override bool ShouldGlowGoldInternal => ShionMechanicsHelper.IsBerserk(this.Owner.Creature, ignoreDefensive: true);
 }

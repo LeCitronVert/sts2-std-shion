@@ -35,7 +35,7 @@ public class ShionBerserkStrike() : ShionBerserkCard(2,
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
         
-        if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature))
+        if (ShionMechanicsHelper.TriggerBerserk(card.Owner.Creature))
         {
             await PowerCmd.Apply<VulnerablePower>(choiceContext, play.Target, 1, card.Owner.Creature, card);
         }

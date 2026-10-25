@@ -10,6 +10,8 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Enchantments;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Platform;
+using MegaCrit.Sts2.Core.Runs;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Character;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
@@ -440,5 +442,46 @@ public static class SlalMechanicsHelper
     public static void MakeSteady(CardModel card)
     {
         CardCmd.Enchant<Steady>(card, 1);
+    }
+
+    // ── Multiplayer ─────────────────────────────────────────────────────────
+
+    public static string GetPlayerName(Player player)
+    {
+        return PlatformUtil.GetPlayerName(RunManager.Instance.NetService.Platform, player.NetId);
+    }
+
+    /// <summary>
+    /// Creates a copy of the card for another player, at the same upgrade level (plus one if <paramref name="upgradeOnce"/>).
+    /// Enchantments and in-combat changes aren't copied.
+    /// </summary>
+    public static CardModel CreateCopyForPlayer(CardModel card, Player receiver, bool upgradeOnce = false)
+    {
+        var copy = receiver.Creature.CombatState!.CreateCard(card.CanonicalInstance, receiver);
+        var upgrades = card.CurrentUpgradeLevel + (upgradeOnce ? 1 : 0);
+        while (copy.CurrentUpgradeLevel < upgrades && copy.IsUpgradable)
+        {
+            CardCmd.Upgrade(copy);
+        }
+        return copy;
+    }
+
+    /// <summary>
+    /// "Puts" a card into another player's pile. Cards can't change owner, so the receiver gets a copy
+    /// and the original leaves combat (the deck isn't affected).
+    /// The copy isn't counted as a card the receiver created. Giving a card to its own owner just moves it.
+    /// </summary>
+    public static async Task GiveCardToPlayer(CardModel card, Player receiver, PileType pile, bool upgradeOnce = false)
+    {
+        if (card.Owner == receiver)
+        {
+            if (upgradeOnce && card.IsUpgradable) CardCmd.Upgrade(card);
+            await CardPileCmd.Add(card, pile);
+            return;
+        }
+
+        var copy = CreateCopyForPlayer(card, receiver, upgradeOnce);
+        await CardPileCmd.RemoveFromCombat(card);
+        await CardPileCmd.AddGeneratedCardToCombat(copy, pile, null);
     }
 }

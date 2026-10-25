@@ -39,7 +39,7 @@ public class BerserkCharge : ShionTheBruiserPower
 
         var power = this;
         var vigorAmount = Amount *
-                          (ShionMechanicsHelper.IsBerserk(Owner) ? DynamicVars["BerserkMultiplier"].BaseValue : 1);
+                          (ShionMechanicsHelper.TriggerBerserk(Owner) ? DynamicVars["BerserkMultiplier"].BaseValue : 1);
         await PowerCmd.Apply<VigorPower>(new ThrowingPlayerChoiceContext(), power.Owner, (decimal) vigorAmount, power.Owner, null!);
     }
     

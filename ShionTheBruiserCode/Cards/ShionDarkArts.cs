@@ -23,7 +23,7 @@ public class ShionDarkArts() : ShionBerserkCard(2,
         CardPlay play)
     {
         var card = this;
-        if (!ShionMechanicsHelper.IsBerserk(card.Owner.Creature))
+        if (!ShionMechanicsHelper.TriggerBerserk(card.Owner.Creature))
         {
             await CreatureCmd.Damage(choiceContext, card.Owner.Creature, card.DynamicVars.HpLoss.BaseValue, ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, card);
         }

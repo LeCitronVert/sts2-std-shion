@@ -19,7 +19,7 @@ public class SarcophagusForm : SlalTheEndlessPower
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Energy", 0)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(0)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<WeakPower>(),

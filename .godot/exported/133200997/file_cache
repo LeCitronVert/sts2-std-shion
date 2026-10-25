@@ -1,6 +1,6 @@
 res://ShionTheBruiser/scenes/abby_monster.tscn::07c9176a22ef272cce8ab1a837dc21f9::1783261259::res://.godot/exported/133200997/export-9f755e90b846d45bcc4fce54b72c8bb5-abby_monster.scn
-res://ShionTheBruiser/scenes/shion_character.tscn::1eafa9a060f336585b5b894d6dabe30a::1783931462::res://.godot/exported/133200997/export-fd6ddcf4e5d25cdc671feb7618e43d15-shion_character.scn
-res://ShionTheBruiser/scenes/shion_merchant.tscn::bf6947f6e057e72dbdc6405493a1d7a8::1783893074::res://.godot/exported/133200997/export-cd26794a6eaff2495d57120700afc0a6-shion_merchant.scn
+res://ShionTheBruiser/scenes/shion_character.tscn::0652fc9a21b8a7db6e02c7b5244983f9::1792929169::res://.godot/exported/133200997/export-fd6ddcf4e5d25cdc671feb7618e43d15-shion_character.scn
+res://ShionTheBruiser/scenes/shion_merchant.tscn::841646ef3e63164eda061c6e1cacb3da::1792929169::res://.godot/exported/133200997/export-cd26794a6eaff2495d57120700afc0a6-shion_merchant.scn
 res://ShionTheBruiser/scenes/shion_energy.tscn::a1f026ae598b832c2b7f323058a8a2dd::1784628730::res://.godot/exported/133200997/export-c97dca098f249270034db915c094ce5e-shion_energy.scn
 res://ShionTheBruiser/scenes/slal_character.tscn::1812ba754c2abf8268e606c9ffc2fa8f::1784857059::res://.godot/exported/133200997/export-5d0ecf0c6b12c4452d47412617129cb9-slal_character.scn
 res://ShionTheBruiser/scenes/slal_energy.tscn::10b8532ae0c96b6a3db6394c4c7b68d7::1784852634::res://.godot/exported/133200997/export-8aa72712c7b7ec994eb6c8e57e480cd1-slal_energy.scn
@@ -10,3 +10,4 @@ res://ShionTheBruiser/scenes/fx/berserk_sparks.tscn::914fb33b194d3194473288e6ec4
 res://ShionTheBruiser/scenes/fx/crit_indicator.tscn::7d432d29bf511e9fb7e9830a77eb078a::1792503855::res://.godot/exported/133200997/export-12010982c5eb65e6e8210fd6009a8402-crit_indicator.scn
 res://ShionTheBruiser/scenes/fx/energy_blast.tscn::a001b1ce74cf61df874b008ea78bcba1::1792503923::res://.godot/exported/133200997/export-90ec196ae62e8416432c4f8a9470782e-energy_blast.scn
 res://ShionTheBruiser/scenes/fx/shion_auras.tscn::f2269fb71a5f0eff11d7e4968a650fa2::1792503896::res://.godot/exported/133200997/export-7e8ad1dd980be1d36bb55caed1ec25a1-shion_auras.scn
+res://ShionTheBruiser/scenes/slal_rest.tscn::256e8d9577746fe878605e2327301da0::1792929289::res://.godot/exported/133200997/export-7c9a29a3ce85156465a5df9205b9fbfa-slal_rest.scn

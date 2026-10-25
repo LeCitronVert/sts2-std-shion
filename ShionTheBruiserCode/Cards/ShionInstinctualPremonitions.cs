@@ -21,21 +21,23 @@ public class ShionInstinctualPremonitions() : ShionBerserkCard(2,
     public const int BlockBonusAgainstAttacks = 10;
     public const int EnergyBonusAgainstOthers = 1;
     public const int VigorBonusAgainstBlock = 10;
-    public const int CounterStanceAgainstDebuffs = 1;
+    public const int CounterStrategyAgainstDebuffs = 1;
     public const int CostReductionWhenBerserk = 1;
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("BlockBonusAgainstAttacks", BlockBonusAgainstAttacks),
         new DynamicVar("VigorBonusAgainstBlock", VigorBonusAgainstBlock),
         new EnergyVar("EnergyBonusAgainstOthers", EnergyBonusAgainstOthers),
-        new DynamicVar("CounterStanceAgainstDebuffs", CounterStanceAgainstDebuffs),
+        new DynamicVar("CounterStrategyAgainstDebuffs", CounterStrategyAgainstDebuffs),
         new EnergyVar("CostReductionWhenBerserk", CostReductionWhenBerserk),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
         new CalculatedVar("PremonitionBlock").WithMultiplier((card, _) =>
             CountIntents(card, IntentCategory.Attack) * PreviewHelper.ModifiedBlock(card, BlockBonusAgainstAttacks, ValueProp.Move)),
-        new CalculatedVar("PremonitionCounterStance").WithMultiplier((card, _) =>
-            CountIntents(card, IntentCategory.Debuff) * CounterStanceAgainstDebuffs),
+        new CalculatedVar("PremonitionCounterStrategy").WithMultiplier((card, _) =>
+            CountIntents(card, IntentCategory.Debuff) * CounterStrategyAgainstDebuffs),
         new CalculatedVar("PremonitionEnergy").WithMultiplier((card, _) =>
             CountIntents(card, IntentCategory.Other) * EnergyBonusAgainstOthers),
     ];
@@ -44,7 +46,7 @@ public class ShionInstinctualPremonitions() : ShionBerserkCard(2,
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.Static(StaticHoverTip.Block),
-        HoverTipFactory.FromPower<CounterStance>(),
+        HoverTipFactory.FromPower<CounterStrategy>(),
         HoverTipFactory.ForEnergy(this),
         HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
     ];
@@ -54,6 +56,8 @@ public class ShionInstinctualPremonitions() : ShionBerserkCard(2,
         CardPlay play)
     {
         var card = this;
+        // The cost reduction is a Modify hook, so the Berserk trigger is marked here
+        ShionMechanicsHelper.TriggerBerserk(card.Owner.Creature);
         
         foreach (var intent in GetEnemyIntents(card))
         {
@@ -96,7 +100,7 @@ public class ShionInstinctualPremonitions() : ShionBerserkCard(2,
 
     protected override void OnUpgrade()
     {
-        AddKeyword(CardKeyword.Retain);
+        RemoveKeyword(CardKeyword.Exhaust);
     }
     
     private async Task GainBonusBasedOnIntent(AbstractIntent intent, Creature owner)
@@ -113,7 +117,7 @@ public class ShionInstinctualPremonitions() : ShionBerserkCard(2,
                 );
                 break;
             case IntentCategory.Debuff:
-                await PowerCmd.Apply<CounterStance>(new ThrowingPlayerChoiceContext(), owner, CounterStanceAgainstDebuffs, owner, this);
+                await PowerCmd.Apply<CounterStrategy>(new ThrowingPlayerChoiceContext(), owner, CounterStrategyAgainstDebuffs, owner, this);
                 break;
             case IntentCategory.Other:
             default:

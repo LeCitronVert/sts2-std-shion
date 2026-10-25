@@ -43,7 +43,7 @@ public class BerserkForm : ShionTheBruiserPower
             var blockAmount = Amount * 0.01 * result.TotalDamage;
             await CreatureCmd.GainBlock(Owner, (int)blockAmount, ValueProp.Unpowered, null);
             
-            if (!ShionMechanicsHelper.IsBerserk(Owner))
+            if (!ShionMechanicsHelper.TriggerBerserk(Owner))
             {
                 return;
             }

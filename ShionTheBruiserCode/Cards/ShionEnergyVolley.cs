@@ -66,6 +66,8 @@ public class ShionEnergyVolley() : ShionTheBruiserCard(1,
             Character.ShionTheBruiser.GetEnergyCastAnimIfApplicable(card.Owner.Character),
             Character.ShionTheBruiser.GetEnergyCastDelayIfApplicable(card.Owner.Character)
         );
+        // Also covers the cost increase, which is a Modify hook
+        ShionMechanicsHelper.TriggerGalvanised(card.Owner.Creature, FirstGalvanisedThreshold);
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .WithHitCount((int) ((CalculatedVar) card.DynamicVars["HitCount"]).Calculate(card.Owner.Creature))
             .FromCard(card)

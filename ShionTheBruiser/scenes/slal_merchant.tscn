@@ -471,7 +471,7 @@ _data = {
 position = Vector2(206.61, -183.29)
 sprite_frames = SubResource("SpriteFrames_fy0v4")
 animation = &"idle"
-autoplay = "idle"
+autoplay = "merchant_idle"
 script = ExtResource("8_cslpv")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

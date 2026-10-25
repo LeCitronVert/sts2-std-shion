@@ -47,7 +47,7 @@ public class ShionEnergyBall() : ShionTheBruiserCard(1,
         ArgumentNullException.ThrowIfNull(play.Target);
 
         var vigorAmount = card.Owner.Creature.GetPowerAmount<VigorPower>();
-        var isGalvanised = ShionMechanicsHelper.IsGalvanised(card.Owner.Creature, GalvanisedThreshold);
+        var isGalvanised = ShionMechanicsHelper.TriggerGalvanised(card.Owner.Creature, GalvanisedThreshold);
         await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
             .FromCard(card)
             .Targeting(play.Target)

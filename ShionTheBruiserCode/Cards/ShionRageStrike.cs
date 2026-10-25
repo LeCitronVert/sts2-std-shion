@@ -32,7 +32,7 @@ public class ShionRageStrike() : ShionBerserkCard(2,
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
         
-        if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature))
+        if (ShionMechanicsHelper.TriggerBerserk(card.Owner.Creature))
         {
             await ShionMechanicsHelper.PatchUpCreature(card.DynamicVars[PatchUpVar.Key].IntValue, card.Owner.Creature);
         }

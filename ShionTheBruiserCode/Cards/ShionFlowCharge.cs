@@ -32,7 +32,7 @@ public class ShionFlowCharge() : ShionBerserkCard(1,
     {
         var card = this;
         
-        if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature))
+        if (ShionMechanicsHelper.TriggerBerserk(card.Owner.Creature))
         {
             await PowerCmd.Apply<VigorPower>(
                 choiceContext,

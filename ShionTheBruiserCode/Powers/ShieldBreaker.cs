@@ -52,7 +52,7 @@ public class ShieldBreaker : ShionTheBruiserPower
     public override async Task BeforeCardPlayed(CardPlay cardPlay)
     {
         var card = cardPlay.Card;
-        if (card.Owner.Creature != Owner || card.Type != CardType.Attack || !ShionMechanicsHelper.IsGalvanised(Owner, GalvanisedThreshold))
+        if (card.Owner.Creature != Owner || card.Type != CardType.Attack || !ShionMechanicsHelper.TriggerGalvanised(Owner, GalvanisedThreshold))
             return;
 
         if (cardPlay.Target == null && card.TargetType == TargetType.RandomEnemy)

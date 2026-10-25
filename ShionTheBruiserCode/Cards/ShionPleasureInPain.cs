@@ -68,5 +68,5 @@ public class ShionPleasureInPain() : ShionDefensiveCard(0,
         await ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(card.Owner.Creature);
     }
     
-    protected override bool ShouldGlowGoldInternal => ShionMechanicsHelper.IsBerserk(this.Owner.Creature);
+    protected override bool ShouldGlowGoldInternal => ShionMechanicsHelper.IsBerserk(this.Owner.Creature, ignoreDefensive: true);
 }

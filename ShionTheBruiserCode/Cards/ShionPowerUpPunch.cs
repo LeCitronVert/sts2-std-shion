@@ -39,7 +39,7 @@ public class ShionPowerUpPunch() : ShionBerserkCard(1,
             .Execute(choiceContext)
         ;
         await PowerCmd.Apply<StrengthPower>(choiceContext, this.Owner.Creature, card.DynamicVars["StrengthPower"].BaseValue, card.Owner.Creature, card);
-        if (ShionMechanicsHelper.IsBerserk(this.Owner.Creature))
+        if (ShionMechanicsHelper.TriggerBerserk(this.Owner.Creature))
         {
             await PowerCmd.Apply<VigorPower>(choiceContext, this.Owner.Creature, card.DynamicVars["VigorPower"].BaseValue, card.Owner.Creature, card);
         }

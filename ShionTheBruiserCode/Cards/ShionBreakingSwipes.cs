@@ -37,7 +37,7 @@ public class ShionBreakingSwipes() : ShionBerserkCard(1,
             .Execute(choiceContext)
         ;
         
-        if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature))
+        if (ShionMechanicsHelper.TriggerBerserk(card.Owner.Creature))
         {
             await PowerCmd.Apply<VulnerablePower>(choiceContext, play.Target, DynamicVars["VulnerablePower"].BaseValue, card.Owner.Creature, card);
         }

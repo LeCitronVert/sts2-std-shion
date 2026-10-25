@@ -25,7 +25,7 @@ public class ShionChaosCrash() : ShionBerserkCard(1,
     {
         var card = this;
         
-        if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature))
+        if (ShionMechanicsHelper.TriggerBerserk(card.Owner.Creature))
         {
             await ShionMechanicsHelper.PatchUpCreature(card.DynamicVars[PatchUpVar.Key].IntValue, card.Owner.Creature);
         }

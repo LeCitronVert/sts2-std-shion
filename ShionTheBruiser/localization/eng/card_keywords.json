@@ -1,5 +1,5 @@
 {
-  "SHIONTHEBRUISER-DEFENSIVE.description": "Can only be played if you haven't played an Attack this turn. You can't play Attacks for the rest of the turn.",
+  "SHIONTHEBRUISER-DEFENSIVE.description": "Blocks your [gold]Berserk[/gold] and [gold]Galvanised[/gold] effects for the rest of the turn. Can't be played in a turn where one of them triggered.",
   "SHIONTHEBRUISER-DEFENSIVE.title": "Defensive",
   "SHIONTHEBRUISER-NONNATIVE.description": "Cards from other characters, or Colorless cards.",
   "SHIONTHEBRUISER-NONNATIVE.title": "Non-Native",

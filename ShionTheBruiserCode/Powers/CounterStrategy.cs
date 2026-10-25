@@ -1,5 +1,3 @@
-using Godot;
-using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -13,14 +11,18 @@ using MegaCrit.Sts2.Core.HoverTips;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
-public class CounterStance() : ShionTheBruiserPower, ICardAfflictionListener
+/// <summary>
+/// Counter the next X hindrances (debuff, Affliction or Status card): each one grants Strength and Dexterity
+/// and uses up 1 stack.
+/// </summary>
+public class CounterStrategy() : ShionTheBruiserPower, ICardAfflictionListener
 {
     public override PowerType Type =>
         PowerType.Buff;
 
     public override PowerStackType StackType =>
         PowerStackType.Counter;
-    
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("StatsGain", StatsGain)
     ];
@@ -35,30 +37,33 @@ public class CounterStance() : ShionTheBruiserPower, ICardAfflictionListener
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier,
         CardModel? cardSource)
     {
-        if (power.Type != PowerType.Debuff || power.Owner != Owner) 
+        // Debuffs ticking down aren't received, and Defensive is your own stance, not a hindrance
+        if (power.Type != PowerType.Debuff || power.Owner != Owner || amount <= 0 || power is DefensiveDebuff)
         {
             return;
         }
 
-        await GainBonus();
-    }
-
-    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
-    {
-        if (side != CombatSide.Enemy) return;
-
-        await PowerCmd.Decrement(this);
+        await Counter();
     }
 
     public override async Task AfterCardEnteredCombat(CardModel card)
     {
         if (card.Type != CardType.Status || card.Owner.Creature != Owner) return;
-        
-        await GainBonus();
+
+        await Counter();
     }
 
-    public async Task GainBonus()
+    public async Task OnAfflictionApplied(AfflictionModel affliction, CardModel card)
     {
+        if (card.Owner.Creature != Owner) return;
+
+        await Counter();
+    }
+
+    private async Task Counter()
+    {
+        if (Amount <= 0) return;
+
         Flash();
         await PowerCmd.Apply<StrengthPower>(
             new ThrowingPlayerChoiceContext(),
@@ -74,12 +79,6 @@ public class CounterStance() : ShionTheBruiserPower, ICardAfflictionListener
             Owner,
             null
         );
-    }
-
-    public async Task OnAfflictionApplied(AfflictionModel affliction, CardModel card)
-    {
-        if (card.Owner.Creature != Owner) return;
-        
-        await GainBonus();
+        await PowerCmd.Decrement(this);
     }
 }

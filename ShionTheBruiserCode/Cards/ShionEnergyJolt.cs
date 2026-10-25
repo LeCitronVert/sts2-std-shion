@@ -46,7 +46,7 @@ public class ShionEnergyJolt() : ShionTheBruiserCard(2,
             Character.ShionTheBruiser.GetEnergyCastDelayIfApplicable(card.Owner.Character)
         );
         // Checked before the Attack resolves, since it consumes Vigor
-        var isGalvanised = ShionMechanicsHelper.IsGalvanised(card.Owner.Creature, GalvanisedThreshold);
+        var isGalvanised = ShionMechanicsHelper.TriggerGalvanised(card.Owner.Creature, GalvanisedThreshold);
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .FromCard(card)
             .Targeting(play.Target)

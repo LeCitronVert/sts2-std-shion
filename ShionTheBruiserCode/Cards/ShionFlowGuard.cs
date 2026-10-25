@@ -1,5 +1,3 @@
-using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -30,7 +28,7 @@ public class ShionFlowGuard() : ShionBerserkCard(1,
         new BlockVar(3, ValueProp.Move),
         new CalculationBaseVar(3),
         new CalculationExtraVar(1),
-        new CalculatedVar("BlockCount").WithMultiplier((model, _) => ShionMechanicsHelper.IsBerserk(model.Owner.Creature) ? 1 : 0),
+        new CalculatedVar("BlockCount").WithMultiplier((model, _) => ShionMechanicsHelper.IsBerserk(model.Owner.Creature, ignoreDefensive: true) ? 1 : 0),
         new PowerVar<Guard>(1)
     ];
 
@@ -76,17 +74,9 @@ public class ShionFlowGuard() : ShionBerserkCard(1,
         );
     }
 
-    // Defensive cards are only playable if the player didn't play any attacks this turn
-    protected override bool IsPlayable
-    {
-        get
-        {
-            var amount = CombatManager.Instance.History.Entries
-                    .OfType<CardPlayStartedEntry>()
-                    .Count((Func<CardPlayStartedEntry, bool>) (e => e.HappenedThisTurn(CombatState) && e.Actor == this.Owner.Creature && e.CardPlay.Card.Type == CardType.Attack))
-                ;
-            
-            return amount == 0;
-        }
-    }
+    // Defensive cards aren't playable in a turn where a Berserk or Galvanised effect triggered
+    protected override bool IsPlayable => !ShionMechanicsHelper.SpecialEffectTriggeredThisTurn(Owner.Creature);
+
+    // Its own Berserk effect still applies while Defensive
+    protected override bool ShouldGlowGoldInternal => ShionMechanicsHelper.IsBerserk(Owner.Creature, ignoreDefensive: true);
 }

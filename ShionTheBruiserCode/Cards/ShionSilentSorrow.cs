@@ -37,7 +37,7 @@ public class ShionSilentSorrow() : ShionBerserkCard(1,
             play
         );
 
-        if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature))
+        if (ShionMechanicsHelper.TriggerBerserk(card.Owner.Creature))
         {
             await PowerCmd.Apply<Guard>(
                 choiceContext,

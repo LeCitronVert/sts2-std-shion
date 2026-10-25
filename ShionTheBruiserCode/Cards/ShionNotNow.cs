@@ -34,7 +34,7 @@ public class ShionNotNow() : ShionBerserkCard(0,
         CardPlay play)
     {
         var card = this;
-        if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature))
+        if (ShionMechanicsHelper.TriggerBerserk(card.Owner.Creature))
         {
             await PlayerCmd.GainEnergy(DynamicVars["BerserkEnergy"].IntValue, card.Owner);
             return;

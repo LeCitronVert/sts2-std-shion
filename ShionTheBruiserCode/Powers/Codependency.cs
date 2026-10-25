@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -60,6 +61,16 @@ public class Codependency : ShionTheBruiserPower
         return dealer != this.Owner || !props.IsPoweredAttack()  ? 1M : GetDamageBoost();
     }
     
+    // The boost is a Modify hook, so the partner's Berserk trigger is marked here
+    public override Task BeforeCardPlayed(CardPlay cardPlay)
+    {
+        if (Applier != null && cardPlay.Card.Owner.Creature == Owner && cardPlay.Card.Type == CardType.Attack)
+        {
+            ShionMechanicsHelper.TriggerBerserk(Applier);
+        }
+        return Task.CompletedTask;
+    }
+
     public decimal GetDamageBoost()
     {
         var partner = Applier;

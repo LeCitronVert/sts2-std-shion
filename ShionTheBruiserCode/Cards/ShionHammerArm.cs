@@ -42,7 +42,7 @@ public class ShionHammerArm() : ShionBerserkCard(1,
         ;
         await PowerCmd.Apply<HammerArm>(choiceContext, play.Target, cardSource.DynamicVars["StrengthPower"].BaseValue, cardSource.Owner.Creature, cardSource);
         
-        if (ShionMechanicsHelper.IsBerserk(this.Owner.Creature))
+        if (ShionMechanicsHelper.TriggerBerserk(this.Owner.Creature))
         {
             await PowerCmd.Apply<WeakPower>(choiceContext, play.Target, cardSource.DynamicVars["WeakPower"].BaseValue, cardSource.Owner.Creature, cardSource);
         }

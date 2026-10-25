@@ -60,7 +60,7 @@ public class ShionFrontliner() : ShionDefensiveCard(1,
             }
         }
         
-        if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature))
+        if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature, ignoreDefensive: true))
         {
             await CreatureCmd.GainBlock(
                 card.Owner.Creature,
@@ -93,5 +93,5 @@ public class ShionFrontliner() : ShionDefensiveCard(1,
         await ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(card.Owner.Creature);
     }
     
-    protected override bool ShouldGlowGoldInternal => ShionMechanicsHelper.IsBerserk(this.Owner.Creature);
+    protected override bool ShouldGlowGoldInternal => ShionMechanicsHelper.IsBerserk(this.Owner.Creature, ignoreDefensive: true);
 }

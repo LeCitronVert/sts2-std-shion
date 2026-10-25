@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -43,6 +44,16 @@ public class BerserkDrive : ShionTheBruiserPower
         return dealer != this.Owner && !this.Owner.Pets.Contains<Creature>(dealer) || !props.IsPoweredAttack() || cardSource == null ? 1M : GetBerserkDriveMultiplier(Owner);
     }
     
+    // The multiplier is a Modify hook, so the Berserk trigger is marked here
+    public override Task BeforeCardPlayed(CardPlay cardPlay)
+    {
+        if (cardPlay.Card.Owner.Creature == Owner && cardPlay.Card.Type == CardType.Attack)
+        {
+            ShionMechanicsHelper.TriggerBerserk(Owner);
+        }
+        return Task.CompletedTask;
+    }
+
     private decimal GetBerserkDriveMultiplier(Creature creature)
     {
         return 1 + Amount / 100M + (ShionMechanicsHelper.IsBerserk(creature) ? (Amount / 100M) : 0);

@@ -33,7 +33,7 @@ public class ShionRageCharge() : ShionBerserkCard(1,
         CardPlay play)
     {
         var card = this;
-        if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature))
+        if (ShionMechanicsHelper.TriggerBerserk(card.Owner.Creature))
         {
             await ShionMechanicsHelper.PatchUpCreature(card.DynamicVars[PatchUpVar.Key].IntValue, card.Owner.Creature);
         }

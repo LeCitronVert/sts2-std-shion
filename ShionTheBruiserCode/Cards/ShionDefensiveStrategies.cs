@@ -8,46 +8,55 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionDefensiveStrategies() : ShionTheBruiserCard(2,
-    CardType.Power, CardRarity.Uncommon,
+/// <summary>
+/// Counter the next 4 hindrances. Extend Guard and Mighty Guard by 1 (2) turn(s). Defensive.
+/// </summary>
+public class ShionDefensiveStrategies() : ShionDefensiveCard(2,
+    CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<DefensiveStrategies>(1),
+        new PowerVar<CounterStrategy>(4),
+        new DynamicVar("Extension", 1),
     ];
-    
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(ShionCardKeywords.Defensive),
         HoverTipFactory.FromPower<Guard>(),
         HoverTipFactory.FromPower<MightyGuard>(),
-        HoverTipFactory.FromPower<CounterStance>()
+        HoverTipFactory.FromPower<CounterStrategy>()
     ];
-    
+
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
         var card = this;
-        
-        await PowerCmd.Apply<CounterStance>(
+        var owner = card.Owner.Creature;
+
+        await PowerCmd.Apply<CounterStrategy>(
             choiceContext,
-            card.Owner.Creature,
-            999,
-            card.Owner.Creature,
+            owner,
+            card.DynamicVars["CounterStrategy"].BaseValue,
+            owner,
             card
         );
 
-        await PowerCmd.Apply<DefensiveStrategies>(
-            choiceContext,
-            card.Owner.Creature,
-            card.DynamicVars["DefensiveStrategies"].BaseValue,
-            card.Owner.Creature,
-            card
-        );
+        var extension = card.DynamicVars["Extension"].BaseValue;
+        if (owner.HasPower<Guard>())
+        {
+            await PowerCmd.Apply<Guard>(choiceContext, owner, extension, owner, card);
+        }
+        if (owner.HasPower<MightyGuard>())
+        {
+            await PowerCmd.Apply<MightyGuard>(choiceContext, owner, extension, owner, card);
+        }
+
+        await ApplyDefensiveToPlayer();
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["DefensiveStrategies"].UpgradeValueBy(1);
+        DynamicVars["Extension"].UpgradeValueBy(1);
     }
 }

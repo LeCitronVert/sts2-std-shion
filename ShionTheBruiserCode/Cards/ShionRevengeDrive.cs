@@ -60,7 +60,7 @@ public class ShionRevengeDrive() : ShionDefensiveCard(1,
             DynamicVars.Block,
             play
         );
-        if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature))
+        if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature, ignoreDefensive: true))
         {
             await PowerCmd.Apply<Guard>(
                 choiceContext,
@@ -96,5 +96,5 @@ public class ShionRevengeDrive() : ShionDefensiveCard(1,
         await ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(card.Owner.Creature);
     }
     
-    protected override bool ShouldGlowGoldInternal => ShionMechanicsHelper.IsBerserk(this.Owner.Creature);
+    protected override bool ShouldGlowGoldInternal => ShionMechanicsHelper.IsBerserk(this.Owner.Creature, ignoreDefensive: true);
 }

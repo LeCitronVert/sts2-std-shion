@@ -53,7 +53,7 @@ public class CompetitiveSpirit() : ShionTheBruiserPower
     {
         if (AmountThisTurn <= 0) return;
         await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), Owner, 1, Owner, null!);
-        if (ShionMechanicsHelper.IsBerserk(Owner))
+        if (ShionMechanicsHelper.TriggerBerserk(Owner))
         {
             await PowerCmd.Apply<DexterityPower>(new ThrowingPlayerChoiceContext(), Owner, 1, Owner, null!);
         }

@@ -32,7 +32,7 @@ public class BattleTempo : ShionTheBruiserPower
         if (!participants.Contains(Owner))
             return;
         
-        var powerAmount = ShionMechanicsHelper.IsBerserk(Owner) ? Amount * BerserkMultiplier : Amount;
+        var powerAmount = ShionMechanicsHelper.TriggerBerserk(Owner) ? Amount * BerserkMultiplier : Amount;
         Flash();
         await PowerCmd.Apply<Scrappy>(
             new ThrowingPlayerChoiceContext(),

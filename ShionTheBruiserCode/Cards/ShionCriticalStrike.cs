@@ -31,6 +31,7 @@ public class ShionCriticalStrike() : CritContributorCard(2,
         ShionCriticalStrike card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
         await ShionMechanicsHelper.EnsureCreatureHasCritTracker(card.Owner.Creature);
+        ShionMechanicsHelper.TriggerBerserk(card.Owner.Creature);
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .FromCard(card)
             .Targeting(play.Target)

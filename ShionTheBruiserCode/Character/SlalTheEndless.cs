@@ -73,12 +73,17 @@ public class SlalTheEndless : PlaceholderCharacterModel
     public override string CustomMerchantAnimPath => Path.Join(MainFile.ResPath, "scenes",
         "slal_merchant.tscn");
 
+    public override string CustomRestSiteAnimPath => Path.Join(MainFile.ResPath, "scenes",
+        "slal_rest.tscn");
+
     public override RelicIconData CustomYummyCookie => new(
         "slal.png".CookieImagePath(),
         "slal.png".CookieImagePath(),
         "slal_outline.png".CookieImagePath()
     );
-    
+
+    public override string CustomEnergyCounterPath => Path.Join(MainFile.ResPath, "scenes", "slal_energy.tscn");
+
     // Couleurs
     
     public override Color MapDrawingColor => Color;
