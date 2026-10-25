@@ -20,10 +20,12 @@ public class SlalCactusForm() : SlalTheEndlessCard(2,
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<CactusForm>(2),
+        new EnergyVar(2),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<ThornsPower>(),
+        HoverTipFactory.ForEnergy(this),
     ];
 
     protected override async Task OnPlay(
@@ -43,5 +45,6 @@ public class SlalCactusForm() : SlalTheEndlessCard(2,
     protected override void OnUpgrade()
     {
         DynamicVars["CactusForm"].UpgradeValueBy(1);
+        DynamicVars.Energy.UpgradeValueBy(1);
     }
 }

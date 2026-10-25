@@ -369,7 +369,7 @@
     "SHIONTHEBRUISER-SLAL_TOUCAN_FORM.title": "Toucan Form",
     "SHIONTHEBRUISER-SLAL_TOUCAN_FORM.description": "Gain {WeakPower:diff()} [gold]Weak[/gold].\nAt the start of your turn, if you are [gold]Weak[/gold], gain {ToucanForm:diff()} [gold]Block[/gold].",
     "SHIONTHEBRUISER-SLAL_CACTUS_FORM.title": "Cactus Form",
-    "SHIONTHEBRUISER-SLAL_CACTUS_FORM.description": "At the end of your turn, lose up to {CactusForm:energyIcons()}. Gain [blue]1[/blue] [gold]Thorns[/gold] for each energy lost this way.",
+    "SHIONTHEBRUISER-SLAL_CACTUS_FORM.description": "At the end of your turn, lose up to {Energy:energyIcons()}. Gain [blue]1[/blue] [gold]Thorns[/gold] for each energy lost this way.",
     "SHIONTHEBRUISER-SLAL_ANGLERFISH_FORM.title": "Anglerfish Form",
     "SHIONTHEBRUISER-SLAL_ANGLERFISH_FORM.description": "Gain {SlipperyPower:diff()} [gold]Slippery[/gold].\nWhenever you apply [gold]Weak[/gold] to an enemy, also apply {AnglerfishForm:diff()} [gold]Vulnerable[/gold] to it.",
     "SHIONTHEBRUISER-SLAL_PINWHEEL_FORM.title": "Pinwheel Form",
