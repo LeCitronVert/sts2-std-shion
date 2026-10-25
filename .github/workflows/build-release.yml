@@ -1,0 +1,101 @@
+# Builds the mod (dll + pck) on every push to main and publishes it as a GitHub release
+# containing a ready-to-drop-in ShionTheBruiser/ folder for the game's mods directory.
+#
+# Game DLLs needed to compile live in ci/game-refs/. Refresh them after a game update:
+#   cp ".../data_sts2_macos_x86_64/"{sts2,0Harmony}.dll ci/game-refs/
+
+name: Build & Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-release
+  cancel-in-progress: false
+
+env:
+  # Must match the MegaDot the game ships with, or the game refuses the .pck.
+  MEGADOT_VERSION: 4.5.1-m.13
+  MOD_NAME: ShionTheBruiser
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Cache MegaDot
+        id: megadot-cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/megadot
+          key: megadot-${{ env.MEGADOT_VERSION }}-linux
+
+      - name: Download MegaDot
+        if: steps.megadot-cache.outputs.cache-hit != 'true'
+        run: |
+          zip="megadot-$MEGADOT_VERSION-linux-x86_64-editor-csharp.zip"
+          base="https://megadot.megacrit.com/$MEGADOT_VERSION"
+          cd "$RUNNER_TEMP"
+          curl -fL --retry 3 -o "$zip" "$base/$zip"
+          curl -fsSL -o "$zip.sha256" "$base/$zip.sha256"
+          echo "$(awk '{print $1}' "$zip.sha256")  $zip" | sha256sum -c -
+          unzip -q "$zip" -d megadot
+          rm "$zip"
+
+      - name: Locate MegaDot executable
+        run: |
+          godot=$(find "$RUNNER_TEMP/megadot" -type f -name '*.x86_64' | head -n1)
+          test -n "$godot" || { echo "MegaDot executable not found"; find "$RUNNER_TEMP/megadot" -maxdepth 3; exit 1; }
+          chmod +x "$godot"
+          "$godot" --headless --version
+          echo "GODOT_BIN=$godot" >> "$GITHUB_ENV"
+
+      # Sts2PathDiscovery.props derives Sts2DataDir/ModsPath from Sts2Path on Linux; the env var
+      # also reaches the inner build MegaDot runs during --export-pack.
+      - name: Set up fake game install
+        run: |
+          sts2="$RUNNER_TEMP/sts2"
+          mkdir -p "$sts2/data_sts2_linuxbsd_x86_64" "$sts2/mods"
+          cp ci/game-refs/*.dll "$sts2/data_sts2_linuxbsd_x86_64/"
+          echo "Sts2Path=$sts2" >> "$GITHUB_ENV"
+
+      - name: Import Godot resources
+        run: timeout 15m "$GODOT_BIN" --headless --editor --quit || true
+
+      - name: Build and publish
+        run: dotnet publish "$MOD_NAME.csproj" -p:GodotPath="$GODOT_BIN"
+
+      - name: Package
+        run: |
+          out="$Sts2Path/mods/$MOD_NAME"
+          ls -la "$out"
+          # GodotPublish only warns on failure; a release without the .pck is useless.
+          test -f "$out/$MOD_NAME.pck" || { echo "::error::$MOD_NAME.pck was not exported"; exit 1; }
+          test -f "$out/$MOD_NAME.dll" || { echo "::error::$MOD_NAME.dll missing"; exit 1; }
+          cd "$Sts2Path/mods"
+          zip -r "$GITHUB_WORKSPACE/$MOD_NAME.zip" "$MOD_NAME"
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: Build ${{ github.run_number }} (${{ github.sha }})
+          target_commitish: ${{ github.sha }}
+          make_latest: true
+          body: |
+            Commit: ${{ github.sha }}
+
+            ${{ github.event.head_commit.message }}
+
+            **Install:** unzip into the game's `mods` folder so you get `mods/${{ env.MOD_NAME }}/`.
+          files: ${{ env.MOD_NAME }}.zip
