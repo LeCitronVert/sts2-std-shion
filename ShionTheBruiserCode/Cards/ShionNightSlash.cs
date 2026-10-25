@@ -5,8 +5,10 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Critical;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -21,16 +23,19 @@ public class ShionNightSlash() : CritContributorCard(3,
         new CritAttackRateVar(100)
     ];
 
+    protected override HashSet<CardTag> CanonicalTags => [ShionCardTags.Energy];
+
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
+        await ShionMechanicsHelper.EnsureCreatureHasCritTracker(card.Owner.Creature);
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .FromCard(card)
             .Targeting(play.Target)
-            .WithHitFx("vfx/vfx_attack_slash")
+            .WithEnergyBlast(card, "vfx/vfx_attack_slash")
             .Execute(choiceContext)
         ;
     }
