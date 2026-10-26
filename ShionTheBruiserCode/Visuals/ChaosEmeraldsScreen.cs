@@ -14,12 +14,13 @@ public static class ChaosEmeraldsScreen
 {
     private const string Table = "main_menu_ui";
     private const int IconSize = 128;
+    private const int ScreenZIndex = 100;
 
     private static readonly Color LockedModulate = new(0.08f, 0.08f, 0.08f, 0.9f);
 
     public static Control Create(Font? font)
     {
-        var root = new Control { Name = "ChaosEmeraldsScreen", MouseFilter = Control.MouseFilterEnum.Stop, ZIndex = 100 };
+        var root = new Control { Name = "ChaosEmeraldsScreen", MouseFilter = Control.MouseFilterEnum.Stop, ZIndex = ScreenZIndex };
         root.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
 
         var dim = new ColorRect { Color = new Color(0, 0, 0, 0.8f), MouseFilter = Control.MouseFilterEnum.Stop };
@@ -92,7 +93,12 @@ public static class ChaosEmeraldsScreen
             ? relic.HoverTips
             : [new HoverTip(new LocString(Table, "SHIONTHEBRUISER-CHAOS_EMERALDS_SCREEN.locked_title"),
                 new LocString(Table, "SHIONTHEBRUISER-CHAOS_EMERALDS_SCREEN.locked_description"))];
-        icon.MouseEntered += () => NHoverTipSet.CreateAndShow(icon, tips, HoverTipAlignment.Right);
+        icon.MouseEntered += () =>
+        {
+            // Tips live in NGame's HoverTipsContainer, so they must out-rank the screen's ZIndex to draw on top of it.
+            var tipSet = NHoverTipSet.CreateAndShow(icon, tips, HoverTipAlignment.Right);
+            if (tipSet != null) tipSet.ZIndex = ScreenZIndex + 1;
+        };
         icon.MouseExited += () => NHoverTipSet.Remove(icon);
 
         var name = unlocked ? relic.Title.GetFormattedText() : Loc("SHIONTHEBRUISER-CHAOS_EMERALDS_SCREEN.locked_title");
