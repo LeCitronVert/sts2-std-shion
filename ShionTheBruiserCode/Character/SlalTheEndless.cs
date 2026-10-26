@@ -64,6 +64,16 @@ public class SlalTheEndless : PlaceholderCharacterModel
     
     public override string? CustomIconOutlineTexturePath => "slal/ui_icon_slal_white.png".CharacterUiPath();
     
+    // 1 weak, 1 strong, 3 weak (the Architect shuffles the order)
+    public override List<string> GetArchitectAttackVfx() =>
+    [
+        "vfx/vfx_attack_blunt",
+        "vfx/vfx_heavy_blunt",
+        "vfx/vfx_attack_blunt",
+        "vfx/vfx_attack_blunt",
+        "vfx/vfx_attack_blunt",
+    ];
+
     public override NCreatureVisuals CreateCustomVisuals()
     {
         return NodeFactory<NCreatureVisuals>.CreateFromScene(Path.Join(MainFile.ResPath, "scenes",

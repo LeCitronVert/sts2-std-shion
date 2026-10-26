@@ -393,7 +393,7 @@
     "SHIONTHEBRUISER-SLAL_TELEVISION_FORM.title": "Television Form",
     "SHIONTHEBRUISER-SLAL_TELEVISION_FORM.description": "Whenever you play a card from your [gold]Hand[/gold], play up to {TelevisionForm:diff()} identical cards from your [gold]Discard Pile[/gold].\nRandom cards you create can be Colorless.",
     "SHIONTHEBRUISER-SLAL_SPARROW_FORM.title": "Sparrow Form",
-    "SHIONTHEBRUISER-SLAL_SPARROW_FORM.description": "Whenever you create a card, play it.{IfUpgraded:show:\n[gold]Replay[/gold].|}",
+    "SHIONTHEBRUISER-SLAL_SPARROW_FORM.description": "Whenever you create a card, play it.",
     "SHIONTHEBRUISER-SLAL_BREAK_CONTINUITY.title": "Break Continuity",
     "SHIONTHEBRUISER-SLAL_BREAK_CONTINUITY.description": "Put ALL [gold]Fresh Ideas[/gold] from your [gold]Exhaust Pile[/gold] into your [gold]Discard Pile[/gold].\nALL enemies lose that much HP.{InCombat:\n(Lose {HpLossAmount:diff()} HP)|}",
 

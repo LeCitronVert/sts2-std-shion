@@ -156,8 +156,8 @@
   "TANX.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-0.ancient": "FIGHT ME, BRUISER!",
   "TANX.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-0.next": "Fight",
   "TANX.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-1.char": "[i][font_size=22]Shion completely loses herself in her fight with Tanx.[/font_size][/i]",
-  "TANX.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-2.next": "Continue",
-  "TANX.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-3.ancient": "FREAKY BERSERKER?! GET A WEAPON AND GET OUT!!!",
+  "TANX.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-1.next": "Continue",
+  "TANX.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.2-2.ancient": "FREAKY BERSERKER?! GET A WEAPON AND GET OUT!!!",
 
   "TANX.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.3-0r.ancient": "YOU!!! NOT NEARLY ANGRY ENOUGH!! GET ANGRIER, BERSERKER!!",
 
@@ -236,12 +236,153 @@
   "THE_ARCHITECT.talk.SHIONTHEBRUISER-SHION_THE_BRUISER.3-attack": "Both",
 
 
-  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-0r.char": "eto bleh",
+  "NEOW.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-0r.ancient": "[sine]....how did you....[/sine]",
+  "NEOW.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-0r.next": "Talk",
+  "NEOW.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-1r.char": "Ah. I slipped on the wrong door. Happens even to the worst adventurer.",
+  "NEOW.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-1r.next": "Continue",
+  "NEOW.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-2r.ancient": "[sine]....irrational... non sensical..... good.....[/sine]",
+
+  "NEOW.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-0r.ancient": "[sine].......did you... even leave.... I could have sworn....[/sine]",
+  "NEOW.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-0r.next": "Talk",
+  "NEOW.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-1r.char": "Wow I feel super refreshed! Thank you big whale!",
+  "NEOW.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-1r.next": "Continue",
+  "NEOW.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-2r.ancient": "[sine].......rise....[/sine]",
+
+  "NEOW.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-0r.ancient": "[sine]....where are you going.....[/sine]",
+  "NEOW.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-0r.next": "Talk",
+  "NEOW.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-1r.char": "I am positively and one hundred percently lost. Was this the kitchen?",
+  "NEOW.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-1r.next": "Continue",
+  "NEOW.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-2r.ancient": "[sine]...just... go... up...[/sine]",
+
+  "DARV.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-0r.ancient": "And you're telling me you can store an infinite amount of trash?",
+  "DARV.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-0r.next": "Continue",
+  "DARV.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-1r.ancient": "Go on then! The first one is on me!",
+
+  "DARV.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-0r.ancient": "You can mimic things you absorb?",
+  "DARV.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-0r.next": "Answer",
+  "DARV.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-1r.char": "I don't have to absorb them but it's much better when I do, yes.",
+  "DARV.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-1r.next": "Continue",
+  "DARV.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-2r.ancient": "Ahaa! Try this one then!",
+
+  "DARV.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-0r.ancient": "Oï! Slime thing! Catch!",
+
+  "NONUPEIPE.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-0r.ancient": "You look much cleaner than the average slime…",
+  "NONUPEIPE.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-0r.next": "Answer",
+  "NONUPEIPE.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-1r.char": "I'm great at eating dirt!",
+  "NONUPEIPE.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-1r.next": "Continue",
+  "NONUPEIPE.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-2r.ancient": "Let's refine your taste to be more akin to victory.",
+
+  "NONUPEIPE.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-0r.ancient": "My goodness did that drop of water talk?",
+  "NONUPEIPE.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-0r.next": "Continue",
+  "NONUPEIPE.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-1r.ancient": "My goodness did it just [i]eat[/i] my blessing?",
+
+  "NONUPEIPE.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-0r.ancient": "Is this protrusion on your head…",
+  "NONUPEIPE.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-0r.next": "Continue",
+  "NONUPEIPE.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-1r.char": "[i][font_size=22]The Goofball tips his slime hat.[/font_size][/i]",
+  "NONUPEIPE.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-1r.next": "Continue",
+  "NONUPEIPE.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-2r.ancient": "…an adorable little hat! What a cute creature.",
+
+  "OROBAS.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-0r.ancient": "Slime… friend?",
+  "OROBAS.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-0r.next": "Answer",
+  "OROBAS.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-1r.char": "Friend!",
+  "OROBAS.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-1r.next": "Continue",
+  "OROBAS.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-2r.ancient": "Friend!!",
+
+  "OROBAS.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-0r.ancient": "Look! Pretty colors! You try being like this one!",
+
+  "OROBAS.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-0r.ancient": "Let's play Hide and Seek! You hide! I seek!",
+  "OROBAS.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-0r.next": "Shapeshift",
+  "OROBAS.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-1r.char": "[i][font_size=22]The Goofball becomes a mawler hide.[/font_size][/i]",
+  "OROBAS.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-1r.next": "Continue",
+  "OROBAS.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-2r.ancient": "Found you! And this also. For you!!",
+
+  "PAEL.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-0r.ancient": "Are you a part of me?",
+  "PAEL.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-0r.next": "Answer",
+  "PAEL.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-1r.char": "No! My parts disappear when they are cut off.",
+  "PAEL.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-1r.next": "Continue",
+  "PAEL.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-2r.ancient": "Then take one of mine.",
+
+  "PAEL.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-0r.ancient": "Don't forget to rest, little slime. Even you need some sleep.",
+
+  "PAEL.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-0r.ancient": "Do you know where you are going little slime?",
+  "PAEL.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-0r.next": "Answer",
+  "PAEL.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-1r.char": "Not a clue! That's usually how I get to my destination. Sheer luck!",
+  "PAEL.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-1r.next": "Continue",
+  "PAEL.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-2r.ancient": "This time you'll need more than luck.",
+
+  "TANX.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-0r.ancient": "SO WEAK!",
+  "TANX.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-0r.next": "Answer",
+  "TANX.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-1r.char": "Yeah it is kinda my thing.",
+  "TANX.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-1r.next": "Continue",
+  "TANX.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-2r.ancient": "TRY ANOTHER THING!",
+
+  "TANX.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-0r.ancient": "YOU NEED SPIKES! AND BLADES!",
+  "TANX.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-0r.next": "Answer",
+  "TANX.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-1r.char": "Sorry I am lethally allergic to sharpness.",
+  "TANX.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-1r.next": "Continue",
+  "TANX.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-2r.ancient": "EVERYONE IS! THAT'S THE POINT!",
+
+  "TANX.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-0r.ancient": "STRIKE ME! WITH ALL YOUR MIGHT!",
+  "TANX.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-0r.next": "Strike",
+  "TANX.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-1r.char": "[i][font_size=22]The Goofball throws itself at Tanx. It has no effect.[/font_size][/i]",
+  "TANX.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-1r.next": "Continue",
+  "TANX.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-2r.ancient": "PATHETIC! USE THIS!",
+
+  "TEZCATARA.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-0r.ancient": "Looks like my soup is getting away again…",
+  "TEZCATARA.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-0r.next": "Protest",
+  "TEZCATARA.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-1r.char": "I AM NOT SOUP!",
+  "TEZCATARA.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-1r.next": "Continue",
+  "TEZCATARA.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-2r.ancient": "It lacks a very special ingredient…",
+
+  "TEZCATARA.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-0r.ancient": "What an adorable little slime. How should we reignite your violence?",
+
+  "TEZCATARA.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-0r.ancient": "Come on, just hop in my cauldron, there is a gift for you inside…",
+
+  "VAKUU.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-0r.ancient": "Do you find it ironic your fellow slimes want you dead?",
+
+  "VAKUU.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-0r.ancient": "Interesting. You, of all creatures, seeks a contract with me?",
+  "VAKUU.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-0r.next": "Share",
+  "VAKUU.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-1r.char": "You write fanfictions too?! Look! I wrote one where-",
+  "VAKUU.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-1r.next": "Continue",
+  "VAKUU.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-2r.ancient": "No deal. Take this and leave.",
+
+  "VAKUU.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-0r.ancient": "You can be anything, but I can make you someone.",
+
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-0r.char": "Wow! Did you build that place? Are you a real architect?",
   "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-0r.next": "Continue",
-  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-1r.ancient": "fuck off",
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-1r.ancient": "Urh. Brainless groupie.",
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-1r.next": "Continue",
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-2r.char": "Inaccurate! For the following reasons:",
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-2r.next": "Fight",
   "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-attack": "Both",
 
-  "NEOW.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.0-0.ancient": "[sine]what the fuck a slime[/sine]",
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-0r.char": "What are you working on? Does it work on squirrels?",
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-0r.next": "Continue",
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-1r.ancient": "And you are supposed to be?…",
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-1r.next": "Continue",
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-2r.char": "Not a squirrel! I mean, most of the time! You see…",
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-2r.next": "Fight",
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.1-attack": "Both",
+
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-0r.char": "High mister! Is this the top? Is this where the whipped cream is?",
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-0r.next": "Continue",
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-1r.ancient": "Who brought some Overgrowth trash to my office?",
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-1r.next": "Continue",
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-2r.char": "I am trash but not from the Overgrowth! The truth is,…",
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-2r.next": "Fight",
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.2-attack": "Both",
+
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.3-0r.char": "Ah. Mister Architect. Have you considered installing an elevator?",
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.3-0r.next": "Continue",
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.3-1r.ancient": "And get more visits from the Underdocks? Pass.",
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.3-1r.next": "Continue",
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.3-2r.char": "There are many other advantages! Like…",
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.3-2r.next": "Fight",
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.3-attack": "Both",
+
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.4-0r.char": "Phew! What a wild ride! So, mister Architect, I have a message from Neow!",
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.4-0r.next": "Fight",
+  "THE_ARCHITECT.talk.SHIONTHEBRUISER-SLAL_THE_ENDLESS.4-attack": "Architect",
 
   "THE_ARCHITECT.talk.SHIONTHEBRUISER-FRY_THE_COMMANDER.0-0r.char": "TODO: Fry line",
   "THE_ARCHITECT.talk.SHIONTHEBRUISER-FRY_THE_COMMANDER.0-0r.next": "Continue",

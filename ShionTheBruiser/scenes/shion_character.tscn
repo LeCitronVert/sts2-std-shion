@@ -340,7 +340,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Visuals" type="AnimatedSprite2D" parent="."]
-position = Vector2(110.61, -183.29)
+position = Vector2(-10.77, -183.29)
 sprite_frames = SubResource("SpriteFrames_0srai")
 animation = &"idle"
 autoplay = "idle"
@@ -353,9 +353,7 @@ libraries = {
 
 [node name="Bounds" type="Control" parent="."]
 layout_mode = 1
-anchor_left = 0.011000001
-anchor_right = 0.011000001
-offset_left = 0.87999916
+offset_left = -120.5
 offset_top = -366.0
-offset_right = 241.88
+offset_right = 120.5
 offset_bottom = -3.0

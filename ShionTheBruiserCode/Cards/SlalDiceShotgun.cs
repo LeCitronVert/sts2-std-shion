@@ -1,8 +1,10 @@
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
@@ -29,21 +31,27 @@ public class SlalDiceShotgun() : SlalTheEndlessCard(1,
         var card = this;
         if (card.CombatState is null) return;
 
+        // One attack context for all hits, so Vigor/Strength/Sharp etc. apply to every hit (Vigor consumed once).
+        await using var context = await AttackCommand.CreateContextAsync(card.CombatState, choiceContext, card);
+        var animPlayed = false;
+
         foreach (var handCard in PileType.Hand.GetPile(card.Owner).Cards.ToList())
         {
             await SlalMechanicsHelper.GainRandom(choiceContext, card.Owner.Creature, 1, card);
 
             var damage = SlalMechanicsHelper.GetEnergyCost(handCard);
-            if (damage <= 0) continue;
 
             var enemy = card.Owner.RunState.Rng.CombatTargets.NextItem(card.CombatState.HittableEnemies);
             if (enemy == null) continue;
 
-            await DamageCmd.Attack(damage)
-                .FromCard(card)
-                .Targeting(enemy)
-                .WithHitFx("vfx/vfx_attack_blunt")
-                .Execute(choiceContext);
+            if (!animPlayed)
+            {
+                await CreatureCmd.TriggerAnim(card.Owner.Creature, "Attack", card.Owner.Character.AttackAnimDelay);
+                animPlayed = true;
+            }
+
+            VfxCmd.PlayOnCreature(enemy, "vfx/vfx_attack_blunt");
+            context.AddHit(await CreatureCmd.Damage(choiceContext, enemy, damage, ValueProp.Move, card));
         }
     }
 
