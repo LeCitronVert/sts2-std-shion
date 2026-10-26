@@ -370,9 +370,33 @@ public static class SlalMechanicsHelper
         ModelDb.Card<SlalSparrowForm>(),
     ];
 
+    /// <summary>
+    /// Goofball Token Powers that can only be created once Creativity Unbound has been played this combat.
+    /// </summary>
+    public static IReadOnlyList<CardModel> CreativityUnboundTokenPowers => [
+        ModelDb.Card<SlalWalkingEncyclopedia>(),
+        ModelDb.Card<SlalTelevisionForm>(),
+        ModelDb.Card<SlalSparrowForm>(),
+    ];
+
     public static bool IsGoofballTokenPower(CardModel card)
     {
         return GoofballTokenPowers.Any(c => c.Id == card.Id);
+    }
+
+    public static bool HasPlayedCreativityUnbound(Player player)
+    {
+        return CombatManager.Instance.History.CardPlaysStarted
+            .Any(e => e.CardPlay.Card.Owner == player && e.CardPlay.Card is SlalCreativityUnbound);
+    }
+
+    /// <summary>
+    /// The Goofball Token Powers that can be created right now for this player.
+    /// </summary>
+    public static IReadOnlyList<CardModel> GetCreatableGoofballTokenPowers(Player player)
+    {
+        if (HasPlayedCreativityUnbound(player)) return GoofballTokenPowers;
+        return GoofballTokenPowers.Where(c => CreativityUnboundTokenPowers.All(u => u.Id != c.Id)).ToList();
     }
 
     /// <summary>
@@ -380,7 +404,7 @@ public static class SlalMechanicsHelper
     /// </summary>
     public static CardModel CreateGoofballTokenPower(Player player, bool upgraded, ModelId? lastGiven = null)
     {
-        return CreateTokenAvoiding(player, GoofballTokenPowers, lastGiven, upgraded);
+        return CreateTokenAvoiding(player, GetCreatableGoofballTokenPowers(player), lastGiven, upgraded);
     }
 
     /// <summary>

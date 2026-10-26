@@ -359,7 +359,7 @@
     "SHIONTHEBRUISER-SLAL_ABSORPTION.title": "Absorption",
     "SHIONTHEBRUISER-SLAL_ABSORPTION.description": "[gold]Transform[/gold] up to {Cards:diff()} cards in your [gold]Hand[/gold] into [gold]Slimed[/gold].\nGain {MaxHp:diff()} Max HP for each card [gold]Transformed[/gold] this way.",
     "SHIONTHEBRUISER-SLAL_CREATIVITY_UNBOUND.title": "Creativity Unbound",
-    "SHIONTHEBRUISER-SLAL_CREATIVITY_UNBOUND.description": "Add a random{IfUpgraded:show: upgraded|} [gold]Walking Encyclopedia Form[/gold], [gold]Television Form[/gold] or [gold]Sparrow Form[/gold] into your [gold]Hand[/gold].",
+    "SHIONTHEBRUISER-SLAL_CREATIVITY_UNBOUND.description": "Add a random{IfUpgraded:show: upgraded|} [gold]Walking Encyclopedia Form[/gold], [gold]Television Form[/gold] or [gold]Sparrow Form[/gold] into your [gold]Hand[/gold].\n[gold]Walking Encyclopedia Form[/gold], [gold]Television Form[/gold] and [gold]Sparrow Form[/gold] are now creatable as [gold]Goofball Token Powers[/gold].",
     "SHIONTHEBRUISER-SLAL_FRIDGE_FORM.title": "Fridge Form",
     "SHIONTHEBRUISER-SLAL_FRIDGE_FORM.description": "Gain a potion slot and fill your potion slots with random potions.\nWhenever you play a [gold]Form[/gold] Power, procure {FridgeForm:diff()} random {FridgeForm:plural:potion|potions}.\nAt the end of combat, discard ALL your potions and lose {FridgeForm:diff()} potion {FridgeForm:plural:slot|slots}.",
     "SHIONTHEBRUISER-SLAL_GENIE_FORM.title": "Genie Form",

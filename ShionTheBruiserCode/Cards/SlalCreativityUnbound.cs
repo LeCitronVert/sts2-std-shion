@@ -9,6 +9,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
 /// Power with no lasting effect: add 1 random of Walking Encyclopedia, Television or Sparrow Form into your Hand.
+/// Playing it also makes those three creatable as Goofball Token Powers for the rest of the combat.
 /// </summary>
 public class SlalCreativityUnbound() : SlalTheEndlessCard(3,
     CardType.Power, CardRarity.Rare,
@@ -29,12 +30,6 @@ public class SlalCreativityUnbound() : SlalTheEndlessCard(3,
         }
     }
 
-    private static IReadOnlyList<CardModel> PowerOptions => [
-        ModelDb.Card<SlalWalkingEncyclopedia>(),
-        ModelDb.Card<SlalTelevisionForm>(),
-        ModelDb.Card<SlalSparrowForm>(),
-    ];
-
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromCard<SlalWalkingEncyclopedia>(IsUpgraded),
         HoverTipFactory.FromCard<SlalTelevisionForm>(IsUpgraded),
@@ -48,7 +43,7 @@ public class SlalCreativityUnbound() : SlalTheEndlessCard(3,
         var card = this;
         await CreatureCmd.TriggerAnim(card.Owner.Creature, "Cast", card.Owner.Character.CastAnimDelay);
 
-        var power = SlalMechanicsHelper.CreateTokenAvoiding(card.Owner, PowerOptions, LastGivenPower, IsUpgraded);
+        var power = SlalMechanicsHelper.CreateTokenAvoiding(card.Owner, SlalMechanicsHelper.CreativityUnboundTokenPowers, LastGivenPower, IsUpgraded);
         LastGivenPower = power.Id;
         await CardPileCmd.AddGeneratedCardToCombat(power, PileType.Hand, card.Owner);
     }
