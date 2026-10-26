@@ -6,7 +6,7 @@ ShionTheBruiser.json::JSON::-1::1792433998::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1793019636
+::res://bin/ExportRelease/net9.0/publish/::1793020556
 ShionTheBruiser.deps.json::JSON::-1::1793018459::0::1::::<><><>0<>0<><>::
 ::res://ci/::1792939391
 ::res://ci/game-refs/::1792939391
@@ -903,9 +903,9 @@ character_slal_rest.png::CompressedTexture2D::6789641064684939044::1792929186::1
 lull.png::CompressedTexture2D::1267024042070092315::1783267457::1783267487::1::::<><><>0<>0<>46ca43c57aac12a6d7ea8ace1d934f9d<>res://.godot/imported/lull.png-a7714865cfaf878a1f7a05dec126e0c0.ctex::
 seek.png::CompressedTexture2D::7391533348874629046::1793017840::1793018465::1::::<><><>0<>0<>2556d5a07730c99b22510cb19361aa1f<>res://.godot/imported/seek.png-279120f713f3895c9c6f09d897a7f0c0.ctex::
 ::res://ShionTheBruiser/localization/::1781940056
-::res://ShionTheBruiser/localization/eng/::1793018960
+::res://ShionTheBruiser/localization/eng/::1793020389
 ancients.json::JSON::-1::1793019069::0::1::::<><><>0<>0<><>::
-cards.json::JSON::-1::1793018960::0::1::::<><><>0<>0<><>::
+cards.json::JSON::-1::1793020378::0::1::::<><><>0<>0<><>::
 card_keywords.json::JSON::-1::1792870600::0::1::::<><><>0<>0<><>::
 card_selection.json::JSON::-1::1792675405::0::1::::<><><>0<>0<><>::
 characters.json::JSON::-1::1793018962::0::1::::<><><>0<>0<><>::
@@ -915,8 +915,8 @@ events.json::JSON::-1::1793013036::0::1::::<><><>0<>0<><>::
 main_menu_ui.json::JSON::-1::1793017890::0::1::::<><><>0<>0<><>::
 monsters.json::JSON::-1::1791312255::0::1::::<><><>0<>0<><>::
 potions.json::JSON::-1::1792779287::0::1::::<><><>0<>0<><>::
-powers.json::JSON::-1::1793017890::0::1::::<><><>0<>0<><>::
-relics.json::JSON::-1::1793018184::0::1::::<><><>0<>0<><>::
+powers.json::JSON::-1::1793020389::0::1::::<><><>0<>0<><>::
+relics.json::JSON::-1::1793020192::0::1::::<><><>0<>0<><>::
 rest_site_ui.json::JSON::-1::1793017890::0::1::::<><><>0<>0<><>::
 static_hover_tips.json::JSON::-1::1792442512::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiser/scenes/::1792929289
@@ -941,7 +941,7 @@ shion_auras.gd::GDScript::4576563140771859101::1792503904::0::1::::<>Node2D<><>0
 shion_auras.tscn::PackedScene::-1::1792503896::0::1::::<><><>0<>0<><>::res://ShionTheBruiser/scenes/fx/shion_auras.gd
 ::res://ShionTheBruiserCode/::1792675405
 MainFile.cs::CSharpScript::2954314548483070873::1791501155::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Cards/::1793018465
+::res://ShionTheBruiserCode/Cards/::1793020342
 CosmoDetermination.cs::CSharpScript::4903082444639403780::1792756623::0::1::::<><><>0<>0<><>::
 CosmoGuidance.cs::CSharpScript::4895954223051435257::1792870460::0::1::::<><><>0<>0<><>::
 CosmoKindness.cs::CSharpScript::2527117697509655675::1792756623::0::1::::<><><>0<>0<><>::
@@ -1243,7 +1243,7 @@ SlalAnchorThrow.cs::CSharpScript::4090245567086415269::1792779101::0::1::::<><><
 SlalAnglerfishForm.cs::CSharpScript::3537330402931727397::1792257956::0::1::::<><><>0<>0<><>::
 SlalAnvilStrike.cs::CSharpScript::72720640379381485::1792676214::0::1::::<><><>0<>0<><>::
 SlalAppleJuiceStocks.cs::CSharpScript::5476861177451012571::1792257956::0::1::::<><><>0<>0<><>::
-SlalAvatarCharacter.cs::CSharpScript::1916161595260891544::1792607539::0::1::::<><><>0<>0<><>::
+SlalAvatarCharacter.cs::CSharpScript::1916161595260891544::1793020351::0::1::::<><><>0<>0<><>::
 SlalBackSlap.cs::CSharpScript::2502501691564095414::1792257921::0::1::::<><><>0<>0<><>::
 SlalBellMemory.cs::CSharpScript::1084444676185246506::1792778564::0::1::::<><><>0<>0<><>::
 SlalBicycleTime.cs::CSharpScript::2972938118457870967::1792870990::0::1::::<><><>0<>0<><>::
@@ -1278,7 +1278,7 @@ SlalDraftPhase.cs::CSharpScript::6834671420212056086::1791313815::0::1::::<><><>
 SlalElaborateFlourish.cs::CSharpScript::8229445151217290468::1792778778::0::1::::<><><>0<>0<><>::
 SlalEmergencyShapeshift.cs::CSharpScript::3692038759044152768::1792778544::0::1::::<><><>0<>0<><>::
 SlalEnthusiasticWave.cs::CSharpScript::4199337619944911609::1792870923::0::1::::<><><>0<>0<><>::
-SlalFalseConPunch.cs::CSharpScript::8884388342257623712::1792607539::0::1::::<><><>0<>0<><>::
+SlalFalseConPunch.cs::CSharpScript::8884388342257623712::1793020351::0::1::::<><><>0<>0<><>::
 SlalFavouriteBucket.cs::CSharpScript::8579979158152694632::1792689303::0::1::::<><><>0<>0<><>::
 SlalFoxForm.cs::CSharpScript::4848200294076538056::1792607539::0::1::::<><><>0<>0<><>::
 SlalFreshIdea.cs::CSharpScript::4368751252289004731::1792778963::0::1::::<><><>0<>0<><>::
@@ -1321,8 +1321,8 @@ SlalSeeWhatSticks.cs::CSharpScript::6163520525076272424::1792676593::0::1::::<><
 SlalShareSecrets.cs::CSharpScript::3737574093798336419::1792257921::0::1::::<><><>0<>0<><>::
 SlalShriekingLaugh.cs::CSharpScript::3821892500395787622::1792257921::0::1::::<><><>0<>0<><>::
 SlalSlideForm.cs::CSharpScript::5499861385232666751::1792257601::0::1::::<><><>0<>0<><>::
-SlalSlimeAppetite.cs::CSharpScript::1783516337018476067::1792779015::0::1::::<><><>0<>0<><>::
-SlalSlimeForm.cs::CSharpScript::326313686007131964::1792779031::0::1::::<><><>0<>0<><>::
+SlalSlimeAppetite.cs::CSharpScript::1783516337018476067::1793020342::0::1::::<><><>0<>0<><>::
+SlalSlimeForm.cs::CSharpScript::326313686007131964::1793020351::0::1::::<><><>0<>0<><>::
 SlalSlimeHammer.cs::CSharpScript::5733842983300179745::1792504629::0::1::::<><><>0<>0<><>::
 SlalSlimeHug.cs::CSharpScript::5015901039681629077::1792779031::0::1::::<><><>0<>0<><>::
 SlalSlimeItOff.cs::CSharpScript::8425528690800095138::1792676593::0::1::::<><><>0<>0<><>::
@@ -1335,7 +1335,7 @@ SlalStreetLightForm.cs::CSharpScript::9175659778147483837::1792504536::0::1::::<
 SlalStrike.cs::CSharpScript::9185886012061968931::1785182398::0::1::::<><><>0<>0<><>::
 SlalSurpriseShapeshift.cs::CSharpScript::5038424032196558036::1792778543::0::1::::<><><>0<>0<><>::
 SlalSwordForm.cs::CSharpScript::8732130764177978926::1792756623::0::1::::<><><>0<>0<><>::
-SlalTabulaRasa.cs::CSharpScript::1043433023659409477::1792258117::0::1::::<><><>0<>0<><>::
+SlalTabulaRasa.cs::CSharpScript::1043433023659409477::1793020351::0::1::::<><><>0<>0<><>::
 SlalTelevisionForm.cs::CSharpScript::9021451150085182839::1792779080::0::1::::<><><>0<>0<><>::
 SlalTheEndlessCard.cs::CSharpScript::3792054219534233841::1792739965::0::1::::<><><>0<>0<><>::
 SlalThinkingBoard.cs::CSharpScript::2232492225506016084::1792676618::0::1::::<><><>0<>0<><>::
@@ -1430,7 +1430,7 @@ ShionTheBruiserPotion.cs::CSharpScript::9201725349623556408::1783339625::0::1:::
 SlalTheEndlessPotion.cs::CSharpScript::8376483660968667012::1784597711::0::1::::<><><>0<>0<><>::
 SlimePotion.cs::CSharpScript::7989781476553595685::1792676669::0::1::::<><><>0<>0<><>::
 UltraSpicyBrew.cs::CSharpScript::9048578971562818039::1784853353::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Powers/::1793018465
+::res://ShionTheBruiserCode/Powers/::1793020469
 AggravatingDemeanor.cs::CSharpScript::8129228658966784852::1792675405::0::1::::<><><>0<>0<><>::
 AnchoredDown.cs::CSharpScript::5901246561197500973::1792505028::0::1::::<><><>0<>0<><>::
 AnglerfishForm.cs::CSharpScript::518667432377815112::1792257838::0::1::::<><><>0<>0<><>::
@@ -1514,7 +1514,7 @@ FryTodo23Dexterity.cs::CSharpScript::8410080625262884031::1792675405::0::1::::<>
 FullNelson.cs::CSharpScript::3553155038824038212::1783418991::0::1::::<><><>0<>0<><>::
 GamblersLuck.cs::CSharpScript::4982854600161764797::1792675405::0::1::::<><><>0<>0<><>::
 GamblingAddiction.cs::CSharpScript::3984542263207562174::1792675405::0::1::::<><><>0<>0<><>::
-GenieForm.cs::CSharpScript::4535880389300652158::1792778835::0::1::::<><><>0<>0<><>::
+GenieForm.cs::CSharpScript::4535880389300652158::1793020377::0::1::::<><><>0<>0<><>::
 GettingTheBootStrengthDown.cs::CSharpScript::3484445441754368289::1792675405::0::1::::<><><>0<>0<><>::
 GorillaForm.cs::CSharpScript::1854034448893593354::1792676331::0::1::::<><><>0<>0<><>::
 GreenChallengeDexterityDown.cs::CSharpScript::176608913335941337::1793016716::0::1::::<><><>0<>0<><>::
@@ -1580,11 +1580,11 @@ ShowOfStrength.cs::CSharpScript::3810933752980122112::1792264217::0::1::::<><><>
 SlalOnPowerPlayedPower.cs::CSharpScript::7802400872444033170::1792257741::0::1::::<><><>0<>0<><>::
 SlalTheEndlessPower.cs::CSharpScript::3453855862811496232::1792504479::0::1::::<><><>0<>0<><>::
 SlideForm.cs::CSharpScript::6241566967445579967::1792257601::0::1::::<><><>0<>0<><>::
-SlimeAppetite.cs::CSharpScript::8975589247553762758::1792779012::0::1::::<><><>0<>0<><>::
+SlimeAppetite.cs::CSharpScript::8975589247553762758::1793020342::0::1::::<><><>0<>0<><>::
 SlimedFreeThisTurn.cs::CSharpScript::1992644122233482712::1792676669::0::1::::<><><>0<>0<><>::
 SlimeForm.cs::CSharpScript::6947764846356122508::1792779031::0::1::::<><><>0<>0<><>::
 SmugLook.cs::CSharpScript::1524418675892732085::1792675405::0::1::::<><><>0<>0<><>::
-SparrowForm.cs::CSharpScript::3952496737444871215::1793012145::0::1::::<><><>0<>0<><>::
+SparrowForm.cs::CSharpScript::3952496737444871215::1793020469::0::1::::<><><>0<>0<><>::
 SpinToDeflectStuffStrengthDown.cs::CSharpScript::2992862153021980315::1792675405::0::1::::<><><>0<>0<><>::
 SpiritBreak.cs::CSharpScript::5026743736895344921::1792442439::0::1::::<><><>0<>0<><>::
 SpiritBurst.cs::CSharpScript::2581299230402162673::1792870525::0::1::::<><><>0<>0<><>::
