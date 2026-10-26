@@ -816,5 +816,18 @@
     "SHIONTHEBRUISER-SLAL_HUMAN_FORM.title": "Human Form",
     "SHIONTHEBRUISER-SLAL_HUMAN_FORM.description": "At the end of your turn, gain [gold]Random[/gold] equal to the number of different cards in your [gold]Hand[/gold].",
     "SHIONTHEBRUISER-SLAL_ELABORATE_FLOURISH.title": "Elaborate Flourish",
-    "SHIONTHEBRUISER-SLAL_ELABORATE_FLOURISH.description": "Apply {Confusion:diff()} [gold]Confusion[/gold].\nIf you are [gold]Weak[/gold], apply it again.\nIf the enemy is [gold]Weak[/gold], apply it again.{InCombat:{HasTarget:cond:>0?\n(Apply {ConfusionAmount:diff()} [gold]Confusion[/gold])|}|}"
+    "SHIONTHEBRUISER-SLAL_ELABORATE_FLOURISH.description": "Apply {Confusion:diff()} [gold]Confusion[/gold].\nIf you are [gold]Weak[/gold], apply it again.\nIf the enemy is [gold]Weak[/gold], apply it again.{InCombat:{HasTarget:cond:>0?\n(Apply {ConfusionAmount:diff()} [gold]Confusion[/gold])|}|}",
+    "SHIONTHEBRUISER-SPECIAL_STAGE.title": "Emerald Challenge",
+    "SHIONTHEBRUISER-SPECIAL_STAGE.description": "Your next [gold]Elite[/gold] fight is harder: {Challenge}\nWhen it starts, [gold]Exhaust[/gold] this. Win it to obtain the [gold]{Emerald}[/gold].",
+    "SHIONTHEBRUISER-SPECIAL_STAGE.challenge_purple": "enemies can't take more than [blue]12[/blue] damage from a single card.",
+    "SHIONTHEBRUISER-SPECIAL_STAGE.challenge_cyan": "at the end of your turn, lose HP equal to the turn number.",
+    "SHIONTHEBRUISER-SPECIAL_STAGE.challenge_green": "whenever you play a card, lose [blue]1[/blue] [gold]Strength[/gold] and [gold]Dexterity[/gold] until next turn.",
+    "SHIONTHEBRUISER-SPECIAL_STAGE.challenge_yellow": "the first card you play each turn costs [blue]1[/blue] more [gold]Energy[/gold].",
+    "SHIONTHEBRUISER-SPECIAL_STAGE.challenge_blue": "at the end of your turn, [gold]Exhaust[/gold] a random card in your [gold]Hand[/gold].",
+    "SHIONTHEBRUISER-SPECIAL_STAGE.challenge_red": "all enemies start the fight with [blue]1[/blue] [gold]Ritual[/gold].",
+    "SHIONTHEBRUISER-SPECIAL_STAGE.challenge_grey": "at the end of your turn, [gold]Exhaust[/gold] a random card in your [gold]Discard Pile[/gold].",
+    "SHIONTHEBRUISER-SPECIAL_STAGE.challenge_any": "it gains the challenge of your character's Emerald.",
+    "SHIONTHEBRUISER-SPECIAL_STAGE.emerald_any": "Chaos Emerald",
+    "SHIONTHEBRUISER-EMERALD_DOUBLE_DOWN.title": "Double Down",
+    "SHIONTHEBRUISER-EMERALD_DOUBLE_DOWN.description": "Apply the last debuff the enemy received again, as much as its [gold]Weak[/gold].{InCombat:{HasTarget:cond:>0?\n(Apply {DoubleDownAmount:diff()})|}|}"
 }

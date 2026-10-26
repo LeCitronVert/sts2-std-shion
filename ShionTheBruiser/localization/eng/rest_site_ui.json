@@ -1,3 +1,5 @@
 {
-  "OPTION_LullMasterEmerald.name": "Lull"
+  "OPTION_LullMasterEmerald.name": "Lull",
+  "OPTION_SeekChaosEmerald.name": "Seek",
+  "OPTION_SeekChaosEmerald.description": "Add a [gold]Emerald Challenge[/gold] to your Deck. Win your next [gold]Elite[/gold] fight under its challenge to obtain your [gold]Chaos Emerald[/gold]."
 }
