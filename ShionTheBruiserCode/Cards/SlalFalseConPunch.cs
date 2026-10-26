@@ -11,14 +11,14 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Deal X damage and apply Y Confusion to a random enemy for each card in your Hand.
 /// </summary>
-public class SlalFalseConPunch() : SlalTheEndlessCard(1,
+public class SlalFalseConPunch() : SlalTheEndlessCard(2,
     CardType.Attack, CardRarity.Uncommon,
     TargetType.RandomEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(2M, ValueProp.Move),
-        new PowerVar<Confusion>(4),
+        new DamageVar(4M, ValueProp.Move),
+        new PowerVar<Confusion>(3),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
         new CalculatedVar("Hits").WithMultiplier((card, _) => PileType.Hand.GetPile(card.Owner).Cards.Count(c => c != card) + 1),
@@ -57,7 +57,6 @@ public class SlalFalseConPunch() : SlalTheEndlessCard(1,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(2M);
-        DynamicVars["Confusion"].UpgradeValueBy(2);
+        EnergyCost.UpgradeBy(-1);
     }
 }

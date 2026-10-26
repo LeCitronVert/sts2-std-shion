@@ -12,12 +12,14 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
 /// Deal damage and apply Confusion equal to the number of Powers you played this combat,
-/// then add a copy of each of those Powers into your Discard Pile.
+/// then add a copy of each of those Powers into your Discard Pile. Exhaust.
 /// </summary>
 public class SlalAvatarCharacter() : SlalTheEndlessCard(3,
     CardType.Attack, CardRarity.Rare,
     TargetType.AnyEnemy)
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CalculationBaseVar(0),
         new ExtraDamageVar(1),

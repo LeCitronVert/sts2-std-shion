@@ -40,6 +40,6 @@ public class SlalSlimeForm() : SlalTheEndlessCard(2,
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars["SlimeForm"].UpgradeValueBy(2);
     }
 }

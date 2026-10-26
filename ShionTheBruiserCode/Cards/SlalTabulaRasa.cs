@@ -13,6 +13,8 @@ public class SlalTabulaRasa() : SlalTheEndlessCard(3,
 {
     public const int RandomDropsTo = 1;
 
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(SlalCardKeywords.Novel),
         HoverTipFactory.FromPower<Powers.Random>(),
