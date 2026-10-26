@@ -16,9 +16,10 @@ public class ShionFlowCharge() : ShionBerserkCard(1,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<FlowCharge>(3),
+        new PowerVar<FlowCharge>(5),
         new("VigorAmount", FlowCharge.VigorAmount),
-        new ("BerserkAmount", 6)
+        // Berserk: half of the total Vigor over the turns (2 x 5 / 2 = 5; upgraded 3 x 5 / 2 = 7.5, rounded down). //todo : choose rounding
+        new("BerserkAmount", 5),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -55,19 +56,19 @@ public class ShionFlowCharge() : ShionBerserkCard(1,
             card
         );
 
+        var appliedPower = card.Owner.Creature.GetPower<FlowCharge>();
+        if (null == appliedPower) return;
+
+        appliedPower.RaiseVigorAmount(card.DynamicVars["VigorAmount"].BaseValue);
         if (!ownerHasPowerAlready)
         {
-            var appliedPower = card.Owner.Creature.GetPower<FlowCharge>();
-            if (null != appliedPower)
-            {
-                await appliedPower.ApplyPower();
-            }
+            await appliedPower.ApplyPower();
         }
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["FlowCharge"].UpgradeValueBy(2);
-        DynamicVars["BerserkAmount"].UpgradeValueBy(6);
+        DynamicVars["VigorAmount"].UpgradeValueBy(1);
+        DynamicVars["BerserkAmount"].UpgradeValueBy(2);
     }
 }

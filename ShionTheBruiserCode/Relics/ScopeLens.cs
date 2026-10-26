@@ -8,7 +8,6 @@ using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
-[Pool(typeof(SharedRelicPool))]
 public class ScopeLens :  CritContributorRelic, ICritHitRateContributor
 {
     public override RelicRarity Rarity =>

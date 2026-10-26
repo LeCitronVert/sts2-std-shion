@@ -178,16 +178,28 @@ public static class ShionMechanicsHelper
     private sealed record SpecialEffectTrigger(WeakReference<ICombatState> Combat, int Turn);
     private static readonly ConditionalWeakTable<Creature, SpecialEffectTrigger> _lastSpecialEffectTrigger = new();
 
-    public static void MarkSpecialEffectTriggered(Creature creature)
+    // Berserk-only tracking (Souvenir Picture). Defensive cards whose own Berserk ignores Defensive mark only this one,
+    // so they don't lock the other Defensive cards.
+    private static readonly ConditionalWeakTable<Creature, SpecialEffectTrigger> _lastBerserkTrigger = new();
+
+    public static void MarkSpecialEffectTriggered(Creature creature) => MarkTriggered(_lastSpecialEffectTrigger, creature);
+
+    public static bool SpecialEffectTriggeredThisTurn(Creature creature) => TriggeredThisTurn(_lastSpecialEffectTrigger, creature);
+
+    public static void MarkBerserkUsed(Creature creature) => MarkTriggered(_lastBerserkTrigger, creature);
+
+    public static bool BerserkUsedThisTurn(Creature creature) => TriggeredThisTurn(_lastBerserkTrigger, creature);
+
+    private static void MarkTriggered(ConditionalWeakTable<Creature, SpecialEffectTrigger> table, Creature creature)
     {
         if (creature.CombatState is not { } combatState) return;
-        _lastSpecialEffectTrigger.AddOrUpdate(creature, new SpecialEffectTrigger(new WeakReference<ICombatState>(combatState), GetTurnNumber(creature, combatState)));
+        table.AddOrUpdate(creature, new SpecialEffectTrigger(new WeakReference<ICombatState>(combatState), GetTurnNumber(creature, combatState)));
     }
 
-    public static bool SpecialEffectTriggeredThisTurn(Creature creature)
+    private static bool TriggeredThisTurn(ConditionalWeakTable<Creature, SpecialEffectTrigger> table, Creature creature)
     {
         if (creature.CombatState is not { } combatState) return false;
-        if (!_lastSpecialEffectTrigger.TryGetValue(creature, out var trigger)) return false;
+        if (!table.TryGetValue(creature, out var trigger)) return false;
 
         return trigger.Combat.TryGetTarget(out var triggerCombat)
             && triggerCombat == combatState
@@ -205,6 +217,7 @@ public static class ShionMechanicsHelper
     {
         if (!IsBerserk(creature)) return false;
         MarkSpecialEffectTriggered(creature);
+        MarkBerserkUsed(creature);
         return true;
     }
 

@@ -37,6 +37,10 @@ public class ShionFlowGuard() : ShionBerserkCard(1,
         CardPlay play)
     {
         var card = this;
+        if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature, ignoreDefensive: true))
+        {
+            ShionMechanicsHelper.MarkBerserkUsed(card.Owner.Creature);
+        }
         for (int i = 0; i < ((CalculatedVar) DynamicVars["BlockCount"]).Calculate(this.Owner.Creature); i++)
         {
             await CreatureCmd.GainBlock(

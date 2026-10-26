@@ -1,62 +1,42 @@
-using BaseLib.Utils;
-using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization;
-using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.RelicPools;
-using ShionTheBruiser.ShionTheBruiserCode.Cards;
+using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
-[Pool(typeof(SharedRelicPool))]
+/// <summary>
+/// If you end your turn without using a Berserk effect, gain 2 Vigor at the start of your next turn.
+/// </summary>
 public class SouvenirPicture() : ShionTheBruiserRelic
 {
     public override RelicRarity Rarity =>
         RelicRarity.Common;
 
-    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
+    public const int VigorAmount = 2;
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new DynamicVar("VigorAmount", VigorAmount)
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Berserk),
+        HoverTipFactory.FromPower<VigorPower>(),
+    ];
+
+    public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (player != Owner || Owner.PlayerCombatState?.TurnNumber != 1)
-        {
-            return;
-        }
-        
-        var drawPile = PileType.Draw.GetPile(player);
-        int handSize = 5;
-        
-        var nextCards = drawPile.Cards.Take(handSize).ToList();
-        
-        if (nextCards.Count == 0 || player.Creature.CombatState == null)
-            return;
-        
-        await CardSelectCmd.FromSimpleGrid(
-            choiceContext,
-            nextCards,
-            player,
-            new CardSelectorPrefs(
-                new LocString("relics", "SHIONTHEBRUISER-SOUVENIR_PICTURE.preview"), 
-                0, 
-                0
-                )
-        );
-        
-        CardModel? choice = await CardSelectCmd.FromChooseACardScreen(
-            choiceContext,
-            new List<CardModel> {
-                player.Creature.CombatState.CreateCard<Yes>(player),
-                player.Creature.CombatState.CreateCard<No>(player)
-            },
-            player,
-            canSkip: false
-        );
-        
-        if (choice is Yes)
-        {
-            await CardPileCmd.Shuffle(choiceContext, player);
-        }
+        if (!participants.Contains(Owner.Creature)) return;
+        if (ShionMechanicsHelper.BerserkUsedThisTurn(Owner.Creature)) return;
+
+        Flash();
+        await PowerCmd.Apply<VigorNextTurn>(choiceContext, Owner.Creature, VigorAmount, Owner.Creature, null);
     }
 }

@@ -8,7 +8,6 @@ using MegaCrit.Sts2.Core.Rooms;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
-[Pool(typeof(SharedRelicPool))]
 public class TrainingManual : ShionTheBruiserRelic
 {
     public override RelicRarity Rarity =>

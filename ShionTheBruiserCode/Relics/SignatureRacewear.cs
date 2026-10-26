@@ -12,7 +12,6 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
-[Pool(typeof(SharedRelicPool))]
 public class SignatureRacewear() : ShionTheBruiserRelic
 {
     public override RelicRarity Rarity =>

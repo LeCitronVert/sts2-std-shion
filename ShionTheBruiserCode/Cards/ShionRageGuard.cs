@@ -35,6 +35,7 @@ public class ShionRageGuard() : ShionDefensiveCard(1,
         var card = this;
         if (ShionMechanicsHelper.IsBerserk(card.Owner.Creature, ignoreDefensive: true))
         {
+            ShionMechanicsHelper.MarkBerserkUsed(card.Owner.Creature);
             await ShionMechanicsHelper.PatchUpCreature(card.DynamicVars[PatchUpVar.Key].IntValue, card.Owner.Creature);
         }
         else

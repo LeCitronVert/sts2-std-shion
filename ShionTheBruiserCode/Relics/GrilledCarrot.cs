@@ -9,7 +9,6 @@ using MegaCrit.Sts2.Core.Entities.RestSite;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
-[Pool(typeof(SharedRelicPool))]
 public class GrilledCarrot : ShionTheBruiserRelic, IRestSiteActionRelic
 {
     public override RelicRarity Rarity => RelicRarity.Common;

@@ -15,8 +15,10 @@ public class ShionNap() : ShionTheBruiserCard(0,
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("XBonus", 0),
-        new DynamicVar("PatchUpMultiplier", PatchUpMultiplier)
+        new DynamicVar("PatchUpMultiplier", PatchUpMultiplier),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(PatchUpMultiplier),
+        new CalculatedVar("HealAmount").WithMultiplier((card, _) => PreviewHelper.XValue(card) + (card.IsUpgraded ? 1 : 0)),
     ];
     protected override bool HasEnergyCostX => true;
 
@@ -25,7 +27,7 @@ public class ShionNap() : ShionTheBruiserCard(0,
         CardPlay play)
     {
         var card = this;
-        var xAmount = card.ResolveEnergyXValue() * PatchUpMultiplier;
+        var xAmount = (card.ResolveEnergyXValue() + (IsUpgraded ? 1 : 0)) * PatchUpMultiplier;
         if (xAmount == 0) return;
         await CreatureCmd.Heal(
             card.Owner.Creature,
@@ -35,6 +37,5 @@ public class ShionNap() : ShionTheBruiserCard(0,
 
     protected override void OnUpgrade()
     {
-        RemoveKeyword(CardKeyword.Exhaust);
     }
 }

@@ -13,6 +13,7 @@ public class ShionEepy() : ShionTheBruiserCard(3,
     TargetType.Self)
 {
     public override bool CanBeGeneratedInCombat => false;
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PatchUpVar(999),
     ];

@@ -1,6 +1,8 @@
 using BaseLib.Abstracts;
+using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using ShionTheBruiser.ShionTheBruiserCode.Character;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Critical;
@@ -24,6 +26,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Critical;
 /// Image paths must be provided by each concrete subclass via the inherited
 /// <see cref="CustomRelicModel"/> image-path properties.
 /// </summary>
+[Pool(typeof(ShionTheBruiserRelicPool))]
 public abstract class CritContributorRelic : CustomRelicModel
 {
     /// <summary>

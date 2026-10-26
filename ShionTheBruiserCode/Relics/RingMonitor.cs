@@ -8,7 +8,6 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
-[Pool(typeof(SharedRelicPool))]
 public class RingMonitor() : ShionTheBruiserRelic
 {
     public override RelicRarity Rarity =>

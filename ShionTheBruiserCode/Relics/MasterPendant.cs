@@ -8,7 +8,6 @@ using ShionTheBruiser.ShionTheBruiserCode.RestSiteOptions;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
-[Pool(typeof(ShionTheBruiserRelicPool))]
 public class MasterPendant() : ShionTheBruiserRelic
 {
     public override RelicRarity Rarity =>

@@ -14,7 +14,6 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Potions;
 
-[Pool(typeof(SharedPotionPool))]
 public class DraconicJuice: ShionTheBruiserPotion
 {
     public override PotionRarity Rarity => PotionRarity.Rare;

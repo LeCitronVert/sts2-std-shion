@@ -15,7 +15,6 @@ using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Potions;
 
-[Pool(typeof(SharedPotionPool))]
 public class CriticalPotion: ShionTheBruiserPotion
 {
     public override PotionRarity Rarity => PotionRarity.Common;

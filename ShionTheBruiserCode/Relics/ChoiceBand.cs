@@ -13,13 +13,12 @@ using MegaCrit.Sts2.Core.Rooms;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
-[Pool(typeof(SharedRelicPool))]
 public class ChoiceBand() : ShionTheBruiserRelic
 {
     public override RelicRarity Rarity =>
         RelicRarity.Rare;
 
-    public const int VigorAmount = 10;
+    public const int VigorAmount = 6;
 
     private int _attacksUsedThisTurn;
 

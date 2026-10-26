@@ -12,7 +12,6 @@ using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
-[Pool(typeof(SharedRelicPool))]
 public class ShellBell : CritContributorRelic, IOnCriticalHitListener, ICritHitRateContributor
 {
     public override RelicRarity Rarity =>

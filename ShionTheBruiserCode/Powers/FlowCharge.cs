@@ -35,6 +35,15 @@ public class FlowCharge : ShionTheBruiserPower
         }
     }
 
+    /// <summary>
+    /// Flow Charge+ gives more Vigor per turn. Stacks share one per-turn amount, so the strongest one applied wins. //todo : stacking rule not specified
+    /// </summary>
+    public void RaiseVigorAmount(decimal vigorAmount)
+    {
+        var vigor = DynamicVars["VigorPower"];
+        if (vigorAmount > vigor.BaseValue) vigor.BaseValue = vigorAmount;
+    }
+
     public async Task ApplyPower()
     {
         var power = this;

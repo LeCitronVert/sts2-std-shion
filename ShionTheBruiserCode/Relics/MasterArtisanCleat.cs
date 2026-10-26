@@ -14,7 +14,6 @@ using MegaCrit.Sts2.Core.Runs;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
-[Pool(typeof(SharedRelicPool))]
 public class MasterArtisanCleat() : ShionTheBruiserRelic
 {
     public override RelicRarity Rarity =>

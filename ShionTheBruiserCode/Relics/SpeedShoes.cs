@@ -7,7 +7,6 @@ using MegaCrit.Sts2.Core.Models.RelicPools;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
-[Pool(typeof(SharedRelicPool))]
 public class SpeedShoes() : ShionTheBruiserRelic
 {
     public override RelicRarity Rarity =>

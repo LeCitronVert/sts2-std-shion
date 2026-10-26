@@ -9,7 +9,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionOnceMore() : ShionTheBruiserCard(2,
+public class ShionOnceMore() : ShionTheBruiserCard(3,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
@@ -31,6 +31,6 @@ public class ShionOnceMore() : ShionTheBruiserCard(2,
 
     protected override void OnUpgrade()
     {
-        AddKeyword(CardKeyword.Innate);
+        AddKeyword(CardKeyword.Retain);
     }
 }

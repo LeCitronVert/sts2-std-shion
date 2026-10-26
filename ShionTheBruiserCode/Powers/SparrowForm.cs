@@ -33,7 +33,8 @@ public class SparrowForm : SlalTheEndlessPower
             {
                 // The card may have been exhausted or removed by its first play.
                 if (card.Pile == null || card.Pile.Type is PileType.Exhaust or PileType.None) break;
-                await CardCmd.AutoPlay(new ThrowingPlayerChoiceContext(), card, null);
+                // Created cards can ask for a choice (e.g. Creative Break, Fresh Idea+), which a ThrowingPlayerChoiceContext crashes on.
+                await CardCmd.AutoPlay(new BlockingPlayerChoiceContext(), card, null);
             }
         }
         finally

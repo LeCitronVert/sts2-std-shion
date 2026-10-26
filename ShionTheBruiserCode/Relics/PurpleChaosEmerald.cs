@@ -11,7 +11,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
-[Pool(typeof(SharedRelicPool))]
+[Pool(typeof(EventRelicPool))]
 public class PurpleChaosEmerald() : ShionTheBruiserRelic
 {
     public override RelicRarity Rarity =>
