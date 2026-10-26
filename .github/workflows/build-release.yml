@@ -28,6 +28,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Full history + tags so the release notes can list every commit since the last build.
+          fetch-depth: 0
 
       - uses: actions/setup-dotnet@v4
         with:
@@ -85,6 +88,27 @@ jobs:
           cd "$Sts2Path/mods"
           zip -r "$GITHUB_WORKSPACE/$MOD_NAME.zip" "$MOD_NAME"
 
+      - name: Write release notes
+        run: |
+          # Latest build-* tag reachable from the parent, so a re-run on an already-tagged commit
+          # still diffs against the previous release. Failed builds create no tag, so their
+          # commits roll into the next successful release.
+          prev=$(git describe --tags --abbrev=0 --match 'build-*' HEAD^ 2>/dev/null || true)
+          {
+            if [ -n "$prev" ]; then
+              echo "Changes since $prev:"
+              range="$prev..HEAD"
+            else
+              echo "Changes:"
+              range="HEAD"
+            fi
+            echo
+            git log --no-merges --format='- %s (%h)' "$range"
+            echo
+            echo "**Install:** unzip into the game's \`mods\` folder so you get \`mods/$MOD_NAME/\`."
+          } > release-notes.md
+          cat release-notes.md
+
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
@@ -92,10 +116,5 @@ jobs:
           name: Build ${{ github.run_number }} (${{ github.sha }})
           target_commitish: ${{ github.sha }}
           make_latest: true
-          body: |
-            Commit: ${{ github.sha }}
-
-            ${{ github.event.head_commit.message }}
-
-            **Install:** unzip into the game's `mods` folder so you get `mods/${{ env.MOD_NAME }}/`.
+          body_path: release-notes.md
           files: ${{ env.MOD_NAME }}.zip
