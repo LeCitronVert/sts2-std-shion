@@ -1,5 +1,6 @@
 using BaseLib.Abstracts;
 using Godot;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Rooms;
@@ -17,6 +18,18 @@ public class SlalApparenceSingleton(): CustomSingletonModel(HookType.Combat)
         await base.AfterCurrentHpChanged(creature, delta);
         if (creature.Player?.Character is not SlalTheEndless) return;
         UpdateScale(creature);
+    }
+
+    public override async Task BeforeCombatStart()
+    {
+        await base.BeforeCombatStart();
+        // DebugOnlyGetState just returns the live combat state; BeforeCombatStart has no other way to reach it.
+        var combatState = CombatManager.Instance.DebugOnlyGetState();
+        if (combatState == null) return;
+        foreach (var creature in combatState.Allies)
+        {
+            if (creature.Player?.Character is SlalTheEndless) UpdateScale(creature);
+        }
     }
 
     public override async Task AfterCreatureAddedToCombat(Creature creature)
