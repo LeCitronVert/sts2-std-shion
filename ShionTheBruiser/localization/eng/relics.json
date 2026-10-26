@@ -133,5 +133,9 @@
   "SHIONTHEBRUISER-SPIDER_TEA.flavor": "",
   "SHIONTHEBRUISER-CRYSTAL_GARLAND.title": "Crystal Garland",
   "SHIONTHEBRUISER-CRYSTAL_GARLAND.description": "At the start of each Elite or Boss fight, procure a [gold]Blood Potion[/gold].",
-  "SHIONTHEBRUISER-CRYSTAL_GARLAND.flavor": ""
+  "SHIONTHEBRUISER-CRYSTAL_GARLAND.flavor": "",
+  "SEA_GLASS.SHIONTHEBRUISER-SHION_THE_BRUISER.title": "Tough",
+  "SEA_GLASS.SHIONTHEBRUISER-SLAL_THE_ENDLESS.title": "Quirky",
+  "SEA_GLASS.SHIONTHEBRUISER-FRY_THE_COMMANDER.title": "Magical",
+  "SEA_GLASS.SHIONTHEBRUISER-SEELS_THE_RECKLESS.title": "Bloody"
 }

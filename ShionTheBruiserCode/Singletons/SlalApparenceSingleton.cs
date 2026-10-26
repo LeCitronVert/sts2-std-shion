@@ -2,6 +2,7 @@ using BaseLib.Abstracts;
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Rooms;
 using ShionTheBruiser.ShionTheBruiserCode.Character;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Singletons;
@@ -10,7 +11,7 @@ public class SlalApparenceSingleton(): CustomSingletonModel(HookType.Combat)
 {
     private const float MinScale = 0.4f;
     private const float MaxScale = 1f;
-
+    
     public override async Task AfterCurrentHpChanged(Creature creature, Decimal delta)
     {
         await base.AfterCurrentHpChanged(creature, delta);

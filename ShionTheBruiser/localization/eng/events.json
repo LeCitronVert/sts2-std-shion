@@ -1,0 +1,10 @@
+{
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.CARD_POOL∴SHIONTHEBRUISER-SHION_THE_BRUISER_CARD_POOL.title": "Purple",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.CARD_POOL∴SHIONTHEBRUISER-SHION_THE_BRUISER_CARD_POOL.description": "Obtain [blue]{Cards}[/blue] Bruiser {Cards:plural:card|cards}.",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.CARD_POOL∴SHIONTHEBRUISER-SLAL_THE_ENDLESS_CARD_POOL.title": "Azure",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.CARD_POOL∴SHIONTHEBRUISER-SLAL_THE_ENDLESS_CARD_POOL.description": "Obtain [blue]{Cards}[/blue] Goofball {Cards:plural:card|cards}.",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.CARD_POOL∴SHIONTHEBRUISER-FRY_THE_COMMANDER_CARD_POOL.title": "Crimson",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.CARD_POOL∴SHIONTHEBRUISER-FRY_THE_COMMANDER_CARD_POOL.description": "Obtain [blue]{Cards}[/blue] Commander {Cards:plural:card|cards}.",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.CARD_POOL∴SHIONTHEBRUISER-SEELS_THE_RECKLESS_CARD_POOL.title": "Pale Blue",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.CARD_POOL∴SHIONTHEBRUISER-SEELS_THE_RECKLESS_CARD_POOL.description": "Obtain [blue]{Cards}[/blue] Reckless {Cards:plural:card|cards}."
+}
