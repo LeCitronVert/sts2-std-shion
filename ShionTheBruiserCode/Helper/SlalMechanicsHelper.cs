@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Multiplayer;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.Factories;
@@ -161,6 +162,8 @@ public static class SlalMechanicsHelper
         if (count <= 0 || CombatManager.Instance.IsOverOrEnding) return;
         if (player.Creature.HasPower<MemoryBlocked>()) return;
 
+        await RunAsHookAction(choiceContext);
+
         if (player.Creature.HasPower<EncyclopediaForm>())
         {
             await PowerCmd.Apply<EnergyNextTurnPower>(choiceContext, player.Creature, count, player.Creature, null);
@@ -177,6 +180,20 @@ public static class SlalMechanicsHelper
         }
 
         await AutoPlayFromDiscard(choiceContext, player, PickRandomColoredCards(player, PileType.Discard, count, c => CanBePlayedByMemory(player, c)));
+    }
+
+    /// <summary>
+    /// Turns the rest of a turn hook into a game action. Turn hooks run inline, alongside whatever action is executing
+    /// (e.g. another player's hook paused on a card choice), so long effects like auto-playing cards would be caught
+    /// half-done by that action's checksum, at a different point on each machine (state divergence).
+    /// As an action, it waits its turn in the synced action queue instead. Does nothing if already inside an action.
+    /// </summary>
+    public static async Task RunAsHookAction(PlayerChoiceContext choiceContext)
+    {
+        if (choiceContext is not HookPlayerChoiceContext { GameAction: null }) return;
+
+        await choiceContext.SignalPlayerChoiceBegun(PlayerChoiceOptions.None);
+        await choiceContext.SignalPlayerChoiceEnded();
     }
 
     /// <summary>
