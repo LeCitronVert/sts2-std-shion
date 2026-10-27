@@ -829,5 +829,5 @@
     "SHIONTHEBRUISER-SPECIAL_STAGE.challenge_any": "it gains the challenge of your character's Emerald.",
     "SHIONTHEBRUISER-SPECIAL_STAGE.emerald_any": "Chaos Emerald",
     "SHIONTHEBRUISER-EMERALD_DOUBLE_DOWN.title": "Double Down",
-    "SHIONTHEBRUISER-EMERALD_DOUBLE_DOWN.description": "Apply the last debuff the enemy received again, as much as its [gold]Weak[/gold].{InCombat:{HasTarget:cond:>0?\n(Apply {DoubleDownAmount:diff()})|}|}"
+    "SHIONTHEBRUISER-EMERALD_DOUBLE_DOWN.description": "Apply the last debuff the enemy received again, as much as its [gold]Weak[/gold].{InCombat:{HasTarget:cond:>0?\n(Apply {DoubleDownAmount:diff()} {DoubleDownPower})|}|}"
 }

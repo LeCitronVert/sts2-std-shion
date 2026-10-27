@@ -30,6 +30,7 @@ public class EmeraldDoubleDown() : ShionTheBruiserCard(0,
         new CalculationExtraVar(1),
         new CalculatedVar("DoubleDownAmount").WithMultiplier((_, target) =>
             target is null ? 0 : Math.Abs(AmountToApply(target))),
+        new DoubleDownPowerVar(),
     ];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
@@ -72,6 +73,25 @@ public class EmeraldDoubleDown() : ShionTheBruiserCard(0,
     {
         var entry = LastDebuffEntry(target);
         return entry is null ? null : ModelDb.GetById<PowerModel>(entry.Power.Id);
+    }
+
+    /// <summary>
+    /// Display-only var: the name of the debuff that will be applied to the hovered enemy.
+    /// </summary>
+    private class DoubleDownPowerVar() : StringVar("DoubleDownPower")
+    {
+        public override void UpdateCardPreview(CardModel card, CardPreviewMode previewMode, Creature? target, bool runGlobalHooks)
+        {
+            var power = target is null ? null : LastDebuffReceived(target);
+            if (power is null)
+            {
+                StringValue = "";
+                return;
+            }
+
+            var title = $"[gold]{power.Title.GetFormattedText()}[/gold]";
+            StringValue = AmountToApply(target!) < 0 ? $"negative {title}" : title;
+        }
     }
 
     private static PowerReceivedEntry? LastDebuffEntry(Creature target)
