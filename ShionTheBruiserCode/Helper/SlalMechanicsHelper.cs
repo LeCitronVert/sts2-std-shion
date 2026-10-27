@@ -2,7 +2,6 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Entities.Multiplayer;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.Factories;
@@ -16,6 +15,7 @@ using MegaCrit.Sts2.Core.Runs;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Character;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Patches;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using Random = ShionTheBruiser.ShionTheBruiserCode.Powers.Random;
 
@@ -162,8 +162,6 @@ public static class SlalMechanicsHelper
         if (count <= 0 || CombatManager.Instance.IsOverOrEnding) return;
         if (player.Creature.HasPower<MemoryBlocked>()) return;
 
-        await RunAsHookAction(choiceContext);
-
         if (player.Creature.HasPower<EncyclopediaForm>())
         {
             await PowerCmd.Apply<EnergyNextTurnPower>(choiceContext, player.Creature, count, player.Creature, null);
@@ -175,25 +173,12 @@ public static class SlalMechanicsHelper
         if (continuityThread != null)
         {
             var chosen = await continuityThread.SelectCardsForMemory(choiceContext, player, count, c => CanBePlayedByMemory(player, c));
-            await AutoPlayFromDiscard(choiceContext, player, chosen, exhaust: true);
+            await MemoryAutoChoice.Run(player, () => AutoPlayFromDiscard(choiceContext, player, chosen, exhaust: true));
             return;
         }
 
-        await AutoPlayFromDiscard(choiceContext, player, PickRandomColoredCards(player, PileType.Discard, count, c => CanBePlayedByMemory(player, c)));
-    }
-
-    /// <summary>
-    /// Turns the rest of a turn hook into a game action. Turn hooks run inline, alongside whatever action is executing
-    /// (e.g. another player's hook paused on a card choice), so long effects like auto-playing cards would be caught
-    /// half-done by that action's checksum, at a different point on each machine (state divergence).
-    /// As an action, it waits its turn in the synced action queue instead. Does nothing if already inside an action.
-    /// </summary>
-    public static async Task RunAsHookAction(PlayerChoiceContext choiceContext)
-    {
-        if (choiceContext is not HookPlayerChoiceContext { GameAction: null }) return;
-
-        await choiceContext.SignalPlayerChoiceBegun(PlayerChoiceOptions.None);
-        await choiceContext.SignalPlayerChoiceEnded();
+        var picked = PickRandomColoredCards(player, PileType.Discard, count, c => CanBePlayedByMemory(player, c));
+        await MemoryAutoChoice.Run(player, () => AutoPlayFromDiscard(choiceContext, player, picked));
     }
 
     /// <summary>
