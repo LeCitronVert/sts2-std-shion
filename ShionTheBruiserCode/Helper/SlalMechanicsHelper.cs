@@ -479,13 +479,37 @@ public static class SlalMechanicsHelper
 
     /// <summary>
     /// Creates a copy of the card for another player, at the same upgrade level (plus one if <paramref name="upgradeOnce"/>).
-    /// Enchantments and in-combat changes aren't copied.
+    /// Its Enchantment and added or removed Keywords are kept. Other in-combat changes (cost...) aren't copied.
     /// </summary>
     public static CardModel CreateCopyForPlayer(CardModel card, Player receiver, bool upgradeOnce = false)
     {
         var copy = receiver.Creature.CombatState!.CreateCard(card.CanonicalInstance, receiver);
-        var upgrades = card.CurrentUpgradeLevel + (upgradeOnce ? 1 : 0);
-        while (copy.CurrentUpgradeLevel < upgrades && copy.IsUpgradable)
+        while (copy.CurrentUpgradeLevel < card.CurrentUpgradeLevel && copy.IsUpgradable)
+        {
+            CardCmd.Upgrade(copy);
+        }
+
+        if (card.Enchantment is { } enchantment)
+        {
+            var copiedEnchantment = ModelDb.GetById<EnchantmentModel>(enchantment.Id).ToMutable();
+            if (copiedEnchantment.CanEnchant(copy))
+            {
+                CardCmd.Enchant(copiedEnchantment, copy, enchantment.Amount);
+            }
+        }
+
+        // Match the Keywords at the same upgrade level, so the extra upgrade below still applies its own changes.
+        var keywords = card.GetKeywordsWithSources(KeywordSources.Local);
+        foreach (var keyword in copy.GetKeywordsWithSources(KeywordSources.Local).Except(keywords).ToList())
+        {
+            copy.RemoveKeyword(keyword);
+        }
+        foreach (var keyword in keywords.Except(copy.GetKeywordsWithSources(KeywordSources.Local)).ToList())
+        {
+            copy.AddKeyword(keyword);
+        }
+
+        if (upgradeOnce && copy.IsUpgradable)
         {
             CardCmd.Upgrade(copy);
         }
