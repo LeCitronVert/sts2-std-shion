@@ -177,7 +177,7 @@
     "SHIONTHEBRUISER-SHION_FRONTLINER.title": "Frontliner",
     "SHIONTHEBRUISER-SHION_BORROW_TECHNIQUE.description": "Add a random Skill from the targeted player's character into your [gold]Hand[/gold].\nIt is free to play this turn.",
     "SHIONTHEBRUISER-SHION_BORROW_TECHNIQUE.title": "Borrow Technique",
-    "SHIONTHEBRUISER-SHION_FAE_RETURN.description": "Deal {CalculatedDamage:diff()} damage.\nDeals {ExtraDamage:diff()} additional damage for each time another player gave you a buff or [gold]Block[/gold] this combat.\n[gold]Critical Draw:[/gold] {CriticalDraw:diff()}%",
+    "SHIONTHEBRUISER-SHION_FAE_RETURN.description": "Deal {CalculatedDamage:diff()} damage.\nDeals {ExtraDamage:diff()} additional damage for each time another player gave you a buff, [gold]Block[/gold] or a card this combat.\n[gold]Critical Draw:[/gold] {CriticalDraw:diff()}%",
     "SHIONTHEBRUISER-SHION_FAE_RETURN.title": "Fae Return",
     "SHIONTHEBRUISER-SHION_FULL_NELSON.description": "Gain {Block:diff()} [gold]Block[/gold].\nUntil your next turn, both you and the enemy take double Attack damage.",
     "SHIONTHEBRUISER-SHION_FULL_NELSON.title": "Full-Nelson",

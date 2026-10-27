@@ -1,7 +1,9 @@
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Combat.History;
 using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -60,6 +62,45 @@ public class ShionFaeReturn() : ShionTheBruiserCard(3,
                 entry.Amount > 0)
             {
                 count++;
+            }
+        }
+
+        count += CountCardGifts(ownerCreature, history.Entries);
+
+        return count;
+    }
+
+    /// <summary>
+    /// Times another player gave this creature a card: one per card play that added cards for it
+    /// (Pal Armor, Random Portal, Throw Garbage...), plus generated cards credited to another player outside of a card play (Largesse...).
+    /// </summary>
+    private static int CountCardGifts(Creature ownerCreature, IEnumerable<CombatHistoryEntry> entries)
+    {
+        int count = 0;
+        List<CardPlay> openPlays = [];
+        HashSet<CardPlay> giftingPlays = [];
+
+        foreach (var entry in entries)
+        {
+            switch (entry)
+            {
+                case CardPlayStartedEntry started:
+                    openPlays.Add(started.CardPlay);
+                    break;
+                case CardPlayFinishedEntry finished:
+                    openPlays.Remove(finished.CardPlay);
+                    break;
+                case CardGeneratedEntry generated when generated.Card.Owner?.Creature == ownerCreature:
+                    var play = openPlays.LastOrDefault();
+                    if (play != null)
+                    {
+                        if (play.Card.Owner.Creature != ownerCreature && giftingPlays.Add(play)) count++;
+                    }
+                    else if (generated.Creator != null && generated.Creator.Creature != ownerCreature)
+                    {
+                        count++;
+                    }
+                    break;
             }
         }
 
