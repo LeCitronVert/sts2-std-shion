@@ -27,6 +27,7 @@ public class SlalTabulaRasa() : SlalTheEndlessCard(3,
         var card = this;
         await CreatureCmd.TriggerAnim(card.Owner.Creature, "Cast", card.Owner.Character.CastAnimDelay);
 
+        await SlalMechanicsHelper.EnsureCreatureHasNovelTracker(card.Owner.Creature);
         foreach (var other in ShionMechanicsHelper.GetAllCombatCards(card.Owner).ToList())
         {
             other.AddKeyword(SlalCardKeywords.Novel);
