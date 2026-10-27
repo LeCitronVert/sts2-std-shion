@@ -1,6 +1,6 @@
 {
-  "SHIONTHEBRUISER-FELL_DRAGON.description": "Always apply your [gold]Galvanised[/gold] and [gold]Berserk[/gold] effects.\nYour [gold]Patch Up[/gold] limit is reduced.\nLose HP at the start of your turn.",
-  "SHIONTHEBRUISER-FELL_DRAGON.smartDescription": "Always apply your [gold]Galvanised[/gold] and [gold]Berserk[/gold] effects.\nYour [gold]Patch Up[/gold] limit is reduced by [blue]{PatchUpReduction}%[/blue] of your Max HP.\nAt the start of your turn, lose [blue]{HpLoss}[/blue] HP.",
+  "SHIONTHEBRUISER-FELL_DRAGON.description": "Always apply your [gold]Galvanised[/gold] and [gold]Berserk[/gold] effects.\nYour [gold]Patch Up[/gold] limit is reduced.",
+  "SHIONTHEBRUISER-FELL_DRAGON.smartDescription": "Always apply your [gold]Galvanised[/gold] and [gold]Berserk[/gold] effects.\nYour [gold]Patch Up[/gold] limit is reduced by [blue]{PatchUpReduction}%[/blue] of your Max HP.",
   "SHIONTHEBRUISER-FELL_DRAGON.title": "Fell Dragon",
   "SHIONTHEBRUISER-SHION_CRIT_TRACKER_POWER.description": "Your Attacks can deal [gold]Critical Hits[/gold], dealing [blue]50%[/blue] more damage.",
   "SHIONTHEBRUISER-SHION_CRIT_TRACKER_POWER.smartDescription": "Your Attacks can deal [gold]Critical Hits[/gold], dealing [blue]50%[/blue] more damage.\n[gold]Critical Hit[/gold] chance per hit: [blue]{HitRate}%[/blue].",

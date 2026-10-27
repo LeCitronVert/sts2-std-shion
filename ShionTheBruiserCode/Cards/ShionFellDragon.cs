@@ -16,7 +16,6 @@ public class ShionFellDragon() : ShionBerserkCard(1,
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new HpLossVar(FellDragon.HpLoss),
         new DynamicVar("PatchUpReduction", FellDragon.PatchUpReduction),
         new PatchUpVar(0)
     ];

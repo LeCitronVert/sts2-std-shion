@@ -9,7 +9,7 @@
     "SHIONTHEBRUISER-SHION_BLUFF.title": "Bluff",
     "SHIONTHEBRUISER-SHION_BREAK_DOWN.description": "Deal {CalculatedDamage:diff()} damage {Repeat:diff()} times.\nDeals {ExtraDamage:diff()} additional damage if you have at least [blue]3[/blue] unique buffs.\n[gold]Galvanised 1:[/gold] Deals {ExtraDamage:diff()} additional damage.\n[gold]Berserk:[/gold] Apply [blue]1[/blue] [gold]Vulnerable[/gold].\n[gold]Critical Draw:[/gold] {CriticalDraw:diff()}%",
     "SHIONTHEBRUISER-SHION_BREAK_DOWN.title": "Energy Crash",
-    "SHIONTHEBRUISER-SHION_FELL_DRAGON.description": "Always apply your [gold]Galvanised[/gold] and [gold]Berserk[/gold] effects.\nYour [gold]Patch Up[/gold] limit is reduced by {PatchUpReduction:diff()}% of your Max HP.\nAt the start of your turn, lose {HpLoss:diff()} HP.",
+    "SHIONTHEBRUISER-SHION_FELL_DRAGON.description": "Always apply your [gold]Galvanised[/gold] and [gold]Berserk[/gold] effects.\nYour [gold]Patch Up[/gold] limit is reduced by {PatchUpReduction:diff()}% of your Max HP.",
     "SHIONTHEBRUISER-SHION_FELL_DRAGON.title": "Fell Dragon",
     "SHIONTHEBRUISER-SHION_ENERGY_SPARK.description": "Gain {VigorPower:diff()} [gold]Vigor[/gold].\nDraw {Cards:diff()} {Cards:plural:card|cards}.\n[gold]Critical Draw:[/gold] {CriticalDraw:diff()}%",
     "SHIONTHEBRUISER-SHION_ENERGY_SPARK.title": "Energy Spark",
