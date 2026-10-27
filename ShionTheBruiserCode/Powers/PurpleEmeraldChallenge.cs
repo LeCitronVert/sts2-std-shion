@@ -22,18 +22,26 @@ public class PurpleEmeraldChallenge : EmeraldChallengePower
 
     private readonly Dictionary<CardModel, decimal> _damageTakenFromCard = [];
 
-    private decimal Cap => Math.Max(1, BaseCap - (Amount - 1));
+    private int Cap => Math.Max(1, BaseCap - (Amount - 1));
+
+    /// <summary>
+    /// Display the damage cap rather than the stack count.
+    /// </summary>
+    public override int DisplayAmount => Cap;
 
     public override Task AfterApplied(Creature? applier, CardModel? cardSource)
     {
         DynamicVars["DamageCap"].BaseValue = Cap;
+        InvokeDisplayAmountChanged();
         return Task.CompletedTask;
     }
 
     public override Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount,
         Creature? applier, CardModel? cardSource)
     {
-        if (power == this) DynamicVars["DamageCap"].BaseValue = Cap;
+        if (power != this) return Task.CompletedTask;
+        DynamicVars["DamageCap"].BaseValue = Cap;
+        InvokeDisplayAmountChanged();
         return Task.CompletedTask;
     }
 
