@@ -22,7 +22,8 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Orbs;
 /// </summary>
 public class MonsterOrb : CustomOrbModel
 {
-    private const float IconScale = 0.3f;
+    // The dark orb's rim is ~39px wide in its scene, so this fits the 256px big icon inside it.
+    private const float IconScale = 0.13f;
 
     public override string CustomIconPath => "monstermancy.png".PowerImagePath();
 
