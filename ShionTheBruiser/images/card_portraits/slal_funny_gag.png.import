@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cjgn672xk5wjd"
-path="res://.godot/imported/slal_cartoon_strike.png-0aba3848884be0dc3d473c8ba1c16401.ctex"
+uid="uid://c6dny33oyicwg"
+path="res://.godot/imported/slal_funny_gag.png-1bbd419dedb81badbd0214fa9b672b51.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ShionTheBruiser/images/card_portraits/slal_cartoon_strike.png"
-dest_files=["res://.godot/imported/slal_cartoon_strike.png-0aba3848884be0dc3d473c8ba1c16401.ctex"]
+source_file="res://ShionTheBruiser/images/card_portraits/slal_funny_gag.png"
+dest_files=["res://.godot/imported/slal_funny_gag.png-1bbd419dedb81badbd0214fa9b672b51.ctex"]
 
 [params]
 

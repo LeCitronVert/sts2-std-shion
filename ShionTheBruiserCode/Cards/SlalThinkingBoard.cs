@@ -1,38 +1,62 @@
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
-using MegaCrit.Sts2.Core.Models.Enchantments;
+using ShionTheBruiser.ShionTheBruiserCode.Patches;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Add X (X+1) Steady Fresh Idea+ into your Hand.
+/// Add Novel to a non-Novel card in your Hand (and upgrade it). If you do, gain 1 energy. Exhaust.
+/// The card gets "Neo" in front of its title.
 /// </summary>
 public class SlalThinkingBoard() : SlalTheEndlessCard(0,
-    CardType.Skill, CardRarity.Uncommon,
+    CardType.Skill, CardRarity.Common,
     TargetType.Self)
 {
-    protected override bool HasEnergyCostX => true;
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new EnergyVar(1),
+    ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromCard<SlalFreshIdea>(true),
-        ..HoverTipFactory.FromEnchantment<Steady>(),
+        HoverTipFactory.FromKeyword(SlalCardKeywords.Novel),
+        HoverTipFactory.ForEnergy(this),
     ];
+
+    private static bool CanGainNovel(CardModel card) => !card.Keywords.Contains(SlalCardKeywords.Novel);
+
+    protected override bool ShouldGlowRedInternal => CombatState != null && !PreviewHelper.OtherCardsInHand(this).Any(CanGainNovel);
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
         var card = this;
-        var amount = ResolveEnergyXValue() + (IsUpgraded ? 1 : 0);
-        for (var i = 0; i < amount; i++)
+        var chosen = (await CardSelectCmd.FromHand(
+            choiceContext,
+            card.Owner,
+            new CardSelectorPrefs(card.SelectionScreenPrompt, 1),
+            CanGainNovel,
+            card
+        )).FirstOrDefault();
+        if (chosen is null) return;
+
+        await SlalMechanicsHelper.EnsureCreatureHasNovelTracker(card.Owner.Creature);
+        chosen.AddKeyword(SlalCardKeywords.Novel);
+        NeoTitlePatch.MarkAsNeo(chosen);
+        if (IsUpgraded && chosen.IsUpgradable)
         {
-            var freshIdea = SlalMechanicsHelper.CreateCard<SlalFreshIdea>(card.Owner, true);
-            SlalMechanicsHelper.MakeSteady(freshIdea);
-            await CardPileCmd.AddGeneratedCardToCombat(freshIdea, PileType.Hand, card.Owner);
+            CardCmd.Upgrade(chosen);
         }
+
+        await PlayerCmd.GainEnergy(card.DynamicVars.Energy.BaseValue, card.Owner);
     }
 
     protected override void OnUpgrade()

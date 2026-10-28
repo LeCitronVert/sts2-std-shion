@@ -10,18 +10,18 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Whenever you play a Power, gain 2 Vigor.
+/// Whenever you play a Power, gain 1 Strength.
 /// </summary>
 public class SlalGorillaForm(): SlalTheEndlessCard(2,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<GorillaForm>(2),
+        new PowerVar<GorillaForm>(1),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<VigorPower>(),
+        HoverTipFactory.FromPower<StrengthPower>(),
     ];
     
     protected override HashSet<CardTag> CanonicalTags => [SlalCardTags.Form];

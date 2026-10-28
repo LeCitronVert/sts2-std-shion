@@ -51,13 +51,18 @@ public static class SeelsMechanicsHelper
     }
 
     /// <summary>
-    /// Blood Bend X: consumes ALL your Blood and returns the amount consumed (X).
+    /// Blood Bend X: consumes ALL your Blood, heals that much and returns the amount consumed (X).
+    /// The heal only counts the Blood consumed, not the (X+1) bonuses the cards add on top.
     /// </summary>
     public static async Task<int> BloodBend(PlayerChoiceContext choiceContext, CardModel card)
     {
         var creature = card.Owner.Creature;
         var x = GetBlood(creature);
         await PowerCmd.Remove<Blood>(creature);
+        if (x > 0)
+        {
+            await CreatureCmd.Heal(creature, x);
+        }
 
         if (creature.CombatState is not null)
         {

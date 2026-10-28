@@ -9,7 +9,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
 /// Exhaust 1 card. Another player adds a copy of the exhausted card to their Hand, and adds Return Portal to their Hand.
-/// Upgraded: the copy is upgraded, and so is Return Portal.
+/// Upgraded: the copy is upgraded, and so is Return Portal. Exhaust.
 /// </summary>
 public class SlalRandomPortal() : SlalTheEndlessCard(0,
     CardType.Skill, CardRarity.Uncommon,
@@ -18,6 +18,8 @@ public class SlalRandomPortal() : SlalTheEndlessCard(0,
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
 
     public override bool CanBeGeneratedInCombat => false;
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromCard<SlalReturnPortal>(IsUpgraded),

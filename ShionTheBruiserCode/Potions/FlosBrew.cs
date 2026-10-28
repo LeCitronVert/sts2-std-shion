@@ -13,7 +13,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Potions;
 
 /// <summary>
 /// Add 3 random Rare Form cards of any color into your Hand. Choose one to be free to play this turn.
-/// Walking Encyclopedia, Television and Sparrow Form (from Creativity Unbound) can also be picked.
+/// Genie, Television and Sparrow Form (from Creativity Unbound) can also be picked.
 /// </summary>
 public class FlosBrew : SlalTheEndlessPotion
 {
@@ -22,7 +22,7 @@ public class FlosBrew : SlalTheEndlessPotion
     public override TargetType TargetType => TargetType.Self;
 
     private static IReadOnlyList<CardModel> CreativityUnboundForms => [
-        ModelDb.Card<SlalWalkingEncyclopedia>(),
+        ModelDb.Card<SlalGenieForm>(),
         ModelDb.Card<SlalTelevisionForm>(),
         ModelDb.Card<SlalSparrowForm>(),
     ];

@@ -9,7 +9,6 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 /// <summary>
 /// Whenever you play a card from your Hand, play up to X identical cards from your Discard Pile
 /// (a card and its upgrade count as identical, upgraded ones first).
-/// Random cards you create can be Colorless (see <see cref="SlalMechanicsHelper.GetRandomCardOptions"/>).
 /// </summary>
 public class TelevisionForm : SlalTheEndlessPower
 {

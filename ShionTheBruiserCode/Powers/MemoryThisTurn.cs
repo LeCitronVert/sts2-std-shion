@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Models;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
@@ -20,6 +21,13 @@ public class MemoryThisTurn : SlalTheEndlessPower
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<Memory>(),
     ];
+
+    // Memory adds the bonus itself when the owner has both
+    public override decimal ModifyPowerAmountGivenAdditive(PowerModel power, Creature giver, decimal amount, Creature? target, CardModel? cardSource)
+    {
+        if (power is not Confusion || amount <= 0 || cardSource?.Owner?.Creature != Owner || Owner.HasPower<Memory>()) return 0m;
+        return SlalMechanicsHelper.GetMemoryConfusionBonus(cardSource);
+    }
 
     public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {

@@ -5,11 +5,13 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Cards;
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Transform up to 2 (3) cards in your Hand into Slimed. Gain 1 Max HP for each card transformed this way. Exhaust.
+/// Transform up to 2 (3) non-Slimed cards in your Hand into Slimed. Gain 1 Max HP for each card transformed this way.
+/// You can no longer gain Max HP this combat. Exhaust.
 /// </summary>
 public class SlalAbsorption() : SlalTheEndlessCard(2,
     CardType.Skill, CardRarity.Uncommon,
@@ -27,6 +29,7 @@ public class SlalAbsorption() : SlalTheEndlessCard(2,
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.Static(StaticHoverTip.Transform),
         HoverTipFactory.FromCard<Slimed>(),
+        HoverTipFactory.FromPower<MaxHpLocked>(),
     ];
 
     protected override async Task OnPlay(
@@ -40,16 +43,19 @@ public class SlalAbsorption() : SlalTheEndlessCard(2,
             choiceContext,
             card.Owner,
             new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 0, card.DynamicVars.Cards.IntValue),
-            c => c.IsTransformable,
+            c => c.IsTransformable && c is not Slimed,
             card
         )).ToList();
-        if (originals.Count == 0) return;
 
         foreach (var original in originals)
         {
             await CardCmd.Transform(original, card.CombatState.CreateCard<Slimed>(card.Owner));
         }
-        await CreatureCmd.GainMaxHp(card.Owner.Creature, card.DynamicVars.MaxHp.IntValue * originals.Count);
+        if (originals.Count > 0)
+        {
+            await CreatureCmd.GainMaxHp(card.Owner.Creature, card.DynamicVars.MaxHp.IntValue * originals.Count);
+        }
+        await PowerCmd.Apply<MaxHpLocked>(choiceContext, card.Owner.Creature, 1, card.Owner.Creature, card);
     }
 
     protected override void OnUpgrade()

@@ -3,18 +3,25 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Cards;
-using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Models.CardPools;
+using BaseLib.Utils;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class SlalGenieForm() : SlalTheEndlessCard(2,
-    CardType.Power, CardRarity.Rare,
+/// <summary>
+/// Goofball Token Power (creatable after Creativity Unbound). Now and whenever you reach 10 Random,
+/// choose 1 of 3 cards from any character to add into your Hand (once). It is free to play this turn.
+/// </summary>
+[Pool(typeof(TokenCardPool))]
+public class SlalGenieForm() : SlalTheEndlessCard(1,
+    CardType.Power, CardRarity.Token,
     TargetType.Self)
 {
     protected override HashSet<CardTag> CanonicalTags => [SlalCardTags.Form];
+
+    public override bool CanBeGeneratedInCombat => false;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<GenieForm>(1),
@@ -29,13 +36,15 @@ public class SlalGenieForm() : SlalTheEndlessCard(2,
         CardPlay play)
     {
         var card = this;
+        var amount = card.DynamicVars["GenieForm"].BaseValue;
         await PowerCmd.Apply<GenieForm>(
             choiceContext,
             card.Owner.Creature,
-            card.DynamicVars["GenieForm"].BaseValue,
+            amount,
             card.Owner.Creature,
             card
         );
+        await GenieForm.GrantWishes(choiceContext, card.Owner, (int)amount);
     }
 
     protected override void OnUpgrade()

@@ -47,5 +47,5 @@ public class SlalWallOfText(): SlalTheEndlessCard(1,
         EnergyCost.UpgradeBy(-1);
     }
 
-    public CardModel GetTranscendenceTransformedCard() => ModelDb.Card<SlalAnvilStrike>();
+    public CardModel GetTranscendenceTransformedCard() => ModelDb.Card<SlalAnvilGag>();
 }

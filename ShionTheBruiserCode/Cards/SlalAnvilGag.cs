@@ -9,16 +9,20 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class SlalCartoonStrike() : SlalTheEndlessCard(2,
-    CardType.Attack, CardRarity.Basic,
+/// <summary>
+/// Deal 8 damage. Apply Weak equal to your Random.
+/// Increase this card's damage by 2 each time you gain Random this combat. (Retain)
+/// </summary>
+public class SlalAnvilGag() : SlalTheEndlessCard(1,
+    CardType.Attack, CardRarity.Ancient,
     TargetType.AnyEnemy)
 {
-    protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];
+    public override bool CanBeGeneratedInCombat => false;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CalculationBaseVar(0),
-        new ExtraDamageVar(1),
-        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => SlalMechanicsHelper.GetRandom(card.Owner.Creature)),
+        new CalculationBaseVar(8),
+        new ExtraDamageVar(2),
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => SlalMechanicsHelper.GetTimesRandomGained(card.Owner.Creature)),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -32,10 +36,11 @@ public class SlalCartoonStrike() : SlalTheEndlessCard(2,
     {
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
+
         await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
             .FromCard(card)
             .Targeting(play.Target)
-            .WithHitFx("vfx/vfx_attack_blunt")
+            .WithHitFx("vfx/vfx_attack_blunt", tmpSfx: "heavy_attack.mp3")
             .Execute(choiceContext);
 
         var random = SlalMechanicsHelper.GetRandom(card.Owner.Creature);
@@ -47,6 +52,6 @@ public class SlalCartoonStrike() : SlalTheEndlessCard(2,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.ExtraDamage.UpgradeValueBy(1);
+        AddKeyword(CardKeyword.Retain);
     }
 }

@@ -18,8 +18,6 @@ public class SlalBoxOfNailsForm() : SlalTheEndlessCard(1,
 {
     protected override HashSet<CardTag> CanonicalTags => [SlalCardTags.Form];
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Ethereal];
-
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<BoxOfNailsForm>(1),
     ];

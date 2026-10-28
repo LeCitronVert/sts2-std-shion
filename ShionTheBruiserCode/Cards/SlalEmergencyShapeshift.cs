@@ -5,16 +5,23 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Choose up to X cards in your Hand and Transform them into random Goofball Token Powers. They are free to play this turn.
+/// Choose up to 3 cards in your Hand and Transform them into random Goofball Token Powers (all different).
+/// They are free to play this turn. Exhaust.
 /// </summary>
-public class SlalEmergencyShapeshift() : SlalTheEndlessCard(0,
+public class SlalEmergencyShapeshift() : SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
-    protected override bool HasEnergyCostX => true;
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CardsVar(3),
+    ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.Static(StaticHoverTip.Transform),
@@ -25,25 +32,24 @@ public class SlalEmergencyShapeshift() : SlalTheEndlessCard(0,
         CardPlay play)
     {
         var card = this;
-        var amount = card.ResolveEnergyXValue();
-        if (amount <= 0) return;
-
         var targets = (await CardSelectCmd.FromHand(
             choiceContext,
             card.Owner,
-            new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 0, amount),
+            new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 0, card.DynamicVars.Cards.IntValue),
             c => c.IsTransformable,
             card
         )).ToList();
+        if (targets.Count == 0) return;
 
-        foreach (var target in targets)
+        var powers = SlalMechanicsHelper.CreateDifferentGoofballTokenPowers(card.Owner, targets.Count, IsUpgraded);
+        for (var i = 0; i < targets.Count; i++)
         {
-            var power = SlalMechanicsHelper.CreateGoofballTokenPower(card.Owner, IsUpgraded);
+            var power = powers[i];
             if (!power.EnergyCost.CostsX)
             {
                 power.SetToFreeThisTurn();
             }
-            await CardCmd.Transform(target, power);
+            await CardCmd.Transform(targets[i], power);
         }
     }
 

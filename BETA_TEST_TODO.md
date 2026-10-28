@@ -679,4 +679,3 @@ Content I skipped (incomplete in the spec):
 - [ ] Every `//todo : choose cost`, `//todo : upgrade not specified` and `//todo : type not specified` in `ShionTheBruiserCode/Cards/` (listed as ⚠️ above).
 - [ ] Art: character visuals and scenes, card portraits, power, relic and potion icons, energy counter, map marker, character-select portraits.
 - [ ] Architect dialogue lines (`ancients.json`) and Fry's character-select description (`characters.json`).
-

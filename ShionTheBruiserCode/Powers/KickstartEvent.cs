@@ -11,7 +11,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Enums;
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// This turn, whenever you play a Novel card, gain X energy.
+/// This turn, whenever you draw a Novel card, play it and draw X cards.
 /// </summary>
 public class KickstartEvent : SlalTheEndlessPower
 {
@@ -22,29 +22,16 @@ public class KickstartEvent : SlalTheEndlessPower
         HoverTipFactory.FromKeyword(SlalCardKeywords.Novel),
     ];
 
-    private class Data
+    public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
     {
-        /// <summary>Novel is removed when the card is played, so remember it before the play resolves.</summary>
-        public readonly HashSet<CardModel> novelCardsBeingPlayed = [];
-    }
-
-    protected override object InitInternalData() => new Data();
-
-    public override Task BeforeCardPlayed(CardPlay cardPlay)
-    {
-        if (cardPlay.Card.Owner == Owner.Player && cardPlay.Card.Keywords.Contains(SlalCardKeywords.Novel))
-        {
-            GetInternalData<Data>().novelCardsBeingPlayed.Add(cardPlay.Card);
-        }
-        return Task.CompletedTask;
-    }
-
-    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        if (!GetInternalData<Data>().novelCardsBeingPlayed.Remove(cardPlay.Card) || Owner.Player is null) return;
+        if (card.Owner != Owner.Player || Owner.Player is null) return;
+        if (!card.Keywords.Contains(SlalCardKeywords.Novel) || card.Keywords.Contains(CardKeyword.Unplayable)) return;
+        if (card.Pile?.Type != PileType.Hand || CombatManager.Instance.IsOverOrEnding) return;
 
         Flash();
-        await PlayerCmd.GainEnergy(Amount, Owner.Player);
+        var amount = Amount;
+        await CardCmd.AutoPlay(choiceContext, card, null);
+        await CardPileCmd.Draw(choiceContext, amount, Owner.Player);
     }
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)

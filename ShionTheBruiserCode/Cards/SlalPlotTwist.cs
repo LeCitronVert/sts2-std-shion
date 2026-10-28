@@ -9,8 +9,9 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Apply 3 Confusion. Choose 1 of 2 (3 upgraded) non-Rare cards from another character to add into your Hand. Exhaust.
-/// Creative Spirit allows Rare cards, Television Form allows Colorless cards.
+/// Apply 3 Confusion. Choose between 2 non-Rare cards from other characters and a Goofball Token Power to add into your Hand
+/// (upgraded: they are upgraded). Exhaust.
+/// Creative Spirit allows Rare cards, Mood Shift allows Colorless cards.
 /// </summary>
 public class SlalPlotTwist() : SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Common,
@@ -38,11 +39,10 @@ public class SlalPlotTwist() : SlalTheEndlessCard(1,
 
         var options = SlalMechanicsHelper.GetCharacterCardOptions(card.Owner, includeOwnCharacter: false)
             .Where(c => SlalMechanicsHelper.HasRandomCardRarity(card.Owner, c));
-        await SlalMechanicsHelper.ChooseCardToAddToHand(choiceContext, card.Owner, options, card.DynamicVars.Cards.IntValue, IsUpgraded);
+        await SlalMechanicsHelper.ChooseCardOrGoofballToAddToHand(choiceContext, card.Owner, options, card.DynamicVars.Cards.IntValue, IsUpgraded);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Cards.UpgradeValueBy(1);
     }
 }

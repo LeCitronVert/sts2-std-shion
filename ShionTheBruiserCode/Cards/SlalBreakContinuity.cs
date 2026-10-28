@@ -1,18 +1,14 @@
-using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
-using MegaCrit.Sts2.Core.Models.CardPools;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-// Trashed for now: kept in the code, but out of rewards, shops and random generation.
-[Pool(typeof(TokenCardPool))]
 public class SlalBreakContinuity() : SlalTheEndlessCard(2,
-    CardType.Attack, CardRarity.Token,
+    CardType.Attack, CardRarity.Ancient,
     TargetType.AllEnemies)
 {
     public override bool CanBeGeneratedInCombat => false;

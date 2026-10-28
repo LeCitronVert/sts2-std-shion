@@ -1,5 +1,4 @@
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -10,16 +9,18 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// For each card in your Hand, gain 1 Random and deal damage equal to its energy cost (0 for X-cost) to a random enemy.
+/// Deal damage equal to your Random to ALL enemies. Gain Random equal to the number of different cards in your Hand.
 /// </summary>
 public class SlalDiceShotgun() : SlalTheEndlessCard(1,
     CardType.Attack, CardRarity.Uncommon,
-    TargetType.RandomEnemy)
+    TargetType.AllEnemies)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CalculationBaseVar(0),
+        new ExtraDamageVar(1),
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => SlalMechanicsHelper.GetRandom(card.Owner.Creature)),
         new CalculationExtraVar(1),
-        new CalculatedVar("RandomGain").WithMultiplier((card, _) => PreviewHelper.OtherCardsInHand(card).Count),
+        new CalculatedVar("RandomGain").WithMultiplier((card, _) => SlalMechanicsHelper.CountDifferentCards(PreviewHelper.OtherCardsInHand(card))),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Powers.Random>()];
@@ -31,28 +32,14 @@ public class SlalDiceShotgun() : SlalTheEndlessCard(1,
         var card = this;
         if (card.CombatState is null) return;
 
-        // One attack context for all hits, so Vigor/Strength/Sharp etc. apply to every hit (Vigor consumed once).
-        await using var context = await AttackCommand.CreateContextAsync(card.CombatState, choiceContext, card);
-        var animPlayed = false;
+        await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
+            .FromCard(card)
+            .TargetingAllOpponents(card.CombatState)
+            .WithHitFx("vfx/vfx_attack_blunt")
+            .Execute(choiceContext);
 
-        foreach (var handCard in PileType.Hand.GetPile(card.Owner).Cards.ToList())
-        {
-            await SlalMechanicsHelper.GainRandom(choiceContext, card.Owner.Creature, 1, card);
-
-            var damage = SlalMechanicsHelper.GetEnergyCost(handCard);
-
-            var enemy = card.Owner.RunState.Rng.CombatTargets.NextItem(card.CombatState.HittableEnemies);
-            if (enemy == null) continue;
-
-            if (!animPlayed)
-            {
-                await CreatureCmd.TriggerAnim(card.Owner.Creature, "Attack", card.Owner.Character.AttackAnimDelay);
-                animPlayed = true;
-            }
-
-            VfxCmd.PlayOnCreature(enemy, "vfx/vfx_attack_blunt");
-            context.AddHit(await CreatureCmd.Damage(choiceContext, enemy, damage, ValueProp.Move, card));
-        }
+        var different = SlalMechanicsHelper.CountDifferentCards(PileType.Hand.GetPile(card.Owner).Cards);
+        await SlalMechanicsHelper.GainRandom(choiceContext, card.Owner.Creature, different, card);
     }
 
     protected override void OnUpgrade()

@@ -1,39 +1,28 @@
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.CardPools;
+using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain 1 (2) Random. Gain Block equal to your Random. Increase this card's cost by 1 this combat.
+/// Transform a card in your Hand into a random non-Rare Colorless card (Rare allowed with Creative Spirit).
+/// It keeps the same cost as the original card. An enemy loses Strength equal to that cost this turn.
+/// The new card is upgraded if the original was, and Unplayable if the original was.
 /// </summary>
-public class SlalLogicShift() : SlalTheEndlessCard(0,
-    CardType.Skill, CardRarity.Common,
-    TargetType.Self)
+public class SlalLogicShift() : SlalTheEndlessCard(2,
+    CardType.Skill, CardRarity.Uncommon,
+    TargetType.AnyEnemy)
 {
-    public const int CostIncrease = 1;
-
-    public override bool GainsBlock => true;
-
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<Powers.Random>(1),
-        new CalculationBaseVar(0),
-        new CalculationExtraVar(1),
-        // The Random after this card's gain (it shows 1 again after 10)
-        new CalculatedBlockVar(ValueProp.Move).WithMultiplier((card, _) =>
-        {
-            var gain = card.DynamicVars["Random"].IntValue;
-            var current = SlalMechanicsHelper.GetRandom(card.Owner.Creature);
-            return current <= 0 ? gain : (current + gain - 1) % Powers.Random.GetCardAt + 1;
-        }),
-    ];
-
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<Powers.Random>(),
+        HoverTipFactory.Static(StaticHoverTip.Transform),
+        HoverTipFactory.FromPower<StrengthPower>(),
     ];
 
     protected override async Task OnPlay(
@@ -41,19 +30,40 @@ public class SlalLogicShift() : SlalTheEndlessCard(0,
         CardPlay play)
     {
         var card = this;
-        await SlalMechanicsHelper.GainRandom(choiceContext, card.Owner.Creature, card.DynamicVars["Random"].BaseValue, card);
+        ArgumentNullException.ThrowIfNull(play.Target);
 
-        var block = SlalMechanicsHelper.GetRandom(card.Owner.Creature);
-        if (block > 0)
+        var original = (await CardSelectCmd.FromHand(
+            choiceContext,
+            card.Owner,
+            new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 1),
+            c => c.IsTransformable,
+            card
+        )).FirstOrDefault();
+        if (original is null) return;
+
+        // X-cost cards can't keep a cost, so they are left out
+        var options = ModelDb.CardPool<ColorlessCardPool>()
+            .GetUnlockedCards(card.Owner.UnlockState, card.Owner.RunState.CardMultiplayerConstraint)
+            .Where(c => SlalMechanicsHelper.HasRandomCardRarity(card.Owner, c) && !c.EnergyCost.CostsX);
+        var newCard = SlalMechanicsHelper.CreateRandomCards(card.Owner, 1, original.IsUpgraded, options).FirstOrDefault();
+        if (newCard is null) return;
+
+        var cost = SlalMechanicsHelper.GetEnergyCost(original);
+        newCard.EnergyCost.SetThisCombat(cost);
+        if (original.Keywords.Contains(CardKeyword.Unplayable))
         {
-            await CreatureCmd.GainBlock(card.Owner.Creature, block, ValueProp.Move, play);
+            newCard.AddKeyword(CardKeyword.Unplayable);
         }
+        await CardCmd.Transform(original, newCard);
 
-        card.EnergyCost.AddThisCombat(CostIncrease);
+        if (cost > 0 && play.Target.IsAlive)
+        {
+            await PowerCmd.Apply<LogicShiftStrengthDown>(choiceContext, play.Target, cost, card.Owner.Creature, card);
+        }
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Random"].UpgradeValueBy(1);
+        EnergyCost.UpgradeBy(-1);
     }
 }

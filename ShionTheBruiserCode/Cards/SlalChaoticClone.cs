@@ -11,8 +11,8 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain 6 Block. Play a random Slimed in your Hand. If you do, choose 1 of 2 (upgraded) non-Rare cards from any character
-/// to add into your Hand. Creative Spirit allows Rare cards, Television Form allows Colorless cards.
+/// Gain 6 Block. Play a random Slimed in your Hand. If you do, choose between 2 (upgraded) non-Rare cards from other characters
+/// and a Goofball Token Power to add into your Hand. Creative Spirit allows Rare cards, Mood Shift allows Colorless cards.
 /// </summary>
 public class SlalChaoticClone() : SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Common,
@@ -44,9 +44,9 @@ public class SlalChaoticClone() : SlalTheEndlessCard(1,
 
         await CardCmd.AutoPlay(choiceContext, slimed, null);
 
-        var options = SlalMechanicsHelper.GetCharacterCardOptions(card.Owner, includeOwnCharacter: true)
+        var options = SlalMechanicsHelper.GetCharacterCardOptions(card.Owner, includeOwnCharacter: false)
             .Where(c => SlalMechanicsHelper.HasRandomCardRarity(card.Owner, c));
-        await SlalMechanicsHelper.ChooseCardToAddToHand(choiceContext, card.Owner, options, card.DynamicVars.Cards.IntValue, IsUpgraded);
+        await SlalMechanicsHelper.ChooseCardOrGoofballToAddToHand(choiceContext, card.Owner, options, card.DynamicVars.Cards.IntValue, IsUpgraded);
     }
 
     protected override void OnUpgrade()

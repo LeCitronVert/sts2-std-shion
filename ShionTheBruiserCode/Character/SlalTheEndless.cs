@@ -33,7 +33,7 @@ public class SlalTheEndless : PlaceholderCharacterModel
         ModelDb.Card<SlalDefend>(),
         ModelDb.Card<SlalDefend>(),
         ModelDb.Card<SlalDefend>(),
-        ModelDb.Card<SlalCartoonStrike>(),
+        ModelDb.Card<SlalFunnyGag>(),
         ModelDb.Card<SlalSeeWhatSticks>(),
     ];
 

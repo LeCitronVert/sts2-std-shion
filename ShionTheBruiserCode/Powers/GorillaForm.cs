@@ -7,16 +7,16 @@ using MegaCrit.Sts2.Core.Models.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// Whenever you play a Power, gain X Vigor.
+/// Whenever you play a Power, gain X Strength.
 /// </summary>
 public class GorillaForm : SlalOnPowerPlayedPower
 {
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<VigorPower>(),
+        HoverTipFactory.FromPower<StrengthPower>(),
     ];
 
     protected override async Task OnPowerPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay, int amount)
     {
-        await PowerCmd.Apply<VigorPower>(choiceContext, Owner, amount, Owner, null);
+        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, amount, Owner, null);
     }
 }

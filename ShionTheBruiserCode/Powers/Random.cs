@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
+using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
@@ -18,9 +19,11 @@ public class Random : SlalTheEndlessPower
 
     public const int GetCardAt = 10;
     public const int MemoryPerThreshold = 1;
+    public const int StrengthPerThreshold = 1;
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<Memory>()
+        HoverTipFactory.FromPower<Memory>(),
+        HoverTipFactory.FromPower<StrengthPower>(),
     ];
 
     public override int DisplayAmount => GetCurrentAmount();
@@ -85,7 +88,7 @@ public class Random : SlalTheEndlessPower
     }
 
     /// <summary>
-    /// Each time Random reaches 10, gain 1 Memory (Random then drops back to 1 on the next gain).
+    /// Each time Random reaches 10, gain 1 Memory and 1 Strength (Random then drops back to 1 on the next gain).
     /// </summary>
     private async Task TriggerThresholds(PlayerChoiceContext choiceContext, decimal previousAmount, decimal newAmount)
     {
@@ -95,6 +98,7 @@ public class Random : SlalTheEndlessPower
         for (var i = 0; i < thresholdsCrossed; i++)
         {
             await SlalMechanicsHelper.GainMemory(choiceContext, Owner, MemoryPerThreshold);
+            await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, StrengthPerThreshold, Owner, null);
             await SlalMechanicsHelper.TriggerRandomThresholdReached(choiceContext, Owner);
         }
     }

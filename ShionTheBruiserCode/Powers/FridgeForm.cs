@@ -11,8 +11,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
 /// Whenever you play a Form Power, procure X random potions.
-/// At the end of combat, lose X potion slots and ALL potions.
-/// Amount is both the number of potions procured and the number of slots gained by Fridge Form cards.
+/// At the end of combat, lose ALL potions.
 /// </summary>
 public class FridgeForm : SlalOnPowerPlayedPower
 {
@@ -24,19 +23,6 @@ public class FridgeForm : SlalOnPowerPlayedPower
             PotionFactory.CreateRandomPotionInCombat(player, player.RunState.Rng.CombatPotionGeneration).ToMutable(),
             player
         );
-    }
-
-    /// <summary>
-    /// Procures random potions until every potion slot is full.
-    /// </summary>
-    public static async Task FillPotionSlots(Player player)
-    {
-        // Bounded in case a potion can't be procured
-        var openSlots = player.PotionSlots.Count(p => p == null);
-        for (var i = 0; i < openSlots && player.HasOpenPotionSlots; i++)
-        {
-            await ProcureRandomPotion(player);
-        }
     }
 
     protected override async Task OnPowerPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay, int amount)
@@ -57,6 +43,5 @@ public class FridgeForm : SlalOnPowerPlayedPower
         {
             await PotionCmd.Discard(potion);
         }
-        await PlayerCmd.LoseMaxPotionCount(Math.Min(Amount, player.MaxPotionCount), player);
     }
 }

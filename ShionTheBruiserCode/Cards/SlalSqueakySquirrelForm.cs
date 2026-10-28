@@ -23,7 +23,7 @@ public class SlalSqueakySquirrelForm() : SlalTheEndlessCard(1,
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<Memory>(),
+        HoverTipFactory.FromPower<Powers.Random>(),
     ];
 
     protected override async Task OnPlay(
@@ -42,6 +42,6 @@ public class SlalSqueakySquirrelForm() : SlalTheEndlessCard(1,
 
     protected override void OnUpgrade()
     {
-        BaseReplayCount += 1;
+        DynamicVars["SqueakySquirrelForm"].UpgradeValueBy(1);
     }
 }

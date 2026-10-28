@@ -35,7 +35,7 @@
   "SHIONTHEBRUISER-ERRATIC.title": "Erratic",
   "SHIONTHEBRUISER-ERRATIC.description": "When you draw this card, randomize its cost from [blue]0[/blue] to [blue]3[/blue].\nRemoves [gold]Unplayable[/gold].",
   "SHIONTHEBRUISER-BLOODBEND.title": "Blood Bend X",
-  "SHIONTHEBRUISER-BLOODBEND.description": "Consumes ALL your [gold]Blood[/gold] and converts it into X for the effect of the card.",
+  "SHIONTHEBRUISER-BLOODBEND.description": "Consumes ALL your [gold]Blood[/gold], heals that much HP and converts it into X for the effect of the card.",
   "SHIONTHEBRUISER-GAMBLE.title": "Gamble X",
   "SHIONTHEBRUISER-GAMBLE.description": "Choose X cards in your [gold]Hand[/gold], add [gold]Erratic[/gold] to them this combat and put them on top of your [gold]Draw Pile[/gold].\nStatuses and Curses can be chosen.",
 

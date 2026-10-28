@@ -12,10 +12,10 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// Gain 1 Memory. You choose the cards Memory plays from your Discard Pile, but they are Exhausted. Ethereal (upgrade: not Ethereal).
 /// </summary>
 public class SlalContinuityThread() : SlalTheEndlessCard(3,
-    CardType.Power, CardRarity.Ancient,
+    CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
-    public override bool CanBeGeneratedInCombat => false;
+    public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.SingleplayerOnly;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Ethereal];
 

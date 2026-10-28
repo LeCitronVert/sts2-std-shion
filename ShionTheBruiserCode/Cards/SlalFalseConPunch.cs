@@ -5,11 +5,14 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Models;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Deal X damage and apply Y Confusion to a random enemy for each card in your Hand.
+/// Deal 4 damage to a random enemy for each different card in your Hand.
 /// </summary>
 public class SlalFalseConPunch() : SlalTheEndlessCard(2,
     CardType.Attack, CardRarity.Uncommon,
@@ -18,14 +21,9 @@ public class SlalFalseConPunch() : SlalTheEndlessCard(2,
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(4M, ValueProp.Move),
-        new PowerVar<Confusion>(3),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
-        new CalculatedVar("Hits").WithMultiplier((card, _) => PileType.Hand.GetPile(card.Owner).Cards.Count(c => c != card) + 1),
-    ];
-
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<Confusion>(),
+        new CalculatedVar("Hits").WithMultiplier((card, _) => SlalMechanicsHelper.CountDifferentCards(PreviewHelper.OtherCardsInHand(card))),
     ];
 
     protected override async Task OnPlay(
@@ -35,8 +33,8 @@ public class SlalFalseConPunch() : SlalTheEndlessCard(2,
         var card = this;
         if (card.CombatState is null) return;
 
-        // + 1 for this card, which has already left the Hand
-        var hits = PileType.Hand.GetPile(card.Owner).Cards.Count + 1;
+        // This card has already left the Hand
+        var hits = SlalMechanicsHelper.CountDifferentCards(PileType.Hand.GetPile(card.Owner).Cards);
         for (var i = 0; i < hits; i++)
         {
             var enemy = card.Owner.RunState.Rng.CombatTargets.NextItem(card.CombatState.HittableEnemies);
@@ -47,11 +45,6 @@ public class SlalFalseConPunch() : SlalTheEndlessCard(2,
                 .Targeting(enemy)
                 .WithHitFx("vfx/vfx_attack_blunt")
                 .Execute(choiceContext);
-
-            if (enemy.IsAlive)
-            {
-                await PowerCmd.Apply<Confusion>(choiceContext, enemy, card.DynamicVars["Confusion"].BaseValue, card.Owner.Creature, card);
-            }
         }
     }
 

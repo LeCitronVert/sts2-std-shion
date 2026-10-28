@@ -8,7 +8,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class SlalIntroduction() : SlalTheEndlessCard(2,
+public class SlalIntroduction() : SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Rare,
     TargetType.AllEnemies)
 {
@@ -17,12 +17,10 @@ public class SlalIntroduction() : SlalTheEndlessCard(2,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<WeakPower>(1),
         new DynamicVar("SelfWeak", 1),
-        new EnergyVar(3),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<WeakPower>(),
-        HoverTipFactory.ForEnergy(this),
         HoverTipFactory.FromCard<SlalDescription>(IsUpgraded),
     ];
 
@@ -33,7 +31,6 @@ public class SlalIntroduction() : SlalTheEndlessCard(2,
         var card = this;
         await SlalMechanicsHelper.ApplyToAllEnemies<WeakPower>(choiceContext, card.Owner.Creature, card.DynamicVars.Weak.BaseValue, card);
         await PowerCmd.Apply<WeakPower>(choiceContext, card.Owner.Creature, card.DynamicVars["SelfWeak"].BaseValue, card.Owner.Creature, card);
-        await PlayerCmd.GainEnergy(card.DynamicVars.Energy.BaseValue, card.Owner);
 
         CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(
             SlalMechanicsHelper.CreateCard<SlalDescription>(card.Owner, IsUpgraded), PileType.Draw, card.Owner, CardPilePosition.Random));

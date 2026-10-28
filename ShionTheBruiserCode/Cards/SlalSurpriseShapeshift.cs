@@ -11,7 +11,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Deal 5 damage. Apply 5 Confusion. Add a random Goofball Token Power into your Draw Pile.
+/// Deal 5 (6) damage. Apply 5 (6) Confusion. Add 1 (2) random Goofball Token Powers into your Draw Pile.
 /// </summary>
 public class SlalSurpriseShapeshift() : SlalTheEndlessCard(1,
     CardType.Attack, CardRarity.Common,
@@ -35,6 +35,7 @@ public class SlalSurpriseShapeshift() : SlalTheEndlessCard(1,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(5M, ValueProp.Move),
         new PowerVar<Confusion>(5),
+        new CardsVar(1),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -62,12 +63,18 @@ public class SlalSurpriseShapeshift() : SlalTheEndlessCard(1,
             card
         );
 
-        var power = SlalMechanicsHelper.CreateGoofballTokenPower(card.Owner, IsUpgraded, LastGivenPower);
-        LastGivenPower = power.Id;
-        CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(power, PileType.Draw, card.Owner, CardPilePosition.Random));
+        for (var i = 0; i < card.DynamicVars.Cards.IntValue; i++)
+        {
+            var power = SlalMechanicsHelper.CreateGoofballTokenPower(card.Owner, false, LastGivenPower);
+            LastGivenPower = power.Id;
+            CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(power, PileType.Draw, card.Owner, CardPilePosition.Random));
+        }
     }
 
     protected override void OnUpgrade()
     {
+        DynamicVars.Damage.UpgradeValueBy(1);
+        DynamicVars["Confusion"].UpgradeValueBy(1);
+        DynamicVars.Cards.UpgradeValueBy(1);
     }
 }

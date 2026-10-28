@@ -6,28 +6,31 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Models;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// X times twice (three times): deal 4 damage to a random enemy and apply 1 Weak to it.
+/// Deal 4 damage to a random enemy for each card you played this turn (this one not included). (Retain)
 /// </summary>
 public class SlalPinballMove() : SlalTheEndlessCard(0,
     CardType.Attack, CardRarity.Uncommon,
     TargetType.RandomEnemy)
 {
-    protected override bool HasEnergyCostX => true;
-
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(4M, ValueProp.Move),
-        new PowerVar<WeakPower>(1),
-        new RepeatVar(2),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
-        new CalculatedVar("HitAmount").WithMultiplier((card, _) => PreviewHelper.XValue(card) * card.DynamicVars.Repeat.IntValue),
+        new CalculatedVar("HitAmount").WithMultiplier((card, _) => CountCardsPlayedThisTurn(card)),
     ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<WeakPower>()];
+    private static int CountCardsPlayedThisTurn(CardModel card)
+    {
+        if (card.CombatState == null) return 0;
+        return CombatManager.Instance.History.CardPlaysFinished
+            .Count(e => e.HappenedThisTurn(card.CombatState) && e.CardPlay.Card.Owner == card.Owner && e.CardPlay.IsFirstInSeries);
+    }
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -36,7 +39,8 @@ public class SlalPinballMove() : SlalTheEndlessCard(0,
         var card = this;
         if (card.CombatState is null) return;
 
-        var hits = ResolveEnergyXValue() * card.DynamicVars.Repeat.IntValue;
+        // This play hasn't finished yet, so it isn't counted
+        var hits = CountCardsPlayedThisTurn(card);
         for (var i = 0; i < hits; i++)
         {
             var enemy = card.Owner.RunState.Rng.CombatTargets.NextItem(card.CombatState.HittableEnemies);
@@ -47,16 +51,11 @@ public class SlalPinballMove() : SlalTheEndlessCard(0,
                 .Targeting(enemy)
                 .WithHitFx("vfx/vfx_attack_blunt")
                 .Execute(choiceContext);
-
-            if (enemy.IsAlive)
-            {
-                await PowerCmd.Apply<WeakPower>(choiceContext, enemy, card.DynamicVars.Weak.BaseValue, card.Owner.Creature, card);
-            }
         }
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Repeat.UpgradeValueBy(1);
+        AddKeyword(CardKeyword.Retain);
     }
 }

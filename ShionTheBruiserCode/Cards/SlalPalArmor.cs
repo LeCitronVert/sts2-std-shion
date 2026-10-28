@@ -10,7 +10,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
 /// Another player chooses 1 out of [number of players] Form Powers, one from each player's character.
-/// It is free to play this turn. Exhaust (upgraded: no Exhaust).
+/// It is free to play this turn. Exhaust.
 /// </summary>
 public class SlalPalArmor() : SlalTheEndlessCard(3,
     CardType.Skill, CardRarity.Rare,
@@ -54,6 +54,6 @@ public class SlalPalArmor() : SlalTheEndlessCard(3,
 
     protected override void OnUpgrade()
     {
-        RemoveKeyword(CardKeyword.Exhaust);
+        EnergyCost.UpgradeBy(-1);
     }
 }

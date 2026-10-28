@@ -8,8 +8,8 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain 8 (10) Block. Decrease this card's Block by 1 this combat (like Steam Barrier).
-/// Whenever you play a Form Power, put this into your Hand.
+/// Ethereal. Gain 9 Block. Decrease this card's Block by 2 (1) this combat (like Steam Barrier).
+/// Whenever you play a Form Power, put this into your Hand from anywhere (Exhaust Pile included). Exhaust.
 /// </summary>
 public class SlalReactiveShape() : SlalTheEndlessCard(0,
     CardType.Skill, CardRarity.Rare,
@@ -32,9 +32,11 @@ public class SlalReactiveShape() : SlalTheEndlessCard(0,
 
     public override bool GainsBlock => true;
 
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Ethereal, CardKeyword.Exhaust];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(8M, ValueProp.Move),
-        new DynamicVar("Decrease", 1),
+        new BlockVar(9M, ValueProp.Move),
+        new DynamicVar("Decrease", 2),
     ];
 
     protected override async Task OnPlay(
@@ -51,12 +53,9 @@ public class SlalReactiveShape() : SlalTheEndlessCard(0,
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (cardPlay.Card.Owner != Owner || !SlalMechanicsHelper.IsFormPower(cardPlay.Card) || !cardPlay.IsLastInSeries) return;
-        if (Pile?.Type is not (PileType.Draw or PileType.Discard or PileType.Hand)) return;
+        if (Pile?.Type is not (PileType.Draw or PileType.Discard or PileType.Exhaust)) return;
 
-        if (Pile.Type != PileType.Hand)
-        {
-            await CardPileCmd.Add(this, PileType.Hand);
-        }
+        await CardPileCmd.Add(this, PileType.Hand);
     }
 
     protected override void AfterDowngraded()
@@ -67,6 +66,6 @@ public class SlalReactiveShape() : SlalTheEndlessCard(0,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(2M);
+        DynamicVars["Decrease"].UpgradeValueBy(-1);
     }
 }

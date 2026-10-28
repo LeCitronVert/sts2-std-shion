@@ -17,7 +17,7 @@ public class SlalSarcophagusForm() : SlalTheEndlessCard(1,
     protected override HashSet<CardTag> CanonicalTags => [SlalCardTags.Form];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<SarcophagusForm>(2),
+        new PowerVar<SarcophagusForm>(1),
         new EnergyVar(1),
     ];
 
@@ -43,6 +43,6 @@ public class SlalSarcophagusForm() : SlalTheEndlessCard(1,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["SarcophagusForm"].UpgradeValueBy(2);
+        DynamicVars["SarcophagusForm"].UpgradeValueBy(1);
     }
 }
