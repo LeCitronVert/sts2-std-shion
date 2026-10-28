@@ -14,6 +14,15 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Helper;
 
+/// <summary>
+/// Implemented by models that want to react to Patch Up.
+/// </summary>
+public interface IPatchUpListener
+{
+    /// <summary>Called after a creature Patches Up, with the HP it actually healed.</summary>
+    Task AfterPatchUp(PlayerChoiceContext choiceContext, Creature creature, int amount);
+}
+
 public static class ShionMechanicsHelper
 {
     public static int GetDragonUniqueBuffCount(Creature creature)
@@ -249,5 +258,11 @@ public static class ShionMechanicsHelper
             creature,
             amountToHeal
         );
+
+        if (creature.CombatState is null) return;
+        foreach (var listener in creature.CombatState.IterateHookListeners().OfType<IPatchUpListener>().ToList())
+        {
+            await listener.AfterPatchUp(new ThrowingPlayerChoiceContext(), creature, amountToHeal);
+        }
     }
 }

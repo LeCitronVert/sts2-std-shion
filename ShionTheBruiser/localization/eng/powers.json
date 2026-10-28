@@ -516,5 +516,24 @@
   "SHIONTHEBRUISER-GREY_EMERALD_CHALLENGE.smartDescription": "At the end of your turn, [gold]Exhaust[/gold] {Amount:plural:a random card|[blue]{}[/blue] random cards} in your [gold]Discard Pile[/gold].",
   "SHIONTHEBRUISER-CYAN_EMERALD_CHALLENGE.title": "Cyan Emerald Challenge",
   "SHIONTHEBRUISER-CYAN_EMERALD_CHALLENGE.description": "At the end of your turn, lose HP equal to the turn number.",
-  "SHIONTHEBRUISER-CYAN_EMERALD_CHALLENGE.smartDescription": "At the end of your turn, lose HP equal to {Amount:plural:the turn number|[blue]{}[/blue] times the turn number}."
+  "SHIONTHEBRUISER-CYAN_EMERALD_CHALLENGE.smartDescription": "At the end of your turn, lose HP equal to {Amount:plural:the turn number|[blue]{}[/blue] times the turn number}.",
+
+  "SHIONTHEBRUISER-HYPER_OFFENSE.description": "Your attacks on [gold]Vulnerable[/gold] enemies gain [gold]Critical Hit[/gold] chance, doubled while [gold]Berserk[/gold].",
+  "SHIONTHEBRUISER-HYPER_OFFENSE.smartDescription": "Your attacks on [gold]Vulnerable[/gold] enemies gain [blue]{Amount}%[/blue] [gold]Critical Hit[/gold] chance, doubled while [gold]Berserk[/gold].",
+  "SHIONTHEBRUISER-HYPER_OFFENSE.title": "Hyper Offense",
+  "SHIONTHEBRUISER-FELLOWSHIP.description": "Whenever you play a card, your partner gains [gold]Scrappy[/gold].",
+  "SHIONTHEBRUISER-FELLOWSHIP.smartDescription": "Whenever you play a card, your partner gains [blue]{Amount}[/blue] [gold]Scrappy[/gold].",
+  "SHIONTHEBRUISER-FELLOWSHIP.title": "Fellowship",
+  "SHIONTHEBRUISER-FELLCHION.description": "Whenever you lose HP, your partner [gold]Forges[/gold] that much.\nWhenever your partner's [gold]Sovereign Blade[/gold] deals unblocked damage, heal that much.",
+  "SHIONTHEBRUISER-FELLCHION.smartDescription": "Whenever you lose HP, your partner [gold]Forges[/gold] that much{Amount:cond:>1? (x[blue]{Amount}[/blue])|}.\nWhenever your partner's [gold]Sovereign Blade[/gold] deals unblocked damage, heal that much{Amount:cond:>1? (x[blue]{Amount}[/blue])|}.",
+  "SHIONTHEBRUISER-FELLCHION.title": "Fellchion",
+  "SHIONTHEBRUISER-OFFER_LIFE.description": "You can't lose HP until your next turn. Then, gain [gold]Intangible[/gold].",
+  "SHIONTHEBRUISER-OFFER_LIFE.smartDescription": "You can't lose HP until your next turn. Then, gain [blue]{Amount}[/blue] [gold]Intangible[/gold].",
+  "SHIONTHEBRUISER-OFFER_LIFE.title": "Offer Life",
+  "SHIONTHEBRUISER-ECCENTRICS.description": "Whenever you gain [gold]Random[/gold], your partner gains that much.\nWhenever your partner reaches [blue]10[/blue] [gold]Random[/gold], gain [gold]Strength[/gold] and [gold]Dexterity[/gold].",
+  "SHIONTHEBRUISER-ECCENTRICS.smartDescription": "Whenever you gain [gold]Random[/gold], your partner gains that much{Amount:cond:>1? (x[blue]{Amount}[/blue])|}.\nWhenever your partner reaches [blue]10[/blue] [gold]Random[/gold], gain [blue]{Amount}[/blue] [gold]Strength[/gold] and [gold]Dexterity[/gold].",
+  "SHIONTHEBRUISER-ECCENTRICS.title": "Eccentrics",
+  "SHIONTHEBRUISER-DRAGON_TIGER_FLASH.description": "Whenever you [gold]Patch Up[/gold], your partner loses that much [gold]Damage Debt[/gold].\nWhenever your partner ends their turn with [gold]Refuse[/gold], gain [gold]Block[/gold].",
+  "SHIONTHEBRUISER-DRAGON_TIGER_FLASH.smartDescription": "Whenever you [gold]Patch Up[/gold], your partner loses that much [gold]Damage Debt[/gold]{Amount:cond:>1? (x[blue]{Amount}[/blue])|}.\nWhenever your partner ends their turn with [gold]Refuse[/gold], gain [blue]{BlockPerRefuse}[/blue] [gold]Block[/gold]{Amount:cond:>1? (x[blue]{Amount}[/blue])|}.",
+  "SHIONTHEBRUISER-DRAGON_TIGER_FLASH.title": "Dragon-Tiger Flash"
 }

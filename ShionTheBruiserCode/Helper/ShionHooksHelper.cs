@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.Models;
@@ -16,7 +17,7 @@ public static class ShionHooksHelper
     /// listeners, then clamps the result to be at least the highest floor set by any
     /// <see cref="IMinCritHitRateContributor"/>.
     /// </summary>
-    public static decimal CalculateCritHitRate(ICombatState combatState, CardModel? card, Player? playerToCheck = null)
+    public static decimal CalculateCritHitRate(ICombatState combatState, CardModel? card, Player? playerToCheck = null, IReadOnlyList<Creature>? targets = null)
     {
         MainFile.Logger.Info($"[ShionHooksHelper] CalculateCritHitRate — card={card?.GetType().Name ?? "null"}");
 
@@ -26,6 +27,16 @@ public static class ShionHooksHelper
             decimal bonus = l.GetCritHitRateBonus(card);
             MainFile.Logger.Info($"[ShionHooksHelper]   listener contributor {l.GetType().Name} → hitRateBonus={bonus:P0}");
             rate += bonus;
+        }
+
+        if (card != null && targets != null)
+        {
+            foreach (var l in combatState.IterateHookListeners().OfType<ITargetedCritHitRateContributor>())
+            {
+                decimal bonus = l.GetCritHitRateBonus(card, targets);
+                MainFile.Logger.Info($"[ShionHooksHelper]   targeted contributor {l.GetType().Name} → hitRateBonus={bonus:P0}");
+                rate += bonus;
+            }
         }
 
         if (card is ICritHitRateContributor cardHitContributor)

@@ -7,7 +7,7 @@ ShionTheBruiser.json::JSON::-1::1792433998::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1793178085
+::res://bin/ExportRelease/net9.0/publish/::1793178641
 ShionTheBruiser.deps.json::JSON::-1::1793178085::0::1::::<><><>0<>0<><>::
 ::res://ci/::1792939391
 ::res://ci/game-refs/::1792939391
@@ -906,7 +906,7 @@ character_slal_rest.png::CompressedTexture2D::6789641064684939044::1792929186::1
 ::res://ShionTheBruiser/images/ui/rest/::1793018465
 lull.png::CompressedTexture2D::1267024042070092315::1783267457::1783267487::1::::<><><>0<>0<>46ca43c57aac12a6d7ea8ace1d934f9d<>res://.godot/imported/lull.png-a7714865cfaf878a1f7a05dec126e0c0.ctex::
 seek.png::CompressedTexture2D::7391533348874629046::1793017840::1793018465::1::::<><><>0<>0<>2556d5a07730c99b22510cb19361aa1f<>res://.godot/imported/seek.png-279120f713f3895c9c6f09d897a7f0c0.ctex::
-::res://ShionTheBruiser/images/ui/team_blast/::1793177713
+::res://ShionTheBruiser/images/ui/team_blast/::1793178089
 team_blast_bar.png::CompressedTexture2D::3159766184385900582::1793177713::1793178089::1::::<><><>0<>0<>9f81a9e2af17b3f1f49bc1315c8f5090<>res://.godot/imported/team_blast_bar.png-9c1505bd866994651e0227c40a6b0bd5.ctex::
 team_blast_locked.png::CompressedTexture2D::7621079854370452256::1793177713::1793178089::1::::<><><>0<>0<>013933bfc0053016122d75e6bb53c76f<>res://.godot/imported/team_blast_locked.png-af6d45a45c3d33d30fc47cd1c14ac63b.ctex::
 team_blast_ready.png::CompressedTexture2D::8331283540066729296::1793177713::1793178089::1::::<><><>0<>0<>8f45cec4072dfa0ce28aea63f7bd5405<>res://.godot/imported/team_blast_ready.png-abb4ee67caa30497b30d7a53924e66fb.ctex::
@@ -926,7 +926,7 @@ potions.json::JSON::-1::1792779287::0::1::::<><><>0<>0<><>::
 powers.json::JSON::-1::1793117665::0::1::::<><><>0<>0<><>::
 relics.json::JSON::-1::1793020192::0::1::::<><><>0<>0<><>::
 rest_site_ui.json::JSON::-1::1793017890::0::1::::<><><>0<>0<><>::
-static_hover_tips.json::JSON::-1::1793177950::0::1::::<><><>0<>0<><>::
+static_hover_tips.json::JSON::-1::1793178611::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiser/scenes/::1792929289
 abby_monster.tscn::PackedScene::7688545653783870291::1783261259::0::1::::<><><>0<>0<><>::uid://cx6urwqi2oasn::::res://ShionTheBruiser/images/monsters/abby_spritesheet.png
 shion_character.tscn::PackedScene::1778801279827139717::1793018618::0::1::::<><><>0<>0<><>::uid://byt8gygkpt3q1::::res://ShionTheBruiser/images/sprites/shion/character_shion_idle.png<>uid://bux1yogiry72d::::res://ShionTheBruiser/images/sprites/shion/character_shion_attack.png<>uid://65x0mvvhqy1q::::res://ShionTheBruiser/images/sprites/shion/character_shion_cast.png<>uid://cxrxoegil7ecq::::res://ShionTheBruiser/images/sprites/shion/character_shion_die.png<>uid://bhxwosoqcrcua::::res://ShionTheBruiser/images/sprites/shion/character_shion_energy.png<>uid://w7nwertipwvk::::res://ShionTheBruiser/images/sprites/shion/character_shion_hit.png<>uid://bvr7gw2uk3j0x::::res://ShionTheBruiser/images/sprites/shion/character_shion_merchant.png<>res://ShionTheBruiser/scenes/shion_visuals.gd
@@ -938,7 +938,7 @@ slal_character.tscn::PackedScene::8884350111482344278::1793018618::0::1::::<><><
 slal_energy.tscn::PackedScene::538628958860881497::1784852634::0::1::::<><><>0<>0<><>::uid://cwrbk5gj5wmfv::::res://ShionTheBruiser/images/charui/slal/UI_energy_slal.png
 slal_merchant.tscn::PackedScene::6725568957768718793::1792930133::0::1::::<><><>0<>0<><>::uid://c6vfy78d2khfw::::res://ShionTheBruiser/images/sprites/slal/character_slal_attack.png<>uid://bhvn1av8sooia::::res://ShionTheBruiser/images/sprites/slal/character_slal_cast.png<>uid://by6n0gbv8r4jh::::res://ShionTheBruiser/images/sprites/slal/character_slal_die.png<>uid://0ek8m7ogqlt0::::res://ShionTheBruiser/images/sprites/slal/character_slal_hit.png<>uid://sie827hbb177::::res://ShionTheBruiser/images/sprites/slal/character_slal_idle.png<>uid://bd5o0rgav3d6g::::res://ShionTheBruiser/images/sprites/slal/character_slal_merchant.png<>uid://3n7cbrpur4ou::::res://ShionTheBruiser/scenes/shion_visuals.gd
 slal_rest.tscn::PackedScene::-1::1792929289::0::1::::<><><>0<>0<><>::res://ShionTheBruiser/images/sprites/slal/character_slal_rest.png
-::res://ShionTheBruiser/scenes/fx/::1793177900
+::res://ShionTheBruiser/scenes/fx/::1793178089
 berserk_sparks.gd::GDScript::4278156420224147320::1792503868::0::1::::<>Node2D<><>0<>0<><>::
 berserk_sparks.tscn::PackedScene::-1::1792503868::0::1::::<><><>0<>0<><>::res://ShionTheBruiser/scenes/fx/berserk_sparks.gd
 crit_indicator.gd::GDScript::1372069390936087795::1792503850::0::1::::<>Control<><>0<>0<><>::
@@ -1412,7 +1412,7 @@ ShionMechanicsHelper.cs::CSharpScript::2990478697957247076::1793012479::0::1::::
 SlalMechanicsHelper.cs::CSharpScript::3955379173374721020::1793122048::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiserCode/Monsters/::1783259594
 AbbyMonster.cs::CSharpScript::7065894295935417984::1783259594::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Patches/::1793177883
+::res://ShionTheBruiserCode/Patches/::1793178089
 AfflictionHooks.cs::CSharpScript::1383593816546956163::1792845922::0::1::::<><><>0<>0<><>::
 CardAutoPlayTracker.cs::CSharpScript::7253820485177951645::1792504577::0::1::::<><><>0<>0<><>::
 ChaosEmeraldsMainMenuPatch.cs::CSharpScript::832528578811425573::1793016944::0::1::::<><><>0<>0<><>::
@@ -1694,10 +1694,10 @@ YellowChaosEmeralds.cs::CSharpScript::7947279272287764495::1793017115::0::1::::<
 ::res://ShionTheBruiserCode/RestSiteOptions/::1793018465
 Lull.cs::CSharpScript::1804038520924471915::1783271867::0::1::::<><><>0<>0<><>::
 Seek.cs::CSharpScript::8588524608089364226::1793017890::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Singletons/::1793177994
+::res://ShionTheBruiserCode/Singletons/::1793178089
 ShionCritSingleton.cs::CSharpScript::3951621572379558951::1792845826::0::1::::<><><>0<>0<><>::
 SlalApparenceSingleton.cs::CSharpScript::6424703020693251239::1793013162::0::1::::<><><>0<>0<><>::
-TeamBlastSingleton.cs::CSharpScript::5790765917409709916::1793177994::0::1::::<><><>0<>0<><>::
+TeamBlastSingleton.cs::CSharpScript::5790765917409709916::1793178611::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiserCode/Variables/::1792757174
 CritAttackRateVar.cs::CSharpScript::3230034280361743181::1782405235::0::1::::<><><>0<>0<><>::
 CritHitRateVar.cs::CSharpScript::8635812020860143973::1782405249::0::1::::<><><>0<>0<><>::
@@ -1709,10 +1709,10 @@ HasTargetVar.cs::CSharpScript::3245866986048990123::1792689672::0::1::::<><><>0<
 InCombatPowerAmountVar.cs::CSharpScript::2379550944823328950::1792757131::0::1::::<><><>0<>0<><>::
 PatchUpVar.cs::CSharpScript::3704163300152184645::1784400986::0::1::::<><><>0<>0<><>::
 VigorRefundVar.cs::CSharpScript::2659734043316397022::1792675405::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Visuals/::1793177938
+::res://ShionTheBruiserCode/Visuals/::1793178610
 AnimationRestartPatch.cs::CSharpScript::4570962197437255581::1792523703::0::1::::<><><>0<>0<><>::
 ChaosEmeraldsScreen.cs::CSharpScript::2715992751403064611::1793019185::0::1::::<><><>0<>0<><>::
 CreatureFxController.cs::CSharpScript::500496703940618308::1792504072::0::1::::<><><>0<>0<><>::
 CritIndicatorPatch.cs::CSharpScript::7807271583565384706::1792504089::0::1::::<><><>0<>0<><>::
 EnergyBlast.cs::CSharpScript::772973852196163020::1792503966::0::1::::<><><>0<>0<><>::
-TeamBlastGaugePatch.cs::CSharpScript::6694855378995654689::1793177938::0::1::::<><><>0<>0<><>::
+TeamBlastGaugePatch.cs::CSharpScript::6694855378995654689::1793178610::0::1::::<><><>0<>0<><>::

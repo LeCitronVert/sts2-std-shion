@@ -19,8 +19,8 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Patches;
 public static class CritHitRollPatch
 {
     [HarmonyPrefix]
-    public static void Prefix(ValueProp props, Creature? dealer, CardModel? cardSource)
+    public static void Prefix(IEnumerable<Creature> targets, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        ShionCritSingleton.Instance?.RollPendingHit(dealer, props, cardSource);
+        ShionCritSingleton.Instance?.RollPendingHit(dealer, targets, props, cardSource);
     }
 }

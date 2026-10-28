@@ -20,6 +20,17 @@ public interface ICritHitRateContributor
 }
 
 /// <summary>
+/// Like <see cref="ICritHitRateContributor"/>, for bonuses that depend on who is hit (Hyper Offense).
+/// Only counted for real hits, since previews don't know their targets.
+/// </summary>
+public interface ITargetedCritHitRateContributor
+{
+    /// <param name="sourceCard">The attack card being played.</param>
+    /// <param name="targets">The creatures this hit damages.</param>
+    decimal GetCritHitRateBonus(CardModel sourceCard, IReadOnlyList<Creature> targets);
+}
+
+/// <summary>
 /// Implement this on a card, power, or relic to add a bonus to the whole-attack critical chance
 /// for Shion's attacks. If a critical attack is rolled, ALL hits of that attack are critical.
 /// Bonuses from all contributors are summed together.

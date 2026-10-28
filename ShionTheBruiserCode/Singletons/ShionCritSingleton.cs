@@ -135,15 +135,15 @@ public class ShionCritSingleton : CustomSingletonModel
     /// Performs the per-hit crit roll, if one is pending. Only called from
     /// <see cref="Patches.CritHitRollPatch"/> right before real damage is dealt, never from previews.
     /// </summary>
-    public void RollPendingHit(Creature? dealer, ValueProp props, CardModel? cardSource)
+    public void RollPendingHit(Creature? dealer, IEnumerable<Creature> targets, ValueProp props, CardModel? cardSource)
     {
         if (dealer == null || !dealer.HasPower<ShionCritTrackerPower>() || !props.IsPoweredAttack())
             return;
 
-        EnsureHitRolled(dealer.CombatState!, cardSource);
+        EnsureHitRolled(dealer.CombatState!, cardSource, targets.ToList());
     }
 
-    private void EnsureHitRolled(ICombatState cs, CardModel? card)
+    private void EnsureHitRolled(ICombatState cs, CardModel? card, IReadOnlyList<Creature> targets)
     {
         if (_attackStack.Count == 0)
         {
@@ -163,7 +163,7 @@ public class ShionCritSingleton : CustomSingletonModel
         if (state.HitCritRolled) return;
 
         decimal hitRate = card != null
-            ? ShionHooksHelper.CalculateCritHitRate(cs, card)
+            ? ShionHooksHelper.CalculateCritHitRate(cs, card, targets: targets)
             : 0m;
 
         float roll = card?.Owner.RunState.Rng.Niche.NextFloat() ?? 0f;

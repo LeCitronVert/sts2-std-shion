@@ -37,5 +37,19 @@
   "SHIONTHEBRUISER-BLOODBEND.title": "Blood Bend X",
   "SHIONTHEBRUISER-BLOODBEND.description": "Consumes ALL your [gold]Blood[/gold] and converts it into X for the effect of the card.",
   "SHIONTHEBRUISER-GAMBLE.title": "Gamble X",
-  "SHIONTHEBRUISER-GAMBLE.description": "Choose X cards in your [gold]Hand[/gold], add [gold]Erratic[/gold] to them this combat and put them on top of your [gold]Draw Pile[/gold].\nStatuses and Curses can be chosen."
+  "SHIONTHEBRUISER-GAMBLE.description": "Choose X cards in your [gold]Hand[/gold], add [gold]Erratic[/gold] to them this combat and put them on top of your [gold]Draw Pile[/gold].\nStatuses and Curses can be chosen.",
+
+  "SHIONTHEBRUISER-TEAMUP.title": "Team-Up",
+  "SHIONTHEBRUISER-TEAMUP.description": "Played by two players. When you play it, each ally of the named class adds an [gold]Ethereal[/gold] copy into their [gold]Hand[/gold].\nIts effect happens when one of them plays that copy. Their other copies are [gold]Exhausted[/gold].",
+  "SHIONTHEBRUISER-TEAMUP.cardText": "[gold]Team-Up:[/gold] {Class}",
+  "SHIONTHEBRUISER-TEAMUP.anyone": "Anyone",
+  "SHIONTHEBRUISER-TEAMUP.class.IRONCLAD": "Ironclad",
+  "SHIONTHEBRUISER-TEAMUP.class.SILENT": "Silent",
+  "SHIONTHEBRUISER-TEAMUP.class.DEFECT": "Defect",
+  "SHIONTHEBRUISER-TEAMUP.class.NECROBINDER": "Necrobinder",
+  "SHIONTHEBRUISER-TEAMUP.class.REGENT": "Regent",
+  "SHIONTHEBRUISER-TEAMUP.class.SHIONTHEBRUISER-SHION_THE_BRUISER": "Shion",
+  "SHIONTHEBRUISER-TEAMUP.class.SHIONTHEBRUISER-SLAL_THE_ENDLESS": "Slal",
+  "SHIONTHEBRUISER-TEAMUP.class.SHIONTHEBRUISER-SEELS_THE_RECKLESS": "Seels",
+  "SHIONTHEBRUISER-TEAMUP.class.SHIONTHEBRUISER-FRY_THE_COMMANDER": "Fry"
 }

@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -42,7 +43,7 @@ public class ShionInstinctualPremonitions() : ShionBerserkCard(2,
             CountIntents(card, IntentCategory.Other) * EnergyBonusAgainstOthers),
     ];
 
-    private enum IntentCategory { Attack, Debuff, Other }
+    internal enum IntentCategory { Attack, Debuff, Other }
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.Static(StaticHoverTip.Block),
@@ -65,10 +66,13 @@ public class ShionInstinctualPremonitions() : ShionBerserkCard(2,
         }
     }
 
-    private static List<AbstractIntent> GetEnemyIntents(CardModel card)
+    private static List<AbstractIntent> GetEnemyIntents(CardModel card) => GetEnemyIntents(card.CombatState);
+
+    // Also used by the Monster Orb (Watch and Learn)
+    internal static List<AbstractIntent> GetEnemyIntents(ICombatState? combatState)
     {
         List<AbstractIntent> intents = [];
-        foreach (var enemy in card.CombatState?.Enemies ?? [])
+        foreach (var enemy in combatState?.Enemies ?? [])
         {
             if (!enemy.IsEnemy) continue;
             if (enemy.Monster == null) continue;
@@ -78,7 +82,7 @@ public class ShionInstinctualPremonitions() : ShionBerserkCard(2,
         return intents;
     }
 
-    private static IntentCategory Categorize(AbstractIntent intent)
+    internal static IntentCategory Categorize(AbstractIntent intent)
     {
         switch (intent.IntentType)
         {

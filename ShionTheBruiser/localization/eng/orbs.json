@@ -1,0 +1,5 @@
+{
+  "SHIONTHEBRUISER-MONSTER_ORB.title": "Monster Orb",
+  "SHIONTHEBRUISER-MONSTER_ORB.description": "[gold]Passive:[/gold] At the start of your turn, for each enemy intent, gain:\nAttack: [gold]Block[/gold].\nDebuff: [blue]1[/blue] [gold]Counter Strategy[/gold].\nAnything else: Energy.\n[gold]Evoke:[/gold] Gain ALL of these once.",
+  "SHIONTHEBRUISER-MONSTER_ORB.smartDescription": "[gold]Passive:[/gold] At the start of your turn, for each enemy intent, gain:\nAttack: [blue]{Passive}[/blue] [gold]Block[/gold].\nDebuff: [blue]1[/blue] [gold]Counter Strategy[/gold].\nAnything else: {energyPrefix:energyIcons(1)}.\n[gold]Evoke:[/gold] Gain [blue]{Evoke}[/blue] [gold]Block[/gold], [blue]1[/blue] [gold]Counter Strategy[/gold] and {energyPrefix:energyIcons(1)}."
+}
