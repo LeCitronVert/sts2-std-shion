@@ -10,6 +10,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
 /// Memory that only lasts this turn: triggers at the end of your turn, then is removed.
+/// If the owner also has Memory, Memory plays both amounts at once so no card is played twice.
 /// </summary>
 public class MemoryThisTurn : SlalTheEndlessPower
 {
@@ -22,13 +23,17 @@ public class MemoryThisTurn : SlalTheEndlessPower
 
     public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (!participants.Contains(Owner)) return;
+        if (!participants.Contains(Owner) || Owner.Player is null) return;
 
-        if (Owner.Player is not null)
-        {
-            Flash();
-            await SlalMechanicsHelper.PlayFromMemory(choiceContext, Owner.Player, Amount);
-        }
+        Flash();
+        if (Owner.HasPower<Memory>()) return;
+        await SlalMechanicsHelper.PlayFromMemory(choiceContext, Owner.Player, Amount);
+    }
+
+    // Removed after the turn ends rather than right after playing, so Memory can still count it whichever triggers first
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+    {
+        if (!participants.Contains(Owner)) return;
         await PowerCmd.Remove(this);
     }
 }

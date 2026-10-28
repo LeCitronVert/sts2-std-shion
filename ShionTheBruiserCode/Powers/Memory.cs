@@ -11,6 +11,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
 /// At the end of your turn, play X random colored non-Novel cards from your Discard Pile.
+/// Also plays the Memory This Turn amount in the same pick, so no card is played twice.
 /// </summary>
 public class Memory : SlalTheEndlessPower
 {
@@ -26,6 +27,6 @@ public class Memory : SlalTheEndlessPower
         if (!participants.Contains(Owner) || Owner.Player is null) return;
 
         Flash();
-        await SlalMechanicsHelper.PlayFromMemory(choiceContext, Owner.Player, Amount);
+        await SlalMechanicsHelper.PlayFromMemory(choiceContext, Owner.Player, SlalMechanicsHelper.GetMemory(Owner));
     }
 }
