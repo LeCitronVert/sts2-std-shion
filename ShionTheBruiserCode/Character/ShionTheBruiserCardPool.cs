@@ -1,6 +1,9 @@
 ﻿using BaseLib.Abstracts;
 using ShionTheBruiser.ShionTheBruiserCode.Extensions;
 using Godot;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Unlocks;
+using ShionTheBruiser.ShionTheBruiserCode.Timeline;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Character;
 
@@ -32,4 +35,8 @@ public class ShionTheBruiserCardPool : CustomCardPoolModel
     public override Color DeckEntryCardColor => new("9234eb");
 
     public override bool IsColorless => false;
+
+    // Content of unrevealed epochs is locked (Timeline/EpochLocks.cs)
+    protected override IEnumerable<CardModel> FilterThroughEpochs(UnlockState unlockState, IEnumerable<CardModel> cards) =>
+        EpochLocks.Filter(unlockState, cards);
 }

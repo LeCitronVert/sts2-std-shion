@@ -1,6 +1,8 @@
+using System.Reflection;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Modding;
+using ShionTheBruiser.ShionTheBruiserCode.Timeline.BaseLibEpochs;
 
 namespace ShionTheBruiser.ShionTheBruiserCode;
 
@@ -21,5 +23,8 @@ public partial class MainFile : Node
         Harmony harmony = new(ModId);
 
         harmony.PatchAll();
+
+        // Before the game builds its multiplayer epoch id cache. Goes away once BaseLib registers custom epochs.
+        CustomEpochRegistry.Register(Assembly.GetExecutingAssembly());
     }
 }

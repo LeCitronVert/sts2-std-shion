@@ -7,13 +7,17 @@ using Godot;
 using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Characters;
 using MegaCrit.Sts2.Core.Nodes.Combat;
+using MegaCrit.Sts2.Core.Timeline;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Relics;
+using ShionTheBruiser.ShionTheBruiserCode.Timeline;
+using ShionTheBruiser.ShionTheBruiserCode.Timeline.BaseLibEpochs;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Character;
 
-public class ShionTheBruiser : PlaceholderCharacterModel
+public class ShionTheBruiser : PlaceholderCharacterModel, IEpochCharacter
 {
     public const string CharacterId = "ShionTheBruiser";
 
@@ -45,7 +49,17 @@ public class ShionTheBruiser : PlaceholderCharacterModel
     public override CardPoolModel CardPool => ModelDb.CardPool<ShionTheBruiserCardPool>();
     public override RelicPoolModel RelicPool => ModelDb.RelicPool<ShionTheBruiserRelicPool>();
     public override PotionPoolModel PotionPool => ModelDb.PotionPool<ShionTheBruiserPotionPool>();
-    
+
+    // Timeline (Timeline/ShionEpochs.cs). Taste of Power has its own condition.
+    protected override CharacterModel UnlocksAfterRunAs => ModelDb.Character<Silent>();
+    public EpochModel? UnlockEpoch => EpochModel.Get<ShionTheCallEpoch>();
+    public EpochModel? Act1Epoch => EpochModel.Get<ShionNewChallengesEpoch>();
+    public EpochModel? FifteenElitesEpoch => EpochModel.Get<ShionMemoriesEpoch>();
+    public EpochModel? Act2Epoch => EpochModel.Get<ShionNewFriendsEpoch>();
+    public EpochModel? FifteenBossesEpoch => EpochModel.Get<ShionDeterminationEpoch>();
+    public EpochModel? Act3Epoch => EpochModel.Get<ShionFamiliarSceneEpoch>();
+    public EpochModel? AscensionOneEpoch => EpochModel.Get<ShionIfOneDoesntCutItEpoch>();
+
     // Exclusive animations
     public static string GetEnergyAnimIfApplicable(CharacterModel character)
     {

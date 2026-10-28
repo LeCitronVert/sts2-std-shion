@@ -13,6 +13,7 @@
   "SHIONTHEBRUISER-SHION_THE_BRUISER.pronounSubject": "she",
   "SHIONTHEBRUISER-SHION_THE_BRUISER.title": "The Bruiser",
   "SHIONTHEBRUISER-SHION_THE_BRUISER.titleObject": "The Bruiser",
+  "SHIONTHEBRUISER-SHION_THE_BRUISER.unlockText": "Play a single run with [green]{Prerequisite}[/green] to unlock this character.",
 
   "SHIONTHEBRUISER-SLAL_THE_ENDLESS.aromaPrinciple": "[sine]No thought... Random strategy...[/sine]",
   "SHIONTHEBRUISER-SLAL_THE_ENDLESS.banter.alive.endTurnPing": "I'm eager to read that story you write!",
@@ -28,6 +29,7 @@
   "SHIONTHEBRUISER-SLAL_THE_ENDLESS.pronounSubject": "he",
   "SHIONTHEBRUISER-SLAL_THE_ENDLESS.title": "The Goofball",
   "SHIONTHEBRUISER-SLAL_THE_ENDLESS.titleObject": "The Goofball",
+  "SHIONTHEBRUISER-SLAL_THE_ENDLESS.unlockText": "Play a single run with [purple]{Prerequisite}[/purple] to unlock this character.",
 
   "SHIONTHEBRUISER-FRY_THE_COMMANDER.aromaPrinciple": "Command",
   "SHIONTHEBRUISER-FRY_THE_COMMANDER.banter.alive.endTurnPing": "Co-op hurry up end turn ping message",
@@ -43,6 +45,7 @@
   "SHIONTHEBRUISER-FRY_THE_COMMANDER.pronounSubject": "he",
   "SHIONTHEBRUISER-FRY_THE_COMMANDER.title": "The Commander",
   "SHIONTHEBRUISER-FRY_THE_COMMANDER.titleObject": "The Commander",
+  "SHIONTHEBRUISER-FRY_THE_COMMANDER.unlockText": "Play a single run with [blue]{Prerequisite}[/blue] to unlock this character.",
   "SHIONTHEBRUISER-SEELS_THE_RECKLESS.aromaPrinciple": "Recklessness",
   "SHIONTHEBRUISER-SEELS_THE_RECKLESS.banter.alive.endTurnPing": "Co-op hurry up end turn ping message",
   "SHIONTHEBRUISER-SEELS_THE_RECKLESS.banter.dead.endTurnPing": "...",
@@ -56,5 +59,6 @@
   "SHIONTHEBRUISER-SEELS_THE_RECKLESS.pronounPossessive": "his",
   "SHIONTHEBRUISER-SEELS_THE_RECKLESS.pronounSubject": "he",
   "SHIONTHEBRUISER-SEELS_THE_RECKLESS.title": "The Reckless",
-  "SHIONTHEBRUISER-SEELS_THE_RECKLESS.titleObject": "The Reckless"
+  "SHIONTHEBRUISER-SEELS_THE_RECKLESS.titleObject": "The Reckless",
+  "SHIONTHEBRUISER-SEELS_THE_RECKLESS.unlockText": "Play a single run with [gold]{Prerequisite}[/gold] to unlock this character."
 }

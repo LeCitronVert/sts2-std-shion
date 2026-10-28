@@ -2,12 +2,15 @@ using BaseLib.Abstracts;
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Timeline;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Relics;
+using ShionTheBruiser.ShionTheBruiserCode.Timeline;
+using ShionTheBruiser.ShionTheBruiserCode.Timeline.BaseLibEpochs;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Character;
 
-public class SeelsTheReckless : PlaceholderCharacterModel
+public class SeelsTheReckless : PlaceholderCharacterModel, IEpochCharacter
 {
     public const string CharacterId = "SeelsTheReckless";
 
@@ -41,6 +44,10 @@ public class SeelsTheReckless : PlaceholderCharacterModel
     public override CardPoolModel CardPool => ModelDb.CardPool<SeelsTheRecklessCardPool>();
     public override RelicPoolModel RelicPool => ModelDb.RelicPool<SeelsTheRecklessRelicPool>();
     public override PotionPoolModel PotionPool => ModelDb.PotionPool<SeelsTheRecklessPotionPool>();
+
+    // Timeline (Timeline/SeelsEpochs.cs)
+    protected override CharacterModel UnlocksAfterRunAs => ModelDb.Character<SlalTheEndless>();
+    public EpochModel? UnlockEpoch => EpochModel.Get<SeelsUnlockEpoch>();
 
     // Couleurs
     public override Color MapDrawingColor => Color;

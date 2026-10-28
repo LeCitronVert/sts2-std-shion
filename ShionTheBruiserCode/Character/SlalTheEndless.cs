@@ -7,13 +7,16 @@ using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Combat;
+using MegaCrit.Sts2.Core.Timeline;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Relics;
+using ShionTheBruiser.ShionTheBruiserCode.Timeline;
+using ShionTheBruiser.ShionTheBruiserCode.Timeline.BaseLibEpochs;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Character;
 
 
-public class SlalTheEndless : PlaceholderCharacterModel
+public class SlalTheEndless : PlaceholderCharacterModel, IEpochCharacter
 {
     public const string CharacterId = "SlalTheEndless";
 
@@ -45,6 +48,10 @@ public class SlalTheEndless : PlaceholderCharacterModel
     public override CardPoolModel CardPool => ModelDb.CardPool<SlalTheEndlessCardPool>();
     public override RelicPoolModel RelicPool => ModelDb.RelicPool<SlalTheEndlessRelicPool>();
     public override PotionPoolModel PotionPool => ModelDb.PotionPool<SlalTheEndlessPotionPool>();
+
+    // Timeline (Timeline/SlalEpochs.cs)
+    protected override CharacterModel UnlocksAfterRunAs => ModelDb.Character<ShionTheBruiser>();
+    public EpochModel? UnlockEpoch => EpochModel.Get<SlalUnlockEpoch>();
     
     // Custom visuals
     public override Control CustomIcon

@@ -2,12 +2,15 @@ using BaseLib.Abstracts;
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Timeline;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Relics;
+using ShionTheBruiser.ShionTheBruiserCode.Timeline;
+using ShionTheBruiser.ShionTheBruiserCode.Timeline.BaseLibEpochs;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Character;
 
-public class FryTheCommander : PlaceholderCharacterModel
+public class FryTheCommander : PlaceholderCharacterModel, IEpochCharacter
 {
     public const string CharacterId = "FryTheCommander";
 
@@ -44,6 +47,10 @@ public class FryTheCommander : PlaceholderCharacterModel
     public override CardPoolModel CardPool => ModelDb.CardPool<FryTheCommanderCardPool>();
     public override RelicPoolModel RelicPool => ModelDb.RelicPool<FryTheCommanderRelicPool>();
     public override PotionPoolModel PotionPool => ModelDb.PotionPool<FryTheCommanderPotionPool>();
+
+    // Timeline (Timeline/FryEpochs.cs)
+    protected override CharacterModel UnlocksAfterRunAs => ModelDb.Character<SeelsTheReckless>();
+    public EpochModel? UnlockEpoch => EpochModel.Get<FryUnlockEpoch>();
 
     // Couleurs
     public override Color MapDrawingColor => Color;
