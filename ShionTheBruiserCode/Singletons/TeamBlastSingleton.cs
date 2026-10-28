@@ -151,7 +151,8 @@ public class TeamBlastSingleton : CustomSingletonModel
         }
         else if (dealer != null && IsAlly(dealer))
         {
-            amount += hpDamage * DamageDealtMultiplier;
+            // Damage dealt to an enemy's Block counts too
+            amount += (hpDamage + result.BlockedDamage) * DamageDealtMultiplier;
         }
 
         Fill(amount);
@@ -227,10 +228,6 @@ public class TeamBlastSingleton : CustomSingletonModel
     public HoverTip CreateGaugeHoverTip()
     {
         var description = new LocString("static_hover_tips", "SHIONTHEBRUISER-TEAM_BLAST_GAUGE.description");
-        description.Add("Value", Value);
-        description.Add("Max", MaxValue);
-        description.Add("DeathBonus", DeathBonus.ToString("0.##"));
-        description.Add("OstyDeathBonus", (DeathBonus * AllyOstyDeathMultiplier).ToString("0.##"));
         description.Add("Locked", IsLocked ? 1 : 0);
         return new HoverTip(new LocString("static_hover_tips", "SHIONTHEBRUISER-TEAM_BLAST_GAUGE.title"), description.GetFormattedText());
     }

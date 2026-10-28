@@ -1,0 +1,2 @@
+﻿59246
+/Users/shion/Applications/MegaDot.app/Contents/MacOS/Godot
