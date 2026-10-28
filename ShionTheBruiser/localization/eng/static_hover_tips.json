@@ -6,5 +6,7 @@
   "SHIONTHEBRUISER-CRITICAL_DRAW.title": "Critical Draw",
   "SHIONTHEBRUISER-CRITICAL_DRAW.description": "When you draw this card from your [gold]Draw Pile[/gold], gain [blue]{CriticalDraw}%[/blue] [gold]Critical Hit[/gold] chance this turn.\n[gold]Critical Draw[/gold] can grant at most [blue]50%[/blue] [gold]Critical Hit[/gold] chance per turn.",
   "SHIONTHEBRUISER-PATCH_UP.title": "Patch Up",
-  "SHIONTHEBRUISER-PATCH_UP.description": "Heal for {PatchUp:cond:>0?[blue]{PatchUp}[/blue] HP|the amount specified}.\nThis healing cannot put you above [blue]50%[/blue] of your Max HP, unless modified by other effects."
+  "SHIONTHEBRUISER-PATCH_UP.description": "Heal for {PatchUp:cond:>0?[blue]{PatchUp}[/blue] HP|the amount specified}.\nThis healing cannot put you above [blue]50%[/blue] of your Max HP, unless modified by other effects.",
+  "SHIONTHEBRUISER-TEAM_BLAST_GAUGE.title": "Team Blast",
+  "SHIONTHEBRUISER-TEAM_BLAST_GAUGE.description": "Players fill this gauge together by dealing damage, blocking damage and taking damage. Whenever any creature dies, fill it by [blue]{DeathBonus}[/blue] ([blue]{OstyDeathBonus}[/blue] for an ally [gold]Osty[/gold]).\nOnce full, players with a [gold]Team Blast[/gold] card add an [gold]Ethereal[/gold] copy of it into their [gold]Hand[/gold] at the start of each turn.\nOnly one [gold]Team Blast[/gold] can be used per combat. The gauge carries over between combats, but empties after a combat where a [gold]Team Blast[/gold] was used.\n{Locked:cond:>0?[gold]Locked[/gold] for this combat.|Gauge: [blue]{Value}[/blue]/[blue]{Max}[/blue]}"
 }

@@ -27,6 +27,8 @@ public class FryMechaExpansionPack() : FryTheCommanderCard(2,
 
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
 
+    public override bool CanBeGeneratedInCombat => false;
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [DreamersKeywords.TeamBlast, FryCardKeywords.Request];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [

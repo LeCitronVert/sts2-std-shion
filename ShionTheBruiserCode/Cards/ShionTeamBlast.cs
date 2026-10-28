@@ -14,11 +14,13 @@ using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionTeamBlast() : ShionLatentCard(3,
+public class ShionTeamBlast() : ShionTheBruiserCard(3,
     CardType.Power, CardRarity.Rare,
     TargetType.AllAllies)
 {
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
+
+    public override bool CanBeGeneratedInCombat => false;
 
     public override bool GainsBlock => true;
 
@@ -32,8 +34,7 @@ public class ShionTeamBlast() : ShionLatentCard(3,
     ];
     
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
-        DreamersKeywords.TeamBlast,
-        ShionCardKeywords.Latent
+        DreamersKeywords.TeamBlast
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
