@@ -27,6 +27,8 @@ public class ShionDualStrike() : ShionTeamUpCard(1,
         new DamageVar(16M, ValueProp.Move),
         new CritDisplayTooltipVar(),
     ];
+    
+    protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];
 
     protected override async Task OnTeamUp(PlayerChoiceContext choiceContext, CardPlay play, Player initiator, Player partner)
     {

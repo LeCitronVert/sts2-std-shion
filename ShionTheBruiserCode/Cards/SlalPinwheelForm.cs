@@ -14,6 +14,8 @@ public class SlalPinwheelForm() : SlalTheEndlessCard(2,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
+    protected override HashSet<CardTag> CanonicalTags => [SlalCardTags.Form];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<PinwheelForm>(1),
     ];

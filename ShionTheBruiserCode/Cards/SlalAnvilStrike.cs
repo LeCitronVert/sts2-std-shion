@@ -20,6 +20,8 @@ public class SlalAnvilStrike() : SlalTheEndlessCard(1,
 {
     public override bool CanBeGeneratedInCombat => false;
 
+    protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<Powers.Random>(1),
         new CalculationBaseVar(0),

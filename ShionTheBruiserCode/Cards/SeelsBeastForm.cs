@@ -20,6 +20,8 @@ public class SeelsBeastForm() : SeelsTheRecklessCard(3,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
+    protected override HashSet<CardTag> CanonicalTags => [SlalCardTags.Form];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<BeastForm>(2M)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<VulnerablePower>()];
