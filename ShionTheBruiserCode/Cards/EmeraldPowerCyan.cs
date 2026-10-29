@@ -11,11 +11,11 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
 /// Play a copy of ALL the Power cards you played this combat.
-/// Whenever you draw this card, reduce its cost by 1 this combat. Exhaust. (Retain)
+/// Whenever you draw this card, reduce its cost by 1 this combat. Exhaust. (Costs 2 less)
 /// Shuffled into the Draw Pile by the Cyan Chaos Emerald.
 /// </summary>
 [Pool(typeof(TokenCardPool))]
-public class EmeraldPowerCyan() : ShionTheBruiserCard(3,
+public class EmeraldPowerCyan() : ShionTheBruiserCard(4,
     CardType.Skill, CardRarity.Token,
     TargetType.Self)
 {
@@ -64,6 +64,6 @@ public class EmeraldPowerCyan() : ShionTheBruiserCard(3,
 
     protected override void OnUpgrade()
     {
-        AddKeyword(CardKeyword.Retain);
+        EnergyCost.UpgradeBy(-2);
     }
 }

@@ -39,12 +39,14 @@ public static class CreatureFxPatch
 /// <list type="bullet">
 /// <item>Berserk sparks (scenes/fx/berserk_sparks.tscn) on any creature that has the Berserk tracker and is Berserk.</item>
 /// <item>Shion's auras (scenes/fx/shion_auras.tscn), stacked in order of application.</item>
+/// <item>Memory bulbs (scenes/fx/memory_bulbs.tscn) above the head, one per stack of Memory, hopping when Memory plays cards.</item>
 /// </list>
 /// </summary>
 public class CreatureFxController
 {
     private static readonly string SparksScenePath = Path.Join(MainFile.ResPath, "scenes", "fx", "berserk_sparks.tscn");
     private static readonly string AurasScenePath = Path.Join(MainFile.ResPath, "scenes", "fx", "shion_auras.tscn");
+    private static readonly string MemoryBulbsScenePath = Path.Join(MainFile.ResPath, "scenes", "fx", "memory_bulbs.tscn");
 
     /// <summary>Light layer only Shion's body is on, so her aura lights only light her. Matches shion_auras.gd.</summary>
     public const int AuraLightLayer = 1 << 19;
@@ -67,6 +69,7 @@ public class CreatureFxController
     private readonly Creature _creature;
     private readonly Node2D _sparks;
     private readonly Node2D? _auras;
+    private readonly Node2D? _memoryBulbs;
 
     /// <summary>Active auras, in order of application.</summary>
     private readonly List<string> _activeAuras = [];
@@ -80,6 +83,14 @@ public class CreatureFxController
         _sparks = GD.Load<PackedScene>(SparksScenePath).Instantiate<Node2D>();
         visuals.AddChild(_sparks);
         _sparks.Call("set_area", bounds.Grow(20f));
+
+        // Only players can get Memory
+        if (_creature.IsPlayer)
+        {
+            _memoryBulbs = GD.Load<PackedScene>(MemoryBulbsScenePath).Instantiate<Node2D>();
+            visuals.AddChild(_memoryBulbs);
+            _memoryBulbs.Call("set_area", bounds);
+        }
 
         if (_creature.Player?.Character is Character.ShionTheBruiser)
         {
@@ -101,9 +112,15 @@ public class CreatureFxController
         var controller = new CreatureFxController(node);
 
         void OnCombatStateChanged(CombatState _) => controller.Refresh();
+        void OnMemoryCardPlayed(Creature creature, int index) => controller.HopMemoryBulb(creature, index);
 
         CombatManager.Instance.StateTracker.CombatStateChanged += OnCombatStateChanged;
-        node.TreeExiting += () => CombatManager.Instance.StateTracker.CombatStateChanged -= OnCombatStateChanged;
+        SlalMechanicsHelper.MemoryCardPlayed += OnMemoryCardPlayed;
+        node.TreeExiting += () =>
+        {
+            CombatManager.Instance.StateTracker.CombatStateChanged -= OnCombatStateChanged;
+            SlalMechanicsHelper.MemoryCardPlayed -= OnMemoryCardPlayed;
+        };
         controller.Refresh();
     }
 
@@ -114,6 +131,11 @@ public class CreatureFxController
         var alive = _creature.IsAlive;
         _sparks.Call("set_active", alive && _creature.HasPower<BerserkIndicator>() && ShionMechanicsHelper.IsBerserk(_creature));
 
+        if (_memoryBulbs != null && GodotObject.IsInstanceValid(_memoryBulbs))
+        {
+            _memoryBulbs.Call("set_count", alive ? SlalMechanicsHelper.GetMemory(_creature) : 0);
+        }
+
         if (_auras == null || !GodotObject.IsInstanceValid(_auras)) return;
 
         foreach (var (name, isActive) in AuraConditions)
@@ -123,5 +145,11 @@ public class CreatureFxController
             else if (!active) _activeAuras.Remove(name);
         }
         _auras.Call("set_auras", _activeAuras.ToArray());
+    }
+
+    private void HopMemoryBulb(Creature creature, int index)
+    {
+        if (creature != _creature || _memoryBulbs == null || !GodotObject.IsInstanceValid(_memoryBulbs)) return;
+        _memoryBulbs.Call("hop", index);
     }
 }

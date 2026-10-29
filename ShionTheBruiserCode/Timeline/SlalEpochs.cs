@@ -71,7 +71,7 @@ public class SlalMimickeryEpoch : DreamersEpoch<SlalStory>
 
     public override IReadOnlyList<CardModel> Cards =>
     [
-        ModelDb.Card<SlalCartoonishMimickery>(),
+        ModelDb.Card<SlalAbsorption>(),
         ModelDb.Card<SlalReactiveShape>(),
         ModelDb.Card<SlalBlobbishCrouch>(),
     ];

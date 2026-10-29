@@ -39,11 +39,8 @@ public class GenieForm : SlalTheEndlessPower, ISlalRandomListener
         var options = SlalMechanicsHelper.GetCharacterCardOptions(player, includeOwnCharacter: true);
         for (var i = 0; i < times; i++)
         {
-            var chosen = await SlalMechanicsHelper.ChooseCardToAddToHand(choiceContext, player, options, CardsToChooseFrom, false);
-            if (chosen != null && !chosen.EnergyCost.CostsX)
-            {
-                chosen.SetToFreeThisTurn();
-            }
+            // Made free before being added, so Sparrow Form doesn't trigger on it
+            await SlalMechanicsHelper.ChooseCardToAddToHand(choiceContext, player, options, CardsToChooseFrom, false, freeThisTurn: true);
         }
     }
 }

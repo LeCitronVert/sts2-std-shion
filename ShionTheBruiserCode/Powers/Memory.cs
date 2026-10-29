@@ -11,7 +11,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// At the end of your turn, play X random non-Novel playable cards without Exhaust from your Discard Pile.
+/// At the end of your turn, play X random non-Rare, non-Novel playable cards without Exhaust from your Discard Pile.
 /// Also plays the Memory This Turn amount in the same pick, so no card is played twice.
 /// Cards it plays apply X more Confusion (X = the Memory amount used).
 /// </summary>

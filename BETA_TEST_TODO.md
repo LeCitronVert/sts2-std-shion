@@ -682,3 +682,47 @@ Content I skipped (incomplete in the spec):
 
 ---
 
+
+## 5. Slal: "To change-2" pass
+
+- [ ] Re-export the `.pck` with MegaDot (new scene: `scenes/fx/memory_bulbs.tscn` + `memory_bulbs.gd`; MegaDot will generate their `.uid` files), then build and launch.
+
+### 5.1 Cards
+
+- [ ] **Draft Phase** no longer has Always Novel.
+- [ ] **Favourite Bucket**: 1 cost. Slimy. Gain 11 Block, gain 2 Weak, ignore your Vulnerable until your next turn. Exhaust. Upgrade: loses Exhaust (no more Retain or double Block).
+- [ ] **Logic Shift**: 0 cost, no target. Always Novel. Choose a card in your Discard Pile to put into your Hand, then discard 1 card. Exhaust. Upgrade: loses Exhaust. Works with an empty Discard Pile and with an empty Hand.
+- [ ] **Sparrow Form**: the first X non-free cards you create each turn become free to play. The cost stays at 0 until the card is played, even if it was created in the Draw/Discard Pile.
+- [ ] Sparrow Form's icon counts down the triggers left this turn and resets at the start of your turn. Playing a second Sparrow Form raises it.
+- [ ] Sparrow Form ignores 0-cost, X-cost and Unplayable cards. It also ignores cards from **Splash**, **Genie Form** and **Creativity Unbound**, which are created already free.
+- [ ] **Creativity Unbound**: Always Novel (kept Exhaust and its cost/upgrade). Adds Genie, Television or Sparrow Form, free this turn. Those three are **no longer Goofball Token Powers** (Surprise Shapeshift, Hat Tip etc. never create them).
+- [ ] **Trash Disposal** and **Enthusiastic Wave** have Always Novel (Trash Disposal still draws 1).
+- [ ] **Instant Mattress**: another player gains 4 Block and ignores Vulnerable until your next turn, and you gain 4 Block. Upgraded: targets ALL players, 6 Block each, all ignore Vulnerable. The old damage redirect and Dexterity are gone.
+- [ ] **Ignore Vulnerable** (new power): an enemy attack on a Vulnerable player with it does normal damage, also with Paper Phrog / Cruelty / Debilitate. Removed at the start of your next turn.
+- [ ] **Slime Form**: upgrade now reduces the cost to 1 (Block per Slimed stays 3).
+- [ ] **Share Secrets** is a Skill: apply 15 Confusion, add a Fresh Idea (+ if upgraded) to Draw Pile, Hand and Discard Pile. No damage.
+- [ ] **Surprise Shapeshift** applies Confusion *before* dealing damage, so it can execute with its own hit.
+- [ ] **Emerald Power: Cyan**: 4 cost, upgrade reduces it by 2 (no more Retain). Still gets 1 cheaper when drawn.
+- [ ] Epoch 3 (**Mimickery**) unlocks **Absorption** instead of **Cartoonish Mimickery**. Cartoonish Mimickery is available from the start.
+
+### 5.2 Keywords
+
+- [ ] **Novel** tooltip: "When played, gain 1 Random. Identical cards lose Novel this fight, including future copies. Can't be played by Memory."
+- [ ] **Always Novel** tooltip: "Novel. This keyword is not removed after being played."
+- [ ] **Memory** text says non-Rare, and Memory no longer plays **Rare** cards (still skips Novel, Unplayable and Exhaust cards). Also with Continuity Thread's choice screen.
+
+### 5.3 Visuals
+
+- [ ] **Confusion execute**: when an attack doesn't kill a Confused enemy but Confusion executes it, a green puff of smoke appears and the enemy flies right and slightly up, spinning clockwise (almost one full turn) until it leaves the screen. There's no normal death animation.
+- [ ] Spin-off: spins around its own center (not its feet). Works for big/small enemies and flipped ones. The death sound still plays, and the combat ends normally if it was the last enemy.
+- [ ] Spin-off: enemies that revive or prevent death (e.g. multi-phase bosses) don't fly away. Attacks that kill without the Confusion execute play the normal death.
+- [ ] **Memory bulbs**: one light bulb per stack of Memory (incl. Memory this turn) over the head of any player who has it. Colors cycle red, green, blue, yellow, purple, white.
+- [ ] Bulbs orbit slowly and never go below the neck. Back ones are smaller and darker. They grow in/shrink out when Memory changes and disappear on death.
+- [ ] During a Memory proc, the bulbs hop one after the other, one per card played. Television Form replays don't make them hop.
+- [ ] Bulbs are positioned well on Slal and on other characters who got Memory (e.g. Tabula Rasa). Size/orbit values are exported in `memory_bulbs.gd` if they need tuning.
+
+### 5.4 Decisions I made
+
+- [ ] "Ignore Vulnerable this turn" lasts **until your next turn** (so it covers the enemy turn), as a new **Ignore Vulnerable** buff.
+- [ ] Sparrow Form makes cards free **until played** (not only this turn). The spec just says "free to play".
+- [ ] The old **Instant Mattress**, **Instant Mattress Dexterity**, **Favourite Bucket** and **Logic Shift Strength Down** powers stay in the code but nothing applies them anymore.

@@ -168,11 +168,12 @@ public static class SlalMechanicsHelper
     }
 
     /// <summary>
-    /// Non-Novel playable cards without Exhaust.
+    /// Non-Rare, non-Novel playable cards without Exhaust.
     /// </summary>
     public static bool CanBePlayedByMemory(Player player, CardModel card)
     {
         return !IsNovel(card)
+            && card.Rarity != CardRarity.Rare
             && !card.Keywords.Contains(CardKeyword.Unplayable)
             && !card.Keywords.Contains(CardKeyword.Exhaust);
     }
@@ -231,24 +232,33 @@ public static class SlalMechanicsHelper
         if (continuityThread != null)
         {
             var chosen = await continuityThread.SelectCardsForMemory(choiceContext, player, count, c => CanBePlayedByMemory(player, c));
-            await MemoryAutoChoice.Run(player, () => AutoPlayFromDiscard(choiceContext, player, chosen, exhaust: true, confusionBonus: count));
+            await MemoryAutoChoice.Run(player, () => AutoPlayFromDiscard(choiceContext, player, chosen, exhaust: true, confusionBonus: count, fromMemory: true));
             return;
         }
 
         var picked = PickRandomCards(player, PileType.Discard, count, c => CanBePlayedByMemory(player, c));
-        await MemoryAutoChoice.Run(player, () => AutoPlayFromDiscard(choiceContext, player, picked, confusionBonus: count));
+        await MemoryAutoChoice.Run(player, () => AutoPlayFromDiscard(choiceContext, player, picked, confusionBonus: count, fromMemory: true));
     }
+
+    /// <summary>
+    /// Raised for each card Memory plays, with how many it played before it this proc (makes the Memory bulbs hop).
+    /// Visual only.
+    /// </summary>
+    public static event Action<Creature, int>? MemoryCardPlayed;
 
     /// <summary>
     /// Plays the given cards from the Discard Pile, skipping those that left it in the meantime.
     /// </summary>
-    public static async Task AutoPlayFromDiscard(PlayerChoiceContext choiceContext, Player player, IEnumerable<CardModel> cards, bool exhaust = false, int confusionBonus = 0)
+    public static async Task AutoPlayFromDiscard(PlayerChoiceContext choiceContext, Player player, IEnumerable<CardModel> cards, bool exhaust = false, int confusionBonus = 0, bool fromMemory = false)
     {
+        var played = 0;
         foreach (var card in cards.ToList())
         {
             if (player.Creature.IsDead || CombatManager.Instance.IsOverOrEnding) break;
             // A previous card may have moved it
             if (card.Pile?.Type != PileType.Discard) continue;
+
+            if (fromMemory) MemoryCardPlayed?.Invoke(player.Creature, played++);
 
             // Registered before the card reaches the Play pile, so the card shown there already displays the extra Confusion
             if (confusionBonus > 0) MemoryConfusionBonuses[card] = confusionBonus;
@@ -427,8 +437,9 @@ public static class SlalMechanicsHelper
 
     /// <summary>
     /// Shows <paramref name="count"/> random cards from the options (skippable) and adds the chosen one into the Hand.
+    /// With <paramref name="freeThisTurn"/>, it is made free this turn before being added (so Sparrow Form doesn't trigger on it).
     /// </summary>
-    public static async Task<CardModel?> ChooseCardToAddToHand(PlayerChoiceContext choiceContext, Player player, IEnumerable<CardModel> options, int count, bool upgraded)
+    public static async Task<CardModel?> ChooseCardToAddToHand(PlayerChoiceContext choiceContext, Player player, IEnumerable<CardModel> options, int count, bool upgraded, bool freeThisTurn = false)
     {
         var cards = CreateRandomCards(player, count, upgraded, options.Where(c => c.CanBeGeneratedInCombat));
         if (cards.Count == 0) return null;
@@ -436,6 +447,7 @@ public static class SlalMechanicsHelper
         var chosen = await CardSelectCmd.FromChooseACardScreen(choiceContext, cards, player, canSkip: true);
         if (chosen != null)
         {
+            if (freeThisTurn && !chosen.EnergyCost.CostsX) chosen.SetToFreeThisTurn();
             await CardPileCmd.AddGeneratedCardToCombat(chosen, PileType.Hand, player);
         }
         return chosen;
@@ -467,13 +479,10 @@ public static class SlalMechanicsHelper
         ModelDb.Card<SlalBumperForm>(),
         ModelDb.Card<SlalVentilatorForm>(),
         ModelDb.Card<SlalSqueakySquirrelForm>(),
-        ModelDb.Card<SlalGenieForm>(),
-        ModelDb.Card<SlalTelevisionForm>(),
-        ModelDb.Card<SlalSparrowForm>(),
     ];
 
     /// <summary>
-    /// Goofball Token Powers that can only be created once Creativity Unbound has been played this combat.
+    /// Powers created by Creativity Unbound. They aren't Goofball Token Powers.
     /// </summary>
     public static IReadOnlyList<CardModel> CreativityUnboundTokenPowers => [
         ModelDb.Card<SlalGenieForm>(),
@@ -486,27 +495,12 @@ public static class SlalMechanicsHelper
         return GoofballTokenPowers.Any(c => c.Id == card.Id);
     }
 
-    public static bool HasPlayedCreativityUnbound(Player player)
-    {
-        return CombatManager.Instance.History.CardPlaysStarted
-            .Any(e => e.CardPlay.Card.Owner == player && e.CardPlay.Card is SlalCreativityUnbound);
-    }
-
-    /// <summary>
-    /// The Goofball Token Powers that can be created right now for this player.
-    /// </summary>
-    public static IReadOnlyList<CardModel> GetCreatableGoofballTokenPowers(Player player)
-    {
-        if (HasPlayedCreativityUnbound(player)) return GoofballTokenPowers;
-        return GoofballTokenPowers.Where(c => CreativityUnboundTokenPowers.All(u => u.Id != c.Id)).ToList();
-    }
-
     /// <summary>
     /// Creates a random Goofball Token Power, avoiding the last one given if possible.
     /// </summary>
     public static CardModel CreateGoofballTokenPower(Player player, bool upgraded, ModelId? lastGiven = null)
     {
-        return CreateTokenAvoiding(player, GetCreatableGoofballTokenPowers(player), lastGiven, upgraded);
+        return CreateTokenAvoiding(player, GoofballTokenPowers, lastGiven, upgraded);
     }
 
     /// <summary>
@@ -514,7 +508,7 @@ public static class SlalMechanicsHelper
     /// </summary>
     public static List<CardModel> CreateDifferentGoofballTokenPowers(Player player, int count, bool upgraded)
     {
-        var canonicalOptions = GetCreatableGoofballTokenPowers(player);
+        var canonicalOptions = GoofballTokenPowers;
         List<CardModel> remaining = [..canonicalOptions];
         List<CardModel> created = [];
         for (var i = 0; i < count; i++)

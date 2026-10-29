@@ -11,7 +11,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Deal 5 (6) damage. Apply 5 (6) Confusion. Add 1 (2) random Goofball Token Powers into your Draw Pile.
+/// Apply 5 (6) Confusion. Deal 5 (6) damage. Add 1 (2) random Goofball Token Powers into your Draw Pile.
 /// </summary>
 public class SlalSurpriseShapeshift() : SlalTheEndlessCard(1,
     CardType.Attack, CardRarity.Common,
@@ -33,8 +33,8 @@ public class SlalSurpriseShapeshift() : SlalTheEndlessCard(1,
     }
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(5M, ValueProp.Move),
         new PowerVar<Confusion>(5),
+        new DamageVar(5M, ValueProp.Move),
         new CardsVar(1),
     ];
 
@@ -49,12 +49,6 @@ public class SlalSurpriseShapeshift() : SlalTheEndlessCard(1,
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
 
-        await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
-            .FromCard(card)
-            .Targeting(play.Target)
-            .WithHitFx("vfx/vfx_attack_blunt")
-            .Execute(choiceContext);
-
         await PowerCmd.Apply<Confusion>(
             choiceContext,
             play.Target,
@@ -62,6 +56,12 @@ public class SlalSurpriseShapeshift() : SlalTheEndlessCard(1,
             card.Owner.Creature,
             card
         );
+
+        await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
+            .FromCard(card)
+            .Targeting(play.Target)
+            .WithHitFx("vfx/vfx_attack_blunt")
+            .Execute(choiceContext);
 
         for (var i = 0; i < card.DynamicVars.Cards.IntValue; i++)
         {

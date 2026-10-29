@@ -3,19 +3,22 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Playing it makes Genie, Television and Sparrow Form creatable as Goofball Token Powers for the rest of the combat.
-/// Add 1 random of those three into your Hand. It is free to play this turn. Exhaust.
+/// Always Novel. Add 1 random power out of Genie, Television and Sparrow Form into your Hand. It is free to play this turn. Exhaust.
 /// </summary>
 public class SlalCreativityUnbound() : SlalTheEndlessCard(3,
     CardType.Skill, CardRarity.Rare,
     TargetType.Self)
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [
+        SlalCardKeywords.AlwaysNovel,
+        CardKeyword.Exhaust,
+    ];
 
     private ModelId? _lastGivenPower;
 
@@ -47,8 +50,9 @@ public class SlalCreativityUnbound() : SlalTheEndlessCard(3,
 
         var power = SlalMechanicsHelper.CreateTokenAvoiding(card.Owner, SlalMechanicsHelper.CreativityUnboundTokenPowers, LastGivenPower, false);
         LastGivenPower = power.Id;
-        await CardPileCmd.AddGeneratedCardToCombat(power, PileType.Hand, card.Owner);
+        // Made free before being added, so Sparrow Form doesn't trigger on it
         power.SetToFreeThisTurn();
+        await CardPileCmd.AddGeneratedCardToCombat(power, PileType.Hand, card.Owner);
     }
 
     protected override void OnUpgrade()

@@ -4,12 +4,13 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Add Throw Garbage into another player's Hand. Draw 1 card.
+/// Always Novel. Add Throw Garbage into another player's Hand. Draw 1 card.
 /// Upgraded: into ALL players' Hands (including yours).
 /// </summary>
 public class SlalTrashDisposal() : SlalTheEndlessCard(0,
@@ -19,6 +20,8 @@ public class SlalTrashDisposal() : SlalTheEndlessCard(0,
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
 
     public override bool CanBeGeneratedInCombat => false;
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [SlalCardKeywords.AlwaysNovel];
 
     public override TargetType TargetType => IsUpgraded ? TargetType.AllAllies : TargetType.AnyAlly;
 

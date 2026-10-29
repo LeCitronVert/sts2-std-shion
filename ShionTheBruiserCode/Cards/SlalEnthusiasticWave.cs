@@ -5,12 +5,13 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Enchantments;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Add 1 Steady Fresh Idea into another player's Hand.
+/// Always Novel. Add 1 Steady Fresh Idea into another player's Hand.
 /// Upgraded: add 2 Steady Fresh Ideas into ALL players' Hands (including yours).
 /// </summary>
 public class SlalEnthusiasticWave() : SlalTheEndlessCard(0,
@@ -20,6 +21,8 @@ public class SlalEnthusiasticWave() : SlalTheEndlessCard(0,
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
 
     public override bool CanBeGeneratedInCombat => false;
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [SlalCardKeywords.AlwaysNovel];
 
     public override TargetType TargetType => IsUpgraded ? TargetType.AllAllies : TargetType.AnyAlly;
 

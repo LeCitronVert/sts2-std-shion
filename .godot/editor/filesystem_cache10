@@ -7,7 +7,7 @@ ShionTheBruiser.json::JSON::-1::1792433998::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1793310481
+::res://bin/ExportRelease/net9.0/publish/::1793311928
 ShionTheBruiser.deps.json::JSON::-1::1793307387::0::1::::<><><>0<>0<><>::
 ::res://ci/::1792939391
 ::res://ci/game-refs/::1792939391
@@ -1521,9 +1521,9 @@ RestSiteHooks.cs::CSharpScript::3722907556398537321::1783323268::0::1::::<><><>0
 RestSiteOptionPatches.cs::CSharpScript::5859460897548258494::1791501155::0::1::::<><><>0<>0<><>::
 SatedPatch.cs::CSharpScript::7062723142091543022::1793290483::0::1::::<><><>0<>0<><>::
 SeekRestSitePatch.cs::CSharpScript::2938708185198662857::1793016819::0::1::::<><><>0<>0<><>::
-ShionAncientRelicPatches.cs::CSharpScript::1924961160751329131::1793306051::0::1::::<><><>0<>0<><>::
+ShionAncientRelicPatches.cs::CSharpScript::1924961160751329131::1793311732::0::1::::<><><>0<>0<><>::
 TeamBlastHiddenPilePatch.cs::CSharpScript::2785949779694875366::1793177883::0::1::::<><><>0<>0<><>::
-TeamUpPatches.cs::CSharpScript::4786867569928225186::1793304285::0::1::::<><><>0<>0<><>::
+TeamUpPatches.cs::CSharpScript::4786867569928225186::1793311732::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiserCode/Potions/::1793012184
 CottonCandy.cs::CSharpScript::5285314688492318686::1792779141::0::1::::<><><>0<>0<><>::
 CriticalPotion.cs::CSharpScript::1928527186095989498::1793012183::0::1::::<><><>0<>0<><>::

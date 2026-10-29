@@ -2,68 +2,54 @@ using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.CardPools;
-using MegaCrit.Sts2.Core.Models.Powers;
-using ShionTheBruiser.ShionTheBruiserCode.Helper;
-using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Transform a card in your Hand into a random non-Rare Colorless card (Rare allowed with Creative Spirit).
-/// It keeps the same cost as the original card. An enemy loses Strength equal to that cost this turn.
-/// The new card is upgraded if the original was, and Unplayable if the original was.
+/// Always Novel. Choose a card in your Discard Pile to put into your Hand. Discard 1 card. Exhaust. (Lose Exhaust)
 /// </summary>
-public class SlalLogicShift() : SlalTheEndlessCard(2,
+public class SlalLogicShift() : SlalTheEndlessCard(0,
     CardType.Skill, CardRarity.Uncommon,
-    TargetType.AnyEnemy)
+    TargetType.Self)
 {
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.Static(StaticHoverTip.Transform),
-        HoverTipFactory.FromPower<StrengthPower>(),
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [
+        SlalCardKeywords.AlwaysNovel,
+        CardKeyword.Exhaust,
     ];
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(1)];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
         var card = this;
-        ArgumentNullException.ThrowIfNull(play.Target);
 
-        var original = (await CardSelectCmd.FromHand(
+        var chosen = (await CardSelectCmd.FromCombatPile(
+            choiceContext,
+            PileType.Discard.GetPile(card.Owner),
+            card.Owner,
+            new CardSelectorPrefs(card.SelectionScreenPrompt, 1)
+        )).FirstOrDefault();
+        if (chosen != null)
+        {
+            await CardPileCmd.Add(chosen, PileType.Hand);
+        }
+
+        var discarded = await CardSelectCmd.FromHandForDiscard(
             choiceContext,
             card.Owner,
-            new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 1),
-            c => c.IsTransformable,
+            new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, card.DynamicVars.Cards.IntValue),
+            null,
             card
-        )).FirstOrDefault();
-        if (original is null) return;
-
-        // X-cost cards can't keep a cost, so they are left out
-        var options = ModelDb.CardPool<ColorlessCardPool>()
-            .GetUnlockedCards(card.Owner.UnlockState, card.Owner.RunState.CardMultiplayerConstraint)
-            .Where(c => SlalMechanicsHelper.HasRandomCardRarity(card.Owner, c) && !c.EnergyCost.CostsX);
-        var newCard = SlalMechanicsHelper.CreateRandomCards(card.Owner, 1, original.IsUpgraded, options).FirstOrDefault();
-        if (newCard is null) return;
-
-        var cost = SlalMechanicsHelper.GetEnergyCost(original);
-        newCard.EnergyCost.SetThisCombat(cost);
-        if (original.Keywords.Contains(CardKeyword.Unplayable))
-        {
-            newCard.AddKeyword(CardKeyword.Unplayable);
-        }
-        await CardCmd.Transform(original, newCard);
-
-        if (cost > 0 && play.Target.IsAlive)
-        {
-            await PowerCmd.Apply<LogicShiftStrengthDown>(choiceContext, play.Target, cost, card.Owner.Creature, card);
-        }
+        );
+        await CardCmd.Discard(choiceContext, discarded);
     }
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        RemoveKeyword(CardKeyword.Exhaust);
     }
 }

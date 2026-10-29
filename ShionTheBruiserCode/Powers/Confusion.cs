@@ -9,13 +9,14 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
 /// At the start of its turn, loses X HP and loses all Confusion. Does not drop below 1 HP.
 /// Attacks execute it if they leave it with as much Confusion as HP or more
-/// (even if the attack dealt no damage).
+/// (even if the attack dealt no damage). Executed enemies spin off the screen (see ConfusionSpinOff).
 /// </summary>
 public class Confusion(): SlalTheEndlessPower
 {
@@ -55,7 +56,8 @@ public class Confusion(): SlalTheEndlessPower
     if (Amount < Owner.CurrentHp) return;
 
     Flash();
-    await CreatureCmd.Kill(Owner);
+    // Only reached when the attack didn't kill it by itself
+    await ConfusionSpinOff.Kill(Owner);
   }
 
   public override IEnumerable<HealthBarForecastSegment> GetHealthBarForecastSegments(

@@ -3,19 +3,20 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+/// <summary>
+/// Apply 15 Confusion. Add a Fresh Idea (+) into your Draw Pile, Hand and Discard Pile.
+/// </summary>
 public class SlalShareSecrets() : SlalTheEndlessCard(2,
-    CardType.Attack, CardRarity.Uncommon,
+    CardType.Skill, CardRarity.Uncommon,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(10M, ValueProp.Move),
-        new PowerVar<Confusion>(5),
+        new PowerVar<Confusion>(15),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -29,12 +30,6 @@ public class SlalShareSecrets() : SlalTheEndlessCard(2,
     {
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
-        await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
-            .FromCard(card)
-            .Targeting(play.Target)
-            .WithHitFx("vfx/vfx_attack_slash")
-            .Execute(choiceContext);
-
         await PowerCmd.Apply<Confusion>(choiceContext, play.Target, card.DynamicVars["Confusion"].BaseValue, card.Owner.Creature, card);
 
         var drawResult = await CardPileCmd.AddGeneratedCardToCombat(SlalMechanicsHelper.CreateCard<SlalFreshIdea>(card.Owner, IsUpgraded), PileType.Draw, card.Owner, CardPilePosition.Random);
