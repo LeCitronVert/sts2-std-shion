@@ -12,16 +12,16 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 /// <summary>
-/// At the start of each combat, add 2 Slimed into your Draw Pile. At the start of your turn, gain 3 Free Status.
+/// At the start of combat, add 2 Slimed to your draw pile. At the start of your turn, gain 1 Free Status.
 /// </summary>
 public class AppleSauce : SlalTheEndlessRelic
 {
     public override RelicRarity Rarity =>
-        RelicRarity.Rare;
+        RelicRarity.Uncommon;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(2),
-        new PowerVar<FreeStatus>(3),
+        new PowerVar<FreeStatus>(1),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [

@@ -17,7 +17,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 public class Champagne : SlalTheEndlessRelic
 {
     public override RelicRarity Rarity =>
-        RelicRarity.Uncommon;
+        RelicRarity.Rare;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<SlipperyPower>(1),

@@ -85,7 +85,7 @@
   "SHIONTHEBRUISER-CHAMPAGNE.description": "Once per turn, after you've played a [gold]Common[/gold], an [gold]Uncommon[/gold] and a [gold]Rare[/gold] card, gain {SlipperyPower:diff()} [gold]Slippery[/gold].",
   "SHIONTHEBRUISER-CHAMPAGNE.flavor": "",
   "SHIONTHEBRUISER-APPLE_SAUCE.title": "Apple Sauce",
-  "SHIONTHEBRUISER-APPLE_SAUCE.description": "At the start of each combat, add {Cards:diff()} [gold]Slimed[/gold] into your [gold]Draw Pile[/gold].\nAt the start of your turn, gain {FreeStatus:diff()} [gold]Free Status[/gold].",
+  "SHIONTHEBRUISER-APPLE_SAUCE.description": "At the start of combat, add {Cards:diff()} [gold]Slimed[/gold] to your [gold]Draw Pile[/gold].\nAt the start of your turn, gain {FreeStatus:diff()} [gold]Free Status[/gold].",
   "SHIONTHEBRUISER-APPLE_SAUCE.flavor": "",
   "SHIONTHEBRUISER-WHITE_RIBBON.title": "White Ribbon",
   "SHIONTHEBRUISER-WHITE_RIBBON.description": "Whenever you play a Power, deal damage to ALL enemies equal to the number of Powers you played this combat.",
