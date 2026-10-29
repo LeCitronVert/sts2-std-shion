@@ -11,7 +11,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Turtle Hermit Shell starter. Gain 3 Block. Galvanised 2: Gain 3 additional Block, then lose 2 Vigor.
+/// Turtle Hermit Shell starter. Gain 5 Block. Galvanised 2: Gain 3 additional Block, then lose 1 Vigor.
 /// </summary>
 public class ShionEnergyShield() : ShionTheBruiserCard(1,
     CardType.Skill, CardRarity.Basic,
@@ -24,9 +24,9 @@ public class ShionEnergyShield() : ShionTheBruiserCard(1,
     protected override HashSet<CardTag> CanonicalTags => [CardTag.Defend, ShionCardTags.Energy];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(3, ValueProp.Move),
+        new BlockVar(5, ValueProp.Move),
         new DynamicVar("GalvanisedBlock", 3),
-        new DynamicVar("VigorLoss", GalvanisedThreshold),
+        new DynamicVar("VigorLoss", 1),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [

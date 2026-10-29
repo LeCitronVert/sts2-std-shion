@@ -7,7 +7,7 @@ ShionTheBruiser.json::JSON::-1::1792433998::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1793308300
+::res://bin/ExportRelease/net9.0/publish/::1793309354
 ShionTheBruiser.deps.json::JSON::-1::1793307387::0::1::::<><><>0<>0<><>::
 ::res://ci/::1792939391
 ::res://ci/game-refs/::1792939391
@@ -18,7 +18,7 @@ mod_image.png::CompressedTexture2D::8120906206059877335::1781940056::1782158780:
 ::res://ShionTheBruiser/audio/monsters/::1783257373
 abby_cry.mp3::AudioStreamMP3::5378262688525908553::1783257218::1783257373::1::::<><><>0<>0<>18ae4e70743613656c80bd98369a5fbe<>res://.godot/imported/abby_cry.mp3-ae38cbe1b620798428d3ef3470f24654.mp3str::
 ::res://ShionTheBruiser/images/::1793207411
-::res://ShionTheBruiser/images/card_portraits/::1793307403
+::res://ShionTheBruiser/images/card_portraits/::1793308311
 card.png::CompressedTexture2D::1049500711854334682::1781940056::1782158780::1::::<><><>0<>0<>e86ff99e55e178dfa257e115aff98269<>res://.godot/imported/card.png-ed4193b7714d803835eb3395cc67803f.ctex::
 cosmo_determination.png::CompressedTexture2D::7370259231145839813::1783264288::1783268294::1::::<><><>0<>0<>92d0180d2bcae8f7dae36e08a69a2fc2<>res://.godot/imported/cosmo_determination.png-de16beb2149397672a3cc958560a33b9.ctex::
 cosmo_guidance.png::CompressedTexture2D::2493547857642524238::1783264292::1783268294::1::::<><><>0<>0<>07f4a01856c0f20e031eb65f2bd43687<>res://.godot/imported/cosmo_guidance.png-0ad46f64033753485063848d8d132a4a.ctex::
@@ -353,7 +353,7 @@ slal_strike.png::CompressedTexture2D::5918578733995773492::1785182956::178518302
 slal_wall_of_text.png::CompressedTexture2D::6096153770101103649::1785189360::1785218102::1::::<><><>0<>0<>1e432662ce6d45f0e34680b5b23a1b9e<>res://.godot/imported/slal_wall_of_text.png-bb6e44530c48e57502c53b65e98b7223.ctex::
 special_stage.png::CompressedTexture2D::8845264401202963198::1793017840::1793018465::1::::<><><>0<>0<>2fbc103b8f3d1cc96cd06b92fe2b05b7<>res://.godot/imported/special_stage.png-cd0d00afe6492e2bd603f5bc33d24ee7.ctex::
 yes.png::CompressedTexture2D::5279192743463950200::1783248434::1783250447::1::::<><><>0<>0<>87bbd865506a411f480cb67c509dc39c<>res://.godot/imported/yes.png-816f261255c7e33f7f4cf5b55e6f45af.ctex::
-::res://ShionTheBruiser/images/card_portraits/big/::1793307404
+::res://ShionTheBruiser/images/card_portraits/big/::1793308311
 berserk_drive.png::CompressedTexture2D::1173516633182531861::1783421669::1783421693::1::::<><><>0<>0<>a0e7ab2b45a81d3fbcd341103134a846<>res://.godot/imported/berserk_drive.png-005441c15d646c8791a92b1851669ba4.ctex::
 card.png::CompressedTexture2D::5376909193275950955::1783421669::1783421693::1::::<><><>0<>0<>e9bc5581e7060e2b238b6e16f552b620<>res://.godot/imported/card.png-f2bdec99a9547bf841f67e1ad99b4423.ctex::
 cosmo_determination.png::CompressedTexture2D::4653851150383875096::1783421669::1783421693::1::::<><><>0<>0<>9141471787ccae1a9089871bfa36aad5<>res://.godot/imported/cosmo_determination.png-13a65723f9f7f99a5ee796a5390a2660.ctex::
@@ -977,9 +977,9 @@ team_blast_bar.png::CompressedTexture2D::3159766184385900582::1793177713::179317
 team_blast_locked.png::CompressedTexture2D::7621079854370452256::1793177713::1793178089::1::::<><><>0<>0<>013933bfc0053016122d75e6bb53c76f<>res://.godot/imported/team_blast_locked.png-af6d45a45c3d33d30fc47cd1c14ac63b.ctex::
 team_blast_ready.png::CompressedTexture2D::8331283540066729296::1793177713::1793178089::1::::<><><>0<>0<>8f45cec4072dfa0ce28aea63f7bd5405<>res://.godot/imported/team_blast_ready.png-abb4ee67caa30497b30d7a53924e66fb.ctex::
 ::res://ShionTheBruiser/localization/::1781940056
-::res://ShionTheBruiser/localization/eng/::1793308197
+::res://ShionTheBruiser/localization/eng/::1793309221
 ancients.json::JSON::-1::1793302304::0::1::::<><><>0<>0<><>::
-cards.json::JSON::-1::1793308197::0::1::::<><><>0<>0<><>::
+cards.json::JSON::-1::1793309221::0::1::::<><><>0<>0<><>::
 card_keywords.json::JSON::-1::1793290579::0::1::::<><><>0<>0<><>::
 card_selection.json::JSON::-1::1793183274::0::1::::<><><>0<>0<><>::
 characters.json::JSON::-1::1793207457::0::1::::<><><>0<>0<><>::
@@ -1022,7 +1022,7 @@ MainFile.cs::CSharpScript::2954314548483070873::1793207387::0::1::::<><><>0<>0<>
 ::res://ShionTheBruiserCode/Ancients/::1793303570
 PartyDialogue.cs::CSharpScript::241308958335632356::1793302135::0::1::::<><><>0<>0<><>::
 ShionPartyDialogues.cs::CSharpScript::7951062430476225983::1793302135::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Cards/::1793308197
+::res://ShionTheBruiserCode/Cards/::1793309221
 CosmoDetermination.cs::CSharpScript::4903082444639403780::1792756623::0::1::::<><><>0<>0<><>::
 CosmoGuidance.cs::CSharpScript::4895954223051435257::1792870460::0::1::::<><><>0<>0<><>::
 CosmoKindness.cs::CSharpScript::2527117697509655675::1792756623::0::1::::<><><>0<>0<><>::
@@ -1276,7 +1276,7 @@ ShionEnergyCharge.cs::CSharpScript::5765438809460713064::1784857452::0::1::::<><
 ShionEnergyJolt.cs::CSharpScript::6218755334696067433::1792870359::0::1::::<><><>0<>0<><>::
 ShionEnergyShield.cs::CSharpScript::1827979362561321155::1793305947::0::1::::<><><>0<>0<><>::
 ShionEnergySpark.cs::CSharpScript::6704986148074893323::1784857425::0::1::::<><><>0<>0<><>::
-ShionEnergyStrike.cs::CSharpScript::6225904476480266067::1793307214::0::1::::<><><>0<>0<><>::
+ShionEnergyStrike.cs::CSharpScript::6225904476480266067::1793309221::0::1::::<><><>0<>0<><>::
 ShionEnergySurge.cs::CSharpScript::8441539777815285288::1792870359::0::1::::<><><>0<>0<><>::
 ShionEnergyVolley.cs::CSharpScript::4286085764411823295::1792870412::0::1::::<><><>0<>0<><>::
 ShionEnergyWave.cs::CSharpScript::7041956892016054297::1792870359::0::1::::<><><>0<>0<><>::
