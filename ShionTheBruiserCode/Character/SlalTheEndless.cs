@@ -49,9 +49,15 @@ public class SlalTheEndless : PlaceholderCharacterModel, IEpochCharacter
     public override RelicPoolModel RelicPool => ModelDb.RelicPool<SlalTheEndlessRelicPool>();
     public override PotionPoolModel PotionPool => ModelDb.PotionPool<SlalTheEndlessPotionPool>();
 
-    // Timeline (Timeline/SlalEpochs.cs)
+    // Timeline (Timeline/SlalEpochs.cs). Mistake has its own condition.
     protected override CharacterModel UnlocksAfterRunAs => ModelDb.Character<ShionTheBruiser>();
-    public EpochModel? UnlockEpoch => EpochModel.Get<SlalUnlockEpoch>();
+    public EpochModel? UnlockEpoch => EpochModel.Get<SlalReconnaissanceEpoch>();
+    public EpochModel? Act1Epoch => EpochModel.Get<SlalTheFactoryEpoch>();
+    public EpochModel? Act3Epoch => EpochModel.Get<SlalRejectionsEpoch>();
+    public EpochModel? FifteenElitesEpoch => EpochModel.Get<SlalMimickeryEpoch>();
+    public EpochModel? AscensionOneEpoch => EpochModel.Get<SlalCreativeSoulEpoch>();
+    public EpochModel? Act2Epoch => EpochModel.Get<SlalInfiniteWorldsEpoch>();
+    public EpochModel? FifteenBossesEpoch => EpochModel.Get<SlalSelfDiscoveryEpoch>();
     
     // Custom visuals
     public override Control CustomIcon
