@@ -39,6 +39,8 @@ public class ShionEnergyBind() : ShionTheBruiserCard(0,
 
     private int PreviewX() => CombatState is null ? 0 : PreviewHelper.XValue(this) + (IsUpgraded ? 1 : 0);
 
+    protected override bool ShouldGlowGoldInternal => PreviewX() >= DebilitateThreshold;
+
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)

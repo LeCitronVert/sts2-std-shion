@@ -29,6 +29,8 @@ public class ShionEnergyStrike() : ShionTheBruiserCard(1,
         HoverTipFactory.FromPower<VigorNextTurn>(),
     ];
 
+    protected override bool ShouldGlowGoldInternal => !ShionMechanicsHelper.IsGalvanised(Owner.Creature, 1);
+
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
