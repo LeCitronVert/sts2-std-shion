@@ -36,7 +36,7 @@ public class ShionEccentrics() : ShionTeamUpCard(3,
         await SlalMechanicsHelper.EnsureCreatureHasNovelTracker(initiator.Creature);
         foreach (var card in ShionMechanicsHelper.GetAllCombatCards(initiator).ToList())
         {
-            card.AddKeyword(SlalCardKeywords.Novel);
+            SlalMechanicsHelper.AddNovel(card);
         }
 
         await TeamUpPower.Apply<Eccentrics>(choiceContext, initiator.Creature, partner.Creature, DynamicVars["Eccentrics"].BaseValue, this);

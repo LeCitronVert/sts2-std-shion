@@ -10,7 +10,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class SlalFridgeForm() : SlalTheEndlessCard(3,
+public class SlalFridgeForm() : SlalTheEndlessCard(2,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {

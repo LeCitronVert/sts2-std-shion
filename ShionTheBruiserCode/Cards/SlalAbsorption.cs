@@ -11,7 +11,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
 /// Transform up to 2 (3) non-Slimed cards in your Hand into Slimed. Gain 1 Max HP for each card transformed this way.
-/// You can no longer gain Max HP this combat. Exhaust.
+/// This combat, you are Sated (you can no longer gain Max HP). Exhaust.
 /// </summary>
 public class SlalAbsorption() : SlalTheEndlessCard(2,
     CardType.Skill, CardRarity.Uncommon,
@@ -29,7 +29,7 @@ public class SlalAbsorption() : SlalTheEndlessCard(2,
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.Static(StaticHoverTip.Transform),
         HoverTipFactory.FromCard<Slimed>(),
-        HoverTipFactory.FromPower<MaxHpLocked>(),
+        HoverTipFactory.FromPower<Sated>(),
     ];
 
     protected override async Task OnPlay(
@@ -55,7 +55,7 @@ public class SlalAbsorption() : SlalTheEndlessCard(2,
         {
             await CreatureCmd.GainMaxHp(card.Owner.Creature, card.DynamicVars.MaxHp.IntValue * originals.Count);
         }
-        await PowerCmd.Apply<MaxHpLocked>(choiceContext, card.Owner.Creature, 1, card.Owner.Creature, card);
+        await PowerCmd.Apply<Sated>(choiceContext, card.Owner.Creature, 1, card.Owner.Creature, card);
     }
 
     protected override void OnUpgrade()

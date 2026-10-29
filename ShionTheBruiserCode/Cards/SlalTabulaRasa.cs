@@ -30,7 +30,7 @@ public class SlalTabulaRasa() : SlalTheEndlessCard(3,
         await SlalMechanicsHelper.EnsureCreatureHasNovelTracker(card.Owner.Creature);
         foreach (var other in ShionMechanicsHelper.GetAllCombatCards(card.Owner).ToList())
         {
-            other.AddKeyword(SlalCardKeywords.Novel);
+            SlalMechanicsHelper.AddNovel(other);
         }
 
         var random = card.Owner.Creature.GetPower<Powers.Random>();

@@ -15,6 +15,8 @@
   "SHIONTHEBRUISER-BERSERK.title": "Berserk",
   "SHIONTHEBRUISER-NOVEL.description": "Gain [blue]1[/blue] [gold]Random[/gold].\nRemove [gold]Novel[/gold] on ALL identical cards.\nAfterwards, [gold]Novel[/gold] can't be applied on identical cards this combat.",
   "SHIONTHEBRUISER-NOVEL.title": "Novel",
+  "SHIONTHEBRUISER-ALWAYSNOVEL.description": "[gold]Novel[/gold]. Doesn't lose [gold]Novel[/gold] after being played.",
+  "SHIONTHEBRUISER-ALWAYSNOVEL.title": "Always Novel",
   "SHIONTHEBRUISER-SLIMY.description": "After playing this card, add a [gold]Slimed[/gold] into your [gold]Hand[/gold].",
   "SHIONTHEBRUISER-SLIMY.title": "Slimy",
   "SHIONTHEBRUISER-VERYSLIMY.description": "After playing this card, add [blue]3[/blue] [gold]Slimed[/gold] into your [gold]Hand[/gold].\nCounts as [gold]Slimy[/gold].",

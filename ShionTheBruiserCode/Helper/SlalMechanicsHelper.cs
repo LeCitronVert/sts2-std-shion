@@ -36,19 +36,50 @@ public interface ISlalRandomListener
 
 public static class SlalMechanicsHelper
 {
+    /// <summary>
+    /// Novel or Always Novel.
+    /// </summary>
+    public static bool IsNovel(CardModel card)
+    {
+        return card.Keywords.Contains(SlalCardKeywords.Novel) || card.Keywords.Contains(SlalCardKeywords.AlwaysNovel);
+    }
+
+    /// <summary>
+    /// Adds Novel to the card, unless it already is Always Novel.
+    /// </summary>
+    public static void AddNovel(CardModel card)
+    {
+        if (card.Keywords.Contains(SlalCardKeywords.AlwaysNovel)) return;
+        card.AddKeyword(SlalCardKeywords.Novel);
+    }
+
+    /// <summary>
+    /// Random gained from playing a Novel card (Pony Form grants more).
+    /// </summary>
+    public static int GetNovelRandom(Creature character)
+    {
+        return 1 + character.GetPowerAmount<PonyForm>();
+    }
+
+    /// <summary>
+    /// Gains Random and removes Novel from ALL identical cards. Always Novel cards keep it.
+    /// </summary>
     public static async Task TriggerNovel(PlayerChoiceContext choiceContext, CardModel card, Creature character)
     {
-        card.RemoveKeyword(SlalCardKeywords.Novel);
-
-        foreach (var copy in (character.Player?.PlayerCombatState?.AllCards ?? []).Where(c => c.Id == card.Id))
+        if (!card.Keywords.Contains(SlalCardKeywords.AlwaysNovel))
         {
-            copy.RemoveKeyword(SlalCardKeywords.Novel);
+            card.RemoveKeyword(SlalCardKeywords.Novel);
+
+            foreach (var copy in (character.Player?.PlayerCombatState?.AllCards ?? []).Where(c => c.Id == card.Id))
+            {
+                copy.RemoveKeyword(SlalCardKeywords.Novel);
+            }
         }
 
         await PowerCmd.Apply<Random>(
             choiceContext,
             character,
-            1,
+            GetNovelRandom(character),
             character,
             null
         );
@@ -72,7 +103,7 @@ public static class SlalMechanicsHelper
     public static CardModel? ChooseRandomCardWithoutNovelIfPossible(Player player, PileType pile)
     {
         var cardList = pile.GetPile(player);
-        var cardWithoutNovelList = cardList.Cards.Where(c => !c.Keywords.Contains(SlalCardKeywords.Novel)).ToList();
+        var cardWithoutNovelList = cardList.Cards.Where(c => !IsNovel(c)).ToList();
 
         return cardWithoutNovelList.Count > 0
             ? player.RunState.Rng.CombatCardSelection.NextItem(cardWithoutNovelList)
@@ -137,13 +168,13 @@ public static class SlalMechanicsHelper
     }
 
     /// <summary>
-    /// Colored, non-Novel, playable cards.
+    /// Non-Novel playable cards without Exhaust.
     /// </summary>
     public static bool CanBePlayedByMemory(Player player, CardModel card)
     {
-        return IsColored(card)
-            && !card.Keywords.Contains(SlalCardKeywords.Novel)
-            && !card.Keywords.Contains(CardKeyword.Unplayable);
+        return !IsNovel(card)
+            && !card.Keywords.Contains(CardKeyword.Unplayable)
+            && !card.Keywords.Contains(CardKeyword.Exhaust);
     }
 
     /// <summary>
@@ -171,6 +202,15 @@ public static class SlalMechanicsHelper
     }
 
     /// <summary>
+    /// Confusion a single application of <paramref name="amount"/> would give, with the Memory bonus (for previews).
+    /// Nothing is applied for 0, so there's no bonus either.
+    /// </summary>
+    public static decimal WithMemoryConfusionBonus(CardModel card, decimal amount)
+    {
+        return amount > 0 ? amount + GetMemoryConfusionBonus(card) : amount;
+    }
+
+    /// <summary>
     /// Total Memory (permanent and this turn).
     /// </summary>
     public static int GetMemory(Creature creature)
@@ -180,12 +220,12 @@ public static class SlalMechanicsHelper
 
     /// <summary>
     /// Plays up to <paramref name="count"/> cards from the Discard Pile (random, or chosen with Continuity Thread).
-    /// Memory Blocked stops it this turn. Cards that apply Confusion apply <paramref name="count"/> more.
+    /// Memory Blocked stops it this turn, Break Continuity for the whole combat. Cards that apply Confusion apply <paramref name="count"/> more.
     /// </summary>
     public static async Task PlayFromMemory(PlayerChoiceContext choiceContext, Player player, int count)
     {
         if (count <= 0 || CombatManager.Instance.IsOverOrEnding) return;
-        if (player.Creature.HasPower<MemoryBlocked>()) return;
+        if (player.Creature.HasPower<MemoryBlocked>() || player.Creature.HasPower<BreakContinuity>()) return;
 
         var continuityThread = player.Creature.GetPower<ContinuityThread>();
         if (continuityThread != null)
@@ -195,7 +235,7 @@ public static class SlalMechanicsHelper
             return;
         }
 
-        var picked = PickRandomColoredCards(player, PileType.Discard, count, c => CanBePlayedByMemory(player, c));
+        var picked = PickRandomCards(player, PileType.Discard, count, c => CanBePlayedByMemory(player, c));
         await MemoryAutoChoice.Run(player, () => AutoPlayFromDiscard(choiceContext, player, picked, confusionBonus: count));
     }
 
@@ -210,12 +250,13 @@ public static class SlalMechanicsHelper
             // A previous card may have moved it
             if (card.Pile?.Type != PileType.Discard) continue;
 
-            await CardPileCmd.Add(card, PileType.Play);
-            // Continuity Thread: the played card ends up Exhausted
-            if (exhaust) card.ExhaustOnNextPlay = true;
+            // Registered before the card reaches the Play pile, so the card shown there already displays the extra Confusion
             if (confusionBonus > 0) MemoryConfusionBonuses[card] = confusionBonus;
             try
             {
+                await CardPileCmd.Add(card, PileType.Play);
+                // Continuity Thread: the played card ends up Exhausted
+                if (exhaust) card.ExhaustOnNextPlay = true;
                 await CardCmd.AutoPlay(choiceContext, card, null);
             }
             finally
@@ -304,8 +345,16 @@ public static class SlalMechanicsHelper
     /// </summary>
     public static List<CardModel> PickRandomColoredCards(Player player, PileType pile, int count, Func<CardModel, bool>? filter = null)
     {
+        return PickRandomCards(player, pile, count, c => IsColored(c) && (filter?.Invoke(c) ?? true));
+    }
+
+    /// <summary>
+    /// Picks up to <paramref name="count"/> random cards from the given pile.
+    /// </summary>
+    public static List<CardModel> PickRandomCards(Player player, PileType pile, int count, Func<CardModel, bool>? filter = null)
+    {
         var candidates = pile.GetPile(player).Cards
-            .Where(c => IsColored(c) && (filter?.Invoke(c) ?? true))
+            .Where(c => filter?.Invoke(c) ?? true)
             .ToList();
 
         return candidates.TakeRandom(count, player.RunState.Rng.CombatCardSelection).ToList();

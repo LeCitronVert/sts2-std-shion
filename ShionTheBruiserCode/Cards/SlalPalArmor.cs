@@ -10,7 +10,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
 /// Another player chooses 1 out of [number of players] Form Powers, one from each player's character.
-/// It is free to play this turn. Exhaust.
+/// It is free to play this turn. Ethereal (upgrade: no Ethereal). Exhaust.
 /// </summary>
 public class SlalPalArmor() : SlalTheEndlessCard(3,
     CardType.Skill, CardRarity.Rare,
@@ -18,7 +18,7 @@ public class SlalPalArmor() : SlalTheEndlessCard(3,
 {
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Ethereal, CardKeyword.Exhaust];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -54,6 +54,6 @@ public class SlalPalArmor() : SlalTheEndlessCard(3,
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        RemoveKeyword(CardKeyword.Ethereal);
     }
 }

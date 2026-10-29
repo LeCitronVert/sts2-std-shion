@@ -6,7 +6,9 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Character;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Extensions;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -22,5 +24,12 @@ public abstract class SlalTheEndlessCard(int cost, CardType type, CardRarity rar
     public override string CustomPortraitPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".BigCardImagePath();
     public override string PortraitPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".CardImagePath();
     public override string BetaPortraitPath => $"beta/{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".CardImagePath();
+
+    // Always Novel cards trigger through the Novel tracker, which the owner may not have yet (e.g. a Fresh Idea given to another character)
+    public override async Task BeforeCardPlayed(CardPlay cardPlay)
+    {
+        if (cardPlay.Card != this || !Keywords.Contains(SlalCardKeywords.AlwaysNovel)) return;
+        await SlalMechanicsHelper.EnsureCreatureHasNovelTracker(Owner.Creature);
+    }
 }
 

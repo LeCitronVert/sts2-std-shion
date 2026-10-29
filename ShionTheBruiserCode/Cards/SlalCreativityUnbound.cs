@@ -8,8 +8,8 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Add 1 random of Genie, Television or Sparrow Form into your Hand.
-/// Playing it also makes those three creatable as Goofball Token Powers for the rest of the combat. Exhaust.
+/// Playing it makes Genie, Television and Sparrow Form creatable as Goofball Token Powers for the rest of the combat.
+/// Add 1 random of those three into your Hand. It is free to play this turn. Exhaust.
 /// </summary>
 public class SlalCreativityUnbound() : SlalTheEndlessCard(3,
     CardType.Skill, CardRarity.Rare,
@@ -48,6 +48,7 @@ public class SlalCreativityUnbound() : SlalTheEndlessCard(3,
         var power = SlalMechanicsHelper.CreateTokenAvoiding(card.Owner, SlalMechanicsHelper.CreativityUnboundTokenPowers, LastGivenPower, false);
         LastGivenPower = power.Id;
         await CardPileCmd.AddGeneratedCardToCombat(power, PileType.Hand, card.Owner);
+        power.SetToFreeThisTurn();
     }
 
     protected override void OnUpgrade()

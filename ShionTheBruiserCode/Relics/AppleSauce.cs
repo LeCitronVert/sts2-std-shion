@@ -5,11 +5,14 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Entities.Players;
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 /// <summary>
-/// Slimed cards are free to play. At the start of each combat, add 2 Slimed into your Draw Pile.
+/// At the start of each combat, add 2 Slimed into your Draw Pile. At the start of your turn, gain 3 Free Status.
 /// </summary>
 public class AppleSauce : SlalTheEndlessRelic
 {
@@ -18,20 +21,13 @@ public class AppleSauce : SlalTheEndlessRelic
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(2),
+        new PowerVar<FreeStatus>(3),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromCard<Slimed>(),
+        HoverTipFactory.FromPower<FreeStatus>(),
     ];
-
-    public override bool TryModifyEnergyCostInCombat(CardModel card, decimal originalCost, out decimal modifiedCost)
-    {
-        modifiedCost = originalCost;
-        if (card.Owner != Owner || card is not Slimed) return false;
-
-        modifiedCost = 0M;
-        return true;
-    }
 
     public override async Task BeforeCombatStart()
     {
@@ -44,5 +40,13 @@ public class AppleSauce : SlalTheEndlessRelic
                 await CardPileCmd.AddGeneratedCardToCombat(slimed, PileType.Draw, Owner, CardPilePosition.Random)
             );
         }
+    }
+
+    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
+    {
+        if (player != Owner) return;
+
+        Flash();
+        await PowerCmd.Apply<FreeStatus>(choiceContext, Owner.Creature, DynamicVars["FreeStatus"].BaseValue, Owner.Creature, null);
     }
 }

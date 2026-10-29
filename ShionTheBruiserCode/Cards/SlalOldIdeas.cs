@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -33,7 +34,7 @@ public class SlalOldIdeas() : SlalTheEndlessCard(0,
 
     protected override bool ShouldGlowRedInternal => CombatState != null && CountNovelInDiscard(this) == 0;
 
-    private static bool IsNovel(CardModel card) => card.Keywords.Contains(SlalCardKeywords.Novel);
+    private static bool IsNovel(CardModel card) => SlalMechanicsHelper.IsNovel(card);
 
     private static int CountNovelInDiscard(CardModel card)
     {

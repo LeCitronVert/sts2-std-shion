@@ -37,7 +37,7 @@ public class SlalPonyForm() : SlalTheEndlessCard(3,
         await SlalMechanicsHelper.EnsureCreatureHasNovelTracker(card.Owner.Creature);
         foreach (var other in ShionMechanicsHelper.GetAllCombatCards(card.Owner).ToList())
         {
-            other.AddKeyword(SlalCardKeywords.Novel);
+            SlalMechanicsHelper.AddNovel(other);
         }
 
         await PowerCmd.Apply<PonyForm>(

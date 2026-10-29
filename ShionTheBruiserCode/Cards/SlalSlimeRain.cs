@@ -14,7 +14,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Very Slimy. Deal 4 damage to ALL enemies.
 /// Each time you create a Slimed, this card's damage increases by 1 (2) this combat.
-/// The Slimed created by its own Very Slimy are created after the damage is dealt.
+/// The Slimed created by its own Very Slimy are created before the damage is dealt, so they count.
 /// </summary>
 public class SlalSlimeRain(): SlalSlimyCard(2,
     CardType.Attack, CardRarity.Common,
@@ -37,6 +37,8 @@ public class SlalSlimeRain(): SlalSlimyCard(2,
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [SlalCardKeywords.VerySlimy];
 
+    protected override bool SlimesBeforeEffect => true;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(4M, ValueProp.Move),
         new DynamicVar("Increase", 1),
@@ -50,6 +52,8 @@ public class SlalSlimeRain(): SlalSlimyCard(2,
     {
         var card = this;
         if (card.CombatState is null) return;
+
+        await AddSlimed();
 
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .FromCard(card)

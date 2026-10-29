@@ -30,10 +30,10 @@ public class NovelTracker : SlalTheEndlessPower
         var card = cardPlay.Card;
         if (card.Owner != Owner.Player) return;
         
-        // Only a triggered Novel locks identical cards out of Novel for the rest of the combat.
-        if (card.Keywords.Contains(SlalCardKeywords.Novel))
+        // Only a triggered Novel locks identical cards out of Novel for the rest of the combat (Always Novel cards keep it).
+        if (SlalMechanicsHelper.IsNovel(card))
         {
-            if (!CardsUsedThisFight.Contains(card.Id)) CardsUsedThisFight.Add(card.Id);
+            if (!card.Keywords.Contains(SlalCardKeywords.AlwaysNovel) && !CardsUsedThisFight.Contains(card.Id)) CardsUsedThisFight.Add(card.Id);
             await SlalMechanicsHelper.TriggerNovel(choiceContext, card, Owner);
         }
     }

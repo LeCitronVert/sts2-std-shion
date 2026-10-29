@@ -1,42 +1,28 @@
-using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// This turn, whenever you draw a Novel card, play it and draw X cards.
+/// Whenever you play a Novel card, gain X energy.
+/// Novel is removed when the card is played, so it is checked before the play resolves.
 /// </summary>
-public class KickstartEvent : SlalTheEndlessPower
+public class KickstartEvent : SlalOnPowerPlayedPower
 {
-    public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Counter;
-
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(SlalCardKeywords.Novel),
     ];
 
-    public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
-    {
-        if (card.Owner != Owner.Player || Owner.Player is null) return;
-        if (!card.Keywords.Contains(SlalCardKeywords.Novel) || card.Keywords.Contains(CardKeyword.Unplayable)) return;
-        if (card.Pile?.Type != PileType.Hand || CombatManager.Instance.IsOverOrEnding) return;
+    protected override bool ShouldTrigger(CardModel card) => SlalMechanicsHelper.IsNovel(card);
 
-        Flash();
-        var amount = Amount;
-        await CardCmd.AutoPlay(choiceContext, card, null);
-        await CardPileCmd.Draw(choiceContext, amount, Owner.Player);
-    }
-
-    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+    protected override async Task OnPowerPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay, int amount)
     {
-        if (!participants.Contains(Owner)) return;
-        await PowerCmd.Remove(this);
+        if (Owner.Player is null) return;
+        await PlayerCmd.GainEnergy(amount, Owner.Player);
     }
 }

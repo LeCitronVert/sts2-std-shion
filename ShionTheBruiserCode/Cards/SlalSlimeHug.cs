@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -33,7 +34,7 @@ public class SlalSlimeHug(): SlalSlimyCard(1,
             {
                 weak *= card.IsUpgraded ? UpgradedMultiplier : NormalMultiplier;
             }
-            return weak;
+            return SlalMechanicsHelper.WithMemoryConfusionBonus(card, weak);
         }),
     ];
 

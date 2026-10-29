@@ -9,11 +9,12 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Potions;
 
 /// <summary>
-/// Transform a card in your Hand into Slimed. Slimed are free to play this turn.
+/// Transform a card in your Hand into Slimed. Gain 6 Free Status.
 /// </summary>
 public class SlimePotion : SlalTheEndlessPotion
 {
@@ -21,9 +22,14 @@ public class SlimePotion : SlalTheEndlessPotion
     public override PotionUsage Usage => PotionUsage.CombatOnly;
     public override TargetType TargetType => TargetType.Self;
 
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new PowerVar<FreeStatus>(6),
+    ];
+
     public override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.Static(StaticHoverTip.Transform),
         HoverTipFactory.FromCard<Slimed>(),
+        HoverTipFactory.FromPower<FreeStatus>(),
     ];
 
     protected override async Task OnUse(PlayerChoiceContext choiceContext, Creature? target)
@@ -42,6 +48,6 @@ public class SlimePotion : SlalTheEndlessPotion
         {
             await CardCmd.Transform(original, Owner.Creature.CombatState.CreateCard<Slimed>(Owner));
         }
-        await PowerCmd.Apply<SlimedFreeThisTurn>(choiceContext, Owner.Creature, 1, Owner.Creature, null);
+        await PowerCmd.Apply<FreeStatus>(choiceContext, Owner.Creature, DynamicVars["FreeStatus"].BaseValue, Owner.Creature, null);
     }
 }

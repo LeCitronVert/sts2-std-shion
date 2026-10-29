@@ -8,7 +8,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Unthreatening Smile: apply 2 Weak. If you are Weak, apply 2 Vulnerable. Gain 1 (2) Vulnerable.
+/// Unthreatening Smile: apply 2 Weak. If you are Weak, apply 1 (2) Vulnerable.
 /// (The class keeps its old name so existing saves still find it.)
 /// </summary>
 public class SlalUnthreateningLook() : SlalTheEndlessCard(0,
@@ -17,8 +17,7 @@ public class SlalUnthreateningLook() : SlalTheEndlessCard(0,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<WeakPower>(2),
-        new PowerVar<VulnerablePower>(2),
-        new DynamicVar("SelfVulnerable", 1),
+        new PowerVar<VulnerablePower>(1),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -40,12 +39,10 @@ public class SlalUnthreateningLook() : SlalTheEndlessCard(0,
         {
             await PowerCmd.Apply<VulnerablePower>(choiceContext, play.Target, card.DynamicVars.Vulnerable.BaseValue, card.Owner.Creature, card);
         }
-
-        await PowerCmd.Apply<VulnerablePower>(choiceContext, card.Owner.Creature, card.DynamicVars["SelfVulnerable"].BaseValue, card.Owner.Creature, card);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["SelfVulnerable"].UpgradeValueBy(1);
+        DynamicVars.Vulnerable.UpgradeValueBy(1);
     }
 }

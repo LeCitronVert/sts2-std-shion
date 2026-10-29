@@ -11,6 +11,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
 /// Slimed cost 0 this turn, including the ones created later this turn.
+/// Trashed for now: nothing applies it anymore (Slime Potion gives Free Status instead).
 /// </summary>
 public class SlimedFreeThisTurn : SlalTheEndlessPower
 {

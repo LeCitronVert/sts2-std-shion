@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -10,6 +11,8 @@ public class SlalChangeOfPlan() : SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Rare,
     TargetType.Self)
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [SlalCardKeywords.AlwaysNovel];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),

@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -18,6 +19,8 @@ public class SlalAnvilGag() : SlalTheEndlessCard(1,
     TargetType.AnyEnemy)
 {
     public override bool CanBeGeneratedInCombat => false;
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [SlalCardKeywords.AlwaysNovel];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CalculationBaseVar(8),

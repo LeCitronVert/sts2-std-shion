@@ -11,6 +11,7 @@ using Random = ShionTheBruiser.ShionTheBruiserCode.Powers.Random;
 using MegaCrit.Sts2.Core.HoverTips;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Models.CardPools;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -19,19 +20,14 @@ public class SlalFreshIdea(): SlalTheEndlessCard(0,
     CardType.Skill, CardRarity.Token,
     TargetType.Self)
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [SlalCardKeywords.AlwaysNovel, CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new InCombatPowerAmountVar<CreativeSpirit>("InCombatHasCreativeSpirit"),
-        // Pony Form grants additional Random
-        new CalculationBaseVar(1),
-        new CalculationExtraVar(1),
-        new CalculatedVar("RandomAmount").WithMultiplier((card, _) =>
-            card.CombatState == null ? 0 : card.Owner.Creature.GetPowerAmount<PonyForm>()),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<Powers.Random>(),
+        HoverTipFactory.FromKeyword(SlalCardKeywords.Novel),
         HoverTipFactory.Static(StaticHoverTip.Transform),
     ];
 
@@ -42,15 +38,6 @@ public class SlalFreshIdea(): SlalTheEndlessCard(0,
         var card = this;
         
         await CreatureCmd.TriggerAnim(card.Owner.Creature, "Cast", card.Owner.Character.CastAnimDelay);
-
-        // Pony Form grants additional Random
-        await PowerCmd.Apply<Random>(
-            choiceContext,
-            Owner.Creature,
-            1 + Owner.Creature.GetPowerAmount<PonyForm>(),
-            Owner.Creature,
-            null
-        );
 
         List<CardModel> chosenCards;
         if (!IsUpgraded)

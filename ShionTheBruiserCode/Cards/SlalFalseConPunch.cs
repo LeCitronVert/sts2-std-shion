@@ -12,19 +12,21 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Deal 4 damage to a random enemy for each different card in your Hand.
+/// Apply 4 Confusion to a random enemy for each different card in your Hand.
 /// </summary>
 public class SlalFalseConPunch() : SlalTheEndlessCard(2,
-    CardType.Attack, CardRarity.Uncommon,
+    CardType.Skill, CardRarity.Uncommon,
     TargetType.RandomEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(4M, ValueProp.Move),
+        new PowerVar<Confusion>(4),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
         new CalculatedVar("Hits").WithMultiplier((card, _) => SlalMechanicsHelper.CountDifferentCards(PreviewHelper.OtherCardsInHand(card))),
     ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Confusion>()];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -40,11 +42,7 @@ public class SlalFalseConPunch() : SlalTheEndlessCard(2,
             var enemy = card.Owner.RunState.Rng.CombatTargets.NextItem(card.CombatState.HittableEnemies);
             if (enemy == null) break;
 
-            await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
-                .FromCard(card)
-                .Targeting(enemy)
-                .WithHitFx("vfx/vfx_attack_blunt")
-                .Execute(choiceContext);
+            await PowerCmd.Apply<Confusion>(choiceContext, enemy, card.DynamicVars["Confusion"].BaseValue, card.Owner.Creature, card);
         }
     }
 

@@ -33,7 +33,7 @@ public class EncyclopediaForm : SlalTheEndlessPower
     public override Task BeforeCardPlayed(CardPlay cardPlay)
     {
         if (cardPlay.Card.Owner == Owner.Player && !cardPlay.IsAutoPlay && cardPlay.IsFirstInSeries
-            && !cardPlay.Card.Keywords.Contains(SlalCardKeywords.Novel))
+            && !SlalMechanicsHelper.IsNovel(cardPlay.Card))
         {
             GetInternalData<Data>().cardsBeingPlayed.Add(cardPlay.Card);
         }

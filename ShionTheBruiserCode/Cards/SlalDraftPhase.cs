@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -12,6 +13,8 @@ public class SlalDraftPhase(): SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Common,
     TargetType.Self)
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [SlalCardKeywords.AlwaysNovel];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new EnergyVar(1)
     ];

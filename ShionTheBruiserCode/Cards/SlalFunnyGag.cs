@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -18,6 +19,8 @@ public class SlalFunnyGag() : SlalTheEndlessCard(2,
     CardType.Attack, CardRarity.Basic,
     TargetType.AnyEnemy)
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [SlalCardKeywords.AlwaysNovel];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CalculationBaseVar(8),
         new ExtraDamageVar(4),

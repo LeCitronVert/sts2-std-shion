@@ -40,14 +40,14 @@ public class SlalDescription() : SlalTheEndlessCard(9,
         _novelCardsBeingPlayed = [];
     }
 
-    public override Task BeforeCardPlayed(CardPlay cardPlay)
+    public override async Task BeforeCardPlayed(CardPlay cardPlay)
     {
+        await base.BeforeCardPlayed(cardPlay);
         if (cardPlay.Card != this && cardPlay.Card.Owner == Owner && cardPlay.IsFirstInSeries
-            && cardPlay.Card.Keywords.Contains(SlalCardKeywords.Novel))
+            && SlalMechanicsHelper.IsNovel(cardPlay.Card))
         {
             _novelCardsBeingPlayed.Add(cardPlay.Card);
         }
-        return Task.CompletedTask;
     }
 
     public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)

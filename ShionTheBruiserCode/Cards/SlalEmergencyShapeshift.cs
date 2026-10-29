@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -17,7 +18,7 @@ public class SlalEmergencyShapeshift() : SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [SlalCardKeywords.AlwaysNovel, CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(3),

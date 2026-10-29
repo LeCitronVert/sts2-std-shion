@@ -12,7 +12,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Patches;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Add Novel to a non-Novel card in your Hand (and upgrade it). If you do, gain 1 energy. Exhaust.
+/// Add Always Novel to a non-Novel card in your Hand (and upgrade it). If you do, gain 1 energy. Exhaust.
 /// The card gets "Neo" in front of its title.
 /// </summary>
 public class SlalThinkingBoard() : SlalTheEndlessCard(0,
@@ -26,11 +26,12 @@ public class SlalThinkingBoard() : SlalTheEndlessCard(0,
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(SlalCardKeywords.AlwaysNovel),
         HoverTipFactory.FromKeyword(SlalCardKeywords.Novel),
         HoverTipFactory.ForEnergy(this),
     ];
 
-    private static bool CanGainNovel(CardModel card) => !card.Keywords.Contains(SlalCardKeywords.Novel);
+    private static bool CanGainNovel(CardModel card) => !SlalMechanicsHelper.IsNovel(card);
 
     protected override bool ShouldGlowRedInternal => CombatState != null && !PreviewHelper.OtherCardsInHand(this).Any(CanGainNovel);
 
@@ -49,7 +50,7 @@ public class SlalThinkingBoard() : SlalTheEndlessCard(0,
         if (chosen is null) return;
 
         await SlalMechanicsHelper.EnsureCreatureHasNovelTracker(card.Owner.Creature);
-        chosen.AddKeyword(SlalCardKeywords.Novel);
+        chosen.AddKeyword(SlalCardKeywords.AlwaysNovel);
         NeoTitlePatch.MarkAsNeo(chosen);
         if (IsUpgraded && chosen.IsUpgradable)
         {

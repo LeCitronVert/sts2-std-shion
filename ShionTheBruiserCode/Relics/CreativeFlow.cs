@@ -39,7 +39,7 @@ public class CreativeFlow : SlalTheEndlessRelic
     {
         foreach (var cardModel in Owner.PlayerCombatState?.AllCards ?? [])
         {
-            cardModel.AddKeyword(SlalCardKeywords.Novel);
+            SlalMechanicsHelper.AddNovel(cardModel);
         }
 
         // Cards created before the first turn starts also need the tracker to gain Novel.
@@ -54,7 +54,7 @@ public class CreativeFlow : SlalTheEndlessRelic
         var novelPower = Owner.Creature.GetPower<NovelTracker>();
         if (card.Owner == Owner && novelPower != null && !novelPower.CardsUsedThisFight.Contains(card.Id))
         {
-            card.AddKeyword(SlalCardKeywords.Novel);
+            SlalMechanicsHelper.AddNovel(card);
         }
 
         return Task.CompletedTask;
@@ -67,7 +67,7 @@ public class CreativeFlow : SlalTheEndlessRelic
 
     public override Task BeforeCardPlayed(CardPlay cardPlay)
     {
-        if (cardPlay.Card.Owner == Owner && cardPlay.Card.Keywords.Contains(SlalCardKeywords.Novel))
+        if (cardPlay.Card.Owner == Owner && SlalMechanicsHelper.IsNovel(cardPlay.Card))
         {
             _novelCardBeingPlayed = cardPlay.Card;
         }

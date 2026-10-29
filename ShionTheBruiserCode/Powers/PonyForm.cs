@@ -8,11 +8,12 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// Fresh Ideas grant X additional Random (handled in <see cref="SlalFreshIdea"/>).
+/// Novel cards grant X additional Random (handled in <see cref="SlalMechanicsHelper.GetNovelRandom"/>).
 /// The first time you play a Novel card each turn, add a Fresh Idea into your Hand.
 /// </summary>
 public class PonyForm : SlalTheEndlessPower
@@ -22,6 +23,7 @@ public class PonyForm : SlalTheEndlessPower
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(SlalCardKeywords.Novel),
+        HoverTipFactory.FromPower<Random>(),
         HoverTipFactory.FromCard<SlalFreshIdea>(),
     ];
 
@@ -42,7 +44,7 @@ public class PonyForm : SlalTheEndlessPower
 
     public override Task BeforeCardPlayed(CardPlay cardPlay)
     {
-        if (cardPlay.Card.Owner == Owner.Player && cardPlay.Card.Keywords.Contains(SlalCardKeywords.Novel))
+        if (cardPlay.Card.Owner == Owner.Player && SlalMechanicsHelper.IsNovel(cardPlay.Card))
         {
             GetInternalData<Data>().novelCardsBeingPlayed.Add(cardPlay.Card);
         }

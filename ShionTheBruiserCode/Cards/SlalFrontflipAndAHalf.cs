@@ -21,7 +21,7 @@ public class SlalFrontflipAndAHalf() : SlalTheEndlessCard(1,
         new DynamicVar("SelfWeak", 1),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
-        new CalculatedVar("ConfusionAmount").WithMultiplier((card, _) => card.Owner.Creature.Block),
+        new CalculatedVar("ConfusionAmount").WithMultiplier((card, _) => SlalMechanicsHelper.WithMemoryConfusionBonus(card, card.Owner.Creature.Block)),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [

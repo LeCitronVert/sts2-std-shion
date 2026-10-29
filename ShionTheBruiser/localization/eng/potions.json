@@ -6,7 +6,7 @@
   "SHIONTHEBRUISER-ULTRA_SPICY_BREW.description": "Gain [blue]100%[/blue] [gold]Critical Hit[/gold] chance this turn.",
   "SHIONTHEBRUISER-ULTRA_SPICY_BREW.title": "Ultra Spicy Brew",
   "SHIONTHEBRUISER-SLIME_POTION.title": "Slime Potion",
-  "SHIONTHEBRUISER-SLIME_POTION.description": "[gold]Transform[/gold] a card in your [gold]Hand[/gold] into [gold]Slimed[/gold].\n[gold]Slimed[/gold] are free to play this turn.",
+  "SHIONTHEBRUISER-SLIME_POTION.description": "[gold]Transform[/gold] a card in your [gold]Hand[/gold] into [gold]Slimed[/gold].\nGain {FreeStatus:diff()} [gold]Free Status[/gold].",
   "SHIONTHEBRUISER-SLIME_POTION.selectionScreenPrompt": "Choose a card to Transform into Slimed.",
   "SHIONTHEBRUISER-COTTON_CANDY.title": "Cotton Candy",
   "SHIONTHEBRUISER-COTTON_CANDY.description": "Gain {Energy:energyIcons()}.\nGain [gold]Random[/gold] equal to the number of cards in your [gold]Hand[/gold].",

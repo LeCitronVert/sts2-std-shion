@@ -3,14 +3,13 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Whenever you play a Slimy card, apply 1 Weak to a random enemy and gain 1 Plating.
+/// Whenever you play a Novel card, draw 1 card.
 /// </summary>
 public class SlalSlimeAppetite() : SlalTheEndlessCard(2,
     CardType.Power, CardRarity.Uncommon,
@@ -21,9 +20,7 @@ public class SlalSlimeAppetite() : SlalTheEndlessCard(2,
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromKeyword(SlalCardKeywords.Slimy),
-        HoverTipFactory.FromPower<WeakPower>(),
-        HoverTipFactory.FromPower<PlatingPower>(),
+        HoverTipFactory.FromKeyword(SlalCardKeywords.Novel),
     ];
 
     protected override async Task OnPlay(

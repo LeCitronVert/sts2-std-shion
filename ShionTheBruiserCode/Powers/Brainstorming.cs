@@ -31,7 +31,7 @@ public class Brainstorming : SlalTheEndlessPower
 
     public override Task BeforeCardPlayed(CardPlay cardPlay)
     {
-        if (cardPlay.Card.Owner == Owner.Player && cardPlay.Card.Keywords.Contains(SlalCardKeywords.Novel))
+        if (cardPlay.Card.Owner == Owner.Player && SlalMechanicsHelper.IsNovel(cardPlay.Card))
         {
             GetInternalData<Data>().novelCardsBeingPlayed.Add(cardPlay.Card);
         }

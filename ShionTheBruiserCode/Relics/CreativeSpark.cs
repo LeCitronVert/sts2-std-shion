@@ -23,7 +23,7 @@ public class CreativeSpark : SlalTheEndlessRelic
     {
         foreach (var cardModel in Owner.PlayerCombatState?.AllCards ?? [])
         {
-            cardModel.AddKeyword(SlalCardKeywords.Novel);
+            SlalMechanicsHelper.AddNovel(cardModel);
         }
 
         // Cards created before the first turn starts also need the tracker to gain Novel.
@@ -35,7 +35,7 @@ public class CreativeSpark : SlalTheEndlessRelic
         var novelPower = Owner.Creature.GetPower<NovelTracker>();
         if (card.Owner == Owner && novelPower != null && !novelPower.CardsUsedThisFight.Contains(card.Id))
         {
-            card.AddKeyword(SlalCardKeywords.Novel);
+            SlalMechanicsHelper.AddNovel(card);
         }
         
         return Task.CompletedTask;

@@ -1,41 +1,80 @@
-using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Deal damage and apply Confusion equal to the number of Powers you played this combat,
-/// then add a copy of each of those Powers into your Discard Pile. Exhaust.
+/// TD Fact: apply 3 Confusion. Increase this card's Confusion by 1 (2) each time you play a Novel card this combat. Exhaust.
+/// Only the Novel cards played while this card is in combat count.
+/// (The class keeps its old name so existing saves still find it.)
 /// </summary>
-public class SlalAvatarCharacter() : SlalTheEndlessCard(3,
-    CardType.Attack, CardRarity.Rare,
+//todo : type not specified
+public class SlalAvatarCharacter() : SlalTheEndlessCard(1,
+    CardType.Skill, CardRarity.Rare,
     TargetType.AnyEnemy)
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CalculationBaseVar(0),
-        new ExtraDamageVar(1),
-        new CalculationExtraVar(1),
-        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => GetPowersPlayed(card).Count),
-        new CalculatedVar("ConfusionAmount").WithMultiplier((card, _) => GetPowersPlayed(card).Count),
+        new PowerVar<Confusion>(3),
+        new DynamicVar("Increase", 1),
     ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Confusion>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<Confusion>(),
+        HoverTipFactory.FromKeyword(SlalCardKeywords.Novel),
+    ];
 
-    private static List<CardModel> GetPowersPlayed(CardModel card)
+    private decimal _extraConfusionFromNovel;
+
+    /// <summary>
+    /// Required so we can restore the extra Confusion after a downgrade (see Rampage).
+    /// </summary>
+    private decimal ExtraConfusionFromNovel
     {
-        return CombatManager.Instance.History.CardPlaysFinished
-            .Where(e => e.CardPlay.Card.Owner == card.Owner && e.CardPlay.IsFirstInSeries && e.CardPlay.Card.Type == CardType.Power)
-            .Select(e => e.CardPlay.Card)
-            .ToList();
+        get => _extraConfusionFromNovel;
+        set
+        {
+            AssertMutable();
+            _extraConfusionFromNovel = value;
+        }
+    }
+
+    /// <summary>Novel is removed when the card is played, so remember it before the play resolves.</summary>
+    private HashSet<CardModel> _novelCardsBeingPlayed = [];
+
+    // MemberwiseClone shares the set with the canonical model, so give each instance its own.
+    protected override void DeepCloneFields()
+    {
+        base.DeepCloneFields();
+        _novelCardsBeingPlayed = [];
+    }
+
+    public override async Task BeforeCardPlayed(CardPlay cardPlay)
+    {
+        await base.BeforeCardPlayed(cardPlay);
+        if (cardPlay.Card.Owner == Owner && cardPlay.IsFirstInSeries && SlalMechanicsHelper.IsNovel(cardPlay.Card))
+        {
+            _novelCardsBeingPlayed.Add(cardPlay.Card);
+        }
+    }
+
+    public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        if (cardPlay.IsLastInSeries && _novelCardsBeingPlayed.Remove(cardPlay.Card))
+        {
+            var increase = DynamicVars["Increase"].BaseValue;
+            DynamicVars["Confusion"].BaseValue += increase;
+            ExtraConfusionFromNovel += increase;
+        }
+        return Task.CompletedTask;
     }
 
     protected override async Task OnPlay(
@@ -44,27 +83,17 @@ public class SlalAvatarCharacter() : SlalTheEndlessCard(3,
     {
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
+        await PowerCmd.Apply<Confusion>(choiceContext, play.Target, card.DynamicVars["Confusion"].BaseValue, card.Owner.Creature, card);
+    }
 
-        var powers = GetPowersPlayed(card);
-        if (powers.Count == 0) return;
-
-        await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
-            .FromCard(card)
-            .Targeting(play.Target)
-            .WithHitFx("vfx/vfx_attack_blunt", tmpSfx: "heavy_attack.mp3")
-            .Execute(choiceContext);
-
-        if (play.Target.IsAlive)
-        {
-            await PowerCmd.Apply<Confusion>(choiceContext, play.Target, powers.Count, card.Owner.Creature, card);
-        }
-
-        var copies = powers.Select(p => p.CreateClone()).ToList();
-        CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardsToCombat(copies, PileType.Discard, card.Owner));
+    protected override void AfterDowngraded()
+    {
+        base.AfterDowngraded();
+        DynamicVars["Confusion"].BaseValue += ExtraConfusionFromNovel;
     }
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars["Increase"].UpgradeValueBy(1);
     }
 }
