@@ -67,7 +67,8 @@ public static class TeamUpLootPatch
 }
 
 /// <summary>
-/// Neow offers Friendship Bracelet in place of her first blessing, when the player has Team-Ups available with the current team.
+/// Neow sometimes offers Friendship Bracelet in place of her first blessing, when the player has Team-Ups available with the current team.
+/// Odds match a regular blessing: Neow shows 2 out of ~16 positive options.
 /// </summary>
 [HarmonyPatch(typeof(Neow), "GenerateInitialOptions")]
 public static class FriendshipBraceletNeowPatch
@@ -75,12 +76,15 @@ public static class FriendshipBraceletNeowPatch
     private static readonly MethodInfo RelicOption = AccessTools.Method(typeof(AncientEventModel), "RelicOption",
         [typeof(RelicModel), typeof(string), typeof(string)]);
 
+    private const float OfferChance = 0.125f;
+
     [HarmonyPostfix]
     public static void Postfix(Neow __instance, ref IReadOnlyList<EventOption> __result)
     {
         if (__instance.Owner is not { } player || __result.Count == 0) return;
         if (player.RunState.Modifiers.Count > 0) return;
         if (!ModelDb.Relic<FriendshipBracelet>().IsAllowedAtNeow(player)) return;
+        if (__instance.Rng.NextFloat() >= OfferChance) return;
 
         var options = __result.ToList();
         options[0] = (EventOption)RelicOption.Invoke(__instance,
