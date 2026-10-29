@@ -7,7 +7,7 @@ ShionTheBruiser.json::JSON::-1::1792433998::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1793208115
+::res://bin/ExportRelease/net9.0/publish/::1793208378
 ShionTheBruiser.deps.json::JSON::-1::1793178085::0::1::::<><><>0<>0<><>::
 ::res://ci/::1792939391
 ::res://ci/game-refs/::1792939391
@@ -959,7 +959,7 @@ team_blast_bar.png::CompressedTexture2D::3159766184385900582::1793177713::179317
 team_blast_locked.png::CompressedTexture2D::7621079854370452256::1793177713::1793178089::1::::<><><>0<>0<>013933bfc0053016122d75e6bb53c76f<>res://.godot/imported/team_blast_locked.png-af6d45a45c3d33d30fc47cd1c14ac63b.ctex::
 team_blast_ready.png::CompressedTexture2D::8331283540066729296::1793177713::1793178089::1::::<><><>0<>0<>8f45cec4072dfa0ce28aea63f7bd5405<>res://.godot/imported/team_blast_ready.png-abb4ee67caa30497b30d7a53924e66fb.ctex::
 ::res://ShionTheBruiser/localization/::1781940056
-::res://ShionTheBruiser/localization/eng/::1793208110
+::res://ShionTheBruiser/localization/eng/::1793208373
 ancients.json::JSON::-1::1793019069::0::1::::<><><>0<>0<><>::
 cards.json::JSON::-1::1793193928::0::1::::<><><>0<>0<><>::
 card_keywords.json::JSON::-1::1793197255::0::1::::<><><>0<>0<><>::
@@ -967,7 +967,7 @@ card_selection.json::JSON::-1::1793183274::0::1::::<><><>0<>0<><>::
 characters.json::JSON::-1::1793207457::0::1::::<><><>0<>0<><>::
 combat_messages.json::JSON::-1::1782426298::0::1::::<><><>0<>0<><>::
 enchantments.json::JSON::-1::1792675405::0::1::::<><><>0<>0<><>::
-epochs.json::JSON::-1::1793208110::0::1::::<><><>0<>0<><>::
+epochs.json::JSON::-1::1793208373::0::1::::<><><>0<>0<><>::
 events.json::JSON::-1::1793013036::0::1::::<><><>0<>0<><>::
 main_menu_ui.json::JSON::-1::1793017890::0::1::::<><><>0<>0<><>::
 monsters.json::JSON::-1::1791312255::0::1::::<><><>0<>0<><>::

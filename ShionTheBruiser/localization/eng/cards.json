@@ -129,7 +129,7 @@
     "SHIONTHEBRUISER-SHION_ONCE_MORE.title": "Once More",
     "SHIONTHEBRUISER-SHION_BREAKING_SWIPES.description": "Deal {Damage:diff()} damage.\nReturn this card to your [gold]Hand[/gold].\n[gold]Berserk:[/gold] Apply {VulnerablePower:diff()} [gold]Vulnerable[/gold].",
     "SHIONTHEBRUISER-SHION_BREAKING_SWIPES.title": "Breaking Swipes",
-    "SHIONTHEBRUISER-SHION_SHIELD_BUSTER.description": "Remove ALL of the enemy's [gold]Block[/gold].\nDeal {Damage:diff()} damage.\n[gold]Critical Draw:[/gold] {CriticalDraw:diff()}%",
+    "SHIONTHEBRUISER-SHION_SHIELD_BUSTER.description": "Deal {Damage:diff()} damage.\nIf the enemy has [gold]Block[/gold], remove it before attacking and deal {BonusDamage:diff()} additional damage.{InCombat:{HasTarget:cond:>0?\n(Deal {CalculatedDamage:diff()} damage)|}|}\n[gold]Critical Draw:[/gold] {CriticalDraw:diff()}%",
     "SHIONTHEBRUISER-SHION_SHIELD_BUSTER.title": "Shield Buster",
     "SHIONTHEBRUISER-SHION_EMERGENCY_GUARD.description": "Gain {Block:diff()} [gold]Block[/gold] {Repeat:diff()} times.\nGain {Guard:diff()} [gold]Guard[/gold].",
     "SHIONTHEBRUISER-SHION_EMERGENCY_GUARD.title": "Emergency Guard",
