@@ -11,7 +11,8 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Patches;
 
 /// <summary>
 /// Shion's Ancient relics. When the player is Shion, each one can take the place of one of its Ancient's options,
-/// as often as the other relics it competes with.
+/// as often as the other relics it competes with. Each one is also listed in its Ancient's AllPossibleOptions,
+/// so the "ancient" console command and the Relic Collection know about it.
 /// </summary>
 public static class ShionAncientRelics
 {
@@ -19,6 +20,13 @@ public static class ShionAncientRelics
         [typeof(RelicModel), typeof(string), typeof(string)]);
 
     public static bool IsShion(Player? player) => player?.Character is Character.ShionTheBruiser;
+
+    public static EventOption Option(AncientEventModel ancient, RelicModel relic, string? customDonePage = null,
+        Func<EventOption, EventOption>? configure = null)
+    {
+        var option = (EventOption)RelicOption.Invoke(ancient, [relic.ToMutable(), "INITIAL", customDonePage])!;
+        return configure?.Invoke(option) ?? option;
+    }
 
     /// <summary>
     /// Replaces the option at <paramref name="index"/> with the relic, 1 time out of <paramref name="odds"/>.
@@ -29,9 +37,8 @@ public static class ShionAncientRelics
         if (index >= options.Count) return;
         if (ancient.Rng.NextInt(odds) != 0) return;
 
-        var option = (EventOption)RelicOption.Invoke(ancient, [relic.ToMutable(), "INITIAL", customDonePage])!;
         var list = options.ToList();
-        list[index] = configure?.Invoke(option) ?? option;
+        list[index] = Option(ancient, relic, customDonePage, configure);
         options = list;
     }
 }
@@ -47,6 +54,16 @@ public static class ThornRingVakuuPatch
     {
         if (!ShionAncientRelics.IsShion(__instance.Owner)) return;
         ShionAncientRelics.TryReplaceOption(__instance, ref __result, 0, 4, ModelDb.Relic<ThornRing>());
+    }
+}
+
+[HarmonyPatch(typeof(Vakuu), nameof(AncientEventModel.AllPossibleOptions), MethodType.Getter)]
+public static class ThornRingVakuuOptionsPatch
+{
+    [HarmonyPostfix]
+    public static void Postfix(Vakuu __instance, ref IEnumerable<EventOption> __result)
+    {
+        __result = __result.Append(ShionAncientRelics.Option(__instance, ModelDb.Relic<ThornRing>()));
     }
 }
 
@@ -70,6 +87,20 @@ public static class TurtleHermitShellNeowPatch
 }
 
 /// <summary>
+/// Also read by Neow's Bones, which TurtleHermitShell.IsAllowedAtNeow keeps to Shion.
+/// </summary>
+[HarmonyPatch(typeof(Neow), nameof(AncientEventModel.AllPossibleOptions), MethodType.Getter)]
+public static class TurtleHermitShellNeowOptionsPatch
+{
+    [HarmonyPostfix]
+    public static void Postfix(Neow __instance, ref IEnumerable<EventOption> __result)
+    {
+        __result = __result.Append(ShionAncientRelics.Option(__instance, ModelDb.Relic<TurtleHermitShell>(),
+            "NEOW.pages.DONE.POSITIVE.description"));
+    }
+}
+
+/// <summary>
 /// Orobas: Master Ball joins his second pool (Alchemical Coffer, Driftwood, Radiant Pearl), so 1 in 4,
 /// once Abby the Absol is unlocked (Shion's Determination epoch).
 /// </summary>
@@ -85,5 +116,17 @@ public static class MasterBallOrobasPatch
         var maxHpLoss = ModelDb.Relic<MasterBall>().DynamicVars.HpLoss.BaseValue;
         ShionAncientRelics.TryReplaceOption(__instance, ref __result, 1, 4, ModelDb.Relic<MasterBall>(),
             configure: option => option.ThatDecreasesMaxHp(maxHpLoss));
+    }
+}
+
+[HarmonyPatch(typeof(Orobas), nameof(AncientEventModel.AllPossibleOptions), MethodType.Getter)]
+public static class MasterBallOrobasOptionsPatch
+{
+    [HarmonyPostfix]
+    public static void Postfix(Orobas __instance, ref IEnumerable<EventOption> __result)
+    {
+        var maxHpLoss = ModelDb.Relic<MasterBall>().DynamicVars.HpLoss.BaseValue;
+        __result = __result.Append(ShionAncientRelics.Option(__instance, ModelDb.Relic<MasterBall>(),
+            configure: option => option.ThatDecreasesMaxHp(maxHpLoss)));
     }
 }

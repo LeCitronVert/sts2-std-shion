@@ -92,3 +92,17 @@ public static class FriendshipBraceletNeowPatch
         __result = options;
     }
 }
+
+/// <summary>
+/// Also read by Neow's Bones, which FriendshipBracelet.IsAllowedAtNeow keeps to parties with Team-Ups available.
+/// </summary>
+[HarmonyPatch(typeof(Neow), nameof(AncientEventModel.AllPossibleOptions), MethodType.Getter)]
+public static class FriendshipBraceletNeowOptionsPatch
+{
+    [HarmonyPostfix]
+    public static void Postfix(Neow __instance, ref IEnumerable<EventOption> __result)
+    {
+        __result = __result.Append(ShionAncientRelics.Option(__instance, ModelDb.Relic<FriendshipBracelet>(),
+            "NEOW.pages.DONE.POSITIVE.description"));
+    }
+}

@@ -7,7 +7,7 @@ ShionTheBruiser.json::JSON::-1::1792433998::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1793309761
+::res://bin/ExportRelease/net9.0/publish/::1793310481
 ShionTheBruiser.deps.json::JSON::-1::1793307387::0::1::::<><><>0<>0<><>::
 ::res://ci/::1792939391
 ::res://ci/game-refs/::1792939391
@@ -1022,7 +1022,7 @@ MainFile.cs::CSharpScript::2954314548483070873::1793207387::0::1::::<><><>0<>0<>
 ::res://ShionTheBruiserCode/Ancients/::1793303570
 PartyDialogue.cs::CSharpScript::241308958335632356::1793302135::0::1::::<><><>0<>0<><>::
 ShionPartyDialogues.cs::CSharpScript::7951062430476225983::1793302135::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Cards/::1793309648
+::res://ShionTheBruiserCode/Cards/::1793310387
 CosmoDetermination.cs::CSharpScript::4903082444639403780::1792756623::0::1::::<><><>0<>0<><>::
 CosmoGuidance.cs::CSharpScript::4895954223051435257::1792870460::0::1::::<><><>0<>0<><>::
 CosmoKindness.cs::CSharpScript::2527117697509655675::1792756623::0::1::::<><><>0<>0<><>::
@@ -1269,14 +1269,14 @@ ShionEmeraldReflection.cs::CSharpScript::8453308753580855263::1782892129::0::1::
 ShionEmergencyGuard.cs::CSharpScript::8690074971349723207::1783423384::0::1::::<><><>0<>0<><>::
 ShionEndure.cs::CSharpScript::3990314036148543778::1792442439::0::1::::<><><>0<>0<><>::
 ShionEnergyBall.cs::CSharpScript::1682706645116790596::1792870359::0::1::::<><><>0<>0<><>::
-ShionEnergyBind.cs::CSharpScript::3427089845815474347::1793305963::0::1::::<><><>0<>0<><>::
+ShionEnergyBind.cs::CSharpScript::3427089845815474347::1793310387::0::1::::<><><>0<>0<><>::
 ShionEnergyBomb.cs::CSharpScript::1204715597505481185::1792503996::0::1::::<><><>0<>0<><>::
 ShionEnergyBurst.cs::CSharpScript::6372255246636101457::1793305963::0::1::::<><><>0<>0<><>::
 ShionEnergyCharge.cs::CSharpScript::5765438809460713064::1784857452::0::1::::<><><>0<>0<><>::
 ShionEnergyJolt.cs::CSharpScript::6218755334696067433::1792870359::0::1::::<><><>0<>0<><>::
 ShionEnergyShield.cs::CSharpScript::1827979362561321155::1793309648::0::1::::<><><>0<>0<><>::
 ShionEnergySpark.cs::CSharpScript::6704986148074893323::1784857425::0::1::::<><><>0<>0<><>::
-ShionEnergyStrike.cs::CSharpScript::6225904476480266067::1793309221::0::1::::<><><>0<>0<><>::
+ShionEnergyStrike.cs::CSharpScript::6225904476480266067::1793310329::0::1::::<><><>0<>0<><>::
 ShionEnergySurge.cs::CSharpScript::8441539777815285288::1792870359::0::1::::<><><>0<>0<><>::
 ShionEnergyVolley.cs::CSharpScript::4286085764411823295::1792870412::0::1::::<><><>0<>0<><>::
 ShionEnergyWave.cs::CSharpScript::7041956892016054297::1792870359::0::1::::<><><>0<>0<><>::
