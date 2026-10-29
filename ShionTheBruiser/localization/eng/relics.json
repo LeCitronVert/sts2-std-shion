@@ -35,6 +35,15 @@
   "SHIONTHEBRUISER-ABBY_THE_ABSOL.description": "At the start of each combat, summon [gold]Abby[/gold].\nGain {CritAttackRate:diff()}% [gold]Critical Hit[/gold] chance.\nWhenever you deal [gold]Critical[/gold] damage to an enemy, [gold]Abby[/gold] deals the same damage to it.",
   "SHIONTHEBRUISER-ABBY_THE_ABSOL.flavor": "Former Shadow Pokémon, now mascot and daughter, the ever-vigilant Abby watches over Shion more than the other way around.",
   "SHIONTHEBRUISER-ABBY_THE_ABSOL.title": "Abby the Absol",
+  "SHIONTHEBRUISER-THORN_RING.title": "Thorn Ring",
+  "SHIONTHEBRUISER-THORN_RING.description": "At the start of each combat, add {Cards:diff()} [gold]Come What May[/gold] to your [gold]Hand[/gold].",
+  "SHIONTHEBRUISER-THORN_RING.flavor": "The mere sight of this item make the frail-hearted tremble. For someone desperate for power, however...",
+  "SHIONTHEBRUISER-TURTLE_HERMIT_SHELL.title": "Turtle Hermit Shell",
+  "SHIONTHEBRUISER-TURTLE_HERMIT_SHELL.description": "Replace your starter [gold]Deck[/gold] with one focused on Energy moves.\nYour [gold]Berserk[/gold] threshold is reduced by {BerserkThresholdReduction:diff()}% of your Max HP.",
+  "SHIONTHEBRUISER-TURTLE_HERMIT_SHELL.flavor": "Eat well, play well, and rest well! It's the Turtle School's way!",
+  "SHIONTHEBRUISER-MASTER_BALL.title": "Master Ball",
+  "SHIONTHEBRUISER-MASTER_BALL.description": "Gain [gold]Abby the Absol[/gold], [gold]Show of Strength[/gold] and [gold]Press the Advantage[/gold].\nLose {HpLoss:diff()} Max HP.",
+  "SHIONTHEBRUISER-MASTER_BALL.flavor": "When Shion snagged Abby, she used a Master Ball, clueless to how expensive it was. She owes up to it, though. It's a good proof of love.",
   "SHIONTHEBRUISER-MASTER_PENDANT.description": "You can [gold]Lull[/gold] at Rest Sites to add a strong card to your Deck.",
   "SHIONTHEBRUISER-MASTER_PENDANT.flavor": "It's said that the Master Emerald's existence is shared across space and time. Somewhere, somewhen, someone is VERY confused why a shard of the Master Emerald is suddenly flying upwards.",
   "SHIONTHEBRUISER-MASTER_PENDANT.title": "Master Emerald Shard Pendant",
@@ -181,5 +190,5 @@
 
   "SHIONTHEBRUISER-FRIENDSHIP_BRACELET.title": "Friendship Bracelet",
   "SHIONTHEBRUISER-FRIENDSHIP_BRACELET.description": "Choose a [gold]Team-Up[/gold] card to add to your [gold]Deck[/gold]: one for each class in your party, and one that works with anyone.",
-  "SHIONTHEBRUISER-FRIENDSHIP_BRACELET.flavor": ""
+  "SHIONTHEBRUISER-FRIENDSHIP_BRACELET.flavor": "What a cutie! You love your friends, don't you? Yes you do!!"
 }

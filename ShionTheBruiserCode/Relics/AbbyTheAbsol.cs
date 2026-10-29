@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Monsters;
+using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Character;
 using ShionTheBruiser.ShionTheBruiserCode.Critical;
@@ -16,7 +17,8 @@ using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
-[Pool(typeof(ShionTheBruiserRelicPool))]
+// Only obtained from Master Ball (Orobas): out of Shion's pool, so no reward, shop or random relic gives it
+[Pool(typeof(EventRelicPool))]
 public class AbbyTheAbsol : CritContributorRelic, ICritHitRateContributor, IOnCriticalHitListener
 {
     // Shion relic
@@ -29,7 +31,7 @@ public class AbbyTheAbsol : CritContributorRelic, ICritHitRateContributor, IOnCr
     
     // Normal stuff I master
     public override RelicRarity Rarity =>
-        RelicRarity.Rare;
+        RelicRarity.Event;
     
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CritDisplayTooltipVar(),

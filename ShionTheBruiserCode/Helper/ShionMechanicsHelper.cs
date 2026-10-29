@@ -9,8 +9,11 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Models.CardPools;
+using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Character;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Helper;
 
@@ -63,6 +66,38 @@ public static class ShionMechanicsHelper
         return card.Pool.Id == character.CardPool.Id;
     }
     
+    // Shion cards that play, generate or count Non-Native cards (Come What May leaves them alone)
+    private static readonly HashSet<Type> NonNativeInteractionCards =
+    [
+        typeof(ShionComeWhatMay),
+        typeof(ShionUma),
+        typeof(ShionStartingGate),
+        typeof(ShionChildOfMany),
+        typeof(ShionImprovise),
+        typeof(ShionHalfHearted),
+        typeof(ShionOffRockers),
+        typeof(ShionLurkingIntensity),
+    ];
+
+    public static bool InteractsWithNonNative(CardModel card)
+    {
+        return NonNativeInteractionCards.Contains(card.GetType());
+    }
+
+    /// <summary>
+    /// Cards that are Non-Native for this player: other characters' cards and Colorless cards.
+    /// </summary>
+    public static IEnumerable<CardModel> GetNonNativeCardOptions(Player player)
+    {
+        IEnumerable<CardPoolModel> pools = [
+            ..SlalMechanicsHelper.AllCharacterCardPools.Where(p => p.Id != player.Character.CardPool.Id),
+            ModelDb.CardPool<ColorlessCardPool>(),
+        ];
+        return GetRandomCardOptionsForPool(pools.DistinctBy(p => p.Id), player)
+            .Distinct()
+            .Where(c => c.CanBeGeneratedInCombat && c.Rarity is CardRarity.Common or CardRarity.Uncommon or CardRarity.Rare);
+    }
+
     public static IEnumerable<CardModel> GetAllCombatCards (Player player)
     {
         var handCards = PileType.Hand.GetPile(player).Cards;
@@ -155,6 +190,10 @@ public static class ShionMechanicsHelper
     public static decimal GetBerserkThreshold(Creature creature)
     {
         var threshold = BaseBerserkThreshold + (creature.GetPower<PleasureInPain>()?.Amount ?? 0) / 100m;
+        if (creature.Player?.GetRelic<TurtleHermitShell>() != null)
+        {
+            threshold -= TurtleHermitShell.BerserkThresholdReduction / 100m;
+        }
         return Math.Clamp(threshold, 0m, 1m);
     }
     
