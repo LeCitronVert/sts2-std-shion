@@ -107,12 +107,12 @@ public class ShionDeterminationEpoch : DreamersEpoch<ShionStory>
 }
 
 /// <summary>
-/// 6. Complete Act 3 with Shion. Column of "We Need a Hero!" (Regent 3).
+/// 6. Complete Act 3 with Shion. Column of "The Daily".
 /// </summary>
 public class ShionFamiliarSceneEpoch : DreamersEpoch<ShionStory>
 {
-    public override EpochEra Era => EpochEra.Invitation2;
-    public override int EraPosition => 4;
+    public override EpochEra Era => EpochEra.Invitation6;
+    public override int EraPosition => 3;
     protected override string PortraitFile => "shion/a_familiar_scene";
 
     public override IReadOnlyList<CardModel> Cards =>
@@ -124,12 +124,12 @@ public class ShionFamiliarSceneEpoch : DreamersEpoch<ShionStory>
 }
 
 /// <summary>
-/// 7. Win a run with the Purple Chaos Emerald as Shion. Column of "Nemesis" (Silent 6).
+/// 7. Win a run with the Purple Chaos Emerald as Shion. Column of "The Daily".
 /// </summary>
 public class ShionTasteOfPowerEpoch : DreamersEpoch<ShionStory>
 {
-    public override EpochEra Era => EpochEra.Prehistoria2;
-    public override int EraPosition => 2;
+    public override EpochEra Era => EpochEra.Invitation6;
+    public override int EraPosition => 4;
     protected override string PortraitFile => "shion/a_taste_of_power";
 
     public override IReadOnlyList<CardModel> Cards =>
