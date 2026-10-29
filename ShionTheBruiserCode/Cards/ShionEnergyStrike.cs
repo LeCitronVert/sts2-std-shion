@@ -12,7 +12,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Turtle Hermit Shell starter. Deal 4 damage. If you have no Vigor, gain 1 Vigor next turn.
+/// Turtle Hermit Shell starter. Deal 4 damage. If not Galvanised, gain 1 Vigor next turn.
 /// </summary>
 public class ShionEnergyStrike() : ShionTheBruiserCard(1,
     CardType.Attack, CardRarity.Basic,
@@ -41,14 +41,14 @@ public class ShionEnergyStrike() : ShionTheBruiserCard(1,
             Character.ShionTheBruiser.GetEnergyCastDelayIfApplicable(card.Owner.Character)
         );
         // Checked before the Attack resolves, since it consumes Vigor
-        var hadVigor = ShionMechanicsHelper.HasVigor(card.Owner.Creature);
+        var wasGalvanised = ShionMechanicsHelper.IsGalvanised(card.Owner.Creature, 1);
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .FromCard(card)
             .Targeting(play.Target)
             .WithEnergyBlast(card, "vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        if (!hadVigor)
+        if (!wasGalvanised)
         {
             await PowerCmd.Apply<VigorNextTurn>(choiceContext, card.Owner.Creature, DynamicVars["VigorNextTurn"].BaseValue, card.Owner.Creature, card);
         }
@@ -57,5 +57,6 @@ public class ShionEnergyStrike() : ShionTheBruiserCard(1,
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(2);
+        DynamicVars["VigorNextTurn"].UpgradeValueBy(1);
     }
 }
