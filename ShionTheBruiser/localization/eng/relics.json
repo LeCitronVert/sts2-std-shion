@@ -24,7 +24,7 @@
   "SHIONTHEBRUISER-CHAO_EGGSHELL.flavor": "Do you think Shions grow out of an egg, too?",
   "SHIONTHEBRUISER-CHAO_EGGSHELL.title": "Chao Eggshell",
   "SHIONTHEBRUISER-EDGE_THE_CHAO.description": "Whenever you consume [gold]Vigor[/gold], gain {RefundPercent:diff()}% of it (rounded down, up to {RefundCap:diff()}) as [gold]Vigor[/gold] next turn.",
-  "SHIONTHEBRUISER-EDGE_THE_CHAO.flavor": "Shion's trusted and beloved little guy. Wants to be a Bruiser when he grows up, too.",
+  "SHIONTHEBRUISER-EDGE_THE_CHAO.flavor": "Shion's trusted and beloved little guy. Wants to be a Berserker when he grows up, too.",
   "SHIONTHEBRUISER-EDGE_THE_CHAO.title": "Edge The Chao",
   "SHIONTHEBRUISER-RING_MONITOR.description": "Whenever you would lose HP, {BlockChance:diff()}% chance to lose {BlockAmount:diff()} less.",
   "SHIONTHEBRUISER-RING_MONITOR.flavor": "There is probably a cynical remark to make about currency being able to protect you from harm.",
