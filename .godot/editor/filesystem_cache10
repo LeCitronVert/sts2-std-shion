@@ -7,8 +7,8 @@ ShionTheBruiser.json::JSON::-1::1792433998::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1793360879
-ShionTheBruiser.deps.json::JSON::-1::1793307387::0::1::::<><><>0<>0<><>::
+::res://bin/ExportRelease/net9.0/publish/::1793370120
+ShionTheBruiser.deps.json::JSON::-1::1793370120::0::1::::<><><>0<>0<><>::
 ::res://ci/::1792939391
 ::res://ci/game-refs/::1792939391
 ::res://ShionTheBruiser/::1792675405
@@ -967,7 +967,7 @@ new_friends.png::CompressedTexture2D::5442753149340826503::1793207411::179320768
 new_friends_packed.png::CompressedTexture2D::513616703345979971::1793207411::1793207687::1::::<><><>0<>0<>b074cad9abfccb713786db1615bb507a<>res://.godot/imported/new_friends_packed.png-01ce0024c8c8e94b0f9dc33ade39d67a.ctex::
 the_call.png::CompressedTexture2D::4889037100230555786::1793207411::1793207688::1::::<><><>0<>0<>58f580f9336f5aea7d76943f350a0385<>res://.godot/imported/the_call.png-6af1eb33ea8a0ad8b76863b74bedfcd7.ctex::
 the_call_packed.png::CompressedTexture2D::2638478158282856999::1793207411::1793207687::1::::<><><>0<>0<>46d2cbe9f3ef11ca81869382787a49b4<>res://.godot/imported/the_call_packed.png-0e0491bb87239caf8cc41b67d82fcd49.ctex::
-::res://ShionTheBruiser/images/timeline/slal/::1793360676
+::res://ShionTheBruiser/images/timeline/slal/::1793360886
 a_creative_soul.png::CompressedTexture2D::3729382622480073693::1793360675::1793360885::1::::<><><>0<>0<>07a8207c732255877591790765e77b15<>res://.godot/imported/a_creative_soul.png-16e67623dfd8bff1171ff72fb57b8606.ctex::
 a_creative_soul_packed.png::CompressedTexture2D::5683040218978264992::1793360680::1793360884::1::::<><><>0<>0<>e6f574dee7ece9167fb620a5f89ac131<>res://.godot/imported/a_creative_soul_packed.png-2ea2ea67e9f4060c1105b427e1004d81.ctex::
 infinite_worlds.png::CompressedTexture2D::5451687458328156282::1793360675::1793360885::1::::<><><>0<>0<>4f6b345ebffc0cebf6dbf501e70df540<>res://.godot/imported/infinite_worlds.png-5a779976e5e95ad3c108e1d4fe307596.ctex::
@@ -993,7 +993,7 @@ team_blast_bar.png::CompressedTexture2D::3159766184385900582::1793177713::179317
 team_blast_locked.png::CompressedTexture2D::7621079854370452256::1793177713::1793178089::1::::<><><>0<>0<>013933bfc0053016122d75e6bb53c76f<>res://.godot/imported/team_blast_locked.png-af6d45a45c3d33d30fc47cd1c14ac63b.ctex::
 team_blast_ready.png::CompressedTexture2D::8331283540066729296::1793177713::1793178089::1::::<><><>0<>0<>8f45cec4072dfa0ce28aea63f7bd5405<>res://.godot/imported/team_blast_ready.png-abb4ee67caa30497b30d7a53924e66fb.ctex::
 ::res://ShionTheBruiser/localization/::1781940056
-::res://ShionTheBruiser/localization/eng/::1793309221
+::res://ShionTheBruiser/localization/eng/::1793368327
 ancients.json::JSON::-1::1793302304::0::1::::<><><>0<>0<><>::
 cards.json::JSON::-1::1793312603::0::1::::<><><>0<>0<><>::
 card_keywords.json::JSON::-1::1793312603::0::1::::<><><>0<>0<><>::
@@ -1001,7 +1001,7 @@ card_selection.json::JSON::-1::1793183274::0::1::::<><><>0<>0<><>::
 characters.json::JSON::-1::1793207457::0::1::::<><><>0<>0<><>::
 combat_messages.json::JSON::-1::1782426298::0::1::::<><><>0<>0<><>::
 enchantments.json::JSON::-1::1792675405::0::1::::<><><>0<>0<><>::
-epochs.json::JSON::-1::1793296609::0::1::::<><><>0<>0<><>::
+epochs.json::JSON::-1::1793368327::0::1::::<><><>0<>0<><>::
 events.json::JSON::-1::1793013036::0::1::::<><><>0<>0<><>::
 main_menu_ui.json::JSON::-1::1793017890::0::1::::<><><>0<>0<><>::
 monsters.json::JSON::-1::1791312255::0::1::::<><><>0<>0<><>::
@@ -1556,7 +1556,7 @@ ShionTheBruiserPotion.cs::CSharpScript::9201725349623556408::1783339625::0::1:::
 SlalTheEndlessPotion.cs::CSharpScript::8376483660968667012::1784597711::0::1::::<><><>0<>0<><>::
 SlimePotion.cs::CSharpScript::7989781476553595685::1793290502::0::1::::<><><>0<>0<><>::
 UltraSpicyBrew.cs::CSharpScript::9048578971562818039::1784853353::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Powers/::1793312926
+::res://ShionTheBruiserCode/Powers/::1793369827
 AggravatingDemeanor.cs::CSharpScript::8129228658966784852::1792675405::0::1::::<><><>0<>0<><>::
 AnchoredDown.cs::CSharpScript::5901246561197500973::1792505028::0::1::::<><><>0<>0<><>::
 AnglerfishForm.cs::CSharpScript::518667432377815112::1792257838::0::1::::<><><>0<>0<><>::
@@ -1592,7 +1592,7 @@ ComboMeter.cs::CSharpScript::2869109764371955420::1792675405::0::1::::<><><>0<>0
 ComeWhatMay.cs::CSharpScript::4219008426143968382::1793305896::0::1::::<><><>0<>0<><>::
 CompetitiveSpirit.cs::CSharpScript::6760749595507080196::1792870359::0::1::::<><><>0<>0<><>::
 Conclusion.cs::CSharpScript::2706445204222891017::1792778670::0::1::::<><><>0<>0<><>::
-Confusion.cs::CSharpScript::8048853769951691982::1793312749::0::1::::<><><>0<>0<><>::
+Confusion.cs::CSharpScript::8048853769951691982::1793369827::0::1::::<><><>0<>0<><>::
 ContinuityThread.cs::CSharpScript::4035396133213721992::1792778698::0::1::::<><><>0<>0<><>::
 CoolBandages.cs::CSharpScript::4887038531725767910::1792675405::0::1::::<><><>0<>0<><>::
 CounterStrategy.cs::CSharpScript::7633700097038938229::1792870448::0::1::::<><><>0<>0<><>::

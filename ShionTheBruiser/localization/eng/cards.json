@@ -344,7 +344,7 @@
     "SHIONTHEBRUISER-SLAL_SLIDE_FORM.title": "Slide Form",
     "SHIONTHEBRUISER-SLAL_SLIDE_FORM.description": "Whenever you create a card, apply {SlideForm:diff()} [gold]Confusion[/gold] to a random enemy.",
     "SHIONTHEBRUISER-SLAL_KICKSTART_EVENT.title": "Kickstart Event",
-    "SHIONTHEBRUISER-SLAL_KICKSTART_EVENT.description": "Whenever you play a [gold]Novel[/gold] card, gain {KickstartEvent:energyIcons()}.",
+    "SHIONTHEBRUISER-SLAL_KICKSTART_EVENT.description": "Whenever you play a [gold]Novel[/gold] card, gain {Energy:energyIcons()}.",
     "SHIONTHEBRUISER-SLAL_CAMOUFLAGED_TRAP.title": "Camouflaged Trap",
     "SHIONTHEBRUISER-SLAL_CAMOUFLAGED_TRAP.description": "Deal {CalculatedDamage:diff()} damage.\nDeals {ExtraDamage:diff()} additional damage for each [gold]Slimed[/gold] in your [gold]Exhaust Pile[/gold].",
     "SHIONTHEBRUISER-SLAL_AVATAR_CHARACTER.title": "TD Fact",

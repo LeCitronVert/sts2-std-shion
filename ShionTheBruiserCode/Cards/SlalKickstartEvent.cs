@@ -16,7 +16,7 @@ public class SlalKickstartEvent() : SlalTheEndlessCard(2,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<KickstartEvent>(1),
+        new EnergyVar(1),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -29,7 +29,7 @@ public class SlalKickstartEvent() : SlalTheEndlessCard(2,
         CardPlay play)
     {
         var card = this;
-        await PowerCmd.Apply<KickstartEvent>(choiceContext, card.Owner.Creature, card.DynamicVars["KickstartEvent"].BaseValue, card.Owner.Creature, card);
+        await PowerCmd.Apply<KickstartEvent>(choiceContext, card.Owner.Creature, card.DynamicVars.Energy.BaseValue, card.Owner.Creature, card);
     }
 
     protected override void OnUpgrade()
