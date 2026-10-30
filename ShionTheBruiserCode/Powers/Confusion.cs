@@ -33,20 +33,22 @@ public class Confusion(): SlalTheEndlessPower
   {
     if (!participants.Contains(Owner)) return;
 
+    var owner = Owner;
     var damageAmount = HpLossAmount;
+    if (damageAmount > 0) Flash();
+    // Remove before dealing damage so the health bar forecast doesn't redraw against the lowered HP mid-hit
+    await PowerCmd.Remove(this);
     if (damageAmount > 0)
     {
-      Flash();
       await CreatureCmd.Damage(
         choiceContext,
-        Owner,
+        owner,
         damageAmount,
         ValueProp.Unblockable | ValueProp.Unpowered,
         null,
         null
       );
     }
-    await PowerCmd.Remove(this);
   }
 
   public override async Task AfterAttack(PlayerChoiceContext choiceContext, AttackCommand command)
