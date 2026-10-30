@@ -36,6 +36,7 @@ public class SlalTheFactoryEpoch : DreamersEpoch<SlalStory>
 {
     public override EpochEra Era => EpochEra.Prehistoria2;
     public override int EraPosition => 2;
+    protected override string PortraitFile => "slal/the_factory";
 
     public override IReadOnlyList<CardModel> Cards =>
     [
@@ -52,6 +53,7 @@ public class SlalRejectionsEpoch : DreamersEpoch<SlalStory>
 {
     public override EpochEra Era => EpochEra.Prehistoria2;
     public override int EraPosition => 3;
+    protected override string PortraitFile => "slal/rejections";
 
     public override IReadOnlyList<PotionModel> Potions =>
     [
@@ -68,6 +70,7 @@ public class SlalMimickeryEpoch : DreamersEpoch<SlalStory>
 {
     public override EpochEra Era => EpochEra.Seeds3;
     public override int EraPosition => 3;
+    protected override string PortraitFile => "slal/mimickery";
 
     public override IReadOnlyList<CardModel> Cards =>
     [
@@ -84,6 +87,7 @@ public class SlalCreativeSoulEpoch : DreamersEpoch<SlalStory>
 {
     public override EpochEra Era => EpochEra.Blight1;
     public override int EraPosition => 4;
+    protected override string PortraitFile => "slal/a_creative_soul";
 
     public override IReadOnlyList<CardModel> Cards =>
     [
@@ -100,6 +104,7 @@ public class SlalInfiniteWorldsEpoch : DreamersEpoch<SlalStory>
 {
     public override EpochEra Era => EpochEra.Blight2;
     public override int EraPosition => 2; // Free gap between Defect 6 and Ablaze
+    protected override string PortraitFile => "slal/infinite_worlds";
 
     public override IReadOnlyList<RelicModel> Relics =>
     [
@@ -116,6 +121,7 @@ public class SlalSelfDiscoveryEpoch : DreamersEpoch<SlalStory>
 {
     public override EpochEra Era => EpochEra.Flourish0;
     public override int EraPosition => 3;
+    protected override string PortraitFile => "slal/self_discovery";
 
     public override IReadOnlyList<RelicModel> Relics =>
     [
@@ -132,6 +138,7 @@ public class SlalReconnaissanceEpoch : CharacterUnlockEpoch<SlalTheEndless, Slal
 {
     public override EpochEra Era => EpochEra.Invitation1;
     public override int EraPosition => 6; // Above Shion's The Call
+    protected override string PortraitFile => "slal/reconnaissance";
 }
 
 /// <summary>
@@ -141,6 +148,7 @@ public class SlalMistakeEpoch : DreamersEpoch<SlalStory>
 {
     public override EpochEra Era => EpochEra.Invitation6;
     public override int EraPosition => 5;
+    protected override string PortraitFile => "slal/mistake";
 
     public override IReadOnlyList<CardModel> Cards =>
     [
