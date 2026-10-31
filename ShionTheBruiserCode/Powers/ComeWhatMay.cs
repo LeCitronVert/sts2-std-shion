@@ -9,7 +9,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
 /// You can't heal or revive during this fight (Patches/ComeWhatMayPatches).
-/// At the start of your turn, lose 1 HP, gain 1 Energy and draw 1 card.
+/// At the start of your turn, lose X HP, gain X Energy, X Stars and draw X cards (X = stacks).
 /// </summary>
 public class ComeWhatMay : ShionTheBruiserPower
 {
@@ -26,6 +26,7 @@ public class ComeWhatMay : ShionTheBruiserPower
         await CreatureCmd.Damage(choiceContext, Owner, Amount, ValueProp.Unblockable | ValueProp.Unpowered, null, null);
         if (Owner.IsDead) return;
         await PlayerCmd.GainEnergy(Amount, player);
+        await PlayerCmd.GainStars(Amount, player);
         await CardPileCmd.Draw(choiceContext, Amount, player);
     }
 }

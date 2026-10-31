@@ -19,7 +19,7 @@
     "SHIONTHEBRUISER-SHION_BREAK_DOWN.title": "Energy Crash",
     "SHIONTHEBRUISER-SHION_FELL_DRAGON.description": "Always apply your [gold]Galvanised[/gold] and [gold]Berserk[/gold] effects.\nYour [gold]Patch Up[/gold] limit is reduced by {PatchUpReduction:diff()}% of your Max HP.",
     "SHIONTHEBRUISER-SHION_FELL_DRAGON.title": "Fell Dragon",
-    "SHIONTHEBRUISER-SHION_COME_WHAT_MAY.description": "You can't heal or revive during this fight.\n[gold]Transform[/gold] all your cards that aren't [gold]Non-Native[/gold] or interact with [gold]Non-Native[/gold] cards into random [gold]Non-Native[/gold] cards.\nAt the start of your turn, lose {HpLoss:diff()} HP, gain {Energy:energyIcons()} and draw {Cards:diff()} {Cards:plural:card|cards}.",
+    "SHIONTHEBRUISER-SHION_COME_WHAT_MAY.description": "You can't heal or revive during this fight.\nGain {Stars:diff()} {singleStarIcon}.\n[gold]Transform[/gold] all your cards that aren't [gold]Non-Native[/gold] or interact with [gold]Non-Native[/gold] cards into random [gold]Non-Native[/gold] cards.\nAt the start of your turn, lose {HpLoss:diff()} HP, gain {Energy:energyIcons()}, {TurnStars:starIcons()} and draw {Cards:diff()} {Cards:plural:card|cards}.",
     "SHIONTHEBRUISER-SHION_COME_WHAT_MAY.title": "Come What May",
     "SHIONTHEBRUISER-SHION_ENERGY_SPARK.description": "Gain {VigorPower:diff()} [gold]Vigor[/gold].\nDraw {Cards:diff()} {Cards:plural:card|cards}.\n[gold]Critical Draw:[/gold] {CriticalDraw:diff()}%",
     "SHIONTHEBRUISER-SHION_ENERGY_SPARK.title": "Energy Spark",

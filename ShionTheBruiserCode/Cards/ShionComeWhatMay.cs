@@ -13,8 +13,10 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
 /// Thorn Ring's card. You can't heal or revive during this fight.
-/// Change all your cards that aren't Non-Native or interact with Non-Native cards into random Non-Native cards.
-/// At the start of your turn, lose 1 HP, gain 1 Energy and draw 1 card.
+/// Gain 9 Stars.
+/// Change all your cards that aren't Non-Native or interact with Non-Native cards into random Non-Native cards
+/// (hidden weights: see ShionMechanicsHelper.GetWeightedNonNativeCardOptions).
+/// At the start of your turn, lose 1 HP, gain 1 Energy, 1 Star and draw 1 card.
 /// Speedlines flash behind its owner during its cast animation (ShionVfx).
 /// </summary>
 public class ShionComeWhatMay() : ShionTheBruiserCard(0,
@@ -27,6 +29,8 @@ public class ShionComeWhatMay() : ShionTheBruiserCard(0,
         new PowerVar<ComeWhatMay>(1),
         new HpLossVar(1),
         new EnergyVar(1),
+        new StarsVar(9),
+        new StarsVar("TurnStars", 1),
         new CardsVar(1),
     ];
 
@@ -45,9 +49,11 @@ public class ShionComeWhatMay() : ShionTheBruiserCard(0,
         ShionVfx.PlayComeWhatMaySpeedlines(owner.Creature);
         await CreatureCmd.TriggerAnim(owner.Creature, "Cast", owner.Character.CastAnimDelay);
         await PowerCmd.Apply<ComeWhatMay>(choiceContext, owner.Creature, DynamicVars["ComeWhatMay"].BaseValue, owner.Creature, card);
+        await PlayerCmd.GainStars(DynamicVars.Stars.BaseValue, owner);
 
-        var options = ShionMechanicsHelper.GetNonNativeCardOptions(owner).ToList();
-        if (options.Count == 0) return;
+        var groups = ShionMechanicsHelper.GetWeightedNonNativeCardOptions(owner);
+        if (groups.Count == 0) return;
+        var rng = owner.RunState.Rng.CombatCardSelection;
 
         foreach (var original in ShionMechanicsHelper.GetAllCombatCards(owner)
                      .Where(c => c.IsTransformable
@@ -55,9 +61,10 @@ public class ShionComeWhatMay() : ShionTheBruiserCard(0,
                                  && !ShionMechanicsHelper.InteractsWithNonNative(c))
                      .ToList())
         {
+            var options = rng.WeightedNextItem(groups, g => g.Weight).Cards;
             await CardCmd.Transform(
                 new CardTransformation(original, options).Yield(),
-                owner.RunState.Rng.CombatCardSelection
+                rng
             );
         }
     }

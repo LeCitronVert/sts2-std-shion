@@ -84,18 +84,44 @@ public static class ShionMechanicsHelper
         return NonNativeInteractionCards.Contains(card.GetType());
     }
 
+    // Come What May's hidden transform weights (not shown to the player).
+    public const float ComeWhatMayColorlessWeight = 40f;
+    public const float ComeWhatMayVanillaWeight = 20f;
+    public const float ComeWhatMayThisModWeight = 30f;
+    public const float ComeWhatMayOtherModsWeight = 10f;
+
     /// <summary>
-    /// Cards that are Non-Native for this player: other characters' cards and Colorless cards.
+    /// Non-Native cards for this player (other characters' cards and Colorless cards), grouped by source with
+    /// Come What May's weights: Colorless 40, vanilla characters 20, this mod's characters 30, other mods' characters 10.
+    /// The player's own pool is excluded. Empty groups are dropped, so the remaining weights renormalise.
     /// </summary>
-    public static IEnumerable<CardModel> GetNonNativeCardOptions(Player player)
+    public static List<(float Weight, List<CardModel> Cards)> GetWeightedNonNativeCardOptions(Player player)
     {
-        IEnumerable<CardPoolModel> pools = [
-            ..SlalMechanicsHelper.AllCharacterCardPools.Where(p => p.Id != player.Character.CardPool.Id),
-            ModelDb.CardPool<ColorlessCardPool>(),
+        var vanillaAssembly = typeof(CharacterModel).Assembly;
+        var thisModAssembly = typeof(ShionMechanicsHelper).Assembly;
+
+        var characterPools = SlalMechanicsHelper.AllCharacterCardPools
+            .Concat(ModelDb.AllCharacters.Select(c => c.CardPool))
+            .DistinctBy(p => p.Id)
+            .Where(p => p.Id != player.Character.CardPool.Id)
+            .ToList();
+
+        List<(float Weight, IEnumerable<CardPoolModel> Pools)> groups =
+        [
+            (ComeWhatMayColorlessWeight, [ModelDb.CardPool<ColorlessCardPool>()]),
+            (ComeWhatMayVanillaWeight, characterPools.Where(p => p.GetType().Assembly == vanillaAssembly)),
+            (ComeWhatMayThisModWeight, characterPools.Where(p => p.GetType().Assembly == thisModAssembly)),
+            (ComeWhatMayOtherModsWeight, characterPools.Where(p => p.GetType().Assembly != vanillaAssembly
+                                                                   && p.GetType().Assembly != thisModAssembly)),
         ];
-        return GetRandomCardOptionsForPool(pools.DistinctBy(p => p.Id), player)
-            .Distinct()
-            .Where(c => c.CanBeGeneratedInCombat && c.Rarity is CardRarity.Common or CardRarity.Uncommon or CardRarity.Rare);
+
+        return groups
+            .Select(g => (g.Weight, Cards: GetRandomCardOptionsForPool(g.Pools, player)
+                .Distinct()
+                .Where(c => c.CanBeGeneratedInCombat && c.Rarity is CardRarity.Common or CardRarity.Uncommon or CardRarity.Rare)
+                .ToList()))
+            .Where(g => g.Cards.Count > 0)
+            .ToList();
     }
 
     public static IEnumerable<CardModel> GetAllCombatCards (Player player)

@@ -849,3 +849,22 @@ Content I skipped (incomplete in the spec):
 - [ ] Hits from cards Spirit Burst autoplayed show a flurry of golden slashes on each target, instead of Hellraiser's VFX.
 - [ ] **Energy Attacks**: when the ki blast lands, an explosion (flash, golden ring, fireball, smoke) plays on the target, on top of the existing ki burst. Check it isn't too much on multi-hit cards (Energy Volley).
 - [ ] Multiplayer: every player sees these effects.
+
+## 13. Come What May rework
+
+- [ ] New image (`images/ui/stars/shion_stars_icon.png`): run a Godot export (Publish) once so it gets imported, or Shion's star counter keeps the vanilla star.
+- [ ] Playing it gives **9 Stars**. Text: "Gain 9 ★".
+- [ ] At the start of each turn: lose 1 HP, gain 1 Energy, **1 Star**, and draw 1 card. Two stacks → 2 of each (HP loss scales too).
+- [ ] Power tooltip shows the Star gain with the stack count.
+- [ ] As **Shion**, the star counter (next to the energy orb) shows the blue icon instead of the gold star, with no rotating star layers. It still dims at 0 Stars and flashes when gaining Stars.
+- [ ] As another character (e.g. Regent, or anyone via Thorn Ring), the star counter is unchanged.
+- [ ] Transform distribution (hidden from the player): over a few plays, roughly 40% Colorless, 20% vanilla characters, 30% this mod's other characters (Slal, Seels, Fry, Shion if you aren't Shion), 10% other mods' characters. Never your own character's cards.
+- [ ] With no other character mods installed, the "other mods" 10% is dropped and the rest scales up (≈44/22/33). No crash.
+- [ ] Multiplayer: the transformed cards match on every client (no desync).
+
+**Decisions I made**
+- HP loss stays and scales with stacks (confirmed).
+- The blue icon is only on Shion's star counter. Card/power text keeps the vanilla star glyph (confirmed).
+- "9 Stars" is written as "9 ★" rather than 9 star glyphs in a row.
+- The weights are per transformed card: each card first rolls a category, then a card from it. Empty categories are skipped.
+- "Your own character" is excluded from every category, so a non-Shion player using Come What May can get Shion cards in the 30% bucket.
