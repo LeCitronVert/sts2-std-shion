@@ -812,3 +812,9 @@ Content I skipped (incomplete in the spec):
 - [ ] **Sunken Treasure** "écrit en wavey": the mod has no Slal text for that event. Tell me which line.
 - [ ] **Elaborate Flourish** (suggested illustration): no image was in the spec.
 - [ ] The **Mimickery** epoch keeps its name and ID (renaming the ID would reset its unlock in saves). Rename only its title if wanted.
+
+## 8. Grey Chaos Emerald rework
+
+- [ ] **Grey Chaos Emerald** (and the combo Chaos Emeralds): after each fight, one random card in your Deck gets **Glam**, with the enchant animation. Hovering the relic shows Glam's tooltip.
+- [ ] Only cards Glam can go on are picked: no Status/Curse, no Unplayable, and no card that already has an Enchantment.
+- [ ] The old effect is gone: no card choice at the start of combat, and no card removed from your Deck after combat.
