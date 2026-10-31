@@ -12,7 +12,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Turtle Hermit Shell starter. Deal 4 damage. If not Galvanised, gain 1 Vigor next turn.
+/// Turtle Hermit Shell starter. Deal 4 damage. If not Galvanised, gain 2 (3) Vigor next turn.
 /// </summary>
 public class ShionEnergyStrike() : ShionTheBruiserCard(1,
     CardType.Attack, CardRarity.Basic,
@@ -22,7 +22,7 @@ public class ShionEnergyStrike() : ShionTheBruiserCard(1,
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(4, ValueProp.Move),
-        new PowerVar<VigorNextTurn>(1),
+        new PowerVar<VigorNextTurn>(2),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
