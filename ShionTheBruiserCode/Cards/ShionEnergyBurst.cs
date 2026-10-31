@@ -10,7 +10,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Turtle Hermit Shell starter. Gain 3 * X Vigor. Gain X Vulnerable.
+/// Turtle Hermit Shell starter. Gain 3 * X Vigor. Gain 1 Vulnerable.
 /// </summary>
 public class ShionEnergyBurst() : ShionTheBruiserCard(0,
     CardType.Skill, CardRarity.Basic,
@@ -25,7 +25,7 @@ public class ShionEnergyBurst() : ShionTheBruiserCard(0,
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
         new CalculatedVar("VigorAmount").WithMultiplier((card, _) => ((ShionEnergyBurst)card).PreviewX() * card.DynamicVars["VigorPerX"].IntValue),
-        new CalculatedVar("VulnerableAmount").WithMultiplier((card, _) => ((ShionEnergyBurst)card).PreviewX()),
+        new PowerVar<VulnerablePower>(1M),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -42,15 +42,15 @@ public class ShionEnergyBurst() : ShionTheBruiserCard(0,
         var card = this;
         var owner = card.Owner.Creature;
         var x = card.ResolveEnergyXValue();
-        if (x == 0) return;
 
         await CreatureCmd.TriggerAnim(
             owner,
             Character.ShionTheBruiser.GetEnergyCastAnimIfApplicable(card.Owner.Character),
             Character.ShionTheBruiser.GetEnergyCastDelayIfApplicable(card.Owner.Character)
         );
-        await PowerCmd.Apply<VigorPower>(choiceContext, owner, x * card.DynamicVars["VigorPerX"].BaseValue, owner, card);
-        await PowerCmd.Apply<VulnerablePower>(choiceContext, owner, x, owner, card);
+        if (x > 0)
+            await PowerCmd.Apply<VigorPower>(choiceContext, owner, x * card.DynamicVars["VigorPerX"].BaseValue, owner, card);
+        await PowerCmd.Apply<VulnerablePower>(choiceContext, owner, card.DynamicVars.Vulnerable.BaseValue, owner, card);
     }
 
     protected override void OnUpgrade()
