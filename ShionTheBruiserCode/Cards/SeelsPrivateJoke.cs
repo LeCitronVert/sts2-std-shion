@@ -17,7 +17,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// Draw 1 (2) card(s). If you draw an Attack, a random enemy takes 3 damage (for each Attack drawn this way).
 /// </summary>
 public class SeelsPrivateJoke() : SeelsTheRecklessCard(0,
-    CardType.Attack, CardRarity.Common,
+    CardType.Skill, CardRarity.Common,
     TargetType.RandomEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [

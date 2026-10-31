@@ -14,7 +14,7 @@ public class SeelsTheReckless : PlaceholderCharacterModel, IEpochCharacter
 {
     public const string CharacterId = "SeelsTheReckless";
 
-    public static readonly Color Color = new("add8e6");
+    public static readonly Color Color = new("f1c232");
 
     // No custom visuals yet: borrow the Silent's placeholder assets.
     public override string PlaceholderID => "silent";

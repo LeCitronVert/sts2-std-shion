@@ -7,7 +7,7 @@ ShionTheBruiser.json::JSON::-1::1792433998::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1793477909
+::res://bin/ExportRelease/net9.0/publish/::1793479156
 ShionTheBruiser.deps.json::JSON::-1::1793464776::0::1::::<><><>0<>0<><>::
 ::res://ci/::1792939391
 ::res://ci/game-refs/::1792939391
@@ -1675,13 +1675,13 @@ SlalWalkingEncyclopedia.cs::CSharpScript::6736505859485798935::1793193355::0::1:
 SlalWallOfText.cs::CSharpScript::2191618882358923795::1793290459::0::1::::<><><>0<>0<><>::
 SpecialStage.cs::CSharpScript::6933988245479906911::1793017875::0::1::::<><><>0<>0<><>::
 Yes.cs::CSharpScript::1548182700875497738::1792756623::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Character/::1793296540
+::res://ShionTheBruiserCode/Character/::1793479123
 FryTheCommander.cs::CSharpScript::3388522255496721692::1793207357::0::1::::<><><>0<>0<><>::
-FryTheCommanderCardPool.cs::CSharpScript::2229281210919404376::1793207383::0::1::::<><><>0<>0<><>::
+FryTheCommanderCardPool.cs::CSharpScript::2229281210919404376::1793478703::0::1::::<><><>0<>0<><>::
 FryTheCommanderPotionPool.cs::CSharpScript::8457779907626360332::1793207383::0::1::::<><><>0<>0<><>::
 FryTheCommanderRelicPool.cs::CSharpScript::1756786572221350776::1793207383::0::1::::<><><>0<>0<><>::
-SeelsTheReckless.cs::CSharpScript::2741939039580084337::1793207357::0::1::::<><><>0<>0<><>::
-SeelsTheRecklessCardPool.cs::CSharpScript::2469504198085505288::1793207383::0::1::::<><><>0<>0<><>::
+SeelsTheReckless.cs::CSharpScript::2741939039580084337::1793479123::0::1::::<><><>0<>0<><>::
+SeelsTheRecklessCardPool.cs::CSharpScript::2469504198085505288::1793479123::0::1::::<><><>0<>0<><>::
 SeelsTheRecklessPotionPool.cs::CSharpScript::7367188993480158799::1793207383::0::1::::<><><>0<>0<><>::
 SeelsTheRecklessRelicPool.cs::CSharpScript::2697941172730210671::1793207383::0::1::::<><><>0<>0<><>::
 ShionTheBruiser.cs::CSharpScript::5230343434016276755::1793207348::0::1::::<><><>0<>0<><>::

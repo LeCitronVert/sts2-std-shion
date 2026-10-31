@@ -14,13 +14,14 @@ public class SeelsTheRecklessCardPool : CustomCardPoolModel
     public override string BigEnergyIconPath => "charui/big_energy.png".ImagePath();
     public override string TextEnergyIconPath => "charui/text_energy.png".ImagePath();
 
-    // HSV of #add8e6 (light blue).
-    public override float H => 0.542f;
-    public override float S => 0.248f;
-    public override float V => 0.902f;
+    // Shader params, NOT absolute HSV: hsv.gdshader hue-rotates the red base frame and multiplies
+    // its chroma (S) and brightness (V). Solved so the frame border renders as #f1c232 (gold).
+    public override float H => 0.131f;
+    public override float S => 0.492f;
+    public override float V => 2.499f;
 
     //Color of small card icons
-    public override Color DeckEntryCardColor => new("add8e6");
+    public override Color DeckEntryCardColor => new("f1c232");
 
     public override bool IsColorless => false;
 

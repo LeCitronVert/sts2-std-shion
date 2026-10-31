@@ -14,10 +14,11 @@ public class FryTheCommanderCardPool : CustomCardPoolModel
     public override string BigEnergyIconPath => "charui/big_energy.png".ImagePath();
     public override string TextEnergyIconPath => "charui/text_energy.png".ImagePath();
 
-    // HSV of #cc0000 (red).
-    public override float H => 0f;
-    public override float S => 1f;
-    public override float V => 0.8f;
+    // Shader params, NOT absolute HSV: hsv.gdshader hue-rotates the red base frame and multiplies
+    // its chroma (S) and brightness (V). Solved so the frame border renders as #cc0000 (red).
+    public override float H => 0.006f;
+    public override float S => 2.443f;
+    public override float V => 0.795f;
 
     //Color of small card icons
     public override Color DeckEntryCardColor => new("cc0000");
