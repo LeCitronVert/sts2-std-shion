@@ -695,6 +695,8 @@
     "SHIONTHEBRUISER-SEELS_BLOOD_DROP.description": "Lose {HpLoss:diff()} HP.\nGain {Energy:energyIcons()}.",
     "SHIONTHEBRUISER-SEELS_WINK.title": "Wink",
     "SHIONTHEBRUISER-SEELS_WINK.description": "Gain {Block:diff()} [gold]Block[/gold].\n[gold]Gamble[/gold] {Gamble:diff()}.",
+    "SHIONTHEBRUISER-SEELS_FINAL_SHOWDOWN.title": "Final Showdown",
+    "SHIONTHEBRUISER-SEELS_FINAL_SHOWDOWN.description": "Apply {VulnerablePower:diff()} [gold]Vulnerable[/gold] and {ArtifactPower:diff()} [gold]Artifact[/gold].\nGain [gold]Strength[/gold] and [gold]Demise[/gold] equal to the enemy's [gold]Vulnerable[/gold].\nDraw {Cards:diff()} cards.{InCombat:{HasTarget:cond:>0?\n(Gain {ShowdownAmount:diff()} [gold]Strength[/gold] and [gold]Demise[/gold])|}|}",
     "SHIONTHEBRUISER-SEELS_PARRY_ATTEMPT.title": "Parry Attempt",
     "SHIONTHEBRUISER-SEELS_PARRY_ATTEMPT.description": "Gain {Block:diff()} [gold]Block[/gold] times the energy cost of this card.\nDouble this [gold]Block[/gold] if its cost is [blue]2[/blue] or more.{InCombat:\n(Gain {BlockAmount:diff()} [gold]Block[/gold])|}",
     "SHIONTHEBRUISER-SEELS_BYPASS.title": "Bypass",

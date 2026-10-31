@@ -670,7 +670,7 @@ Spec interpretations:
 - [ ] **Ultimate Form** carries the Slal "Form" tag, so Genie's Advice reduces its cost.
 
 Content I skipped (incomplete in the spec):
-- [ ] Seels' 5 incomplete rows: the Nimble Blood Bend, "Choose 1 of 2 colorless", "Draw X cards…", Final Showdown, and the Vulnerable→Strength power.
+- [ ] Seels' 5 incomplete rows: the Nimble Blood Bend, "Choose 1 of 2 colorless", "Draw X cards…", and the Vulnerable→Strength power. (Final Showdown: added in section 15.)
 - [ ] Fry: "No Endor Holocaust" and "Slap-On-The-Wrist" (no effect), the 5 relics with no effect, and all Fry potions.
 
 ## 4. Placeholders to fill in later
@@ -885,3 +885,21 @@ Content I skipped (incomplete in the spec):
 **Decisions I made**
 - The countdown is only on the icon. The description keeps the full amount.
 - At 0 the icon shows 0 (same as Sparrow Form already did); the power isn't hidden.
+
+## 15. Seels card art + Final Showdown
+
+- [ ] Re-export the `.pck` with MegaDot (93 new images: `card_portraits/seels_*.png` + `big/` versions; MegaDot will generate their `.import` files), then build and launch.
+- [ ] Every Seels card shows its art (no fallback `card.png`), both in hand and in the big inspect view.
+- [ ] **Blood Prison** and **Gambling Addiction** (Ancient) use the tall ancient frame art. Check Blood Prison's crop: the source is wide, so only the center is kept.
+- [ ] **Final Showdown** (Rare Skill, cost 1 ⚠️): applies 3 (5) Vulnerable, **then** 10 Artifact to the enemy.
+- [ ] You gain Strength and Demise equal to the enemy's **total** Vulnerable (including Vulnerable they already had).
+- [ ] Draws 3 (5) cards.
+- [ ] Preview: when aiming at an enemy, the card shows "(Gain X Strength and Demise)". It shows only the enemy's current Vulnerable if they already have Artifact (the new Vulnerable gets blocked).
+- [ ] Demise ticks on you at end of turn.
+- [ ] Final Showdown appears in Seels' card rewards.
+
+**Decisions I made**
+- The 10 Artifact goes on the enemy (confirmed), after the Vulnerable, so it doesn't block it.
+- Cost 1 (confirmed), still flagged `//todo : choose cost`.
+- Strength/Demise reads the enemy's total Vulnerable after applying (confirmed). Nothing is gained if it's 0.
+- Uses the base game's `DemisePower` (the one from Powdered Demise).
