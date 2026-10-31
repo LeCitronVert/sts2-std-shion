@@ -23,7 +23,9 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Singletons;
 /// <see cref="Patches.TeamBlastHiddenPilePatch"/>) and kept in a hidden pile here.</item>
 /// <item>If any player had one, the gauge is active for this combat. Allies fill it by dealing, blocking and taking
 /// damage, and whenever any creature dies.</item>
-/// <item>Once full, each player with a hidden Team Blast gets an Ethereal copy of it at the start of every turn.</item>
+/// <item>Once full, each player with a hidden Team Blast gets an Ethereal copy of it at the start of every turn.
+/// Duplicates only give one copy, but each extra one makes the whole team fill the gauge
+/// <see cref="DuplicateChargeBonus"/> faster.</item>
 /// <item>Playing a Team Blast locks the gauge for the rest of the combat; it then goes back to 0 when combat ends.</item>
 /// </list>
 /// The gauge value is saved with the run, on every player (all clients keep the same value).
@@ -45,6 +47,8 @@ public class TeamBlastSingleton : CustomSingletonModel
     public const decimal DamageTakenMultiplier = 1m;
     public const decimal DeathBonus = 10m;
     public const decimal AllyOstyDeathMultiplier = 0.5m;
+    /// <summary>Gauge fill bonus for each duplicate of a Team Blast a player has (copies after the first).</summary>
+    public const decimal DuplicateChargeBonus = 0.2m;
 
     // ── State ────────────────────────────────────────────────────────────────
 
@@ -67,6 +71,12 @@ public class TeamBlastSingleton : CustomSingletonModel
 
     /// <summary>Whether someone had a Team Blast at the start of this combat. The gauge only shows and fills then.</summary>
     public bool IsActive { get; private set; }
+
+    /// <summary>Number of duplicate Team Blasts (per player and card, copies after the first) in this combat.</summary>
+    public int DuplicateCount { get; private set; }
+
+    /// <summary>Multiplier on every gauge gain, from <see cref="DuplicateCount"/>.</summary>
+    public decimal ChargeMultiplier => 1m + DuplicateChargeBonus * DuplicateCount;
 
     /// <summary>A Team Blast was used this combat.</summary>
     public bool IsLocked { get; private set; }
@@ -95,6 +105,7 @@ public class TeamBlastSingleton : CustomSingletonModel
             _remainder = 0m;
             _usedTeamBlast = null;
             IsLocked = false;
+            DuplicateCount = 0;
         }
 
         var drawPile = PileType.Draw.GetPile(player);
@@ -106,6 +117,7 @@ public class TeamBlastSingleton : CustomSingletonModel
 
         _hiddenPile[player] = teamBlasts;
         IsActive = _hiddenPile.Values.Any(cards => cards.Count > 0);
+        DuplicateCount = _hiddenPile.Values.Sum(cards => cards.Count - DistinctTeamBlasts(cards).Count());
     }
 
     // ── Gauge ────────────────────────────────────────────────────────────────
@@ -116,7 +128,7 @@ public class TeamBlastSingleton : CustomSingletonModel
     {
         if (!CanFill || amount <= 0 || _combatState == null) return;
 
-        _remainder += amount;
+        _remainder += amount * ChargeMultiplier;
         var points = (int)Math.Floor(_remainder);
         if (points <= 0) return;
         _remainder -= points;
@@ -173,7 +185,7 @@ public class TeamBlastSingleton : CustomSingletonModel
         if (!IsActive || IsLocked || !IsFull) return;
         if (!_hiddenPile.TryGetValue(player, out var hidden)) return;
 
-        foreach (var original in hidden)
+        foreach (var original in DistinctTeamBlasts(hidden))
         {
             var copy = original.CreateClone();
             copy.AddKeyword(CardKeyword.Ethereal);
@@ -181,6 +193,10 @@ public class TeamBlastSingleton : CustomSingletonModel
             await CardPileCmd.Add(copy, PileType.Hand);
         }
     }
+
+    /// <summary>One card per Team Blast, the upgraded one when there are duplicates.</summary>
+    private static IEnumerable<CardModel> DistinctTeamBlasts(IEnumerable<CardModel> cards) =>
+        cards.GroupBy(c => c.Id).Select(g => g.OrderByDescending(c => c.IsUpgraded).First());
 
     /// <summary>Team Blasts can't be generated in combat by any means (clones, gifts…), only by the gauge.</summary>
     public override async Task AfterCardEnteredCombat(CardModel card)
@@ -220,6 +236,7 @@ public class TeamBlastSingleton : CustomSingletonModel
         _hiddenPile.Clear();
         _allowedCopies.Clear();
         _remainder = 0m;
+        DuplicateCount = 0;
         return Task.CompletedTask;
     }
 
@@ -229,6 +246,7 @@ public class TeamBlastSingleton : CustomSingletonModel
     {
         var description = new LocString("static_hover_tips", "SHIONTHEBRUISER-TEAM_BLAST_GAUGE.description");
         description.Add("Locked", IsLocked ? 1 : 0);
+        description.Add("ChargeBonus", (int)Math.Round(DuplicateChargeBonus * DuplicateCount * 100m));
         return new HoverTip(new LocString("static_hover_tips", "SHIONTHEBRUISER-TEAM_BLAST_GAUGE.title"), description.GetFormattedText());
     }
 }

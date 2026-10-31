@@ -818,3 +818,10 @@ Content I skipped (incomplete in the spec):
 - [ ] **Grey Chaos Emerald** (and the combo Chaos Emeralds): after each fight, one random card in your Deck gets **Glam**, with the enchant animation. Hovering the relic shows Glam's tooltip.
 - [ ] Only cards Glam can go on are picked: no Status/Curse, no Unplayable, and no card that already has an Enchantment.
 - [ ] The old effect is gone: no card choice at the start of combat, and no card removed from your Deck after combat.
+
+## 9. Team Blast duplicates
+
+- [ ] With 2+ copies of the same Team Blast, a player only gets **one** Ethereal copy of it per turn once the gauge is full (the upgraded one if any copy is upgraded). Different Team Blasts still each give a copy.
+- [ ] Each duplicate (copies after the first, per player and per card) makes the **whole team** fill the gauge 20% faster: 2 copies = +20%, 3 copies = +40%, and two players each with 2 copies = +40%.
+- [ ] Gauge hover tip says "Filling X% faster" when there's a bonus.
+- [ ] Upgraded and unupgraded copies of the same card count as duplicates.
