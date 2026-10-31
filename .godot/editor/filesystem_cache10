@@ -7,7 +7,7 @@ ShionTheBruiser.json::JSON::-1::1792433998::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1793370120
+::res://bin/ExportRelease/net9.0/publish/::1793383075
 ShionTheBruiser.deps.json::JSON::-1::1793370120::0::1::::<><><>0<>0<><>::
 ::res://ci/::1792939391
 ::res://ci/game-refs/::1792939391
@@ -993,12 +993,12 @@ team_blast_bar.png::CompressedTexture2D::3159766184385900582::1793177713::179317
 team_blast_locked.png::CompressedTexture2D::7621079854370452256::1793177713::1793178089::1::::<><><>0<>0<>013933bfc0053016122d75e6bb53c76f<>res://.godot/imported/team_blast_locked.png-af6d45a45c3d33d30fc47cd1c14ac63b.ctex::
 team_blast_ready.png::CompressedTexture2D::8331283540066729296::1793177713::1793178089::1::::<><><>0<>0<>8f45cec4072dfa0ce28aea63f7bd5405<>res://.godot/imported/team_blast_ready.png-abb4ee67caa30497b30d7a53924e66fb.ctex::
 ::res://ShionTheBruiser/localization/::1781940056
-::res://ShionTheBruiser/localization/eng/::1793368327
+::res://ShionTheBruiser/localization/eng/::1793382543
 ancients.json::JSON::-1::1793302304::0::1::::<><><>0<>0<><>::
-cards.json::JSON::-1::1793312603::0::1::::<><><>0<>0<><>::
+cards.json::JSON::-1::1793382375::0::1::::<><><>0<>0<><>::
 card_keywords.json::JSON::-1::1793312603::0::1::::<><><>0<>0<><>::
 card_selection.json::JSON::-1::1793183274::0::1::::<><><>0<>0<><>::
-characters.json::JSON::-1::1793207457::0::1::::<><><>0<>0<><>::
+characters.json::JSON::-1::1793382408::0::1::::<><><>0<>0<><>::
 combat_messages.json::JSON::-1::1782426298::0::1::::<><><>0<>0<><>::
 enchantments.json::JSON::-1::1792675405::0::1::::<><><>0<>0<><>::
 epochs.json::JSON::-1::1793368327::0::1::::<><><>0<>0<><>::
@@ -1008,7 +1008,7 @@ monsters.json::JSON::-1::1791312255::0::1::::<><><>0<>0<><>::
 orbs.json::JSON::-1::1793183274::0::1::::<><><>0<>0<><>::
 potions.json::JSON::-1::1793290579::0::1::::<><><>0<>0<><>::
 powers.json::JSON::-1::1793312603::0::1::::<><><>0<>0<><>::
-relics.json::JSON::-1::1793307646::0::1::::<><><>0<>0<><>::
+relics.json::JSON::-1::1793382543::0::1::::<><><>0<>0<><>::
 rest_site_ui.json::JSON::-1::1793017890::0::1::::<><><>0<>0<><>::
 static_hover_tips.json::JSON::-1::1793178611::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiser/scenes/::1792929289
@@ -1040,7 +1040,7 @@ MainFile.cs::CSharpScript::2954314548483070873::1793207387::0::1::::<><><>0<>0<>
 ::res://ShionTheBruiserCode/Ancients/::1793303570
 PartyDialogue.cs::CSharpScript::241308958335632356::1793302135::0::1::::<><><>0<>0<><>::
 ShionPartyDialogues.cs::CSharpScript::7951062430476225983::1793302135::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Cards/::1793312476
+::res://ShionTheBruiserCode/Cards/::1793378577
 CosmoDetermination.cs::CSharpScript::4903082444639403780::1792756623::0::1::::<><><>0<>0<><>::
 CosmoGuidance.cs::CSharpScript::4895954223051435257::1792870460::0::1::::<><><>0<>0<><>::
 CosmoKindness.cs::CSharpScript::2527117697509655675::1792756623::0::1::::<><><>0<>0<><>::
@@ -1407,7 +1407,7 @@ SlalHumanForm.cs::CSharpScript::2996073394397051639::1792778743::0::1::::<><><>0
 SlalIncomingBeam.cs::CSharpScript::5913780303554452430::1792756623::0::1::::<><><>0<>0<><>::
 SlalInstantMattress.cs::CSharpScript::1565130686821204207::1793312476::0::1::::<><><>0<>0<><>::
 SlalIntroduction.cs::CSharpScript::1142570265458019722::1793193656::0::1::::<><><>0<>0<><>::
-SlalKickstartEvent.cs::CSharpScript::5738289500394808689::1793291801::0::1::::<><><>0<>0<><>::
+SlalKickstartEvent.cs::CSharpScript::5738289500394808689::1793378577::0::1::::<><><>0<>0<><>::
 SlalLaughablePunches.cs::CSharpScript::7837041278100270839::1793193487::0::1::::<><><>0<>0<><>::
 SlalLogicShift.cs::CSharpScript::6014009273455815614::1793312476::0::1::::<><><>0<>0<><>::
 SlalMaybeLater.cs::CSharpScript::3067666914254408590::1792756623::0::1::::<><><>0<>0<><>::
@@ -1504,7 +1504,7 @@ SlalCardKeywords.cs::CSharpScript::6802432698703623791::1793290269::0::1::::<><>
 SlalCardTags.cs::CSharpScript::1358202875028359775::1791312131::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiserCode/Extensions/::1784594829
 StringExtensions.cs::CSharpScript::7657938563527260869::1784594829::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Helper/::1793312612
+::res://ShionTheBruiserCode/Helper/::1793377988
 ChaosEmeraldHelper.cs::CSharpScript::5035153769625751730::1793017875::0::1::::<><><>0<>0<><>::
 DreamersMechanicsHelper.cs::CSharpScript::1367708701330932763::1792845898::0::1::::<><><>0<>0<><>::
 FryMechanicsHelper.cs::CSharpScript::5896359720773048801::1792675405::0::1::::<><><>0<>0<><>::
@@ -1514,7 +1514,7 @@ PreviewHelper.cs::CSharpScript::6436008676017542931::1792689968::0::1::::<><><>0
 SeelsMechanicsHelper.cs::CSharpScript::8100201785959170499::1793193821::0::1::::<><><>0<>0<><>::
 ShionHooksHelper.cs::CSharpScript::7312245568866882451::1793182889::0::1::::<><><>0<>0<><>::
 ShionMechanicsHelper.cs::CSharpScript::2990478697957247076::1793305911::0::1::::<><><>0<>0<><>::
-SlalMechanicsHelper.cs::CSharpScript::3955379173374721020::1793312826::0::1::::<><><>0<>0<><>::
+SlalMechanicsHelper.cs::CSharpScript::3955379173374721020::1793377988::0::1::::<><><>0<>0<><>::
 TeamUpHelper.cs::CSharpScript::4276879372354178547::1793183242::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiserCode/Monsters/::1783259594
 AbbyMonster.cs::CSharpScript::7065894295935417984::1783259594::0::1::::<><><>0<>0<><>::
