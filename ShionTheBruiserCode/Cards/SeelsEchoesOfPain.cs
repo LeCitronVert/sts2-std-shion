@@ -28,13 +28,23 @@ public class SeelsEchoesOfPain() : SeelsTheRecklessCard(2,
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("CopiesAmount").WithMultiplier((card, _) => GetEnchantedWounds(card).Count),
+        new CalculatedVar("DrawAmount").WithMultiplier((card, _) => SeelsMechanicsHelper.PreviewFreeHandSlots(card)),
+    ];
+
+    private static List<CardModel> GetEnchantedWounds(CardModel card) =>
+        SeelsMechanicsHelper.GetAllCombatCards(card.Owner)
+            .Where(c => SeelsMechanicsHelper.IsWound(c) && c.Enchantment is not null)
+            .ToList();
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Wound>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        var wounds = SeelsMechanicsHelper.GetAllCombatCards(Owner)
-            .Where(c => SeelsMechanicsHelper.IsWound(c) && c.Enchantment is not null)
-            .ToList();
+        var wounds = GetEnchantedWounds(this);
 
         foreach (var wound in wounds)
         {

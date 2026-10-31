@@ -27,7 +27,13 @@ public class SeelsSpectacularBreakIn() : SeelsTheRecklessCard(1,
 {
     public const int GlassAmount = 2;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Bonus", 0M)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new DynamicVar("Bonus", 0M),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("SlashesAmount").WithMultiplier((card, _) =>
+            SeelsMechanicsHelper.PreviewBloodBendX(card) + card.DynamicVars["Bonus"].IntValue),
+    ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(SeelsCardKeywords.BloodBend),

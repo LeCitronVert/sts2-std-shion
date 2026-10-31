@@ -30,14 +30,27 @@ public class SeelsPaybackTime() : SeelsTheRecklessCard(0,
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CalculationBaseVar(0),
+        new ExtraDamageVar(1),
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => PreviewMissingHp(card)),
         new CalculationExtraVar(1),
-        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => GetMissingHp(card)),
+        new CalculatedVar("HitAmount").WithMultiplier((card, _) => SeelsMechanicsHelper.PreviewBloodBendX(card)),
     ];
 
     private static int GetMissingHp(CardModel card) =>
         card.CombatState!.GetTeammatesOf(card.Owner.Creature)
             .Where(c => c.IsPlayer && (card.IsUpgraded || c != card.Owner.Creature))
             .Sum(c => c.MaxHp - c.CurrentHp);
+
+    /// <summary>
+    /// Preview only: the Blood Bend heals you first, which matters when you count yourself (upgraded).
+    /// </summary>
+    private static int PreviewMissingHp(CardModel card)
+    {
+        var missing = GetMissingHp(card);
+        if (!card.IsUpgraded) return missing;
+        var self = card.Owner.Creature;
+        return missing - Math.Min(SeelsMechanicsHelper.PreviewBloodBendX(card), self.MaxHp - self.CurrentHp);
+    }
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(SeelsCardKeywords.BloodBend),

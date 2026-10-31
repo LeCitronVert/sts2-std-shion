@@ -28,6 +28,10 @@ public class SeelsImprovisedAcupuncture() : SeelsTheRecklessCard(0,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new HpLossVar(1M),
         new DynamicVar("ExtraDraw", 0M),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("DrawAmount").WithMultiplier((card, _) =>
+            card.DynamicVars.HpLoss.BaseValue + card.DynamicVars["ExtraDraw"].BaseValue),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)

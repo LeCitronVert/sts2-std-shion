@@ -25,14 +25,19 @@ public class SeelsUltraKill() : SeelsTheRecklessCard(6,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(30M, ValueProp.Move),
         new RepeatVar(2),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("HpLossAmount").WithMultiplier((card, _) => GetHpLoss(card)),
     ];
+
+    private static int GetHpLoss(CardModel card) => Math.Max(0, BaseHpLoss - card.EnergyCost.GetResolved());
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(SeelsCardKeywords.Erratic)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         ArgumentNullException.ThrowIfNull(play.Target);
-        await SeelsMechanicsHelper.LoseHp(choiceContext, Owner.Creature, BaseHpLoss - EnergyCost.GetResolved(), this);
+        await SeelsMechanicsHelper.LoseHp(choiceContext, Owner.Creature, GetHpLoss(this), this);
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this)

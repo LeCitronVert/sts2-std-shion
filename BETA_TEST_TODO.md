@@ -903,3 +903,33 @@ Content I skipped (incomplete in the spec):
 - Cost 1 (confirmed), still flagged `//todo : choose cost`.
 - Strength/Demise reads the enemy's total Vulnerable after applying (confirmed). Nothing is gained if it's 0.
 - Uses the base game's `DemisePower` (the one from Powdered Demise).
+
+## 16. Seels in-combat previews
+
+- [ ] Build and launch (code + localization only, no `.pck` re-export needed).
+- [ ] **Strike First**: while aiming, shows "(Deal N damage M times)". N doubles when you're Vulnerable and again when the enemy intends to attack; M = your energy (+1 upgraded). With no target it shows only "(Hits M times)".
+- [ ] **Blood Cage** / **Blood Prison**: "(Apply N Vulnerable)" = your Blood (+1 upgraded); Prison+ says "twice".
+- [ ] **Blood Bath**: "(Gain N Block)" = (Blood (+1)) × Block, with Dexterity applied to each gain.
+- [ ] **Bloody Execution**: the preview now includes your Blood ("Deal N damage" instead of "N + X").
+- [ ] **Exsanguination**: "(Deal N damage)" = your Blood, tripled when the condition is met (matches the gold glow).
+- [ ] **Payback Time** (multiplayer): the preview no longer breaks. Shows "(Deal N damage M times)", M = your Blood. Upgraded: N already counts your Blood Bend heal.
+- [ ] **Scarlet Shadow**: "(Gain N Blood)" = Blood × 2 (3).
+- [ ] **Spectacular Break-In** / **Pin Them Down**: "(Add N Slashes)" = Blood (+1).
+- [ ] **Funny Dance**: "(Gain X Vulnerable and N Block)" for this turn's Block.
+- [ ] **Summon Wrath**: "(Lose X HP and get N Slashes)"; upgraded: "(Get N Slashes)". N is capped by the Slashes in your Draw + Discard piles.
+- [ ] **High Reward**: "(Hits 1/3 times)" depending on whether you're Vulnerable.
+- [ ] **Ultra Kill**: "(Lose N HP)" = 6 − current cost (changes when Erratic rerolls it, never below 0).
+- [ ] **Slash**: "(Hits N times)" only shows when Untelegraph Attacks makes it hit more than once.
+- [ ] **Go Crazy**: "(Add N Slashes)" = free Hand slots (this card doesn't count).
+- [ ] **Echoes of Pain**: "(Shuffle N Wounds)" and "(Draw N cards)".
+- [ ] **Hematoma**: "(Draw N cards)" = Wounds in Hand + the one it adds.
+- [ ] **Pain Chock**: the preview now counts the Wound it adds first (it used to show 1 less than it dealt).
+- [ ] **Reckless Charge** / **Pain Chock** / **Hematoma** with a full Hand: the added Wound isn't counted if it can't fit.
+- [ ] **Big Target Sign** (multiplayer): aiming at an ally shows "(Gain N Vulnerable)".
+- [ ] **Do This All Day**: "(Move N Slashes)".
+- [ ] **Improvised Acupuncture**: "(Draw N cards)" grows with the HP loss each play.
+
+**Decisions I made**
+- Blood Bend X is now resolved in previews (current Blood), the same way X-cost cards show current energy.
+- No previews on Powers, or where the number depends on random draws or on how much damage gets through (Belittle, Body Strike, Palm Strike, Private Joke, Running Joke, Copy Kitty).
+- An Opening and Never Learn have no number to show (they already glow gold when their condition is met), so they didn't get preview text.

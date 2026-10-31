@@ -24,6 +24,10 @@ public class SeelsBloodPrison() : SeelsTheRecklessCard(0,
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(6M, ValueProp.Move),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("VulnerableAmount").WithMultiplier((card, _) =>
+            SeelsMechanicsHelper.PreviewBloodBendX(card) + card.DynamicVars["Bonus"].IntValue),
         new DynamicVar("Bonus", 0M),
         new RepeatVar(1),
     ];

@@ -22,7 +22,14 @@ public class SeelsHighReward() : SeelsTheRecklessCard(1,
 {
     public const int VulnerableHits = 3;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(10M, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new DamageVar(10M, ValueProp.Move),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("HitAmount").WithMultiplier((card, _) => GetHits(card)),
+    ];
+
+    private static int GetHits(CardModel card) => card.Owner.Creature.HasPower<VulnerablePower>() ? VulnerableHits : 1;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<VulnerablePower>()];
 
@@ -34,7 +41,7 @@ public class SeelsHighReward() : SeelsTheRecklessCard(1,
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this)
             .Targeting(play.Target)
-            .WithHitCount(Owner.Creature.HasPower<VulnerablePower>() ? VulnerableHits : 1)
+            .WithHitCount(GetHits(this))
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
     }

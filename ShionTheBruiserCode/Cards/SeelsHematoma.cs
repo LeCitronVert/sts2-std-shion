@@ -29,7 +29,13 @@ public class SeelsHematoma() : SeelsTheRecklessCard(1,
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [SeelsCardKeywords.Wounding];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(7M, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new BlockVar(7M, ValueProp.Move),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        // Counts the Wound this card adds first
+        new CalculatedVar("DrawAmount").WithMultiplier((card, _) => SeelsMechanicsHelper.PreviewWoundsInHandAfterWounding(card)),
+    ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Wound>()];
 

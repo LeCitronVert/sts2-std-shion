@@ -15,6 +15,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Enchantments;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -26,6 +27,14 @@ public class SeelsBigTargetSign() : SeelsTheRecklessCard(0,
     TargetType.AnyAlly)
 {
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new HasTargetVar(),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("VulnerableAmount").WithMultiplier((_, target) =>
+            target is null ? 0 : SeelsMechanicsHelper.GetVulnerable(target)),
+    ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<VulnerablePower>()];
 

@@ -10,6 +10,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -29,9 +30,27 @@ public class SeelsStrikeFirst() : SeelsTheRecklessCard(0,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(1M, ValueProp.Move),
         new DynamicVar("Bonus", 0M),
+        new HasTargetVar(),
+        new CalculationBaseVar(0),
+        new ExtraDamageVar(1),
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, target) =>
+            target is null ? 0 : ((SeelsStrikeFirst)card).GetHitDamage(target)),
+        new CalculationExtraVar(1),
+        new CalculatedVar("HitAmount").WithMultiplier((card, _) => ((SeelsStrikeFirst)card).PreviewHits()),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<VulnerablePower>()];
+
+    private int PreviewHits() => PreviewHelper.XValue(this) + DynamicVars["Bonus"].IntValue;
+
+    /// <summary>Damage of each hit against this enemy, before damage modifiers.</summary>
+    private decimal GetHitDamage(Creature target)
+    {
+        var damage = DynamicVars.Damage.BaseValue + SeelsMechanicsHelper.GetVulnerable(target);
+        if (Owner.Creature.HasPower<VulnerablePower>()) damage *= 2;
+        if (SeelsMechanicsHelper.IntendsToAttack(target)) damage *= 2;
+        return damage;
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
@@ -39,11 +58,7 @@ public class SeelsStrikeFirst() : SeelsTheRecklessCard(0,
         var hits = ResolveEnergyXValue() + DynamicVars["Bonus"].IntValue;
         if (hits <= 0) return;
 
-        var damage = DynamicVars.Damage.BaseValue + SeelsMechanicsHelper.GetVulnerable(play.Target);
-        if (Owner.Creature.HasPower<VulnerablePower>()) damage *= 2;
-        if (SeelsMechanicsHelper.IntendsToAttack(play.Target)) damage *= 2;
-
-        await DamageCmd.Attack(damage)
+        await DamageCmd.Attack(GetHitDamage(play.Target))
             .FromCard(this)
             .Targeting(play.Target)
             .WithHitCount(hits)

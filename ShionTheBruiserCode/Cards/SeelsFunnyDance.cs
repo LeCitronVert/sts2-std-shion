@@ -29,7 +29,15 @@ public class SeelsFunnyDance() : SeelsTheRecklessCard(0,
 
     protected override bool HasEnergyCostX => true;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(6M, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new BlockVar(6M, ValueProp.Move),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("XAmount").WithMultiplier((card, _) => PreviewHelper.XValue(card)),
+        // Block is gained X times, so modifiers apply to each gain
+        new CalculatedVar("BlockAmount").WithMultiplier((card, _) =>
+            PreviewHelper.XValue(card) * PreviewHelper.ModifiedBlock(card, card.DynamicVars.Block.BaseValue, card.DynamicVars.Block.Props)),
+    ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<VulnerablePower>(),

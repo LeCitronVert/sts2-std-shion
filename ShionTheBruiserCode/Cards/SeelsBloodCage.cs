@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -22,6 +23,10 @@ public class SeelsBloodCage() : SeelsTheRecklessCard(0,
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(4M, ValueProp.Move),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("VulnerableAmount").WithMultiplier((card, _) =>
+            SeelsMechanicsHelper.PreviewBloodBendX(card) + card.DynamicVars["Bonus"].IntValue),
         new DynamicVar("Bonus", 0),
     ];
 

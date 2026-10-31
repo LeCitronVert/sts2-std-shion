@@ -28,6 +28,20 @@ public class SeelsSummonWrath() : SeelsTheRecklessCard(0,
 {
     protected override bool HasEnergyCostX => true;
 
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("XAmount").WithMultiplier((card, _) => PreviewHelper.XValue(card)),
+        new CalculatedVar("SlashesAmount").WithMultiplier((card, _) =>
+            Math.Min(PreviewHelper.XValue(card), GetSlashesInPiles(card).Count)),
+    ];
+
+    private static List<CardModel> GetSlashesInPiles(CardModel card) =>
+        PileType.Draw.GetPile(card.Owner).Cards
+            .Concat(PileType.Discard.GetPile(card.Owner).Cards)
+            .Where(SeelsMechanicsHelper.IsSlash)
+            .ToList();
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<SeelsSlash>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
@@ -35,10 +49,7 @@ public class SeelsSummonWrath() : SeelsTheRecklessCard(0,
         var x = ResolveEnergyXValue();
         await SeelsMechanicsHelper.LoseHp(choiceContext, Owner.Creature, IsUpgraded ? 1 : x, this);
 
-        var slashes = PileType.Draw.GetPile(Owner).Cards
-            .Concat(PileType.Discard.GetPile(Owner).Cards)
-            .Where(SeelsMechanicsHelper.IsSlash)
-            .ToList()
+        var slashes = GetSlashesInPiles(this)
             .StableShuffle(Owner.RunState.Rng.CombatCardSelection)
             .Take(x)
             .ToList();

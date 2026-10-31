@@ -24,6 +24,13 @@ public class SeelsExsanguination() : SeelsTheRecklessCard(2,
 
     protected override HashSet<CardTag> CanonicalTags => [SeelsCardTags.Blood];
 
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CalculationBaseVar(0),
+        new ExtraDamageVar(1),
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) =>
+            ((SeelsExsanguination)card).GetDamage(SeelsMechanicsHelper.PreviewBloodBendX(card))),
+    ];
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(SeelsCardKeywords.BloodBend),
         HoverTipFactory.FromPower<Blood>(),
@@ -35,15 +42,15 @@ public class SeelsExsanguination() : SeelsTheRecklessCard(2,
         return IsUpgraded ? x >= otherCards : x == otherCards;
     }
 
+    private int GetDamage(int x) => IsTripled(x) ? x * Multiplier : x;
+
     protected override bool ShouldGlowGoldInternal => IsTripled(SeelsMechanicsHelper.GetBlood(Owner.Creature));
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         ArgumentNullException.ThrowIfNull(play.Target);
         var x = await SeelsMechanicsHelper.BloodBend(choiceContext, this);
-        if (IsTripled(x)) x *= Multiplier;
-
-        await DamageCmd.Attack(x)
+        await DamageCmd.Attack(GetDamage(x))
             .FromCard(this)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_bloody_impact")

@@ -25,6 +25,12 @@ public class SeelsGoCrazy() : SeelsTheRecklessCard(2,
     CardType.Skill, CardRarity.Rare,
     TargetType.Self)
 {
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("SlashesAmount").WithMultiplier((card, _) => SeelsMechanicsHelper.PreviewFreeHandSlots(card)),
+    ];
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<SeelsSlash>(IsUpgraded)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)

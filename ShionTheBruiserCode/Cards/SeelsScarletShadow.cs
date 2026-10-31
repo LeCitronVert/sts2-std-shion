@@ -27,7 +27,13 @@ public class SeelsScarletShadow() : SeelsTheRecklessCard(0,
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new RepeatVar(2)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new RepeatVar(2),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("BloodAmount").WithMultiplier((card, _) =>
+            SeelsMechanicsHelper.PreviewBloodBendX(card) * card.DynamicVars.Repeat.IntValue),
+    ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(SeelsCardKeywords.BloodBend),

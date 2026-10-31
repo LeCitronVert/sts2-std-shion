@@ -25,11 +25,20 @@ public class SeelsDoThisAllDay() : SeelsTheRecklessCard(2,
     CardType.Skill, CardRarity.Rare,
     TargetType.Self)
 {
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("SlashesAmount").WithMultiplier((card, _) => GetExhaustedSlashes(card).Count),
+    ];
+
+    private static List<CardModel> GetExhaustedSlashes(CardModel card) =>
+        PileType.Exhaust.GetPile(card.Owner).Cards.Where(SeelsMechanicsHelper.IsSlash).ToList();
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<SeelsSlash>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        var slashes = PileType.Exhaust.GetPile(Owner).Cards.Where(SeelsMechanicsHelper.IsSlash).ToList();
+        var slashes = GetExhaustedSlashes(this);
         if (slashes.Count == 0) return;
 
         await CardPileCmd.Add(slashes, IsUpgraded ? PileType.Draw : PileType.Discard, IsUpgraded ? CardPilePosition.Random : CardPilePosition.Bottom);

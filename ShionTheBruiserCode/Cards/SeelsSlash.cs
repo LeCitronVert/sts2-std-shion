@@ -1,3 +1,5 @@
+using MegaCrit.Sts2.Core.Models;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -23,15 +25,15 @@ public class SeelsSlash() : SeelsTheRecklessCard(0,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(3M, ValueProp.Move),
         new CardsVar(1),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("HitAmount").WithMultiplier((card, _) => GetHitCount(card)),
     ];
 
-    private int HitCount
+    private static int GetHitCount(CardModel card)
     {
-        get
-        {
-            var untelegraph = Owner.Creature.GetPowerAmount<UntelegraphAttacks>();
-            return untelegraph > 0 ? EnergyCost.GetResolved() + untelegraph : 1;
-        }
+        var untelegraph = card.Owner.Creature.GetPowerAmount<UntelegraphAttacks>();
+        return untelegraph > 0 ? card.EnergyCost.GetResolved() + untelegraph : 1;
     }
 
     protected override async Task OnPlay(
@@ -43,7 +45,7 @@ public class SeelsSlash() : SeelsTheRecklessCard(0,
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this)
             .TargetingRandomOpponents(CombatState)
-            .WithHitCount(HitCount)
+            .WithHitCount(GetHitCount(this))
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 

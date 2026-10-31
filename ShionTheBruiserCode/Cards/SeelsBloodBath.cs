@@ -32,6 +32,12 @@ public class SeelsBloodBath() : SeelsTheRecklessCard(2,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new BlockVar(5M, ValueProp.Move),
         new DynamicVar("Bonus", 0M),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        // Block is gained X times, so modifiers apply to each gain
+        new CalculatedVar("BlockAmount").WithMultiplier((card, _) =>
+            (SeelsMechanicsHelper.PreviewBloodBendX(card) + card.DynamicVars["Bonus"].IntValue)
+            * PreviewHelper.ModifiedBlock(card, card.DynamicVars.Block.BaseValue, card.DynamicVars.Block.Props)),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [

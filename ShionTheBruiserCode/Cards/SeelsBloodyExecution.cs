@@ -26,7 +26,8 @@ public class SeelsBloodyExecution() : SeelsTheRecklessCard(2,
         new DynamicVar("PerBloodCard", 2M),
         new CalculationBaseVar(0),
         new ExtraDamageVar(1),
-        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => CountBloodCards(card) * card.DynamicVars["PerBloodCard"].BaseValue),
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) =>
+            SeelsMechanicsHelper.PreviewBloodBendX(card) + CountBloodCards(card) * card.DynamicVars["PerBloodCard"].BaseValue),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [

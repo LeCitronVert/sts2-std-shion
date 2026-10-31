@@ -298,6 +298,35 @@ public static class SeelsMechanicsHelper
         await CreatureCmd.Damage(choiceContext, creature, amount, ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, creature, source);
     }
 
+    // ── Previews ────────────────────────────────────────────────────────────
+
+    /// <summary>
+    /// Preview only: the X a Blood Bend would resolve to if this card were played now (all current Blood).
+    /// </summary>
+    public static int PreviewBloodBendX(CardModel card)
+    {
+        return card.CombatState is null ? 0 : GetBlood(card.Owner.Creature);
+    }
+
+    /// <summary>
+    /// Preview only: Wounds in your Hand once this card has left it and added its Wound
+    /// (the Wound only lands in the Hand if there is room).
+    /// </summary>
+    public static int PreviewWoundsInHandAfterWounding(CardModel card)
+    {
+        if (card.CombatState is null) return 0;
+        var others = PreviewHelper.OtherCardsInHand(card);
+        return others.Count(IsWound) + (others.Count < CardPile.MaxCardsInHand ? 1 : 0);
+    }
+
+    /// <summary>
+    /// Free slots in your Hand once this card has left it.
+    /// </summary>
+    public static int PreviewFreeHandSlots(CardModel card)
+    {
+        return card.CombatState is null ? 0 : Math.Max(0, CardPile.MaxCardsInHand - PreviewHelper.OtherCardsInHand(card).Count);
+    }
+
     public static int GetVulnerable(Creature creature)
     {
         return creature.GetPowerAmount<MegaCrit.Sts2.Core.Models.Powers.VulnerablePower>();

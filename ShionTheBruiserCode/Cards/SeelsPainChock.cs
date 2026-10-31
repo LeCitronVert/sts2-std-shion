@@ -25,7 +25,7 @@ public class SeelsPainChock() : SeelsTheRecklessCard(1,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CalculationBaseVar(0),
         new ExtraDamageVar(1),
-        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => SeelsMechanicsHelper.GetWoundsInHand(card.Owner).Count()),
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => SeelsMechanicsHelper.PreviewWoundsInHandAfterWounding(card)),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Wound>()];
@@ -35,7 +35,8 @@ public class SeelsPainChock() : SeelsTheRecklessCard(1,
         if (CombatState is null) return;
         await SeelsMechanicsHelper.AddWounds(Owner, 1);
 
-        await DamageCmd.Attack(DynamicVars.CalculatedDamage)
+        // Counted after adding the Wound (the preview var adds it on top of the Hand)
+        await DamageCmd.Attack(SeelsMechanicsHelper.GetWoundsInHand(Owner).Count())
             .FromCard(this)
             .TargetingAllOpponents(CombatState)
             .WithHitFx("vfx/vfx_attack_blunt")

@@ -27,7 +27,7 @@ public class SeelsRecklessCharge() : SeelsTheRecklessCard(1,
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
         // Counts the Wound this card adds before attacking
-        new CalculatedVar("HitAmount").WithMultiplier((card, _) => SeelsMechanicsHelper.GetWoundsInHand(card.Owner).Count() + 1),
+        new CalculatedVar("HitAmount").WithMultiplier((card, _) => SeelsMechanicsHelper.PreviewWoundsInHandAfterWounding(card)),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Wound>()];
