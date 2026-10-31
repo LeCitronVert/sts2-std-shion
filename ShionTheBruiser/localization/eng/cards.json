@@ -127,7 +127,7 @@
     "SHIONTHEBRUISER-SHION_BATTLE_TEMPO.title": "Battle Tempo",
     "SHIONTHEBRUISER-SHION_ENDURE.description": "Gain {Endure:diff()} [gold]Endure[/gold].\nUntil it is consumed, [gold]Berserk[/gold] effects no longer apply.",
     "SHIONTHEBRUISER-SHION_ENDURE.title": "Endure",
-    "SHIONTHEBRUISER-SHION_EXTREME_SPEED.description": "Apply [blue]1[/blue] [gold]Slow[/gold] to the enemy this turn.\n[gold]Critical Draw:[/gold] {CriticalDraw:diff()}%",
+    "SHIONTHEBRUISER-SHION_EXTREME_SPEED.description": "Apply [gold]Slow[/gold] to the enemy for [blue]1[/blue] turn. Stacks duration.\n[gold]Critical Draw:[/gold] {CriticalDraw:diff()}%",
     "SHIONTHEBRUISER-SHION_EXTREME_SPEED.title": "Extreme Speed",
     "SHIONTHEBRUISER-SHION_NAP.description": "Heal {PatchUpMultiplier:diff()} HP {IfUpgraded:show:X+1|X} times.{InCombat:\n(Heal {HealAmount:diff()} HP)|}",
     "SHIONTHEBRUISER-SHION_NAP.title": "Nap",
