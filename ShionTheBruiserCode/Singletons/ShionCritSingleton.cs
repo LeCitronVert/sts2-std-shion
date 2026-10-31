@@ -188,7 +188,8 @@ public class ShionCritSingleton : CustomSingletonModel
         if (isCrit && result.UnblockedDamage > 0)
         {
             // TODO: replace with real FMOD event / VFX scene paths once assets are ready.
-            TalkCmd.Play(new LocString("combat_messages", "SHIONTHEBRUISER-CRIT"), dealer, VfxColor.Purple, VfxDuration.VeryShort);
+            if (cardSource != null)
+                CritLines.TryPlay(dealer, cardSource.Owner.RunState.Rng.Niche);
         }
 
         if (isCrit)

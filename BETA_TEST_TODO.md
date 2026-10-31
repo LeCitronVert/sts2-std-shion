@@ -825,3 +825,11 @@ Content I skipped (incomplete in the spec):
 - [ ] Each duplicate (copies after the first, per player and per card) makes the **whole team** fill the gauge 20% faster: 2 copies = +20%, 3 copies = +40%, and two players each with 2 copies = +40%.
 - [ ] Gauge hover tip says "Filling X% faster" when there's a bonus.
 - [ ] Upgraded and unupgraded copies of the same card count as duplicates.
+
+## 10. Crit lines
+
+- [ ] The old "Crit!!" bubble is gone. Crits on characters with no lines (Fry, Seels, Slal) only show the damage number.
+- [ ] Ironclad, Silent, Defect, Regent, Necrobinder and Shion say a random crit line about **10%** of the time per crit that deals unblocked damage.
+- [ ] While Shion is **Berserk**, she uses her red Berserk lines instead of her normal ones.
+- [ ] Text effects look right: shake on "WEAK!!", "MORE", "YES!!"; jitter on "BLEED"; bold italic on the second "HARDER!!!". The long Defect hex line fits in the bubble.
+- [ ] Multiplayer: every player sees the same line at the same time.
