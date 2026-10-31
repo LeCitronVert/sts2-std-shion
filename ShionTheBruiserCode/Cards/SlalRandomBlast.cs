@@ -12,7 +12,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Team Blast. Whenever ANYONE plays a card this turn, apply 1 (3) Confusion to a random enemy and increase this value by 1.
 /// </summary>
-public class SlalRandomBlast() : SlalTheEndlessCard(2,
+public class SlalRandomBlast() : SlalTheEndlessCard(0,
     CardType.Attack, CardRarity.Rare,
     TargetType.AllEnemies)
 {

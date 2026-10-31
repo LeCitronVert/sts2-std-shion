@@ -19,7 +19,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Team Blast. Request 2 (1). Apply Shrink to ALL enemies. ALL players gain 7 Strength and 7 Dexterity for 3 turns.
 /// </summary>
-public class FryMechaExpansionPack() : FryTheCommanderCard(2,
+public class FryMechaExpansionPack() : FryTheCommanderCard(0,
     CardType.Skill, CardRarity.Rare,
     TargetType.AllAllies)
 {

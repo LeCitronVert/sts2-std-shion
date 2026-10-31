@@ -16,7 +16,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Team Blast. Blood Bend X. Deal damage equal to the missing HP of ALL other players (ALL players) X times.
 /// </summary>
-public class SeelsPaybackTime() : SeelsTheRecklessCard(2,
+public class SeelsPaybackTime() : SeelsTheRecklessCard(0,
     CardType.Attack, CardRarity.Rare,
     TargetType.AnyEnemy)
 {

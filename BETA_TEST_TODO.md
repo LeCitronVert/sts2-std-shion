@@ -219,7 +219,7 @@ Values are base (upgraded). "X" is the Blood Bend / energy X.
   While this card is in your Hand, it grants you its energy cost as Strength and Dexterity. Deal 1 damage.
 - [ ] **Finishing Explosion** — Attack, 2 energy  
   Deal 3 (4) damage to a random enemy for each Slash in your Exhaust Pile.
-- [ ] **Payback Time** — Attack, 2 energy — TeamBlast — multiplayer only  
+- [ ] **Payback Time** — Attack, 0 energy — TeamBlast — multiplayer only  
   Blood Bend X. Deal damage equal to the missing HP of ALL other players X times (upgraded: ALL players, including you).
 - [ ] **Ultra Kill** — Attack, 6 energy  
   Lose 6 HP minus the energy cost of this card. Deal 30 (35) damage 2 times.
@@ -581,7 +581,7 @@ Values are base (upgraded). "TODO" cards are the spec's unnamed rows (`FryTodoN`
   Heal 3 HP for each card in your Hand. Discard your Hand.
 - [ ] **Last Chance Hit Point** — Skill, 2 energy — Exhaust, +Retain when upgraded — ⚠️ todo: choose cost  
   Until your next turn, gain Hardened Shell equal to your HP minus 1. Refuse 1.
-- [ ] **Mecha Expansion Pack** — Skill, 2 energy — TeamBlast, Request — multiplayer only, ⚠️ todo: Shrink amount not specified  
+- [ ] **Mecha Expansion Pack** — Skill, 0 energy — TeamBlast, Request — multiplayer only, ⚠️ todo: Shrink amount not specified  
   Request 2 (1). Apply 3 Shrink to ALL enemies. ALL players gain 7 Strength and 7 Dexterity for 3 turns.
 - [ ] **Mid-Season Upgrade** — Skill, 0 energy + 2 Stars — ⚠️ todo: upgrade not specified  
   Cooldown 3 (2). Double your Strength.

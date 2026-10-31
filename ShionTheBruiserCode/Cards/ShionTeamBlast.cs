@@ -14,7 +14,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionTeamBlast() : ShionTheBruiserCard(3,
+public class ShionTeamBlast() : ShionTheBruiserCard(0,
     CardType.Power, CardRarity.Rare,
     TargetType.AllAllies)
 {
