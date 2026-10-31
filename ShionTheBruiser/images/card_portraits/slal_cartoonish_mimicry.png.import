@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c4vy4jra5il8u"
-path="res://.godot/imported/slal_cartoonish_mimicry.png-c4437d7b20942ad86ce662948e1efc48.ctex"
+path="res://.godot/imported/slal_cartoonish_mimicry.png-57fe4292037ce3b755fdb0354661a28b.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://ShionTheBruiser/images/card_portraits/slal_cartoonish_mimicry.png"
-dest_files=["res://.godot/imported/slal_cartoonish_mimicry.png-c4437d7b20942ad86ce662948e1efc48.ctex"]
+dest_files=["res://.godot/imported/slal_cartoonish_mimicry.png-57fe4292037ce3b755fdb0354661a28b.ctex"]
 
 [params]
 

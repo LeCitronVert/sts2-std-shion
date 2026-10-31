@@ -833,3 +833,9 @@ Content I skipped (incomplete in the spec):
 - [ ] While Shion is **Berserk**, she uses her red Berserk lines instead of her normal ones.
 - [ ] Text effects look right: shake on "WEAK!!", "MORE", "YES!!"; jitter on "BLEED"; bold italic on the second "HARDER!!!". The long Defect hex line fits in the bubble.
 - [ ] Multiplayer: every player sees the same line at the same time.
+
+## 11. Berserk hurry-up ping
+
+- [ ] Co-op: when Shion is **Berserk** and alive, her end-turn "hurry up" ping says "You're such a tease..." in red, not "Everything okay?".
+- [ ] Out of Berserk, or dead, she uses her normal alive/dead lines.
+- [ ] The other players see the Berserk line too.

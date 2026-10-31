@@ -1,6 +1,7 @@
 {
   "SHIONTHEBRUISER-SHION_THE_BRUISER.aromaPrinciple": "[sine][purple]I won't stay weak... And I won't lose myself to power neither...[/purple][/sine]",
   "SHIONTHEBRUISER-SHION_THE_BRUISER.banter.alive.endTurnPing": "Everything okay?",
+  "SHIONTHEBRUISER-SHION_THE_BRUISER.banter.alive.endTurnPingBerserk": "[red]You're such a tease...[/red]",
   "SHIONTHEBRUISER-SHION_THE_BRUISER.banter.dead.endTurnPing": "Just... get it over with, already...",
   "SHIONTHEBRUISER-SHION_THE_BRUISER.cardsModifierDescription": "Shion's cards will now appear in rewards and shops.",
   "SHIONTHEBRUISER-SHION_THE_BRUISER.cardsModifierTitle": "Shion's Cards",
