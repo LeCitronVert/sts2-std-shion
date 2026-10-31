@@ -933,3 +933,14 @@ Content I skipped (incomplete in the spec):
 - Blood Bend X is now resolved in previews (current Blood), the same way X-cost cards show current energy.
 - No previews on Powers, or where the number depends on random draws or on how much damage gets through (Belittle, Body Strike, Palm Strike, Private Joke, Running Joke, Copy Kitty).
 - An Opening and Never Learn have no number to show (they already glow gold when their condition is met), so they didn't get preview text.
+
+## Team Blast: Rest Site reset + Elite/Boss multipliers
+
+- [ ] Fill the gauge partway, enter a **Rest Site**: the gauge is back to 0 in the next combat.
+- [ ] Same in multiplayer: every player's gauge reads 0 after the Rest Site (no desync).
+- [ ] The gauge tooltip now says it empties at Rest Sites.
+- [ ] **Elite** and **Boss** fights fill the gauge exactly like normal fights for now (`EliteMultiplier` / `BossMultiplier` = 1x in `TeamBlastSingleton`).
+
+**Decisions I made**
+- The reset happens on entering the Rest Site, whichever option is picked.
+- The Elite/Boss multipliers stack with the per-Team-Blast charge bonus (they multiply each other). They aren't in the tooltip while they're 1x.

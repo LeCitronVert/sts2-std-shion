@@ -27,6 +27,9 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Singletons;
 /// Duplicates only give one copy, but every Team Blast in any player's deck (duplicates included) makes the whole
 /// team fill the gauge <see cref="ChargeBonusPerTeamBlast"/> faster.</item>
 /// <item>Playing a Team Blast locks the gauge for the rest of the combat; it then goes back to 0 when combat ends.</item>
+/// <item>Elite and Boss fights fill the gauge <see cref="EliteMultiplier"/> / <see cref="BossMultiplier"/> times as
+/// fast.</item>
+/// <item>Entering a Rest Site resets the gauge to 0 (see <see cref="Patches.TeamBlastRestSiteResetPatch"/>).</item>
 /// </list>
 /// The gauge value is saved with the run, on every player (all clients keep the same value).
 /// </summary>
@@ -49,6 +52,10 @@ public class TeamBlastSingleton : CustomSingletonModel
     public const decimal AllyOstyDeathMultiplier = 0.5m;
     /// <summary>Gauge fill bonus for each Team Blast in any player's deck (every copy counts).</summary>
     public const decimal ChargeBonusPerTeamBlast = 0.2m;
+    /// <summary>Gauge fill multiplier during Elite fights.</summary>
+    public const decimal EliteMultiplier = 1m;
+    /// <summary>Gauge fill multiplier during Boss fights.</summary>
+    public const decimal BossMultiplier = 1m;
 
     // ── State ────────────────────────────────────────────────────────────────
 
@@ -77,6 +84,14 @@ public class TeamBlastSingleton : CustomSingletonModel
 
     /// <summary>Multiplier on every gauge gain, from <see cref="TeamBlastCount"/>.</summary>
     public decimal ChargeMultiplier => 1m + ChargeBonusPerTeamBlast * TeamBlastCount;
+
+    /// <summary>Multiplier on every gauge gain, from the kind of fight (Elite, Boss).</summary>
+    public decimal RoomMultiplier => _combatState?.Encounter?.RoomType switch
+    {
+        RoomType.Elite => EliteMultiplier,
+        RoomType.Boss => BossMultiplier,
+        _ => 1m,
+    };
 
     /// <summary>A Team Blast was used this combat.</summary>
     public bool IsLocked { get; private set; }
@@ -128,7 +143,7 @@ public class TeamBlastSingleton : CustomSingletonModel
     {
         if (!CanFill || amount <= 0 || _combatState == null) return;
 
-        _remainder += amount * ChargeMultiplier;
+        _remainder += amount * ChargeMultiplier * RoomMultiplier;
         var points = (int)Math.Floor(_remainder);
         if (points <= 0) return;
         _remainder -= points;
@@ -138,13 +153,18 @@ public class TeamBlastSingleton : CustomSingletonModel
         SetGauge(_combatState, newValue);
     }
 
-    private static void SetGauge(ICombatState combatState, int value)
+    private static void SetGauge(ICombatState combatState, int value) => SetGauge(combatState.Players, value);
+
+    private static void SetGauge(IEnumerable<Player> players, int value)
     {
-        foreach (var player in combatState.Players)
+        foreach (var player in players)
         {
             SavedGauge.Set(player, value);
         }
     }
+
+    /// <summary>Called when the party enters a Rest Site: the gauge goes back to 0.</summary>
+    public static void ResetGauge(IEnumerable<Player> players) => SetGauge(players, 0);
 
     /// <summary>Players and their pets.</summary>
     private static bool IsAlly(Creature creature) => creature.Side == CombatSide.Player;
