@@ -10,18 +10,21 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class SlalSlimeForm() : SlalTheEndlessCard(2,
+/// <summary>
+/// Whenever you create a Status card, gain 4 Block. Costs 1 (0).
+/// </summary>
+public class SlalSlimeForm() : SlalTheEndlessCard(1,
     CardType.Power, CardRarity.Uncommon,
     TargetType.Self)
 {
     protected override HashSet<CardTag> CanonicalTags => [SlalCardTags.Form];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<SlimeForm>(3),
+        new PowerVar<SlimeForm>(4),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromCard<Slimed>(),
+        HoverTipFactory.Static(StaticHoverTip.Block),
     ];
 
     protected override async Task OnPlay(

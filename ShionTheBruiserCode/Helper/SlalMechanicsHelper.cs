@@ -153,24 +153,44 @@ public static class SlalMechanicsHelper
         }
     }
 
-    // ── Memory ──────────────────────────────────────────────────────────────
+    // ── Memory / Flashback ──────────────────────────────────────────────────
 
+    /// <summary>
+    /// Gains Memory, plus as much Flashback right away (not written on the cards).
+    /// </summary>
     public static async Task GainMemory(PlayerChoiceContext choiceContext, Creature creature, decimal amount, CardModel? source = null)
     {
         if (amount <= 0) return;
         await PowerCmd.Apply<Memory>(choiceContext, creature, amount, creature, source);
+        await GainFlashback(choiceContext, creature, amount, source);
     }
 
-    public static async Task GainMemoryThisTurn(PlayerChoiceContext choiceContext, Creature creature, decimal amount, CardModel? source = null)
+    public static async Task GainFlashback(PlayerChoiceContext choiceContext, Creature creature, decimal amount, CardModel? source = null)
     {
         if (amount <= 0) return;
-        await PowerCmd.Apply<MemoryThisTurn>(choiceContext, creature, amount, creature, source);
+        await PowerCmd.Apply<Flashback>(choiceContext, creature, amount, creature, source);
+    }
+
+    /// <summary>
+    /// Removes ALL the creature's Flashback.
+    /// </summary>
+    public static async Task LoseAllFlashback(Creature creature)
+    {
+        if (creature.GetPower<Flashback>() is { } flashback)
+        {
+            await PowerCmd.Remove(flashback);
+        }
+    }
+
+    public static int GetFlashback(Creature creature)
+    {
+        return creature.GetPowerAmount<Flashback>();
     }
 
     /// <summary>
     /// Non-Rare, non-Novel playable cards without Exhaust.
     /// </summary>
-    public static bool CanBePlayedByMemory(Player player, CardModel card)
+    public static bool CanBePlayedByFlashback(Player player, CardModel card)
     {
         return !IsNovel(card)
             && card.Rarity != CardRarity.Rare
@@ -179,23 +199,23 @@ public static class SlalMechanicsHelper
     }
 
     /// <summary>
-    /// Number of times the creature gained Memory (or Short-Term Memory) this combat.
+    /// Number of times the creature gained Flashback this combat (Memory's gains included).
     /// </summary>
-    public static int GetTimesMemoryGained(Creature creature)
+    public static int GetTimesFlashbackGained(Creature creature)
     {
         if (creature.CombatState is null || !CombatManager.Instance.IsInProgress) return 0;
         return CombatManager.Instance.History.Entries
             .OfType<PowerReceivedEntry>()
-            .Count(e => e.Actor == creature && e.Amount > 0 && e.Power is Memory or MemoryThisTurn);
+            .Count(e => e.Actor == creature && e.Amount > 0 && e.Power is Flashback);
     }
 
     /// <summary>
-    /// Cards Memory is playing right now, with the extra Confusion they apply (the Memory amount).
+    /// Cards Flashback is playing right now, with the extra Confusion they apply (the Memory amount).
     /// </summary>
     private static readonly Dictionary<CardModel, int> MemoryConfusionBonuses = [];
 
     /// <summary>
-    /// The extra Confusion the card applies because Memory is playing it (0 otherwise).
+    /// The extra Confusion the card applies because Flashback is playing it with Memory (0 otherwise).
     /// </summary>
     public static int GetMemoryConfusionBonus(CardModel? card)
     {
@@ -211,45 +231,43 @@ public static class SlalMechanicsHelper
         return amount > 0 ? amount + GetMemoryConfusionBonus(card) : amount;
     }
 
-    /// <summary>
-    /// Total Memory (permanent and this turn).
-    /// </summary>
     public static int GetMemory(Creature creature)
     {
-        return creature.GetPowerAmount<Memory>() + creature.GetPowerAmount<MemoryThisTurn>();
+        return creature.GetPowerAmount<Memory>();
     }
 
     /// <summary>
     /// Plays up to <paramref name="count"/> cards from the Discard Pile (random, or chosen with Continuity Thread).
-    /// Memory Blocked stops it this turn, Break Continuity for the whole combat. Cards that apply Confusion apply <paramref name="count"/> more.
+    /// Memory Blocked stops it this turn. Cards that apply Confusion apply as much more as the player's Memory.
     /// </summary>
-    public static async Task PlayFromMemory(PlayerChoiceContext choiceContext, Player player, int count)
+    public static async Task PlayFromFlashback(PlayerChoiceContext choiceContext, Player player, int count)
     {
         if (count <= 0 || CombatManager.Instance.IsOverOrEnding) return;
-        if (player.Creature.HasPower<MemoryBlocked>() || player.Creature.HasPower<BreakContinuity>()) return;
+        if (player.Creature.HasPower<MemoryBlocked>()) return;
 
+        var confusionBonus = GetMemory(player.Creature);
         var continuityThread = player.Creature.GetPower<ContinuityThread>();
         if (continuityThread != null)
         {
-            var chosen = await continuityThread.SelectCardsForMemory(choiceContext, player, count, c => CanBePlayedByMemory(player, c));
-            await MemoryAutoChoice.Run(player, () => AutoPlayFromDiscard(choiceContext, player, chosen, exhaust: true, confusionBonus: count, fromMemory: true));
+            var chosen = await continuityThread.SelectCardsForFlashback(choiceContext, player, count, c => CanBePlayedByFlashback(player, c));
+            await MemoryAutoChoice.Run(player, () => AutoPlayFromDiscard(choiceContext, player, chosen, exhaust: true, confusionBonus: confusionBonus, fromFlashback: true));
             return;
         }
 
-        var picked = PickRandomCards(player, PileType.Discard, count, c => CanBePlayedByMemory(player, c));
-        await MemoryAutoChoice.Run(player, () => AutoPlayFromDiscard(choiceContext, player, picked, confusionBonus: count, fromMemory: true));
+        var picked = PickRandomCards(player, PileType.Discard, count, c => CanBePlayedByFlashback(player, c));
+        await MemoryAutoChoice.Run(player, () => AutoPlayFromDiscard(choiceContext, player, picked, confusionBonus: confusionBonus, fromFlashback: true));
     }
 
     /// <summary>
-    /// Raised for each card Memory plays, with how many it played before it this proc (makes the Memory bulbs hop).
+    /// Raised for each card Flashback plays, with how many it played before it this proc (makes the Flashback bulbs hop).
     /// Visual only.
     /// </summary>
-    public static event Action<Creature, int>? MemoryCardPlayed;
+    public static event Action<Creature, int>? FlashbackCardPlayed;
 
     /// <summary>
     /// Plays the given cards from the Discard Pile, skipping those that left it in the meantime.
     /// </summary>
-    public static async Task AutoPlayFromDiscard(PlayerChoiceContext choiceContext, Player player, IEnumerable<CardModel> cards, bool exhaust = false, int confusionBonus = 0, bool fromMemory = false)
+    public static async Task AutoPlayFromDiscard(PlayerChoiceContext choiceContext, Player player, IEnumerable<CardModel> cards, bool exhaust = false, int confusionBonus = 0, bool fromFlashback = false)
     {
         var played = 0;
         foreach (var card in cards.ToList())
@@ -258,7 +276,7 @@ public static class SlalMechanicsHelper
             // A previous card may have moved it
             if (card.Pile?.Type != PileType.Discard) continue;
 
-            if (fromMemory) MemoryCardPlayed?.Invoke(player.Creature, played++);
+            if (fromFlashback) FlashbackCardPlayed?.Invoke(player.Creature, played++);
 
             // Registered before the card reaches the Play pile, so the card shown there already displays the extra Confusion
             if (confusionBonus > 0) MemoryConfusionBonuses[card] = confusionBonus;
@@ -455,7 +473,7 @@ public static class SlalMechanicsHelper
 
     /// <summary>
     /// Shows <paramref name="count"/> random cards from the options plus a random Goofball Token Power (skippable)
-    /// and adds the chosen one into the Hand. Hat Tip triggers if the Goofball Token Power is chosen.
+    /// and adds the chosen one into the Hand.
     /// </summary>
     public static async Task<CardModel?> ChooseCardOrGoofballToAddToHand(PlayerChoiceContext choiceContext, Player player, IEnumerable<CardModel> options, int count, bool upgraded)
     {
@@ -468,6 +486,49 @@ public static class SlalMechanicsHelper
             await CardPileCmd.AddGeneratedCardToCombat(chosen, PileType.Hand, player);
         }
         return chosen;
+    }
+
+    // ── Shapeshift / Mimic ──────────────────────────────────────────────────
+
+    /// <summary>
+    /// Shapeshift: adds <paramref name="count"/> random Goofball Token Powers into the Hand (all different if possible).
+    /// Free Shapeshift (<paramref name="free"/>): they are free to play this turn.
+    /// </summary>
+    public static async Task<List<CardModel>> Shapeshift(Player player, int count = 1, bool upgraded = false, bool free = false)
+    {
+        if (count <= 0) return [];
+
+        var powers = CreateDifferentGoofballTokenPowers(player, count, upgraded);
+        foreach (var power in powers)
+        {
+            if (free && !power.EnergyCost.CostsX) power.SetToFreeThisTurn();
+            await CardPileCmd.AddGeneratedCardToCombat(power, PileType.Hand, player);
+        }
+        return powers;
+    }
+
+    /// <summary>
+    /// Non-Rare cards from other characters (Creative Spirit allows Rare cards, Mood Shift allows Colorless cards).
+    /// </summary>
+    public static IEnumerable<CardModel> GetMimicOptions(Player player)
+    {
+        return GetCharacterCardOptions(player, includeOwnCharacter: false).Where(c => HasRandomCardRarity(player, c));
+    }
+
+    /// <summary>
+    /// Mimic X: choose 1 of X random non-Rare cards from other characters to add into your Hand (can be skipped).
+    /// </summary>
+    public static Task<CardModel?> Mimic(PlayerChoiceContext choiceContext, Player player, int count, bool upgraded = false)
+    {
+        return ChooseCardToAddToHand(choiceContext, player, GetMimicOptions(player), count, upgraded);
+    }
+
+    /// <summary>
+    /// "Choose to Mimic X or Shapeshift": one screen with the X Mimic cards and a Goofball Token Power (can be skipped).
+    /// </summary>
+    public static Task<CardModel?> MimicOrShapeshift(PlayerChoiceContext choiceContext, Player player, int count, bool upgraded = false)
+    {
+        return ChooseCardOrGoofballToAddToHand(choiceContext, player, GetMimicOptions(player), count, upgraded);
     }
 
     // ── Goofball Token Powers ───────────────────────────────────────────────

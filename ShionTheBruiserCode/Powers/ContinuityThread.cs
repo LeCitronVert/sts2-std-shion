@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.Models;
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// You choose the cards Memory plays from your Discard Pile instead of picking them at random. They are Exhausted.
+/// You choose the cards Flashback plays from your Discard Pile instead of picking them at random. They are Exhausted.
 /// </summary>
 public class ContinuityThread : SlalTheEndlessPower
 {
@@ -19,7 +19,7 @@ public class ContinuityThread : SlalTheEndlessPower
     public override PowerStackType StackType => PowerStackType.Single;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<Memory>(),
+        HoverTipFactory.FromPower<Flashback>(),
     ];
 
     private LocString Prompt(int count)
@@ -29,7 +29,7 @@ public class ContinuityThread : SlalTheEndlessPower
         return prompt;
     }
 
-    public async Task<List<CardModel>> SelectCardsForMemory(PlayerChoiceContext choiceContext, Player player, int count, Func<CardModel, bool> filter)
+    public async Task<List<CardModel>> SelectCardsForFlashback(PlayerChoiceContext choiceContext, Player player, int count, Func<CardModel, bool> filter)
     {
         Flash();
         return (await CardSelectCmd.FromCombatPile(

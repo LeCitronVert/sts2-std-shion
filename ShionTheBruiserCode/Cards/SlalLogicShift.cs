@@ -8,9 +8,9 @@ using ShionTheBruiser.ShionTheBruiserCode.Enums;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Always Novel. Choose a card in your Discard Pile to put into your Hand. Discard 1 card. Exhaust. (Lose Exhaust)
+/// Always Novel. Choose a card in your Discard Pile to put into your Hand. Discard 1 card. Exhaust. Costs 1 (0).
 /// </summary>
-public class SlalLogicShift() : SlalTheEndlessCard(0,
+public class SlalLogicShift() : SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
@@ -50,6 +50,6 @@ public class SlalLogicShift() : SlalTheEndlessCard(0,
 
     protected override void OnUpgrade()
     {
-        RemoveKeyword(CardKeyword.Exhaust);
+        EnergyCost.UpgradeBy(-1);
     }
 }

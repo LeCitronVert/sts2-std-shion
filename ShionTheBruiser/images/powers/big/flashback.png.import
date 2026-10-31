@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dih3cxu0m7y3m"
-path="res://.godot/imported/memory_this_turn.png-592566b8e650fa00fad9928816d5f1a6.ctex"
+uid="uid://dmrk63qjk6uyk"
+path="res://.godot/imported/flashback.png-91b8e8befcb682953f1d8a1978b53803.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ShionTheBruiser/images/powers/memory_this_turn.png"
-dest_files=["res://.godot/imported/memory_this_turn.png-592566b8e650fa00fad9928816d5f1a6.ctex"]
+source_file="res://ShionTheBruiser/images/powers/big/flashback.png"
+dest_files=["res://.godot/imported/flashback.png-91b8e8befcb682953f1d8a1978b53803.ctex"]
 
 [params]
 

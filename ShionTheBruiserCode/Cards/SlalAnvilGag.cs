@@ -7,12 +7,13 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Deal 8 damage. Apply Weak equal to your Random.
-/// Increase this card's damage by 2 each time you gain Random this combat. (Retain)
+/// Gain 1 Memory. Deal 14 (20) damage. Apply Weak equal to your Random.
+/// Increase this card's damage by 4 (5) each time you gain Flashback this combat.
 /// </summary>
 public class SlalAnvilGag() : SlalTheEndlessCard(1,
     CardType.Attack, CardRarity.Ancient,
@@ -23,12 +24,17 @@ public class SlalAnvilGag() : SlalTheEndlessCard(1,
     public override IEnumerable<CardKeyword> CanonicalKeywords => [SlalCardKeywords.AlwaysNovel];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CalculationBaseVar(8),
-        new ExtraDamageVar(2),
-        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => SlalMechanicsHelper.GetTimesRandomGained(card.Owner.Creature)),
+        new PowerVar<Memory>(1),
+        new CalculationBaseVar(14),
+        new ExtraDamageVar(4),
+        // In the Hand, also counts the Flashback its own Memory gives before the hit
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) =>
+            SlalMechanicsHelper.GetTimesFlashbackGained(card.Owner.Creature) + (card.Pile?.Type == PileType.Hand ? 1 : 0)),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<Memory>(),
+        HoverTipFactory.FromPower<Flashback>(),
         HoverTipFactory.FromPower<Powers.Random>(),
         HoverTipFactory.FromPower<WeakPower>(),
     ];
@@ -39,6 +45,9 @@ public class SlalAnvilGag() : SlalTheEndlessCard(1,
     {
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
+
+        // Its Flashback raises the damage before the hit
+        await SlalMechanicsHelper.GainMemory(choiceContext, card.Owner.Creature, card.DynamicVars["Memory"].BaseValue, card);
 
         await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
             .FromCard(card)
@@ -55,6 +64,7 @@ public class SlalAnvilGag() : SlalTheEndlessCard(1,
 
     protected override void OnUpgrade()
     {
-        AddKeyword(CardKeyword.Retain);
+        DynamicVars.CalculationBase.UpgradeValueBy(6);
+        DynamicVars.ExtraDamage.UpgradeValueBy(1);
     }
 }

@@ -1,3 +1,6 @@
+using MegaCrit.Sts2.Core.Nodes.Vfx;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -53,6 +56,10 @@ public class SlalSlimeHug(): SlalSlimyCard(1,
     {
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
+
+        // Gunk Up's goop, visual only
+        var goop = NGoopyImpactVfx.Create(play.Target);
+        if (goop != null) NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(goop);
 
         await PowerCmd.Apply<WeakPower>(choiceContext, play.Target, card.DynamicVars.Weak.BaseValue, card.Owner.Creature, card);
 

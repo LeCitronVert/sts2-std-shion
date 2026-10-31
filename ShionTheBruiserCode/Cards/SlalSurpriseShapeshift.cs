@@ -5,13 +5,14 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Apply 5 (6) Confusion. Deal 5 (6) damage. Add 1 (2) random Goofball Token Powers into your Draw Pile.
+/// Apply 5 (6) Confusion. Deal 5 (6) damage. Shapeshift (twice).
 /// </summary>
 public class SlalSurpriseShapeshift() : SlalTheEndlessCard(1,
     CardType.Attack, CardRarity.Common,
@@ -38,8 +39,12 @@ public class SlalSurpriseShapeshift() : SlalTheEndlessCard(1,
         new CardsVar(1),
     ];
 
+    protected override HashSet<CardTag> CanonicalTags => [SlalCardTags.Shapeshift];
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<Confusion>(),
+        HoverTipFactory.FromKeyword(SlalCardKeywords.Shapeshift),
+        HoverTipFactory.FromKeyword(SlalCardKeywords.GoofballTokenPower),
     ];
 
     protected override async Task OnPlay(
@@ -67,7 +72,7 @@ public class SlalSurpriseShapeshift() : SlalTheEndlessCard(1,
         {
             var power = SlalMechanicsHelper.CreateGoofballTokenPower(card.Owner, false, LastGivenPower);
             LastGivenPower = power.Id;
-            CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(power, PileType.Draw, card.Owner, CardPilePosition.Random));
+            await CardPileCmd.AddGeneratedCardToCombat(power, PileType.Hand, card.Owner);
         }
     }
 

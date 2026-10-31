@@ -10,7 +10,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Deal 1 damage and apply 6 Confusion to ALL enemies. Gain 1 Memory this turn for each enemy.
+/// Apply 6 Confusion and deal 1 damage to ALL enemies (Confusion first, so the hit can execute). Gain 1 Flashback for each enemy.
 /// </summary>
 public class SlalBoldAnnouncement() : SlalTheEndlessCard(1,
     CardType.Attack, CardRarity.Uncommon,
@@ -19,16 +19,16 @@ public class SlalBoldAnnouncement() : SlalTheEndlessCard(1,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(1M, ValueProp.Move),
         new PowerVar<Confusion>(6),
-        new PowerVar<MemoryThisTurn>(1),
+        new PowerVar<Flashback>(1),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
-        new CalculatedVar("MemoryAmount").WithMultiplier((card, _) =>
-            card.CombatState!.HittableEnemies.Count() * card.DynamicVars["MemoryThisTurn"].BaseValue),
+        new CalculatedVar("FlashbackAmount").WithMultiplier((card, _) =>
+            card.CombatState!.HittableEnemies.Count() * card.DynamicVars["Flashback"].BaseValue),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<Confusion>(),
-        HoverTipFactory.FromPower<Memory>(),
+        HoverTipFactory.FromPower<Flashback>(),
     ];
 
     protected override async Task OnPlay(
@@ -39,14 +39,15 @@ public class SlalBoldAnnouncement() : SlalTheEndlessCard(1,
         if (card.CombatState is null) return;
 
         var enemyCount = card.CombatState.HittableEnemies.Count();
+        await SlalMechanicsHelper.ApplyToAllEnemies<Confusion>(choiceContext, card.Owner.Creature, card.DynamicVars["Confusion"].BaseValue, card);
+
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .FromCard(card)
             .TargetingAllOpponents(card.CombatState)
             .WithHitFx("vfx/vfx_attack_blunt", tmpSfx: "heavy_attack.mp3")
             .Execute(choiceContext);
 
-        await SlalMechanicsHelper.ApplyToAllEnemies<Confusion>(choiceContext, card.Owner.Creature, card.DynamicVars["Confusion"].BaseValue, card);
-        await SlalMechanicsHelper.GainMemoryThisTurn(choiceContext, card.Owner.Creature, card.DynamicVars["MemoryThisTurn"].BaseValue * enemyCount, card);
+        await SlalMechanicsHelper.GainFlashback(choiceContext, card.Owner.Creature, card.DynamicVars["Flashback"].BaseValue * enemyCount, card);
     }
 
     protected override void OnUpgrade()

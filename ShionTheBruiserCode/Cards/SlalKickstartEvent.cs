@@ -9,14 +9,15 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Whenever you play a Novel card, gain 1 energy. Costs 2 (1).
+/// The first 3 (5) Novel cards you play each turn grant 1 energy.
 /// </summary>
 public class SlalKickstartEvent() : SlalTheEndlessCard(2,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new EnergyVar(1),
+        new PowerVar<KickstartEvent>(3),
+        new EnergyVar(KickstartEvent.EnergyAmount),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -29,11 +30,11 @@ public class SlalKickstartEvent() : SlalTheEndlessCard(2,
         CardPlay play)
     {
         var card = this;
-        await PowerCmd.Apply<KickstartEvent>(choiceContext, card.Owner.Creature, card.DynamicVars.Energy.BaseValue, card.Owner.Creature, card);
+        await PowerCmd.Apply<KickstartEvent>(choiceContext, card.Owner.Creature, card.DynamicVars["KickstartEvent"].BaseValue, card.Owner.Creature, card);
     }
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars["KickstartEvent"].UpgradeValueBy(2);
     }
 }

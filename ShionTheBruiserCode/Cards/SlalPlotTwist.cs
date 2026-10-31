@@ -3,15 +3,14 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Apply 3 Confusion. Choose between 2 non-Rare cards from other characters and a Goofball Token Power to add into your Hand
-/// (upgraded: they are upgraded). Exhaust.
-/// Creative Spirit allows Rare cards, Mood Shift allows Colorless cards.
+/// Apply 3 Confusion. Choose to Mimic 2 or Shapeshift (upgraded: the offered cards are upgraded). Exhaust.
 /// </summary>
 public class SlalPlotTwist() : SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Common,
@@ -24,8 +23,13 @@ public class SlalPlotTwist() : SlalTheEndlessCard(1,
         new CardsVar(2),
     ];
 
+    protected override HashSet<CardTag> CanonicalTags => [SlalCardTags.Shapeshift, SlalCardTags.Mimic];
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<Confusion>(),
+        HoverTipFactory.FromKeyword(SlalCardKeywords.Mimic),
+        HoverTipFactory.FromKeyword(SlalCardKeywords.Shapeshift),
+        HoverTipFactory.FromKeyword(SlalCardKeywords.GoofballTokenPower),
     ];
 
     protected override async Task OnPlay(
@@ -37,9 +41,7 @@ public class SlalPlotTwist() : SlalTheEndlessCard(1,
 
         await PowerCmd.Apply<Confusion>(choiceContext, play.Target, card.DynamicVars["Confusion"].BaseValue, card.Owner.Creature, card);
 
-        var options = SlalMechanicsHelper.GetCharacterCardOptions(card.Owner, includeOwnCharacter: false)
-            .Where(c => SlalMechanicsHelper.HasRandomCardRarity(card.Owner, c));
-        await SlalMechanicsHelper.ChooseCardOrGoofballToAddToHand(choiceContext, card.Owner, options, card.DynamicVars.Cards.IntValue, IsUpgraded);
+        await SlalMechanicsHelper.MimicOrShapeshift(choiceContext, card.Owner, card.DynamicVars.Cards.IntValue, IsUpgraded);
     }
 
     protected override void OnUpgrade()

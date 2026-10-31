@@ -9,6 +9,9 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+/// <summary>
+/// Deal 6 (8) damage twice. Gain 1 Flashback.
+/// </summary>
 public class SlalBellMemory(): SlalTheEndlessCard(2,
     CardType.Attack, CardRarity.Common,
     TargetType.AnyEnemy)
@@ -16,10 +19,10 @@ public class SlalBellMemory(): SlalTheEndlessCard(2,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(6M, ValueProp.Move),
         new RepeatVar(2),
-        new PowerVar<MemoryThisTurn>(1),
+        new PowerVar<Flashback>(1),
     ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<MemoryThisTurn>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Flashback>()];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -34,7 +37,7 @@ public class SlalBellMemory(): SlalTheEndlessCard(2,
             .WithHitCount(DynamicVars.Repeat.IntValue)
             .Execute(choiceContext)
         ;
-        await SlalMechanicsHelper.GainMemoryThisTurn(choiceContext, card.Owner.Creature, card.DynamicVars["MemoryThisTurn"].BaseValue, card);
+        await SlalMechanicsHelper.GainFlashback(choiceContext, card.Owner.Creature, card.DynamicVars["Flashback"].BaseValue, card);
     }
 
     protected override void OnUpgrade()

@@ -10,7 +10,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain 1 Weak and X (X+1) Memory this turn. Retain your Hand this turn.
+/// Gain 1 Weak and X (X+1) Flashback. Retain your Hand this turn. Exhaust.
 /// </summary>
 public class SlalWaitASecond() : SlalTheEndlessCard(0,
     CardType.Skill, CardRarity.Uncommon,
@@ -22,12 +22,12 @@ public class SlalWaitASecond() : SlalTheEndlessCard(0,
         new PowerVar<WeakPower>(1),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
-        new CalculatedVar("MemoryAmount").WithMultiplier((card, _) => PreviewHelper.XValue(card) + (card.IsUpgraded ? 1 : 0)),
+        new CalculatedVar("FlashbackAmount").WithMultiplier((card, _) => PreviewHelper.XValue(card) + (card.IsUpgraded ? 1 : 0)),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<WeakPower>(),
-        HoverTipFactory.FromPower<MemoryThisTurn>(),
+        HoverTipFactory.FromPower<Flashback>(),
         HoverTipFactory.FromKeyword(CardKeyword.Retain),
     ];
 
@@ -41,7 +41,7 @@ public class SlalWaitASecond() : SlalTheEndlessCard(0,
         var memory = ResolveEnergyXValue() + (IsUpgraded ? 1 : 0);
 
         await PowerCmd.Apply<WeakPower>(choiceContext, card.Owner.Creature, card.DynamicVars.Weak.BaseValue, card.Owner.Creature, card);
-        await SlalMechanicsHelper.GainMemoryThisTurn(choiceContext, card.Owner.Creature, memory, card);
+        await SlalMechanicsHelper.GainFlashback(choiceContext, card.Owner.Creature, memory, card);
         await PowerCmd.Apply<RetainHandPower>(choiceContext, card.Owner.Creature, 1, card.Owner.Creature, card);
     }
 

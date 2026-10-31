@@ -1,30 +1,35 @@
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Cards;
+using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// Whenever you create a card, apply X Confusion to a random enemy.
+/// The first X Novel cards you play each turn draw 1 card.
 /// </summary>
-public class SlideForm : SlalTheEndlessPower
+public class SlideForm : SlalFirstPlaysEachTurnPower
 {
-    public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Counter;
+    public const int CardsDrawn = 1;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Confusion>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(SlalCardKeywords.Novel),
+    ];
 
-    public override async Task AfterCardGeneratedForCombat(CardModel card, Player? creator)
+    protected override bool ShouldTrigger(CardPlay cardPlay) => SlalMechanicsHelper.IsNovel(cardPlay.Card);
+
+    protected override async Task OnTriggered(PlayerChoiceContext choiceContext, CardPlay cardPlay, Player player)
     {
-        if (creator == null || creator != Owner.Player || CombatState is null) return;
-
-        var enemy = creator.RunState.Rng.CombatTargets.NextItem(CombatState.HittableEnemies);
-        if (enemy == null) return;
-
-        Flash();
-        await PowerCmd.Apply<Confusion>(new ThrowingPlayerChoiceContext(), enemy, Amount, Owner, null);
+        await CardPileCmd.Draw(choiceContext, CardsDrawn, player);
     }
 }

@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -60,6 +61,16 @@ public class SlalSlimeRain(): SlalSlimyCard(2,
             .TargetingAllOpponents(card.CombatState)
             .WithHitFx("vfx/vfx_attack_blunt", tmpSfx: "heavy_attack.mp3")
             .Execute(choiceContext);
+    }
+
+    /// <summary>
+    /// While in the Hand, the damage shown includes the Slimed its own Very Slimy will create before the hit.
+    /// Once played, the real Slimed raise the damage instead (the card is no longer in the Hand).
+    /// </summary>
+    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    {
+        if (cardSource != this || Pile?.Type != PileType.Hand) return 0m;
+        return DynamicVars["Increase"].BaseValue * SlimedToAdd(PileType.Hand.GetPile(Owner).Cards.Count);
     }
 
     public override Task AfterCardGeneratedForCombat(CardModel card, Player? creator)

@@ -1,19 +1,16 @@
-using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
-using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// At the end of your turn, play X random non-Rare, non-Novel playable cards without Exhaust from your Discard Pile.
-/// Also plays the Memory This Turn amount in the same pick, so no card is played twice.
-/// Cards it plays apply X more Confusion (X = the Memory amount used).
+/// At the start of your turn, gain X Flashback. Cards Flashback plays that apply Confusion apply X more.
+/// Not written: whenever you gain Memory, also gain that much Flashback right away (see <see cref="SlalMechanicsHelper.GainMemory"/>).
 /// </summary>
 public class Memory : SlalTheEndlessPower
 {
@@ -21,7 +18,7 @@ public class Memory : SlalTheEndlessPower
     public override PowerStackType StackType => PowerStackType.Counter;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromKeyword(SlalCardKeywords.Novel),
+        HoverTipFactory.FromPower<Flashback>(),
         HoverTipFactory.FromPower<Confusion>(),
     ];
 
@@ -31,11 +28,11 @@ public class Memory : SlalTheEndlessPower
         return SlalMechanicsHelper.GetMemoryConfusionBonus(cardSource);
     }
 
-    public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
-        if (!participants.Contains(Owner) || Owner.Player is null) return;
+        if (player != Owner.Player) return;
 
         Flash();
-        await SlalMechanicsHelper.PlayFromMemory(choiceContext, Owner.Player, SlalMechanicsHelper.GetMemory(Owner));
+        await SlalMechanicsHelper.GainFlashback(choiceContext, Owner, Amount);
     }
 }

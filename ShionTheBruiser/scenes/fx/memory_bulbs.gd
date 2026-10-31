@@ -1,6 +1,7 @@
 extends Node2D
 
-## Light bulbs slowly orbiting above a creature's head, one per stack of Memory.
+## Light bulbs slowly orbiting above a creature's head, one per stack of Flashback.
+## Bulb size doesn't follow the creature's scale (Slal shrinks with its HP); only the orbit does.
 ## Colours cycle red, green, blue, yellow, purple, white. The orbit stays above the neck.
 ## Driven from C# (CreatureFxController.cs) through set_area(), set_count() and hop().
 
@@ -17,7 +18,7 @@ const BASE_DARK := Color8(95, 95, 105)
 
 ## Radians per second
 @export var orbit_speed := 0.7
-@export var bulb_radius := 10.0
+@export var bulb_radius := 20.0
 @export var hop_height := 22.0
 @export var hop_duration := 0.35
 @export var grow_duration := 0.25
@@ -38,7 +39,8 @@ func set_area(rect: Rect2) -> void:
 	_radius_x = clampf(rect.size.x * 0.4, 50.0, 110.0)
 	_radius_y = clampf(rect.size.y * 0.06, 10.0, 22.0)
 	# Centered just above the top of the head, so the lowest point is around the neck
-	position = Vector2(rect.get_center().x, rect.position.y + _radius_y * 0.5)
+	# (raised by half a bulb so the bigger bulbs' bases stay above it)
+	position = Vector2(rect.get_center().x, rect.position.y + _radius_y * 0.5 - bulb_radius * 0.5)
 
 
 func set_count(count: int) -> void:
@@ -71,6 +73,8 @@ func _process(delta: float) -> void:
 
 
 func _draw() -> void:
+	# Undo the creature's scale on the bulbs themselves, so they keep the same size on screen
+	var comp := 1.0 / maxf(absf(get_global_transform().get_scale().y), 0.01)
 	var total := maxi(_count, 1)
 	var bulbs := []
 	for i in _scales.size():
@@ -81,12 +85,12 @@ func _draw() -> void:
 		var pos := Vector2(cos(a) * _radius_x, sin(a) * _radius_y)
 		var hop_t := _hops[i] / hop_duration
 		if hop_t < 1.0:
-			pos.y -= sin(hop_t * PI) * hop_height
+			pos.y -= sin(hop_t * PI) * hop_height * comp
 		bulbs.append({"pos": pos, "depth": depth, "scale": _scales[i], "color": COLORS[i % COLORS.size()]})
 	# Back bulbs first, so front ones are drawn over them
 	bulbs.sort_custom(func(x, y): return x.depth < y.depth)
 	for b in bulbs:
-		_draw_bulb(b.pos, b.scale * (1.0 - depth_shrink * (1.0 - b.depth)), b.color, b.depth)
+		_draw_bulb(b.pos, b.scale * comp * (1.0 - depth_shrink * (1.0 - b.depth)), b.color, b.depth)
 
 
 func _draw_bulb(pos: Vector2, s: float, color: Color, depth: float) -> void:

@@ -9,12 +9,14 @@ using MegaCrit.Sts2.Core.Models.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// Whenever you apply Weak to an enemy, apply X Vulnerable to that enemy.
+/// Whenever you apply Weak to an enemy, apply 1 Vulnerable to that enemy. Doesn't stack.
 /// </summary>
 public class AnglerfishForm : SlalTheEndlessPower
 {
     public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Counter;
+    public const int VulnerableAmount = 1;
+
+    public override PowerStackType StackType => PowerStackType.Single;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<WeakPower>(),
@@ -26,6 +28,6 @@ public class AnglerfishForm : SlalTheEndlessPower
         if (power is not WeakPower || amount <= 0 || applier != Owner || power.Owner.Side == Owner.Side || !power.Owner.IsAlive) return;
 
         Flash();
-        await PowerCmd.Apply<VulnerablePower>(choiceContext, power.Owner, Amount, Owner, cardSource);
+        await PowerCmd.Apply<VulnerablePower>(choiceContext, power.Owner, VulnerableAmount, Owner, cardSource);
     }
 }

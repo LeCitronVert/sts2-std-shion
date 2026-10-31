@@ -38,8 +38,9 @@ public static class CreatureFxPatch
 /// Keeps a creature's visual effects in sync with its state:
 /// <list type="bullet">
 /// <item>Berserk sparks (scenes/fx/berserk_sparks.tscn) on any creature that has the Berserk tracker and is Berserk.</item>
-/// <item>Shion's auras (scenes/fx/shion_auras.tscn), stacked in order of application.</item>
-/// <item>Memory bulbs (scenes/fx/memory_bulbs.tscn) above the head, one per stack of Memory, hopping when Memory plays cards.</item>
+/// <item>Shion's auras (scenes/fx/shion_auras.tscn), stacked in order of application. Any player also gets Shion's blue flames
+/// (Spirit Break's) from Burlesque Wind-Up until the Vigor it gave is used up.</item>
+/// <item>Flashback bulbs (scenes/fx/memory_bulbs.tscn) above the head, one per stack of Flashback, hopping when Flashback plays cards.</item>
 /// </list>
 /// </summary>
 public class CreatureFxController
@@ -48,7 +49,7 @@ public class CreatureFxController
     private static readonly string AurasScenePath = Path.Join(MainFile.ResPath, "scenes", "fx", "shion_auras.tscn");
     private static readonly string MemoryBulbsScenePath = Path.Join(MainFile.ResPath, "scenes", "fx", "memory_bulbs.tscn");
 
-    /// <summary>Light layer only Shion's body is on, so her aura lights only light her. Matches shion_auras.gd.</summary>
+    /// <summary>Light layer only players' bodies are on, so aura lights only light them. Matches shion_auras.gd.</summary>
     public const int AuraLightLayer = 1 << 19;
 
     public const int AuraCritThreshold = 50;
@@ -71,6 +72,15 @@ public class CreatureFxController
     private readonly Node2D? _auras;
     private readonly Node2D? _memoryBulbs;
 
+    /// <summary>Burlesque Wind-Up's aura (drawn with Spirit Break's spritesheet, see shion_auras.gd).</summary>
+    private const string BurlesqueAura = "burlesque_wind_up";
+
+    /// <summary>
+    /// Burlesque Wind-Up's aura stays after the power is removed, until the Vigor gained meanwhile is used up.
+    /// Visual state only.
+    /// </summary>
+    private bool _burlesqueAuraActive;
+
     /// <summary>Active auras, in order of application.</summary>
     private readonly List<string> _activeAuras = [];
 
@@ -84,7 +94,7 @@ public class CreatureFxController
         visuals.AddChild(_sparks);
         _sparks.Call("set_area", bounds.Grow(20f));
 
-        // Only players can get Memory
+        // Only players can get Flashback
         if (_creature.IsPlayer)
         {
             _memoryBulbs = GD.Load<PackedScene>(MemoryBulbsScenePath).Instantiate<Node2D>();
@@ -92,7 +102,8 @@ public class CreatureFxController
             _memoryBulbs.Call("set_area", bounds);
         }
 
-        if (_creature.Player?.Character is Character.ShionTheBruiser)
+        // Shion's auras, and Burlesque Wind-Up's for any player
+        if (_creature.IsPlayer)
         {
             _auras = GD.Load<PackedScene>(AurasScenePath).Instantiate<Node2D>();
             visuals.AddChild(_auras);
@@ -112,14 +123,14 @@ public class CreatureFxController
         var controller = new CreatureFxController(node);
 
         void OnCombatStateChanged(CombatState _) => controller.Refresh();
-        void OnMemoryCardPlayed(Creature creature, int index) => controller.HopMemoryBulb(creature, index);
+        void OnFlashbackCardPlayed(Creature creature, int index) => controller.HopMemoryBulb(creature, index);
 
         CombatManager.Instance.StateTracker.CombatStateChanged += OnCombatStateChanged;
-        SlalMechanicsHelper.MemoryCardPlayed += OnMemoryCardPlayed;
+        SlalMechanicsHelper.FlashbackCardPlayed += OnFlashbackCardPlayed;
         node.TreeExiting += () =>
         {
             CombatManager.Instance.StateTracker.CombatStateChanged -= OnCombatStateChanged;
-            SlalMechanicsHelper.MemoryCardPlayed -= OnMemoryCardPlayed;
+            SlalMechanicsHelper.FlashbackCardPlayed -= OnFlashbackCardPlayed;
         };
         controller.Refresh();
     }
@@ -133,18 +144,28 @@ public class CreatureFxController
 
         if (_memoryBulbs != null && GodotObject.IsInstanceValid(_memoryBulbs))
         {
-            _memoryBulbs.Call("set_count", alive ? SlalMechanicsHelper.GetMemory(_creature) : 0);
+            _memoryBulbs.Call("set_count", alive ? SlalMechanicsHelper.GetFlashback(_creature) : 0);
         }
 
         if (_auras == null || !GodotObject.IsInstanceValid(_auras)) return;
 
+        var isShion = _creature.Player?.Character is Character.ShionTheBruiser;
         foreach (var (name, isActive) in AuraConditions)
         {
-            var active = alive && isActive(_creature);
-            if (active && !_activeAuras.Contains(name)) _activeAuras.Add(name);
-            else if (!active) _activeAuras.Remove(name);
+            SetAuraActive(name, alive && isShion && isActive(_creature));
         }
+
+        if (_creature.HasPower<BurlesqueWindUp>()) _burlesqueAuraActive = true;
+        else if (_creature.GetPowerAmount<VigorPower>() <= 0) _burlesqueAuraActive = false;
+        SetAuraActive(BurlesqueAura, alive && _burlesqueAuraActive);
+
         _auras.Call("set_auras", _activeAuras.ToArray());
+    }
+
+    private void SetAuraActive(string name, bool active)
+    {
+        if (active && !_activeAuras.Contains(name)) _activeAuras.Add(name);
+        else if (!active) _activeAuras.Remove(name);
     }
 
     private void HopMemoryBulb(Creature creature, int index)

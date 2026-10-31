@@ -8,6 +8,9 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+/// <summary>
+/// Gain 1 Weak. Gain 1 (2) energy.
+/// </summary>
 public class SlalBurstOfLaughter() : SlalTheEndlessCard(0,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
@@ -20,7 +23,6 @@ public class SlalBurstOfLaughter() : SlalTheEndlessCard(0,
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<WeakPower>(),
         HoverTipFactory.ForEnergy(this),
-        HoverTipFactory.FromPower<Confusion>(),
     ];
 
     protected override async Task OnPlay(
@@ -30,7 +32,6 @@ public class SlalBurstOfLaughter() : SlalTheEndlessCard(0,
         var card = this;
         await PowerCmd.Apply<WeakPower>(choiceContext, card.Owner.Creature, card.DynamicVars.Weak.BaseValue, card.Owner.Creature, card);
         await PlayerCmd.GainEnergy(card.DynamicVars.Energy.BaseValue, card.Owner);
-        await PowerCmd.Apply<BurstOfLaughter>(choiceContext, card.Owner.Creature, 1, card.Owner.Creature, card);
     }
 
     protected override void OnUpgrade()

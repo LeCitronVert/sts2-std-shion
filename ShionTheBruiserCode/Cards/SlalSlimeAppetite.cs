@@ -3,15 +3,16 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Whenever you play a Novel card, draw 1 card.
+/// At the start of your turn, add 1 Slimed into your Hand. Costs 1 (0).
 /// </summary>
-public class SlalSlimeAppetite() : SlalTheEndlessCard(2,
+public class SlalSlimeAppetite() : SlalTheEndlessCard(1,
     CardType.Power, CardRarity.Uncommon,
     TargetType.Self)
 {
@@ -20,7 +21,7 @@ public class SlalSlimeAppetite() : SlalTheEndlessCard(2,
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromKeyword(SlalCardKeywords.Novel),
+        HoverTipFactory.FromCard<Slimed>(),
     ];
 
     protected override async Task OnPlay(

@@ -736,3 +736,79 @@ Content I skipped (incomplete in the spec):
 - [ ] A Galvanised Crunch locks Defensive cards for the turn, like other Galvanised triggers.
 - [ ] Critical Draw 10% still works.
 - [ ] **Shield Breaker**: the Vulnerable-on-Attack effect now triggers at **Galvanised 9** (was 15). Card and power text say 9.
+
+## 7. Slal: "Change Pending" pass
+
+- [ ] Re-export the `.pck` with MegaDot (renamed images: `powers/flashback.png`, `card_portraits/slal_cartoonish_mimicry.png` + `big/` versions; edited `memory_bulbs.gd` and `shion_auras.gd`; new `Powers/SlalFirstPlaysEachTurnPower.cs` needs its `.uid`), then build and launch.
+- [ ] Drop a bowling sound at `ShionTheBruiser/audio/sfx/confusion_bowling.mp3` (nothing plays until it exists).
+
+### 7.1 Memory / Flashback rework
+
+- [ ] **Flashback** (was Short-Term Memory, renamed class/ID/icon): at the end of your turn, plays X random non-Rare cards without Exhaust (still skips Novel/Unplayable) from the Discard Pile, then is removed.
+- [ ] **Memory**: at the start of your turn, gain X Flashback. Gaining Memory also gives that much Flashback right away (not written on cards).
+- [ ] Cards played by Flashback apply X more Confusion, X = your **Memory** (no bonus with Flashback alone).
+- [ ] Random reaching 10 still gives 1 Memory (so +1 Flashback right away too).
+- [ ] **Novel** tooltip: "Can't be played by Flashback". **Continuity Thread** picks the cards Flashback plays (still Exhausts them).
+- [ ] Bulbs now count **Flashback**, are twice as big, and keep their size when Slal shrinks with HP (only the orbit follows the body). They vanish at end of turn and come back with Memory's Flashback.
+
+### 7.2 Cards
+
+- [ ] **Anglerfish Form**: no longer stacks. A second copy only gives its Slippery; Weak → always 1 Vulnerable.
+- [ ] **Anvil Gag**: Gain 1 Memory, deal 14 (20) damage, Weak = Random, +4 (+5) damage per Flashback gain this combat. Retain upgrade removed. The damage shown in Hand includes the Flashback from its own Memory.
+- [ ] **Apple Juice Stocks**: first Slimed from Hand each turn grants 1 energy; no extra play anymore.
+- [ ] **Bell Memory**: 6 damage twice, gain 1 Flashback.
+- [ ] **Bold Announcement**: applies 6 Confusion **before** the 1 damage to ALL (can execute), gain 1 Flashback per enemy.
+- [ ] **Break Continuity**: now a 2-cost **Power** (Ancient). Whenever you play a Novel card: Free Shapeshift once, gain 1 Frail and 1 Disintegration (base game power). Upgrade: Innate. Old effect gone.
+- [ ] **Bumper Form**: the first time you play a Power each turn, a random card in Hand that costs energy costs 1 less this turn. Upgrade still -1 cost.
+- [ ] **Burst of Laughter**: Gain 1 Weak, gain 1 (2) energy. No more double-Confusion effect.
+- [ ] **Cartoonish Mimicry** (renamed class/ID/portrait): Exhaust a card in Hand. Costs 0 / X / Unplayable → 1 Slippery, else Mimic its cost (skippable). Keeps Exhaust; upgrade still removes it.
+- [ ] **Cartoony Dodge**: Always Novel, targets an enemy: 6 Confusion, 4 Block per Flashback, lose all Flashback. Upgrade -1 cost still flagged `//todo : upgrade not specified`.
+- [ ] **Chaotic Clone**: play a random Slimed from Hand (if any), then choose to Mimic 2 or Shapeshift (always). No Block anymore.
+- [ ] **Continuity Thread**: text only (Flashback).
+- [ ] **Dangerous Ideas**: 1 cost. Whenever you create a card, a random enemy gains 3 (5) Confusion (no more Innate).
+- [ ] **Distraction**: Shapeshift. Exhaust. (Upgraded token when upgraded.)
+- [ ] **Emergency Shapeshift**: Exhaust up to 3 cards in Hand, Free Shapeshift for each. Keeps Exhaust and the upgraded-tokens upgrade.
+- [ ] **Favourite Bucket**: 2 cost. 10 (14) Block + 3 (4) per Slimed in Hand, then plays those Slimed, then Ignore Vulnerable until your next turn. No Slimy, no Weak, no Exhaust.
+- [ ] **Funny Gag**: +4 damage per Flashback gain.
+- [ ] **Hat Tip**: whenever you play a card with Shapeshift or Mimic, Free Shapeshift once.
+- [ ] **Kickstart Event**: the first 3 (5) Novel cards each turn grant 1 energy. Stays 2 cost when upgraded.
+- [ ] **Logic Shift**: 1 cost, upgrade → 0 cost (keeps Exhaust now).
+- [ ] **Plot Twist**: 3 Confusion, choose to Mimic 2 or Shapeshift. Keeps Exhaust.
+- [ ] **Proof Reading**: 0 cost. Gain 1 energy and draw 1 per Flashback, lose all Flashback. Exhaust (upgrade: no Exhaust).
+- [ ] **Slide Form**: 2 cost (1 upgraded). The first 2 Novel cards each turn draw 1 card.
+- [ ] **Slime Appetite**: 1 cost (0 upgraded). Start of turn: add 1 Slimed to Hand.
+- [ ] **Slime Form**: 1 cost (0 upgraded). Whenever you create a Status card, gain 4 Block.
+- [ ] **Slime Rain**: damage shown in Hand includes the 3 Slimed its Very Slimy makes before the hit.
+- [ ] **Sparrow Form**: text now says "free to play this combat" (behaviour was already like that).
+- [ ] **Squeaky Squirrel Form**: the first time you play a Power each turn, draw 1 card. Upgrade → 0 cost. Still says "Pouic!".
+- [ ] **Surprise Shapeshift**: 5 Confusion, 5 damage, Shapeshift (into Hand now, not Draw Pile). Upgrade keeps +1/+1 and Shapeshifts twice.
+- [ ] **Wait a Second**: Gain 1 Weak and X (X+1) Flashback. Retain Hand. Exhaust.
+
+### 7.3 Keywords, relic, text
+
+- [ ] New hover tips: **Shapeshift**, **Free Shapeshift**, **Mimic X**, **Goofball Token Powers** (lists the 6 forms). Shapeshift gives different tokens when it gives several.
+- [ ] **Champagne**: needs a Status, a Common, an Uncommon and a Rare each turn for its 1 Slippery.
+- [ ] **Aroma of Chaos** line: cyan (`[aqua]`) and wavy.
+
+### 7.4 Visuals and sounds
+
+- [ ] **Confusion execute** plays the bowling sound (once the file is there).
+- [ ] **Slime Hammer**: Bludgeon's bonk + heavy attack sound.
+- [ ] **Dice Shotgun**: Dagger Spray's flurry, impacts and sound.
+- [ ] **Slime Strikes**: Gunk Up's goop + its blunt sound. **Slime Hug**: Gunk Up's goop on the target (no sound).
+- [ ] **Burlesque Wind-Up**: Shion's blue flames (Spirit Break's) on whoever plays it, until the turn ends with no Vigor or until the Vigor it gave is used up.
+
+### 7.5 Decisions I made
+
+- [ ] Hat Tip only triggers on cards tagged Shapeshift/Mimic: Distraction, Surprise Shapeshift, Plot Twist, Chaotic Clone, Cartoonish Mimicry and Emergency Shapeshift (not Break Continuity or Hat Tip itself).
+- [ ] "Choose to Mimic 2 or Shapeshift" stays a single screen: 2 other-character cards + 1 Goofball Token Power (skippable).
+- [ ] Favourite Bucket's "This turn, ignore your Vulnerable" uses the existing Ignore Vulnerable buff (lasts until your next turn).
+- [ ] "First X per turn" powers (Bumper, Squeaky Squirrel, Kickstart, Slide, Apple Juice) count each card once, even if it's played several times (Echo Form…). Their icon shows X, not a countdown.
+- [ ] Bold Announcement's Flashback counts as one Flashback gain for Funny Gag / Anvil Gag, whatever the number of enemies.
+- [ ] Old **Burst of Laughter**, **Blank Mind** (Memory Blocked) and **Slal On Power Played** base code is kept but nothing uses it anymore.
+
+### 7.6 Left out
+
+- [ ] **Sunken Treasure** "écrit en wavey": the mod has no Slal text for that event. Tell me which line.
+- [ ] **Elaborate Flourish** (suggested illustration): no image was in the spec.
+- [ ] The **Mimickery** epoch keeps its name and ID (renaming the ID would reset its unlock in saves). Rename only its title if wanted.

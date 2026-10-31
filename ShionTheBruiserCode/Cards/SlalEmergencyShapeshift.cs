@@ -3,16 +3,15 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
-using ShionTheBruiser.ShionTheBruiserCode.Helper;
-
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Choose up to 3 cards in your Hand and Transform them into random Goofball Token Powers (all different).
-/// They are free to play this turn. Exhaust.
+/// Always Novel. Exhaust up to 3 cards in your Hand. Free Shapeshift for each card Exhausted this way
+/// (upgraded: the Goofball Token Powers are upgraded). Exhaust.
 /// </summary>
 public class SlalEmergencyShapeshift() : SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Uncommon,
@@ -20,12 +19,15 @@ public class SlalEmergencyShapeshift() : SlalTheEndlessCard(1,
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [SlalCardKeywords.AlwaysNovel, CardKeyword.Exhaust];
 
+    protected override HashSet<CardTag> CanonicalTags => [SlalCardTags.Shapeshift];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CardsVar(3),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.Static(StaticHoverTip.Transform),
+        HoverTipFactory.FromKeyword(SlalCardKeywords.FreeShapeshift),
+        HoverTipFactory.FromKeyword(SlalCardKeywords.GoofballTokenPower),
     ];
 
     protected override async Task OnPlay(
@@ -36,22 +38,17 @@ public class SlalEmergencyShapeshift() : SlalTheEndlessCard(1,
         var targets = (await CardSelectCmd.FromHand(
             choiceContext,
             card.Owner,
-            new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 0, card.DynamicVars.Cards.IntValue),
-            c => c.IsTransformable,
+            new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, 0, card.DynamicVars.Cards.IntValue),
+            null,
             card
         )).ToList();
         if (targets.Count == 0) return;
 
-        var powers = SlalMechanicsHelper.CreateDifferentGoofballTokenPowers(card.Owner, targets.Count, IsUpgraded);
-        for (var i = 0; i < targets.Count; i++)
+        foreach (var target in targets)
         {
-            var power = powers[i];
-            if (!power.EnergyCost.CostsX)
-            {
-                power.SetToFreeThisTurn();
-            }
-            await CardCmd.Transform(targets[i], power);
+            await CardCmd.Exhaust(choiceContext, target);
         }
+        await SlalMechanicsHelper.Shapeshift(card.Owner, targets.Count, IsUpgraded, free: true);
     }
 
     protected override void OnUpgrade()

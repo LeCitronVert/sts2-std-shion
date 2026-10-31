@@ -10,6 +10,10 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+/// <summary>
+/// Gain 1 Slippery. Whenever you apply Weak to an enemy, also apply 1 Vulnerable to it.
+/// Anglerfish Form doesn't stack: playing it again only gives the Slippery.
+/// </summary>
 public class SlalAnglerfishForm() : SlalTheEndlessCard(2,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)

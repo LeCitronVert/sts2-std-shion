@@ -1,28 +1,38 @@
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Cards;
+using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// Whenever you play a Novel card, draw X cards.
-/// Novel is removed when the card is played, so it is checked before the play resolves.
+/// At the start of your turn, add X Slimed into your Hand.
 /// </summary>
-public class SlimeAppetite : SlalOnPowerPlayedPower
+public class SlimeAppetite : SlalTheEndlessPower
 {
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromKeyword(SlalCardKeywords.Novel),
-    ];
+    public override PowerType Type => PowerType.Buff;
+    public override PowerStackType StackType => PowerStackType.Counter;
 
-    protected override bool ShouldTrigger(CardModel card) => SlalMechanicsHelper.IsNovel(card);
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Slimed>()];
 
-    protected override async Task OnPowerPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay, int amount)
+    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
-        if (Owner.Player is null) return;
-        await CardPileCmd.Draw(choiceContext, amount, Owner.Player);
+        if (player != Owner.Player || CombatState is null) return;
+
+        Flash();
+        for (var i = 0; i < Amount; i++)
+        {
+            await CardPileCmd.AddGeneratedCardToCombat(CombatState.CreateCard<Slimed>(player), PileType.Hand, player);
+        }
     }
 }

@@ -16,7 +16,7 @@ public class CreativeSpark : SlalTheEndlessRelic
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(SlalCardKeywords.Novel),
-        HoverTipFactory.FromPower<Memory>()
+        HoverTipFactory.FromPower<Flashback>()
     ];
     
     public override async Task BeforeCombatStart()

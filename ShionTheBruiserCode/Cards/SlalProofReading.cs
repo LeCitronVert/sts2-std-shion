@@ -10,26 +10,22 @@ using ShionTheBruiser.ShionTheBruiserCode.Enums;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain 1 Memory this turn. Gain 1 energy and draw 1 card per Memory you have (permanent and this turn).
-/// Memory doesn't play cards this turn. Exhaust (upgrade: no Exhaust).
+/// Gain 1 energy and draw 1 card per Flashback you have. Lose all Flashback. Exhaust (upgrade: no Exhaust).
 /// </summary>
-public class SlalProofReading() : SlalTheEndlessCard(1,
+public class SlalProofReading() : SlalTheEndlessCard(0,
     CardType.Skill, CardRarity.Common,
     TargetType.Self)
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [SlalCardKeywords.AlwaysNovel, CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<MemoryThisTurn>(1),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
-        // Counts the Memory gained first
-        new CalculatedVar("MemoryAmount").WithMultiplier((card, _) =>
-            SlalMechanicsHelper.GetMemory(card.Owner.Creature) + card.DynamicVars["MemoryThisTurn"].IntValue),
+        new CalculatedVar("FlashbackAmount").WithMultiplier((card, _) => SlalMechanicsHelper.GetFlashback(card.Owner.Creature)),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<Memory>(),
+        HoverTipFactory.FromPower<Flashback>(),
         HoverTipFactory.ForEnergy(this),
     ];
 
@@ -38,14 +34,12 @@ public class SlalProofReading() : SlalTheEndlessCard(1,
         CardPlay play)
     {
         var card = this;
-        await SlalMechanicsHelper.GainMemoryThisTurn(choiceContext, card.Owner.Creature, card.DynamicVars["MemoryThisTurn"].BaseValue, card);
-        await PowerCmd.Apply<MemoryBlocked>(choiceContext, card.Owner.Creature, 1, card.Owner.Creature, card);
+        var flashback = SlalMechanicsHelper.GetFlashback(card.Owner.Creature);
+        if (flashback <= 0) return;
 
-        var memory = SlalMechanicsHelper.GetMemory(card.Owner.Creature);
-        if (memory <= 0) return;
-
-        await PlayerCmd.GainEnergy(memory, card.Owner);
-        await CardPileCmd.Draw(choiceContext, memory, card.Owner);
+        await PlayerCmd.GainEnergy(flashback, card.Owner);
+        await CardPileCmd.Draw(choiceContext, flashback, card.Owner);
+        await SlalMechanicsHelper.LoseAllFlashback(card.Owner.Creature);
     }
 
     protected override void OnUpgrade()

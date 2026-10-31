@@ -91,7 +91,7 @@
   "SHIONTHEBRUISER-EVIL_WAFFLE.description": "Whenever your [gold]Random[/gold] reaches [blue]10[/blue], gain {Energy:energyIcons()}.",
   "SHIONTHEBRUISER-EVIL_WAFFLE.flavor": "",
   "SHIONTHEBRUISER-CHAMPAGNE.title": "Champagne",
-  "SHIONTHEBRUISER-CHAMPAGNE.description": "Once per turn, after you've played a [gold]Common[/gold], an [gold]Uncommon[/gold] and a [gold]Rare[/gold] card, gain {SlipperyPower:diff()} [gold]Slippery[/gold].",
+  "SHIONTHEBRUISER-CHAMPAGNE.description": "Once per turn, after you've played a Status, a [gold]Common[/gold], an [gold]Uncommon[/gold] and a [gold]Rare[/gold] card, gain {SlipperyPower:diff()} [gold]Slippery[/gold].",
   "SHIONTHEBRUISER-CHAMPAGNE.flavor": "",
   "SHIONTHEBRUISER-APPLE_SAUCE.title": "Apple Sauce",
   "SHIONTHEBRUISER-APPLE_SAUCE.description": "At the start of combat, add {Cards:diff()} [gold]Slimed[/gold] to your [gold]Draw Pile[/gold].\nAt the start of your turn, gain {FreeStatus:diff()} [gold]Free Status[/gold].",

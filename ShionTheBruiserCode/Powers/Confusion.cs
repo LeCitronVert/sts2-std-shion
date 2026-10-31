@@ -24,6 +24,9 @@ public class Confusion(): SlalTheEndlessPower
   public override PowerStackType StackType => PowerStackType.Counter;
   public override Color AmountLabelColor => PowerModel._normalAmountLabelColor;
 
+  /// <summary>Played when an attack executes it. Drop the file there; nothing plays while it's missing.</summary>
+  private static readonly string ExecuteSfxPath = Path.Join(MainFile.ResPath, "audio", "sfx", "confusion_bowling.mp3");
+
   private int HpLossAmount => Math.Max(0, Math.Min(Amount, Owner.CurrentHp - 1));
 
   private static bool IsAttack(Creature? dealer, ValueProp props) =>
@@ -58,6 +61,8 @@ public class Confusion(): SlalTheEndlessPower
     if (Amount < Owner.CurrentHp) return;
 
     Flash();
+    // Bowling strike (BaseLib plays res:// paths)
+    if (ResourceLoader.Exists(ExecuteSfxPath)) SfxCmd.Play(ExecuteSfxPath);
     // Only reached when the attack didn't kill it by itself
     await ConfusionSpinOff.Kill(Owner);
   }

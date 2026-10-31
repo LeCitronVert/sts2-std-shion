@@ -1,3 +1,7 @@
+using MegaCrit.Sts2.Core.Nodes.Vfx;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Helpers;
+using Godot;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -25,6 +29,9 @@ public class SlalDiceShotgun() : SlalTheEndlessCard(1,
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Powers.Random>()];
 
+    private const string DaggerSpraySfx = "event:/sfx/characters/silent/silent_dagger_spray";
+    private static readonly Color DaggerSprayColor = new("#b1ccca");
+
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
@@ -32,10 +39,21 @@ public class SlalDiceShotgun() : SlalTheEndlessCard(1,
         var card = this;
         if (card.CombatState is null) return;
 
+        // Dagger Spray's sound and visuals
+        SfxCmd.Play(DaggerSpraySfx);
         await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
             .FromCard(card)
             .TargetingAllOpponents(card.CombatState)
-            .WithHitFx("vfx/vfx_attack_blunt")
+            .WithAttackerFx(() => NDaggerSprayFlurryVfx.Create(card.Owner.Creature, DaggerSprayColor, goingRight: true))
+            .BeforeDamage(() =>
+            {
+                foreach (var enemy in card.CombatState.HittableEnemies)
+                {
+                    var impact = NDaggerSprayImpactVfx.Create(enemy, DaggerSprayColor, goingRight: true);
+                    if (impact != null) NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(impact);
+                }
+                return Task.CompletedTask;
+            })
             .Execute(choiceContext);
 
         var different = SlalMechanicsHelper.CountDifferentCards(PileType.Hand.GetPile(card.Owner).Cards);

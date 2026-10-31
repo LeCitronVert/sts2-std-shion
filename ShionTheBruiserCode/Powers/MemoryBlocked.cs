@@ -8,7 +8,8 @@ using MegaCrit.Sts2.Core.HoverTips;
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// Memory doesn't play cards this turn (Proof Reading, Cartoony Dodge). Removed at the end of the turn.
+/// Flashback doesn't play cards this turn. Removed at the end of the turn.
+/// No card applies it anymore (Proof Reading and Cartoony Dodge now remove Flashback instead).
 /// </summary>
 public class MemoryBlocked : SlalTheEndlessPower
 {
@@ -16,7 +17,7 @@ public class MemoryBlocked : SlalTheEndlessPower
     public override PowerStackType StackType => PowerStackType.Single;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<Memory>(),
+        HoverTipFactory.FromPower<Flashback>(),
     ];
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)

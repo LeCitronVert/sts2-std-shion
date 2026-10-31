@@ -9,7 +9,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain 1 Memory. You choose the cards Memory plays from your Discard Pile, but they are Exhausted. Ethereal (upgrade: not Ethereal).
+/// Gain 1 Memory. You choose the cards Flashback plays from your Discard Pile, but they are Exhausted. Ethereal (upgrade: not Ethereal).
 /// </summary>
 public class SlalContinuityThread() : SlalTheEndlessCard(3,
     CardType.Power, CardRarity.Rare,
@@ -21,7 +21,7 @@ public class SlalContinuityThread() : SlalTheEndlessCard(3,
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<Memory>(1)];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Memory>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Memory>(), HoverTipFactory.FromPower<Flashback>()];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,

@@ -11,23 +11,24 @@ using ShionTheBruiser.ShionTheBruiserCode.Enums;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Exhaust a card in your Hand. Gain as much Weak and Random as its energy cost (0 for X-cost),
-/// and 1 Slippery if it is a Status or unplayable.
+/// Always Novel. Exhaust a card in your Hand. If it costs no energy (X-cost and Unplayable included), gain 1 Slippery.
+/// Otherwise, Mimic equal to its energy cost. Exhaust (upgrade: no Exhaust).
 /// </summary>
-public class SlalCartoonishMimickery() : SlalTheEndlessCard(0,
+public class SlalCartoonishMimicry() : SlalTheEndlessCard(0,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [SlalCardKeywords.AlwaysNovel, CardKeyword.Exhaust];
+
+    protected override HashSet<CardTag> CanonicalTags => [SlalCardTags.Mimic];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<SlipperyPower>(1),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<WeakPower>(),
-        HoverTipFactory.FromPower<Powers.Random>(),
         HoverTipFactory.FromPower<SlipperyPower>(),
+        HoverTipFactory.FromKeyword(SlalCardKeywords.Mimic),
     ];
 
     protected override async Task OnPlay(
@@ -44,20 +45,18 @@ public class SlalCartoonishMimickery() : SlalTheEndlessCard(0,
         )).FirstOrDefault();
         if (exhausted == null) return;
 
-        // Read everything before the card leaves the Hand
-        var cost = SlalMechanicsHelper.GetEnergyCost(exhausted);
-        var isStatusOrUnplayable = exhausted.Type == CardType.Status || exhausted.Keywords.Contains(CardKeyword.Unplayable);
+        // Read before the card leaves the Hand
+        var cost = exhausted.Keywords.Contains(CardKeyword.Unplayable) ? 0 : SlalMechanicsHelper.GetEnergyCost(exhausted);
 
         await CardCmd.Exhaust(choiceContext, exhausted);
 
-        if (cost > 0)
-        {
-            await PowerCmd.Apply<WeakPower>(choiceContext, card.Owner.Creature, cost, card.Owner.Creature, card);
-            await SlalMechanicsHelper.GainRandom(choiceContext, card.Owner.Creature, cost, card);
-        }
-        if (isStatusOrUnplayable)
+        if (cost <= 0)
         {
             await PowerCmd.Apply<SlipperyPower>(choiceContext, card.Owner.Creature, card.DynamicVars["SlipperyPower"].BaseValue, card.Owner.Creature, card);
+        }
+        else
+        {
+            await SlalMechanicsHelper.Mimic(choiceContext, card.Owner, cost);
         }
     }
 

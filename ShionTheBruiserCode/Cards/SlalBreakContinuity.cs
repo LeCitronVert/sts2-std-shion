@@ -3,31 +3,30 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using MegaCrit.Sts2.Core.Models.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain 1 Memory. This combat, Memory doesn't play cards.
-/// Instead, Memory gives 1 energy and draws 1 card for the first X cards played each turn. Exhaust (upgrade: no Exhaust).
+/// Whenever you play a Novel card, Free Shapeshift (once), gain 1 Frail and 1 Disintegration. (Innate)
 /// </summary>
-//todo : type not specified
 public class SlalBreakContinuity() : SlalTheEndlessCard(2,
-    CardType.Skill, CardRarity.Ancient,
+    CardType.Power, CardRarity.Ancient,
     TargetType.Self)
 {
     public override bool CanBeGeneratedInCombat => false;
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<Memory>(),
-        HoverTipFactory.ForEnergy(this),
+        HoverTipFactory.FromKeyword(SlalCardKeywords.Novel),
+        HoverTipFactory.FromKeyword(SlalCardKeywords.FreeShapeshift),
+        HoverTipFactory.FromKeyword(SlalCardKeywords.GoofballTokenPower),
+        HoverTipFactory.FromPower<FrailPower>(),
+        HoverTipFactory.FromPower<DisintegrationPower>(),
     ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<Memory>(1),
         new PowerVar<BreakContinuity>(1),
     ];
 
@@ -36,12 +35,11 @@ public class SlalBreakContinuity() : SlalTheEndlessCard(2,
         CardPlay play)
     {
         var card = this;
-        await SlalMechanicsHelper.GainMemory(choiceContext, card.Owner.Creature, card.DynamicVars["Memory"].BaseValue, card);
         await PowerCmd.Apply<BreakContinuity>(choiceContext, card.Owner.Creature, card.DynamicVars["BreakContinuity"].BaseValue, card.Owner.Creature, card);
     }
 
     protected override void OnUpgrade()
     {
-        RemoveKeyword(CardKeyword.Exhaust);
+        AddKeyword(CardKeyword.Innate);
     }
 }

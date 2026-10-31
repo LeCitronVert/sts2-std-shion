@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -28,7 +29,9 @@ public class SlalSlimeStrikes(): SlalSlimyCard(1,
             .WithHitCount(card.DynamicVars.Repeat.IntValue)
             .FromCard(card)
             .Targeting(play.Target)
-            .WithHitFx("vfx/vfx_attack_slash")
+            // Gunk Up's goop
+            .WithHitFx(null, null, "blunt_attack.mp3")
+            .WithHitVfxNode(NGoopyImpactVfx.Create)
             .Execute(choiceContext)
         ;
     }

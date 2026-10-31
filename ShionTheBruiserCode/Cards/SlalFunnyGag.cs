@@ -12,8 +12,8 @@ using ShionTheBruiser.ShionTheBruiserCode.Enums;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Deal 8 damage. Apply 2 Weak. Increase this card's damage by 4 each time you gain Memory this combat
-/// (Short-Term Memory counts too).
+/// Deal 8 damage. Apply 2 Weak. Increase this card's damage by 4 each time you gain Flashback this combat
+/// (Memory's start of turn gains count too).
 /// </summary>
 public class SlalFunnyGag() : SlalTheEndlessCard(2,
     CardType.Attack, CardRarity.Basic,
@@ -24,13 +24,13 @@ public class SlalFunnyGag() : SlalTheEndlessCard(2,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CalculationBaseVar(8),
         new ExtraDamageVar(4),
-        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => SlalMechanicsHelper.GetTimesMemoryGained(card.Owner.Creature)),
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => SlalMechanicsHelper.GetTimesFlashbackGained(card.Owner.Creature)),
         new PowerVar<WeakPower>(2),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<WeakPower>(),
-        HoverTipFactory.FromPower<Memory>(),
+        HoverTipFactory.FromPower<Flashback>(),
     ];
 
     protected override async Task OnPlay(

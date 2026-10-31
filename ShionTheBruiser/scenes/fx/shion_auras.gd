@@ -1,6 +1,7 @@
 extends Node2D
 
 ## Stackable auras displayed behind Shion, each casting a light of its colour on her.
+## Other players only get Burlesque Wind-Up's aura (Spirit Break's blue flames).
 ## Driven from C# (CreatureFxController.cs) through set_auras().
 ## This node is placed at Shion's feet, horizontally centered on her.
 ## Auras are ordered by application: the first one is in front and the smallest,
@@ -21,6 +22,12 @@ const AURA_COLORS := {
 	"fell_dragon": Color8(173, 10, 239),
 	"spirit_break": Color8(16, 152, 241),
 	"spirit_burst": Color8(253, 82, 8),
+	"burlesque_wind_up": Color8(16, 152, 241),
+}
+
+## Auras that reuse another aura's spritesheet
+const AURA_SHEETS := {
+	"burlesque_wind_up": "spirit_break",
 }
 
 ## Light layer used only by Shion's body, so the aura lights don't light enemies or the background.
@@ -139,7 +146,7 @@ func _layout() -> void:
 func _get_frames(aura_name: String) -> SpriteFrames:
 	if _frames_cache.has(aura_name):
 		return _frames_cache[aura_name]
-	var sheet: Texture2D = load(AURA_PATH % aura_name)
+	var sheet: Texture2D = load(AURA_PATH % AURA_SHEETS.get(aura_name, aura_name))
 	var frames := SpriteFrames.new()
 	frames.set_animation_speed(&"default", fps)
 	frames.set_animation_loop(&"default", true)

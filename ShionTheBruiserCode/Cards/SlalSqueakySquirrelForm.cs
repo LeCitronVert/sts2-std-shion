@@ -42,6 +42,6 @@ public class SlalSqueakySquirrelForm() : SlalTheEndlessCard(1,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["SqueakySquirrelForm"].UpgradeValueBy(1);
+        EnergyCost.UpgradeBy(-1);
     }
 }

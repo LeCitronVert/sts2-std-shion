@@ -10,7 +10,10 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class SlalDangerousIdeas() : SlalTheEndlessCard(2,
+/// <summary>
+/// Whenever you create a card, a random enemy gains 3 (5) Confusion.
+/// </summary>
+public class SlalDangerousIdeas() : SlalTheEndlessCard(1,
     CardType.Power, CardRarity.Uncommon,
     TargetType.Self)
 {
@@ -19,7 +22,6 @@ public class SlalDangerousIdeas() : SlalTheEndlessCard(2,
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<Powers.Random>(),
         HoverTipFactory.FromPower<Confusion>(),
     ];
 
@@ -39,6 +41,6 @@ public class SlalDangerousIdeas() : SlalTheEndlessCard(2,
 
     protected override void OnUpgrade()
     {
-        AddKeyword(CardKeyword.Innate);
+        DynamicVars["DangerousIdeas"].UpgradeValueBy(2);
     }
 }

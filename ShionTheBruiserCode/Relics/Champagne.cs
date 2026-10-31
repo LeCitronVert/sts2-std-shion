@@ -12,7 +12,7 @@ using MegaCrit.Sts2.Core.Rooms;
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 /// <summary>
-/// Once per turn, after you've played a Common, an Uncommon and a Rare card, gain 1 Slippery (like Rainbow Ring).
+/// Once per turn, after you've played a Status, a Common, an Uncommon and a Rare card, gain 1 Slippery (like Rainbow Ring).
 /// </summary>
 public class Champagne : SlalTheEndlessRelic
 {
@@ -27,6 +27,7 @@ public class Champagne : SlalTheEndlessRelic
         HoverTipFactory.FromPower<SlipperyPower>(),
     ];
 
+    private bool _statusPlayed;
     private bool _commonPlayed;
     private bool _uncommonPlayed;
     private bool _rarePlayed;
@@ -46,6 +47,7 @@ public class Champagne : SlalTheEndlessRelic
     private void Reset()
     {
         AssertMutable();
+        _statusPlayed = false;
         _commonPlayed = false;
         _uncommonPlayed = false;
         _rarePlayed = false;
@@ -63,10 +65,11 @@ public class Champagne : SlalTheEndlessRelic
         if (cardPlay.Card.Owner != Owner || !CombatManager.Instance.IsInProgress || ActivatedThisTurn) return;
 
         AssertMutable();
+        _statusPlayed |= cardPlay.Card.Type == CardType.Status;
         _commonPlayed |= cardPlay.Card.Rarity == CardRarity.Common;
         _uncommonPlayed |= cardPlay.Card.Rarity == CardRarity.Uncommon;
         _rarePlayed |= cardPlay.Card.Rarity == CardRarity.Rare;
-        if (!_commonPlayed || !_uncommonPlayed || !_rarePlayed) return;
+        if (!_statusPlayed || !_commonPlayed || !_uncommonPlayed || !_rarePlayed) return;
 
         Flash();
         ActivatedThisTurn = true;

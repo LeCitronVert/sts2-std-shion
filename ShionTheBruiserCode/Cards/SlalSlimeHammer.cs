@@ -33,7 +33,9 @@ public class SlalSlimeHammer() : SlalSlimyCard(2,
         await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
             .FromCard(card)
             .Targeting(play.Target)
-            .WithHitFx("vfx/vfx_attack_blunt", tmpSfx: "heavy_attack.mp3")
+            // Bludgeon's bonk
+            .WithHitFx("vfx/vfx_heavy_blunt", null, "heavy_attack.mp3")
+            .WithHitVfxSpawnedAtBase()
             .Execute(choiceContext);
     }
 

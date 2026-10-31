@@ -10,6 +10,9 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+/// <summary>
+/// The first Slimed you play from your Hand each turn grants 1 energy (it is no longer played an additional time).
+/// </summary>
 public class SlalAppleJuiceStocks() : SlalTheEndlessCard(2,
     CardType.Power, CardRarity.Uncommon,
     TargetType.Self)

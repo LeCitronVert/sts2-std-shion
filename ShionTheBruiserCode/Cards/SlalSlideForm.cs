@@ -8,17 +8,20 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class SlalSlideForm() : SlalTheEndlessCard(1,
+/// <summary>
+/// The first 2 Novel cards you play each turn draw 1 card. Costs 2 (1).
+/// </summary>
+public class SlalSlideForm() : SlalTheEndlessCard(2,
     CardType.Power, CardRarity.Uncommon,
     TargetType.Self)
 {
     protected override HashSet<CardTag> CanonicalTags => [SlalCardTags.Form];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<SlideForm>(3),
+        new PowerVar<SlideForm>(2),
     ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Confusion>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(SlalCardKeywords.Novel)];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -36,6 +39,6 @@ public class SlalSlideForm() : SlalTheEndlessCard(1,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["SlideForm"].UpgradeValueBy(2);
+        EnergyCost.UpgradeBy(-1);
     }
 }
