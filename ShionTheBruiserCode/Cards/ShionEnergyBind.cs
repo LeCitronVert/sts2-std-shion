@@ -10,13 +10,13 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Turtle Hermit Shell starter. Apply X Weak and Vulnerable. If X is 3 or more, apply X Debilitate.
+/// Turtle Hermit Shell starter. Apply X Weak and Vulnerable. If X is 2 or more, apply X Debilitate.
 /// </summary>
 public class ShionEnergyBind() : ShionTheBruiserCard(0,
     CardType.Skill, CardRarity.Basic,
     TargetType.AnyEnemy)
 {
-    public const int DebilitateThreshold = 3;
+    public const int DebilitateThreshold = 2;
 
     protected override bool HasEnergyCostX => true;
 
