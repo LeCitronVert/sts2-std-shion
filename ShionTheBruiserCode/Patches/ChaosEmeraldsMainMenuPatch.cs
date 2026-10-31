@@ -28,6 +28,10 @@ public static class ChaosEmeraldsMainMenuPatch
             container.MoveChild(button, compendium.GetIndex() + 1);
             button.SetLocalization("SHIONTHEBRUISER-CHAOS_EMERALDS");
             button.Visible = true;
+            // Duplicate() copies the Compendium's dimmed label/focus state when the game has it disabled
+            // (undiscovered epochs), but not the C# _isEnabled flag, so a bare Enable() would no-op.
+            // Toggle off→on to force OnEnable to restore the label colour and focus mode.
+            button.Disable();
             button.Enable();
 
             var focused = AccessTools.Method(typeof(NMainMenu), "MainMenuButtonFocused");
