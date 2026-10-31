@@ -12,6 +12,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
 /// The first X times you are attacked each turn, gain 1 Thorns (after the hit).
+/// The displayed amount counts down the triggers left this turn.
 /// </summary>
 public class BoxOfNailsForm : SlalTheEndlessPower
 {
@@ -23,6 +24,8 @@ public class BoxOfNailsForm : SlalTheEndlessPower
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
+    public override int DisplayAmount => Math.Max(0, Amount - GetInternalData<Data>().procsThisTurn);
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<ThornsPower>()];
 
     protected override object InitInternalData() => new Data();
@@ -30,6 +33,7 @@ public class BoxOfNailsForm : SlalTheEndlessPower
     public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         GetInternalData<Data>().procsThisTurn = 0;
+        InvokeDisplayAmountChanged();
         return Task.CompletedTask;
     }
 
@@ -40,6 +44,7 @@ public class BoxOfNailsForm : SlalTheEndlessPower
         var data = GetInternalData<Data>();
         if (data.procsThisTurn >= Amount) return;
         data.procsThisTurn++;
+        InvokeDisplayAmountChanged();
 
         Flash();
         await PowerCmd.Apply<ThornsPower>(choiceContext, Owner, 1, Owner, null);

@@ -48,17 +48,15 @@ public class SlalPinballMove() : SlalTheEndlessCard(1,
 
         // This play hasn't finished yet, so it isn't counted
         var hits = CountCardsPlayedThisTurn(card);
-        for (var i = 0; i < hits; i++)
-        {
-            var enemy = card.Owner.RunState.Rng.CombatTargets.NextItem(card.CombatState.HittableEnemies);
-            if (enemy == null) break;
+        if (hits <= 0) return;
 
-            await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
-                .FromCard(card)
-                .Targeting(enemy)
-                .WithHitFx("vfx/vfx_attack_blunt")
-                .Execute(choiceContext);
-        }
+        // Single multi-hit attack (re-rolls the random target per hit) so Vigor etc. apply to every hit
+        await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
+            .FromCard(card)
+            .TargetingRandomOpponents(card.CombatState)
+            .WithHitCount(hits)
+            .WithHitFx("vfx/vfx_attack_blunt")
+            .Execute(choiceContext);
     }
 
     protected override void OnUpgrade()

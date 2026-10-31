@@ -14,6 +14,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 /// <summary>
 /// The first X times you target an enemy each turn (with an Attack or a Skill), that enemy loses 1 Strength this turn.
 /// Random targets count. When several enemies are targeted at once, the left-most ones are affected first.
+/// The displayed amount counts down the triggers left this turn.
 /// </summary>
 public class OctopusForm : SlalTheEndlessPower
 {
@@ -27,13 +28,19 @@ public class OctopusForm : SlalTheEndlessPower
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
+    public override int DisplayAmount => Math.Max(0, Amount - GetInternalData<Data>().procsThisTurn);
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>()];
 
     protected override object InitInternalData() => new Data();
 
     public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
-        if (participants.Contains(Owner)) GetInternalData<Data>().procsThisTurn = 0;
+        if (participants.Contains(Owner))
+        {
+            GetInternalData<Data>().procsThisTurn = 0;
+            InvokeDisplayAmountChanged();
+        }
         return Task.CompletedTask;
     }
 
@@ -86,6 +93,7 @@ public class OctopusForm : SlalTheEndlessPower
         {
             if (data.procsThisTurn >= Amount) break;
             data.procsThisTurn++;
+            InvokeDisplayAmountChanged();
 
             Flash();
             await PowerCmd.Apply<OctopusFormStrengthDown>(choiceContext, enemy, 1, Owner, null);

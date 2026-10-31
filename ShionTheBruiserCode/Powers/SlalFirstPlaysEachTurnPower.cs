@@ -19,11 +19,14 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 /// Base for "The first X [cards] you play each turn ..." powers. X is the power's amount.
 /// The card is checked before it resolves (Novel is removed when played), and the effect happens after it resolves.
 /// Repeated plays of the same card (Echo Form...) count once.
+/// The displayed amount counts down the triggers left this turn.
 /// </summary>
 public abstract class SlalFirstPlaysEachTurnPower : SlalTheEndlessPower
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
+
+    public override int DisplayAmount => Math.Max(0, Amount - GetInternalData<Data>().triggersThisTurn);
 
     private class Data
     {
@@ -38,6 +41,7 @@ public abstract class SlalFirstPlaysEachTurnPower : SlalTheEndlessPower
         if (participants.Contains(Owner))
         {
             GetInternalData<Data>().triggersThisTurn = 0;
+            InvokeDisplayAmountChanged();
         }
         return Task.CompletedTask;
     }
@@ -50,6 +54,7 @@ public abstract class SlalFirstPlaysEachTurnPower : SlalTheEndlessPower
         if (data.triggersThisTurn >= Amount) return Task.CompletedTask;
 
         data.triggersThisTurn++;
+        InvokeDisplayAmountChanged();
         data.pending.Add(cardPlay.Card);
         return Task.CompletedTask;
     }

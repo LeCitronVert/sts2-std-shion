@@ -868,3 +868,20 @@ Content I skipped (incomplete in the spec):
 - "9 Stars" is written as "9 ★" rather than 9 star glyphs in a row.
 - The weights are per transformed card: each card first rolls a category, then a card from it. Empty categories are skipped.
 - "Your own character" is excluded from every category, so a non-Shion player using Come What May can get Shion cards in the 30% bucket.
+
+## 14. "First X times each turn" countdown
+
+- [ ] The power icon number shows how many triggers are **left this turn**, goes down by 1 on each trigger, and goes back to full at the start of your turn.
+- [ ] **Apple Juice Stocks**: goes down only on Slimed played from Hand (not auto-played ones).
+- [ ] **Slide Form** / **Kickstart Event**: goes down on Novel cards.
+- [ ] **Bumper Form** / **Squeaky Squirrel Form**: goes down on Powers. Echo Form-style repeats count once.
+- [ ] **Sword Form**: goes down on Attacks.
+- [ ] **Octopus Form**: goes down once per enemy affected (an AoE card can use several at once).
+- [ ] **Box of Nails Form**: goes down when you're hit by an attack. It refills at the start of **each** side's turn (unchanged behavior), so it's full when the enemy turn starts.
+- [ ] **Sparrow Form**: unchanged (it already counted down).
+- [ ] Stacking a power mid-turn raises the number by the added amount.
+- [ ] The hover text still shows the full X ("The first 2 Attacks..."), not the remaining count.
+
+**Decisions I made**
+- The countdown is only on the icon. The description keeps the full amount.
+- At 0 the icon shows 0 (same as Sparrow Form already did); the power isn't hidden.
