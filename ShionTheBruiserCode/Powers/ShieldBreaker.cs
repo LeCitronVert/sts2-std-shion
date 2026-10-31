@@ -18,7 +18,7 @@ public class ShieldBreaker : ShionTheBruiserPower
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public const int GalvanisedThreshold = 15;
+    public const int GalvanisedThreshold = 9;
     public const int VulnerableAmount = 2;
     
     protected override IEnumerable<DynamicVar> CanonicalVars => [

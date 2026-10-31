@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -14,9 +15,12 @@ public class ShionCrunch() : ShionTheBruiserCard(0,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.AnyEnemy)
 {
+    public const int GalvanisedThreshold = 3;
+    public const int DebilitateThreshold = 9;
+    
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("DebuffAmount", 1),
-        new DynamicVar("VigorNeeded", 5),
+        new CardsVar(1),
         new CriticalDrawVar(10)
     ];
 
@@ -25,10 +29,11 @@ public class ShionCrunch() : ShionTheBruiserCard(0,
         HoverTipFactory.FromPower<WeakPower>(),
         HoverTipFactory.FromPower<VulnerablePower>(),
         HoverTipFactory.FromPower<DebilitatePower>(),
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Galvanised),
         HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
     ];
     
-    protected override bool ShouldGlowGoldInternal => Owner.Creature.GetPowerAmount<VigorPower>() >= DynamicVars["VigorNeeded"].BaseValue;
+    protected override bool ShouldGlowGoldInternal => ShionMechanicsHelper.IsGalvanised(Owner.Creature, GalvanisedThreshold);
     protected override bool ShouldGlowRedInternal => !ShouldGlowGoldInternal;
 
     protected override async Task OnPlay(
@@ -38,19 +43,25 @@ public class ShionCrunch() : ShionTheBruiserCard(0,
         var card = this;
         var owner = card.Owner.Creature;
 
-        if (owner.GetPowerAmount<VigorPower>() < card.DynamicVars["VigorNeeded"].BaseValue)
+        if (!ShionMechanicsHelper.TriggerGalvanised(owner, GalvanisedThreshold))
         {
             await CardCmd.Exhaust(choiceContext, card);
+            await CardPileCmd.Draw(choiceContext, card.DynamicVars.Cards.IntValue, card.Owner);
             return;
         }
         
         ArgumentNullException.ThrowIfNull(play.Target);
         
-        await PowerCmd.Apply<WeakPower>(choiceContext, play.Target, card.DynamicVars["DebuffAmount"].BaseValue, card.Owner.Creature, card);
-        await PowerCmd.Apply<VulnerablePower>(choiceContext, play.Target, card.DynamicVars["DebuffAmount"].BaseValue, card.Owner.Creature, card);
-        await PowerCmd.Apply<DebilitatePower>(choiceContext, play.Target, card.DynamicVars["DebuffAmount"].BaseValue, card.Owner.Creature, card);
+        // Checked before applying anything, Galvanised 3 already passed
+        var isDebilitating = ShionMechanicsHelper.IsGalvanised(owner, DebilitateThreshold);
         
-        await PowerCmd.Apply<VigorPower>(choiceContext, card.Owner.Creature, -card.DynamicVars["VigorNeeded"].BaseValue, card.Owner.Creature, card);
+        await PowerCmd.Apply<WeakPower>(choiceContext, play.Target, card.DynamicVars["DebuffAmount"].BaseValue, owner, card);
+        await PowerCmd.Apply<VulnerablePower>(choiceContext, play.Target, card.DynamicVars["DebuffAmount"].BaseValue, owner, card);
+        
+        if (isDebilitating)
+        {
+            await PowerCmd.Apply<DebilitatePower>(choiceContext, play.Target, card.DynamicVars["DebuffAmount"].BaseValue, owner, card);
+        }
     }
 
     protected override void OnUpgrade()
@@ -61,11 +72,5 @@ public class ShionCrunch() : ShionTheBruiserCard(0,
     public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
     {
         await ShionMechanicsHelper.ApplyCriticalDraw(this, choiceContext, card);
-    }
-    
-    protected override PileType GetResultPileTypeForCardPlay()
-    {
-        PileType pileTypeForCardPlay = base.GetResultPileTypeForCardPlay();
-        return pileTypeForCardPlay != PileType.Discard ? pileTypeForCardPlay : PileType.Hand;
     }
 }

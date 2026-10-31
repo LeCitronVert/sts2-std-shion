@@ -726,3 +726,13 @@ Content I skipped (incomplete in the spec):
 - [ ] "Ignore Vulnerable this turn" lasts **until your next turn** (so it covers the enemy turn), as a new **Ignore Vulnerable** buff.
 - [ ] Sparrow Form makes cards free **until played** (not only this turn). The spec just says "free to play".
 - [ ] The old **Instant Mattress**, **Instant Mattress Dexterity**, **Favourite Bucket** and **Logic Shift Strength Down** powers stay in the code but nothing applies them anymore.
+
+## 6. Crunch rework
+
+- [ ] **Crunch** at 3+ Vigor (Galvanised 3): applies 1 Weak and 1 Vulnerable (2 each upgraded). It doesn't consume Vigor and goes to the discard pile (no more return to Hand).
+- [ ] At 9+ Vigor (Galvanised 9): also applies 1 Debilitate (2 upgraded).
+- [ ] Under 3 Vigor: Exhausts and draws 1 card, with no debuffs. It glows gold at 3+ Vigor and red otherwise.
+- [ ] Spirit Break / Defensive turn Crunch off (Exhaust + draw). Fell Dragon always gives the full Galvanised 9 effect.
+- [ ] A Galvanised Crunch locks Defensive cards for the turn, like other Galvanised triggers.
+- [ ] Critical Draw 10% still works.
+- [ ] **Shield Breaker**: the Vulnerable-on-Attack effect now triggers at **Galvanised 9** (was 15). Card and power text say 9.
