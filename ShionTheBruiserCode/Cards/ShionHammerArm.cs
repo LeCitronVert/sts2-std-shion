@@ -37,7 +37,7 @@ public class ShionHammerArm() : ShionBerserkCard(1,
         await DamageCmd.Attack(cardSource.DynamicVars.Damage.BaseValue)
             .FromCard(cardSource)
             .Targeting(play.Target)
-            .WithHitFx("vfx/vfx_attack_slash")
+            .WithHitFx("vfx/vfx_heavy_blunt")
             .Execute(choiceContext)
         ;
         await PowerCmd.Apply<HammerArm>(choiceContext, play.Target, cardSource.DynamicVars["StrengthPower"].BaseValue, cardSource.Owner.Creature, cardSource);

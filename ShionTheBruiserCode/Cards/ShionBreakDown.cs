@@ -11,6 +11,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -52,7 +53,7 @@ public class ShionBreakDown() : ShionBerserkCard(1,
             .WithHitCount(card.DynamicVars.Repeat.IntValue)
             .FromCard(card)
             .Targeting(play.Target)
-            .WithHitFx("vfx/vfx_attack_slash")
+            .WithEnergyBlast(card, "vfx/vfx_attack_blunt")
             .Execute(choiceContext);
         
         if (ShionMechanicsHelper.TriggerBerserk(card.Owner.Creature))

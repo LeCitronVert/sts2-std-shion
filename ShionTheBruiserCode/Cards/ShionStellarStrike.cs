@@ -43,7 +43,7 @@ public class ShionStellarStrike() : ShionLatentCard(3,
         await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
             .FromCard(card)
             .Targeting(play.Target)
-            .WithHitFx("vfx/vfx_attack_slash")
+            .WithHitFx("vfx/vfx_heavy_blunt")
             .Execute(choiceContext)
         ;
     }

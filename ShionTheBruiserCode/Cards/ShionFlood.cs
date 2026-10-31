@@ -43,7 +43,7 @@ public class ShionFlood() : ShionTheBruiserCard(1,
             .WithHitCount((int) ((CalculatedVar) card.DynamicVars["HitAmount"]).Calculate(card.Owner.Creature))
             .FromCard(card)
             .Targeting(play.Target)
-            .WithHitFx("vfx/vfx_attack_slash")
+            .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext)
         ;
     }

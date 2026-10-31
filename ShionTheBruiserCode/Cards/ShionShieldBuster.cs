@@ -57,7 +57,7 @@ public class ShionShieldBuster() : ShionTheBruiserCard(1,
         await DamageCmd.Attack(damage)
             .FromCard(card)
             .Targeting(target)
-            .WithHitFx("vfx/vfx_attack_slash")
+            .WithHitFx("vfx/vfx_heavy_blunt")
             .Execute(choiceContext)
         ;
     }

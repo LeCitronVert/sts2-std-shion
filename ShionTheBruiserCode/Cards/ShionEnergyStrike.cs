@@ -37,11 +37,6 @@ public class ShionEnergyStrike() : ShionTheBruiserCard(1,
     {
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
-        await CreatureCmd.TriggerAnim(
-            card.Owner.Creature,
-            Character.ShionTheBruiser.GetEnergyCastAnimIfApplicable(card.Owner.Character),
-            Character.ShionTheBruiser.GetEnergyCastDelayIfApplicable(card.Owner.Character)
-        );
         // Checked before the Attack resolves, since it consumes Vigor
         var wasGalvanised = ShionMechanicsHelper.IsGalvanised(card.Owner.Creature, 1);
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)

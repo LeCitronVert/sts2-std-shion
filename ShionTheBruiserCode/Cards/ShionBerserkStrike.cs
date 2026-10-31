@@ -43,7 +43,7 @@ public class ShionBerserkStrike() : ShionBerserkCard(2,
         await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
             .FromCard(card)
             .Targeting(play.Target)
-            .WithHitFx("vfx/vfx_attack_slash")
+            .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext)
         ;
     }

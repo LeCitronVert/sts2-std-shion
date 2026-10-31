@@ -41,7 +41,7 @@ public class ShionBloodRondo() : ShionBerserkCard(1,
             .FromCard(card)
             .Targeting(play.Target)
             .WithHitCount(GetHits(card.Owner.Creature))
-            .WithHitFx("vfx/vfx_attack_slash")
+            .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext)
         ;
     }

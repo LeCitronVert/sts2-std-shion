@@ -31,7 +31,7 @@ public class ShionDragonSmash() : ShionTheBruiserCard(0,
         await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
             .FromCard(card)
             .Targeting(play.Target)
-            .WithHitFx("vfx/vfx_attack_slash")
+            .WithHitFx("vfx/vfx_attack_blunt")
             .WithHitCount(xAmount)
             .Execute(choiceContext);
     }

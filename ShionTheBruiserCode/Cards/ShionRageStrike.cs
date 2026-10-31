@@ -51,7 +51,7 @@ public class ShionRageStrike() : ShionBerserkCard(2,
             .WithValueProp(ValueProp.Move)
             .FromCard(card)
             .Targeting(play.Target)
-            .WithHitFx("vfx/vfx_attack_slash")
+            .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext)
         ;
     }

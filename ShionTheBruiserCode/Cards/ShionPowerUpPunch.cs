@@ -35,7 +35,7 @@ public class ShionPowerUpPunch() : ShionBerserkCard(1,
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .FromCard(card)
             .Targeting(play.Target)
-            .WithHitFx("vfx/vfx_attack_slash")
+            .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext)
         ;
         await PowerCmd.Apply<StrengthPower>(choiceContext, this.Owner.Creature, card.DynamicVars["StrengthPower"].BaseValue, card.Owner.Creature, card);

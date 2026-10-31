@@ -115,7 +115,7 @@ public class ShionFaeReturn() : ShionTheBruiserCard(3,
         await DamageCmd.Attack(DynamicVars.CalculatedDamage)
             .FromCard(this)
             .Targeting(play.Target)
-            .WithHitFx("vfx/vfx_attack_slash")
+            .WithHitFx("vfx/vfx_heavy_blunt")
             .Execute(choiceContext);
     }
 

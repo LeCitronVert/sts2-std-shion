@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using MegaCrit.Sts2.Core.HoverTips;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -45,7 +46,8 @@ public class ShionEnergyWave() : ShionTheBruiserCard(1,
                 .FromCard(card)
                 .WithValueProp(ValueProp.Move)
                 .TargetingAllOpponents(card.CombatState)
-                .WithHitFx("vfx/vfx_attack_blunt", tmpSfx: "heavy_attack.mp3")
+                .WithHitFx(tmpSfx: "heavy_attack.mp3")
+                .WithEnergyBlast(card, "vfx/vfx_attack_blunt")
                 .Execute(choiceContext)
             ;
 
