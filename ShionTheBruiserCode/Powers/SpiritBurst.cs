@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 using MegaCrit.Sts2.Core.HoverTips;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
@@ -65,7 +66,15 @@ public class SpiritBurst: ShionTheBruiserPower
             else
             {
                 data.autoPlayingCards.Add(card);
-                await CardCmd.AutoPlay(choiceContext, card, null);
+                ShionVfx.SetSpiritBurstAutoPlaying(power.Owner, true);
+                try
+                {
+                    await CardCmd.AutoPlay(choiceContext, card, null);
+                }
+                finally
+                {
+                    ShionVfx.SetSpiritBurstAutoPlaying(power.Owner, false);
+                }
                 data.autoPlayingCards.Remove(card);
                 await CardPileCmd.Draw(choiceContext, 1, card.Owner);
                 data = null;
@@ -88,7 +97,9 @@ public class SpiritBurst: ShionTheBruiserPower
     {
         if (command.ModelSource == null || command.Attacker?.Player == null || !this.GetInternalData<Data>().autoPlayingCards.Contains(command.ModelSource))
             return Task.CompletedTask;
-        command.WithHitFx("vfx/hellraiser_attack_vfx", command.HitSfx, command.TmpHitSfx).WithAttackerAnim("Cast", command.Attacker.Player.Character.CastAnimDelay).SpawningHitVfxOnEachCreature().WithHitVfxSpawnedAtBase();
+        command.WithHitFx(null, command.HitSfx, command.TmpHitSfx)
+            .WithHitVfxNode(ShionVfx.CreateSpiritBurstStrike)
+            .WithAttackerAnim("Cast", command.Attacker.Player.Character.CastAnimDelay);
         return Task.CompletedTask;
     }
     

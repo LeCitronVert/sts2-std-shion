@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Models;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -14,6 +15,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// Thorn Ring's card. You can't heal or revive during this fight.
 /// Change all your cards that aren't Non-Native or interact with Non-Native cards into random Non-Native cards.
 /// At the start of your turn, lose 1 HP, gain 1 Energy and draw 1 card.
+/// Speedlines flash behind its owner during its cast animation (ShionVfx).
 /// </summary>
 public class ShionComeWhatMay() : ShionTheBruiserCard(0,
     CardType.Power, CardRarity.Ancient,
@@ -40,6 +42,8 @@ public class ShionComeWhatMay() : ShionTheBruiserCard(0,
     {
         var card = this;
         var owner = card.Owner;
+        ShionVfx.PlayComeWhatMaySpeedlines(owner.Creature);
+        await CreatureCmd.TriggerAnim(owner.Creature, "Cast", owner.Character.CastAnimDelay);
         await PowerCmd.Apply<ComeWhatMay>(choiceContext, owner.Creature, DynamicVars["ComeWhatMay"].BaseValue, owner.Creature, card);
 
         var options = ShionMechanicsHelper.GetNonNativeCardOptions(owner).ToList();

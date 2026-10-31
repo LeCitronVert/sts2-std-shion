@@ -13,3 +13,6 @@ res://ShionTheBruiser/scenes/fx/shion_auras.tscn::f2269fb71a5f0eff11d7e4968a650f
 res://ShionTheBruiser/scenes/slal_rest.tscn::256e8d9577746fe878605e2327301da0::1792929289::res://.godot/exported/133200997/export-7c9a29a3ce85156465a5df9205b9fbfa-slal_rest.scn
 res://ShionTheBruiser/scenes/fx/team_blast_gauge.tscn::9758935eb8373647d394f1e4a00e2eee::1793177900::res://.godot/exported/133200997/export-f3dfd06e92240c3aecf87b9279fe0f5c-team_blast_gauge.scn
 res://ShionTheBruiser/scenes/fx/memory_bulbs.tscn::3bee0c3228a1bd65673c6ede2645a36c::1793312803::res://.godot/exported/133200997/export-fd38f93f30a54b8bcaced6eaab1c2610-memory_bulbs.scn
+res://ShionTheBruiser/scenes/fx/come_what_may_speedlines.tscn::0412f018c511038c991498b91a11f896::1793467171::res://.godot/exported/133200997/export-9466466c34944041ac855cf7b66ea466-come_what_may_speedlines.scn
+res://ShionTheBruiser/scenes/fx/spirit_burst_lightning.tscn::173ee2c706e2ac7da2dfd0816283b87a::1793467171::res://.godot/exported/133200997/export-33dca832411fd2cc6119b8dc938fb681-spirit_burst_lightning.scn
+res://ShionTheBruiser/scenes/fx/spirit_burst_strike.tscn::4ce24e37390cbfeab47ec3de1828f580::1793467171::res://.godot/exported/133200997/export-ba38f47987d569917919286a82eed2c9-spirit_burst_strike.scn

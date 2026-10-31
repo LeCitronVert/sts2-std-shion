@@ -839,3 +839,13 @@ Content I skipped (incomplete in the spec):
 - [ ] Co-op: when Shion is **Berserk** and alive, her end-turn "hurry up" ping says "You're such a tease..." in red, not "Everything okay?".
 - [ ] Out of Berserk, or dead, she uses her normal alive/dead lines.
 - [ ] The other players see the Berserk line too.
+
+## 12. Shion VFX
+
+- [ ] Images are new: run a Godot export (Publish) once so they get imported, or the effects won't load.
+- [ ] **Come What May**: Shion plays her Cast animation, with full screen white speedlines behind her (bursting from the bottom center of the screen) for about 0.9s. The lines look like they're running: frames swap and mirror at random, zoom outward, and dashes race outward along the lines.
+- [ ] **Spirit Burst** autoplays: yellow lightning (cycling 3 frames) crosses the whole screen horizontally behind Shion, at her body's height, while each card autoplays. Chained autoplays keep the same lightning without flickering; it fades out after the last one.
+- [ ] The lightning always spans the whole screen width, including in fullscreen / other resolutions and during camera shake.
+- [ ] Hits from cards Spirit Burst autoplayed show a flurry of golden slashes on each target, instead of Hellraiser's VFX.
+- [ ] **Energy Attacks**: when the ki blast lands, an explosion (flash, golden ring, fireball, smoke) plays on the target, on top of the existing ki burst. Check it isn't too much on multi-hit cards (Energy Volley).
+- [ ] Multiplayer: every player sees these effects.

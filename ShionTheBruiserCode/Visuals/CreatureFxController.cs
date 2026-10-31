@@ -41,6 +41,7 @@ public static class CreatureFxPatch
 /// <item>Shion's auras (scenes/fx/shion_auras.tscn), stacked in order of application. Any player also gets Shion's blue flames
 /// (Spirit Break's) from Burlesque Wind-Up until the Vigor it gave is used up.</item>
 /// <item>Flashback bulbs (scenes/fx/memory_bulbs.tscn) above the head, one per stack of Flashback, hopping when Flashback plays cards.</item>
+/// <item>Spirit Burst's lightning (scenes/fx/spirit_burst_lightning.tscn) across the screen behind any player, while Spirit Burst autoplays their cards.</item>
 /// </list>
 /// </summary>
 public class CreatureFxController
@@ -48,6 +49,7 @@ public class CreatureFxController
     private static readonly string SparksScenePath = Path.Join(MainFile.ResPath, "scenes", "fx", "berserk_sparks.tscn");
     private static readonly string AurasScenePath = Path.Join(MainFile.ResPath, "scenes", "fx", "shion_auras.tscn");
     private static readonly string MemoryBulbsScenePath = Path.Join(MainFile.ResPath, "scenes", "fx", "memory_bulbs.tscn");
+    private static readonly string SpiritBurstLightningScenePath = Path.Join(MainFile.ResPath, "scenes", "fx", "spirit_burst_lightning.tscn");
 
     /// <summary>Light layer only players' bodies are on, so aura lights only light them. Matches shion_auras.gd.</summary>
     public const int AuraLightLayer = 1 << 19;
@@ -71,6 +73,7 @@ public class CreatureFxController
     private readonly Node2D _sparks;
     private readonly Node2D? _auras;
     private readonly Node2D? _memoryBulbs;
+    private readonly Node2D? _spiritBurstLightning;
 
     /// <summary>Burlesque Wind-Up's aura (drawn with Spirit Break's spritesheet, see shion_auras.gd).</summary>
     private const string BurlesqueAura = "burlesque_wind_up";
@@ -115,6 +118,12 @@ public class CreatureFxController
             {
                 body.LightMask |= AuraLightLayer;
             }
+
+            // Behind Shion and her auras, at her body's center
+            _spiritBurstLightning = GD.Load<PackedScene>(SpiritBurstLightningScenePath).Instantiate<Node2D>();
+            visuals.AddChild(_spiritBurstLightning);
+            visuals.MoveChild(_spiritBurstLightning, 0);
+            _spiritBurstLightning.Position = bounds.GetCenter();
         }
     }
 
@@ -124,13 +133,16 @@ public class CreatureFxController
 
         void OnCombatStateChanged(CombatState _) => controller.Refresh();
         void OnFlashbackCardPlayed(Creature creature, int index) => controller.HopMemoryBulb(creature, index);
+        void OnSpiritBurstAutoPlayChanged(Creature creature, bool autoPlaying) => controller.SetSpiritBurstLightning(creature, autoPlaying);
 
         CombatManager.Instance.StateTracker.CombatStateChanged += OnCombatStateChanged;
         SlalMechanicsHelper.FlashbackCardPlayed += OnFlashbackCardPlayed;
+        ShionVfx.SpiritBurstAutoPlayChanged += OnSpiritBurstAutoPlayChanged;
         node.TreeExiting += () =>
         {
             CombatManager.Instance.StateTracker.CombatStateChanged -= OnCombatStateChanged;
             SlalMechanicsHelper.FlashbackCardPlayed -= OnFlashbackCardPlayed;
+            ShionVfx.SpiritBurstAutoPlayChanged -= OnSpiritBurstAutoPlayChanged;
         };
         controller.Refresh();
     }
@@ -166,6 +178,12 @@ public class CreatureFxController
     {
         if (active && !_activeAuras.Contains(name)) _activeAuras.Add(name);
         else if (!active) _activeAuras.Remove(name);
+    }
+
+    private void SetSpiritBurstLightning(Creature creature, bool active)
+    {
+        if (creature != _creature || _spiritBurstLightning == null || !GodotObject.IsInstanceValid(_spiritBurstLightning)) return;
+        _spiritBurstLightning.Call("set_active", active && _creature.IsAlive);
     }
 
     private void HopMemoryBulb(Creature creature, int index)
