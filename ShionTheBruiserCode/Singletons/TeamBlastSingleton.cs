@@ -53,9 +53,9 @@ public class TeamBlastSingleton : CustomSingletonModel
     /// <summary>Gauge fill bonus for each Team Blast in any player's deck (every copy counts).</summary>
     public const decimal ChargeBonusPerTeamBlast = 0.2m;
     /// <summary>Gauge fill multiplier during Elite fights.</summary>
-    public const decimal EliteMultiplier = 1m;
+    public const decimal EliteMultiplier = 1.5m;
     /// <summary>Gauge fill multiplier during Boss fights.</summary>
-    public const decimal BossMultiplier = 1m;
+    public const decimal BossMultiplier = 3m;
 
     // ── State ────────────────────────────────────────────────────────────────
 
