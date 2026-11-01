@@ -19,4 +19,8 @@ public static class SeelsCardKeywords
 
     [CustomEnum, KeywordProperties(AutoKeywordPosition.None)]
     public static CardKeyword Gamble;
+
+    /// <summary>Bloody Daggers: the Shiv deals X additional damage, then its owner Blood Bends.</summary>
+    [CustomEnum, KeywordProperties(AutoKeywordPosition.Before)]
+    public static CardKeyword BloodyShiv;
 }

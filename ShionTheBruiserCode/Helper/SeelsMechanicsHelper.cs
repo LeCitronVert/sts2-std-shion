@@ -54,9 +54,15 @@ public static class SeelsMechanicsHelper
     /// Blood Bend X: consumes ALL your Blood, heals that much and returns the amount consumed (X).
     /// The heal only counts the Blood consumed, not the (X+1) bonuses the cards add on top.
     /// </summary>
-    public static async Task<int> BloodBend(PlayerChoiceContext choiceContext, CardModel card)
+    public static Task<int> BloodBend(PlayerChoiceContext choiceContext, CardModel card) =>
+        BloodBend(choiceContext, card.Owner, card);
+
+    /// <summary>
+    /// Blood Bend X for the given player, e.g. a Team-Up making its Initiator Blood Bend from the Partner's copy.
+    /// </summary>
+    public static async Task<int> BloodBend(PlayerChoiceContext choiceContext, Player player, CardModel? card)
     {
-        var creature = card.Owner.Creature;
+        var creature = player.Creature;
         var x = GetBlood(creature);
         await PowerCmd.Remove<Blood>(creature);
         if (x > 0)
@@ -68,7 +74,7 @@ public static class SeelsMechanicsHelper
         {
             foreach (var listener in creature.CombatState.IterateHookListeners().OfType<ISeelsListener>().ToList())
             {
-                await listener.AfterBloodBend(choiceContext, card.Owner, x, card);
+                await listener.AfterBloodBend(choiceContext, player, x, card);
             }
         }
 

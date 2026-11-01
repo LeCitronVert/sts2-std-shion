@@ -1051,3 +1051,48 @@ Content I skipped (incomplete in the spec):
 - Burlesque aura: "bigger" = 1.3x (`AURA_SCALES` in `shion_auras.gd`), 70% opacity on the flames only.
 - Funny Gag: Bludgeon's hit VFX and sound, without the Ironclad heavy attacker animation.
 - Puzzling Tip: the Weak comes after the Colorless card ("Also").
+
+## 19. Seels Team-Ups, vanilla & generic Team Blasts, Power Core
+
+- [ ] Re-export the `.pck` with MegaDot (17 new card portraits + `big/` versions, `relics/power_core.png` + `big/` + a placeholder outline; MegaDot will generate their `.import` files), then build and launch.
+- [ ] Shion's Team-Ups still work exactly as before (their base class was split into `TeamUpCard` → `ShionTeamUpCard` / `SeelsTeamUpCard`): play one, the partner gets the Ethereal copy, the "Team-Up: (Class)" line and the partner text are right.
+
+**Seels Team-Ups** (2 players: Seels + the named class; only offered when that class is in the run)
+- [ ] **Scratchin' Pals** (anyone, 1): 1 (2) Slash into Seels' and the partner's Hand, Draw Pile and Discard Pile. Exhausts.
+- [ ] **Blowout Blast** (Shion): Seels' card costs 0, Shion's copy costs **X**. When Shion plays it: Seels Blood Bends, Shion deals 14 damage (Seels' X + Shion's X) times. Upgraded: +1 to each X. Previews: Seels' card shows "Your X", Shion's copy shows the total hits. Exhausts.
+- [ ] **Goopy Blood** (Slal, 2 → 1): Slal creating a Slimed → Seels +1 Strength. Seels creating a Wound → Slal +2 Random. Enemy-added Slimed/Wounds don't count.
+- [ ] **Mismatched Magic** (Fry, 1): Fry spends Stars → Seels loses 1 Blood, heals 2 (nothing without Blood). Seels Blood Bends → Fry loses 3 Stars, gains 10 Bad Faith (nothing under 3 Stars).
+- [ ] **Stormblood** (Ironclad, 3 → 2): each attack hit by Seels or the Ironclad on a Vulnerable enemy → Seels +1 Blood. Ironclad's Attacks deal + Seels' Blood (check the damage preview on Ironclad's cards).
+- [ ] **Bloody Daggers** (Silent, 2, upgrade Innate): Shivs the Silent creates show a "Blood Bend X" line + hover tip and deal +X (X = Silent's Blood, shown in the damage preview); after the Shiv is played the Silent Blood Bends (heals X), and Seels gains X Blood. The Silent gains 1 Blood per Skill played.
+- [ ] **Royal Mage** (Regent, 2): Seels and the Regent each get a red **Blood Inklet** (Inklet model, facing the enemies) with 10% (20%) of their own Max HP and 1 Slippery. Check: tint, facing, position next to its owner. Hovering it shows its HP bar, powers and hover tips (on a teammate's Inklet the bar only shows on hover, like their Osty).
+- [ ] Blood Inklet takes the owner's **unblocked attack** damage, before Osty (test with a Necrobinder ally: give Seels an Osty via Osty's Bestie, then Royal Mage). Playing Royal Mage again adds Max HP + Slippery to the living Inklet; once it dies, a new one is summoned.
+- [ ] **Osty's Bestie** (Necrobinder, 3, upgrade Retain): the Necrobinder's Osty Max HP doubles, then Seels Summons his own Osty with that much Max HP. Check a non-Necrobinder Osty looks and behaves fine (size, position, taking hits). Nothing happens if the Necrobinder's Osty is dead.
+- [ ] **Bloody Blitz** (Defect, 2 → 1): Seels and the Defect draw 3, those cost 1 less this turn, then the drawn ones that don't cost 0 (and X-cost ones) are discarded.
+
+**Team Blasts** (start set aside, come from the gauge like the others)
+- [ ] They show up in rewards for their character (Ironclad, Silent, Regent, Necrobinder, Defect) and the generic ones as Colorless Rares, in multiplayer only.
+- [ ] **Bitter End** (Ironclad): 1 (2) Vulnerable to ALL enemies; per enemy, every player gets 1 (2) random Attacks from their Draw Pile into their Hand, and their highest cost Attack costs 0 this turn.
+- [ ] **Bladestorm** (Silent): every player's Hand fills up with Shivs (Shivs+ when upgraded).
+- [ ] **Uncontested Reign** (Regent): Forge 10 + ALL players' Strength (upgraded: everyone's, enemies included; negative Strength lowers it), preview shows the total. Then the Sovereign Blade is played on the target, wherever it was (Hand, Draw, Discard). With no Sovereign Blade yet, Forge creates one first.
+- [ ] **Legion of Death** (Necrobinder): the target gains Doom equal to the unblocked attack damage it takes, this turn (upgraded: this turn and next). The debuff shows on the enemy and disappears on time.
+- [ ] **Happy Fleet** (Defect): the other players (upgraded: everyone, Defect included) gain as many Orb Slots as the Defect has and Channel copies of its Orbs. Check non-Defects' orb UI.
+- [ ] **Cacophony**: ALL players +3 (5) Energy and +3 (5) Stars.
+- [ ] **Good Pals**: ALL players +10 (20) Block, heal 10.
+- [ ] **All Out Attack**: 30 (50) damage, with every other player's Strength/Vigor/relic damage modifiers (and Shion's crit chance) applied. Check the damage preview.
+
+**Relics**
+- [ ] **Friendship Bracelet** now also adds a random Curse to your Deck (even if you skip the card).
+- [ ] **Power Core** (new Neow relic, multiplayer): choose 1 of 3 Team Blasts: your character's own (if it has one) + generic ones; no other character's. Then a random Curse. Shion's own is Dragon Cheer, Slal's Random Blast, Seels' Payback Time, Fry's Mecha Expansion Pack.
+- [ ] Neow: Friendship Bracelet and Power Core share her first slot (1 in 8; when both are possible, one at random). Both now use Neow's "cursed" closing line.
+
+**Decisions I made**
+- Blood Inklet HP uses each owner's own Max HP (confirmed). Bloody Daggers' Blood Bend X = +X damage (confirmed). Power Core shares Bracelet's slot (confirmed). Uncontested Reign rewritten as you asked.
+- Blowout Blast: the partner's copy becomes X-cost when it's created; Seels Blood Bends when the partner plays it, and the partner deals the damage.
+- Bloody Daggers: "gain the Blood they used" = **Seels** gains it (same wording as "gain 1 Strength" on Goopy Blood). The Shiv's bonus uses the Silent's Blood at hit time, and the Blood Bend happens right after the Shiv resolves.
+- Stormblood: Blood is gained per **hit** on a Vulnerable enemy (like Hyper Offense's per-hit crits); the bonus damage only applies to the partner's Attack cards.
+- Mismatched Magic: once per Star spend (not per Star); with several stacks it converts up to that many times. No upgrade in the sheet → none (`//todo : upgrade not specified`).
+- Bitter End: the "free" Attack is per enemy (1 per enemy, even when upgraded) and skips Attacks that already cost 0; Attacks are picked at random from the Draw Pile.
+- Bloody Blitz: X-cost cards don't get the reduction and count as "not 0", so they're discarded.
+- Legion of Death: counts unblocked attack damage only; it wears off at the end of the players' turn.
+- Power Core can't be skipped (you pay the Curse either way). Friendship Bracelet keeps its skip.
+- The new powers have no icons yet (default power icon); they're listed in `MISSING_IMAGES.tsv`. Power Core's outline is a copy of its icon for now.

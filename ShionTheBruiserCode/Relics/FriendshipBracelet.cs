@@ -15,6 +15,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 /// <summary>
 /// Neow relic (multiplayer, FriendshipBraceletNeowPatch). Choose a Team-Up to add to your Deck:
 /// one per class in the party that has a Team-Up with yours, plus one that works with anyone.
+/// Then add a random Curse to your Deck.
 /// </summary>
 [Pool(typeof(EventRelicPool))]
 public class FriendshipBracelet : ShionTheBruiserRelic
@@ -41,14 +42,18 @@ public class FriendshipBracelet : ShionTheBruiserRelic
         if (universal.Count > 0) choices.Add(rng.NextItem(universal)!);
 
         var cards = choices.Select(c => Owner.RunState.CreateCard(c, Owner)).ToList();
-        if (cards.Count == 0) return;
+        if (cards.Count > 0)
+        {
+            var chosen = cards.Count <= 3
+                ? await CardSelectCmd.FromChooseACardScreen(new BlockingPlayerChoiceContext(), cards, Owner, canSkip: true)
+                : (await CardSelectCmd.FromSimpleGrid(new BlockingPlayerChoiceContext(), cards, Owner,
+                    new CardSelectorPrefs(new LocString("card_selection", "SHIONTHEBRUISER-TEAM_UP_CHOICE"), 1))).FirstOrDefault();
+            if (chosen != null)
+            {
+                CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(chosen, PileType.Deck));
+            }
+        }
 
-        var chosen = cards.Count <= 3
-            ? await CardSelectCmd.FromChooseACardScreen(new BlockingPlayerChoiceContext(), cards, Owner, canSkip: true)
-            : (await CardSelectCmd.FromSimpleGrid(new BlockingPlayerChoiceContext(), cards, Owner,
-                new CardSelectorPrefs(new LocString("card_selection", "SHIONTHEBRUISER-TEAM_UP_CHOICE"), 1))).FirstOrDefault();
-        if (chosen == null) return;
-
-        CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(chosen, PileType.Deck));
+        await DreamersMechanicsHelper.AddRandomCurseToDeck(Owner);
     }
 }

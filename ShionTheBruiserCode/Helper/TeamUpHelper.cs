@@ -11,9 +11,9 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Helper;
 /// </summary>
 public static class TeamUpHelper
 {
-    public static IEnumerable<ShionTeamUpCard> AllTeamUps => ModelDb.AllCards.OfType<ShionTeamUpCard>();
+    public static IEnumerable<TeamUpCard> AllTeamUps => ModelDb.AllCards.OfType<TeamUpCard>();
 
-    public static bool IsPartnerCharacter(ShionTeamUpCard card, CharacterModel character)
+    public static bool IsPartnerCharacter(TeamUpCard card, CharacterModel character)
     {
         return card.PartnerCharacter == null || card.PartnerCharacter.Id == character.Id;
     }
@@ -21,7 +21,7 @@ public static class TeamUpHelper
     /// <summary>
     /// Loot only offers a Team-Up when the run has its Initiator's class, and another player of its Partner's class.
     /// </summary>
-    public static bool IsAvailableInRun(ShionTeamUpCard card, IRunState runState)
+    public static bool IsAvailableInRun(TeamUpCard card, IRunState runState)
     {
         return runState.Players.Any(initiator => initiator.Character.Id == card.InitiatorCharacter.Id
             && runState.Players.Any(partner => partner != initiator && IsPartnerCharacter(card, partner.Character)));
@@ -30,7 +30,7 @@ public static class TeamUpHelper
     /// <summary>
     /// Team-Ups this player can initiate with the current team.
     /// </summary>
-    public static IEnumerable<ShionTeamUpCard> GetAvailableTeamUps(Player player)
+    public static IEnumerable<TeamUpCard> GetAvailableTeamUps(Player player)
     {
         return AllTeamUps.Where(card => card.InitiatorCharacter.Id == player.Character.Id
             && player.RunState.Players.Any(partner => partner != player && IsPartnerCharacter(card, partner.Character)));
@@ -39,7 +39,7 @@ public static class TeamUpHelper
     /// <summary>
     /// Living players who can play the Partner's copy of this card.
     /// </summary>
-    public static IEnumerable<Player> GetPartners(ShionTeamUpCard card, Player initiator)
+    public static IEnumerable<Player> GetPartners(TeamUpCard card, Player initiator)
     {
         return initiator.RunState.Players.Where(p => p != initiator
             && p.Creature.IsAlive

@@ -1,7 +1,10 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.CardPools;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Helper;
@@ -34,5 +37,23 @@ public static class DreamersMechanicsHelper
                 );
             }
         }
+    }
+
+    public static bool IsTeamBlast(CardModel card) => card.CanonicalKeywords.Contains(DreamersKeywords.TeamBlast);
+
+    /// <summary>
+    /// Adds a random Curse to the player's Deck, like Sere Talon (out of combat).
+    /// </summary>
+    public static async Task AddRandomCurseToDeck(Player owner)
+    {
+        var curses = ModelDb.CardPool<CurseCardPool>()
+            .GetUnlockedCards(owner.UnlockState, owner.RunState.CardMultiplayerConstraint)
+            .Where(c => c.CanBeGeneratedByModifiers)
+            .OrderBy(c => c.Id)
+            .ToList();
+        if (curses.Count == 0) return;
+
+        var curse = owner.RunState.CreateCard(owner.RunState.Rng.Niche.NextItem(curses)!, owner);
+        CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(curse, PileType.Deck));
     }
 }

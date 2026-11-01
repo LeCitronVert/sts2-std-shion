@@ -21,7 +21,7 @@ public static class TeamUpPartnerDescriptionPatch
     [HarmonyPostfix]
     public static void Postfix(CardModel __instance, ref LocString __result)
     {
-        if (__instance is ShionTeamUpCard { IsPartnerCopy: true })
+        if (__instance is TeamUpCard { IsPartnerCopy: true })
         {
             __result = new LocString("cards", __instance.Id.Entry + ".partnerDescription");
         }
@@ -44,7 +44,7 @@ public static class TeamUpDescriptionPatch
     [HarmonyPostfix]
     public static void Postfix(CardModel __instance, ref string __result)
     {
-        if (__instance is not ShionTeamUpCard card) return;
+        if (__instance is not TeamUpCard card) return;
 
         var line = new LocString("card_keywords", "SHIONTHEBRUISER-TEAMUP.cardText");
         line.Add("Class", TeamUpHelper.GetClassName(card.IsPartnerCopy ? card.InitiatorCharacter : card.PartnerCharacter));
@@ -62,13 +62,15 @@ public static class TeamUpLootPatch
     [HarmonyPostfix]
     public static void Postfix(IRunState runState, ref IEnumerable<CardModel> __result)
     {
-        __result = __result.Where(c => c is not ShionTeamUpCard teamUp || TeamUpHelper.IsAvailableInRun(teamUp, runState));
+        __result = __result.Where(c => c is not TeamUpCard teamUp || TeamUpHelper.IsAvailableInRun(teamUp, runState));
     }
 }
 
 /// <summary>
-/// Neow sometimes offers Friendship Bracelet in place of her first blessing, when the player has Team-Ups available with the current team.
-/// Odds match a regular blessing: Neow shows 2 out of ~16 positive options.
+/// Neow sometimes offers Friendship Bracelet or Power Core in place of her first blessing, in multiplayer:
+/// Friendship Bracelet when the player has Team-Ups available with the current team, Power Core when Team Blasts exist.
+/// Odds match a regular blessing: Neow shows 2 out of ~16 positive options. When both can appear, one is picked at random.
+/// Both add a Curse, so they use Neow's "cursed" closing text.
 /// </summary>
 [HarmonyPatch(typeof(Neow), "GenerateInitialOptions")]
 public static class FriendshipBraceletNeowPatch
@@ -78,23 +80,29 @@ public static class FriendshipBraceletNeowPatch
 
     private const float OfferChance = 0.125f;
 
+    public const string DonePage = "NEOW.pages.DONE.CURSED.description";
+
+    public static IEnumerable<RelicModel> SharedSlotRelics => [ModelDb.Relic<FriendshipBracelet>(), ModelDb.Relic<PowerCore>()];
+
     [HarmonyPostfix]
     public static void Postfix(Neow __instance, ref IReadOnlyList<EventOption> __result)
     {
         if (__instance.Owner is not { } player || __result.Count == 0) return;
         if (player.RunState.Modifiers.Count > 0) return;
-        if (!ModelDb.Relic<FriendshipBracelet>().IsAllowedAtNeow(player)) return;
+
+        var candidates = SharedSlotRelics.Where(r => r.IsAllowedAtNeow(player)).ToList();
+        if (candidates.Count == 0) return;
         if (__instance.Rng.NextFloat() >= OfferChance) return;
 
+        var relic = candidates.Count == 1 ? candidates[0] : __instance.Rng.NextItem(candidates)!;
         var options = __result.ToList();
-        options[0] = (EventOption)RelicOption.Invoke(__instance,
-            [ModelDb.Relic<FriendshipBracelet>().ToMutable(), "INITIAL", "NEOW.pages.DONE.POSITIVE.description"])!;
+        options[0] = (EventOption)RelicOption.Invoke(__instance, [relic.ToMutable(), "INITIAL", DonePage])!;
         __result = options;
     }
 }
 
 /// <summary>
-/// Also read by Neow's Bones, which FriendshipBracelet.IsAllowedAtNeow keeps to parties with Team-Ups available.
+/// Also read by Neow's Bones, which FriendshipBracelet.IsAllowedAtNeow / PowerCore.IsAllowedAtNeow keep to multiplayer parties.
 /// </summary>
 [HarmonyPatch(typeof(Neow), nameof(AncientEventModel.AllPossibleOptions), MethodType.Getter)]
 public static class FriendshipBraceletNeowOptionsPatch
@@ -102,7 +110,7 @@ public static class FriendshipBraceletNeowOptionsPatch
     [HarmonyPostfix]
     public static void Postfix(Neow __instance, ref IEnumerable<EventOption> __result)
     {
-        __result = __result.Append(ShionAncientRelics.Option(__instance, ModelDb.Relic<FriendshipBracelet>(),
-            "NEOW.pages.DONE.POSITIVE.description"));
+        __result = __result.Concat(FriendshipBraceletNeowPatch.SharedSlotRelics
+            .Select(relic => ShionAncientRelics.Option(__instance, relic, FriendshipBraceletNeowPatch.DonePage)));
     }
 }
