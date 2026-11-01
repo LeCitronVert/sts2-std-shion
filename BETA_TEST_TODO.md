@@ -1078,6 +1078,7 @@ Content I skipped (incomplete in the spec):
 - [ ] **Happy Fleet** (Defect): the other players (upgraded: everyone, Defect included) gain as many Orb Slots as the Defect has and Channel copies of its Orbs. Check non-Defects' orb UI.
 - [ ] **Cacophony**: ALL players +3 (5) Energy and +3 (5) Stars.
 - [ ] **Good Pals**: ALL players +10 (20) Block, heal 10.
+- [ ] **Dragon Cheer** (Shion's Team Blast) no longer gives Block. Base text: "ALL players gain 20% Critical Hit chance, and 10% more while Berserk." Upgraded text starts with the Regen line.
 - [ ] **All Out Attack**: 30 (50) damage, with every other player's Strength/Vigor/relic damage modifiers (and Shion's crit chance) applied. Check the damage preview.
 
 **Relics**

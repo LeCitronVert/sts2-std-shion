@@ -181,7 +181,7 @@
     "SHIONTHEBRUISER-COSMO_DETERMINATION.title": "Cosmo's Determination",
     "SHIONTHEBRUISER-COSMO_KINDNESS.description": "[gold]Patch Up[/gold] up to [blue]50%[/blue] of your Max HP.{InCombat:\n(Heal {HealAmount:diff()} HP)|}",
     "SHIONTHEBRUISER-COSMO_KINDNESS.title": "Cosmo's Kindness",
-    "SHIONTHEBRUISER-SHION_TEAM_BLAST.description": "ALL players gain {Block:diff()} [gold]Block[/gold]{RegenPower:cond:>0? and {RegenPower:diff()} [gold]Regen[/gold]|}.\nThey also gain {CritHitRate:diff()}% [gold]Critical Hit[/gold] chance, and {CritAttackRate:diff()}% more while [gold]Berserk[/gold].",
+    "SHIONTHEBRUISER-SHION_TEAM_BLAST.description": "{RegenPower:cond:>0?ALL players gain {RegenPower:diff()} [gold]Regen[/gold].\nThey also gain|ALL players gain} {CritHitRate:diff()}% [gold]Critical Hit[/gold] chance, and {CritAttackRate:diff()}% more while [gold]Berserk[/gold].",
     "SHIONTHEBRUISER-SHION_TEAM_BLAST.title": "Dragon Cheer",
     "SHIONTHEBRUISER-SHION_FRONTLINER.description": "Other players gain [blue]1[/blue] [gold]Intangible[/gold].\nYou take triple damage until your next turn.\n[gold]Berserk:[/gold] Gain {Block:diff()} [gold]Block[/gold].",
     "SHIONTHEBRUISER-SHION_FRONTLINER.title": "Frontliner",

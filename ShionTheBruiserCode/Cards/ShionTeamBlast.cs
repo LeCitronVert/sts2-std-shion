@@ -23,11 +23,8 @@ public class ShionTeamBlast() : ShionTheBruiserCard(0,
 
     public override bool CanBeGeneratedInCombat => false;
 
-    public override bool GainsBlock => true;
-
     
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(30, ValueProp.Move),
         new CritDisplayTooltipVar(),
         new DynamicVar("CritHitRate", 20),
         new DynamicVar("CritAttackRate", 10),
@@ -53,12 +50,6 @@ public class ShionTeamBlast() : ShionTheBruiserCard(0,
         
         foreach (Creature target in card.CombatState?.GetTeammatesOf(card.Owner.Creature).Where(c => c?.IsPlayer ?? false)!)
         {
-            await CreatureCmd.GainBlock(
-                target, 
-                card.DynamicVars.Block, 
-                play
-            );
-            
             await ShionMechanicsHelper.EnsureCreatureHasCritTracker(target);
             await ShionMechanicsHelper.EnsureCreatureHasBerserkIndicator(target);
             
