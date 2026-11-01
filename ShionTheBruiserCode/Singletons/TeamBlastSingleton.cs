@@ -48,7 +48,7 @@ public class TeamBlastSingleton : CustomSingletonModel
     public const decimal DamageDealtMultiplier = 1m;
     public const decimal DamageBlockedMultiplier = 1m;
     public const decimal DamageTakenMultiplier = 1m;
-    public const decimal DeathBonus = 10m;  
+    public const decimal DeathBonus = 20m;  
     public const decimal AllyOstyDeathMultiplier = 0.5m;
     /// <summary>Gauge fill bonus for each Team Blast in any player's deck (every copy counts).</summary>
     public const decimal ChargeBonusPerTeamBlast = 0.2m;
