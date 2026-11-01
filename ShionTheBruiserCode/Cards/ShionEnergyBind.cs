@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -49,6 +50,7 @@ public class ShionEnergyBind() : ShionTheBruiserCard(0,
         ArgumentNullException.ThrowIfNull(play.Target);
         var x = card.ResolveEnergyXValue() + (IsUpgraded ? 1 : 0);
         if (x == 0) return;
+        ShionVfx.PlayFlameBurst(play.Target, ShionVfx.PurpleFlames);
 
         await PowerCmd.Apply<WeakPower>(choiceContext, play.Target, x, card.Owner.Creature, card);
         await PowerCmd.Apply<VulnerablePower>(choiceContext, play.Target, x, card.Owner.Creature, card);

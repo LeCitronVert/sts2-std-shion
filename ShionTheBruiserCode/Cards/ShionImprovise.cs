@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -20,6 +21,7 @@ public class ShionImprovise() : ShionTheBruiserCard(1,
     {
         var card = this;
         var player = card.Owner;
+        ShionVfx.PlayLightBulb(player.Creature);
         IReadOnlyList<CardPileAddResult> result = await CardPileCmd.AddGeneratedCardsToCombat(CardFactory.GetDistinctForCombat(player, ModelDb.CardPool<ColorlessCardPool>().GetUnlockedCards(player.UnlockState, player.RunState.CardMultiplayerConstraint), 1, player.RunState.Rng.CombatCardGeneration).ToList(), PileType.Hand, card.Owner);
         result.First().cardAdded.SetToFreeThisTurn();
     }

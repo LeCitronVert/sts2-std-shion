@@ -29,45 +29,50 @@ public static class EnergyBlast
     /// at every target of each hit, and waits for it to land before the damage is dealt.
     /// </summary>
     /// <param name="hitVfx">Optional VFX played on each target when the blast lands.</param>
-    public static AttackCommand WithEnergyBlast(this AttackCommand command, CardModel card, string? hitVfx = null)
+    /// <param name="onLand">Optional visual-only callback for each target when the blast lands, just before the damage.</param>
+    /// <param name="speed">Speeds up the attack: travel time and attack animation delay are divided by it (Energy Volley).</param>
+    public static AttackCommand WithEnergyBlast(this AttackCommand command, CardModel card, string? hitVfx = null,
+        Action<Creature>? onLand = null, float speed = 1f)
     {
         var attacker = card.Owner.Creature;
         List<Creature> pendingTargets = [];
+        speed = Math.Max(speed, 0.1f);
 
         return command
             .WithAttackerAnim(
                 Character.ShionTheBruiser.GetEnergyAnimIfApplicable(card.Owner.Character),
-                Character.ShionTheBruiser.GetEnergyDelayIfApplicable(card.Owner.Character))
+                Character.ShionTheBruiser.GetEnergyDelayIfApplicable(card.Owner.Character) / speed)
             .WithHitVfxNode(target =>
             {
                 pendingTargets.Add(target);
-                return Create(attacker, target);
+                return Create(attacker, target, speed);
             })
             .BeforeDamage(async () =>
             {
                 if (pendingTargets.Count == 0) return;
-                await Cmd.CustomScaledWait(FastTravelTime, StandardTravelTime);
-                if (hitVfx != null)
+                await Cmd.CustomScaledWait(FastTravelTime / speed, StandardTravelTime / speed);
+                foreach (var target in pendingTargets.Where(t => t.IsAlive))
                 {
-                    foreach (var target in pendingTargets.Where(t => t.IsAlive))
-                    {
-                        VfxCmd.PlayOnCreatureCenter(target, hitVfx);
-                    }
+                    if (hitVfx != null) VfxCmd.PlayOnCreatureCenter(target, hitVfx);
+                    onLand?.Invoke(target);
                 }
                 pendingTargets.Clear();
             });
     }
 
-    private static float TravelTime => SaveManager.Instance.PrefsSave.FastMode switch
+    /// <summary>Duration of a <c>Cmd.CustomScaledWait(fast, standard)</c> with the current Fast Mode (0 when Instant).</summary>
+    public static float ScaledTime(float fast, float standard) => SaveManager.Instance.PrefsSave.FastMode switch
     {
-        FastModeType.Fast => FastTravelTime,
-        FastModeType.Normal => StandardTravelTime,
+        FastModeType.Fast => fast,
+        FastModeType.Normal => standard,
         _ => 0f,
     };
 
-    private static Node2D? Create(Creature attacker, Creature target)
+    private static float TravelTime => ScaledTime(FastTravelTime, StandardTravelTime);
+
+    private static Node2D? Create(Creature attacker, Creature target, float speed)
     {
-        var travelTime = TravelTime;
+        var travelTime = TravelTime / speed;
         if (travelTime <= 0f) return null;
 
         var attackerNode = attacker.GetCreatureNode();

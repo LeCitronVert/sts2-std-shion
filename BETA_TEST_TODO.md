@@ -944,3 +944,52 @@ Content I skipped (incomplete in the spec):
 **Decisions I made**
 - The reset happens on entering the Rest Site, whichever option is picked.
 - The Elite/Boss multipliers stack with the per-Team-Blast charge bonus (they multiply each other). They aren't in the tooltip while they're 1x.
+
+## 17. Shion flavour VFX
+
+- [ ] Re-export the `.pck` with MegaDot (13 new scenes + scripts and 2 shaders in `scenes/fx/`; MegaDot will generate their `.uid` files), then build and launch. If any effect is missing, check MegaDot's output for GDScript errors first: I couldn't run the scripts.
+- [ ] **Berserk Form**: Nightmare's smoky vignette, tinted crimson, fades in around the screen edges while Shion has Berserk Form, and stays. It fades out when the power goes away and is gone after combat.
+- [ ] Berserk Form (multiplayer): only the player whose Shion has it sees the vignette.
+- [ ] **Team Blast**: confetti falls from the top of the screen on every player's screen, then clears (about 5s max).
+- [ ] **Borrow Technique**: Spirit Burst's lightning crosses the screen once (one loop), then fades.
+- [ ] **Codependency**: salmon-pink glow behind the creature that has it, and a pink light on their body (players).
+- [ ] **Come What May**: tears fall from both sides of Shion's head now and then while she has the power. Only on Shion. ⚠️ Eye positions are guessed from her bounds; tweak in `CreatureFxController.RefreshPowerEffects`.
+- [ ] **Competitive Spirit**: a red 💢 pops on Shion's head each time it gives Strength.
+- [ ] **Pout**: same 💢 on Shion when played.
+- [ ] **Crunch** (Galvanised branch): Fur Coat's bite on the enemy.
+- [ ] **Defensive**: a pale honeycomb barrier in front of Shion while she has Defensive. Cells pop in from the center, shimmer, and scatter when it ends.
+- [ ] **Mighty Guard**: the same barrier, azure, with thicker edges and a second inner layer. Both can show at once.
+- [ ] **Dragon Roar**: purple shockwave arcs from Shion's mouth towards the enemies, plus a medium screen shake.
+- [ ] **Dragonsong**: white notes with a black outline orbit Shion, one per point of reduction (= min(unique buffs, Dragonsong)). Shapes are random (quarter, eighth, beamed, sixteenth). The count follows buffs gained/lost.
+- [ ] Dragonsong: all notes flash red when a hit's damage is reduced.
+- [ ] **Dragon Pulse**: translucent purple wind streaks and a ring gust out of Shion.
+- [ ] **Dragon Smash**: Shion strikes once (no damage), the enemy flies to an upper corner, then bounces off screen edges, spinning fast. Each collision = one damage instance with a hit VFX and a small shake. The last hit slams it back in its place, upright.
+- [ ] Dragon Smash: X = 1 → launch, then straight back down for the only hit. Enemy dies mid-flight → it snaps back home afterwards. Health bar/intent stay in place (only the body flies).
+- [ ] Dragon Smash in Instant fast mode: no flying; the hits play normally.
+- [ ] **Eleventh Hour**: Shion turns black and white and animates at 20% speed while she has it; back to normal when it ends.
+- [ ] **Extreme Speed**: same on the enemy (works on Spine enemies).
+- [ ] **Energy Bomb**: when the blasts land, for a split second the background goes white and every creature is a white silhouette with a black outline, then a white flash fades. ⚠️ Check the white backdrop is behind the creatures (it goes in `BackCombatVfxContainer`).
+- [ ] **Energy Bind**: purple fiery aura flares on the enemy, holds ~1.6s, then sinks and flickers out.
+- [ ] **Energy Burst**: same, on Shion.
+- [ ] **Energy Volley**: more hits = faster blasts and animation (+15% per extra hit, up to 3x). Each hit pushes the enemy back a little; it slides back at the end.
+- [ ] **Flow Charge**: orange particles drift up around Shion while she has the power. Berserk Flow Charge: orange fiery aura (like Energy Burst) when played.
+- [ ] **Improvise**: a light bulb pops above Shion's head, lights up, shakes and explodes into shards.
+- [ ] **Lurking Intensity**: red particles drift up around Shion while she has the power.
+- [ ] **Nap**: 4 Zs rise from Shion's head and float off screen. Her animations are 20% slower until the last Z is gone.
+- [ ] **Eepy**: Zs keep rising and she stays 20% slower until her next turn starts.
+- [ ] Slowdowns stack sensibly: Eleventh Hour + Nap → the slower one (20%) wins; multi-hit attacks still speed up each loop.
+- [ ] **Monster Spell**: 50% chance Shion says a line when played, depending on the enemy it was copied from. Berserk → only the red Berserk lines.
+- [ ] Monster Spell lines: try one enemy per group (e.g. Nibbit, Leaf Slime, Bowlbug, Axebot, The Lost, a Ruby Raider, a Cultist, and an unlisted one like a Gremlin → "Other"). `[jitter]`/`[shake]` render.
+- [ ] Monster Spell (multiplayer): every client shows the same line or none, no desync.
+
+**Decisions I made**
+- Dragon Roar: Piercing Wail has no VFX in the base game (only the Cast animation), so it's a programmatic purple shockwave + screen shake (confirmed).
+- Black and white is on the affected creature's body only, not the whole screen (confirmed).
+- Lurking Intensity / Flow Charge particles last as long as the power (confirmed).
+- Berserk Form's vignette is local only, like Nightmare (confirmed). Nightmare's hands VFX aren't used, only the edge vignette.
+- Energy Bind / Energy Burst / Berserk Flow Charge reuse Shion's aura spritesheets: Fell Dragon's (purple) and the Crit/Vigor one (orange).
+- Defensive's barrier is pale lavender (no colour was given); Mighty Guard's is azure.
+- Dragon Smash's bounce spots are random (cosmetic RNG, not the run's). The original blunt hit VFX now plays at each collision instead of at the start of each hit.
+- Energy Bomb's impact frame plays once per attack, not once per enemy hit.
+- Monster Spell: while Berserk, only Berserk lines; otherwise only normal lines (same as the crit lines). Typos in the sheet fixed ("(jiter)…(/juter)", the stray "(" after "under your skin!"). Kaiser Crab = its Crusher and Rocket halves. The sheet listed Stabbot twice; I put **Zapbot** in the Machine group (`//todo : check Zapbot's group`). Unlisted enemies (Gremlins, Byrdpip, Architect, Wriggler, Torch Head Amalgam, The Adversary…) use "Other".
+- Monster Spell always uses the same two shared RNG rolls, even when the line is skipped, so clients in different languages can't desync.

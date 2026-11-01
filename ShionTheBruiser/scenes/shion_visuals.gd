@@ -6,5 +6,6 @@ func _ready() -> void:
 func _on_animation_finished() -> void:
 	if animation != &"idle" and animation != &"merchant_idle" and animation != &"die":
 		# Multi-hit attacks speed up the animation so each hit gets a full loop (see AnimationRestartPatch.cs)
-		speed_scale = 1.0
+		# Keeps Eleventh Hour, Nap... slowing her down (CreatureLook.cs)
+		speed_scale = get_meta(&"fx_anim_speed", 1.0)
 		play(&"idle")

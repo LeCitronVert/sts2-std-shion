@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -24,6 +25,7 @@ public class ShionEepy() : ShionTheBruiserCard(3,
     {
         var card = this;
         await ShionMechanicsHelper.PatchUpCreature(DynamicVars[PatchUpVar.Key].IntValue, card.Owner.Creature);
+        ShionVfx.PlayEepy(card.Owner.Creature);
         PlayerCmd.EndTurn(card.Owner, false);
     }
 

@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -18,6 +19,7 @@ public class ShionPout() : ShionTheBruiserCard(0,
         CardPlay play)
     {
         var card = this;
+        ShionVfx.PlayAngerMark(card.Owner.Creature);
         var xAmount = card.ResolveEnergyXValue() + 1;
         ArgumentNullException.ThrowIfNull(play.Target?.Player);
         

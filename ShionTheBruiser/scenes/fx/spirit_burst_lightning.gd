@@ -78,6 +78,31 @@ func set_active(active: bool) -> void:
 		)
 
 
+## Borrow Technique: plays the lightning's animation once (one loop), then fades it.
+## Does nothing while Spirit Burst's lightning is already active.
+func play_once() -> void:
+	if _active:
+		return
+	if _tween:
+		_tween.kill()
+	visible = true
+	set_process(true)
+	_sprite.play(&"default")
+	_sprite.frame = 0
+	_stretch()
+	modulate.a = 1.0
+	_tween = create_tween()
+	_tween.tween_interval(FRAMES.size() / fps)
+	_tween.tween_property(self, "modulate:a", 0.0, fade_out * 0.5)
+	_tween.tween_callback(func() -> void:
+		if _active:
+			return
+		visible = false
+		set_process(false)
+		_sprite.stop()
+	)
+
+
 func _process(_delta: float) -> void:
 	_stretch()
 

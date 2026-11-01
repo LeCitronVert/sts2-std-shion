@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -20,6 +21,7 @@ public class ShionBorrowTechnique() : ShionTheBruiserCard(1,
         CardPlay play)
     {
         var ogCard = this;
+        ShionVfx.PlaySpiritBurstLightningOnce(ogCard.Owner.Creature);
         var target = play.Target;
         ArgumentNullException.ThrowIfNull(target);
         ArgumentNullException.ThrowIfNull(target.Player);

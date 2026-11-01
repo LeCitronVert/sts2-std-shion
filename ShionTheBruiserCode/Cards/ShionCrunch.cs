@@ -8,6 +8,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
 using MegaCrit.Sts2.Core.HoverTips;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -51,6 +52,7 @@ public class ShionCrunch() : ShionTheBruiserCard(0,
         }
         
         ArgumentNullException.ThrowIfNull(play.Target);
+        ShionVfx.PlayBite(play.Target);
         
         // Checked before applying anything, Galvanised 3 already passed
         var isDebilitating = ShionMechanicsHelper.IsGalvanised(owner, DebilitateThreshold);

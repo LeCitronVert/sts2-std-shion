@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -28,12 +29,15 @@ public class ShionDragonSmash() : ShionTheBruiserCard(0,
         if (xAmount == 0) return;
         
         ArgumentNullException.ThrowIfNull(play.Target);
+        // The first strike sends the target flying (no damage), then each hit is a bounce off a screen edge
+        // and the last one slams it back in its place. The hit VFX play on each collision.
         await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
             .FromCard(card)
             .Targeting(play.Target)
-            .WithHitFx("vfx/vfx_attack_blunt")
             .WithHitCount(xAmount)
+            .WithDragonSmash(play.Target, xAmount)
             .Execute(choiceContext);
+        CreatureMotion.ReturnHome(play.Target);
     }
 
     protected override void OnUpgrade()

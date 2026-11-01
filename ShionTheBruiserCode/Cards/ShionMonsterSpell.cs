@@ -27,6 +27,9 @@ public class ShionMonsterSpell() : ShionTheBruiserCard(2,
 
     private List<(Type PowerType, int Amount)> _powersOnSelf = [];
     private List<(Type PowerType, int Amount)> _powersOnTarget = [];
+
+    /// <summary>The enemy this spell was copied from (its model's class name), for Shion's lines. See <see cref="MonsterSpellLines"/>.</summary>
+    private string? _sourceMonster;
     
     public override bool CanBeGeneratedInCombat => false;
     public override bool CanBeGeneratedByModifiers => false;
@@ -105,6 +108,8 @@ public class ShionMonsterSpell() : ShionTheBruiserCard(2,
 
         _powersOnSelf = memory.PowersOnSelf;
         _powersOnTarget = memory.PowersOnTarget;
+
+        _sourceMonster = MonsterSpellLines.SourceId(memory.Monster);
         
         UpdateDynamicVars();
     }
@@ -116,6 +121,7 @@ public class ShionMonsterSpell() : ShionTheBruiserCard(2,
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         var card = play.Card;
+        MonsterSpellLines.TryPlay(card.Owner.Creature, _sourceMonster, card.Owner.RunState.Rng.Niche);
         
         if (_hasAttack)
         {

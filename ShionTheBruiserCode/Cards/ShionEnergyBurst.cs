@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -48,6 +49,7 @@ public class ShionEnergyBurst() : ShionTheBruiserCard(0,
             Character.ShionTheBruiser.GetEnergyCastAnimIfApplicable(card.Owner.Character),
             Character.ShionTheBruiser.GetEnergyCastDelayIfApplicable(card.Owner.Character)
         );
+        ShionVfx.PlayFlameBurst(owner, ShionVfx.PurpleFlames);
         if (x > 0)
             await PowerCmd.Apply<VigorPower>(choiceContext, owner, x * card.DynamicVars["VigorPerX"].BaseValue, owner, card);
         await PowerCmd.Apply<VulnerablePower>(choiceContext, owner, card.DynamicVars.Vulnerable.BaseValue, owner, card);

@@ -34,11 +34,12 @@ public static class AnimationRestartPatch
         if (sprite.IsPlaying() && sprite.Animation == animation)
         {
             sprite.SetFrameAndProgress(0, 0f);
-            sprite.SpeedScale = RepeatSpeedScale;
+            sprite.SpeedScale = RepeatSpeedScale * CreatureLook.GetSpriteSpeed(sprite);
         }
         else
         {
-            sprite.SpeedScale = 1f;
+            // Slowed down by Eleventh Hour, Nap... (CreatureLook)
+            sprite.SpeedScale = CreatureLook.GetSpriteSpeed(sprite);
         }
     }
 

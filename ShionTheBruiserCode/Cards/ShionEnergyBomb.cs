@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -23,6 +24,18 @@ public class ShionEnergyBomb() : CritContributorCard(3,
     
     protected override HashSet<CardTag> CanonicalTags => [ShionCardTags.Energy];
 
+    /// <summary>Flash + impact frame once per hit, when the blasts land (they land on every enemy at once).</summary>
+    private static Action<Creature> ImpactFrameOnce()
+    {
+        var played = false;
+        return _ =>
+        {
+            if (played) return;
+            played = true;
+            ShionVfx.PlayImpactFrame();
+        };
+    }
+
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
@@ -31,7 +44,7 @@ public class ShionEnergyBomb() : CritContributorCard(3,
         if (card.CombatState != null)
             await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue).FromCard(card)
                 .TargetingAllOpponents(card.CombatState).WithHitFx(tmpSfx: "heavy_attack.mp3")
-                .WithEnergyBlast(card, "vfx/vfx_attack_blunt")
+                .WithEnergyBlast(card, "vfx/vfx_attack_blunt", ImpactFrameOnce())
                 .Execute(choiceContext);
     }
 

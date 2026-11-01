@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -26,6 +27,7 @@ public class ShionDragonPulse() : ShionTheBruiserCard(2,
         CardPlay play)
     {
         var card = this;
+        ShionVfx.PlayDragonPulse(card.Owner.Creature);
         var healAmount = ShionMechanicsHelper.GetDragonUniqueBuffCount(card.Owner.Creature);
         if (healAmount <= 0) return;
         await CreatureCmd.Heal(card.Owner.Creature, healAmount);

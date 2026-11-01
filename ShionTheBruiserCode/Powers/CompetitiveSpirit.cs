@@ -9,6 +9,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using MegaCrit.Sts2.Core.HoverTips;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiser.images.powers;
 
@@ -59,6 +60,7 @@ public class CompetitiveSpirit() : ShionTheBruiserPower
         }
         AmountThisTurn--;
         this.Flash();
+        ShionVfx.PlayAngerMark(Owner);
     }
     
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext context, PowerModel power, decimal amount, Creature? applier,

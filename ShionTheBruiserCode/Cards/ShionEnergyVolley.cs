@@ -55,6 +55,9 @@ public class ShionEnergyVolley() : ShionTheBruiserCard(1,
         return true;
     }
 
+    /// <summary>Animation speed: +15% per hit after the first, up to 3x.</summary>
+    private static float VolleySpeed(int hitCount) => Math.Min(1f + 0.15f * Math.Max(hitCount - 1, 0), 3f);
+
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
         CardPlay play)
@@ -63,13 +66,16 @@ public class ShionEnergyVolley() : ShionTheBruiserCard(1,
         ArgumentNullException.ThrowIfNull(play.Target);
         // Also covers the cost increase, which is a Modify hook
         ShionMechanicsHelper.TriggerGalvanised(card.Owner.Creature, FirstGalvanisedThreshold);
+        var hitCount = (int) ((CalculatedVar) card.DynamicVars["HitCount"]).Calculate(card.Owner.Creature);
+        // The more hits, the faster; each hit pushes the target back a little, until the end of the attack
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
-            .WithHitCount((int) ((CalculatedVar) card.DynamicVars["HitCount"]).Calculate(card.Owner.Creature))
+            .WithHitCount(hitCount)
             .FromCard(card)
             .Targeting(play.Target)
-            .WithEnergyBlast(card, "vfx/vfx_attack_slash")
+            .WithEnergyBlast(card, "vfx/vfx_attack_slash", CreatureMotion.Knockback, VolleySpeed(hitCount))
             .Execute(choiceContext)
         ;
+        CreatureMotion.ReturnHome(play.Target);
     }
 
     protected override void OnUpgrade()

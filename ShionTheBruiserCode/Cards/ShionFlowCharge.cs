@@ -8,6 +8,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using MegaCrit.Sts2.Core.HoverTips;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -35,6 +36,7 @@ public class ShionFlowCharge() : ShionBerserkCard(1,
         
         if (ShionMechanicsHelper.TriggerBerserk(card.Owner.Creature))
         {
+            ShionVfx.PlayFlameBurst(card.Owner.Creature, ShionVfx.OrangeFlames);
             await PowerCmd.Apply<VigorPower>(
                 choiceContext,
                 card.Owner.Creature,

@@ -16,3 +16,17 @@ res://ShionTheBruiser/scenes/fx/memory_bulbs.tscn::3bee0c3228a1bd65673c6ede2645a
 res://ShionTheBruiser/scenes/fx/come_what_may_speedlines.tscn::0412f018c511038c991498b91a11f896::1793467171::res://.godot/exported/133200997/export-9466466c34944041ac855cf7b66ea466-come_what_may_speedlines.scn
 res://ShionTheBruiser/scenes/fx/spirit_burst_lightning.tscn::173ee2c706e2ac7da2dfd0816283b87a::1793467171::res://.godot/exported/133200997/export-33dca832411fd2cc6119b8dc938fb681-spirit_burst_lightning.scn
 res://ShionTheBruiser/scenes/fx/spirit_burst_strike.tscn::4ce24e37390cbfeab47ec3de1828f580::1793467171::res://.godot/exported/133200997/export-ba38f47987d569917919286a82eed2c9-spirit_burst_strike.scn
+res://ShionTheBruiser/scenes/fx/anger_mark.tscn::32f946384365414a6fac90b754ea9662::1793526859::res://.godot/exported/133200997/export-a21fa1fe5e74d9034e2d6038235f96cf-anger_mark.scn
+res://ShionTheBruiser/scenes/fx/aura_light.tscn::fad6f919961932db404208179585175a::1793526859::res://.godot/exported/133200997/export-375201df47a0844aa83a87739c912d54-aura_light.scn
+res://ShionTheBruiser/scenes/fx/confetti.tscn::c9d221fe961d3cfce8f0dab943edb38a::1793526859::res://.godot/exported/133200997/export-1a176ab62c969a98f30b5a56e62165c8-confetti.scn
+res://ShionTheBruiser/scenes/fx/dragon_roar.tscn::cc5a52f70ed37e02d963225c2aae1d71::1793526859::res://.godot/exported/133200997/export-4378019acfac78168c831d47b1192451-dragon_roar.scn
+res://ShionTheBruiser/scenes/fx/flame_burst.tscn::8d1df5062d3be2147bfa1aeddb414dde::1793526859::res://.godot/exported/133200997/export-af41f610d5631556dedbe69e1dcbf5ba-flame_burst.scn
+res://ShionTheBruiser/scenes/fx/hex_shell.tscn::826296c81c9994e9bd7d2ae063543e85::1793526859::res://.godot/exported/133200997/export-b5cbaa151a605d9658cb5fae6110246d-hex_shell.scn
+res://ShionTheBruiser/scenes/fx/impact_frame.tscn::57e28bed46b833522686a01925be59b0::1793526859::res://.godot/exported/133200997/export-38cde0e77859c7a732810f23f0807b88-impact_frame.scn
+res://ShionTheBruiser/scenes/fx/light_bulb.tscn::039537d942aee2585295ed0fcf22159b::1793526859::res://.godot/exported/133200997/export-ff0074bd15dc83a668d374ad67efe251-light_bulb.scn
+res://ShionTheBruiser/scenes/fx/music_notes.tscn::dffa887e50dda9329b44149b5e9a169b::1793526859::res://.godot/exported/133200997/export-77fea447be49c269467f86d642ea5ac6-music_notes.scn
+res://ShionTheBruiser/scenes/fx/rising_particles.tscn::c26166f2d591342412c76d157b6032a0::1793526859::res://.godot/exported/133200997/export-63bce869d8222744c707c31e1001735b-rising_particles.scn
+res://ShionTheBruiser/scenes/fx/tears.tscn::efa1e8cd9f923dcd35c2241b9de8c1c5::1793526859::res://.godot/exported/133200997/export-2fb1cf3758801dde8830360ce73d5031-tears.scn
+res://ShionTheBruiser/scenes/fx/wind_gust.tscn::1044046454f24d9b64c84600e8b1d31b::1793526859::res://.godot/exported/133200997/export-3d6631dccd7c52401d30409f8964cba4-wind_gust.scn
+res://ShionTheBruiser/scenes/fx/zzz.tscn::06cb59324f07e331f07b1a69b96e6825::1793526859::res://.godot/exported/133200997/export-669d1994f45760a88c66bef4699de5a5-zzz.scn
+res://ShionTheBruiser/scenes/fx/rainbow_explosion.tscn::097263d7a6b3849ce86b4a44ac49b7e6::1793528957::res://.godot/exported/133200997/export-8da6de4871eece299942d002ca2f4129-rainbow_explosion.scn

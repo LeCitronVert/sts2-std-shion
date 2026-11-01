@@ -9,6 +9,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
 using MegaCrit.Sts2.Core.HoverTips;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -40,12 +41,22 @@ public class ShionStellarStrike() : ShionLatentCard(3,
     {
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
-        await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
-            .FromCard(card)
-            .Targeting(play.Target)
-            .WithHitFx("vfx/vfx_heavy_blunt")
-            .Execute(choiceContext)
-        ;
+        // Visual only: if this kills, the target's death particles explode with the rainbow explosion
+        ExplodingDeath.Begin(play.Target);
+        try
+        {
+            await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
+                .FromCard(card)
+                .Targeting(play.Target)
+                .WithHitFx("vfx/vfx_heavy_blunt")
+                .WithHitVfxNode(ShionVfx.CreateStellarExplosion)
+                .Execute(choiceContext)
+            ;
+        }
+        finally
+        {
+            ExplodingDeath.End(play.Target);
+        }
     }
 
     protected override void OnUpgrade()

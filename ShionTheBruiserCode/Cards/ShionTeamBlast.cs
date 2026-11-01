@@ -11,6 +11,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -47,6 +48,8 @@ public class ShionTeamBlast() : ShionTheBruiserCard(0,
     {
         var card = this;
         var applier = card.Owner.Creature;
+        // Every client plays the card, so every player sees it
+        ShionVfx.PlayConfetti();
         
         foreach (Creature target in card.CombatState?.GetTeammatesOf(card.Owner.Creature).Where(c => c?.IsPlayer ?? false)!)
         {

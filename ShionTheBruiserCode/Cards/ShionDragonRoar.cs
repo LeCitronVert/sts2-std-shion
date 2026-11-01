@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -36,6 +37,7 @@ public class ShionDragonRoar() : ShionTheBruiserCard(1,
     {
         var cardSource = this;
         await CreatureCmd.TriggerAnim(cardSource.Owner.Creature, "Cast", cardSource.Owner.Character.CastAnimDelay);
+        ShionVfx.PlayDragonRoar(cardSource.Owner.Creature);
         foreach (Creature hittableEnemy in cardSource.CombatState?.HittableEnemies ?? [])
         {
             // idk why i can't just use the dynamic var here, i prolly fucked up something
