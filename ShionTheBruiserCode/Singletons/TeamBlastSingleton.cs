@@ -46,8 +46,8 @@ public class TeamBlastSingleton : CustomSingletonModel
     // ── Balancing ────────────────────────────────────────────────────────────
 
     public const int GaugePerPlayer = 600;
-    public const decimal DamageDealtMultiplier = 1m;
-    public const decimal DamageBlockedMultiplier = 1m;
+    public const decimal DamageDealtMultiplier = 2m;
+    public const decimal DamageBlockedMultiplier = 1.5m;
     public const decimal DamageTakenMultiplier = 1m;
     public const decimal DeathBonus = 20m;  
     public const decimal AllyOstyDeathMultiplier = 0.5m;
