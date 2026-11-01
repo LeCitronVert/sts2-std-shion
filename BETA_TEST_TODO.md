@@ -1097,3 +1097,9 @@ Content I skipped (incomplete in the spec):
 - Legion of Death: counts unblocked attack damage only; it wears off at the end of the players' turn.
 - Power Core can't be skipped (you pay the Curse either way). Friendship Bracelet keeps its skip.
 - The new powers have no icons yet (default power icon); they're listed in `MISSING_IMAGES.tsv`. Power Core's outline is a copy of its icon for now.
+
+## Team Blast: lock fix (Random Blast duplicates)
+
+- [ ] With 2+ Random Blasts in the deck, fill the gauge: only **one** Random Blast copy in hand per turn, and never a second one while a copy is still in Hand/Draw/Discard (e.g. Retained).
+- [ ] Play Random Blast: every other Team Blast (yours and the other players', in Hand, Draw and Discard) is **Exhausted** right away.
+- [ ] Gauge orange (locked): no Team Blast shows up again for the rest of the combat, even through clones/gifts (Wall of Text, Reverse Beam, Random Portal…).

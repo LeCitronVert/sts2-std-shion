@@ -26,7 +26,8 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Singletons;
 /// <item>Once full, each player with a hidden Team Blast gets an Ethereal copy of it at the start of every turn.
 /// Duplicates only give one copy, but every Team Blast in any player's deck (duplicates included) makes the whole
 /// team fill the gauge <see cref="ChargeBonusPerTeamBlast"/> faster.</item>
-/// <item>Playing a Team Blast locks the gauge for the rest of the combat; it then goes back to 0 when combat ends.</item>
+/// <item>Playing a Team Blast locks the gauge for the rest of the combat: every other Team Blast in combat is
+/// Exhausted and no more can enter combat. The gauge then goes back to 0 when combat ends.</item>
 /// <item>Elite and Boss fights fill the gauge <see cref="EliteMultiplier"/> / <see cref="BossMultiplier"/> times as
 /// fast.</item>
 /// <item>Entering a Rest Site resets the gauge to 0 (see <see cref="Patches.TeamBlastRestSiteResetPatch"/>).</item>
@@ -207,6 +208,9 @@ public class TeamBlastSingleton : CustomSingletonModel
 
         foreach (var original in DistinctTeamBlasts(hidden))
         {
+            // Never more than one copy of a Team Blast at a time (e.g. last turn's copy wasn't Exhausted by Ethereal)
+            if (GetTeamBlastsInCombat(player).Any(c => c.Id == original.Id)) continue;
+
             var copy = original.CreateClone();
             copy.AddKeyword(CardKeyword.Ethereal);
             _allowedCopies.Add(copy);
@@ -218,12 +222,22 @@ public class TeamBlastSingleton : CustomSingletonModel
     private static IEnumerable<CardModel> DistinctTeamBlasts(IEnumerable<CardModel> cards) =>
         cards.GroupBy(c => c.Id).Select(g => g.OrderByDescending(c => c.IsUpgraded).First());
 
-    /// <summary>Team Blasts can't be generated in combat by any means (clones, gifts…), only by the gauge.</summary>
+    /// <summary>
+    /// Team Blasts can't be generated in combat by any means (clones, gifts…), only by the gauge.
+    /// Once the gauge is locked, none can enter combat at all.
+    /// </summary>
     public override async Task AfterCardEnteredCombat(CardModel card)
     {
-        if (!IsTeamBlast(card) || _allowedCopies.Contains(card) || card.Pile == null) return;
+        if (!IsTeamBlast(card) || card.Pile == null || card == _usedTeamBlast) return;
+        if (_allowedCopies.Contains(card) && !IsLocked) return;
         await CardPileCmd.RemoveFromCombat(card);
     }
+
+    /// <summary>Every player's Team Blasts in the Hand, Draw Pile and Discard Pile.</summary>
+    private static IEnumerable<CardModel> GetTeamBlastsInCombat(Player player) =>
+        new[] { PileType.Hand, PileType.Draw, PileType.Discard }
+            .SelectMany(pile => pile.GetPile(player).Cards)
+            .Where(IsTeamBlast);
 
     public override Task BeforeCardPlayed(CardPlay cardPlay)
     {
@@ -238,17 +252,20 @@ public class TeamBlastSingleton : CustomSingletonModel
     }
 
     /// <summary>
-    /// Once the Team Blast is played, the other copies (a different Team Blast of the same player, or other players'
-    /// copies) can't be played anymore, so they're removed from combat right away.
+    /// Once the Team Blast is played, every other Team Blast (duplicates, a different Team Blast of the same player,
+    /// other players' copies) can't be played anymore, so they're all Exhausted right away, wherever they are.
+    /// Done here and not only by the cards, so it covers every Team Blast and every player.
     /// </summary>
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (_usedTeamBlast == null || cardPlay.Card != _usedTeamBlast) return;
+        if (_usedTeamBlast == null || cardPlay.Card != _usedTeamBlast || _combatState == null) return;
 
-        var leftovers = _allowedCopies.Where(c => c != _usedTeamBlast && c.Pile != null).ToList();
-        foreach (var card in leftovers)
+        foreach (var player in _combatState.Players)
         {
-            await CardPileCmd.RemoveFromCombat(card);
+            foreach (var card in GetTeamBlastsInCombat(player).Where(c => c != _usedTeamBlast).ToList())
+            {
+                await CardCmd.Exhaust(choiceContext, card);
+            }
         }
     }
 
