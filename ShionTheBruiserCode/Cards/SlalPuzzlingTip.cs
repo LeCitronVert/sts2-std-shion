@@ -5,13 +5,14 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
+using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Apply 5 Confusion. Add a random (upgraded) Colorless card into your Hand.
+/// Apply 5 Confusion. Add a random (upgraded) Colorless card into your Hand. Gain 2 Weak.
 /// </summary>
 public class SlalPuzzlingTip() : SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Common,
@@ -19,9 +20,13 @@ public class SlalPuzzlingTip() : SlalTheEndlessCard(1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<Confusion>(5),
+        new PowerVar<WeakPower>(2),
     ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Confusion>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<Confusion>(),
+        HoverTipFactory.FromPower<WeakPower>(),
+    ];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -36,6 +41,8 @@ public class SlalPuzzlingTip() : SlalTheEndlessCard(1,
         {
             await CardPileCmd.AddGeneratedCardToCombat(newCard, PileType.Hand, card.Owner);
         }
+
+        await PowerCmd.Apply<WeakPower>(choiceContext, card.Owner.Creature, card.DynamicVars.Weak.BaseValue, card.Owner.Creature, card);
     }
 
     protected override void OnUpgrade()

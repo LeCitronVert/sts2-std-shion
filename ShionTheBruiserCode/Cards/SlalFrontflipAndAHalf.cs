@@ -10,18 +10,20 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain 1 Weak. Apply 1 Weak, and Confusion equal to your Block, to ALL enemies. Lose all your Block.
+/// Gain 2 Weak. Apply 1 Weak, and Confusion equal to your Block, to ALL enemies. Lose all your Block. Exhaust.
 /// </summary>
 public class SlalFrontflipAndAHalf() : SlalTheEndlessCard(1,
     CardType.Attack, CardRarity.Uncommon,
     TargetType.AllEnemies)
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<WeakPower>(1),
-        new DynamicVar("SelfWeak", 1),
+        new DynamicVar("SelfWeak", 2),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
-        new CalculatedVar("ConfusionAmount").WithMultiplier((card, _) => SlalMechanicsHelper.WithMemoryConfusionBonus(card, card.Owner.Creature.Block)),
+        new CalculatedVar("ConfusionAmount").WithMultiplier((card, _) => PreviewHelper.ModifiedConfusion(card, card.Owner.Creature.Block)),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [

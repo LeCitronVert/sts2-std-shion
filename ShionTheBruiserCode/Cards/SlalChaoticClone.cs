@@ -5,20 +5,25 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Cards;
+using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Play a random Slimed in your Hand. Choose to Mimic 2 or Shapeshift (upgraded: the offered cards are upgraded).
-/// The choice happens even without a Slimed to play.
+/// Gain 6 Block. Play a random Slimed in your Hand. If you do, choose to Mimic 2 or Shapeshift
+/// (upgraded: and upgrade that card, i.e. the offered cards are upgraded).
+/// Not written: when Flashback plays it, it always Shapeshifts.
 /// </summary>
 public class SlalChaoticClone() : SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Common,
     TargetType.Self)
 {
+    public override bool GainsBlock => true;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new BlockVar(6M, ValueProp.Move),
         new CardsVar(2),
     ];
 
@@ -36,16 +41,16 @@ public class SlalChaoticClone() : SlalTheEndlessCard(1,
         CardPlay play)
     {
         var card = this;
+        await CreatureCmd.GainBlock(card.Owner.Creature, card.DynamicVars.Block, play);
+
         var slimed = PileType.Hand.GetPile(card.Owner).Cards
             .Where(c => c is Slimed)
             .TakeRandom(1, card.Owner.RunState.Rng.CombatCardSelection)
             .FirstOrDefault();
-        if (slimed != null)
-        {
-            await CardCmd.AutoPlay(choiceContext, slimed, null);
-        }
+        if (slimed == null) return;
 
-        await SlalMechanicsHelper.MimicOrShapeshift(choiceContext, card.Owner, card.DynamicVars.Cards.IntValue, IsUpgraded);
+        await CardCmd.AutoPlay(choiceContext, slimed, null);
+        await SlalMechanicsHelper.MimicOrShapeshift(choiceContext, card.Owner, card.DynamicVars.Cards.IntValue, IsUpgraded, card);
     }
 
     protected override void OnUpgrade()

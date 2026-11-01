@@ -1,4 +1,3 @@
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -10,23 +9,22 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Apply 3 Confusion. Choose to Mimic 2 or Shapeshift (upgraded: the offered cards are upgraded). Exhaust.
+/// Gain 1 Flashback. Choose to Mimic 2 or Shapeshift (upgraded: and upgrade that card, i.e. the offered cards are upgraded).
+/// Not written: when Flashback plays it, it always Shapeshifts.
 /// </summary>
 public class SlalPlotTwist() : SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Common,
-    TargetType.AnyEnemy)
+    TargetType.Self)
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<Confusion>(3),
+        new PowerVar<Flashback>(1),
         new CardsVar(2),
     ];
 
     protected override HashSet<CardTag> CanonicalTags => [SlalCardTags.Shapeshift, SlalCardTags.Mimic];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<Confusion>(),
+        HoverTipFactory.FromPower<Flashback>(),
         HoverTipFactory.FromKeyword(SlalCardKeywords.Mimic),
         HoverTipFactory.FromKeyword(SlalCardKeywords.Shapeshift),
         HoverTipFactory.FromKeyword(SlalCardKeywords.GoofballTokenPower),
@@ -37,11 +35,8 @@ public class SlalPlotTwist() : SlalTheEndlessCard(1,
         CardPlay play)
     {
         var card = this;
-        ArgumentNullException.ThrowIfNull(play.Target);
-
-        await PowerCmd.Apply<Confusion>(choiceContext, play.Target, card.DynamicVars["Confusion"].BaseValue, card.Owner.Creature, card);
-
-        await SlalMechanicsHelper.MimicOrShapeshift(choiceContext, card.Owner, card.DynamicVars.Cards.IntValue, IsUpgraded);
+        await SlalMechanicsHelper.GainFlashback(choiceContext, card.Owner.Creature, card.DynamicVars["Flashback"].BaseValue, card);
+        await SlalMechanicsHelper.MimicOrShapeshift(choiceContext, card.Owner, card.DynamicVars.Cards.IntValue, IsUpgraded, card);
     }
 
     protected override void OnUpgrade()

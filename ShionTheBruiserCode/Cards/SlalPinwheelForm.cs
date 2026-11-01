@@ -10,6 +10,9 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+/// <summary>
+/// Whenever you Shapeshift or Mimic, apply 4 Confusion to ALL enemies, and gain the created card's cost. Upgraded: costs 1.
+/// </summary>
 public class SlalPinwheelForm() : SlalTheEndlessCard(2,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
@@ -17,11 +20,13 @@ public class SlalPinwheelForm() : SlalTheEndlessCard(2,
     protected override HashSet<CardTag> CanonicalTags => [SlalCardTags.Form];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<PinwheelForm>(1),
+        new PowerVar<PinwheelForm>(4),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<Confusion>(),
+        HoverTipFactory.FromKeyword(SlalCardKeywords.Shapeshift),
+        HoverTipFactory.FromKeyword(SlalCardKeywords.Mimic),
     ];
 
     protected override async Task OnPlay(
@@ -40,6 +45,6 @@ public class SlalPinwheelForm() : SlalTheEndlessCard(2,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["PinwheelForm"].UpgradeValueBy(1);
+        EnergyCost.UpgradeBy(-1);
     }
 }

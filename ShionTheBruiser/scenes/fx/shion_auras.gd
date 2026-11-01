@@ -30,6 +30,16 @@ const AURA_SHEETS := {
 	"burlesque_wind_up": "spirit_break",
 }
 
+## Size multiplier of some auras' flames (on top of the stacking scale)
+const AURA_SCALES := {
+	"burlesque_wind_up": 1.3,
+}
+
+## Opacity of some auras' flames (their light is unchanged)
+const AURA_OPACITIES := {
+	"burlesque_wind_up": 0.7,
+}
+
 ## Light layer used only by Shion's body, so the aura lights don't light enemies or the background.
 ## Must match CreatureFxController.AuraLightLayer.
 const LIGHT_LAYER := 1 << 19
@@ -95,6 +105,7 @@ func _add_aura(aura_name: String) -> void:
 	sprite.light_mask = 0
 	sprite.play(&"default")
 	sprite.frame = randi() % FRAME_CELLS.size()
+	sprite.modulate.a = AURA_OPACITIES.get(aura_name, 1.0)
 	aura.add_child(sprite)
 
 	var light := PointLight2D.new()
@@ -128,7 +139,7 @@ func _layout() -> void:
 	for i in range(_order.size() - 1, -1, -1):
 		var aura: Node2D = _auras[_order[i]]
 		move_child(aura, _order.size() - 1 - i)
-		var aura_scale := base_scale * (1.0 + scale_step * i)
+		var aura_scale: float = base_scale * (1.0 + scale_step * i) * AURA_SCALES.get(_order[i], 1.0)
 		var sprite := aura.get_node("Sprite") as AnimatedSprite2D
 		var light := aura.get_node("Light") as PointLight2D
 		var target_position := Vector2(0.0, feet_offset - FRAME_BOTTOM * aura_scale)

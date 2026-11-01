@@ -993,3 +993,61 @@ Content I skipped (incomplete in the spec):
 - Energy Bomb's impact frame plays once per attack, not once per enemy hit.
 - Monster Spell: while Berserk, only Berserk lines; otherwise only normal lines (same as the crit lines). Typos in the sheet fixed ("(jiter)…(/juter)", the stray "(" after "under your skin!"). Kaiser Crab = its Crusher and Rocket halves. The sheet listed Stabbot twice; I put **Zapbot** in the Machine group (`//todo : check Zapbot's group`). Unlisted enemies (Gremlins, Byrdpip, Architect, Wriggler, Torch Head Amalgam, The Adversary…) use "Other".
 - Monster Spell always uses the same two shared RNG rolls, even when the line is skipped, so clients in different languages can't desync.
+
+## 18. Slal: Change Pending B
+
+- [ ] Re-export the `.pck` with MegaDot (`scenes/fx/shion_auras.gd` changed), then build and launch.
+
+**Random / Memory / Confusion**
+- [ ] **Random**: Confusion applied by Slal's cards gets +current Random (1–10) on **each** application. Hover a Confusion card with e.g. 4 Random: `{Confusion}` shows the boosted value in green.
+- [ ] Random's tooltip shows the current bonus ("increased by X").
+- [ ] Confusion from **powers** is NOT boosted: Pinwheel Form, Pirate Parrot Form, Random Blast, Dangerous Ideas, Conclusion. Random Blast's card text doesn't show the bonus either.
+- [ ] **Memory** still adds its Confusion on Flashback plays, on top of Random. Its text is unchanged.
+- [ ] Computed previews include Random (and Memory on Flashback plays): Frontflip and a Half, Crypted Lore, Slime Hug, Elaborate Flourish, Cartoony Dodge.
+- [ ] Multi-application cards: Share Secrets (twice), False-Con Punch (each hit), Elaborate Flourish (each repeat), Cartoony Dodge (once per Flashback) all get the bonus each time.
+
+**Keywords**
+- [ ] New hover tips **Shapeshift+** and **Free Shapeshift+** (upgraded Goofball Token Power) appear on Distraction+ and Emergency Shapeshift+.
+
+**Cards**
+- [ ] **Chaotic Clone**: gain 6 Block; plays a random Slimed; **only if it did**, Mimic 2 / Shapeshift choice. Upgraded text: "...or Shapeshift and upgrade that card."
+- [ ] Chaotic Clone / **Plot Twist** played by **Flashback**: no choice screen, always Shapeshift (upgraded token if the card is upgraded). Also with Continuity Thread.
+- [ ] **Burlesque Wind-Up**: Always Novel instead of Exhaust. Its blue aura is ~30% bigger and 30% transparent (the light on the body is unchanged).
+- [ ] **Emergency Shapeshift**: first two sentences on one line; upgraded says "Free Shapeshift+".
+- [ ] **Distraction**: Shapeshift; glows gold while you're Weak, and the token is then free this turn. Upgraded: Shapeshift+ / Free Shapeshift+.
+- [ ] **Plot Twist**: Self-target, gain 1 Flashback, Mimic 2 or Shapeshift. No Exhaust, no Confusion anymore. Flashback can now play it.
+- [ ] **Proof Reading**: draw 1 (2) cards even with 0 Flashback, then gain 1 energy per Flashback, lose all Flashback. Keeps Always Novel and Exhaust (upgrade no longer removes Exhaust).
+- [ ] **Frontflip and a Half**: gain 2 Weak, now Exhausts.
+- [ ] **Wait a Second**: X Weak to ALL enemies (preview shows X), gain Flashback = different cards in Hand (upgraded: all cards), preview excludes itself. No more self Weak / Retain Hand.
+- [ ] **Wall of Text**: no longer Always Novel; upgraded = triple Block (keeps Exhaust).
+- [ ] **Cartoony Dodge**: Always Novel, targets ALL enemies, gain 8 Block, apply 4 Confusion to ALL enemies per Flashback (preview = total per enemy). No longer loses Flashback.
+- [ ] **Funny Gag**: Bludgeon's heavy blunt hit VFX + heavy attack sound.
+- [ ] **Favourite Bucket**: gain 2 Weak, 14 (18) Block, 3 Free Status, ignore Vulnerable until next turn. No Slimed effects anymore.
+- [ ] **Fresh Idea**: always choose the card to Transform; upgraded gains Retain.
+- [ ] **Enthusiastic Wave**: gives Fresh Idea+ (not Steady Fresh Idea); upgraded 2 to ALL players.
+- [ ] **Surprise Shapeshift**: now a **Skill** (check the frame/portrait looks fine), apply 2 (3) Confusion, gain 1 Flashback, Shapeshift (twice). No damage.
+- [ ] **Share Secrets**: apply 7 Confusion twice.
+- [ ] **Crypted Lore**: Stun threshold 40.
+- [ ] **False-Con Punch**: gain 2 Weak, then 2 Confusion per different card in Hand.
+- [ ] **Sarcophagus Form**: whenever you gain Weak, gain 3 (5) Plating now and 1 energy next turn. No more damage reduction. Plating gives Block at end of turn and decays.
+- [ ] **Slime Strikes**: Slimy's Slimed is added before the hits; 1 hit + 1 per Slimed in Hand (min 2 with room in Hand). Preview "Hits X times". Upgrade: 5 damage only.
+- [ ] **Slime It Off**: text now "Gain X Free Status" with its hover tip.
+- [ ] **Pinwheel Form**: 2 (1) cost. Each Shapeshift/Mimic → 4 Confusion to ALL enemies + gain the created card's energy/star cost (unmodified, so Free Shapeshift still refunds 1; upgraded tokens cost 0 → nothing).
+- [ ] Pinwheel Form: Emergency Shapeshift with 3 cards = 3 triggers; Surprise Shapeshift+ = 2; skipped Mimic still applies Confusion but gives no energy. Hat Tip / Break Continuity Shapeshifts also trigger it.
+- [ ] Pinwheel Form + a Mimic'd Regent card with a star cost: gain the stars.
+- [ ] **Puzzling Tip**: also gain 2 Weak (at the end).
+- [ ] **Pinball Move**: already fixed in d4f630c (one multi-hit attack, Vigor on every hit). Just re-check.
+
+**Decisions I made**
+- Random adds its current amount per application; Memory keeps its bonus too (confirmed). "Directly applied by cards" = the Confusion has the owner's card as source; powers now pass no card source (Pirate Parrot Form was changed for this).
+- Kept the name Cartoony Dodge (confirmed). Surprise Shapeshift → Skill (confirmed). Plot Twist loses Exhaust, Proof Reading keeps Always Novel (confirmed).
+- "Free Shapeshift+" in the sheet didn't say "upgraded"; I made it upgraded, like Shapeshift+.
+- "Upgrade that card" = the offered cards are upgraded (same as before, only the wording changed).
+- Wall of Text: upgrade is now triple Block instead of removing Exhaust, so both versions Exhaust. Slime Strikes: upgrade is now +1 damage only (no more shuffle into the Draw Pile).
+- Fresh Idea: "Transform a card" read as a choice (the old base version picked randomly).
+- Favourite Bucket: the sheet says "This turn, ignore your Vulnerable", but Vulnerable only matters on the enemy turn, so it still lasts until your next turn and the text says so. No upgrade given → kept +4 Block.
+- Cartoony Dodge: one 4-Confusion application per Flashback (so Random applies each time). Its upgrade (-1 cost, `//todo : upgrade not specified`) is unchanged.
+- Pinwheel Form: X-cost created cards give nothing. Removed the old "spread to all enemies" mechanic and the `IsApplyingToAllEnemies` flag that only it used.
+- Burlesque aura: "bigger" = 1.3x (`AURA_SCALES` in `shion_auras.gd`), 70% opacity on the flames only.
+- Funny Gag: Bludgeon's hit VFX and sound, without the Ironclad heavy attacker animation.
+- Puzzling Tip: the Weak comes after the Colorless card ("Also").

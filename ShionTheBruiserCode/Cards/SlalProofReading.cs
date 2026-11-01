@@ -10,7 +10,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Enums;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain 1 energy and draw 1 card per Flashback you have. Lose all Flashback. Exhaust (upgrade: no Exhaust).
+/// Always Novel. Draw 1 (2) card(s). Gain 1 energy per Flashback. Lose all Flashback. Exhaust.
 /// </summary>
 public class SlalProofReading() : SlalTheEndlessCard(0,
     CardType.Skill, CardRarity.Common,
@@ -19,6 +19,7 @@ public class SlalProofReading() : SlalTheEndlessCard(0,
     public override IEnumerable<CardKeyword> CanonicalKeywords => [SlalCardKeywords.AlwaysNovel, CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CardsVar(1),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
         new CalculatedVar("FlashbackAmount").WithMultiplier((card, _) => SlalMechanicsHelper.GetFlashback(card.Owner.Creature)),
@@ -34,16 +35,17 @@ public class SlalProofReading() : SlalTheEndlessCard(0,
         CardPlay play)
     {
         var card = this;
+        await CardPileCmd.Draw(choiceContext, card.DynamicVars.Cards.BaseValue, card.Owner);
+
         var flashback = SlalMechanicsHelper.GetFlashback(card.Owner.Creature);
         if (flashback <= 0) return;
 
         await PlayerCmd.GainEnergy(flashback, card.Owner);
-        await CardPileCmd.Draw(choiceContext, flashback, card.Owner);
         await SlalMechanicsHelper.LoseAllFlashback(card.Owner.Creature);
     }
 
     protected override void OnUpgrade()
     {
-        RemoveKeyword(CardKeyword.Exhaust);
+        DynamicVars.Cards.UpgradeValueBy(1);
     }
 }

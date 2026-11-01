@@ -11,7 +11,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Deal 8 damage and double the enemy's Confusion. If it has 20 Confusion or more, Stun it. Exhaust.
+/// Deal 8 damage and double the enemy's Confusion. If it has 40 Confusion or more, Stun it. Exhaust.
 /// </summary>
 public class SlalCryptedLore() : SlalTheEndlessCard(1,
     CardType.Attack, CardRarity.Rare,
@@ -21,11 +21,11 @@ public class SlalCryptedLore() : SlalTheEndlessCard(1,
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(8M, ValueProp.Move),
-        new DynamicVar("StunThreshold", 20),
+        new DynamicVar("StunThreshold", 40),
         new HasTargetVar(),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
-        new CalculatedVar("ConfusionAmount").WithMultiplier((card, target) => SlalMechanicsHelper.WithMemoryConfusionBonus(card, target?.GetPowerAmount<Confusion>() ?? 0)),
+        new CalculatedVar("ConfusionAmount").WithMultiplier((card, target) => PreviewHelper.ModifiedConfusion(card, target?.GetPowerAmount<Confusion>() ?? 0, target)),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [

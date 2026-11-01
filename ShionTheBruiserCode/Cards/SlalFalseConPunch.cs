@@ -3,7 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Models;
@@ -12,7 +12,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Apply 4 Confusion to a random enemy for each different card in your Hand.
+/// Gain 2 Weak. Apply 2 Confusion to a random enemy for each different card in your Hand.
 /// </summary>
 public class SlalFalseConPunch() : SlalTheEndlessCard(2,
     CardType.Skill, CardRarity.Uncommon,
@@ -20,13 +20,17 @@ public class SlalFalseConPunch() : SlalTheEndlessCard(2,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<Confusion>(4),
+        new PowerVar<WeakPower>(2),
+        new PowerVar<Confusion>(2),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
         new CalculatedVar("Hits").WithMultiplier((card, _) => SlalMechanicsHelper.CountDifferentCards(PreviewHelper.OtherCardsInHand(card))),
     ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Confusion>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<WeakPower>(),
+        HoverTipFactory.FromPower<Confusion>(),
+    ];
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -34,6 +38,8 @@ public class SlalFalseConPunch() : SlalTheEndlessCard(2,
     {
         var card = this;
         if (card.CombatState is null) return;
+
+        await PowerCmd.Apply<WeakPower>(choiceContext, card.Owner.Creature, card.DynamicVars.Weak.BaseValue, card.Owner.Creature, card);
 
         // This card has already left the Hand
         var hits = SlalMechanicsHelper.CountDifferentCards(PileType.Hand.GetPile(card.Owner).Cards);

@@ -23,7 +23,8 @@ public class SlalRandomBlast() : SlalTheEndlessCard(0,
     public override IEnumerable<CardKeyword> CanonicalKeywords => [DreamersKeywords.TeamBlast];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<Confusion>(1),
+        // Not a PowerVar: the power applies it, so Random doesn't increase it (a PowerVar preview would show the bonus)
+        new DynamicVar("Confusion", 1),
         new DynamicVar("Increase", RandomBlast.BaseIncrease),
     ];
 

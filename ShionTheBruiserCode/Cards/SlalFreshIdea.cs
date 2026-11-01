@@ -15,6 +15,9 @@ using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+/// <summary>
+/// Always Novel. Transform a card in your Hand (chosen) into a random non-Rare card. Exhaust. Upgraded: Retain.
+/// </summary>
 [Pool(typeof(TokenCardPool))]
 public class SlalFreshIdea(): SlalTheEndlessCard(0,
     CardType.Skill, CardRarity.Token,
@@ -39,22 +42,13 @@ public class SlalFreshIdea(): SlalTheEndlessCard(0,
         
         await CreatureCmd.TriggerAnim(card.Owner.Creature, "Cast", card.Owner.Character.CastAnimDelay);
 
-        List<CardModel> chosenCards;
-        if (!IsUpgraded)
-        {
-            var randomCard = SlalMechanicsHelper.ChooseRandomCardWithoutNovelIfPossible(Owner, PileType.Hand);
-            chosenCards = randomCard == null ? [] : [randomCard];
-        }
-        else
-        {
-            chosenCards = (await CardSelectCmd.FromHand(
-                choiceContext,
-                Owner,
-                new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 1),
-                null,
-                card
-            )).ToList();
-        }
+        var chosenCards = (await CardSelectCmd.FromHand(
+            choiceContext,
+            Owner,
+            new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 1),
+            null,
+            card
+        )).ToList();
 
         if (chosenCards.Count == 0) return;
         
@@ -76,5 +70,6 @@ public class SlalFreshIdea(): SlalTheEndlessCard(0,
 
     protected override void OnUpgrade()
     {
+        AddKeyword(CardKeyword.Retain);
     }
 }

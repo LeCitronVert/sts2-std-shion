@@ -37,7 +37,7 @@ public class SlalSlimeHug(): SlalSlimyCard(1,
             {
                 weak *= card.IsUpgraded ? UpgradedMultiplier : NormalMultiplier;
             }
-            return SlalMechanicsHelper.WithMemoryConfusionBonus(card, weak);
+            return PreviewHelper.ModifiedConfusion(card, weak, target);
         }),
     ];
 

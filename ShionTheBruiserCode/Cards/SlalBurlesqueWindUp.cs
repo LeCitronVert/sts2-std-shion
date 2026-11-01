@@ -5,17 +5,18 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// This turn, you gain 1 Vigor and draw 1 card whenever you play a card, but Attacks have no effect. Exhaust.
+/// Always Novel. This turn, you gain 1 Vigor and draw 1 card whenever you play a card, but Attacks have no effect.
 /// </summary>
 public class SlalBurlesqueWindUp() : SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [SlalCardKeywords.AlwaysNovel];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

@@ -29,6 +29,6 @@ public class HatTip : SlalTheEndlessPower
         if (!card.Tags.Contains(SlalCardTags.Shapeshift) && !card.Tags.Contains(SlalCardTags.Mimic)) return;
 
         Flash();
-        await SlalMechanicsHelper.Shapeshift(Owner.Player, Amount, free: true);
+        await SlalMechanicsHelper.Shapeshift(choiceContext, Owner.Player, Amount, free: true);
     }
 }

@@ -25,7 +25,7 @@ public class SlalElaborateFlourish() : SlalTheEndlessCard(1,
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
         new CalculatedVar("ConfusionAmount").WithMultiplier((card, target) =>
-            target is null ? 0 : SlalMechanicsHelper.WithMemoryConfusionBonus(card, card.DynamicVars["Confusion"].BaseValue) * TimesApplied(card, target)),
+            target is null ? 0 : PreviewHelper.ModifiedConfusion(card, card.DynamicVars["Confusion"].BaseValue, target) * TimesApplied(card, target)),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [

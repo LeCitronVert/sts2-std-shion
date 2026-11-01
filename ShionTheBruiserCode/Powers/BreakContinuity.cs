@@ -50,7 +50,7 @@ public class BreakContinuity : SlalTheEndlessPower
         if (!cardPlay.IsLastInSeries || !GetInternalData<Data>().novelPlays.Remove(cardPlay.Card) || Owner.Player is null) return;
 
         Flash();
-        await SlalMechanicsHelper.Shapeshift(Owner.Player, Amount, free: true);
+        await SlalMechanicsHelper.Shapeshift(choiceContext, Owner.Player, Amount, free: true);
         await PowerCmd.Apply<FrailPower>(choiceContext, Owner, FrailAmount, Owner, null);
         await PowerCmd.Apply<DisintegrationPower>(choiceContext, Owner, DisintegrationAmount, Owner, null);
     }

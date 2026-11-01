@@ -4,13 +4,12 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
-using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Always Novel. Add a copy of ALL cards in your Hand into your Draw Pile.
-/// Gain Block equal to double the number of cards created this way. Exhaust (upgrade: no Exhaust).
+/// Add a copy of ALL cards in your Hand into your Draw Pile.
+/// Gain Block equal to double (triple) the number of cards created this way. Exhaust.
 /// </summary>
 public class SlalWallOfText(): SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Uncommon,
@@ -18,7 +17,7 @@ public class SlalWallOfText(): SlalTheEndlessCard(1,
 {
     public override bool GainsBlock => true;
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [SlalCardKeywords.AlwaysNovel, CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CalculationBaseVar(0),
@@ -47,7 +46,7 @@ public class SlalWallOfText(): SlalTheEndlessCard(1,
 
     protected override void OnUpgrade()
     {
-        RemoveKeyword(CardKeyword.Exhaust);
+        DynamicVars.CalculationExtra.UpgradeValueBy(1);
     }
 
     public CardModel GetTranscendenceTransformedCard() => ModelDb.Card<SlalAnvilGag>();

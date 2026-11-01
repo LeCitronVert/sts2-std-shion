@@ -4,15 +4,14 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Enchantments;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Always Novel. Add 1 Steady Fresh Idea into another player's Hand.
-/// Upgraded: add 2 Steady Fresh Ideas into ALL players' Hands (including yours).
+/// Always Novel. Add 1 Fresh Idea+ into another player's Hand.
+/// Upgraded: add 2 Fresh Idea+ into ALL players' Hands (including yours).
 /// </summary>
 public class SlalEnthusiasticWave() : SlalTheEndlessCard(0,
     CardType.Skill, CardRarity.Uncommon,
@@ -29,8 +28,7 @@ public class SlalEnthusiasticWave() : SlalTheEndlessCard(0,
     protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(1)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromCard<SlalFreshIdea>(),
-        ..HoverTipFactory.FromEnchantment<Steady>(),
+        HoverTipFactory.FromCard<SlalFreshIdea>(true),
     ];
 
     protected override async Task OnPlay(
@@ -56,8 +54,7 @@ public class SlalEnthusiasticWave() : SlalTheEndlessCard(0,
             for (var i = 0; i < card.DynamicVars.Cards.IntValue; i++)
             {
                 // Created for the receiving player, so it goes into their Hand
-                var freshIdea = SlalMechanicsHelper.CreateCard<SlalFreshIdea>(player);
-                SlalMechanicsHelper.MakeSteady(freshIdea);
+                var freshIdea = SlalMechanicsHelper.CreateCard<SlalFreshIdea>(player, upgraded: true);
                 await CardPileCmd.AddGeneratedCardToCombat(freshIdea, PileType.Hand, player);
             }
         }

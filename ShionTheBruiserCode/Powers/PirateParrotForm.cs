@@ -38,7 +38,8 @@ public class PirateParrotForm : SlalTheEndlessPower
 
             var lostHp = targetResults.Any(r => r.UnblockedDamage > 0);
             Flash();
-            await PowerCmd.Apply<Confusion>(choiceContext, target, lostHp ? Amount : Amount * 2, Owner, card);
+            // No card source: Confusion from powers isn't increased by Random
+            await PowerCmd.Apply<Confusion>(choiceContext, target, lostHp ? Amount : Amount * 2, Owner, null);
         }
     }
 }

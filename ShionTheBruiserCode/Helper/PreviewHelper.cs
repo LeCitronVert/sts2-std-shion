@@ -1,7 +1,9 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Helper;
 
@@ -32,5 +34,16 @@ public static class PreviewHelper
     public static decimal ModifiedBlock(CardModel card, decimal amount, ValueProp props)
     {
         return Hook.ModifyBlock(card.CombatState, card.Owner.Creature, amount, props, card, null, out _);
+    }
+
+    /// <summary>
+    /// Confusion a single application of this amount by the card would actually give, after Random, Memory
+    /// and other modifiers (same calculation as <c>PowerVar&lt;Confusion&gt;</c> previews).
+    /// Nothing is applied for 0, so there's no bonus either.
+    /// </summary>
+    public static decimal ModifiedConfusion(CardModel card, decimal amount, Creature? target = null)
+    {
+        if (amount <= 0 || card.CombatState is null) return amount;
+        return Hook.ModifyPowerAmountGiven(card.CombatState, ModelDb.Power<Confusion>(), card.Owner.Creature, amount, target, card, out _);
     }
 }

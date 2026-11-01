@@ -10,6 +10,9 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+/// <summary>
+/// Whenever you gain Weak, gain 3 (5) Plating and 1 energy next turn.
+/// </summary>
 public class SlalSarcophagusForm() : SlalTheEndlessCard(1,
     CardType.Power, CardRarity.Uncommon,
     TargetType.Self)
@@ -17,12 +20,13 @@ public class SlalSarcophagusForm() : SlalTheEndlessCard(1,
     protected override HashSet<CardTag> CanonicalTags => [SlalCardTags.Form];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<SarcophagusForm>(1),
+        new PowerVar<SarcophagusForm>(3),
         new EnergyVar(1),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<WeakPower>(),
+        HoverTipFactory.FromPower<PlatingPower>(),
         HoverTipFactory.ForEnergy(this),
     ];
 
@@ -43,6 +47,6 @@ public class SlalSarcophagusForm() : SlalTheEndlessCard(1,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["SarcophagusForm"].UpgradeValueBy(1);
+        DynamicVars["SarcophagusForm"].UpgradeValueBy(2);
     }
 }

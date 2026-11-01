@@ -22,6 +22,7 @@ public class Random : SlalTheEndlessPower
     public const int StrengthPerThreshold = 1;
     
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<Confusion>(),
         HoverTipFactory.FromPower<Memory>(),
         HoverTipFactory.FromPower<StrengthPower>(),
     ];
@@ -45,6 +46,16 @@ public class Random : SlalTheEndlessPower
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("DisplayAmount", 0)
     ];
+
+    /// <summary>
+    /// Confusion applied directly by the owner's cards is increased by the current Random (per application).
+    /// Confusion applied by powers isn't: they pass no card source.
+    /// </summary>
+    public override decimal ModifyPowerAmountGivenAdditive(PowerModel power, Creature giver, decimal amount, Creature? target, CardModel? cardSource)
+    {
+        if (power is not Confusion || amount <= 0 || giver != Owner || cardSource?.Owner?.Creature != Owner) return 0m;
+        return GetCurrentAmount();
+    }
 
     public int GetCurrentAmount()
     {

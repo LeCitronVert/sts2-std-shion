@@ -215,20 +215,24 @@ public static class SlalMechanicsHelper
     private static readonly Dictionary<CardModel, int> MemoryConfusionBonuses = [];
 
     /// <summary>
+    /// Cards Flashback (or Continuity Thread) is playing right now.
+    /// </summary>
+    private static readonly HashSet<CardModel> CardsPlayedByFlashback = [];
+
+    /// <summary>
+    /// True while Flashback is playing this card (Plot Twist and Chaotic Clone then always Shapeshift).
+    /// </summary>
+    public static bool IsPlayedByFlashback(CardModel? card)
+    {
+        return card != null && CardsPlayedByFlashback.Contains(card);
+    }
+
+    /// <summary>
     /// The extra Confusion the card applies because Flashback is playing it with Memory (0 otherwise).
     /// </summary>
     public static int GetMemoryConfusionBonus(CardModel? card)
     {
         return card != null && MemoryConfusionBonuses.TryGetValue(card, out var bonus) ? bonus : 0;
-    }
-
-    /// <summary>
-    /// Confusion a single application of <paramref name="amount"/> would give, with the Memory bonus (for previews).
-    /// Nothing is applied for 0, so there's no bonus either.
-    /// </summary>
-    public static decimal WithMemoryConfusionBonus(CardModel card, decimal amount)
-    {
-        return amount > 0 ? amount + GetMemoryConfusionBonus(card) : amount;
     }
 
     public static int GetMemory(Creature creature)
@@ -280,6 +284,7 @@ public static class SlalMechanicsHelper
 
             // Registered before the card reaches the Play pile, so the card shown there already displays the extra Confusion
             if (confusionBonus > 0) MemoryConfusionBonuses[card] = confusionBonus;
+            if (fromFlashback) CardsPlayedByFlashback.Add(card);
             try
             {
                 await CardPileCmd.Add(card, PileType.Play);
@@ -290,6 +295,7 @@ public static class SlalMechanicsHelper
             finally
             {
                 MemoryConfusionBonuses.Remove(card);
+                CardsPlayedByFlashback.Remove(card);
             }
         }
     }
@@ -297,27 +303,12 @@ public static class SlalMechanicsHelper
     // ── Confusion ───────────────────────────────────────────────────────────
 
     /// <summary>
-    /// True while an effect is applying Confusion to all enemies at once (used by Pinwheel Form to avoid spreading it again).
-    /// </summary>
-    public static bool IsApplyingToAllEnemies { get; private set; }
-
-    /// <summary>
-    /// Applies a power to ALL hittable enemies, flagging the application as already targeting everyone.
+    /// Applies a power to ALL hittable enemies.
     /// </summary>
     public static async Task ApplyToAllEnemies<T>(PlayerChoiceContext choiceContext, Creature applier, decimal amount, CardModel? source) where T : PowerModel
     {
         if (applier.CombatState is null || amount <= 0) return;
-
-        var previous = IsApplyingToAllEnemies;
-        IsApplyingToAllEnemies = true;
-        try
-        {
-            await PowerCmd.Apply<T>(choiceContext, applier.CombatState.HittableEnemies.ToList(), amount, applier, source);
-        }
-        finally
-        {
-            IsApplyingToAllEnemies = previous;
-        }
+        await PowerCmd.Apply<T>(choiceContext, applier.CombatState.HittableEnemies.ToList(), amount, applier, source);
     }
 
     // ── Card helpers ────────────────────────────────────────────────────────
@@ -492,19 +483,41 @@ public static class SlalMechanicsHelper
 
     /// <summary>
     /// Shapeshift: adds <paramref name="count"/> random Goofball Token Powers into the Hand (all different if possible).
+    /// Shapeshift+ (<paramref name="upgraded"/>): they are upgraded.
     /// Free Shapeshift (<paramref name="free"/>): they are free to play this turn.
+    /// Each one counts as a separate Shapeshift (Pinwheel Form).
     /// </summary>
-    public static async Task<List<CardModel>> Shapeshift(Player player, int count = 1, bool upgraded = false, bool free = false)
+    public static async Task<List<CardModel>> Shapeshift(PlayerChoiceContext choiceContext, Player player, int count = 1, bool upgraded = false, bool free = false)
     {
         if (count <= 0) return [];
 
         var powers = CreateDifferentGoofballTokenPowers(player, count, upgraded);
         foreach (var power in powers)
         {
-            if (free && !power.EnergyCost.CostsX) power.SetToFreeThisTurn();
-            await CardPileCmd.AddGeneratedCardToCombat(power, PileType.Hand, player);
+            await AddShapeshiftedPower(choiceContext, player, power, free);
         }
         return powers;
+    }
+
+    /// <summary>
+    /// Adds a Goofball Token Power created by a Shapeshift into the Hand and triggers the Shapeshift effects.
+    /// </summary>
+    public static async Task AddShapeshiftedPower(PlayerChoiceContext choiceContext, Player player, CardModel power, bool free = false)
+    {
+        if (free && !power.EnergyCost.CostsX) power.SetToFreeThisTurn();
+        await CardPileCmd.AddGeneratedCardToCombat(power, PileType.Hand, player);
+        await AfterShapeshiftOrMimic(choiceContext, player, power);
+    }
+
+    /// <summary>
+    /// Called after each Shapeshift or Mimic, with the card it created (null if the Mimic was skipped).
+    /// </summary>
+    private static async Task AfterShapeshiftOrMimic(PlayerChoiceContext choiceContext, Player player, CardModel? created)
+    {
+        if (player.Creature.GetPower<PinwheelForm>() is { } pinwheelForm)
+        {
+            await pinwheelForm.AfterShapeshiftOrMimic(choiceContext, created);
+        }
     }
 
     /// <summary>
@@ -518,17 +531,27 @@ public static class SlalMechanicsHelper
     /// <summary>
     /// Mimic X: choose 1 of X random non-Rare cards from other characters to add into your Hand (can be skipped).
     /// </summary>
-    public static Task<CardModel?> Mimic(PlayerChoiceContext choiceContext, Player player, int count, bool upgraded = false)
+    public static async Task<CardModel?> Mimic(PlayerChoiceContext choiceContext, Player player, int count, bool upgraded = false)
     {
-        return ChooseCardToAddToHand(choiceContext, player, GetMimicOptions(player), count, upgraded);
+        var chosen = await ChooseCardToAddToHand(choiceContext, player, GetMimicOptions(player), count, upgraded);
+        await AfterShapeshiftOrMimic(choiceContext, player, chosen);
+        return chosen;
     }
 
     /// <summary>
     /// "Choose to Mimic X or Shapeshift": one screen with the X Mimic cards and a Goofball Token Power (can be skipped).
+    /// When Flashback plays <paramref name="source"/>, it always Shapeshifts instead (no choice).
     /// </summary>
-    public static Task<CardModel?> MimicOrShapeshift(PlayerChoiceContext choiceContext, Player player, int count, bool upgraded = false)
+    public static async Task<CardModel?> MimicOrShapeshift(PlayerChoiceContext choiceContext, Player player, int count, bool upgraded = false, CardModel? source = null)
     {
-        return ChooseCardOrGoofballToAddToHand(choiceContext, player, GetMimicOptions(player), count, upgraded);
+        if (IsPlayedByFlashback(source))
+        {
+            return (await Shapeshift(choiceContext, player, 1, upgraded)).FirstOrDefault();
+        }
+
+        var chosen = await ChooseCardOrGoofballToAddToHand(choiceContext, player, GetMimicOptions(player), count, upgraded);
+        await AfterShapeshiftOrMimic(choiceContext, player, chosen);
+        return chosen;
     }
 
     // ── Goofball Token Powers ───────────────────────────────────────────────

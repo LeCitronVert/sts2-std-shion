@@ -42,7 +42,9 @@ public class SlalFunnyGag() : SlalTheEndlessCard(2,
         await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
             .FromCard(card)
             .Targeting(play.Target)
-            .WithHitFx("vfx/vfx_attack_blunt")
+            // Bludgeon's hit
+            .WithHitFx("vfx/vfx_heavy_blunt", null, "heavy_attack.mp3")
+            .WithHitVfxSpawnedAtBase()
             .Execute(choiceContext);
 
         if (play.Target.IsAlive)
