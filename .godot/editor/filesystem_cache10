@@ -1,13 +1,13 @@
 63f7b34db8d8cdea90c76aacccf841ec
 ::res://::1793527567
-BETA_TEST_TODO.md::TextFile::-1::1793533274::0::1::::<><><>0<>0<><>::
+BETA_TEST_TODO.md::TextFile::-1::1793538619::0::1::::<><><>0<>0<><>::
 export_presets.cfg::TextFile::-1::1781940056::0::1::::<><><>0<>0<><>::
 README.md::TextFile::-1::1793314835::0::1::::<><><>0<>0<><>::
 ShionTheBruiser.json::JSON::-1::1792433998::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1793533320
+::res://bin/ExportRelease/net9.0/publish/::1793543844
 ShionTheBruiser.deps.json::JSON::-1::1793529204::0::1::::<><><>0<>0<><>::
 ::res://ci/::1792939391
 ::res://ci/game-refs/::1792939391
@@ -1229,7 +1229,7 @@ team_blast_bar.png::CompressedTexture2D::3159766184385900582::1793177713::179317
 team_blast_locked.png::CompressedTexture2D::7621079854370452256::1793177713::1793178089::1::::<><><>0<>0<>013933bfc0053016122d75e6bb53c76f<>res://.godot/imported/team_blast_locked.png-af6d45a45c3d33d30fc47cd1c14ac63b.ctex::
 team_blast_ready.png::CompressedTexture2D::8331283540066729296::1793177713::1793178089::1::::<><><>0<>0<>8f45cec4072dfa0ce28aea63f7bd5405<>res://.godot/imported/team_blast_ready.png-abb4ee67caa30497b30d7a53924e66fb.ctex::
 ::res://ShionTheBruiser/localization/::1781940056
-::res://ShionTheBruiser/localization/eng/::1793532470
+::res://ShionTheBruiser/localization/eng/::1793533996
 ancients.json::JSON::-1::1793450154::0::1::::<><><>0<>0<><>::
 cards.json::JSON::-1::1793533266::0::1::::<><><>0<>0<><>::
 card_keywords.json::JSON::-1::1793532216::0::1::::<><><>0<>0<><>::
@@ -1242,7 +1242,7 @@ events.json::JSON::-1::1793013036::0::1::::<><><>0<>0<><>::
 main_menu_ui.json::JSON::-1::1793017890::0::1::::<><><>0<>0<><>::
 monsters.json::JSON::-1::1793532216::0::1::::<><><>0<>0<><>::
 orbs.json::JSON::-1::1793183274::0::1::::<><><>0<>0<><>::
-potions.json::JSON::-1::1793290579::0::1::::<><><>0<>0<><>::
+potions.json::JSON::-1::1793533996::0::1::::<><><>0<>0<><>::
 powers.json::JSON::-1::1793532216::0::1::::<><><>0<>0<><>::
 relics.json::JSON::-1::1793532470::0::1::::<><><>0<>0<><>::
 rest_site_ui.json::JSON::-1::1793017890::0::1::::<><><>0<>0<><>::
@@ -2134,10 +2134,10 @@ YellowChaosEmeralds.cs::CSharpScript::7947279272287764495::1793017115::0::1::::<
 ::res://ShionTheBruiserCode/RestSiteOptions/::1793018465
 Lull.cs::CSharpScript::1804038520924471915::1783271867::0::1::::<><><>0<>0<><>::
 Seek.cs::CSharpScript::8588524608089364226::1793017890::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Singletons/::1793525607
+::res://ShionTheBruiserCode/Singletons/::1793542386
 ShionCritSingleton.cs::CSharpScript::3951621572379558951::1793457705::0::1::::<><><>0<>0<><>::
 SlalApparenceSingleton.cs::CSharpScript::6424703020693251239::1793013162::0::1::::<><><>0<>0<><>::
-TeamBlastSingleton.cs::CSharpScript::5790765917409709916::1793525607::0::1::::<><><>0<>0<><>::
+TeamBlastSingleton.cs::CSharpScript::5790765917409709916::1793542386::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiserCode/Timeline/::1793360692
 CharacterUnlockEpoch.cs::CSharpScript::2177026565359277390::1793207253::0::1::::<><><>0<>0<><>::
 DreamersEpoch.cs::CSharpScript::1284180167898971242::1793207404::0::1::::<><><>0<>0<><>::

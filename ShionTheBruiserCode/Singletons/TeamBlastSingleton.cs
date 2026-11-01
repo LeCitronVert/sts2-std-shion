@@ -56,7 +56,7 @@ public class TeamBlastSingleton : CustomSingletonModel
     /// <summary>Gauge fill multiplier during Elite fights.</summary>
     public const decimal EliteMultiplier = 1.5m;
     /// <summary>Gauge fill multiplier during Boss fights.</summary>
-    public const decimal BossMultiplier = 3m;
+    public const decimal BossMultiplier = 2m;
 
     // ── State ────────────────────────────────────────────────────────────────
 
