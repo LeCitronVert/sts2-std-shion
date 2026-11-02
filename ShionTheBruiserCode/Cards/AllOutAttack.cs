@@ -14,18 +14,21 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Generic Team Blast. Deal 30 (50) damage. ALL players' Attack modifiers apply.
+/// Generic Team Blast. Deal 50 damage (upgraded: 60 damage to ALL enemies). ALL players' Attack modifiers apply.
 /// You deal the damage; the other players' damage modifiers and Critical Hit chance are added on top of yours
 /// (same approach as <see cref="ShionDualStrike"/>).
 /// </summary>
 [Pool(typeof(ColorlessCardPool))]
 public class AllOutAttack() : TeamBlastCard(CardType.Attack, TargetType.AnyEnemy), ICritHitRateContributor
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(30M, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(50M, ValueProp.Move)];
+
+    public override TargetType TargetType => IsUpgraded ? TargetType.AllEnemies : TargetType.AnyEnemy;
 
     protected override async Task OnTeamBlast(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        ArgumentNullException.ThrowIfNull(play.Target);
+        if (CombatState is null) return;
+        if (!IsUpgraded) ArgumentNullException.ThrowIfNull(play.Target);
 
         // Crits need the tracker if anyone on the team can crit
         if (LivingPlayers.Any(p => p.Creature.HasPower<ShionCritTrackerPower>()))
@@ -33,9 +36,9 @@ public class AllOutAttack() : TeamBlastCard(CardType.Attack, TargetType.AnyEnemy
             await ShionMechanicsHelper.EnsureCreatureHasCritTracker(Owner.Creature);
         }
 
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
-            .Targeting(play.Target)
+        var attack = DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this);
+        attack = IsUpgraded ? attack.TargetingAllOpponents(CombatState) : attack.Targeting(play.Target!);
+        await attack
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);
     }
@@ -73,6 +76,6 @@ public class AllOutAttack() : TeamBlastCard(CardType.Attack, TargetType.AnyEnemy
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(20M);
+        DynamicVars.Damage.UpgradeValueBy(10M);
     }
 }

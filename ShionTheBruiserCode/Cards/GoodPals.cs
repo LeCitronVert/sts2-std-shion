@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Generic Team Blast. ALL players gain 10 (20) Block and heal 10 HP.
+/// Generic Team Blast. ALL players gain 20 (30) Block and heal 10 (15) HP.
 /// </summary>
 [Pool(typeof(ColorlessCardPool))]
 public class GoodPals() : TeamBlastCard(CardType.Skill, TargetType.AllAllies)
@@ -17,7 +17,7 @@ public class GoodPals() : TeamBlastCard(CardType.Skill, TargetType.AllAllies)
     public override bool GainsBlock => true;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(10, ValueProp.Move),
+        new BlockVar(20, ValueProp.Move),
         new HealVar(10),
     ];
 
@@ -33,5 +33,6 @@ public class GoodPals() : TeamBlastCard(CardType.Skill, TargetType.AllAllies)
     protected override void OnUpgrade()
     {
         DynamicVars.Block.UpgradeValueBy(10);
+        DynamicVars.Heal.UpgradeValueBy(5);
     }
 }

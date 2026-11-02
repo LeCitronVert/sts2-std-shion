@@ -910,9 +910,9 @@
     "SHIONTHEBRUISER-DEFECT_HAPPY_FLEET.title": "Happy Fleet",
     "SHIONTHEBRUISER-DEFECT_HAPPY_FLEET.description": "{IfUpgraded:show:ALL players|ALL other players} gain as many [gold]Orb Slots[/gold] as you have and [gold]Channel[/gold] a copy of each of your Orbs.",
     "SHIONTHEBRUISER-CACOPHONY.title": "Cacophony",
-    "SHIONTHEBRUISER-CACOPHONY.description": "ALL players gain {Energy:energyIcons()} and {Stars:starIcons()}.",
+    "SHIONTHEBRUISER-CACOPHONY.description": "ALL players gain {Energy:energyIcons()} and {Stars:starIcons()}, and draw {Cards:diff()} {Cards:plural:card|cards}.",
     "SHIONTHEBRUISER-GOOD_PALS.title": "Good Pals",
     "SHIONTHEBRUISER-GOOD_PALS.description": "ALL players gain {Block:diff()} [gold]Block[/gold] and heal {Heal:diff()} HP.",
     "SHIONTHEBRUISER-ALL_OUT_ATTACK.title": "All Out Attack",
-    "SHIONTHEBRUISER-ALL_OUT_ATTACK.description": "Deal {Damage:diff()} damage.\nALL players' Attack modifiers apply."
+    "SHIONTHEBRUISER-ALL_OUT_ATTACK.description": "Deal {Damage:diff()} damage{IfUpgraded:show: to ALL enemies|}.\nALL players' Attack modifiers apply."
 }
