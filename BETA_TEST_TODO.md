@@ -1184,6 +1184,7 @@ Content I skipped (incomplete in the spec):
 - [ ] **Break Continuity (Slal)**: the upgrade now gives Retain instead of Innate.
 
 **Visuals**
+- [ ] **Seels card frame** is now a softer, muted gold (about `#c8a85a`, was `#f1c232`), and so are the small deck-list card icons. Check that it's easier on the eyes and still reads as gold, not brown.
 - [ ] **Gloat** power has no icon yet (added to `MISSING_IMAGES.tsv`). The new temporary Strength powers (Belittle, Big Target Sign, Joke and Run, Savagery, Strike First) use the wrapper's default display, like Humiliate.
 
 **Decisions I made**
