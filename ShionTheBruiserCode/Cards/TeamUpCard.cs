@@ -14,7 +14,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
 /// Base class for Team-Up cards: multiplayer Rares played by two players.
-/// When the Initiator plays it, every Partner of the right class gets an Ethereal copy.
+/// When the Initiator plays it, every Partner of the right class gets an Ethereal, Exhaust copy.
 /// The effect happens when one Partner plays that copy (the other copies are Exhausted), and both players animate.
 /// The copy shows the ".partnerDescription" text (TeamUpDescriptionPatch).
 /// Team-Ups are never generated in combat or by modifiers, and loot only offers them with the Partner's class in the run (TeamUpLootPatch).
@@ -78,6 +78,7 @@ public abstract class TeamUpCard(int cost, CardType type, TargetType target) :
             copy.Initiator = Owner;
             copy._copies = copies;
             copy.AddKeyword(CardKeyword.Ethereal);
+            if (!copy.Keywords.Contains(CardKeyword.Exhaust)) copy.AddKeyword(CardKeyword.Exhaust);
             copy.OnBecamePartnerCopy();
             copies.Add(copy);
             await CardPileCmd.AddGeneratedCardToCombat(copy, PileType.Hand, Owner);
