@@ -21,7 +21,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Add Replay to ALL your Slashes (and Upgrade them). Gain 1 Vulnerable for each of your Slashes. Doesn't include the Exhausted ones.
 /// </summary>
-public class SeelsTornadoStance() : SeelsTheRecklessCard(1,
+public class SeelsTornadoStance() : SeelsTheRecklessCard(2,
     CardType.Skill, CardRarity.Rare,
     TargetType.Self)
 {

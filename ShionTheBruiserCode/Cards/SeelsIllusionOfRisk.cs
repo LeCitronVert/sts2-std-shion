@@ -19,34 +19,39 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Double your Vulnerable. For the next 2 (3) turns, if you are Vulnerable, you take 75% reduced damage from Vulnerable enemies.
+/// Gamble 2 (3). Draw 2 (3) cards. Increase the cost of this card by 1 energy this turn, and return it to your Hand.
 /// </summary>
-public class SeelsIllusionOfRisk() : SeelsTheRecklessCard(1,
+public class SeelsIllusionOfRisk() : SeelsTheRecklessCard(0,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<IllusionOfRisk>(2M),
-        new CalculationBaseVar(0),
-        new CalculationExtraVar(1),
-        new CalculatedVar("VulnerableAmount").WithMultiplier((card, _) => SeelsMechanicsHelper.GetVulnerable(card.Owner.Creature)),
+        new DynamicVar("Gamble", 2M),
+        new CardsVar(2),
+        new EnergyVar(1),
     ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<VulnerablePower>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(SeelsCardKeywords.Gamble),
+        HoverTipFactory.FromKeyword(SeelsCardKeywords.Erratic),
+    ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        var creature = Owner.Creature;
-        var vulnerable = SeelsMechanicsHelper.GetVulnerable(creature);
-        if (vulnerable > 0)
-        {
-            await PowerCmd.Apply<VulnerablePower>(choiceContext, creature, vulnerable, creature, this);
-        }
-        await PowerCmd.Apply<IllusionOfRisk>(choiceContext, creature, DynamicVars["IllusionOfRisk"].BaseValue, creature, this);
+        await SeelsMechanicsHelper.Gamble(choiceContext, Owner, DynamicVars["Gamble"].IntValue, this);
+        await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
+        EnergyCost.AddThisTurn(DynamicVars.Energy.IntValue);
+    }
+
+    protected override PileType GetResultPileTypeForCardPlay()
+    {
+        var pileType = base.GetResultPileTypeForCardPlay();
+        return pileType != PileType.Discard ? pileType : PileType.Hand;
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["IllusionOfRisk"].UpgradeValueBy(1M);
+        DynamicVars["Gamble"].UpgradeValueBy(1M);
+        DynamicVars.Cards.UpgradeValueBy(1M);
     }
 }

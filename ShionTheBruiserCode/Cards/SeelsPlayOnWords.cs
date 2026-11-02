@@ -19,26 +19,32 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain 1 (2) Vulnerable. Apply 1 (2) Vulnerable to ALL enemies.
+/// Gloat 1 (2). Apply 1 (2) Vulnerable to ALL enemies.
 /// </summary>
-public class SeelsPlayOnWords() : SeelsTheRecklessCard(0,
+public class SeelsPlayOnWords() : SeelsTheRecklessCard(1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.AllEnemies)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<VulnerablePower>(1M)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new PowerVar<Gloat>(1M),
+        new PowerVar<VulnerablePower>(1M),
+    ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<VulnerablePower>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<Gloat>(),
+        HoverTipFactory.FromPower<VulnerablePower>(),
+    ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         if (CombatState is null) return;
-        var amount = DynamicVars.Vulnerable.BaseValue;
-        await PowerCmd.Apply<VulnerablePower>(choiceContext, Owner.Creature, amount, Owner.Creature, this);
-        await PowerCmd.Apply<VulnerablePower>(choiceContext, CombatState.HittableEnemies.ToList(), amount, Owner.Creature, this);
+        await SeelsMechanicsHelper.Gloat(choiceContext, Owner.Creature, DynamicVars["Gloat"].BaseValue, this);
+        await PowerCmd.Apply<VulnerablePower>(choiceContext, CombatState.HittableEnemies.ToList(), DynamicVars.Vulnerable.BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
+        DynamicVars["Gloat"].UpgradeValueBy(1M);
         DynamicVars.Vulnerable.UpgradeValueBy(1M);
     }
 }

@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -79,6 +80,28 @@ public static class SeelsMechanicsHelper
         }
 
         return x;
+    }
+
+    // ── Gloat ───────────────────────────────────────────────────────────────
+
+    /// <summary>
+    /// Gloat X: if you take unblocked attack damage this turn, gain X energy and draw X additional cards next turn.
+    /// </summary>
+    public static async Task Gloat(PlayerChoiceContext choiceContext, Creature creature, decimal amount, CardModel? source)
+    {
+        if (amount <= 0) return;
+        await PowerCmd.Apply<Powers.Gloat>(choiceContext, creature, amount, creature, source);
+    }
+
+    /// <summary>
+    /// Whether the player lost HP this turn (any unblocked damage, including self-inflicted HP loss).
+    /// </summary>
+    public static bool LostHpThisTurn(Creature creature)
+    {
+        if (creature.CombatState is null || !CombatManager.Instance.IsInProgress) return false;
+        return CombatManager.Instance.History.Entries
+            .OfType<DamageReceivedEntry>()
+            .Any(e => e.Receiver == creature && e.Result.UnblockedDamage > 0 && e.HappenedThisTurn(creature.CombatState));
     }
 
     // ── Gamble / Erratic ────────────────────────────────────────────────────

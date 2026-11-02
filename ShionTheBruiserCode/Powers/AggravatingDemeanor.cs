@@ -9,7 +9,8 @@ using MegaCrit.Sts2.Core.Models.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// Whenever you gain Vulnerable, gain Block next turn equal to your Vulnerable, up to X.
+/// Whenever you apply Vulnerable, gain (X times) as much Vigor next turn.
+/// Goes through VigorNextTurn: Vulnerable can be applied mid-attack, which would break VigorPower.
 /// </summary>
 public class AggravatingDemeanor : SeelsTheRecklessPower
 {
@@ -18,17 +19,14 @@ public class AggravatingDemeanor : SeelsTheRecklessPower
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<VulnerablePower>(),
-        HoverTipFactory.FromPower<BlockNextTurnPower>(),
+        HoverTipFactory.FromPower<VigorNextTurn>(),
     ];
 
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
-        if (power is not VulnerablePower || power.Owner != Owner || amount <= 0) return;
-
-        var block = Math.Min(power.Amount, Amount);
-        if (block <= 0) return;
+        if (power is not VulnerablePower || applier != Owner || power.Owner == Owner || amount <= 0) return;
 
         Flash();
-        await PowerCmd.Apply<BlockNextTurnPower>(choiceContext, Owner, block, Owner, null);
+        await PowerCmd.Apply<VigorNextTurn>(choiceContext, Owner, amount * Amount, Owner, null);
     }
 }

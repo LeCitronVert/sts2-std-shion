@@ -19,7 +19,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// If you have more Vulnerable than HP, gain 4 Max HP. Exhaust. (Retain.)
+/// If you have more Blood than you have HP, gain 4 Max HP. Exhaust. (Retain.)
 /// </summary>
 public class SeelsNeverLearn() : SeelsTheRecklessCard(1,
     CardType.Skill, CardRarity.Rare,
@@ -29,9 +29,9 @@ public class SeelsNeverLearn() : SeelsTheRecklessCard(1,
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new MaxHpVar(4M)];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<VulnerablePower>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Blood>()];
 
-    private bool IsActive => SeelsMechanicsHelper.GetVulnerable(Owner.Creature) > Owner.Creature.CurrentHp;
+    private bool IsActive => SeelsMechanicsHelper.GetBlood(Owner.Creature) > Owner.Creature.CurrentHp;
 
     protected override bool ShouldGlowGoldInternal => IsActive;
 

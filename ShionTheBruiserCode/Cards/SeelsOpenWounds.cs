@@ -19,27 +19,32 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Draw 2 (3) cards. The next 2 times you lose HP, add a Wound into your Hand.
+/// Wounding. Draw 1 card. Replay 1 (2).
 /// </summary>
 public class SeelsOpenWounds() : SeelsTheRecklessCard(0,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CardsVar(2),
-        new PowerVar<OpenWounds>(2M),
-    ];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [SeelsCardKeywords.Wounding];
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(1)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Wound>()];
 
+    public override void AfterCreated()
+    {
+        base.AfterCreated();
+        BaseReplayCount = 1;
+    }
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
+        await SeelsMechanicsHelper.AddWounds(Owner, 1);
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
-        await PowerCmd.Apply<OpenWounds>(choiceContext, Owner.Creature, DynamicVars["OpenWounds"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Cards.UpgradeValueBy(1M);
+        BaseReplayCount += 1;
     }
 }

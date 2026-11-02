@@ -20,6 +20,8 @@ public class SeelsUntelegraphAttacks() : SeelsTheRecklessCard(2,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
+    public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.SingleplayerOnly;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<UntelegraphAttacks>(1M),
         new CardsVar(2),

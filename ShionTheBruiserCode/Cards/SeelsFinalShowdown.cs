@@ -1,3 +1,5 @@
+using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -5,14 +7,20 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Cards;
+using MegaCrit.Sts2.Core.Models.Enchantments;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Enchantments;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Apply 3 (5) Vulnerable and 10 Artifact. Gain Strength and Demise equal to the enemy's Vulnerable. Draw 3 (5) cards.
+/// Apply 3 (5) Vulnerable. Gain Strength and Demise equal to the enemy's Vulnerable. Draw 3 (5) cards.
 /// </summary>
 //todo : choose cost
 public class SeelsFinalShowdown() : SeelsTheRecklessCard(1,
@@ -21,7 +29,6 @@ public class SeelsFinalShowdown() : SeelsTheRecklessCard(1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<VulnerablePower>(3M),
-        new PowerVar<ArtifactPower>(10M),
         new CardsVar(3),
         new HasTargetVar(),
         new CalculationBaseVar(0),
@@ -32,7 +39,6 @@ public class SeelsFinalShowdown() : SeelsTheRecklessCard(1,
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<VulnerablePower>(),
-        HoverTipFactory.FromPower<ArtifactPower>(),
         HoverTipFactory.FromPower<StrengthPower>(),
         HoverTipFactory.FromPower<DemisePower>(),
     ];
@@ -48,7 +54,6 @@ public class SeelsFinalShowdown() : SeelsTheRecklessCard(1,
     {
         ArgumentNullException.ThrowIfNull(play.Target);
         await PowerCmd.Apply<VulnerablePower>(choiceContext, play.Target, DynamicVars.Vulnerable.BaseValue, Owner.Creature, this);
-        await PowerCmd.Apply<ArtifactPower>(choiceContext, play.Target, DynamicVars["ArtifactPower"].BaseValue, Owner.Creature, this);
 
         var amount = SeelsMechanicsHelper.GetVulnerable(play.Target);
         if (amount > 0)

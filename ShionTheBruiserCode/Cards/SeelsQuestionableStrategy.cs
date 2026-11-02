@@ -19,40 +19,32 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain 5 Vulnerable. Gain Block equal to your Vulnerable (twice).
+/// Fill your Hand with Wounds. Gain 20 (28) Block.
 /// </summary>
-public class SeelsQuestionableStrategy() : SeelsTheRecklessCard(0,
+public class SeelsQuestionableStrategy() : SeelsTheRecklessCard(2,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
     public override bool GainsBlock => true;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<VulnerablePower>(5M),
-        new RepeatVar(1),
+        new BlockVar(20M, ValueProp.Move),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
-        // Counts the Vulnerable gained first; Block is gained once per repeat, so modifiers apply to each gain
-        new CalculatedVar("BlockAmount").WithMultiplier((card, _) =>
-            card.DynamicVars.Repeat.IntValue * PreviewHelper.ModifiedBlock(card,
-                SeelsMechanicsHelper.GetVulnerable(card.Owner.Creature) + card.DynamicVars.Vulnerable.BaseValue,
-                ValueProp.Move)),
+        new CalculatedVar("WoundsAmount").WithMultiplier((card, _) => SeelsMechanicsHelper.PreviewFreeHandSlots(card)),
     ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<VulnerablePower>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Wound>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        var creature = Owner.Creature;
-        await PowerCmd.Apply<VulnerablePower>(choiceContext, creature, DynamicVars.Vulnerable.BaseValue, creature, this);
-        for (var i = 0; i < DynamicVars.Repeat.IntValue; i++)
-        {
-            await CreatureCmd.GainBlock(creature, SeelsMechanicsHelper.GetVulnerable(creature), ValueProp.Move, play);
-        }
+        var amount = CardPile.MaxCardsInHand - PileType.Hand.GetPile(Owner).Cards.Count;
+        await SeelsMechanicsHelper.AddWounds(Owner, amount);
+        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Repeat.UpgradeValueBy(1M);
+        DynamicVars.Block.UpgradeValueBy(8M);
     }
 }

@@ -19,33 +19,25 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain 2 Vulnerable. Next turn, gain 2 (3) energy and draw 2 additional cards.
+/// Gloat 2 (3). Exhaust.
 /// </summary>
 public class SeelsConcedeFirstBlow() : SeelsTheRecklessCard(0,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<VulnerablePower>(2M),
-        new EnergyVar(2),
-        new CardsVar(2),
-    ];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<VulnerablePower>(),
-        HoverTipFactory.ForEnergy(this),
-    ];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<Gloat>(2M)];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Gloat>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        var creature = Owner.Creature;
-        await PowerCmd.Apply<VulnerablePower>(choiceContext, creature, DynamicVars.Vulnerable.BaseValue, creature, this);
-        await PowerCmd.Apply<EnergyNextTurnPower>(choiceContext, creature, DynamicVars.Energy.BaseValue, creature, this);
-        await PowerCmd.Apply<DrawCardsNextTurnPower>(choiceContext, creature, DynamicVars.Cards.BaseValue, creature, this);
+        await SeelsMechanicsHelper.Gloat(choiceContext, Owner.Creature, DynamicVars["Gloat"].BaseValue, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Energy.UpgradeValueBy(1M);
+        DynamicVars["Gloat"].UpgradeValueBy(1M);
     }
 }

@@ -19,14 +19,13 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain X Vulnerable. Gain 6 (8) Block X times. Gain 6 (8) Block X times next turn.
+/// Apply X Vulnerable. Gain 6 (8) Block X times. Gain 6 (8) Block X times next turn.
 /// </summary>
 public class SeelsFunnyDance() : SeelsTheRecklessCard(0,
     CardType.Skill, CardRarity.Common,
-    TargetType.Self)
+    TargetType.AnyEnemy)
 {
     public override bool GainsBlock => true;
-
     protected override bool HasEnergyCostX => true;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
@@ -46,11 +45,12 @@ public class SeelsFunnyDance() : SeelsTheRecklessCard(0,
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
+        ArgumentNullException.ThrowIfNull(play.Target);
         var x = ResolveEnergyXValue();
         if (x <= 0) return;
 
         var creature = Owner.Creature;
-        await PowerCmd.Apply<VulnerablePower>(choiceContext, creature, x, creature, this);
+        await PowerCmd.Apply<VulnerablePower>(choiceContext, play.Target, x, creature, this);
         for (var i = 0; i < x; i++)
         {
             await CreatureCmd.GainBlock(creature, DynamicVars.Block, play);

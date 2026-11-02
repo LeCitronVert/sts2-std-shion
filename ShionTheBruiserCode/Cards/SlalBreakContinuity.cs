@@ -10,7 +10,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Whenever you play a Novel card, Shapeshift (once), gain 1 Frail and 1 Disintegration. (Innate)
+/// Whenever you play a Novel card, Shapeshift (once), gain 1 Frail and 1 Disintegration. (Retain)
 /// </summary>
 public class SlalBreakContinuity() : SlalTheEndlessCard(2,
     CardType.Power, CardRarity.Ancient,
@@ -40,6 +40,6 @@ public class SlalBreakContinuity() : SlalTheEndlessCard(2,
 
     protected override void OnUpgrade()
     {
-        AddKeyword(CardKeyword.Innate);
+        AddKeyword(CardKeyword.Retain);
     }
 }

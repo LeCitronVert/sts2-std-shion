@@ -20,6 +20,8 @@ public class SeelsSplashArmor() : SeelsTheRecklessCard(2,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
+    public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<SplashArmor>(1M)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [

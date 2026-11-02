@@ -1,12 +1,17 @@
+using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
+using MegaCrit.Sts2.Core.Models.Enchantments;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Enchantments;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
@@ -14,7 +19,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Wounding. Deal damage to ALL enemies equal to the number of Wounds in your Hand. Upgrade: Replay.
+/// Wounding. Deal 7 (9) damage to ALL enemies. Deal 3 (4) additional damage per Wound in your Hand.
 /// </summary>
 public class SeelsPainChock() : SeelsTheRecklessCard(1,
     CardType.Attack, CardRarity.Common,
@@ -23,8 +28,9 @@ public class SeelsPainChock() : SeelsTheRecklessCard(1,
     public override IEnumerable<CardKeyword> CanonicalKeywords => [SeelsCardKeywords.Wounding];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CalculationBaseVar(0),
-        new ExtraDamageVar(1),
+        new CalculationBaseVar(7M),
+        new ExtraDamageVar(3M),
+        // Counts the Wound this card adds before attacking
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => SeelsMechanicsHelper.PreviewWoundsInHandAfterWounding(card)),
     ];
 
@@ -35,8 +41,9 @@ public class SeelsPainChock() : SeelsTheRecklessCard(1,
         if (CombatState is null) return;
         await SeelsMechanicsHelper.AddWounds(Owner, 1);
 
-        // Counted after adding the Wound (the preview var adds it on top of the Hand)
-        await DamageCmd.Attack(SeelsMechanicsHelper.GetWoundsInHand(Owner).Count())
+        var wounds = SeelsMechanicsHelper.GetWoundsInHand(Owner).Count();
+        var damage = DynamicVars.CalculationBase.BaseValue + DynamicVars.ExtraDamage.BaseValue * wounds;
+        await DamageCmd.Attack(damage)
             .FromCard(this)
             .TargetingAllOpponents(CombatState)
             .WithHitFx("vfx/vfx_attack_blunt")
@@ -45,6 +52,7 @@ public class SeelsPainChock() : SeelsTheRecklessCard(1,
 
     protected override void OnUpgrade()
     {
-        BaseReplayCount += 1;
+        DynamicVars.CalculationBase.UpgradeValueBy(2M);
+        DynamicVars.ExtraDamage.UpgradeValueBy(1M);
     }
 }

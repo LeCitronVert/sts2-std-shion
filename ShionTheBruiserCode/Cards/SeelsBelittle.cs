@@ -1,12 +1,17 @@
+using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
+using MegaCrit.Sts2.Core.Models.Enchantments;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Enchantments;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
@@ -14,7 +19,8 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Deal 7 damage to a random enemy 3 (4) times. Each time an enemy loses HP this way, gain 1 Vulnerable.
+/// Deal 7 damage to a random enemy 3 (4) times. Each target that lost HP loses 2 (3) Strength this turn.
+/// The targets are checked once the attack is over (benefits from Vigor).
 /// </summary>
 public class SeelsBelittle() : SeelsTheRecklessCard(2,
     CardType.Attack, CardRarity.Common,
@@ -23,9 +29,10 @@ public class SeelsBelittle() : SeelsTheRecklessCard(2,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(7M, ValueProp.Move),
         new RepeatVar(3),
+        new PowerVar<StrengthPower>(2M),
     ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<VulnerablePower>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
@@ -38,15 +45,21 @@ public class SeelsBelittle() : SeelsTheRecklessCard(2,
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);
 
-        var hpLosses = attack.Results.SelectMany(r => r).Count(r => r.UnblockedDamage > 0);
-        if (hpLosses > 0)
+        var targets = attack.Results.SelectMany(r => r)
+            .Where(r => r.UnblockedDamage > 0)
+            .Select(r => r.Receiver)
+            .Distinct()
+            .Where(c => c.IsAlive)
+            .ToList();
+        foreach (var target in targets)
         {
-            await PowerCmd.Apply<VulnerablePower>(choiceContext, Owner.Creature, hpLosses, Owner.Creature, this);
+            await PowerCmd.Apply<BelittleStrengthDown>(choiceContext, target, DynamicVars.Strength.BaseValue, Owner.Creature, this);
         }
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars.Repeat.UpgradeValueBy(1M);
+        DynamicVars.Strength.UpgradeValueBy(1M);
     }
 }

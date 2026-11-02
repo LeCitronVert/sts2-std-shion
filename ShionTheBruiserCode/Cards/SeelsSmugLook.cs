@@ -19,28 +19,28 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain 2 Vulnerable. This turn (For 2 turns), whenever you play a card, deal 2 damage to a random enemy.
+/// Gloat 2. This turn, whenever you play a card, deal 2 damage to a random enemy. (0-cost)
 /// </summary>
-public class SeelsSmugLook() : SeelsTheRecklessCard(0,
+public class SeelsSmugLook() : SeelsTheRecklessCard(1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<VulnerablePower>(2M),
+        new PowerVar<Gloat>(2M),
         new PowerVar<SmugLook>(1M),
     ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<VulnerablePower>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Gloat>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         var creature = Owner.Creature;
-        await PowerCmd.Apply<VulnerablePower>(choiceContext, creature, DynamicVars.Vulnerable.BaseValue, creature, this);
+        await SeelsMechanicsHelper.Gloat(choiceContext, creature, DynamicVars["Gloat"].BaseValue, this);
         await PowerCmd.Apply<SmugLook>(choiceContext, creature, DynamicVars["SmugLook"].BaseValue, creature, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["SmugLook"].UpgradeValueBy(1M);
+        EnergyCost.UpgradeBy(-1);
     }
 }

@@ -1142,3 +1142,56 @@ Content I skipped (incomplete in the spec):
 - The Mood Shift **power** was deleted, along with its loc and its `MISSING_IMAGES.tsv` row. The card stays.
 - Flo's Brew now uses the shared Creativity Unbound list, so Pinwheel and Walking Encyclopedia stay pickable after becoming Tokens.
 - Page 2 of the sheet ("Ideas, ne pas implémenter encore") was not implemented.
+
+## 21. Seels: Change Pending D
+
+- [ ] Build and launch. No scene or `.pck` changes in this pass, so no re-export is needed.
+
+**New status: Gloat X**
+- [ ] **Gloat X**: if you take unblocked attack damage, gain X energy and draw X more cards next turn (Energy Next Turn + Draw Cards Next Turn). It triggers once and is then removed.
+- [ ] Gloat that never triggers wears off when the enemy turn ends. Fully blocked hits, non-attack damage and self HP loss don't trigger it.
+- [ ] The Gloat hover tip appears on Concede First Blow, Lure, Palm Strike, Play on Words and Smug Look.
+
+**Cards**
+- [ ] **Aggravating Demeanor**: whenever you apply Vulnerable (to an enemy), gain that much **Vigor next turn**, multiplied by the stacks: 2 copies = twice as much. Self-Vulnerable doesn't count. Upgraded: 0-cost.
+- [ ] **Beast Form**: gain 6 (9) Strength. Still a Form Power, cost 3.
+- [ ] **Belittle**: 7 damage ×3 (×4) to random enemies. After the attack, each enemy that lost HP loses 2 (3) Strength this turn, once per enemy even if hit several times. Vigor boosts the hits.
+- [ ] **Big Target Sign**: X-cost, no longer multiplayer-only, hits ALL enemies. They lose 2X Strength this turn and you gain 4X Tainted (base game). Check the in-combat preview. Upgraded: Retain.
+- [ ] **Concede First Blow**: Gloat 2 (3). Exhaust.
+- [ ] **Final Showdown**: no more 10 Artifact. Apply 3 (5) Vulnerable, gain Strength + Demise equal to the enemy's Vulnerable, draw 3 (5).
+- [ ] **Funny Dance**: now targets an enemy and applies X Vulnerable to it. Block X times now and next turn are unchanged.
+- [ ] **High Reward**: hits 3 times if you lost HP this turn (glows gold). Check that HP loss from Blood/self-damage counts.
+- [ ] **Illusion of Risk**: 0-cost. Gamble 2 (3), draw 2 (3), then return to your Hand costing 1 more this turn. Make sure the +1 survives the move back to the Hand and resets next turn.
+- [ ] **Joke and Run**: 2-cost Power. Gain 1 (2) Dexterity, gain 2 energy, lose 3 Strength this turn.
+- [ ] **Laugh It Off**: whenever you lose HP, add 1 (2) Slash(es) into your Hand.
+- [ ] **Lure**: 2-cost (upgraded 1-cost). Gain 1 Intangible, Gloat 3. Exhaust. No more Retain upgrade.
+- [ ] **Never Learn**: checks **Blood** > HP (glows gold when true). Upgraded: Retain.
+- [ ] **Palm Strike**: deal 10, Gloat 1.
+- [ ] **Play on Words**: 1-cost. Gloat 1 (2), apply 1 (2) Vulnerable to ALL enemies.
+- [ ] **Questionable Strategy**: 2-cost. Fill your Hand with Wounds (preview shows how many), gain 20 (28) Block.
+- [ ] **Savagery**: whenever you play an Attack, gain 2 Strength this turn. Upgraded: 0-cost.
+- [ ] **Smug Look**: 1-cost (upgraded 0). Gloat 2, then this turn, every card played deals 2 to a random enemy. The "for 2 turns" upgrade is gone.
+- [ ] **Strike First**: 0-cost (no longer X). Deal 5 (7). If the target intends to attack, gain 3 (4) Strength this turn. It glows gold if any enemy intends to attack.
+- [ ] **Threatening Promise**: no more "repeat if you are Vulnerable". One Perfect Fit Slash (Slash+) per Vulnerable on the enemy.
+- [ ] **Tornado Stance**: now 2-cost. The rest is unchanged.
+- [ ] **Splash Armor**: multiplayer only (gone from solo rewards).
+- [ ] **Untelegraph Attacks**: singleplayer only (gone from MP rewards).
+- [ ] **Blood Bath**: also adds X Slashes into the Discard Pile. X is the Blood consumed (the upgrade's +1 only affects the Block).
+- [ ] **Bloody Execution**: Blood Bend X, then add 2 Slashes (Slashes+) enchanted **Sharp X** to the Hand and 2 to the Draw Pile. If X = 0, the Slashes have no Sharp. It no longer deals damage and needs no target.
+- [ ] **Reckless Charge**: Wounding. 9 (11) damage per Wound in your Hand, plus that many Slashes into the Discard Pile.
+- [ ] **Pain Chock**: Wounding. 7 (9) damage to ALL, +3 (+4) per Wound in your Hand (the preview counts its own Wound). No more Replay upgrade.
+- [ ] **Open Wounds**: Wounding, draw 1, **Replay 1 (2)**. Check that Replay shows in hand **and** in the card library/compendium, and survives save/load.
+- [ ] **Break Continuity (Slal)**: the upgrade now gives Retain instead of Innate.
+
+**Visuals**
+- [ ] **Gloat** power has no icon yet (added to `MISSING_IMAGES.tsv`). The new temporary Strength powers (Belittle, Big Target Sign, Joke and Run, Savagery, Strike First) use the wrapper's default display, like Humiliate.
+
+**Decisions I made**
+- Gloat = "if you take unblocked attack damage, gain X energy and draw X cards next turn" (confirmed). It triggers once, lasts through the enemy turn and then wears off.
+- Aggravating Demeanor: stacks multiply the Vigor (confirmed). Following the Vigor rule (VigorNextTurn for hooks), the Vigor arrives as **Vigor next turn**, because Vulnerable can be applied mid-attack. Only Vulnerable applied to *other* creatures counts.
+- Tainted = base-game TaintedPower (confirmed). Sharp = base-game Sharp enchantment (confirmed).
+- Kept the current values the sheet doesn't mention: Joke and Run stays a Power, Final Showdown keeps 5 Vulnerable / 5 draw upgraded, Laugh It Off upgrade = 2 Slashes, Big Target Sign upgrade = Retain, Never Learn upgrade = Retain, Palm Strike upgrade = -1 cost, Threatening Promise upgrade = +1 Vulnerable / Slash+, Tornado Stance still upgrades the Slashes.
+- Play on Words: the upgrade raises both Gloat and Vulnerable by 1, like the old version raised both of its values.
+- Bloody Execution stays an Attack card (no type change in the sheet), but targets no one.
+- Deleted the now-unused **Beast Form**, **Open Wounds** and **Illusion of Risk** powers, with their loc and their `MISSING_IMAGES.tsv` rows. The cards stay.
+- Page 2 of the sheet ("Ideas, ne pas implémenter encore") was not implemented.

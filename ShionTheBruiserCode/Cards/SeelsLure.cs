@@ -19,9 +19,9 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain 1 Intangible. Gain 5 Vulnerable. Exhaust. (Retain.)
+/// Gain 1 Intangible. Gloat 3. Exhaust. (1-cost)
 /// </summary>
-public class SeelsLure() : SeelsTheRecklessCard(1,
+public class SeelsLure() : SeelsTheRecklessCard(2,
     CardType.Skill, CardRarity.Rare,
     TargetType.Self)
 {
@@ -29,23 +29,23 @@ public class SeelsLure() : SeelsTheRecklessCard(1,
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<IntangiblePower>(1M),
-        new PowerVar<VulnerablePower>(5M),
+        new PowerVar<Gloat>(3M),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<IntangiblePower>(),
-        HoverTipFactory.FromPower<VulnerablePower>(),
+        HoverTipFactory.FromPower<Gloat>(),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         var creature = Owner.Creature;
         await PowerCmd.Apply<IntangiblePower>(choiceContext, creature, DynamicVars["IntangiblePower"].BaseValue, creature, this);
-        await PowerCmd.Apply<VulnerablePower>(choiceContext, creature, DynamicVars.Vulnerable.BaseValue, creature, this);
+        await SeelsMechanicsHelper.Gloat(choiceContext, creature, DynamicVars["Gloat"].BaseValue, this);
     }
 
     protected override void OnUpgrade()
     {
-        AddKeyword(CardKeyword.Retain);
+        EnergyCost.UpgradeBy(-1);
     }
 }
