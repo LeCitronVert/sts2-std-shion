@@ -11,6 +11,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Character;
 using ShionTheBruiser.ShionTheBruiserCode.Extensions;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
@@ -58,6 +59,7 @@ public class EdgeTheChao() : ShionTheBruiserRelic
         // Applying VigorNextTurn (not VigorPower) mid-attack is safe: it doesn't touch
         // VigorPower's pending attack command, so no deferral to AfterAttack is needed.
         Flash();
+        CompanionVisuals.PlayEdgeProc(Owner.Creature);
         await PowerCmd.Apply<VigorNextTurn>(context, Owner.Creature, vigorNextTurn, Owner.Creature, null);
     }
 }

@@ -186,6 +186,7 @@ public class CreatureFxController
     public static void Attach(NCreature node)
     {
         var controller = new CreatureFxController(node);
+        CompanionVisuals.AttachToCombat(node);
 
         void OnCombatStateChanged(CombatState _) => controller.Refresh();
         void OnFlashbackCardPlayed(Creature creature, int index) => controller.HopMemoryBulb(creature, index);

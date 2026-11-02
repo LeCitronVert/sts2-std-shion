@@ -1196,3 +1196,21 @@ Content I skipped (incomplete in the spec):
 - Bloody Execution stays an Attack card (no type change in the sheet), but targets no one.
 - Deleted the now-unused **Beast Form**, **Open Wounds** and **Illusion of Risk** powers, with their loc and their `MISSING_IMAGES.tsv` rows. The cards stay.
 - Page 2 of the sheet ("Ideas, ne pas implémenter encore") was not implemented.
+
+## Companions: Abby & Edge outside of combat
+
+Shown for any player who owns the relic (Abby = Abby the Absol, Edge = Edge the Chao). Positions are constants at the top of `Visuals/CompanionVisuals.cs`; Edge's bobbing and proc time are exports in `scenes/companions/edge_chao.gd`.
+
+**Edge**
+- [ ] **Combat**: floats gently at Shion's top left, first Sonic Chao sprite (with his ponpon).
+- [ ] **Edge the Chao procs** (Vigor spent): switches to the fourth sprite with a "!" in place of his ponpon for about 1.2 s, then goes back. Several procs in a row keep the "!" up.
+- [ ] Edge disappears when Shion dies.
+- [ ] **Merchant**: second sprite, flipped (looking away from Shion), "?" in place of the ponpon. The "?" itself must not be mirrored.
+- [ ] **Rest site**: last sprite, heart in place of the ponpon, a bit left of and lower than his combat spot. Check he actually sits on the log, in all 3 acts.
+- [ ] Edge still floats up and down at the merchant and the rest site.
+- [ ] Pixel art stays crisp (no blur).
+
+**Abby**
+- [ ] **Merchant**: just in front of Shion, drawn over her legs.
+- [ ] **Rest site**: lying by Shion's side, drawn over her lower body.
+- [ ] **Multiplayer**: companions follow their owner, including the darker back row at the merchant and the mirrored rest site spots (2nd and 4th players).
