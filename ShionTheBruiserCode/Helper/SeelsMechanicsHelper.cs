@@ -273,6 +273,11 @@ public static class SeelsMechanicsHelper
         else
         {
             card.Enchantment.Amount += (int)amount;
+            // Amount's setter doesn't refresh derived values (e.g. Adroit's Block var). The game only
+            // recalculates enchantments for the *local* player's cards, so without this the owner's
+            // client sees the new value while teammates keep the stale one → state divergence.
+            card.Enchantment.RecalculateValues();
+            card.DynamicVars.RecalculateForUpgradeOrEnchant();
         }
         card.FinalizeUpgradeInternal();
         CountModification(card);
