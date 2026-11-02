@@ -1103,3 +1103,42 @@ Content I skipped (incomplete in the spec):
 - [ ] With 2+ Random Blasts in the deck, fill the gauge: only **one** Random Blast copy in hand per turn, and never a second one while a copy is still in Hand/Draw/Discard (e.g. Retained).
 - [ ] Play Random Blast: every other Team Blast (yours and the other players', in Hand, Draw and Discard) is **Exhausted** right away.
 - [ ] Gauge orange (locked): no Team Blast shows up again for the rest of the combat, even through clones/gifts (Wall of Text, Reverse Beam, Random Portal…).
+
+## 20. Slal: Change Pending C
+
+- [ ] Build and launch. No scene or `.pck` changes in this pass, so no re-export is needed.
+
+**Free Shapeshift removed / no more Colorless**
+- [ ] No card, power or hover tip says "Free Shapeshift" or "Free Shapeshift+" any more. Goofball Token Powers are never made free by Slal's effects.
+- [ ] **Emergency Shapeshift**: Exhaust up to 3 cards, then **Shapeshift** (upgraded: Shapeshift+) once per card. The Goofball powers are no longer free, and they cost 0 anyway.
+- [ ] Slal never creates Colorless cards: Mimic, Plot Twist, Puzzling Tip, Genie Form wishes, etc. only offer character cards. Mood Shift no longer gives a power.
+- [ ] Colorless cards still show up in Slal's shop like they do for everyone else.
+
+**Memory / Creative Flow**
+- [ ] **Memory** text: "At the start of your turn, gain X Flashback. When you gain 1 Memory, also gain 1 Flashback." plus the old Confusion line, which is kept. The mechanics are unchanged.
+- [ ] **Creative Flow**: all cards (and created ones) gain Novel. At combat start, gain **1 Memory**, which also gives 1 Flashback right away. With turn 1's start-of-turn Flashback, that's 2 Flashback on turn 1. No more starting Random, and no Random on Novel plays.
+
+**Cards**
+- [ ] **Blooper**: also gain 1 Weak (hover tip present).
+- [ ] **Proof Reading**: draw until you draw a Novel card (shuffles the Discard Pile in if needed; stops when the Hand is full or there are no cards left). Then gain 1 energy per Flashback and lose all Flashback. Base: Exhaust and **not** Always Novel. Upgraded: no Exhaust, gains Always Novel.
+- [ ] **All Goofball / Creativity Unbound Forms cost 0**: Bumper, Ventilator, Squeaky Squirrel, Sword, Octopus, Box of Nails, Television, Sparrow, Genie, Walking Encyclopedia, Pinwheel.
+- [ ] **Upgraded Forms double their stacks**: Squeaky Squirrel 2 times, Television 2 cards, Sparrow 2 cards, Genie 2 wishes (2 cards right away on play), Pinwheel 8 Confusion, Walking Encyclopedia 2 Random. Check the green upgrade preview.
+- [ ] **Bumper Form**: upgrade is now "first **2** times" (it used to be -1 cost).
+- [ ] **Ventilator Form**: "The first 1 (2) time(s) you play a Power each turn, ALL enemies lose 1 Strength this turn." The power counts down its triggers each turn and resets next turn.
+- [ ] **Walking Encyclopedia Form** and **Pinwheel Form** are now Tokens: gone from Slal's card rewards and shops, and never random-generated. They come from Creativity Unbound and Flo's Brew.
+- [ ] **Creativity Unbound**: Always Novel, no Exhaust. Adds 1 random power out of Genie, Pinwheel, Sparrow, Television and Walking Encyclopedia Form (all 5 hover tips). Not the same one twice in a row. Not made free (they're 0-cost).
+- [ ] **Flo's Brew** can still offer the 5 Creativity Unbound Forms.
+- [ ] **Distraction**: Shapeshift. If you're Weak, Shapeshift again (2 different Goofball powers). Upgraded: both are Shapeshift+. It glows gold while you're Weak.
+- [ ] **Hat Tip**: whenever you play a Shapeshift/Mimic card, **Shapeshift** (once per stack).
+- [ ] **Break Continuity**: whenever you play a Novel card, **Shapeshift** (once per stack), gain 1 Frail and 1 Disintegration.
+- [ ] **Puzzling Tip**: gain 2 Weak, apply 5 Confusion (+Random), choose to Mimic 2 or Shapeshift. Upgraded: the offered cards are upgraded. Played by Flashback: always Shapeshifts. It now triggers Hat Tip.
+- [ ] **Slime Rain**: +2 damage per Slimed created (it was +1). Upgraded: **10** base damage, still +2 per Slimed. Check the in-hand preview and that the bonus survives downgrade.
+- [ ] **Mood Shift**: only "Put a Power from your Draw Pile into your Hand". Exhaust (upgraded: no Exhaust).
+
+**Decisions I made**
+- Creative Flow loses its Random parts (confirmed). Memory keeps its Confusion bonus (confirmed). Ventilator's base is "first 1 time" (confirmed). Slime Rain+ = 10 base damage (confirmed). Creativity Unbound loses Exhaust (confirmed). Emergency Shapeshift → plain Shapeshift (confirmed). Proof Reading reshuffles (confirmed).
+- Squeaky Squirrel, Television, Sparrow, Genie, Pinwheel and Walking Encyclopedia Forms: the upgrade now doubles their stacks, replacing the old -1 cost (confirmed).
+- Distraction checks Weak before the first Shapeshift.
+- The Mood Shift **power** was deleted, along with its loc and its `MISSING_IMAGES.tsv` row. The card stays.
+- Flo's Brew now uses the shared Creativity Unbound list, so Pinwheel and Walking Encyclopedia stay pickable after becoming Tokens.
+- Page 2 of the sheet ("Ideas, ne pas implémenter encore") was not implemented.

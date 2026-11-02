@@ -8,7 +8,8 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Shapeshift (upgraded: Shapeshift+). If you are Weak, Free Shapeshift (Free Shapeshift+) instead. Exhaust.
+/// Shapeshift (upgraded: Shapeshift+). If you are Weak, Shapeshift (Shapeshift+) again. Exhaust.
+/// Weak is checked before the first Shapeshift.
 /// </summary>
 public class SlalDistraction(): SlalTheEndlessCard(0,
     CardType.Skill, CardRarity.Common,
@@ -20,7 +21,6 @@ public class SlalDistraction(): SlalTheEndlessCard(0,
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(IsUpgraded ? SlalCardKeywords.ShapeshiftPlus : SlalCardKeywords.Shapeshift),
-        HoverTipFactory.FromKeyword(IsUpgraded ? SlalCardKeywords.FreeShapeshiftPlus : SlalCardKeywords.FreeShapeshift),
         HoverTipFactory.FromPower<WeakPower>(),
         HoverTipFactory.FromKeyword(SlalCardKeywords.GoofballTokenPower),
     ];
@@ -31,8 +31,8 @@ public class SlalDistraction(): SlalTheEndlessCard(0,
         PlayerChoiceContext choiceContext,
         CardPlay play)
     {
-        var free = Owner.Creature.HasPower<WeakPower>();
-        await SlalMechanicsHelper.Shapeshift(choiceContext, Owner, upgraded: IsUpgraded, free: free);
+        var count = Owner.Creature.HasPower<WeakPower>() ? 2 : 1;
+        await SlalMechanicsHelper.Shapeshift(choiceContext, Owner, count, IsUpgraded);
     }
 
     protected override void OnUpgrade()

@@ -15,7 +15,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// choose 1 of 3 cards from any character to add into your Hand (once). It is free to play this turn.
 /// </summary>
 [Pool(typeof(TokenCardPool))]
-public class SlalGenieForm() : SlalTheEndlessCard(1,
+public class SlalGenieForm() : SlalTheEndlessCard(0,
     CardType.Power, CardRarity.Token,
     TargetType.Self)
 {
@@ -49,6 +49,7 @@ public class SlalGenieForm() : SlalTheEndlessCard(1,
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        // Doubles the stacks.
+        DynamicVars["GenieForm"].UpgradeValueBy(1);
     }
 }

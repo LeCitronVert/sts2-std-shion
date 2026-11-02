@@ -25,17 +25,9 @@ public class SlalCardKeywords
     [CustomEnum, KeywordProperties(AutoKeywordPosition.None)]
     public static CardKeyword Shapeshift;
 
-    /// <summary>Shapeshift, and the Goofball Token Power is free to play this turn.</summary>
-    [CustomEnum, KeywordProperties(AutoKeywordPosition.None)]
-    public static CardKeyword FreeShapeshift;
-
     /// <summary>Shapeshift, with an upgraded Goofball Token Power.</summary>
     [CustomEnum, KeywordProperties(AutoKeywordPosition.None)]
     public static CardKeyword ShapeshiftPlus;
-
-    /// <summary>Free Shapeshift, with an upgraded Goofball Token Power.</summary>
-    [CustomEnum, KeywordProperties(AutoKeywordPosition.None)]
-    public static CardKeyword FreeShapeshiftPlus;
 
     /// <summary>Choose 1 of X random non-Rare cards from other characters to add into your Hand.</summary>
     [CustomEnum, KeywordProperties(AutoKeywordPosition.None)]

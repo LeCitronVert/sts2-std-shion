@@ -11,8 +11,11 @@ using MegaCrit.Sts2.Core.Models.CardPools;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+/// <summary>
+/// Goofball Token Power. The first 1 (2) time(s) you play a Power each turn, ALL enemies lose 1 Strength this turn.
+/// </summary>
 [Pool(typeof(TokenCardPool))]
-public class SlalVentilatorForm() : SlalTheEndlessCard(1,
+public class SlalVentilatorForm() : SlalTheEndlessCard(0,
     CardType.Power, CardRarity.Token,
     TargetType.Self)
 {
@@ -20,6 +23,7 @@ public class SlalVentilatorForm() : SlalTheEndlessCard(1,
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<VentilatorForm>(1),
+        new DynamicVar("StrengthLoss", VentilatorForm.StrengthLoss),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>()];

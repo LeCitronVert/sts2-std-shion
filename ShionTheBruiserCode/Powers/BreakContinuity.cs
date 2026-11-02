@@ -11,7 +11,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// Whenever you play a Novel card, Free Shapeshift X times, gain 1 Frail and 1 Disintegration.
+/// Whenever you play a Novel card, Shapeshift X times, gain 1 Frail and 1 Disintegration.
 /// Novel is removed when the card is played, so it is checked before the play resolves.
 /// </summary>
 public class BreakContinuity : SlalTheEndlessPower
@@ -24,7 +24,7 @@ public class BreakContinuity : SlalTheEndlessPower
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(SlalCardKeywords.Novel),
-        HoverTipFactory.FromKeyword(SlalCardKeywords.FreeShapeshift),
+        HoverTipFactory.FromKeyword(SlalCardKeywords.Shapeshift),
         HoverTipFactory.FromPower<FrailPower>(),
         HoverTipFactory.FromPower<DisintegrationPower>(),
     ];
@@ -50,7 +50,7 @@ public class BreakContinuity : SlalTheEndlessPower
         if (!cardPlay.IsLastInSeries || !GetInternalData<Data>().novelPlays.Remove(cardPlay.Card) || Owner.Player is null) return;
 
         Flash();
-        await SlalMechanicsHelper.Shapeshift(choiceContext, Owner.Player, Amount, free: true);
+        await SlalMechanicsHelper.Shapeshift(choiceContext, Owner.Player, Amount);
         await PowerCmd.Apply<FrailPower>(choiceContext, Owner, FrailAmount, Owner, null);
         await PowerCmd.Apply<DisintegrationPower>(choiceContext, Owner, DisintegrationAmount, Owner, null);
     }

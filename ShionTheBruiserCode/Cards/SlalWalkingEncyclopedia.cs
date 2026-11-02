@@ -3,19 +3,25 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using BaseLib.Utils;
+using MegaCrit.Sts2.Core.Models.CardPools;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
+/// Token power created by Creativity Unbound.
 /// Walking Encyclopedia Form: whenever you play a non-Novel card from your Hand, gain 1 Random.
 /// </summary>
-public class SlalWalkingEncyclopedia() : SlalTheEndlessCard(3,
-    CardType.Power, CardRarity.Rare,
+[Pool(typeof(TokenCardPool))]
+public class SlalWalkingEncyclopedia() : SlalTheEndlessCard(0,
+    CardType.Power, CardRarity.Token,
     TargetType.Self)
 {
     protected override HashSet<CardTag> CanonicalTags => [SlalCardTags.Form];
+
+    public override bool CanBeGeneratedInCombat => false;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<EncyclopediaForm>(1),
@@ -42,6 +48,7 @@ public class SlalWalkingEncyclopedia() : SlalTheEndlessCard(3,
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        // Doubles the stacks.
+        DynamicVars["EncyclopediaForm"].UpgradeValueBy(1);
     }
 }

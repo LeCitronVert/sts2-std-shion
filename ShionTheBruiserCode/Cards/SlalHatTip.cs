@@ -9,7 +9,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Whenever you play a card with Shapeshift or Mimic, Free Shapeshift (once).
+/// Whenever you play a card with Shapeshift or Mimic, Shapeshift (once).
 /// </summary>
 public class SlalHatTip() : SlalTheEndlessCard(2,
     CardType.Power, CardRarity.Rare,
@@ -22,7 +22,6 @@ public class SlalHatTip() : SlalTheEndlessCard(2,
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(SlalCardKeywords.Shapeshift),
         HoverTipFactory.FromKeyword(SlalCardKeywords.Mimic),
-        HoverTipFactory.FromKeyword(SlalCardKeywords.FreeShapeshift),
         HoverTipFactory.FromKeyword(SlalCardKeywords.GoofballTokenPower),
     ];
 

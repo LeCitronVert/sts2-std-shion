@@ -9,16 +9,14 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Always Novel. Add 1 random power out of Genie, Television and Sparrow Form into your Hand. It is free to play this turn. Exhaust.
+/// Always Novel. Add one random power out of Genie Form, Pinwheel Form, Sparrow Form, Television Form and
+/// Walking Encyclopedia Form into your Hand.
 /// </summary>
 public class SlalCreativityUnbound() : SlalTheEndlessCard(3,
     CardType.Skill, CardRarity.Rare,
     TargetType.Self)
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [
-        SlalCardKeywords.AlwaysNovel,
-        CardKeyword.Exhaust,
-    ];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [SlalCardKeywords.AlwaysNovel];
 
     private ModelId? _lastGivenPower;
 
@@ -37,8 +35,10 @@ public class SlalCreativityUnbound() : SlalTheEndlessCard(3,
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromCard<SlalGenieForm>(),
-        HoverTipFactory.FromCard<SlalTelevisionForm>(),
+        HoverTipFactory.FromCard<SlalPinwheelForm>(),
         HoverTipFactory.FromCard<SlalSparrowForm>(),
+        HoverTipFactory.FromCard<SlalTelevisionForm>(),
+        HoverTipFactory.FromCard<SlalWalkingEncyclopedia>(),
     ];
 
     protected override async Task OnPlay(
@@ -50,8 +50,6 @@ public class SlalCreativityUnbound() : SlalTheEndlessCard(3,
 
         var power = SlalMechanicsHelper.CreateTokenAvoiding(card.Owner, SlalMechanicsHelper.CreativityUnboundTokenPowers, LastGivenPower, false);
         LastGivenPower = power.Id;
-        // Made free before being added, so Sparrow Form doesn't trigger on it
-        power.SetToFreeThisTurn();
         await CardPileCmd.AddGeneratedCardToCombat(power, PileType.Hand, card.Owner);
     }
 

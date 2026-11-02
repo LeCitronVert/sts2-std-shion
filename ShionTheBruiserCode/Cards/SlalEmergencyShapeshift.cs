@@ -10,7 +10,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Always Novel. Exhaust up to 3 cards in your Hand. Free Shapeshift (upgraded: Free Shapeshift+) for each card
+/// Always Novel. Exhaust up to 3 cards in your Hand. Shapeshift (upgraded: Shapeshift+) for each card
 /// Exhausted this way. Exhaust.
 /// </summary>
 public class SlalEmergencyShapeshift() : SlalTheEndlessCard(1,
@@ -26,7 +26,7 @@ public class SlalEmergencyShapeshift() : SlalTheEndlessCard(1,
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromKeyword(IsUpgraded ? SlalCardKeywords.FreeShapeshiftPlus : SlalCardKeywords.FreeShapeshift),
+        HoverTipFactory.FromKeyword(IsUpgraded ? SlalCardKeywords.ShapeshiftPlus : SlalCardKeywords.Shapeshift),
         HoverTipFactory.FromKeyword(SlalCardKeywords.GoofballTokenPower),
     ];
 
@@ -48,7 +48,7 @@ public class SlalEmergencyShapeshift() : SlalTheEndlessCard(1,
         {
             await CardCmd.Exhaust(choiceContext, target);
         }
-        await SlalMechanicsHelper.Shapeshift(choiceContext, card.Owner, targets.Count, IsUpgraded, free: true);
+        await SlalMechanicsHelper.Shapeshift(choiceContext, card.Owner, targets.Count, IsUpgraded);
     }
 
     protected override void OnUpgrade()

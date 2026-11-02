@@ -9,8 +9,8 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// At the start of your turn, gain X Flashback. Cards Flashback plays that apply Confusion apply X more.
-/// Not written: whenever you gain Memory, also gain that much Flashback right away (see <see cref="SlalMechanicsHelper.GainMemory"/>).
+/// At the start of your turn, gain X Flashback. When you gain 1 Memory, also gain 1 Flashback
+/// (see <see cref="SlalMechanicsHelper.GainMemory"/>). Cards Flashback plays that apply Confusion apply X more.
 /// </summary>
 public class Memory : SlalTheEndlessPower
 {

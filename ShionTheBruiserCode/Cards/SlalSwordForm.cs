@@ -12,7 +12,7 @@ using MegaCrit.Sts2.Core.Models.CardPools;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 [Pool(typeof(TokenCardPool))]
-public class SlalSwordForm() : SlalTheEndlessCard(1,
+public class SlalSwordForm() : SlalTheEndlessCard(0,
     CardType.Power, CardRarity.Token,
     TargetType.Self)
 {

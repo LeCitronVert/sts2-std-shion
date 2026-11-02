@@ -5,19 +5,25 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Powers;
+using BaseLib.Utils;
+using MegaCrit.Sts2.Core.Models.CardPools;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Whenever you Shapeshift or Mimic, apply 4 Confusion to ALL enemies, and gain the created card's cost. Upgraded: costs 1.
+/// Token power created by Creativity Unbound.
+/// Whenever you Shapeshift or Mimic, apply 4 Confusion to ALL enemies, and gain the created card's cost.
 /// </summary>
-public class SlalPinwheelForm() : SlalTheEndlessCard(2,
-    CardType.Power, CardRarity.Rare,
+[Pool(typeof(TokenCardPool))]
+public class SlalPinwheelForm() : SlalTheEndlessCard(0,
+    CardType.Power, CardRarity.Token,
     TargetType.Self)
 {
     protected override HashSet<CardTag> CanonicalTags => [SlalCardTags.Form];
+
+    public override bool CanBeGeneratedInCombat => false;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<PinwheelForm>(4),
@@ -45,6 +51,7 @@ public class SlalPinwheelForm() : SlalTheEndlessCard(2,
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        // Doubles the stacks.
+        DynamicVars["PinwheelForm"].UpgradeValueBy(4);
     }
 }

@@ -8,7 +8,7 @@ public static class SlalCardTags
     [CustomEnum]
     public static CardTag Form;
 
-    /// <summary>Cards whose effect Shapeshifts (Free Shapeshift included). Hat Tip triggers on them.</summary>
+    /// <summary>Cards whose effect Shapeshifts. Hat Tip triggers on them.</summary>
     [CustomEnum]
     public static CardTag Shapeshift;
 

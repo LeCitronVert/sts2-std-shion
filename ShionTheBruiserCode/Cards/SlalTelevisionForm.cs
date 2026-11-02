@@ -12,7 +12,7 @@ using MegaCrit.Sts2.Core.Models.CardPools;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 [Pool(typeof(TokenCardPool))]
-public class SlalTelevisionForm() : SlalTheEndlessCard(1,
+public class SlalTelevisionForm() : SlalTheEndlessCard(0,
     CardType.Power, CardRarity.Token,
     TargetType.Self)
 {
@@ -43,6 +43,7 @@ public class SlalTelevisionForm() : SlalTheEndlessCard(1,
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        // Doubles the stacks.
+        DynamicVars["TelevisionForm"].UpgradeValueBy(1);
     }
 }

@@ -394,7 +394,7 @@ public static class SlalMechanicsHelper
 
     /// <summary>
     /// The cards a random card creation can pick from for this player.
-    /// Normally the character's own cards. Mood Shift allows Colorless cards.
+    /// The character's own cards. Slal never creates Colorless cards.
     /// </summary>
     public static IEnumerable<CardModel> GetRandomCardOptions(Player player)
     {
@@ -413,7 +413,7 @@ public static class SlalMechanicsHelper
     ];
 
     /// <summary>
-    /// Cards from any character (or only the other characters), plus Colorless cards with Mood Shift.
+    /// Cards from any character (or only the other characters). Never Colorless cards.
     /// </summary>
     public static IEnumerable<CardModel> GetCharacterCardOptions(Player player, bool includeOwnCharacter)
     {
@@ -423,13 +423,7 @@ public static class SlalMechanicsHelper
 
     private static IEnumerable<CardModel> GetCardsFromPools(Player player, IEnumerable<CardPoolModel> pools)
     {
-        List<CardPoolModel> allPools = [..pools];
-        if (player.Creature.HasPower<MoodShift>())
-        {
-            allPools.Add(ModelDb.CardPool<ColorlessCardPool>());
-        }
-
-        return allPools
+        return pools
             .DistinctBy(p => p.Id)
             .SelectMany(p => p.GetUnlockedCards(player.UnlockState, player.RunState.CardMultiplayerConstraint))
             .Distinct();
@@ -484,17 +478,16 @@ public static class SlalMechanicsHelper
     /// <summary>
     /// Shapeshift: adds <paramref name="count"/> random Goofball Token Powers into the Hand (all different if possible).
     /// Shapeshift+ (<paramref name="upgraded"/>): they are upgraded.
-    /// Free Shapeshift (<paramref name="free"/>): they are free to play this turn.
     /// Each one counts as a separate Shapeshift (Pinwheel Form).
     /// </summary>
-    public static async Task<List<CardModel>> Shapeshift(PlayerChoiceContext choiceContext, Player player, int count = 1, bool upgraded = false, bool free = false)
+    public static async Task<List<CardModel>> Shapeshift(PlayerChoiceContext choiceContext, Player player, int count = 1, bool upgraded = false)
     {
         if (count <= 0) return [];
 
         var powers = CreateDifferentGoofballTokenPowers(player, count, upgraded);
         foreach (var power in powers)
         {
-            await AddShapeshiftedPower(choiceContext, player, power, free);
+            await AddShapeshiftedPower(choiceContext, player, power);
         }
         return powers;
     }
@@ -502,9 +495,8 @@ public static class SlalMechanicsHelper
     /// <summary>
     /// Adds a Goofball Token Power created by a Shapeshift into the Hand and triggers the Shapeshift effects.
     /// </summary>
-    public static async Task AddShapeshiftedPower(PlayerChoiceContext choiceContext, Player player, CardModel power, bool free = false)
+    public static async Task AddShapeshiftedPower(PlayerChoiceContext choiceContext, Player player, CardModel power)
     {
-        if (free && !power.EnergyCost.CostsX) power.SetToFreeThisTurn();
         await CardPileCmd.AddGeneratedCardToCombat(power, PileType.Hand, player);
         await AfterShapeshiftOrMimic(choiceContext, player, power);
     }
@@ -521,7 +513,7 @@ public static class SlalMechanicsHelper
     }
 
     /// <summary>
-    /// Non-Rare cards from other characters (Creative Spirit allows Rare cards, Mood Shift allows Colorless cards).
+    /// Non-Rare cards from other characters (Creative Spirit allows Rare cards).
     /// </summary>
     public static IEnumerable<CardModel> GetMimicOptions(Player player)
     {
@@ -570,8 +562,10 @@ public static class SlalMechanicsHelper
     /// </summary>
     public static IReadOnlyList<CardModel> CreativityUnboundTokenPowers => [
         ModelDb.Card<SlalGenieForm>(),
-        ModelDb.Card<SlalTelevisionForm>(),
+        ModelDb.Card<SlalPinwheelForm>(),
         ModelDb.Card<SlalSparrowForm>(),
+        ModelDb.Card<SlalTelevisionForm>(),
+        ModelDb.Card<SlalWalkingEncyclopedia>(),
     ];
 
     public static bool IsGoofballTokenPower(CardModel card)

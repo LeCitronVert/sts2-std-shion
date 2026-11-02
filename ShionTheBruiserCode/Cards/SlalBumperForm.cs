@@ -11,8 +11,11 @@ using MegaCrit.Sts2.Core.Models.CardPools;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+/// <summary>
+/// Goofball Token Power. The first 1 (2) time(s) you play a Power each turn, reduce the cost of a random card in your Hand by 1 this turn.
+/// </summary>
 [Pool(typeof(TokenCardPool))]
-public class SlalBumperForm() : SlalTheEndlessCard(1,
+public class SlalBumperForm() : SlalTheEndlessCard(0,
     CardType.Power, CardRarity.Token,
     TargetType.Self)
 {
@@ -41,6 +44,6 @@ public class SlalBumperForm() : SlalTheEndlessCard(1,
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars["BumperForm"].UpgradeValueBy(1);
     }
 }

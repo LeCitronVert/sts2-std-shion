@@ -8,7 +8,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// Whenever you play a card with Shapeshift or Mimic, Free Shapeshift X times.
+/// Whenever you play a card with Shapeshift or Mimic, Shapeshift X times.
 /// The cards are recognized by their Shapeshift / Mimic tags (the Goofball Token Powers it adds have neither).
 /// </summary>
 public class HatTip : SlalTheEndlessPower
@@ -19,7 +19,6 @@ public class HatTip : SlalTheEndlessPower
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(SlalCardKeywords.Shapeshift),
         HoverTipFactory.FromKeyword(SlalCardKeywords.Mimic),
-        HoverTipFactory.FromKeyword(SlalCardKeywords.FreeShapeshift),
     ];
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -29,6 +28,6 @@ public class HatTip : SlalTheEndlessPower
         if (!card.Tags.Contains(SlalCardTags.Shapeshift) && !card.Tags.Contains(SlalCardTags.Mimic)) return;
 
         Flash();
-        await SlalMechanicsHelper.Shapeshift(choiceContext, Owner.Player, Amount, free: true);
+        await SlalMechanicsHelper.Shapeshift(choiceContext, Owner.Player, Amount);
     }
 }

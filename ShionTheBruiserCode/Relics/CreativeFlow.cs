@@ -1,5 +1,4 @@
 using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -9,13 +8,11 @@ using MegaCrit.Sts2.Core.Models;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
-using Random = ShionTheBruiser.ShionTheBruiserCode.Powers.Random;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 /// <summary>
-/// Upgraded Creative Spark. ALL your cards and the ones you create gain Novel.
-/// Gain 1 additional Random when you play a Novel card. Start each combat with 5 Random.
+/// Upgraded Creative Spark. Add Novel to ALL your cards and the ones you create. At the start of combat, gain 1 Memory.
 /// </summary>
 public class CreativeFlow : SlalTheEndlessRelic
 {
@@ -23,17 +20,13 @@ public class CreativeFlow : SlalTheEndlessRelic
         RelicRarity.Starter;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("NovelRandom", 1),
-        new DynamicVar("StartingRandom", 5),
+        new DynamicVar("Memory", 1),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(SlalCardKeywords.Novel),
-        HoverTipFactory.FromPower<Random>(),
+        HoverTipFactory.FromPower<Memory>(),
     ];
-
-    // Novel is removed when the card is played, so remember it before the play resolves.
-    private CardModel? _novelCardBeingPlayed;
 
     public override async Task BeforeCombatStart()
     {
@@ -46,7 +39,7 @@ public class CreativeFlow : SlalTheEndlessRelic
         await SlalMechanicsHelper.EnsureCreatureHasNovelTracker(Owner.Creature);
 
         Flash();
-        await SlalMechanicsHelper.GainRandom(new ThrowingPlayerChoiceContext(), Owner.Creature, DynamicVars["StartingRandom"].IntValue);
+        await SlalMechanicsHelper.GainMemory(new ThrowingPlayerChoiceContext(), Owner.Creature, DynamicVars["Memory"].IntValue);
     }
 
     public override Task AfterCardEnteredCombat(CardModel card)
@@ -63,24 +56,5 @@ public class CreativeFlow : SlalTheEndlessRelic
     public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         return SlalMechanicsHelper.EnsureCreatureHasNovelTracker(Owner.Creature);
-    }
-
-    public override Task BeforeCardPlayed(CardPlay cardPlay)
-    {
-        if (cardPlay.Card.Owner == Owner && SlalMechanicsHelper.IsNovel(cardPlay.Card))
-        {
-            _novelCardBeingPlayed = cardPlay.Card;
-        }
-
-        return Task.CompletedTask;
-    }
-
-    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        if (_novelCardBeingPlayed != cardPlay.Card) return;
-        _novelCardBeingPlayed = null;
-
-        Flash();
-        await SlalMechanicsHelper.GainRandom(choiceContext, Owner.Creature, DynamicVars["NovelRandom"].IntValue);
     }
 }

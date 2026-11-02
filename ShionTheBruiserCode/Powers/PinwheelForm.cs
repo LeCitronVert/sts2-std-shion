@@ -12,7 +12,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 /// <summary>
 /// Whenever you Shapeshift or Mimic, apply X Confusion to ALL enemies, and gain the created card's cost:
 /// the energy and/or stars needed to play it at its unmodified cost (upgrades count, but not "free this turn",
-/// so Free Shapeshift still refunds the Goofball Token Power's cost). X costs give nothing.
+/// so a Goofball Token Power made free by another effect still refunds its cost). X costs give nothing.
 /// Called by <see cref="SlalMechanicsHelper"/> after each Shapeshift / Mimic.
 /// </summary>
 public class PinwheelForm : SlalTheEndlessPower
