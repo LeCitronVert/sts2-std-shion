@@ -31,6 +31,7 @@ public class SeelsExsanguination() : SeelsTheRecklessCard(1,
         new ExtraDamageVar(1),
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) =>
             GetDamage(card, SeelsMechanicsHelper.PreviewBloodBendX(card))),
+        new CalculationExtraVar(1),
         new CalculatedVar("AttacksAmount").WithMultiplier((card, _) => CountAttacksPlayedThisTurn(card)),
     ];
 

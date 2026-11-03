@@ -28,9 +28,13 @@ public class SeelsParryAttempt() : SeelsTheRecklessCard(1,
     public override bool GainsBlock => true;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CalculationBaseVar(6M),
-        new CalculationExtraVar(4M),
-        new CalculatedBlockVar(ValueProp.Move).WithMultiplier((card, _) => card.EnergyCost.GetResolved()),
+        new DynamicVar("BlockBase", 6M),
+        new DynamicVar("BlockPerEnergy", 4M),
+        // Base/Extra stay 0/1 so they can be shared with BlurAmount; the real formula lives in the multiplier.
+        new CalculationBaseVar(0M),
+        new CalculationExtraVar(1M),
+        new CalculatedBlockVar(ValueProp.Move).WithMultiplier((card, _) =>
+            card.DynamicVars["BlockBase"].BaseValue + card.DynamicVars["BlockPerEnergy"].BaseValue * card.EnergyCost.GetResolved()),
         new CalculatedVar("BlurAmount").WithMultiplier((card, _) => card.EnergyCost.GetResolved()),
     ];
 
@@ -51,7 +55,7 @@ public class SeelsParryAttempt() : SeelsTheRecklessCard(1,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.CalculationBase.UpgradeValueBy(1M);
-        DynamicVars.CalculationExtra.UpgradeValueBy(1M);
+        DynamicVars["BlockBase"].UpgradeValueBy(1M);
+        DynamicVars["BlockPerEnergy"].UpgradeValueBy(1M);
     }
 }

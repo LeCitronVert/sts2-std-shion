@@ -698,7 +698,7 @@
     "SHIONTHEBRUISER-SEELS_FINAL_SHOWDOWN.title": "Final Showdown",
     "SHIONTHEBRUISER-SEELS_FINAL_SHOWDOWN.description": "Apply {VulnerablePower:diff()} [gold]Vulnerable[/gold].\nGain [gold]Strength[/gold] and [gold]Demise[/gold] equal to the enemy's [gold]Vulnerable[/gold].\nDraw {Cards:diff()} cards.{InCombat:{HasTarget:cond:>0?\n(Gain {ShowdownAmount:diff()} [gold]Strength[/gold] and [gold]Demise[/gold])|}|}",
     "SHIONTHEBRUISER-SEELS_PARRY_ATTEMPT.title": "Parry Attempt",
-    "SHIONTHEBRUISER-SEELS_PARRY_ATTEMPT.description": "Gain {CalculationBase:diff()} [gold]Block[/gold], plus {CalculationExtra:diff()} times this card's energy cost.\nGain [gold]Blur[/gold] equal to this card's energy cost.{InCombat:\n(Gain {CalculatedBlock:diff()} [gold]Block[/gold] and {BlurAmount:diff()} [gold]Blur[/gold])|}",
+    "SHIONTHEBRUISER-SEELS_PARRY_ATTEMPT.description": "Gain {BlockBase:diff()} [gold]Block[/gold], plus {BlockPerEnergy:diff()} times this card's energy cost.\nGain [gold]Blur[/gold] equal to this card's energy cost.{InCombat:\n(Gain {CalculatedBlock:diff()} [gold]Block[/gold] and {BlurAmount:diff()} [gold]Blur[/gold])|}",
     "SHIONTHEBRUISER-SEELS_BYPASS.title": "Bypass",
     "SHIONTHEBRUISER-SEELS_BYPASS.description": "Gain {Block:diff()} [gold]Block[/gold].\nAdd a {IfUpgraded:show:[gold]Slash+[/gold]|[gold]Slash[/gold]} into your [gold]Hand[/gold] and [gold]Draw Pile[/gold].",
     "SHIONTHEBRUISER-SEELS_IMPROVISED_ACUPUNCTURE.title": "Improvised Acupuncture",
