@@ -1,9 +1,9 @@
 Name	Type	Character	Image suggestion	Done
 Berserk	Power	Shion	Red pulsing heart with cracked edge	
 Dark Arts	Power	Shion	Purple swirling sigil with a double arrow	
-Scrappy	Power	Shion	Bandaged scrappy fist	
-Temporary Buffer	Power	Shion	Translucent buffer bubble with a clock	
-Vigor Next Turn	Power	Shion	Vigor icon with a 'next turn' arrow	
+Scrappy	Power	Shion	Bandaged scrappy fist	x
+Temporary Buffer	Power	Shion	Translucent buffer bubble with a clock	x
+Vigor Next Turn	Power	Shion	Vigor icon with a 'next turn' arrow	x
 Battle Rags	Relic	Shion	Only the outline is missing: make one from the existing icon	
 Chao Eggshell	Relic	Shion	Cracked Chao eggshell halves	
 Choice Band	Relic	Shion	A headband with a single bold emblem	
@@ -23,9 +23,9 @@ Brainstorming	Power	Slal	Light bulb over an open book
 Break Continuity	Power	Slal	Broken filmstrip / snapped chain	
 Distraction	Power	Slal	Spiral eyes / dangling shiny object	
 Favourite Bucket	Power	Slal	A beloved little bucket with a heart	
-Ignore Vulnerable	Power	Slal	Cracked shield with a slash through it	
+Ignore Vulnerable	Power	Slal	Cracked shield with a slash through it	x
 Kickstart Event	Power	Slal	Rocket booster / light bulb	
-Sated	Power	Slal	Full belly / fork and knife crossed	
+Sated	Power	Slal	Full belly / fork and knife crossed	x
 Weak Next Turn	Power	Slal	Weak icon with a 'next turn' arrow	
 Apple Sauce	Relic	Slal	A jar of apple sauce with a slimy drip down the side	
 Champagne	Relic	Slal	A champagne bottle popping, three bubbles in different rarity colours	
@@ -137,7 +137,7 @@ Wink	Card	Seels	Seels winking, a die tumbling from their fingers
 Aggravating Demeanor	Power	Seels	Angry vein mark with a small shield	
 Big Numbers	Power	Seels	Die showing a big number	
 Bleed Instructions	Power	Seels	Blood drop over a book	
-Blood	Power	Seels	Single red blood drop	
+Blood	Power	Seels	Single red blood drop	x
 Brutal Teachings	Power	Seels	Bruised fist with a speed line	
 Cliff Dropper	Power	Seels	Cliff edge with a falling die	
 Combo Meter	Power	Seels	'x2' combo counter	
@@ -147,7 +147,7 @@ Dice Blessing	Power	Seels	Die with a halo
 Excited Wait	Power	Seels	Sparkly eyes with a card	
 Gambler's Luck	Power	Seels	Lucky coin with a shield	
 Gambling Addiction	Power	Seels	Slot machine reels	
-Gloat	Power	Seels	Smug grin with a raised finger, beckoning an attack	
+Gloat	Power	Seels	Smug grin with a raised finger, beckoning an attack	x
 Invigorating Pain	Power	Seels	Wound with an up arrow	
 Laugh It Off	Power	Seels	Laughing face with tears	
 Live With The Pain	Power	Seels	Bandaged heart	
