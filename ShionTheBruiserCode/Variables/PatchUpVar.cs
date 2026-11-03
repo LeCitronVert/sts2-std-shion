@@ -40,7 +40,8 @@ public class PatchUpVar: DynamicVar
     }
 
     // Read-only: hover tips are display-only, never mutate state here.
-    private static Creature? GetOwnerCreature(DynamicVar var) => var._owner switch
+    // _owner is protected, so it can only be read through a PatchUpVar reference (clones keep the type).
+    private static Creature? GetOwnerCreature(DynamicVar var) => (var as PatchUpVar)?._owner switch
     {
         CardModel card => card.Owner?.Creature,
         PowerModel power => power.Owner,
