@@ -45,9 +45,15 @@ public class SeelsTheReckless : PlaceholderCharacterModel, IEpochCharacter
     public override RelicPoolModel RelicPool => ModelDb.RelicPool<SeelsTheRecklessRelicPool>();
     public override PotionPoolModel PotionPool => ModelDb.PotionPool<SeelsTheRecklessPotionPool>();
 
-    // Timeline (Timeline/SeelsEpochs.cs)
+    // Timeline (Timeline/SeelsEpochs.cs). Condensed Might has its own condition.
     protected override CharacterModel UnlocksAfterRunAs => ModelDb.Character<SlalTheEndless>();
     public EpochModel? UnlockEpoch => EpochModel.Get<SeelsUnlockEpoch>();
+    public EpochModel? Act1Epoch => EpochModel.Get<SeelsBoringEpoch>();
+    public EpochModel? FifteenElitesEpoch => EpochModel.Get<SeelsHoldOnEpoch>();
+    public EpochModel? Act2Epoch => EpochModel.Get<SeelsWaitForMeGuysEpoch>();
+    public EpochModel? Act3Epoch => EpochModel.Get<SeelsWellThisBlowsEpoch>();
+    public EpochModel? FifteenBossesEpoch => EpochModel.Get<SeelsRagtagPalsEpoch>();
+    public EpochModel? AscensionOneEpoch => EpochModel.Get<SeelsRollWithThePunchesEpoch>();
 
     // Couleurs
     public override Color MapDrawingColor => Color;

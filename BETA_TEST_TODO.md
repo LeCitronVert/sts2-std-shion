@@ -1214,3 +1214,31 @@ Shown for any player who owns the relic (Abby = Abby the Absol, Edge = Edge the 
 - [ ] **Merchant**: just in front of Shion, drawn over her legs.
 - [ ] **Rest site**: lying by Shion's side, drawn over her lower body.
 - [ ] **Multiplayer**: companions follow their owner, including the darker back row at the merchant and the mirrored rest site spots (2nd and 4th players).
+
+## 22. Seels: Epochs
+
+**Setup**
+- [ ] Open the project in MegaDot so it imports the 16 new images in `images/timeline/seels/` (8 portraits + 8 `_packed` thumbnails), then re-export the pck.
+- [ ] On the first main menu load, the log line `[Epochs] Validated N epochs: 0 problem(s)` shows no error (missing keys, art, or two epochs on the same slot).
+
+**Unlocks** (each epoch appears on the timeline once Seels is unlocked)
+- [ ] **Finally!**: play a run with Slal. Unlocks Seels (same epoch as before, so saves that already had Seels keep him). Column of Grand Strategy.
+- [ ] **Bo-riiiing!**: beat Act 1 with Seels. Column of Shion's New Challenges.
+- [ ] **Hold On...**: defeat 15 Elites with Seels. Column of Darv.
+- [ ] **Wait For Me, Guys!**: beat Act 2 with Seels. Column of Life and Death.
+- [ ] **Well, This Blows.**: beat Act 3 with Seels. Column of The Daily (7th row, the column scrolls).
+- [ ] **Ragtag Pals**: defeat 15 Bosses with Seels. Column of Shion's If One Doesn't Cut it...
+- [ ] **Condensed Might**: win a run as Seels holding the Red Chaos Emerald (solo or combo). Same column as Ragtag Pals.
+- [ ] **Roll With The Punches**: win a run on Ascension 1 with Seels. A new column after If One Doesn't Cut it... (the base game's empty "The End" era, year 3,000).
+
+**Visuals**
+- [ ] The timeline thumbnails are center crops of the art. Check that none cuts off the important part (I made them automatically).
+- [ ] Text effects: `(shake)` became `[shake]`, like the combat messages. Check "UNACCEPTABLY BORING" and "I love it." shake, and the jitter words jitter.
+- [ ] The new "The End" column shows its icon, name and year, and the timeline line reaches it.
+
+**Decisions I made**
+- No epoch unlocks anything yet. Each one has a placeholder `unlockText` "TODO" in `epochs.json`. When you add Cards/Relics/Potions (3 of one kind) to an epoch, delete its `unlockText` line.
+- Kept the class `SeelsUnlockEpoch` for Finally! (ID unchanged) so it doesn't re-lock Seels for testers.
+- Chapter order follows the sheet's row order (Chapter # was empty).
+- "(purple and yellow)we" is written as a purple "w" and a gold "e". "(azure)" uses `[aqua]`.
+- Condensed Might = win as Seels with the Red Emerald (confirmed). Red is shared with the Ironclad, but only Seels' runs count.

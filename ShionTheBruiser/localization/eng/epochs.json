@@ -56,10 +56,46 @@
   "SHIONTHEBRUISER-SLAL_MISTAKE_EPOCH.title": "Mistake",
   "SHIONTHEBRUISER-SLAL_MISTAKE_EPOCH.description": "These [aqua]precious gems[/aqua]. They should not be here.\n\nIt is probably his fault. [sine]It generally is.[/sine]\n\nHe needs to fix this. Those emeralds share their power to whoever completes their challenge.\n\nHe can do that. By accident. He can do many, many, [red]impossible[/red] things by accident.",
   "SHIONTHEBRUISER-SLAL_MISTAKE_EPOCH.unlockInfo": "{IsRevealed:Unlocked|Unlock} the [aqua]Cyan Chaos Emerald[/aqua]{IsRevealed:| to reveal this Epoch}.",
-  "SHIONTHEBRUISER-SEELS_UNLOCK_EPOCH.title": "TODO",
-  "SHIONTHEBRUISER-SEELS_UNLOCK_EPOCH.description": "TODO",
+  "SHIONTHEBRUISER-SEELS_BORING_EPOCH.title": "Bo-riiiing!",
+  "SHIONTHEBRUISER-SEELS_BORING_EPOCH.description": "Look.\n\nI'm not gonna say I miss the days where the [red]bossman[/red] was possessed and [purple]w[/purple][gold]e[/gold] had to fight for what felt like a year just so the place wouldn't get a sun thrown up right onto its unstable little face.\n\nI will say, though, right now? Things are [shake rate=20 level=8]UNACCEPTABLY BORING[/shake].\n\nNot only does [purple]she[/purple] never visit anymore, but even [aqua]the slimy goofball[/aqua] went and disappeared on us! Without even a word! The nerve, I tell you.\n\n[jitter]Sigh....[/jitter] I wish something interesting happened soon.",
+  "SHIONTHEBRUISER-SEELS_BORING_EPOCH.unlockInfo": "Beat [gold]Act[/gold] [blue]1[/blue] with [blue]Seelmiles[/blue]{IsRevealed:| to reveal this Epoch}.",
+  "SHIONTHEBRUISER-SEELS_BORING_EPOCH.unlockText": "TODO",
+
+  "SHIONTHEBRUISER-SEELS_UNLOCK_EPOCH.title": "Finally!",
+  "SHIONTHEBRUISER-SEELS_UNLOCK_EPOCH.description": "Yay!\n\nThe interdimensional Swiss Cheese that is our [gold]Chao Garden[/gold] is riddled with portals to other worlds! Now [jitter]THAT'S[/jitter] interesting!\n\nNo doubt that's where [blue]Al'[/blue] ran off to. This smells like [gold]adventure[/gold], I tell ya'!\n\nIt also smells like [red]bloodlust[/red] over there, but that's probably nothing.",
   "SHIONTHEBRUISER-SEELS_UNLOCK_EPOCH.unlockInfo": "{IsRevealed:Played|Play} a run with [gold]The Goofball[/gold]{IsRevealed:| to reveal this Epoch}.",
   "SHIONTHEBRUISER-SEELS_UNLOCK_EPOCH.unlockText": "Unlocked [blue]Seelmiles[/blue] as a playable character.",
+
+  "SHIONTHEBRUISER-SEELS_HOLD_ON_EPOCH.title": "Hold On...",
+  "SHIONTHEBRUISER-SEELS_HOLD_ON_EPOCH.description": "Well, this place is... interesting. Guess I got what I bargained for.\n\nSpotted [red]some[/red] [green]other[/green] [blue]adventurers[/blue] climbing the [gold]tower[/gold]. Wish I could have chatted them up, they look like everything about them was wrong, haha!\n\nThat being said, that also applies to this entire place. It kind of feels... [red]alive[/red]. Don't really like it.",
+  "SHIONTHEBRUISER-SEELS_HOLD_ON_EPOCH.unlockInfo": "{IsRevealed:Defeated|Defeat} [blue]15[/blue] [gold]Elites[/gold] with [blue]Seelmiles[/blue]{IsRevealed:| to reveal this Epoch}.",
+  "SHIONTHEBRUISER-SEELS_HOLD_ON_EPOCH.unlockText": "TODO",
+
+  "SHIONTHEBRUISER-SEELS_WAIT_FOR_ME_GUYS_EPOCH.title": "Wait For Me, Guys!",
+  "SHIONTHEBRUISER-SEELS_WAIT_FOR_ME_GUYS_EPOCH.description": "Some [blue]champagne[/blue] and a few [purple]gloves scraps[/purple]. I'm on the right way for sure!\n\nThis place is awesome. Can't really vouch for the decor, but there's so much different creatures and constructs! If only the latter had blood.\nAlas, I will have to make do with the former.\n\nBummer.",
+  "SHIONTHEBRUISER-SEELS_WAIT_FOR_ME_GUYS_EPOCH.unlockInfo": "Beat [gold]Act[/gold] [blue]2[/blue] with [blue]Seelmiles[/blue]{IsRevealed:| to reveal this Epoch}.",
+  "SHIONTHEBRUISER-SEELS_WAIT_FOR_ME_GUYS_EPOCH.unlockText": "TODO",
+
+  "SHIONTHEBRUISER-SEELS_WELL_THIS_BLOWS_EPOCH.title": "Well, This Blows.",
+  "SHIONTHEBRUISER-SEELS_WELL_THIS_BLOWS_EPOCH.description": "That's [jitter]SO[/jitter] bullshit.\n\nSo, get this: I'm making my way uptown, walking fast, and boom. Met with the final boss of the place. Tried my fair shot at taking the guy down, but he dies and strikes hard!\n\nThis is a bit above my paygrade, not gonna lie. Dunno whether I can be bothered to deal with that all alone.\n\nI [jitter]reallyyyyy[/jitter] need to find my friends...",
+  "SHIONTHEBRUISER-SEELS_WELL_THIS_BLOWS_EPOCH.unlockInfo": "Beat [gold]Act[/gold] [blue]3[/blue] with [blue]Seelmiles[/blue]{IsRevealed:| to reveal this Epoch}.",
+  "SHIONTHEBRUISER-SEELS_WELL_THIS_BLOWS_EPOCH.unlockText": "TODO",
+
+  "SHIONTHEBRUISER-SEELS_RAGTAG_PALS_EPOCH.title": "Ragtag Pals",
+  "SHIONTHEBRUISER-SEELS_RAGTAG_PALS_EPOCH.description": "Found one!!\n\nLooks like we're FINALLY gonna make some trouble! It's good to see [purple]her[/purple] again after all this time.\n\nEven if she's scolding me about using my blood magic. Em, lady? YOU'RE bleeding, and YOU don't get your powers from it, so what gives?!\n\nAt any rate, I think this [red]Architect[/red] guy can shake in his boots, 'cause we're coming at him, and nothing [i](usually)[/i] stops us!",
+  "SHIONTHEBRUISER-SEELS_RAGTAG_PALS_EPOCH.unlockInfo": "{IsRevealed:Defeated|Defeat} [blue]15[/blue] [gold]Bosses[/gold] with [blue]Seelmiles[/blue]{IsRevealed:| to reveal this Epoch}.",
+  "SHIONTHEBRUISER-SEELS_RAGTAG_PALS_EPOCH.unlockText": "TODO",
+
+  "SHIONTHEBRUISER-SEELS_CONDENSED_MIGHT_EPOCH.title": "Condensed Might",
+  "SHIONTHEBRUISER-SEELS_CONDENSED_MIGHT_EPOCH.description": "Good old [gold]Chaos Emeralds[/gold]. Wonder how they even got here?\n\nHolding them feels nice. You can feel the power inside them with your own skin.\n\nIt's very unlike my magic; blood is steady and flows tranquil, mana is strong but uniform.\n\nThis? It's mighty and wild. [shake rate=20 level=8]I love it.[/shake]\n\nC'mon, you know the drill. One Chaos Emerald is good, but [gold]seven makes a miracle.[/gold]",
+  "SHIONTHEBRUISER-SEELS_CONDENSED_MIGHT_EPOCH.unlockInfo": "{IsRevealed:Won|Win} a run with the [red]Red Chaos Emerald[/red] as [blue]Seelmiles[/blue]{IsRevealed:| to reveal this Epoch}.",
+  "SHIONTHEBRUISER-SEELS_CONDENSED_MIGHT_EPOCH.unlockText": "TODO",
+
+  "SHIONTHEBRUISER-SEELS_ROLL_WITH_THE_PUNCHES_EPOCH.title": "Roll With The Punches",
+  "SHIONTHEBRUISER-SEELS_ROLL_WITH_THE_PUNCHES_EPOCH.description": "Meeeeeh. I've taken a few ugly knockouts here and there before. This is nothing.\n\nBesides, I've got my pals, I've got my style, nothing wrong can happen!\nThe giant whale patching us up each time we get annihilated out there helps a lot, to be honest.\n\nBut It's not like I [jitter]NEED[/jitter] her help. Things always work out for me, yep yep!",
+  "SHIONTHEBRUISER-SEELS_ROLL_WITH_THE_PUNCHES_EPOCH.unlockInfo": "{IsRevealed:Won|Win} a run on [gold]Ascension[/gold] [blue]1[/blue] with [blue]Seelmiles[/blue]{IsRevealed:| to reveal this Epoch}.",
+  "SHIONTHEBRUISER-SEELS_ROLL_WITH_THE_PUNCHES_EPOCH.unlockText": "TODO",
+
   "SHIONTHEBRUISER-FRY_UNLOCK_EPOCH.title": "TODO",
   "SHIONTHEBRUISER-FRY_UNLOCK_EPOCH.description": "TODO",
   "SHIONTHEBRUISER-FRY_UNLOCK_EPOCH.unlockInfo": "{IsRevealed:Played|Play} a run with [blue]Seelmiles[/blue]{IsRevealed:| to reveal this Epoch}.",
