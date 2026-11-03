@@ -262,7 +262,7 @@
     "SHIONTHEBRUISER-SLAL_PROOF_READING.title": "Proof Reading",
     "SHIONTHEBRUISER-SLAL_PROOF_READING.description": "Draw cards until you draw a [gold]Novel[/gold] card.\nGain {energyPrefix:energyIcons(1)} for each [gold]Flashback[/gold].{InCombat:\n({FlashbackAmount:diff()} [gold]Flashback[/gold])|}\nLose all [gold]Flashback[/gold].",
     "SHIONTHEBRUISER-SLAL_OLD_IDEAS.title": "Old Ideas",
-    "SHIONTHEBRUISER-SLAL_OLD_IDEAS.description": "Put a [gold]Novel[/gold] card from your [gold]Discard Pile[/gold] into your [gold]Hand[/gold]. It costs {Energy:energyIcons()} less this combat.{InCombat:\n({NovelCount:diff()} [gold]Novel[/gold] {NovelCount:plural:card|cards} in your [gold]Discard Pile[/gold])|}",
+    "SHIONTHEBRUISER-SLAL_OLD_IDEAS.description": "Put a [gold]Novel[/gold] card from your [gold]Discard Pile[/gold] into your [gold]Hand[/gold]. It costs {Energy:energyIcons()} less this combat.{InCombat:\n({NovelCount:diff()} different [gold]Novel[/gold] {NovelCount:plural:card|cards} in your [gold]Discard Pile[/gold])|}",
     "SHIONTHEBRUISER-SLAL_OLD_IDEAS.selectionScreenPrompt": "Choose Novel cards to put into your Hand.",
     "SHIONTHEBRUISER-SLAL_LOGIC_SHIFT.title": "Logic Shift",
     "SHIONTHEBRUISER-SLAL_LOGIC_SHIFT.description": "Choose a card in your [gold]Discard Pile[/gold] to put into your [gold]Hand[/gold].\nDiscard {Cards:diff()} {Cards:plural:card|cards}.",

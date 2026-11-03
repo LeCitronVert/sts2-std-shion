@@ -12,7 +12,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
 /// Put a Novel card from your Discard Pile into your Hand. It costs 1 less this combat. Exhaust. (Upgrade: Retain.)
-/// Shows the number of Novel cards in the Discard Pile (other Old Ideas not counted) and glows red when there are none.
+/// Shows the number of different Novel cards in the Discard Pile (duplicates counted once, other Old Ideas not counted) and glows red when there are none.
 /// </summary>
 public class SlalOldIdeas() : SlalTheEndlessCard(0,
     CardType.Skill, CardRarity.Common,
@@ -39,7 +39,10 @@ public class SlalOldIdeas() : SlalTheEndlessCard(0,
     private static int CountNovelInDiscard(CardModel card)
     {
         if (card.CombatState == null) return 0;
-        return PileType.Discard.GetPile(card.Owner).Cards.Count(c => IsNovel(c) && c is not SlalOldIdeas);
+        return PileType.Discard.GetPile(card.Owner).Cards
+            .Where(c => IsNovel(c) && c is not SlalOldIdeas)
+            .DistinctBy(c => c.Id)
+            .Count();
     }
 
     protected override async Task OnPlay(
