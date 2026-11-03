@@ -23,7 +23,10 @@ public class BloodCarryOverSingleton() : CustomSingletonModel(HookType.Combat)
     /// <summary>True while the carried-over Blood is being given back, so it isn't counted as Blood gained (Red Fang).</summary>
     public static bool IsRestoring { get; private set; }
 
-    public override Task AfterCombatVictoryEarly(CombatRoom room)
+    // Must be AfterCombatEnd, not AfterCombatVictory(Early): CombatManager.EndCombatInternal calls
+    // Player.AfterCombatEnd() (which removes all powers, Blood included) between the two hooks.
+    // AfterCombatEnd only runs on victory (a loss goes through LoseCombat instead).
+    public override Task AfterCombatEnd(CombatRoom room)
     {
         foreach (var player in room.CombatState.Players)
         {

@@ -7,7 +7,7 @@ ShionTheBruiser.json::JSON::-1::1792433998::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1793723317
+::res://bin/ExportRelease/net9.0/publish/::1793724619
 ShionTheBruiser.deps.json::JSON::-1::1793637085::0::1::::<><><>0<>0<><>::
 ::res://ci/::1792939391
 ::res://ci/game-refs/::1792939391
@@ -1272,7 +1272,7 @@ team_blast_ready.png::CompressedTexture2D::8331283540066729296::1793177713::1793
 ::res://ShionTheBruiser/localization/::1781940056
 ::res://ShionTheBruiser/localization/eng/::1793715701
 ancients.json::JSON::-1::1793450154::0::1::::<><><>0<>0<><>::
-cards.json::JSON::-1::1793720018::0::1::::<><><>0<>0<><>::
+cards.json::JSON::-1::1793724553::0::1::::<><><>0<>0<><>::
 card_keywords.json::JSON::-1::1793651865::0::1::::<><><>0<>0<><>::
 card_selection.json::JSON::-1::1793183274::0::1::::<><><>0<>0<><>::
 characters.json::JSON::-1::1793464664::0::1::::<><><>0<>0<><>::
@@ -1511,7 +1511,7 @@ SeelsDoThisAllDay.cs::CSharpScript::7553687778173110852::1793482968::0::1::::<><
 SeelsDropKick.cs::CSharpScript::828997527745614376::1792675405::0::1::::<><><>0<>0<><>::
 SeelsEchoesOfPain.cs::CSharpScript::6623825453028608835::1793719838::0::1::::<><><>0<>0<><>::
 SeelsExcitedWait.cs::CSharpScript::3450724578847247488::1792675405::0::1::::<><><>0<>0<><>::
-SeelsExsanguination.cs::CSharpScript::8707790559315588812::1793719953::0::1::::<><><>0<>0<><>::
+SeelsExsanguination.cs::CSharpScript::8707790559315588812::1793724553::0::1::::<><><>0<>0<><>::
 SeelsEyeOpeningRealization.cs::CSharpScript::2775807119409985050::1793719694::0::1::::<><><>0<>0<><>::
 SeelsFinalShowdown.cs::CSharpScript::4138197658593422283::1793636724::0::1::::<><><>0<>0<><>::
 SeelsFinishingExplosion.cs::CSharpScript::1160194743687475408::1792675405::0::1::::<><><>0<>0<><>::
@@ -1540,7 +1540,7 @@ SeelsOpenWounds.cs::CSharpScript::8594439643653991949::1793719738::0::1::::<><><
 SeelsOstysBestie.cs::CSharpScript::1012354723486886363::1793531997::0::1::::<><><>0<>0<><>::
 SeelsPainChock.cs::CSharpScript::3188270029744742921::1793636659::0::1::::<><><>0<>0<><>::
 SeelsPalmStrike.cs::CSharpScript::1814685233701784837::1793636659::0::1::::<><><>0<>0<><>::
-SeelsParryAttempt.cs::CSharpScript::642871817515429483::1793719738::0::1::::<><><>0<>0<><>::
+SeelsParryAttempt.cs::CSharpScript::642871817515429483::1793724553::0::1::::<><><>0<>0<><>::
 SeelsPaybackTime.cs::CSharpScript::3243950035277550741::1793482968::0::1::::<><><>0<>0<><>::
 SeelsPinThemDown.cs::CSharpScript::8831451973595099635::1793482968::0::1::::<><><>0<>0<><>::
 SeelsPlayOnWords.cs::CSharpScript::8025588958889969983::1793636659::0::1::::<><><>0<>0<><>::
