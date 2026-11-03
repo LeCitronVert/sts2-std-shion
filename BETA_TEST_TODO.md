@@ -1318,3 +1318,41 @@ Shown for any player who owns the relic (Abby = Abby the Absol, Edge = Edge the 
 - [ ] Light colors: blue for Silent / Defect / Slal, red for Ironclad / Fry / Shion, yellow for Regent / Seels / Necrobinder (other characters: soft white).
 - [ ] 0.5s later the Dramatic Entrance full-screen effect plays, right as the lights finish fading, then the Team Blast resolves.
 - [ ] Only plays once per Team Blast (not on replays), on every client, and is skipped with Instant fast mode.
+
+## 24. Seels: Ancients & party interactions (+ Shion ↔ Seels)
+
+**Setup**
+- [ ] Re-export the .pck (ancients.json changed) and rebuild. Let MegaDot generate the `.uid` for the new `SeelsPartyDialogues.cs`.
+- [ ] Note: the build currently fails on `Variables/PatchUpVar.cs(43)` (`DynamicVar._owner` is protected). The error was already on HEAD before this pass.
+
+**Seels with ancients** (one-time dialogues show on Seels' 1st, 2nd, 5th, 8th, 11th… visit, like Shion's; repeating ones join the random pool once that visit is reached)
+- [ ] Neow: first visit "come closer…" → "Wow, big fish!"; repeatables "rise… annoying mage", "Big oof…", "This time, for sure!"; one-time "It happened twice..." and "i kept the blood you collected…".
+- [ ] Orobas: "Blonde thing!!" intro; repeatables (blood spells, "Ooh, the shinies!", marvelling narration).
+- [ ] Pael: hemomancer intro with the mini-Pael narration; repeatables (dragon blood).
+- [ ] Tezcatara: "chip off the old block" intro; repeatable "crimson lake"; one-time pyromancy line.
+- [ ] Nonupeipe: "What is this stench?" intro; repeatables.
+- [ ] Tanx: "SMELL OF A TRUE WARRIOR" intro; repeatables, including the playfight.
+- [ ] Vakuu: "Imagine seeing someone already familiar…" intro; repeatable "pathetic"; one-time "I'm done taking your contracts" speech (7 lines, last one wavy).
+- [ ] Darv: "[purple]punk[/purple]" intro; repeatables (steal from the Architect, "nice junk").
+- [ ] Line speakers look right: narration lines sit on the side of whoever the sheet says (Tezcatara's cackle on Tezcatara's side, Seels' narrations on Seels').
+
+**Seels party dialogues at Neow (multiplayer)**
+- [ ] Ironclad, Silent, Defect, Regent, Necrobinder: the first one-time dialogue plays first, then the repeatables join. Necrobinder's 2nd one-time dialogue ("Always amazing how friendship…") only shows once the first one has been seen.
+- [ ] Silent's "bonks Seels' head" and Defect's "Loading 'Dreamer Manifest'…" lines show on the partner's side, with the partner's icon and colour.
+- [ ] STS1 (Ironclad + Silent + Defect): "Hell, yeah! NOW, it's a party!"
+- [ ] STS2 (Regent + Necrobinder): Regent opens, Necrobinder says "Hard pass.", and the right speaker shows on every line.
+- [ ] Any Dreamer (Slal / Fry / Shion): the 3 repeatable lines.
+- [ ] Seels + Seels: the player/partner lines alternate correctly.
+- [ ] Seels + Shion: Shion opens ("Oh, damn!…"), then the postcard shout shakes.
+
+**Shion party dialogues with Seels (new group)**
+- [ ] Shion + Seels: Seels opens with "Hey, girl!"; repeatables "Race ya to the top!", "good company… folly", "insane bloodlust", "came home more often", "[gold]he[/gold] nags me".
+- [ ] The second one-time dialogue ("Tsk.... this is gonna take some time") only shows after the first one has been seen, and ends on Shion's italic "(side-eye)".
+- [ ] Shion's old Dreamers group still shows with Seels too (both groups are in the random pool).
+
+**Decisions I made**
+- Default visit spacing for one-time ancient dialogues (confirmed). "It happened twice..." shows on Seels' 8th Neow visit.
+- Button labels the sheet doesn't give are contextual (confirmed): Approach, Rejoice, Reconsider, Answer, Show off, Greet, Playfight, Stay silent, Listen. Everything else is "Continue". Party dialogues use the existing "Continue".
+- Tag mapping: (wavey) → [sine], (shake) → [jitter], (italic) → [i], (purple)/(red) → same colour, (yellow) → [gold] (there's no yellow tag). Narration uses the same small italic style as Shion's. All of Pael's lines use [thinky_dots], like his other lines.
+- Typo fixes: "trinks" → "trinkets", "vigoriously" → "vigorously", "TRANSDIMENSONAL" → "TRANSDIMENSIONAL", "welp" → "whelp", and added a period to Nonupeipe's "…reward might. Come.".
+- The sheet has no Architect lines and no "other modded character" group for Seels, so the Architect TODO placeholders stay and nothing was added for modded characters.

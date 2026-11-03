@@ -83,5 +83,14 @@ public static class ShionPartyDialogues
             Once(Self, 0, Self),
             Repeat(0),
             Repeat(Self)),
+
+        new("SEELS", All(ModelDb.Character<SeelsTheReckless>),
+            Once(0, Self, 0, Self),
+            Repeat(0),
+            Repeat(Self),
+            Once(Self, 0, Self, 0, Self),
+            Repeat(0),
+            Repeat(0),
+            Repeat(Self)),
     ];
 }

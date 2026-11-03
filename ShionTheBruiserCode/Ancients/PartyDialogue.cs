@@ -53,6 +53,7 @@ public static class PartyDialogues
     private static readonly Lazy<Dictionary<string, IReadOnlyList<PartyDialogueGroup>>> Groups = new(() => new()
     {
         [ModelDb.Character<Character.ShionTheBruiser>().Id.Entry] = ShionPartyDialogues.Groups,
+        [ModelDb.Character<Character.SeelsTheReckless>().Id.Entry] = SeelsPartyDialogues.Groups,
     });
 
     private static readonly ConditionalWeakTable<AncientDialogueLine, CharacterModel> PartnerSpeakers = new();
