@@ -573,5 +573,8 @@
   "SHIONTHEBRUISER-SAVAGERY_STRENGTH.smartDescription": "Gains [blue]{Amount}[/blue] [gold]Strength[/gold] until the end of the turn.",
   "SHIONTHEBRUISER-STRIKE_FIRST_STRENGTH.title": "Strike First",
   "SHIONTHEBRUISER-STRIKE_FIRST_STRENGTH.description": "Gains [gold]Strength[/gold] until the end of the turn.",
-  "SHIONTHEBRUISER-STRIKE_FIRST_STRENGTH.smartDescription": "Gains [blue]{Amount}[/blue] [gold]Strength[/gold] until the end of the turn."
+  "SHIONTHEBRUISER-STRIKE_FIRST_STRENGTH.smartDescription": "Gains [blue]{Amount}[/blue] [gold]Strength[/gold] until the end of the turn.",
+  "SHIONTHEBRUISER-ACE_OF_SPADE.title": "Ace of Spade",
+  "SHIONTHEBRUISER-ACE_OF_SPADE.description": "Gaining [gold]Strength[/gold] and [gold]Dexterity[/gold] from the [gold]Ace of Spade[/gold] cards in your [gold]Hand[/gold]. Lost when they leave your [gold]Hand[/gold].",
+  "SHIONTHEBRUISER-ACE_OF_SPADE.smartDescription": "Gaining [blue]{Amount}[/blue] [gold]Strength[/gold] and [gold]Dexterity[/gold] from the [gold]Ace of Spade[/gold] cards in your [gold]Hand[/gold]. Lost when they leave your [gold]Hand[/gold]."
 }

@@ -1,10 +1,5 @@
 Name	Type	Character	Image suggestion	Done
-Berserk	Power	Shion	Red pulsing heart with cracked edge	
-Dark Arts	Power	Shion	Purple swirling sigil with a double arrow	
-Scrappy	Power	Shion	Bandaged scrappy fist	x
-Temporary Buffer	Power	Shion	Translucent buffer bubble with a clock	x
-Vigor Next Turn	Power	Shion	Vigor icon with a 'next turn' arrow	x
-Battle Rags	Relic	Shion	Only the outline is missing: make one from the existing icon	
+Come What May	Power	Shion	A stickuma like https://img.game8.co/4246882/e39bb4373e927215d73731dbeacb0172.png/show, but visibly crying	
 Chao Eggshell	Relic	Shion	Cracked Chao eggshell halves	
 Choice Band	Relic	Shion	A headband with a single bold emblem	
 Friendship Bracelet	Relic	Shion	A woven friendship bracelet with colourful beads, one per character	
@@ -17,16 +12,7 @@ Souvenir Picture	Relic	Shion	A polaroid souvenir photo
 Speed Shoes	Relic	Shion	Red sneakers with speed lines	
 Thorn Ring	Relic	Shion	A ring made of thorns	
 Training Manual	Relic	Shion	A well-worn training manual book	
-Elaborate Flourish	Card	Slal	Slal doing an over-the-top theatrical flourish, enemy dizzy with swirls	
-Blank Mind	Power	Slal	Blank speech/thought bubble with a lock	
-Brainstorming	Power	Slal	Light bulb over an open book	
 Break Continuity	Power	Slal	Broken filmstrip / snapped chain	
-Distraction	Power	Slal	Spiral eyes / dangling shiny object	
-Favourite Bucket	Power	Slal	A beloved little bucket with a heart	
-Ignore Vulnerable	Power	Slal	Cracked shield with a slash through it	x
-Kickstart Event	Power	Slal	Rocket booster / light bulb	
-Sated	Power	Slal	Full belly / fork and knife crossed	x
-Weak Next Turn	Power	Slal	Weak icon with a 'next turn' arrow	
 Apple Sauce	Relic	Slal	A jar of apple sauce with a slimy drip down the side	
 Champagne	Relic	Slal	A champagne bottle popping, three bubbles in different rarity colours	
 Evil Waffle	Relic	Slal	A waffle with an evil grin and little horns	
@@ -34,14 +20,6 @@ Genie's Advice	Relic	Slal	A genie lamp with a small scroll
 Juicer	Relic	Slal	A citrus juicer	
 Keyboard Key	Relic	Slal	A single keyboard key (ID is still SlimeRibbon, display name is Keyboard Key)	
 White Ribbon	Relic	Slal	A plain white ribbon bow	
-Creative Soul	Epoch	Slal	A dying young man in a hospital bed, far from family: dim, lonely room	x
-Infinite Worlds	Epoch	Slal	A colourful paradise world built with passion, portals to everywhere	x
-Mimickery	Epoch	Slal	Slime by a dying cat at night, then an empty spot at dawn	x
-Mistake	Epoch	Slal	Chaos-emerald-like precious gems lying where they shouldn't be, an ominous glow	x
-Reconnaissance	Epoch	Slal	Slal looking up at a big blue tower, eager to explore	x
-Rejections	Epoch	Slal	A slime droplet being shunned and called trash/dangerous	x
-Self Discovery	Epoch	Slal	A cleaning-tool slime looking at its own reflection, realizing it's alive	x
-The Factory	Epoch	Slal	A single droplet of unknown substance running down an unsteady steel factory pipe	x
 Ace of Spade	Card	Seels	An ace of spades card held between Seels' fingers, glowing	
 Aggravating Demeanor	Card	Seels	Seels sticking their tongue out at a furious enemy	
 An Opening	Card	Seels	Seels spotting a gap in an enemy's guard, a highlighted weak point	
@@ -134,10 +112,10 @@ Untelegraph Attacks	Card	Seels	Seels attacking from an unexpected angle, no wind
 Violent Rush	Card	Seels	Seels rushing through a crowd of enemies leaving slashes	
 Weird Flex	Card	Seels	Seels flexing a wounded arm proudly	
 Wink	Card	Seels	Seels winking, a die tumbling from their fingers	
+Ace of Spade	Power	Seels	An ace of spades card with small Strength and Dexterity up-arrows	
 Aggravating Demeanor	Power	Seels	Angry vein mark with a small shield	
 Big Numbers	Power	Seels	Die showing a big number	
 Bleed Instructions	Power	Seels	Blood drop over a book	
-Blood	Power	Seels	Single red blood drop	x
 Brutal Teachings	Power	Seels	Bruised fist with a speed line	
 Cliff Dropper	Power	Seels	Cliff edge with a falling die	
 Combo Meter	Power	Seels	'x2' combo counter	
@@ -147,7 +125,6 @@ Dice Blessing	Power	Seels	Die with a halo
 Excited Wait	Power	Seels	Sparkly eyes with a card	
 Gambler's Luck	Power	Seels	Lucky coin with a shield	
 Gambling Addiction	Power	Seels	Slot machine reels	
-Gloat	Power	Seels	Smug grin with a raised finger, beckoning an attack	x
 Invigorating Pain	Power	Seels	Wound with an up arrow	
 Laugh It Off	Power	Seels	Laughing face with tears	
 Live With The Pain	Power	Seels	Bandaged heart	

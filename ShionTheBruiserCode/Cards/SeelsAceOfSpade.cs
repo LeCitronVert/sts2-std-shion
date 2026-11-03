@@ -30,17 +30,12 @@ public class SeelsAceOfSpade() : SeelsTheRecklessCard(1,
         HoverTipFactory.FromKeyword(SeelsCardKeywords.Erratic),
     ];
 
-    private decimal Bonus => Pile?.Type == PileType.Hand ? EnergyCost.GetResolved() : 0;
-
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    // The bonus itself is real Strength and Dexterity, kept in sync by the Ace of Spade power.
+    // The card handles its own pile changes too, since the power doesn't exist before the first Ace enters Hand.
+    public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? clonedBy)
     {
-        return dealer == Owner.Creature && props.IsPoweredAttack() ? Bonus : 0m;
-    }
-
-    public override decimal ModifyBlockAdditive(Creature target, decimal block, ValueProp props, CardModel? cardSource, CardPlay? cardPlay)
-    {
-        if (cardSource != null ? cardSource.Owner.Creature != Owner.Creature : target != Owner.Creature) return 0m;
-        return props.IsPoweredCardOrMonsterMoveBlock() ? Bonus : 0m;
+        if (card != this || (oldPileType != PileType.Hand && Pile?.Type != PileType.Hand)) return;
+        await AceOfSpade.Sync(new ThrowingPlayerChoiceContext(), Owner.Creature);
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
