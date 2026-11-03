@@ -1305,3 +1305,9 @@ Shown for any player who owns the relic (Abby = Abby the Absol, Edge = Edge the 
 - Spirit Burst: X-cost Strikes or Energy cards aren't made free (that would break their X). Energy cards draw on every play, replays included.
 - Deleted the unused **Live With The Pain+** and **Joke and Run** Strength-down powers, with their loc. Also deleted Spirit Burst's "tired" message (it was only for the auto-play cap).
 - Page 2 "Ideas (ne pas implémenter encore)" was not implemented.
+
+## Random Blast: flying icons
+
+- [ ] While Random Blast is active, every card played (by anyone) throws a random buff/debuff icon out of Slal, spinning, towards the enemies (between straight ahead and ~35° up), until it leaves the screen.
+- [ ] The Random Blast play itself doesn't throw one (same as the Confusion proc).
+- [ ] Icons vary (any power of the game, including modded ones), and each player sees their own random icons (visual only, no desync).

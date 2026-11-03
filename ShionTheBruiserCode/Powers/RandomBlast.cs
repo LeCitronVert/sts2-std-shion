@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -45,6 +46,7 @@ public class RandomBlast : SlalTheEndlessPower
         if (enemy == null) return;
 
         Flash();
+        RandomBlastIcons.Throw(Owner);
         await PowerCmd.Apply<Confusion>(choiceContext, enemy, Amount, Owner, null);
         await PowerCmd.Apply<RandomBlast>(choiceContext, Owner, DynamicVars["Increase"].BaseValue, Owner, null);
     }
