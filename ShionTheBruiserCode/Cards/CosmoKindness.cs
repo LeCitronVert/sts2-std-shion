@@ -27,7 +27,9 @@ public class CosmoKindness() : ShionTheBruiserCard(2,
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
         new CalculatedVar("HealAmount").WithMultiplier((card, _) =>
-            ShionMechanicsHelper.GetPatchUpHealAmount(card.DynamicVars[PatchUpVar.Key].IntValue, card.Owner.Creature))
+            ShionMechanicsHelper.GetPatchUpHealAmount(card.DynamicVars[PatchUpVar.Key].IntValue, card.Owner.Creature)),
+        new CalculatedVar("PatchUpLimit").WithMultiplier((card, _) =>
+            (int) Math.Round(ShionMechanicsHelper.GetPatchUpThreshold(card.Owner.Creature) * 100m))
     ];
 
     protected override async Task OnPlay(

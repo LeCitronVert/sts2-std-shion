@@ -17,6 +17,10 @@ public class ShionEepy() : ShionTheBruiserCard(3,
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PatchUpVar(999),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("HealAmount").WithMultiplier((card, _) =>
+            ShionMechanicsHelper.GetPatchUpHealAmount(card.DynamicVars[PatchUpVar.Key].IntValue, card.Owner.Creature))
     ];
     
     protected override async Task OnPlay(
