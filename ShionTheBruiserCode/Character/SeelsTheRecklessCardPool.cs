@@ -15,14 +15,15 @@ public class SeelsTheRecklessCardPool : CustomCardPoolModel
     public override string TextEnergyIconPath => "charui/text_energy.png".ImagePath();
 
     // Shader params, NOT absolute HSV: hsv.gdshader hue-rotates the red base frame and multiplies
-    // its chroma (S) and brightness (V). Was #f1c232 (H 0.131, S 0.492, V 2.499), too bright;
-    // scaled down from those values to a softer, muted gold (~#c8a85a).
+    // its chroma (S) and brightness (V). At this hue: out V ≈ 0.378·V, out chroma ≈ 0.609·S·V
+    // (fitted from #f1c232 = S 0.492/V 2.499 and #c8a85a = S 0.341/V 2.073).
+    // #f1c232 was too bright, #c8a85a too gray; now a deep, saturated gold (#d4ab17).
     public override float H => 0.131f;
-    public override float S => 0.341f;
-    public override float V => 2.073f;
+    public override float S => 0.554f;
+    public override float V => 2.198f;
 
     //Color of small card icons
-    public override Color DeckEntryCardColor => new("c8a85a");
+    public override Color DeckEntryCardColor => new("d4ab17");
 
     public override bool IsColorless => false;
 
