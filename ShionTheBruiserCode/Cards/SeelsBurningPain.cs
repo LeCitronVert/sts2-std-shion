@@ -19,12 +19,14 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Wounding. ALL Wounds in your Hand lose Unplayable and are enchanted with Sown.
+/// Wounding. Make ALL your Wounds free to play. All Wounds in your Hand are enchanted with Sown.
 /// </summary>
 public class SeelsBurningPain() : SeelsTheRecklessCard(1,
     CardType.Skill, CardRarity.Rare,
     TargetType.Self)
 {
+    public const int WoundCost = 0;
+
     public const int SownAmount = 1;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [SeelsCardKeywords.Wounding];
@@ -37,7 +39,8 @@ public class SeelsBurningPain() : SeelsTheRecklessCard(1,
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await SeelsMechanicsHelper.AddWounds(Owner, 1);
-        SeelsMechanicsHelper.EmpowerWoundsInHand<Sown>(Owner, SownAmount);
+        SeelsMechanicsHelper.MakeAllWoundsPlayable(Owner, WoundCost);
+        SeelsMechanicsHelper.EnchantWoundsInHand<Sown>(Owner, SownAmount);
     }
 
     protected override void OnUpgrade()

@@ -19,28 +19,25 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Apply X Vulnerable. Gain 6 (8) Block X times. Gain 6 (8) Block X times next turn.
+/// Apply X Vulnerable. Gloat X. Exhaust. (Upgrade: lose Exhaust.)
 /// </summary>
 public class SeelsFunnyDance() : SeelsTheRecklessCard(0,
     CardType.Skill, CardRarity.Common,
     TargetType.AnyEnemy)
 {
-    public override bool GainsBlock => true;
     protected override bool HasEnergyCostX => true;
 
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(6M, ValueProp.Move),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
         new CalculatedVar("XAmount").WithMultiplier((card, _) => PreviewHelper.XValue(card)),
-        // Block is gained X times, so modifiers apply to each gain
-        new CalculatedVar("BlockAmount").WithMultiplier((card, _) =>
-            PreviewHelper.XValue(card) * PreviewHelper.ModifiedBlock(card, card.DynamicVars.Block.BaseValue, card.DynamicVars.Block.Props)),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<VulnerablePower>(),
-        HoverTipFactory.FromPower<BlockNextTurnPower>(),
+        HoverTipFactory.FromPower<Gloat>(),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
@@ -51,15 +48,11 @@ public class SeelsFunnyDance() : SeelsTheRecklessCard(0,
 
         var creature = Owner.Creature;
         await PowerCmd.Apply<VulnerablePower>(choiceContext, play.Target, x, creature, this);
-        for (var i = 0; i < x; i++)
-        {
-            await CreatureCmd.GainBlock(creature, DynamicVars.Block, play);
-        }
-        await PowerCmd.Apply<BlockNextTurnPower>(choiceContext, creature, DynamicVars.Block.BaseValue * x, creature, this);
+        await SeelsMechanicsHelper.Gloat(choiceContext, creature, x, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(2M);
+        RemoveKeyword(CardKeyword.Exhaust);
     }
 }

@@ -14,25 +14,21 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Whenever you draw a card during your turn, gain its energy cost as Block. Draw 1 (2) card(s).
+/// Whenever you draw a card during your turn (not your starting Hand), gain 3 (5) times its energy cost as Block.
 /// </summary>
 public class SeelsGamblersLuck() : SeelsTheRecklessCard(1,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<GamblersLuck>(1M),
-        new CardsVar(1),
-    ];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<GamblersLuck>(3M)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await PowerCmd.Apply<GamblersLuck>(choiceContext, Owner.Creature, DynamicVars["GamblersLuck"].BaseValue, Owner.Creature, this);
-        await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Cards.UpgradeValueBy(1M);
+        DynamicVars["GamblersLuck"].UpgradeValueBy(2M);
     }
 }

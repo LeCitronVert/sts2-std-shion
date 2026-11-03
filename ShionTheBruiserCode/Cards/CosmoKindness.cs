@@ -16,6 +16,8 @@ public class CosmoKindness() : ShionTheBruiserCard(2,
     CardType.Skill, CardRarity.Token,
     TargetType.Self)
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
     public override bool CanBeGeneratedInCombat => false;
     public override bool CanBeGeneratedByModifiers => false;
 

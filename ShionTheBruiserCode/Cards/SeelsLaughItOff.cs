@@ -19,7 +19,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Whenever you lose HP, add 1 (2) Slash(es) into your Hand.
+/// At the end of your turn, Gloat 1 (2).
 /// </summary>
 public class SeelsLaughItOff() : SeelsTheRecklessCard(1,
     CardType.Power, CardRarity.Uncommon,
@@ -27,7 +27,7 @@ public class SeelsLaughItOff() : SeelsTheRecklessCard(1,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<LaughItOff>(1M)];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<SeelsSlash>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Gloat>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {

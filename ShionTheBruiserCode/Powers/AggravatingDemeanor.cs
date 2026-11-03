@@ -1,3 +1,5 @@
+using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -9,24 +11,28 @@ using MegaCrit.Sts2.Core.Models.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// Whenever you apply Vulnerable, gain (X times) as much Vigor next turn.
-/// Goes through VigorNextTurn: Vulnerable can be applied mid-attack, which would break VigorPower.
+/// Whenever your Gloat triggers (you gain energy from it), immediately gain as much Blur and X Block.
+/// The amount is the Block; stacking adds Block, the Blur always equals the Gloat energy.
 /// </summary>
-public class AggravatingDemeanor : SeelsTheRecklessPower
+public class AggravatingDemeanor : SeelsTheRecklessPower, ISeelsListener
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<VulnerablePower>(),
-        HoverTipFactory.FromPower<VigorNextTurn>(),
+        HoverTipFactory.FromPower<Gloat>(),
+        HoverTipFactory.FromPower<BlurPower>(),
     ];
 
-    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
+    public async Task AfterGloatTriggered(PlayerChoiceContext choiceContext, Creature creature, int energy)
     {
-        if (power is not VulnerablePower || applier != Owner || power.Owner == Owner || amount <= 0) return;
+        if (creature != Owner) return;
 
         Flash();
-        await PowerCmd.Apply<VigorNextTurn>(choiceContext, Owner, amount * Amount, Owner, null);
+        if (energy > 0)
+        {
+            await PowerCmd.Apply<BlurPower>(choiceContext, Owner, energy, Owner, null);
+        }
+        await CreatureCmd.GainBlock(Owner, Amount, ValueProp.Unpowered, null);
     }
 }

@@ -20,10 +20,9 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
 /// Blood Bend X. Add 2 Sharp X Slashes (Slashes+) into your Hand and 2 into your Draw Pile.
-/// The card stays an Attack (the spec gives no type change) but deals no damage itself, so it targets no one.
 /// </summary>
 public class SeelsBloodyExecution() : SeelsTheRecklessCard(2,
-    CardType.Attack, CardRarity.Common,
+    CardType.Skill, CardRarity.Common,
     TargetType.Self)
 {
     protected override HashSet<CardTag> CanonicalTags => [SeelsCardTags.Blood];

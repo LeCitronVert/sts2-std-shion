@@ -20,45 +20,37 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Lose X HP (1 HP). Put X random Slashes from your Draw or Discard Piles into your Hand and Upgrade them.
+/// Lose HP equal to this card's energy cost. Add 2 Slashes (Slashes+) into your Hand.
+/// Increase this card's cost by 1 this combat and shuffle it into your Draw Pile.
 /// </summary>
 public class SeelsSummonWrath() : SeelsTheRecklessCard(0,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
-    protected override bool HasEnergyCostX => true;
-
     protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CardsVar(2),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
-        new CalculatedVar("XAmount").WithMultiplier((card, _) => PreviewHelper.XValue(card)),
-        new CalculatedVar("SlashesAmount").WithMultiplier((card, _) =>
-            Math.Min(PreviewHelper.XValue(card), GetSlashesInPiles(card).Count)),
+        new CalculatedVar("HpLossAmount").WithMultiplier((card, _) => card.EnergyCost.GetResolved()),
     ];
 
-    private static List<CardModel> GetSlashesInPiles(CardModel card) =>
-        PileType.Draw.GetPile(card.Owner).Cards
-            .Concat(PileType.Discard.GetPile(card.Owner).Cards)
-            .Where(SeelsMechanicsHelper.IsSlash)
-            .ToList();
-
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<SeelsSlash>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<SeelsSlash>(IsUpgraded)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        var x = ResolveEnergyXValue();
-        await SeelsMechanicsHelper.LoseHp(choiceContext, Owner.Creature, IsUpgraded ? 1 : x, this);
-
-        var slashes = GetSlashesInPiles(this)
-            .StableShuffle(Owner.RunState.Rng.CombatCardSelection)
-            .Take(x)
-            .ToList();
-
-        foreach (var slash in slashes)
+        var cost = EnergyCost.GetResolved();
+        if (cost > 0)
         {
-            if (slash.IsUpgradable) CardCmd.Upgrade(slash);
-            await CardPileCmd.Add(slash, PileType.Hand);
+            await SeelsMechanicsHelper.LoseHp(choiceContext, Owner.Creature, cost, this);
         }
+
+        await SeelsMechanicsHelper.AddSlashes(Owner, DynamicVars.Cards.IntValue, PileType.Hand, IsUpgraded);
+        EnergyCost.AddThisCombat(1);
+    }
+
+    public override (PileType, CardPilePosition) ModifyCardPlayResultPileTypeAndPosition(CardModel card, bool isAutoPlay, ResourceInfo resources, PileType pileType, CardPilePosition position)
+    {
+        return card == this && pileType == PileType.Discard ? (PileType.Draw, CardPilePosition.Random) : (pileType, position);
     }
 
     protected override void OnUpgrade()

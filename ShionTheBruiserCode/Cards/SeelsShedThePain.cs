@@ -19,9 +19,9 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Exhaust ALL your enchanted Wounds. Heal 1 HP per card Exhausted. Exhaust.
+/// Exhaust ALL your Wounds. Heal 1 HP per enchanted card Exhausted this way. Exhaust.
 /// </summary>
-public class SeelsShedThePain() : SeelsTheRecklessCard(3,
+public class SeelsShedThePain() : SeelsTheRecklessCard(2,
     CardType.Skill, CardRarity.Rare,
     TargetType.Self)
 {
@@ -31,12 +31,13 @@ public class SeelsShedThePain() : SeelsTheRecklessCard(3,
         new HealVar(1M),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
-        new CalculatedVar("HealAmount").WithMultiplier((card, _) => GetWoundsToExhaust(card).Count * card.DynamicVars.Heal.BaseValue),
+        new CalculatedVar("HealAmount").WithMultiplier((card, _) =>
+            GetWoundsToExhaust(card).Count(c => c.Enchantment is not null) * card.DynamicVars.Heal.BaseValue),
     ];
 
     private static List<CardModel> GetWoundsToExhaust(CardModel card) =>
         SeelsMechanicsHelper.GetAllCombatCards(card.Owner)
-            .Where(c => SeelsMechanicsHelper.IsWound(c) && c.Enchantment is not null && c.Pile?.Type != PileType.Exhaust)
+            .Where(c => SeelsMechanicsHelper.IsWound(c) && c.Pile?.Type != PileType.Exhaust)
             .ToList();
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Wound>()];
@@ -44,15 +45,17 @@ public class SeelsShedThePain() : SeelsTheRecklessCard(3,
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         var wounds = GetWoundsToExhaust(this);
+        // Counted before Exhausting, in case Exhausting removes an enchantment.
+        var enchanted = wounds.Count(c => c.Enchantment is not null);
 
         foreach (var wound in wounds)
         {
             await CardCmd.Exhaust(choiceContext, wound);
         }
 
-        if (wounds.Count > 0)
+        if (enchanted > 0)
         {
-            await CreatureCmd.Heal(Owner.Creature, wounds.Count * DynamicVars.Heal.BaseValue);
+            await CreatureCmd.Heal(Owner.Creature, enchanted * DynamicVars.Heal.BaseValue);
         }
     }
 

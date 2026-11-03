@@ -19,15 +19,17 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Wounding. ALL Wounds in your Hand lose Unplayable and are enchanted with Adroit 4 (5).
+/// Wounding. Make ALL your Wounds playable for 1 energy. All Wounds in your Hand are enchanted with Adroit 7 (9).
 /// </summary>
 public class SeelsJoltingPain() : SeelsTheRecklessCard(0,
     CardType.Skill, CardRarity.Common,
     TargetType.Self)
 {
+    public const int WoundCost = 1;
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [SeelsCardKeywords.Wounding];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Adroit", 4M)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Adroit", 7M)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromCard<Wound>(),
@@ -37,11 +39,12 @@ public class SeelsJoltingPain() : SeelsTheRecklessCard(0,
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await SeelsMechanicsHelper.AddWounds(Owner, 1);
-        SeelsMechanicsHelper.EmpowerWoundsInHand<Adroit>(Owner, DynamicVars["Adroit"].BaseValue);
+        SeelsMechanicsHelper.MakeAllWoundsPlayable(Owner, WoundCost);
+        SeelsMechanicsHelper.EnchantWoundsInHand<Adroit>(Owner, DynamicVars["Adroit"].BaseValue);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Adroit"].UpgradeValueBy(1M);
+        DynamicVars["Adroit"].UpgradeValueBy(2M);
     }
 }

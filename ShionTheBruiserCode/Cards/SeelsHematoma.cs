@@ -19,7 +19,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain 7 (9) Block. Wounding. Discard your Wounds and draw as many cards.
+/// Gain 7 (9) Block. Wounding. Discard your Status cards and draw as many cards.
 /// </summary>
 public class SeelsHematoma() : SeelsTheRecklessCard(1,
     CardType.Skill, CardRarity.Common,
@@ -34,7 +34,7 @@ public class SeelsHematoma() : SeelsTheRecklessCard(1,
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
         // Counts the Wound this card adds first
-        new CalculatedVar("DrawAmount").WithMultiplier((card, _) => SeelsMechanicsHelper.PreviewWoundsInHandAfterWounding(card)),
+        new CalculatedVar("DrawAmount").WithMultiplier((card, _) => SeelsMechanicsHelper.PreviewStatusesInHandAfterWounding(card)),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Wound>()];
@@ -44,9 +44,9 @@ public class SeelsHematoma() : SeelsTheRecklessCard(1,
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
         await SeelsMechanicsHelper.AddWounds(Owner, 1);
 
-        var wounds = SeelsMechanicsHelper.GetWoundsInHand(Owner).ToList();
-        if (wounds.Count == 0) return;
-        await CardCmd.DiscardAndDraw(choiceContext, wounds, wounds.Count);
+        var statuses = PileType.Hand.GetPile(Owner).Cards.Where(c => c.Type == CardType.Status).ToList();
+        if (statuses.Count == 0) return;
+        await CardCmd.DiscardAndDraw(choiceContext, statuses, statuses.Count);
     }
 
     protected override void OnUpgrade()

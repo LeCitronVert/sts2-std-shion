@@ -19,7 +19,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain 8 (10) Block times the energy cost of this card. Double this Block if its cost is 2 or more.
+/// Gain 6 (7) Block, plus 4 (5) times this card's energy cost. Gain Blur equal to this card's energy cost.
 /// </summary>
 public class SeelsParryAttempt() : SeelsTheRecklessCard(1,
     CardType.Skill, CardRarity.Common,
@@ -28,32 +28,30 @@ public class SeelsParryAttempt() : SeelsTheRecklessCard(1,
     public override bool GainsBlock => true;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(8M, ValueProp.Move),
-        new CalculationBaseVar(0),
-        new CalculationExtraVar(1),
-        new CalculatedVar("BlockAmount").WithMultiplier((card, _) =>
-            GetTimes(card) * PreviewHelper.ModifiedBlock(card, card.DynamicVars.Block.BaseValue, card.DynamicVars.Block.Props)),
+        new CalculationBaseVar(6M),
+        new CalculationExtraVar(4M),
+        new CalculatedBlockVar(ValueProp.Move).WithMultiplier((card, _) => card.EnergyCost.GetResolved()),
+        new CalculatedVar("BlurAmount").WithMultiplier((card, _) => card.EnergyCost.GetResolved()),
     ];
 
-    private static int GetTimes(CardModel card)
-    {
-        var cost = card.EnergyCost.GetResolved();
-        return cost >= 2 ? cost * 2 : cost;
-    }
-
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(SeelsCardKeywords.Erratic)];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<BlurPower>(),
+        HoverTipFactory.FromKeyword(SeelsCardKeywords.Erratic),
+    ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        var times = GetTimes(this);
-        for (var i = 0; i < times; i++)
+        var cost = EnergyCost.GetResolved();
+        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.CalculatedBlock.Calculate(play.Target), DynamicVars.CalculatedBlock.Props, play);
+        if (cost > 0)
         {
-            await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
+            await PowerCmd.Apply<BlurPower>(choiceContext, Owner.Creature, cost, Owner.Creature, this);
         }
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(2M);
+        DynamicVars.CalculationBase.UpgradeValueBy(1M);
+        DynamicVars.CalculationExtra.UpgradeValueBy(1M);
     }
 }

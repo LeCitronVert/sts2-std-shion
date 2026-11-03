@@ -22,7 +22,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Shuffle a copy of ALL your enchanted Wounds into your Draw Pile. Draw cards until your Hand is full. Exhaust.
 /// </summary>
-public class SeelsEchoesOfPain() : SeelsTheRecklessCard(2,
+public class SeelsEchoesOfPain() : SeelsTheRecklessCard(1,
     CardType.Skill, CardRarity.Rare,
     TargetType.Self)
 {
@@ -63,6 +63,6 @@ public class SeelsEchoesOfPain() : SeelsTheRecklessCard(2,
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1); //todo : upgrade not specified
+        EnergyCost.UpgradeBy(-1);
     }
 }

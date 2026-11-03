@@ -14,7 +14,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Deal 8 damage. Add 1 Wound into your Discard Pile for each HP the enemy lost.
+/// Wounding. Deal 14 damage. If the enemy lost HP, add an additional Wound into your Discard Pile.
 /// </summary>
 public class SeelsBodyStrike() : SeelsTheRecklessCard(1,
     CardType.Attack, CardRarity.Uncommon,
@@ -22,13 +22,17 @@ public class SeelsBodyStrike() : SeelsTheRecklessCard(1,
 {
     protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(8M, ValueProp.Move)];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [SeelsCardKeywords.Wounding];
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(14M, ValueProp.Move)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Wound>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         ArgumentNullException.ThrowIfNull(play.Target);
+        await SeelsMechanicsHelper.AddWounds(Owner, 1);
+
         var attack = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this)
             .Targeting(play.Target)
@@ -36,7 +40,10 @@ public class SeelsBodyStrike() : SeelsTheRecklessCard(1,
             .Execute(choiceContext);
 
         var hpLost = attack.Results.SelectMany(r => r).Sum(r => r.UnblockedDamage);
-        await SeelsMechanicsHelper.AddWounds(Owner, hpLost, PileType.Discard);
+        if (hpLost > 0)
+        {
+            await SeelsMechanicsHelper.AddWounds(Owner, 1, PileType.Discard);
+        }
     }
 
     protected override void OnUpgrade()

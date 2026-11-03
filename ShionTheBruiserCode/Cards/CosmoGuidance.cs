@@ -12,9 +12,11 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 [Pool(typeof(TokenCardPool))]
 public class CosmoGuidance() : ShionTheBruiserCard(2,
-    CardType.Power, CardRarity.Token,
+    CardType.Skill, CardRarity.Token,
     TargetType.Self)
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
     public override bool CanBeGeneratedInCombat => false;
     public override bool CanBeGeneratedByModifiers => false;
     

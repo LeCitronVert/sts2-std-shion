@@ -1,3 +1,4 @@
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -33,6 +34,12 @@ public class Gloat : SeelsTheRecklessPower
         await PowerCmd.Remove(this);
         await PowerCmd.Apply<EnergyNextTurnPower>(choiceContext, Owner, amount, Owner, null);
         await PowerCmd.Apply<DrawCardsNextTurnPower>(choiceContext, Owner, amount, Owner, null);
+
+        if (Owner.CombatState is null) return;
+        foreach (var listener in Owner.CombatState.IterateHookListeners().OfType<ISeelsListener>().ToList())
+        {
+            await listener.AfterGloatTriggered(choiceContext, Owner, amount);
+        }
     }
 
     public override Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)

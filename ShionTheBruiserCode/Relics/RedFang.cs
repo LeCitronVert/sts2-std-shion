@@ -8,10 +8,13 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
+using ShionTheBruiser.ShionTheBruiserCode.Singletons;
+
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 /// <summary>
 /// Every 10 Blood you gain, heal 1 HP. The counter is kept between combats (like Nunchaku).
+/// Blood carried over between combats (BloodCarryOverSingleton) doesn't count again.
 /// </summary>
 public class RedFang : SeelsTheRecklessRelic
 {
@@ -44,7 +47,8 @@ public class RedFang : SeelsTheRecklessRelic
 
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
-        if (power is not Blood || power.Owner != Owner.Creature || amount <= 0) return;
+        // Blood carried over from the last combat was already counted when it was gained.
+        if (power is not Blood || power.Owner != Owner.Creature || amount <= 0 || BloodCarryOverSingleton.IsRestoring) return;
 
         var threshold = DynamicVars["Blood"].IntValue;
         var before = BloodGained / threshold;

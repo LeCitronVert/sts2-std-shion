@@ -19,7 +19,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain 40 Block. Exhaust. (Retain.)
+/// Gain 40 Block and 1 Blur. Exhaust. (Retain.)
 /// </summary>
 public class SeelsMassiveDefend() : SeelsTheRecklessCard(4,
     CardType.Skill, CardRarity.Rare,
@@ -29,11 +29,17 @@ public class SeelsMassiveDefend() : SeelsTheRecklessCard(4,
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(40M, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new BlockVar(40M, ValueProp.Move),
+        new PowerVar<BlurPower>(1M),
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<BlurPower>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
+        await PowerCmd.Apply<BlurPower>(choiceContext, Owner.Creature, DynamicVars["BlurPower"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

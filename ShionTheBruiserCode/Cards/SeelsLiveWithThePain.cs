@@ -14,9 +14,9 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// At the start of your turn, lose 2 HP and gain Block equal to the number of your non-Exhausted Wounds (ALL your Wounds).
+/// At the start of your turn, lose 2 HP and gain Block equal to the number of ALL your Wounds.
 /// </summary>
-public class SeelsLiveWithThePain() : SeelsTheRecklessCard(1,
+public class SeelsLiveWithThePain() : SeelsTheRecklessCard(2,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
@@ -24,17 +24,11 @@ public class SeelsLiveWithThePain() : SeelsTheRecklessCard(1,
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        if (IsUpgraded)
-        {
-            await PowerCmd.Apply<LiveWithThePainPlus>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
-        }
-        else
-        {
-            await PowerCmd.Apply<LiveWithThePain>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
-        }
+        await PowerCmd.Apply<LiveWithThePain>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
+        EnergyCost.UpgradeBy(-1);
     }
 }

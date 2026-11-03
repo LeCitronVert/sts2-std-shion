@@ -13,7 +13,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// Gain 2 Weak. Apply 1 Weak, and Confusion equal to your Block, to ALL enemies. Lose all your Block. Exhaust.
 /// </summary>
 public class SlalFrontflipAndAHalf() : SlalTheEndlessCard(1,
-    CardType.Attack, CardRarity.Uncommon,
+    CardType.Skill, CardRarity.Uncommon,
     TargetType.AllEnemies)
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];

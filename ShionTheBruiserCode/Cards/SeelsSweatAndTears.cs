@@ -14,7 +14,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Every 4 energy you spend, gain 1 (2) Blood.
+/// Every 4 Attacks you play, gain 1 (2) Blood. Each copy played is a separate power (like Orbit).
 /// </summary>
 public class SeelsSweatAndTears() : SeelsTheRecklessCard(2,
     CardType.Power, CardRarity.Rare,

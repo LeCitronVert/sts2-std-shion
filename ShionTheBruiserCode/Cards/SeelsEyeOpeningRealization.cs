@@ -19,15 +19,17 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Wounding. ALL Wounds in your Hand lose Unplayable and are enchanted with Swift 2 (3).
+/// Wounding. Make ALL your Wounds playable for 1 energy. All Wounds in your Hand are enchanted with Swift 3 (4).
 /// </summary>
 public class SeelsEyeOpeningRealization() : SeelsTheRecklessCard(1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
+    public const int WoundCost = 1;
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [SeelsCardKeywords.Wounding];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Swift", 2M)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Swift", 3M)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromCard<Wound>(),
@@ -37,7 +39,8 @@ public class SeelsEyeOpeningRealization() : SeelsTheRecklessCard(1,
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await SeelsMechanicsHelper.AddWounds(Owner, 1);
-        SeelsMechanicsHelper.EmpowerWoundsInHand<Swift>(Owner, DynamicVars["Swift"].BaseValue);
+        SeelsMechanicsHelper.MakeAllWoundsPlayable(Owner, WoundCost);
+        SeelsMechanicsHelper.EnchantWoundsInHand<Swift>(Owner, DynamicVars["Swift"].BaseValue);
     }
 
     protected override void OnUpgrade()

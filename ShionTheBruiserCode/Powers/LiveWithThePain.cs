@@ -11,7 +11,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// At the start of your turn, lose 2 HP and gain Block equal to the number of your non-Exhausted Wounds.
+/// At the start of your turn, lose 2 HP and gain Block equal to the number of ALL your Wounds (Exhausted ones included).
 /// Each stack triggers separately (so each one makes you lose HP individually).
 /// </summary>
 public class LiveWithThePain : SeelsTheRecklessPower
@@ -23,16 +23,7 @@ public class LiveWithThePain : SeelsTheRecklessPower
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Wound>()];
 
-    protected virtual bool CountsExhaustedWounds => false;
-
-    private int CountWounds()
-    {
-        var player = Owner.Player!;
-        var cards = CountsExhaustedWounds
-            ? SeelsMechanicsHelper.GetAllCombatCards(player)
-            : SeelsMechanicsHelper.GetAllCombatCards(player).Where(c => c.Pile?.Type != PileType.Exhaust);
-        return cards.Count(SeelsMechanicsHelper.IsWound);
-    }
+    private int CountWounds() => SeelsMechanicsHelper.GetAllCombatCards(Owner.Player!).Count(SeelsMechanicsHelper.IsWound);
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {

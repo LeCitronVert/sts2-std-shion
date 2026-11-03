@@ -19,17 +19,17 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Whenever you apply Vulnerable, gain as much Vigor next turn. (0-cost)
+/// Whenever you gain energy from Gloat, immediately gain as much Blur and 5 (8) Block.
 /// </summary>
 public class SeelsAggravatingDemeanor() : SeelsTheRecklessCard(1,
     CardType.Power, CardRarity.Uncommon,
     TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<AggravatingDemeanor>(1M)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<AggravatingDemeanor>(5M)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<VulnerablePower>(),
-        HoverTipFactory.FromPower<VigorNextTurn>(),
+        HoverTipFactory.FromPower<Gloat>(),
+        HoverTipFactory.FromPower<BlurPower>(),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
@@ -39,6 +39,6 @@ public class SeelsAggravatingDemeanor() : SeelsTheRecklessCard(1,
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars["AggravatingDemeanor"].UpgradeValueBy(3M);
     }
 }

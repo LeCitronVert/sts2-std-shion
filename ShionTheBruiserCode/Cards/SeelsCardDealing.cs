@@ -14,7 +14,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Draw a card for each enemy. Gamble that number of cards. Deal 3 (6) damage to ALL enemies.
+/// Deal 3 (6) damage to ALL enemies. Draw a card for each enemy. Gamble that number of cards.
 /// </summary>
 public class SeelsCardDealing() : SeelsTheRecklessCard(1,
     CardType.Attack, CardRarity.Common,
@@ -36,15 +36,18 @@ public class SeelsCardDealing() : SeelsTheRecklessCard(1,
     {
         if (CombatState is null) return;
 
+        // Count before the damage: enemies killed by it still dealt you a card.
         var enemies = CombatState.HittableEnemies.Count;
-        await CardPileCmd.Draw(choiceContext, enemies, Owner);
-        await SeelsMechanicsHelper.Gamble(choiceContext, Owner, enemies, this);
 
+        // Damage first, so we don't Gamble for nothing.
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this)
             .TargetingAllOpponents(CombatState)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
+
+        await CardPileCmd.Draw(choiceContext, enemies, Owner);
+        await SeelsMechanicsHelper.Gamble(choiceContext, Owner, enemies, this);
     }
 
     protected override void OnUpgrade()

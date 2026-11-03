@@ -19,12 +19,14 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// ALL enemies lose 2X Strength this turn. Gain 4X Tainted. (Retain.)
+/// ALL enemies lose 2X Strength this turn. Gain 4X Tainted. (Retain.) Multiplayer only.
 /// </summary>
 public class SeelsBigTargetSign() : SeelsTheRecklessCard(0,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.AllEnemies)
 {
+    public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
+
     protected override bool HasEnergyCostX => true;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [

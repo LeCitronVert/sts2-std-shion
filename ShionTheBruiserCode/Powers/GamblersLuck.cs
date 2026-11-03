@@ -8,7 +8,8 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// Whenever you draw a card during your turn, gain (X times) its energy cost as Block.
+/// Whenever you draw a card during your turn, gain X times its energy cost as Block.
+/// The start-of-turn Hand draw doesn't count.
 /// </summary>
 public class GamblersLuck : SeelsTheRecklessPower
 {
@@ -17,7 +18,7 @@ public class GamblersLuck : SeelsTheRecklessPower
 
     public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
     {
-        if (card.Owner.Creature != Owner || Owner.CombatState?.CurrentSide != CombatSide.Player) return;
+        if (fromHandDraw || card.Owner.Creature != Owner || Owner.CombatState?.CurrentSide != CombatSide.Player) return;
 
         var block = card.EnergyCost.GetResolved() * Amount;
         if (block <= 0) return;

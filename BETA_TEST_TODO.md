@@ -1242,3 +1242,66 @@ Shown for any player who owns the relic (Abby = Abby the Absol, Edge = Edge the 
 - Chapter order follows the sheet's row order (Chapter # was empty).
 - "(purple and yellow)we" is written as a purple "w" and a gold "e". "(azure)" uses `[aqua]`.
 - Condensed Might = win as Seels with the Red Emerald (confirmed). Red is shared with the Ironclad, but only Seels' runs count.
+
+## 23. Change Pending E (Seels, Spirit Burst, Cosmo cards, Frontflip and a Half, Blood)
+
+- [ ] Build and launch. No scene, image or `.pck` changes in this pass, so no re-export is needed.
+
+**Wounds**
+- [ ] **Eye Opening Realization**: Wounding. ALL your Wounds (in every pile, at the time you play it) lose Unplayable and cost **1**. Wounds in your Hand get Swift 3 (4). A Wound created later is still Unplayable.
+- [ ] **Jolting Pain**: same, with Adroit 7 (9).
+- [ ] **Burning Pain**: same, but the Wounds cost **0**, and the ones in your Hand get Sown.
+- [ ] Playing one of these after another sets the Wound cost again (Burning Pain then Jolting Pain = Wounds cost 1).
+- [ ] Echoes of Pain copies keep the cost of the Wound they copy.
+
+**Seels cards**
+- [ ] **Big Numbers**: 4-cost (3). At the start of each turn, gain 2 energy (on top of your normal energy, not wiped by the reset). Erratic max cost +1. Two copies = 4 energy and +2. No more Gamble.
+- [ ] **Funny Dance**: X-cost. Apply X Vulnerable, Gloat X. Exhaust. Upgraded: no Exhaust. Check the in-combat preview.
+- [ ] **Body Strike**: Wounding (a Wound in your Hand first). 14 damage. If the enemy lost HP, 1 more Wound in your Discard Pile (just 1, no longer 1 per HP).
+- [ ] **Open Wounds**: X-cost. Gain X energy, draw X (X+1) cards, add X Wounds to your Discard Pile. No more Wounding or Replay. Check the preview.
+- [ ] **Bloody Execution**: is now a Skill.
+- [ ] **Parry Attempt**: one Block gain of 6 + 4 × this card's cost (7 + 5×). Gain Blur equal to the cost. Check with Erratic costs (0-cost = 6 Block, no Blur).
+- [ ] **Wink**: also applies Weak equal to this card's cost to ALL enemies (0 at base cost, so it needs Erratic).
+- [ ] **Exsanguination**: 1-cost. Blood Bend X, deal X + X × Attacks played this turn (itself included) × this card's cost. Exhaust. Upgraded: no Exhaust. Example: 5 Blood, 2nd Attack of the turn, cost 1 = 5 + 5×2×1 = 15. Check the preview shows the Attack count and the damage.
+- [ ] **Aggravating Demeanor**: when your Gloat triggers (you take unblocked attack damage), immediately gain Blur equal to the Gloat energy and 5 (8) Block. Two copies = 10 Block, same Blur. No more Vulnerable → Vigor. Upgrade is now +3 Block, not -1 cost.
+- [ ] **Joke and Run**: Gloat 2. Gain 1 (2) Dexterity and 1 Blur. No more energy or Strength loss.
+- [ ] **Gambler's Luck**: draws during your turn give 3 (5) × the card's cost as Block. The starting Hand draw doesn't count anymore. No more Draw on play.
+- [ ] **Laugh it Off**: at the end of your turn, Gloat 1 (2). It adds to Gloat played during the turn.
+- [ ] **Card Dealing**: the damage now happens first, then the draw and Gamble.
+- [ ] **Hematoma**: discards ALL Status cards in your Hand (not just Wounds) and draws as many.
+- [ ] **Live With The Pain**: 2-cost (1). Counts ALL your Wounds, Exhausted ones included, upgraded or not.
+- [ ] **Summon Wrath**: 0-cost (no longer X). Lose HP equal to its cost, add 2 Slashes (Slashes+) to your Hand, then it costs 1 more this combat and is shuffled into your Draw Pile (not discarded). Play it several times in one combat: 0, 1, 2… HP.
+- [ ] **Big Target Sign**: multiplayer-only again. It must not show up in single player rewards.
+- [ ] **Sweat and Tears**: every 4 Attacks you play, gain 1 (2) Blood. Each copy is a separate power icon with its own countdown, like Orbit. Replays don't count.
+- [ ] **Echoes of Pain**: 1-cost (0).
+- [ ] **Massive Defend**: also gain 1 Blur.
+- [ ] **Shed The Pain**: 2-cost (1). Exhausts ALL your Wounds (enchanted or not). Heals 1 HP per *enchanted* Wound Exhausted. Check the preview.
+
+**Other characters**
+- [ ] **Spirit Burst**: no more auto-play. While active, your Strikes and Energy cards cost 0, and every Energy card you play draws 1 card. The countdown and the No Block / No Heal at the end still work.
+- [ ] Spirit Burst visuals: Strikes and Energy cards played during it still show the lightning and the Spirit Burst strike effect (it used to be on auto-played cards). Check it looks fine on played cards.
+- [ ] **Frontflip and a Half** (Slal): is now a Skill.
+- [ ] **Cosmo's Kindness / Determination / Guidance**: all three are Skills (Guidance was a Power) and Exhaust.
+
+**Blood**
+- [ ] **Unspent Blood carries over**: win a combat with some Blood, and you get it back at the start of your first turn of the next combat.
+- [ ] Spent Blood (Blood Bend) doesn't carry over. 0 Blood at the end = 0 next combat.
+- [ ] Save and quit between two combats, then continue: the Blood still comes back.
+- [ ] **Red Fang**: the Blood you get back doesn't count again for its counter.
+- [ ] **Multiplayer**: each player gets their own Blood back. No desync on the first turn.
+
+**Decisions I made**
+- Thorn Bracers already does "gain 1 Blood after you consumed your Blood" when you play a Blood Bend card. No change.
+- "Make ALL your Wounds playable" = every Wound you have when you play the card, in every pile. Wounds created later stay Unplayable (confirmed).
+- Exsanguination counts itself as an Attack played this turn (confirmed). Only the first play of a series counts (not replays), like Pinball Move.
+- Gambler's Luck no longer draws on play (confirmed).
+- Blood carry-over is on (confirmed). It's saved when you win, so it doesn't apply to losing a fight.
+- Kept the current values the sheet doesn't mention: Body Strike upgrade = -1 cost, Laugh it Off upgrade = Gloat +1, Joke and Run upgrade = +1 Dexterity, Sweat and Tears upgrade = +1 Blood, Bloody Execution / Frontflip keep their costs and upgrades.
+- Big Numbers: each copy gives 2 energy per turn.
+- Aggravating Demeanor: the Block stacks, but the Blur is always the Gloat energy (not multiplied by copies).
+- Card Dealing counts the enemies before the damage, so an enemy it kills still gives you a card.
+- Summon Wrath is shuffled into a random spot of the Draw Pile.
+- Parry Attempt gives the 6 Block and the extra Block as one Block gain, so Dexterity only applies once.
+- Spirit Burst: X-cost Strikes or Energy cards aren't made free (that would break their X). Energy cards draw on every play, replays included.
+- Deleted the unused **Live With The Pain+** and **Joke and Run** Strength-down powers, with their loc. Also deleted Spirit Burst's "tired" message (it was only for the auto-play cap).
+- Page 2 "Ideas (ne pas implémenter encore)" was not implemented.

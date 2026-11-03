@@ -28,6 +28,9 @@ public interface ISeelsListener
     /// <summary>Called after a player Gambles X.</summary>
     Task AfterGamble(PlayerChoiceContext choiceContext, Player player, int amount, IReadOnlyList<CardModel> cards) => Task.CompletedTask;
 
+    /// <summary>Called when a creature's Gloat triggers, with the energy it will give next turn.</summary>
+    Task AfterGloatTriggered(PlayerChoiceContext choiceContext, Creature creature, int energy) => Task.CompletedTask;
+
     /// <summary>Called after an Erratic card is drawn and its cost randomized.</summary>
     Task AfterErraticCostRandomized(PlayerChoiceContext choiceContext, CardModel card, int cost) => Task.CompletedTask;
 }
@@ -284,13 +287,25 @@ public static class SeelsMechanicsHelper
     }
 
     /// <summary>
-    /// The Wounds in your Hand lose Unplayable and are enchanted with T.
+    /// ALL your Wounds in combat right now (every pile) lose Unplayable and cost <paramref name="cost"/> energy.
+    /// Wounds created afterwards stay Unplayable.
     /// </summary>
-    public static void EmpowerWoundsInHand<T>(Player player, decimal amount) where T : EnchantmentModel
+    public static void MakeAllWoundsPlayable(Player player, int cost)
+    {
+        foreach (var wound in GetAllCombatCards(player).Where(IsWound).ToList())
+        {
+            wound.RemoveKeyword(CardKeyword.Unplayable);
+            wound.EnergyCost.SetCustomBaseCost(cost);
+        }
+    }
+
+    /// <summary>
+    /// The Wounds in your Hand are enchanted with T.
+    /// </summary>
+    public static void EnchantWoundsInHand<T>(Player player, decimal amount) where T : EnchantmentModel
     {
         foreach (var wound in GetWoundsInHand(player))
         {
-            wound.RemoveKeyword(CardKeyword.Unplayable);
             ForceEnchant<T>(wound, amount);
         }
     }
@@ -351,6 +366,17 @@ public static class SeelsMechanicsHelper
         if (card.CombatState is null) return 0;
         var others = PreviewHelper.OtherCardsInHand(card);
         return others.Count(IsWound) + (others.Count < CardPile.MaxCardsInHand ? 1 : 0);
+    }
+
+    /// <summary>
+    /// Preview only: Status cards in your Hand once this card has left it and added its Wound
+    /// (the Wound only lands in the Hand if there is room).
+    /// </summary>
+    public static int PreviewStatusesInHandAfterWounding(CardModel card)
+    {
+        if (card.CombatState is null) return 0;
+        var others = PreviewHelper.OtherCardsInHand(card);
+        return others.Count(c => c.Type == CardType.Status) + (others.Count < CardPile.MaxCardsInHand ? 1 : 0);
     }
 
     /// <summary>

@@ -14,139 +14,97 @@ using MegaCrit.Sts2.Core.HoverTips;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
-public class SpiritBurst: ShionTheBruiserPower
+/// <summary>
+/// For X turns, your Strikes and Energy cards cost 0, and playing an Energy card draws 1 card.
+/// When it ends, you can no longer gain Block from cards or heal this combat.
+/// (Used to auto-play Strikes and Energy cards when drawn; changed so other players can keep up in multiplayer.)
+/// </summary>
+public class SpiritBurst : ShionTheBruiserPower
 {
-    public override PowerType Type =>
-        PowerType.Buff;
+    public const int CardsDrawn = 1;
 
-    public override PowerStackType StackType =>
-        PowerStackType.Counter;
+    public override PowerType Type => PowerType.Buff;
+
+    public override PowerStackType StackType => PowerStackType.Counter;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<NoBlockPower>(),
         HoverTipFactory.FromPower<NoHealPower>(),
     ];
-    
-    private const int _infiniteAutoPlayCap = 9;
+
     protected override object InitInternalData() => new Data();
-    
-    public override async Task AfterCardDrawnEarly(
-        PlayerChoiceContext choiceContext,
-        CardModel card,
-        bool fromHandDraw)
+
+    private bool IsBoosted(CardModel card) =>
+        card.Owner.Creature == Owner
+        && (card.Tags.Contains(ShionCardTags.Energy) || card.Tags.Contains(CardTag.Strike));
+
+    public override bool TryModifyEnergyCostInCombatLate(CardModel card, decimal originalCost, out decimal modifiedCost)
     {
-        var power = this;
-        Data? data;
-        if (card.Owner.Creature != power.Owner || (!card.Tags.Contains(ShionCardTags.Energy) && !card.Tags.Contains(CardTag.Strike)))
-            data = null;
-        else
-        {
-            data = power.GetInternalData<Data>();
-            var flag = true;
-            
-            if (power.Owner.CombatState?.HittableEnemies.All<Creature>((Func<Creature, bool>) (c => c.HpDisplay.IsInfinite())) ?? false)
-            {
-                if (data.infiniteAutoPlaysThisTurn >= 9)
-                {
-                    flag = false;
-                    if (!data.showedCapReachedMessage)
-                    {
-                        ThinkCmd.Play(new LocString("powers", "SHIONTHEBRUISER-SPIRIT_BURST.autocap"), power.Owner);
-                        data.showedCapReachedMessage = true;
-                    }
-                }
-                ++data.infiniteAutoPlaysThisTurn;
-            }
-            else
-                power.ResetInfiniteAutoPlayData();
-            if (!flag)
-            {
-                data = null;
-            }
-            else
-            {
-                data.autoPlayingCards.Add(card);
-                ShionVfx.SetSpiritBurstAutoPlaying(power.Owner, true);
-                try
-                {
-                    await CardCmd.AutoPlay(choiceContext, card, null);
-                }
-                finally
-                {
-                    ShionVfx.SetSpiritBurstAutoPlaying(power.Owner, false);
-                }
-                data.autoPlayingCards.Remove(card);
-                await CardPileCmd.Draw(choiceContext, 1, card.Owner);
-                data = null;
-            }
-        }
+        modifiedCost = originalCost;
+        if (!IsBoosted(card) || card.EnergyCost.CostsX) return false;
+
+        modifiedCost = 0M;
+        return true;
     }
-    
-    public override Task AfterSideTurnEnd(
-        PlayerChoiceContext choiceContext,
-        CombatSide side,
-        IEnumerable<Creature> participants)
+
+    // Visuals only: the cards played during Spirit Burst keep its lightning and strike effect.
+    public override Task BeforeCardPlayed(CardPlay cardPlay)
     {
-        if (!participants.Contains<Creature>(this.Owner))
-            return Task.CompletedTask;
-        this.ResetInfiniteAutoPlayData();
+        if (!IsBoosted(cardPlay.Card)) return Task.CompletedTask;
+
+        GetInternalData<Data>().playingCards.Add(cardPlay.Card);
+        ShionVfx.SetSpiritBurstAutoPlaying(Owner, true);
         return Task.CompletedTask;
     }
-    
+
+    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        var card = cardPlay.Card;
+        if (GetInternalData<Data>().playingCards.Remove(card))
+        {
+            ShionVfx.SetSpiritBurstAutoPlaying(Owner, false);
+        }
+
+        if (card.Owner.Creature != Owner || !card.Tags.Contains(ShionCardTags.Energy)) return;
+
+        Flash();
+        await CardPileCmd.Draw(choiceContext, CardsDrawn, card.Owner);
+    }
+
     public override Task BeforeAttack(AttackCommand command)
     {
-        if (command.ModelSource == null || command.Attacker?.Player == null || !this.GetInternalData<Data>().autoPlayingCards.Contains(command.ModelSource))
+        if (command.ModelSource is not CardModel card || command.Attacker?.Player == null
+            || !GetInternalData<Data>().playingCards.Contains(card))
             return Task.CompletedTask;
         command.WithHitFx(null, command.HitSfx, command.TmpHitSfx)
             .WithHitVfxNode(ShionVfx.CreateSpiritBurstStrike)
             .WithAttackerAnim("Cast", command.Attacker.Player.Character.CastAnimDelay);
         return Task.CompletedTask;
     }
-    
+
     public override async Task BeforeSideTurnEnd(
         PlayerChoiceContext choiceContext,
         CombatSide side,
         IEnumerable<Creature> participants)
     {
-        var power = this;
-        if (!participants.Contains<Creature>(power.Owner))
+        if (!participants.Contains(Owner))
             return;
-        if (power.Amount > 1)
+        if (Amount > 1)
         {
-            await PowerCmd.Decrement((PowerModel) power);
+            await PowerCmd.Decrement(this);
         }
         else
         {
-            power.Flash();
+            Flash();
             await Cmd.CustomScaledWait(0.2f, 0.4f);
-            await PowerCmd.Remove((PowerModel) power);
-            await PowerCmd.Apply<NoBlockPower>(
-                choiceContext,
-                power.Owner,
-                999,
-                power.Owner,
-                null
-            );
-            await PowerCmd.Apply<NoHealPower>(
-                choiceContext,
-                power.Owner,
-                999,
-                power.Owner,
-                null
-            );
+            await PowerCmd.Remove(this);
+            await PowerCmd.Apply<NoBlockPower>(choiceContext, Owner, 999, Owner, null);
+            await PowerCmd.Apply<NoHealPower>(choiceContext, Owner, 999, Owner, null);
         }
     }
-    
-    private void ResetInfiniteAutoPlayData()
-    {
-        SpiritBurst.Data internalData = this.GetInternalData<Data>();
-        internalData.infiniteAutoPlaysThisTurn = 0;
-        internalData.showedCapReachedMessage = false;
-    }
+
     private class Data
     {
-        public readonly HashSet<CardModel> autoPlayingCards = new HashSet<CardModel>();
-        public int infiniteAutoPlaysThisTurn;
-        public bool showedCapReachedMessage;
+        public readonly HashSet<CardModel> playingCards = new();
     }
 }
