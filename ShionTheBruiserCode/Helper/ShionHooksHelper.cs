@@ -12,6 +12,20 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Helper;
 public static class ShionHooksHelper
 {
     /// <summary>
+    /// Whether a hook listener belongs to <paramref name="player"/>. Used to scope crit
+    /// rate calculations to one player in multiplayer: contributors return their bonus
+    /// for any owner when no source card is given (indicator/tooltip), so without this
+    /// filter every player's bonuses would be summed together. Null player = no filter.
+    /// </summary>
+    private static bool BelongsTo(object listener, Player? player) => player == null || listener switch
+    {
+        PowerModel power => power.Owner?.Player == player,
+        RelicModel relic => relic.Owner == player,
+        CardModel c => c.Owner == player,
+        _ => true
+    };
+
+    /// <summary>
     /// Calculates the effective per-hit critical chance for the given card.
     /// Sums all <see cref="ICritHitRateContributor"/> bonuses from current combat hook
     /// listeners, then clamps the result to be at least the highest floor set by any
@@ -22,7 +36,7 @@ public static class ShionHooksHelper
         MainFile.Logger.Info($"[ShionHooksHelper] CalculateCritHitRate — card={card?.GetType().Name ?? "null"}");
 
         decimal rate = 0m;
-        foreach (var l in combatState.IterateHookListeners().Where(l => l != card).OfType<ICritHitRateContributor>())
+        foreach (var l in combatState.IterateHookListeners().Where(l => l != card && BelongsTo(l, playerToCheck)).OfType<ICritHitRateContributor>())
         {
             decimal bonus = l.GetCritHitRateBonus(card);
             MainFile.Logger.Info($"[ShionHooksHelper]   listener contributor {l.GetType().Name} → hitRateBonus={bonus:P0}");
@@ -51,7 +65,7 @@ public static class ShionHooksHelper
         }
 
         decimal minRate = 0m;
-        foreach (var l in combatState.IterateHookListeners().Where(l => l != card).OfType<IMinCritHitRateContributor>())
+        foreach (var l in combatState.IterateHookListeners().Where(l => l != card && BelongsTo(l, playerToCheck)).OfType<IMinCritHitRateContributor>())
         {
             decimal floor = l.GetMinCritHitRate(card);
             MainFile.Logger.Info($"[ShionHooksHelper]   listener minHit {l.GetType().Name} → floor={floor:P0}");
@@ -81,7 +95,7 @@ public static class ShionHooksHelper
         MainFile.Logger.Info($"[ShionHooksHelper] CalculateCritAttackRate — card={card?.GetType().Name ?? "null"}");
         
         decimal rate = 0m;
-        foreach (var l in combatState.IterateHookListeners().Where(l => l != card).OfType<ICritAttackRateContributor>())
+        foreach (var l in combatState.IterateHookListeners().Where(l => l != card && BelongsTo(l, playerToCheck)).OfType<ICritAttackRateContributor>())
         {
             decimal bonus = l.GetCritAttackRateBonus(card);
             MainFile.Logger.Info($"[ShionHooksHelper]   listener contributor {l.GetType().Name} → attackRateBonus={bonus:P0}");
@@ -100,7 +114,7 @@ public static class ShionHooksHelper
         }
 
         decimal minRate = 0m;
-        foreach (var l in combatState.IterateHookListeners().Where(l => l != card).OfType<IMinCritAttackRateContributor>())
+        foreach (var l in combatState.IterateHookListeners().Where(l => l != card && BelongsTo(l, playerToCheck)).OfType<IMinCritAttackRateContributor>())
         {
             decimal floor = l.GetMinCritAttackRate(card);
             MainFile.Logger.Info($"[ShionHooksHelper]   listener minAttack {l.GetType().Name} → floor={floor:P0}");
