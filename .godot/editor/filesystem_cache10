@@ -1,13 +1,13 @@
 63f7b34db8d8cdea90c76aacccf841ec
 ::res://::1793637968
-BETA_TEST_TODO.md::TextFile::-1::1793721997::0::1::::<><><>0<>0<><>::
+BETA_TEST_TODO.md::TextFile::-1::1793722883::0::1::::<><><>0<>0<><>::
 export_presets.cfg::TextFile::-1::1781940056::0::1::::<><><>0<>0<><>::
 README.md::TextFile::-1::1793637968::0::1::::<><><>0<>0<><>::
 ShionTheBruiser.json::JSON::-1::1792433998::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1793722063
+::res://bin/ExportRelease/net9.0/publish/::1793723041
 ShionTheBruiser.deps.json::JSON::-1::1793637085::0::1::::<><><>0<>0<><>::
 ::res://ci/::1792939391
 ::res://ci/game-refs/::1792939391
@@ -892,7 +892,7 @@ slime_potion.png::CompressedTexture2D::2496379634329834151::1792928671::17929293
 slime_potion_outline.png::CompressedTexture2D::7263366779475853368::1792928671::1792929320::1::::<><><>0<>0<>99e269600e3747812c4532e75512e7a2<>res://.godot/imported/slime_potion_outline.png-5a36954478f581adde000c815fc8da0d.ctex::
 ultra_spicy_brew.png::CompressedTexture2D::5244659565307615972::1783340892::1783341083::1::::<><><>0<>0<>53bee4954017725bd45db01b611eeb82<>res://.godot/imported/ultra_spicy_brew.png-4d15297eea0c8d93a7c9d3dcb265a78a.ctex::
 ultra_spicy_brew_outline.png::CompressedTexture2D::5370946508363275352::1783340916::1783341083::1::::<><><>0<>0<>cf18d0e9684ec120210f44bd09bff8a8<>res://.godot/imported/ultra_spicy_brew_outline.png-488bd45db63edff11c4d49e740ee9795.ctex::
-::res://ShionTheBruiser/images/powers/::1793720169
+::res://ShionTheBruiser/images/powers/::1793722067
 anchor_throw_1.png::CompressedTexture2D::1694704613269514483::1785008384::1791703503::1::::<><><>0<>0<>9b230ec53e791944e63b5798de7b64c6<>res://.godot/imported/anchor_throw_1.png-f6f0a067e1d2e252dccc1dda08f7bd35.ctex::
 anchor_throw_2.png::CompressedTexture2D::6173809383637649254::1785008516::1791703503::1::::<><><>0<>0<>1d9d4376dfc94d71f7cbe6babcbe4477<>res://.godot/imported/anchor_throw_2.png-8ecefce49035bf90d98a437b096bab09.ctex::
 anglerfish_form.png::CompressedTexture2D::2539738235637194625::1784960376::1791703503::1::::<><><>0<>0<>5bb1be568146c814b4a74a249d33bc4d<>res://.godot/imported/anglerfish_form.png-e3dcfad1522a81364dedd3842dd4f245.ctex::
@@ -1007,7 +1007,7 @@ unusual_strategies.png::CompressedTexture2D::2936581591753448370::1783121150::17
 ventilator_form.png::CompressedTexture2D::7432845348261969052::1785008384::1791703503::1::::<><><>0<>0<>690646c8a57a88988af90ad014ad5dc6<>res://.godot/imported/ventilator_form.png-93a17d7e8f7e2d7ce86a975f0a626564.ctex::
 vigor_next_turn.png::CompressedTexture2D::9151722610234951858::1793720169::1793722067::1::::<><><>0<>0<>aa9c922ff81376ccd8cc6a3f1cdf1327<>res://.godot/imported/vigor_next_turn.png-1c9f6beb08febdbef70616d00ccbacda.ctex::
 volatile_form.png::CompressedTexture2D::6453938902083850369::1785179674::1791703503::1::::<><><>0<>0<>8702198613827bb73e81f01419db8c5d<>res://.godot/imported/volatile_form.png-b044e067f5cccbfba2a474adb47bbc15.ctex::
-::res://ShionTheBruiser/images/powers/big/::1793720169
+::res://ShionTheBruiser/images/powers/big/::1793722067
 anchor_throw_1.png::CompressedTexture2D::3432073208026674638::1785008384::1791703506::1::::<><><>0<>0<>ba68e08bdff162e5a8f3475835666ed5<>res://.godot/imported/anchor_throw_1.png-e3b3c56f3bd86b5a47a7c1a8dae3ed82.ctex::
 anchor_throw_2.png::CompressedTexture2D::5024731390830119525::1785008516::1791703506::1::::<><><>0<>0<>7133ee2ab3fe66d999af970a67841bd4<>res://.godot/imported/anchor_throw_2.png-37bb8899a3a63f050f3abaa66dd1d5ba.ctex::
 anglerfish_form.png::CompressedTexture2D::2533212621252417721::1784960376::1791703506::1::::<><><>0<>0<>6299bc53f1e786db0ec21bf6998da7db<>res://.godot/imported/anglerfish_form.png-144efdc93d17b66009587d9989eb9b07.ctex::
@@ -2179,11 +2179,11 @@ YellowChaosEmeralds.cs::CSharpScript::7947279272287764495::1793017115::0::1::::<
 ::res://ShionTheBruiserCode/RestSiteOptions/::1793018465
 Lull.cs::CSharpScript::1804038520924471915::1783271867::0::1::::<><><>0<>0<><>::
 Seek.cs::CSharpScript::8588524608089364226::1793017890::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Singletons/::1793719935
+::res://ShionTheBruiserCode/Singletons/::1793722067
 BloodCarryOverSingleton.cs::CSharpScript::6157223535071752777::1793719935::0::1::::<><><>0<>0<><>::
 ShionCritSingleton.cs::CSharpScript::3951621572379558951::1793457705::0::1::::<><><>0<>0<><>::
 SlalApparenceSingleton.cs::CSharpScript::6424703020693251239::1793013162::0::1::::<><><>0<>0<><>::
-TeamBlastSingleton.cs::CSharpScript::5790765917409709916::1793546692::0::1::::<><><>0<>0<><>::
+TeamBlastSingleton.cs::CSharpScript::5790765917409709916::1793722606::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiserCode/Timeline/::1793715664
 CharacterUnlockEpoch.cs::CSharpScript::2177026565359277390::1793207253::0::1::::<><><>0<>0<><>::
 DreamersEpoch.cs::CSharpScript::1284180167898971242::1793207404::0::1::::<><><>0<>0<><>::
@@ -2213,7 +2213,7 @@ HasTargetVar.cs::CSharpScript::3245866986048990123::1792689672::0::1::::<><><>0<
 InCombatPowerAmountVar.cs::CSharpScript::2379550944823328950::1792757131::0::1::::<><><>0<>0<><>::
 PatchUpVar.cs::CSharpScript::3704163300152184645::1784400986::0::1::::<><><>0<>0<><>::
 VigorRefundVar.cs::CSharpScript::2659734043316397022::1792675405::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Visuals/::1793721988
+::res://ShionTheBruiserCode/Visuals/::1793722679
 AnimationRestartPatch.cs::CSharpScript::4570962197437255581::1793527116::0::1::::<><><>0<>0<><>::
 ChaosEmeraldsScreen.cs::CSharpScript::2715992751403064611::1793019185::0::1::::<><><>0<>0<><>::
 CompanionVisuals.cs::CSharpScript::2108756909768018280::1793637949::0::1::::<><><>0<>0<><>::
@@ -2229,3 +2229,4 @@ GameOverDeathAnimPatch.cs::CSharpScript::7785496205431538539::1793347164::0::1::
 RandomBlastIcons.cs::CSharpScript::6316672091646638551::1793721988::0::1::::<><><>0<>0<><>::
 ShionVfx.cs::CSharpScript::4005563270271299469::1793528991::0::1::::<><><>0<>0<><>::
 TeamBlastGaugePatch.cs::CSharpScript::6694855378995654689::1793178610::0::1::::<><><>0<>0<><>::
+TeamBlastIntro.cs::CSharpScript::6865524904665539020::1793722883::0::1::::<><><>0<>0<><>::

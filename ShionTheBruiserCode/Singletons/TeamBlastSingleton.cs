@@ -13,6 +13,7 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Singletons;
 
@@ -239,16 +240,21 @@ public class TeamBlastSingleton : CustomSingletonModel
             .SelectMany(pile => pile.GetPile(player).Cards)
             .Where(IsTeamBlast);
 
-    public override Task BeforeCardPlayed(CardPlay cardPlay)
+    public override async Task BeforeCardPlayed(CardPlay cardPlay)
     {
-        if (IsTeamBlast(cardPlay.Card) && !IsLocked)
-        {
-            IsLocked = true;
-            _usedTeamBlast = cardPlay.Card;
-            // Don't let it come back from the Discard Pile
-            cardPlay.Card.ExhaustOnNextPlay = true;
-        }
-        return Task.CompletedTask;
+        if (!IsTeamBlast(cardPlay.Card) || IsLocked) return;
+
+        IsLocked = true;
+        _usedTeamBlast = cardPlay.Card;
+        // Don't let it come back from the Discard Pile
+        cardPlay.Card.ExhaustOnNextPlay = true;
+
+        // Lights on the team, Dramatic Entrance, then the Team Blast proper
+        var owner = cardPlay.Card.Owner;
+        var players = cardPlay.Card.CombatState?.GetTeammatesOf(owner.Creature)
+            .Where(c => c is { IsPlayer: true, IsAlive: true })
+            .ToList() ?? [owner.Creature];
+        await TeamBlastIntro.Play(owner, players);
     }
 
     /// <summary>

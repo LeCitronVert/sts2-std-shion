@@ -1311,3 +1311,10 @@ Shown for any player who owns the relic (Abby = Abby the Absol, Edge = Edge the 
 - [ ] While Random Blast is active, every card played (by anyone) throws a random buff/debuff icon out of Slal, spinning, towards the enemies (between straight ahead and ~35° up), until it leaves the screen.
 - [ ] The Random Blast play itself doesn't throw one (same as the Confusion proc).
 - [ ] Icons vary (any power of the game, including modded ones), and each player sees their own random icons (visual only, no desync).
+
+## Team Blast intro
+
+- [ ] Playing any Team Blast (vanilla, Colorless, Shion/Seels/Fry/Slal) first makes a gentle light burst out of every living player of the team, expanding and fading out.
+- [ ] Light colors: blue for Silent / Defect / Slal, red for Ironclad / Fry / Shion, yellow for Regent / Seels / Necrobinder (other characters: soft white).
+- [ ] 0.5s later the Dramatic Entrance full-screen effect plays, right as the lights finish fading, then the Team Blast resolves.
+- [ ] Only plays once per Team Blast (not on replays), on every client, and is skipped with Instant fast mode.
