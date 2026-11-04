@@ -70,6 +70,12 @@ public class TeamBlastSingleton : CustomSingletonModel
     /// <summary>The Ethereal copies this singleton added. Any other Team Blast entering combat is removed.</summary>
     private readonly HashSet<CardModel> _allowedCopies = new();
 
+    /// <summary>
+    /// Team Blasts that entered combat without being allowed, waiting for their pile change to finish before being
+    /// removed (see <see cref="AfterCardEnteredCombat"/>).
+    /// </summary>
+    private readonly HashSet<CardModel> _pendingRemoval = new();
+
     private ICombatState? _combatState;
 
     /// <summary>The Team Blast that locked the gauge; it still has to finish being played.</summary>
@@ -119,6 +125,7 @@ public class TeamBlastSingleton : CustomSingletonModel
             _combatState = combatState;
             _hiddenPile.Clear();
             _allowedCopies.Clear();
+            _pendingRemoval.Clear();
             _remainder = 0m;
             _usedTeamBlast = null;
             IsLocked = false;
@@ -226,11 +233,23 @@ public class TeamBlastSingleton : CustomSingletonModel
     /// <summary>
     /// Team Blasts can't be generated in combat by any means (clones, gifts…), only by the gauge.
     /// Once the gauge is locked, none can enter combat at all.
+    /// <para>The card isn't removed here: this hook runs in the middle of <see cref="CardPileCmd.Add(CardModel, PileType, CardPilePosition, AbstractModel?, bool)"/>,
+    /// which still reads the card's pile afterwards for the owner's card visuals (and only theirs), so removing it now
+    /// throws on the owner's client only and the two clients diverge. It's removed once the pile change finishes, in
+    /// <see cref="AfterCardChangedPilesLate"/>.</para>
     /// </summary>
-    public override async Task AfterCardEnteredCombat(CardModel card)
+    public override Task AfterCardEnteredCombat(CardModel card)
     {
-        if (!IsTeamBlast(card) || card.Pile == null || card == _usedTeamBlast) return;
-        if (_allowedCopies.Contains(card) && !IsLocked) return;
+        if (!IsTeamBlast(card) || card.Pile == null || card == _usedTeamBlast) return Task.CompletedTask;
+        if (_allowedCopies.Contains(card) && !IsLocked) return Task.CompletedTask;
+        _pendingRemoval.Add(card);
+        return Task.CompletedTask;
+    }
+
+    public override async Task AfterCardChangedPilesLate(CardModel card, PileType oldPileType, AbstractModel? clonedBy)
+    {
+        if (!_pendingRemoval.Remove(card)) return;
+        if (card.Pile is not { IsCombatPile: true }) return;
         await CardPileCmd.RemoveFromCombat(card);
     }
 
@@ -246,8 +265,6 @@ public class TeamBlastSingleton : CustomSingletonModel
 
         IsLocked = true;
         _usedTeamBlast = cardPlay.Card;
-        // Don't let it come back from the Discard Pile
-        cardPlay.Card.ExhaustOnNextPlay = true;
 
         // Lights on the team, Dramatic Entrance, then the Team Blast proper
         var owner = cardPlay.Card.Owner;
@@ -275,6 +292,18 @@ public class TeamBlastSingleton : CustomSingletonModel
         }
     }
 
+    /// <summary>
+    /// A played Team Blast is always Exhausted, so it can't come back from the Discard Pile.
+    /// Done here and not with ExhaustOnNextPlay in <see cref="BeforeCardPlayed"/>: the result pile is picked before
+    /// BeforeCardPlayed runs, so setting it there came too late.
+    /// </summary>
+    public override (PileType, CardPilePosition) ModifyCardPlayResultPileTypeAndPosition(CardModel card,
+        bool isAutoPlay, ResourceInfo resources, PileType pileType, CardPilePosition position)
+    {
+        if (!IsTeamBlast(card) || pileType is PileType.None or PileType.Exhaust) return (pileType, position);
+        return (PileType.Exhaust, position);
+    }
+
     /// <summary>Only one Team Blast per combat.</summary>
     public override bool ShouldPlay(CardModel card, AutoPlayType autoPlayType)
     {
@@ -293,6 +322,7 @@ public class TeamBlastSingleton : CustomSingletonModel
         _usedTeamBlast = null;
         _hiddenPile.Clear();
         _allowedCopies.Clear();
+        _pendingRemoval.Clear();
         _remainder = 0m;
         TeamBlastCount = 0;
         return Task.CompletedTask;

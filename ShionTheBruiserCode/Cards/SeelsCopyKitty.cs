@@ -48,6 +48,8 @@ public class SeelsCopyKitty() : SeelsTheRecklessCard(2,
             var copy = CombatState.CreateCard(original.CanonicalInstance, Owner);
             if (original.IsUpgraded && copy.IsUpgradable) CardCmd.Upgrade(copy);
             await CardPileCmd.AddGeneratedCardToCombat(copy, PileType.Hand, Owner);
+            // Removed while being added (e.g. a Team Blast, see TeamBlastSingleton.AfterCardEnteredCombat)
+            if (copy.Pile?.Type != PileType.Hand) continue;
             copy.ExhaustOnNextPlay = true;
             await CardCmd.AutoPlay(choiceContext, copy, null);
         }
