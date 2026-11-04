@@ -19,7 +19,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Whenever you play an Attack, gain 2 Strength this turn. (0-cost)
+/// Whenever you play an Attack, gain 2 (3) Strength this turn.
 /// </summary>
 public class SeelsSavagery() : SeelsTheRecklessCard(1,
     CardType.Power, CardRarity.Uncommon,
@@ -36,6 +36,6 @@ public class SeelsSavagery() : SeelsTheRecklessCard(1,
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars["Savagery"].UpgradeValueBy(1M);
     }
 }

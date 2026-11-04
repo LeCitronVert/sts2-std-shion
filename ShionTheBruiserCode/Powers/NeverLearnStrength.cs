@@ -4,4 +4,4 @@ using ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
-public class WeirdFlexStrength : CustomTemporaryPowerModelWrapper<SeelsWeirdFlex, StrengthPower>;
+public class NeverLearnStrength : CustomTemporaryPowerModelWrapper<SeelsNeverLearn, StrengthPower>;

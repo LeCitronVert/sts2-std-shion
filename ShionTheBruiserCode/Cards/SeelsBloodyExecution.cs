@@ -3,6 +3,8 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -19,48 +21,47 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Blood Bend X. Add 2 Sharp X Slashes (Slashes+) into your Hand and 2 into your Draw Pile.
+/// Maim 2. Deal 12 (15) damage. Deals 4 (5) additional damage for each Vulnerable on the enemy.
 /// </summary>
 public class SeelsBloodyExecution() : SeelsTheRecklessCard(2,
-    CardType.Skill, CardRarity.Common,
-    TargetType.Self)
+    CardType.Attack, CardRarity.Common,
+    TargetType.AnyEnemy)
 {
     protected override HashSet<CardTag> CanonicalTags => [SeelsCardTags.Blood];
 
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [SeelsCardKeywords.Maim];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CardsVar(2),
-        new CalculationBaseVar(0),
-        new CalculationExtraVar(1),
-        new CalculatedVar("SharpAmount").WithMultiplier((card, _) => SeelsMechanicsHelper.PreviewBloodBendX(card)),
+        MaimHelper.Var(2M),
+        new DamageVar(12M, ValueProp.Move),
+        new DynamicVar("VulnerableDamage", 4M),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromKeyword(SeelsCardKeywords.BloodBend),
         HoverTipFactory.FromPower<Blood>(),
-        HoverTipFactory.FromCard<SeelsSlash>(IsUpgraded),
-        ..HoverTipFactory.FromEnchantment<Sharp>(),
+        HoverTipFactory.FromPower<VulnerablePower>(),
     ];
 
-    private List<CardModel> CreateSharpSlashes(int amount, int sharp)
+    // Bonus per Vulnerable on the target (also shows in the targeted damage preview).
+    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        return Enumerable.Range(0, amount).Select(_ =>
-        {
-            var slash = SeelsMechanicsHelper.CreateSlash(Owner, IsUpgraded);
-            if (sharp > 0) SeelsMechanicsHelper.Enchant<Sharp>(slash, sharp);
-            return slash;
-        }).ToList();
+        if (cardSource != this || target is null) return 0m;
+        return SeelsMechanicsHelper.GetVulnerable(target) * DynamicVars["VulnerableDamage"].BaseValue;
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        var x = await SeelsMechanicsHelper.BloodBend(choiceContext, this);
-        var amount = DynamicVars.Cards.IntValue;
-
-        CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardsToCombat(CreateSharpSlashes(amount, x), PileType.Hand, Owner));
-        CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardsToCombat(CreateSharpSlashes(amount, x), PileType.Draw, Owner, CardPilePosition.Random));
+        ArgumentNullException.ThrowIfNull(play.Target);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .FromCard(this)
+            .Targeting(play.Target)
+            .WithHitFx("vfx/vfx_bloody_impact")
+            .Execute(choiceContext);
     }
 
     protected override void OnUpgrade()
     {
+        DynamicVars.Damage.UpgradeValueBy(3M);
+        DynamicVars["VulnerableDamage"].UpgradeValueBy(1M);
     }
 }

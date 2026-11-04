@@ -1,16 +1,22 @@
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// Whenever you draw a Wound, gain X Strength until the end of your turn.
+/// Whenever you play a Wound, gain X Strength and X Dexterity.
 /// </summary>
 public class WeirdFlex : SeelsTheRecklessPower
 {
@@ -20,13 +26,14 @@ public class WeirdFlex : SeelsTheRecklessPower
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromCard<Wound>(),
         HoverTipFactory.FromPower<StrengthPower>(),
+        HoverTipFactory.FromPower<DexterityPower>(),
     ];
 
-    public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (card.Owner.Creature != Owner || !SeelsMechanicsHelper.IsWound(card)) return;
-
+        if (cardPlay.Card.Owner.Creature != Owner || !SeelsMechanicsHelper.IsWound(cardPlay.Card)) return;
         Flash();
-        await PowerCmd.Apply<WeirdFlexStrength>(choiceContext, Owner, Amount, Owner, null);
+        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, Amount, Owner, null);
+        await PowerCmd.Apply<DexterityPower>(choiceContext, Owner, Amount, Owner, null);
     }
 }

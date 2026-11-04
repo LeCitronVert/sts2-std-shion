@@ -3,6 +3,8 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -19,7 +21,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// If you have more Blood than you have HP, gain 4 Max HP. Exhaust. (Retain.)
+/// If you have more Blood than you have HP, gain 4 Max HP. Blood Bend X. Gain X Strength this turn. Exhaust. (Retain.)
 /// </summary>
 public class SeelsNeverLearn() : SeelsTheRecklessCard(1,
     CardType.Skill, CardRarity.Rare,
@@ -27,9 +29,18 @@ public class SeelsNeverLearn() : SeelsTheRecklessCard(1,
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new MaxHpVar(4M)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new MaxHpVar(4M),
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("StrengthAmount").WithMultiplier((card, _) => SeelsMechanicsHelper.PreviewBloodBendX(card)),
+    ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Blood>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(SeelsCardKeywords.BloodBend),
+        HoverTipFactory.FromPower<Blood>(),
+        HoverTipFactory.FromPower<StrengthPower>(),
+    ];
 
     private bool IsActive => SeelsMechanicsHelper.GetBlood(Owner.Creature) > Owner.Creature.CurrentHp;
 
@@ -37,8 +48,17 @@ public class SeelsNeverLearn() : SeelsTheRecklessCard(1,
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        if (!IsActive) return;
-        await CreatureCmd.GainMaxHp(Owner.Creature, DynamicVars.MaxHp.BaseValue);
+        // Checked before Blood Bending, which consumes the Blood.
+        if (IsActive)
+        {
+            await CreatureCmd.GainMaxHp(Owner.Creature, DynamicVars.MaxHp.BaseValue);
+        }
+
+        var x = await SeelsMechanicsHelper.BloodBend(choiceContext, this);
+        if (x > 0)
+        {
+            await PowerCmd.Apply<NeverLearnStrength>(choiceContext, Owner.Creature, x, Owner.Creature, this);
+        }
     }
 
     protected override void OnUpgrade()

@@ -14,7 +14,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 namespace ShionTheBruiser.ShionTheBruiserCode.Potions;
 
 /// <summary>
-/// Transform a card in your Hand into Slimed. Gain 6 Free Status.
+/// Transform any number of cards in your Hand into Slimed. Gain 6 Free Status.
 /// </summary>
 public class SlimePotion : SlalTheEndlessPotion
 {
@@ -34,20 +34,23 @@ public class SlimePotion : SlalTheEndlessPotion
 
     protected override async Task OnUse(PlayerChoiceContext choiceContext, Creature? target)
     {
-        var original = (await CardSelectCmd.FromHand(
-            choiceContext,
-            Owner,
-            new CardSelectorPrefs(SelectionScreenPrompt, 1),
-            c => c.IsTransformable,
-            this
-        )).FirstOrDefault();
+        var transformable = PileType.Hand.GetPile(Owner).Cards.Count(c => c.IsTransformable);
+        var originals = transformable == 0
+            ? []
+            : (await CardSelectCmd.FromHand(
+                choiceContext,
+                Owner,
+                new CardSelectorPrefs(SelectionScreenPrompt, 0, transformable),
+                c => c.IsTransformable,
+                this
+            )).ToList();
 
         if (Owner.Creature.CombatState is null) return;
-
-        if (original is not null)
+        foreach (var original in originals)
         {
             await CardCmd.Transform(original, Owner.Creature.CombatState.CreateCard<Slimed>(Owner));
         }
+
         await PowerCmd.Apply<FreeStatus>(choiceContext, Owner.Creature, DynamicVars["FreeStatus"].BaseValue, Owner.Creature, null);
     }
 }

@@ -1,13 +1,19 @@
+using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
-
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
+using MegaCrit.Sts2.Core.Models.Enchantments;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Enchantments;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
@@ -15,8 +21,8 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Lose 1 HP. Deal 7 damage. This combat, increase this card's damage by 3 and HP loss by 1.
-/// Shuffle this card into your Draw Pile (put it on top of your Draw Pile instead).
+/// Lose 1 HP. Maim 1. Deal 7 damage. This combat, increase this card's damage by 5 and HP loss by 1.
+/// Put this card into your Draw Pile (on top of your Draw Pile instead).
 /// </summary>
 public class SeelsBloodPunch() : SeelsTheRecklessCard(1,
     CardType.Attack, CardRarity.Uncommon,
@@ -24,18 +30,22 @@ public class SeelsBloodPunch() : SeelsTheRecklessCard(1,
 {
     protected override HashSet<CardTag> CanonicalTags => [SeelsCardTags.Blood];
 
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [SeelsCardKeywords.Maim];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
+        MaimHelper.Var(1M),
         new DamageVar(7M, ValueProp.Move),
         new HpLossVar(1M),
-        new DynamicVar("DamageIncrease", 3M),
+        new DynamicVar("DamageIncrease", 5M),
         new DynamicVar("HpLossIncrease", 1M),
     ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Blood>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         ArgumentNullException.ThrowIfNull(play.Target);
         await SeelsMechanicsHelper.LoseHp(choiceContext, Owner.Creature, DynamicVars.HpLoss.BaseValue, this);
-
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this)
             .Targeting(play.Target)

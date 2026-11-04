@@ -3,6 +3,8 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -19,7 +21,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Blood Bend X. Add X (X+1) Glass 2 Slashes into your Draw Pile.
+/// Wounding. Add 1 Glass 2 Slash (Slash+) into your Hand for each Wound in your Hand.
 /// </summary>
 public class SeelsSpectacularBreakIn() : SeelsTheRecklessCard(1,
     CardType.Skill, CardRarity.Uncommon,
@@ -27,35 +29,34 @@ public class SeelsSpectacularBreakIn() : SeelsTheRecklessCard(1,
 {
     public const int GlassAmount = 2;
 
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [SeelsCardKeywords.Wounding];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("Bonus", 0M),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
-        new CalculatedVar("SlashesAmount").WithMultiplier((card, _) =>
-            SeelsMechanicsHelper.PreviewBloodBendX(card) + card.DynamicVars["Bonus"].IntValue),
+        new CalculatedVar("SlashesAmount").WithMultiplier((card, _) => SeelsMechanicsHelper.PreviewWoundsInHandAfterWounding(card)),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromKeyword(SeelsCardKeywords.BloodBend),
-        HoverTipFactory.FromPower<Blood>(),
-        HoverTipFactory.FromCard<SeelsSlash>(),
+        HoverTipFactory.FromCard<Wound>(),
+        HoverTipFactory.FromCard<SeelsSlash>(IsUpgraded),
         ..HoverTipFactory.FromEnchantment<Glass>(GlassAmount),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        var x = await SeelsMechanicsHelper.BloodBend(choiceContext, this) + DynamicVars["Bonus"].IntValue;
-        var slashes = Enumerable.Range(0, x).Select(_ =>
+        await SeelsMechanicsHelper.AddWounds(Owner, 1);
+        var amount = SeelsMechanicsHelper.GetWoundsInHand(Owner).Count();
+        var slashes = Enumerable.Range(0, amount).Select(_ =>
         {
-            var slash = SeelsMechanicsHelper.CreateSlash(Owner, false);
+            var slash = SeelsMechanicsHelper.CreateSlash(Owner, IsUpgraded);
             SeelsMechanicsHelper.Enchant<Glass>(slash, GlassAmount);
             return slash;
         }).ToList();
-        CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardsToCombat(slashes, PileType.Draw, Owner, CardPilePosition.Random));
+        CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardsToCombat(slashes, PileType.Hand, Owner));
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Bonus"].UpgradeValueBy(1M);
     }
 }

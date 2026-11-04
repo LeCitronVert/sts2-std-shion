@@ -14,15 +14,15 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Deal 3 (4) damage. Increase the damage of ALL Scratch cards by 1 (2) this combat. Add a copy of this card into your Draw Pile.
+/// Deal 1 (2) damage. Increase the damage of ALL Scratch cards by 2 (3) this combat. Add a copy of this card into your Draw Pile.
 /// </summary>
 public class SeelsScratch() : SeelsTheRecklessCard(0,
     CardType.Attack, CardRarity.Uncommon,
     TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(3M, ValueProp.Move),
-        new DynamicVar("Increase", 1M),
+        new DamageVar(1M, ValueProp.Move),
+        new DynamicVar("Increase", 2M),
     ];
 
     private decimal _extraDamage;

@@ -14,7 +14,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Whenever you Blood Bend X, ALL players gain X Block, and Block is not removed at the start of their next (2) turn(s).
+/// Whenever you Blood Bend X, ALL players gain X Block twice and 1 (2) Blur.
 /// </summary>
 public class SeelsSplashArmor() : SeelsTheRecklessCard(2,
     CardType.Power, CardRarity.Rare,

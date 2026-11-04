@@ -3,6 +3,8 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -19,32 +21,27 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Wounding. Make ALL your Wounds free to play. All Wounds in your Hand are enchanted with Sown.
+/// Whenever you Blood Bend with at least 2 Blood, gain 2 (3) Strength.
 /// </summary>
-public class SeelsBurningPain() : SeelsTheRecklessCard(1,
-    CardType.Skill, CardRarity.Rare,
+public class SeelsBurningPain() : SeelsTheRecklessCard(2,
+    CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
-    public const int WoundCost = 0;
-
-    public const int SownAmount = 1;
-
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [SeelsCardKeywords.Wounding];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<BurningPain>(2M)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromCard<Wound>(),
-        ..HoverTipFactory.FromEnchantment<Sown>(SownAmount),
+        HoverTipFactory.FromKeyword(SeelsCardKeywords.BloodBend),
+        HoverTipFactory.FromPower<Blood>(),
+        HoverTipFactory.FromPower<StrengthPower>(),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await SeelsMechanicsHelper.AddWounds(Owner, 1);
-        SeelsMechanicsHelper.MakeAllWoundsPlayable(Owner, WoundCost);
-        SeelsMechanicsHelper.EnchantWoundsInHand<Sown>(Owner, SownAmount);
+        await PowerCmd.Apply<BurningPain>(choiceContext, Owner.Creature, DynamicVars["BurningPain"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars["BurningPain"].UpgradeValueBy(1M);
     }
 }

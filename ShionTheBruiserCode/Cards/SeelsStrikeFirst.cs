@@ -3,6 +3,8 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -19,7 +21,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Deal 5 (7) damage. If the enemy intends to attack, gain 3 (4) Strength this turn.
+/// Maim 1. Deal 5 (7) damage. If the enemy intends to attack, gain 3 (4) Strength this turn.
 /// </summary>
 public class SeelsStrikeFirst() : SeelsTheRecklessCard(0,
     CardType.Attack, CardRarity.Uncommon,
@@ -27,12 +29,18 @@ public class SeelsStrikeFirst() : SeelsTheRecklessCard(0,
 {
     protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];
 
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [SeelsCardKeywords.Maim];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
+        MaimHelper.Var(1M),
         new DamageVar(5M, ValueProp.Move),
         new PowerVar<StrengthPower>(3M),
     ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<StrengthPower>(),
+        HoverTipFactory.FromPower<Blood>(),
+    ];
 
     protected override bool ShouldGlowGoldInternal =>
         CombatState?.HittableEnemies.Any(SeelsMechanicsHelper.IntendsToAttack) ?? false;

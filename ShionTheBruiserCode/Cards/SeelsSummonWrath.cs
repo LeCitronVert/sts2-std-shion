@@ -1,9 +1,10 @@
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -20,37 +21,35 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Lose HP equal to this card's energy cost. Add 2 Slashes (Slashes+) into your Hand.
-/// Increase this card's cost by 1 this combat and shuffle it into your Draw Pile.
+/// Lose 2 HP. Put 2 random Attacks from your Draw Pile into your Hand (and Upgrade them).
+/// Increase this card's HP loss by 1 this combat.
 /// </summary>
 public class SeelsSummonWrath() : SeelsTheRecklessCard(0,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new HpLossVar(2M),
         new CardsVar(2),
-        new CalculationBaseVar(0),
-        new CalculationExtraVar(1),
-        new CalculatedVar("HpLossAmount").WithMultiplier((card, _) => card.EnergyCost.GetResolved()),
+        new DynamicVar("HpLossIncrease", 1M),
     ];
-
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<SeelsSlash>(IsUpgraded)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        var cost = EnergyCost.GetResolved();
-        if (cost > 0)
+        await SeelsMechanicsHelper.LoseHp(choiceContext, Owner.Creature, DynamicVars.HpLoss.BaseValue, this);
+
+        var attacks = PileType.Draw.GetPile(Owner).Cards
+            .Where(c => c.Type == CardType.Attack)
+            .ToList()
+            .TakeRandom(DynamicVars.Cards.IntValue, Owner.RunState.Rng.CombatCardSelection)
+            .ToList();
+        foreach (var attack in attacks)
         {
-            await SeelsMechanicsHelper.LoseHp(choiceContext, Owner.Creature, cost, this);
+            if (IsUpgraded && attack.IsUpgradable) CardCmd.Upgrade(attack);
+            await CardPileCmd.Add(attack, PileType.Hand);
         }
 
-        await SeelsMechanicsHelper.AddSlashes(Owner, DynamicVars.Cards.IntValue, PileType.Hand, IsUpgraded);
-        EnergyCost.AddThisCombat(1);
-    }
-
-    public override (PileType, CardPilePosition) ModifyCardPlayResultPileTypeAndPosition(CardModel card, bool isAutoPlay, ResourceInfo resources, PileType pileType, CardPilePosition position)
-    {
-        return card == this && pileType == PileType.Discard ? (PileType.Draw, CardPilePosition.Random) : (pileType, position);
+        DynamicVars.HpLoss.BaseValue += DynamicVars["HpLossIncrease"].BaseValue;
     }
 
     protected override void OnUpgrade()

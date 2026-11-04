@@ -3,6 +3,8 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -19,7 +21,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain 7 (9) Block. Wounding. Discard your Status cards and draw as many cards.
+/// Gain 7 (9) Block. Wounding. Play ALL Status cards in your Hand and draw as many cards.
 /// </summary>
 public class SeelsHematoma() : SeelsTheRecklessCard(1,
     CardType.Skill, CardRarity.Common,
@@ -46,7 +48,13 @@ public class SeelsHematoma() : SeelsTheRecklessCard(1,
 
         var statuses = PileType.Hand.GetPile(Owner).Cards.Where(c => c.Type == CardType.Status).ToList();
         if (statuses.Count == 0) return;
-        await CardCmd.DiscardAndDraw(choiceContext, statuses, statuses.Count);
+
+        foreach (var status in statuses)
+        {
+            if (Owner.Creature.IsDead) return;
+            await SeelsMechanicsHelper.PlayEvenIfUnplayable(choiceContext, status);
+        }
+        await CardPileCmd.Draw(choiceContext, statuses.Count, Owner);
     }
 
     protected override void OnUpgrade()

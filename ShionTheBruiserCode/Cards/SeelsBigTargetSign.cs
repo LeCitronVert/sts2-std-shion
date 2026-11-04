@@ -3,6 +3,8 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -19,7 +21,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// ALL enemies lose 2X Strength this turn. Gain 4X Tainted. (Retain.) Multiplayer only.
+/// Maim 2. ALL enemies lose 2 HP. Gain 4X Tainted. (Retain.) Multiplayer only.
 /// </summary>
 public class SeelsBigTargetSign() : SeelsTheRecklessCard(0,
     CardType.Skill, CardRarity.Uncommon,
@@ -29,19 +31,20 @@ public class SeelsBigTargetSign() : SeelsTheRecklessCard(0,
 
     protected override bool HasEnergyCostX => true;
 
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [SeelsCardKeywords.Maim];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("StrengthPerX", 2M),
+        MaimHelper.Var(2M),
+        new DynamicVar("EnemyHpLoss", 2M),
         new DynamicVar("TaintedPerX", 4M),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
-        new CalculatedVar("StrengthLossAmount").WithMultiplier((card, _) =>
-            PreviewHelper.XValue(card) * card.DynamicVars["StrengthPerX"].BaseValue),
         new CalculatedVar("TaintedAmount").WithMultiplier((card, _) =>
             PreviewHelper.XValue(card) * card.DynamicVars["TaintedPerX"].BaseValue),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<StrengthPower>(),
+        HoverTipFactory.FromPower<Blood>(),
         HoverTipFactory.FromPower<TaintedPower>(),
     ];
 
@@ -49,14 +52,18 @@ public class SeelsBigTargetSign() : SeelsTheRecklessCard(0,
     {
         if (CombatState is null) return;
         var x = ResolveEnergyXValue();
-        if (x <= 0) return;
 
         var enemies = CombatState.HittableEnemies.ToList();
         if (enemies.Count > 0)
         {
-            await PowerCmd.Apply<BigTargetSignStrengthDown>(choiceContext, enemies, x * DynamicVars["StrengthPerX"].BaseValue, Owner.Creature, this);
+            await CreatureCmd.Damage(choiceContext, enemies, DynamicVars["EnemyHpLoss"].BaseValue,
+                ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, Owner.Creature, this);
         }
-        await PowerCmd.Apply<TaintedPower>(choiceContext, Owner.Creature, x * DynamicVars["TaintedPerX"].BaseValue, Owner.Creature, this);
+
+        if (x > 0)
+        {
+            await PowerCmd.Apply<TaintedPower>(choiceContext, Owner.Creature, x * DynamicVars["TaintedPerX"].BaseValue, Owner.Creature, this);
+        }
     }
 
     protected override void OnUpgrade()

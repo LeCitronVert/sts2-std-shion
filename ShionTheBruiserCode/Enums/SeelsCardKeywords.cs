@@ -20,6 +20,13 @@ public static class SeelsCardKeywords
     [CustomEnum, KeywordProperties(AutoKeywordPosition.None)]
     public static CardKeyword Gamble;
 
+    /// <summary>
+    /// Maim X: if an enemy loses HP from this card, it loses X Strength this turn and you gain X Blood (per hit).
+    /// Hover tip only: the "Maim X." line is written by <see cref="Patches.MaimDescriptionPatch"/>.
+    /// </summary>
+    [CustomEnum, KeywordProperties(AutoKeywordPosition.None)]
+    public static CardKeyword Maim;
+
     /// <summary>Bloody Daggers: the Shiv deals X additional damage, then its owner Blood Bends.</summary>
     [CustomEnum, KeywordProperties(AutoKeywordPosition.Before)]
     public static CardKeyword BloodyShiv;

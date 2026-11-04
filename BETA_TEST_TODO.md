@@ -1356,3 +1356,84 @@ Shown for any player who owns the relic (Abby = Abby the Absol, Edge = Edge the 
 - Tag mapping: (wavey) → [sine], (shake) → [jitter], (italic) → [i], (purple)/(red) → same colour, (yellow) → [gold] (there's no yellow tag). Narration uses the same small italic style as Shion's. All of Pael's lines use [thinky_dots], like his other lines.
 - Typo fixes: "trinks" → "trinkets", "vigoriously" → "vigorously", "TRANSDIMENSONAL" → "TRANSDIMENSIONAL", "welp" → "whelp", and added a period to Nonupeipe's "…reward might. Come.".
 - The sheet has no Architect lines and no "other modded character" group for Seels, so the Architect TODO placeholders stay and nothing was added for modded characters.
+
+## 25. Change Pending F (Seels rework, Maim, Slal bits)
+
+**Setup**
+- [ ] Rebuild, re-export the .pck (new/changed card portraits) and let MegaDot generate the `.uid` files for: `SeelsMutilate.cs`, `MaimHelper.cs`, `MaimDescriptionPatch.cs`, `MaimSingleton.cs`, `BurningPain.cs`, `EchoesOfPain.cs`, `ScarletShadow.cs`, `NeverLearnStrength.cs`, plus the `.import` for `seels_mutilate.png`.
+
+**Maim X (new keyword)**
+- [ ] Cards with Maim show "Maim X." at the top of their text, under Wounding/Retain lines, with a hover tip.
+- [ ] Every hit that makes an enemy lose HP: that enemy loses X Strength this turn (shown as a "Maim" debuff) and you gain X Blood. Belittle 3 hits on enemies with no Block = 3 triggers.
+- [ ] Blocked hits (no HP lost) don't trigger it. A hit that kills still gives the Blood.
+- [ ] Non-attack HP loss counts: Steal Blood and Big Target Sign ("ALL enemies lose 2 HP") trigger Maim per enemy.
+- [ ] Maim added to a card (Go Crazy, Steal Blood) shows in green and stacks with the card's own Maim. Copies of that card keep it.
+
+**Blood Bend on replays**
+- [ ] A replayed Blood Bend card (Echoes of Pain, Tornado Stance's Replay, etc.) reuses the X of its first play, doesn't consume Blood gained in between, heals X again and triggers Burning Pain / Splash Armor / Recall Blood / Thorn Bracers again.
+
+**Seels cards**
+- [ ] **Mutilate** (new, Basic, 3 cost): Maim 2, deal 27 damage, Gloat 1. Upgraded: 33 damage, Gloat 2. It's in the starter deck (10 cards now).
+- [ ] **Scarlet Shadow**: after playing it, at the end of combat you Blood Bend (heal), so that Blood isn't carried over to the next fight.
+- [ ] **Exsanguination**: Blood Bend X, deal 8 + 5X damage, doubled against a Vulnerable enemy. The aimed damage preview shows the doubling. Exhaust (upgrade: no Exhaust).
+- [ ] **Bloody Execution**: now an Attack. Maim 2, 12 damage + 4 per Vulnerable on the target (upgrade 15 / 5). The aimed preview includes the bonus.
+- [ ] **Funny Dance**: 2X Vulnerable to ALL enemies, Gloat X.
+- [ ] **Body Strike**: Maim 1 added.
+- [ ] **Summon Wrath**: lose 2 HP, put 2 random Attacks from Draw Pile into Hand (upgraded: upgrades them), HP loss +1 each play this combat. It now goes to the Discard Pile and its cost stays 0.
+- [ ] **Ultra Kill**, **Strike First**: Maim 3 / Maim 1 added.
+- [ ] **Burning Pain**: now a 2-cost Power. Blood Bending with 2+ Blood gives 2 (3) Strength.
+- [ ] **Echoes of Pain**: the next card with Maim is played one extra time (High Reward counts even without the HP-loss condition). Exhaust. 1 cost (0 upgraded).
+- [ ] **Go Crazy**: adds Maim 1 to ALL your Slashes (not the Exhausted ones).
+- [ ] **Never Learn**: Max HP check first, then Blood Bend X, gain X Strength this turn (with preview).
+- [ ] **Scratch**: 1 damage, +2 per play (upgraded 2 / +3).
+- [ ] **Steal Blood**: Maim 2, enemy loses 2 HP; if it did, choose an Attack in Hand to get Maim 1 + Upgrade (upgraded: ALL Attacks in Hand, no choice).
+- [ ] **High Reward**: if you lost HP this turn, hits 3 times with Maim 3. Otherwise no Maim.
+- [ ] **Big Target Sign**: Maim 2, ALL enemies lose 2 HP (also at X = 0), gain 4X Tainted.
+- [ ] **Copy Kitty**: 2 cost (1 upgraded). Plays a copy of every card the ally played this turn (in order, replays not counted), and the copies are Exhausted.
+- [ ] **Toss A Coin** (multiplayer): the targeted ally gets their own selection screen, picks any number of cards to Gamble (0 allowed), then draws 1. Upgrade: Retain. **Check for desyncs / soft-locks here: it's another player choosing during Seels' card.**
+- [ ] **Brutal Teachings**: now an Attack. Maim 2, 20 damage, +10 damage each play this combat, Gloat 2.
+- [ ] **Tornado Stance**: now Ancient (new tall portrait), Retain. Adds Replay to Slashes + Vulnerable per Slash. At the start of each turn while in Hand, adds 1 (2) Slash into the Discard Pile.
+- [ ] **Splash Armor**: X Block twice + 1 (2) Blur to ALL players.
+- [ ] **Savagery**: upgrade is now 3 Strength instead of 0 cost.
+- [ ] **Show Off**: also triggers when a Wound is Exhausted.
+- [ ] **Weird Flex**: whenever you play a Wound, gain 1 (2) Strength and 1 (2) Dexterity (permanent).
+- [ ] **Invigorating Pain**: played Wounds are Exhausted, give 3 (5) Vigor and draw 1.
+- [ ] **Hematoma**: plays ALL Status cards in Hand (Wounds/Burns included, even Unplayable ones), then draws that many. The Wounds go back to being Unplayable afterwards.
+- [ ] **Combo Meter**: now a 1-cost Ethereal Skill (0 upgraded). Stacks the Combo Meter power, then goes back into the Draw Pile.
+- [ ] **Shed The Pain**: Blood (instead of Heal) per enchanted Wound, then Gloat 2.
+- [ ] **Blood Punch**: Maim 1, +5 damage per play, goes into the Draw Pile (on top when upgraded).
+- [ ] **Blood Cage**: now a Skill. Blood Bend X, 4 Block X+1 times, X (X+1) Vulnerable.
+- [ ] **Blood Prison**: now a Skill that still deals 14 (20) normal damage to ALL enemies + X (X+1) Vulnerable (twice upgraded).
+- [ ] **Blood Bath**: 6 Block X (X+1) times + 2 Blur, no more Slashes.
+- [ ] **Gambling Addiction**: now 0-cost Rare (normal portrait). Ethereal, gain 1 energy, lose 3 (1) HP. Every Gamble pulls it from Draw/Discard into your Hand (never from the Exhaust Pile). When it's Exhausted (Ethereal included), deals 5 x Gambles this combat to ALL enemies.
+- [ ] **Belittle**: Maim 2 (3), 7 damage x3 (x4), no more Strength part.
+- [ ] **Recall Blood**: 2 cost (1 upgraded).
+- [ ] **Pin Them Down**: Gloat 2, 1 Inky Slash into Hand + 2 per energy cost into Draw Pile (Slash+ when upgraded). Try it with an Erratic cost.
+- [ ] **Spectacular Break-In**: Wounding, 1 Glass 2 Slash (Slash+) into Hand per Wound in Hand (counts the new Wound).
+
+**Other**
+- [ ] **Sarcophagus Form** (Slal): Confusion you apply to a Weak enemy gets +6 (+9). It shows in card previews and can't loop.
+- [ ] **Slime Potion**: Transform any number of Hand cards into Slimed (0 allowed), gain 6 Free Status.
+- [ ] **Thorn Bracelet**: after a card that Blood Bent finishes resolving, lose 1 HP (which gives 1 Blood back).
+- [ ] **Fresh Lemonade**: Gamble any number, draw that many, heal per energy cost drawn.
+- [ ] **Megaphone**: every Gloat applied to you (cards, Laugh It Off...) applies 1 Vulnerable to ALL enemies.
+- [ ] **Lottery Ticket**: every play of an Erratic card gives 1 energy (no more start-of-combat choice).
+
+**Visuals**
+- [ ] Mutilate portrait (Seras punch crop) looks right, small + big.
+- [ ] Tornado Stance tall Ancient crop (face centered), Gambling Addiction recropped to the normal format.
+- [ ] New powers without icons (Burning Pain, Echoes of Pain, Scarlet Shadow) added to MISSING_IMAGES.tsv. Removed rows for the deleted Brutal Teachings / Gambling Addiction / Steal Blood powers.
+
+**Decisions I made**
+- Maim triggers once per hit (confirmed). Blood Bend replays reuse X and count as full Blood Bends (confirmed). Page 3 skipped (confirmed). Gambling Addiction upgrade = lose 1 HP (confirmed). Mutilate added to the starter deck (confirmed). Blood Prison deals normal damage as a Skill (confirmed). Summon Wrath drops the cost increase and the return into the Draw Pile (confirmed). Toss A Coin: the ally chooses (confirmed).
+- The "Maim X." line is always at the top of the card. On Blood Punch it shows before "Lose 1 HP" (the sheet has it after).
+- High Reward always shows the Maim hover tip, but its Maim only applies while it's played with the HP-loss condition.
+- Kept the current values the sheet doesn't give: Echoes of Pain keeps Exhaust; Go Crazy keeps 2 cost and has no upgrade (flagged `//todo : upgrade not specified`); Bloody Execution / Brutal Teachings keep their costs; Blood Cage keeps the X+1 Vulnerable upgrade; Splash Armor/Combo Meter keep their stacking powers.
+- Scarlet Shadow's end-of-combat Blood Bend happens before Blood carry-over is saved, so that Blood is healed, not carried.
+- Exsanguination's x2 and Bloody Execution's Vulnerable bonus are damage modifiers, so they show in the aimed preview and stack with Vulnerable's own 50%.
+- Hematoma lifts Unplayable only for the forced play. Invigorating Pain sends played Wounds to the Exhaust Pile.
+- Thorn Bracers (upgraded Thorn Bracelet) doesn't get the new HP loss.
+- Lottery Ticket and Thorn Bracelet trigger on every play (replays included), like the Spirit Burst decision.
+- Sarcophagus Form is an additive bonus to Confusion applied (no second application, so no infinite loop).
+- Deleted the now-unused powers with their loc: Brutal Teachings, Brutal Teachings Dexterity, Gambling Addiction, Steal Blood, Big Target Sign Strength Down, Weird Flex Strength. Belittle Strength Down was renamed to Maim Strength Down.
+- Removed `GambleRandomly` (Toss A Coin was its only user) and added `GambleAnyNumber`.

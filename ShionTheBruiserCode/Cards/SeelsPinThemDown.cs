@@ -3,6 +3,8 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -19,41 +21,52 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Blood Bend X. Add X (X+1) Inky Slashes into your Draw Pile.
+/// Gloat 2. Add 1 Inky Slash (Slash+) into your Hand, and 2 more into your Draw Pile per energy this card costs.
 /// </summary>
 public class SeelsPinThemDown() : SeelsTheRecklessCard(1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("Bonus", 0M),
+        new PowerVar<Gloat>(2M),
+        new CardsVar(1),
+        new DynamicVar("SlashesPerEnergy", 2M),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
         new CalculatedVar("SlashesAmount").WithMultiplier((card, _) =>
-            SeelsMechanicsHelper.PreviewBloodBendX(card) + card.DynamicVars["Bonus"].IntValue),
+            GetDrawPileSlashes(card)),
     ];
 
+    private static int GetDrawPileSlashes(CardModel card) =>
+        card.EnergyCost.GetResolved() * card.DynamicVars["SlashesPerEnergy"].IntValue;
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromKeyword(SeelsCardKeywords.BloodBend),
-        HoverTipFactory.FromPower<Blood>(),
-        HoverTipFactory.FromCard<SeelsSlash>(),
+        HoverTipFactory.FromPower<Gloat>(),
+        HoverTipFactory.FromCard<SeelsSlash>(IsUpgraded),
         ..HoverTipFactory.FromEnchantment<Inky>(),
     ];
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
-    {
-        var x = await SeelsMechanicsHelper.BloodBend(choiceContext, this) + DynamicVars["Bonus"].IntValue;
-        var slashes = Enumerable.Range(0, x).Select(_ =>
+    private List<CardModel> CreateInkySlashes(int amount) =>
+        Enumerable.Range(0, amount).Select(_ =>
         {
-            var slash = SeelsMechanicsHelper.CreateSlash(Owner, false);
+            var slash = SeelsMechanicsHelper.CreateSlash(Owner, IsUpgraded);
             SeelsMechanicsHelper.Enchant<Inky>(slash, 1);
             return slash;
         }).ToList();
-        CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardsToCombat(slashes, PileType.Draw, Owner, CardPilePosition.Random));
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
+    {
+        // Read before anything can change the cost.
+        var drawPileSlashes = GetDrawPileSlashes(this);
+        await SeelsMechanicsHelper.Gloat(choiceContext, Owner.Creature, DynamicVars["Gloat"].BaseValue, this);
+        CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardsToCombat(CreateInkySlashes(DynamicVars.Cards.IntValue), PileType.Hand, Owner));
+        if (drawPileSlashes > 0)
+        {
+            CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardsToCombat(CreateInkySlashes(drawPileSlashes), PileType.Draw, Owner, CardPilePosition.Random));
+        }
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Bonus"].UpgradeValueBy(1M);
     }
 }

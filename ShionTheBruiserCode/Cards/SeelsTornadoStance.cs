@@ -3,6 +3,8 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -19,13 +21,17 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Add Replay to ALL your Slashes (and Upgrade them). Gain 1 Vulnerable for each of your Slashes. Doesn't include the Exhausted ones.
+/// Retain. Add Replay to ALL your Slashes. Gain 1 Vulnerable for each of your Slashes (not the Exhausted ones).
+/// At the start of your turn, if this is in your Hand, add 1 (2) Slash(es) into your Discard Pile.
 /// </summary>
 public class SeelsTornadoStance() : SeelsTheRecklessCard(2,
-    CardType.Skill, CardRarity.Rare,
+    CardType.Skill, CardRarity.Ancient,
     TargetType.Self)
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CardsVar(1),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
         new CalculatedVar("VulnerableAmount").WithMultiplier((card, _) => GetSlashes(card).Count),
@@ -41,14 +47,18 @@ public class SeelsTornadoStance() : SeelsTheRecklessCard(2,
         HoverTipFactory.FromPower<VulnerablePower>(),
     ];
 
+    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
+    {
+        if (player != Owner || Pile?.Type != PileType.Hand) return;
+        await SeelsMechanicsHelper.AddSlashes(Owner, DynamicVars.Cards.IntValue, PileType.Discard, false);
+    }
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         var slashes = GetSlashes(this);
-
         foreach (var slash in slashes)
         {
             slash.BaseReplayCount += 1;
-            if (IsUpgraded && slash.IsUpgradable) CardCmd.Upgrade(slash);
             SeelsMechanicsHelper.CountModification(slash);
         }
 
@@ -60,5 +70,6 @@ public class SeelsTornadoStance() : SeelsTheRecklessCard(2,
 
     protected override void OnUpgrade()
     {
+        DynamicVars.Cards.UpgradeValueBy(1M);
     }
 }

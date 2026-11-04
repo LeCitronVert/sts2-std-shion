@@ -14,7 +14,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Wounding. Whenever a Wound is put into your Discard Pile, gain 2 (3) Block.
+/// Wounding. Whenever a Wound is Exhausted or put into your Discard Pile, gain 2 (3) Block.
 /// </summary>
 public class SeelsShowOff() : SeelsTheRecklessCard(2,
     CardType.Power, CardRarity.Rare,

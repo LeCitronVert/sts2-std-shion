@@ -14,7 +14,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Whenever you play a Wound, gain 3 (5) Vigor.
+/// Whenever you play a Wound, Exhaust it, gain 3 (5) Vigor and draw 1 card.
 /// </summary>
 public class SeelsInvigoratingPain() : SeelsTheRecklessCard(1,
     CardType.Power, CardRarity.Uncommon,

@@ -1,3 +1,6 @@
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Relics;
@@ -10,25 +13,25 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 /// <summary>
-/// While Vulnerable, you have 2 additional Dexterity.
+/// Whenever you Gloat, apply 1 Vulnerable to ALL enemies.
 /// </summary>
 public class Megaphone : SeelsTheRecklessRelic
 {
     public override RelicRarity Rarity => RelicRarity.Uncommon;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<DexterityPower>(2M)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<VulnerablePower>(1M)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<Gloat>(),
         HoverTipFactory.FromPower<VulnerablePower>(),
-        HoverTipFactory.FromPower<DexterityPower>(),
     ];
 
-    public override decimal ModifyBlockAdditive(Creature target, decimal block, ValueProp props, CardModel? cardSource, CardPlay? cardPlay)
+    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
-        var creature = Owner.Creature;
-        if (cardSource != null ? cardSource.Owner.Creature != creature : target != creature) return 0m;
-        if (!props.IsPoweredCardOrMonsterMoveBlock() || !creature.HasPower<VulnerablePower>()) return 0m;
-
-        return DynamicVars.Dexterity.BaseValue;
+        if (power is not Gloat || power.Owner != Owner.Creature || amount <= 0 || Owner.Creature.CombatState is null) return;
+        var enemies = Owner.Creature.CombatState.HittableEnemies.ToList();
+        if (enemies.Count == 0) return;
+        Flash();
+        await PowerCmd.Apply<VulnerablePower>(choiceContext, enemies, DynamicVars.Vulnerable.BaseValue, Owner.Creature, null);
     }
 }

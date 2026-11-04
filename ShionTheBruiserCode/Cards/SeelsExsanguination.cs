@@ -1,13 +1,19 @@
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
+using MegaCrit.Sts2.Core.Models.Enchantments;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Enchantments;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
@@ -15,8 +21,8 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Blood Bend X. Deal X damage. Increase this damage by X times the number of Attacks you played this turn
-/// (this one included), times the energy cost of this card. Exhaust. (Upgrade: lose Exhaust.)
+/// Blood Bend X. Deal 8 damage. Deal 5X additional damage. If the enemy is Vulnerable, deal double damage.
+/// Exhaust. (Upgrade: lose Exhaust.)
 /// </summary>
 public class SeelsExsanguination() : SeelsTheRecklessCard(1,
     CardType.Attack, CardRarity.Common,
@@ -27,44 +33,29 @@ public class SeelsExsanguination() : SeelsTheRecklessCard(1,
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CalculationBaseVar(0),
-        new ExtraDamageVar(1),
-        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) =>
-            GetDamage(card, SeelsMechanicsHelper.PreviewBloodBendX(card))),
-        new CalculationExtraVar(1),
-        new CalculatedVar("AttacksAmount").WithMultiplier((card, _) => CountAttacksPlayedThisTurn(card)),
+        new CalculationBaseVar(8M),
+        new ExtraDamageVar(5M),
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => SeelsMechanicsHelper.PreviewBloodBendX(card)),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(SeelsCardKeywords.BloodBend),
         HoverTipFactory.FromPower<Blood>(),
+        HoverTipFactory.FromPower<VulnerablePower>(),
     ];
 
-    /// <summary>
-    /// Attacks played this turn, this card included (it hasn't finished being played yet, so it's added by hand).
-    /// </summary>
-    private static int CountAttacksPlayedThisTurn(CardModel card)
+    // Double damage against Vulnerable enemies (also shows in the targeted damage preview).
+    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        if (card.CombatState is null) return 0;
-        var finished = CombatManager.Instance.History.CardPlaysFinished
-            .Count(e => e.HappenedThisTurn(card.CombatState)
-                        && e.CardPlay.Card.Owner == card.Owner
-                        && e.CardPlay.IsFirstInSeries
-                        && e.CardPlay.Card.Type == CardType.Attack);
-        return finished + 1;
+        return cardSource == this && target is not null && target.HasPower<VulnerablePower>() ? 2m : 1m;
     }
-
-    private static int GetDamage(CardModel card, int x) =>
-        x + x * CountAttacksPlayedThisTurn(card) * card.EnergyCost.GetResolved();
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         ArgumentNullException.ThrowIfNull(play.Target);
-        // Read before Blood Bending, so nothing triggered by it can change the count.
-        var attacks = CountAttacksPlayedThisTurn(this);
-        var cost = EnergyCost.GetResolved();
         var x = await SeelsMechanicsHelper.BloodBend(choiceContext, this);
-        await DamageCmd.Attack(x + x * attacks * cost)
+        var damage = DynamicVars.CalculationBase.BaseValue + DynamicVars.ExtraDamage.BaseValue * x;
+        await DamageCmd.Attack(damage)
             .FromCard(this)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_bloody_impact")

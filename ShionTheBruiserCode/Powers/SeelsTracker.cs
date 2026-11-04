@@ -25,6 +25,9 @@ public class SeelsTracker : SeelsTheRecklessPower
         ModifiedCards = [];
     }
 
+    /// <summary>Times this player Gambled this combat (Gambling Addiction).</summary>
+    public int GambleCount { get; set; }
+
     public void CountModification(CardModel card)
     {
         ModifiedCards.Add(card);

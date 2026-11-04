@@ -11,20 +11,15 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Potions;
 
 /// <summary>
-/// Gamble 3. Draw 3 cards. Heal HP equal to the energy cost of the cards drawn this way. Can't be alchemized.
+/// Gamble any number of cards in your Hand. Draw as many cards. Heal HP equal to the energy cost of the cards drawn this way.
+/// Can't be alchemized.
 /// </summary>
 public class FreshLemonade : SeelsTheRecklessPotion
 {
     public override PotionRarity Rarity => PotionRarity.Common;
     public override PotionUsage Usage => PotionUsage.CombatOnly;
     public override TargetType TargetType => TargetType.Self;
-
     public override bool CanBeGeneratedInCombat => false;
-
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("Gamble", 3M),
-        new CardsVar(3),
-    ];
 
     public override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(SeelsCardKeywords.Gamble),
@@ -33,9 +28,10 @@ public class FreshLemonade : SeelsTheRecklessPotion
 
     protected override async Task OnUse(PlayerChoiceContext choiceContext, Creature? target)
     {
-        await SeelsMechanicsHelper.Gamble(choiceContext, Owner, DynamicVars["Gamble"].IntValue, this);
-        var drawn = await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
+        var gambled = await SeelsMechanicsHelper.GambleAnyNumber(choiceContext, Owner, this);
+        if (gambled.Count == 0) return;
 
+        var drawn = await CardPileCmd.Draw(choiceContext, gambled.Count, Owner);
         var heal = drawn.Where(c => !c.EnergyCost.CostsX).Sum(c => c.EnergyCost.GetResolved());
         if (heal > 0)
         {

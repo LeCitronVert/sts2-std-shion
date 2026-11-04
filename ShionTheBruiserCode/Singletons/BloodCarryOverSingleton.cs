@@ -26,13 +26,17 @@ public class BloodCarryOverSingleton() : CustomSingletonModel(HookType.Combat)
     // Must be AfterCombatEnd, not AfterCombatVictory(Early): CombatManager.EndCombatInternal calls
     // Player.AfterCombatEnd() (which removes all powers, Blood included) between the two hooks.
     // AfterCombatEnd only runs on victory (a loss goes through LoseCombat instead).
-    public override Task AfterCombatEnd(CombatRoom room)
+    public override async Task AfterCombatEnd(CombatRoom room)
     {
         foreach (var player in room.CombatState.Players)
         {
+            // Scarlet Shadow: Blood Bend at the end of combat, before the leftover Blood is saved.
+            if (player.Creature.IsAlive && player.Creature.HasPower<ScarletShadow>())
+            {
+                await SeelsMechanicsHelper.BloodBend(new ThrowingPlayerChoiceContext(), player, null);
+            }
             SavedBlood.Set(player, player.Creature.IsAlive ? SeelsMechanicsHelper.GetBlood(player.Creature) : 0);
         }
-        return Task.CompletedTask;
     }
 
     public override async Task AfterPlayerTurnStartEarly(PlayerChoiceContext choiceContext, Player player)

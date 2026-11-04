@@ -16,7 +16,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Whenever you Blood Bend X, ALL enemies lose X HP, and you gain X Vigor next turn.
 /// </summary>
-public class SeelsRecallBlood() : SeelsTheRecklessCard(3,
+public class SeelsRecallBlood() : SeelsTheRecklessCard(2,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {

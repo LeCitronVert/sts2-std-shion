@@ -1,3 +1,4 @@
+using BaseLib.Utils;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Combat;
@@ -54,8 +55,12 @@ public static class SeelsMechanicsHelper
         await PowerCmd.Apply<Blood>(choiceContext, creature, amount, creature, source);
     }
 
+    /// <summary>X of the first play of a card's current series, reused by its replays.</summary>
+    private static readonly SpireField<CardModel, int> SeriesBloodBendX = new(() => 0);
+
     /// <summary>
     /// Blood Bend X: consumes ALL your Blood, heals that much and returns the amount consumed (X).
+    /// Replays of the card reuse the X of its first play (no Blood is spent again).
     /// The heal only counts the Blood consumed, not the (X+1) bonuses the cards add on top.
     /// </summary>
     public static Task<int> BloodBend(PlayerChoiceContext choiceContext, CardModel card) =>
@@ -67,8 +72,19 @@ public static class SeelsMechanicsHelper
     public static async Task<int> BloodBend(PlayerChoiceContext choiceContext, Player player, CardModel? card)
     {
         var creature = player.Creature;
-        var x = GetBlood(creature);
-        await PowerCmd.Remove<Blood>(creature);
+        int x;
+        if (card is { CurrentPlayIndex: > 0 })
+        {
+            // Replay: reuses the X of the first play instead of spending Blood again.
+            // Still heals and counts as a Blood Bend for the listeners.
+            x = SeriesBloodBendX.Get(card);
+        }
+        else
+        {
+            x = GetBlood(creature);
+            await PowerCmd.Remove<Blood>(creature);
+            if (card is not null) SeriesBloodBendX.Set(card, x);
+        }
         if (x > 0)
         {
             await CreatureCmd.Heal(creature, x);
@@ -126,30 +142,37 @@ public static class SeelsMechanicsHelper
             source
         )).ToList();
 
-        foreach (var card in cards)
-        {
-            AddErratic(card);
-            await CardPileCmd.Add(card, PileType.Draw, CardPilePosition.Top);
-        }
-
-        if (player.Creature.CombatState is not null)
-        {
-            foreach (var listener in player.Creature.CombatState.IterateHookListeners().OfType<ISeelsListener>().ToList())
-            {
-                await listener.AfterGamble(choiceContext, player, amount, cards);
-            }
-        }
-
+        await GambleCards(choiceContext, player, amount, cards);
         return cards;
     }
 
     /// <summary>
-    /// Gamble for another player: the cards are picked at random from their Hand.
+    /// Gamble any number of cards: the player chooses 0 or more cards in their Hand (X = the number chosen).
+    /// Works for another player too: they make the choice on their side.
     /// </summary>
-    public static async Task<IReadOnlyList<CardModel>> GambleRandomly(PlayerChoiceContext choiceContext, Player player, int amount)
+    public static async Task<IReadOnlyList<CardModel>> GambleAnyNumber(PlayerChoiceContext choiceContext, Player player, AbstractModel source)
     {
-        var cards = PileType.Hand.GetPile(player).Cards.ToList()
-            .TakeRandom(amount, player.RunState.Rng.CombatCardSelection).ToList();
+        var hand = PileType.Hand.GetPile(player).Cards.Where(c => c != source).ToList();
+        if (hand.Count == 0) return [];
+
+        var cards = (await CardSelectCmd.FromHand(
+            choiceContext,
+            player,
+            new CardSelectorPrefs(GamblePrompt, 0, hand.Count),
+            c => c != source,
+            source
+        )).ToList();
+
+        if (cards.Count == 0) return cards;
+        await GambleCards(choiceContext, player, cards.Count, cards);
+        return cards;
+    }
+
+    private static async Task GambleCards(PlayerChoiceContext choiceContext, Player player, int amount, IReadOnlyList<CardModel> cards)
+    {
+        EnsureCreatureHasSeelsTracker(player.Creature);
+        var tracker = player.Creature.GetPower<SeelsTracker>();
+        if (tracker is not null) tracker.GambleCount++;
 
         foreach (var card in cards)
         {
@@ -164,9 +187,9 @@ public static class SeelsMechanicsHelper
                 await listener.AfterGamble(choiceContext, player, amount, cards);
             }
         }
-
-        return cards;
     }
+
+    public static int GetGambleCount(Creature creature) => creature.GetPower<SeelsTracker>()?.GambleCount ?? 0;
 
     public static bool IsErratic(CardModel card) => card.Keywords.Contains(SeelsCardKeywords.Erratic);
 
@@ -337,6 +360,23 @@ public static class SeelsMechanicsHelper
     }
 
     // ── Misc ────────────────────────────────────────────────────────────────
+
+    /// <summary>
+    /// Auto-plays a card, even an Unplayable one (Wounds, Burns...): Unplayable is lifted for that play only.
+    /// </summary>
+    public static async Task PlayEvenIfUnplayable(PlayerChoiceContext choiceContext, CardModel card)
+    {
+        var wasUnplayable = card.Keywords.Contains(CardKeyword.Unplayable);
+        if (wasUnplayable) card.RemoveKeyword(CardKeyword.Unplayable);
+        try
+        {
+            await CardCmd.AutoPlay(choiceContext, card, null);
+        }
+        finally
+        {
+            if (wasUnplayable && !card.HasBeenRemovedFromState) card.AddKeyword(CardKeyword.Unplayable);
+        }
+    }
 
     /// <summary>
     /// Lose HP (unblockable, unpowered), like Bloodletting.

@@ -19,7 +19,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Blood Bend X. Gain X Blood twice (3 times). Exhaust.
+/// Blood Bend X. Gain X Blood twice (3 times). At the end of combat, Blood Bend. Exhaust.
 /// </summary>
 public class SeelsScarletShadow() : SeelsTheRecklessCard(0,
     CardType.Skill, CardRarity.Rare,
@@ -47,6 +47,7 @@ public class SeelsScarletShadow() : SeelsTheRecklessCard(0,
         {
             await SeelsMechanicsHelper.GainBlood(choiceContext, Owner.Creature, x, this);
         }
+        await PowerCmd.Apply<ScarletShadow>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

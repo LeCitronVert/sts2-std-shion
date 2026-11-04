@@ -3,6 +3,8 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -19,7 +21,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Blood Bend X. Gain 5 Block X (X+1) times. Also add X Slashes into your Discard Pile.
+/// Blood Bend X. Gain 6 Block X (X+1) times. Gain 2 Blur.
 /// </summary>
 public class SeelsBloodBath() : SeelsTheRecklessCard(2,
     CardType.Skill, CardRarity.Common,
@@ -30,21 +32,21 @@ public class SeelsBloodBath() : SeelsTheRecklessCard(2,
     protected override HashSet<CardTag> CanonicalTags => [SeelsCardTags.Blood];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(5M, ValueProp.Move),
+        new BlockVar(6M, ValueProp.Move),
         new DynamicVar("Bonus", 0M),
+        new PowerVar<BlurPower>(2M),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
         // Block is gained X times, so modifiers apply to each gain
         new CalculatedVar("BlockAmount").WithMultiplier((card, _) =>
             (SeelsMechanicsHelper.PreviewBloodBendX(card) + card.DynamicVars["Bonus"].IntValue)
             * PreviewHelper.ModifiedBlock(card, card.DynamicVars.Block.BaseValue, card.DynamicVars.Block.Props)),
-        new CalculatedVar("SlashesAmount").WithMultiplier((card, _) => SeelsMechanicsHelper.PreviewBloodBendX(card)),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(SeelsCardKeywords.BloodBend),
         HoverTipFactory.FromPower<Blood>(),
-        HoverTipFactory.FromCard<SeelsSlash>(),
+        HoverTipFactory.FromPower<BlurPower>(),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
@@ -55,7 +57,7 @@ public class SeelsBloodBath() : SeelsTheRecklessCard(2,
         {
             await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
         }
-        await SeelsMechanicsHelper.AddSlashes(Owner, x, PileType.Discard, false);
+        await PowerCmd.Apply<BlurPower>(choiceContext, Owner.Creature, DynamicVars["BlurPower"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
