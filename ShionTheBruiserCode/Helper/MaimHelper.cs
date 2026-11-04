@@ -17,7 +17,7 @@ public interface IConditionalMaim
 }
 
 /// <summary>
-/// Maim X: if an enemy loses HP from the card (once per attack, not per hit), it loses X Strength this turn and the card's owner gains X Blood.
+/// Maim X: if an enemy loses HP from the card (once per attack, not per hit), it loses X Strength this turn and the card's owner gains 1 Blood (regardless of X).
 /// <para>
 /// A card's Maim is its native "Maim" var (cards that have Maim printed on them) plus any Maim added to it this combat
 /// (Go Crazy, Steal Blood). Cards with Maim carry the <see cref="SeelsCardKeywords.Maim"/> keyword for the hover tip,
@@ -27,6 +27,9 @@ public interface IConditionalMaim
 public static class MaimHelper
 {
     public const string VarName = "Maim";
+
+    /// <summary>Blood gained per Maim trigger, independent of the Maim amount.</summary>
+    public const int BloodGained = 1;
 
     /// <summary>Maim added to a card on top of its native amount. Copies of the card keep it.</summary>
     private static readonly SpireField<CardModel, int> AddedMaim = new SpireField<CardModel, int>(() => 0).CopyOnClone();
@@ -117,7 +120,7 @@ public static class MaimHelper
         }
         if (owner.IsAlive)
         {
-            await SeelsMechanicsHelper.GainBlood(choiceContext, owner, maim, cardSource);
+            await SeelsMechanicsHelper.GainBlood(choiceContext, owner, BloodGained, cardSource);
         }
     }
 
