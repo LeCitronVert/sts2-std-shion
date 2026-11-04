@@ -25,6 +25,7 @@ public class SlalTheEndless : PlaceholderCharacterModel, IEpochCharacter
     public override Color NameColor => Color;
     public override CharacterGender Gender => CharacterGender.Neutral;
     public override int StartingHp => 75;
+    public override string PlaceholderID => "defect";
 
     public override IEnumerable<CardModel> StartingDeck =>
     [
