@@ -1437,3 +1437,20 @@ Shown for any player who owns the relic (Abby = Abby the Absol, Edge = Edge the 
 - Sarcophagus Form is an additive bonus to Confusion applied (no second application, so no infinite loop).
 - Deleted the now-unused powers with their loc: Brutal Teachings, Brutal Teachings Dexterity, Gambling Addiction, Steal Blood, Big Target Sign Strength Down, Weird Flex Strength. Belittle Strength Down was renamed to Maim Strength Down.
 - Removed `GambleRandomly` (Toss A Coin was its only user) and added `GambleAnyNumber`.
+
+## Character naming: "Name, the Class"
+
+- [ ] Character select shows Shion, the Bruiser / Slal, the Goofball / Seels, the Reckless / Fry, the Commander.
+- [ ] Team-Up lines read "Team-Up: Bruiser / Goofball / Reckless / Commander".
+- [ ] Colorful Philosophers offers "Bruiser / Goofball / Reckless / Commander cards" (unchanged).
+- [ ] Orobas's Sea Glass for one of our characters says "See 15 cards from The Bruiser" (etc.), and still uses its custom title (Tough Glass...).
+- [ ] Custom-run card modifiers are "Bruiser Cards", "Goofball Cards", "Reckless Cards", "Commander Cards".
+- [ ] Timeline story columns are titled Bruiser / Goofball / Reckless / Commander. Epoch conditions say "with the Bruiser" etc.; unlock pop-ups use the full name.
+- [ ] Shion Berserk Form says "random Bruiser and Colorless Attacks".
+- [ ] Run history death text and singleplayer power owner names show the full name ("Shion, the Bruiser was consumed by...").
+- [ ] Ancient and other dialogue text is unchanged.
+
+**Decisions I made**
+- The run history can't show only the first name without code: the game uses the same `title` key for character select and run history. It shows the full name.
+- Sea Glass names a character from `title`, so a small patch (`SeaGlassClassNamePatch`) swaps in `SEA_GLASS.(Character).character` from relics.json ("The Bruiser", matching the base game's "The Ironclad").
+- Epoch conditions follow the base game's "with the [red]Ironclad[/red]" style. Slal's epoch name color changed from gold to aqua to match his other text.
