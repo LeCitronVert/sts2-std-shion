@@ -1,5 +1,6 @@
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -16,7 +17,7 @@ public interface IConditionalMaim
 }
 
 /// <summary>
-/// Maim X: if an enemy loses HP from the card (each hit counts), it loses X Strength this turn and the card's owner gains X Blood.
+/// Maim X: if an enemy loses HP from the card (once per attack, not per hit), it loses X Strength this turn and the card's owner gains X Blood.
 /// <para>
 /// A card's Maim is its native "Maim" var (cards that have Maim printed on them) plus any Maim added to it this combat
 /// (Go Crazy, Steal Blood). Cards with Maim carry the <see cref="SeelsCardKeywords.Maim"/> keyword for the hover tip,
@@ -56,11 +57,54 @@ public static class MaimHelper
     }
 
     /// <summary>
-    /// Called for every damage instance. Triggers the card's Maim if it made an enemy lose HP.
+    /// Cards whose attack is currently executing (counted, since an attack can trigger another attack from the same card).
+    /// Their HP loss is handled once per attack in <see cref="OnAttackFinished"/> instead of per hit.
+    /// </summary>
+    private static readonly Dictionary<CardModel, int> AttacksInProgress = new();
+
+    public static void OnAttackStarted(AttackCommand command)
+    {
+        if (command.ModelSource is not CardModel card) return;
+        AttacksInProgress[card] = AttacksInProgress.GetValueOrDefault(card) + 1;
+    }
+
+    /// <summary>
+    /// Called for every damage instance. Only handles HP loss that isn't part of an attack (e.g. "an enemy loses X HP").
     /// </summary>
     public static async Task OnDamageReceived(PlayerChoiceContext choiceContext, Creature target, int hpLost, CardModel? cardSource)
     {
         if (cardSource is null || hpLost <= 0) return;
+        if (AttacksInProgress.ContainsKey(cardSource)) return;
+        await TriggerMaim(choiceContext, target, cardSource);
+    }
+
+    /// <summary>
+    /// Called once an attack finishes. Each enemy that lost HP from any of its hits triggers the card's Maim once.
+    /// </summary>
+    public static async Task OnAttackFinished(PlayerChoiceContext choiceContext, AttackCommand command)
+    {
+        if (command.ModelSource is not CardModel card) return;
+        if (AttacksInProgress.TryGetValue(card, out var count))
+        {
+            if (count <= 1) AttacksInProgress.Remove(card);
+            else AttacksInProgress[card] = count - 1;
+        }
+
+        var targetsThatLostHp = command.Results
+            .SelectMany(r => r)
+            .Where(r => r.UnblockedDamage > 0)
+            .Select(r => r.Receiver)
+            .Distinct()
+            .ToList();
+
+        foreach (var target in targetsThatLostHp)
+        {
+            await TriggerMaim(choiceContext, target, card);
+        }
+    }
+
+    private static async Task TriggerMaim(PlayerChoiceContext choiceContext, Creature target, CardModel cardSource)
+    {
         var owner = cardSource.Owner?.Creature;
         if (owner is null || target.Side == owner.Side) return;
 
@@ -76,4 +120,7 @@ public static class MaimHelper
             await SeelsMechanicsHelper.GainBlood(choiceContext, owner, maim, cardSource);
         }
     }
+
+    /// <summary>Clears attack tracking between combats (in case an attack was interrupted).</summary>
+    public static void Reset() => AttacksInProgress.Clear();
 }

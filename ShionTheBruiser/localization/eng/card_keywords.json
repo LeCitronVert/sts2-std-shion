@@ -49,7 +49,7 @@
   "SHIONTHEBRUISER-GAMBLE.title": "Gamble X",
   "SHIONTHEBRUISER-GAMBLE.description": "Choose X cards in your [gold]Hand[/gold], add [gold]Erratic[/gold] to them this combat and put them on top of your [gold]Draw Pile[/gold].\nStatuses and Curses can be chosen.",
   "SHIONTHEBRUISER-MAIM.title": "Maim X",
-  "SHIONTHEBRUISER-MAIM.description": "If an enemy loses HP from this card, it loses X [gold]Strength[/gold] this turn and you gain X [gold]Blood[/gold]. Each hit counts.",
+  "SHIONTHEBRUISER-MAIM.description": "If an enemy loses HP from this card, it loses X [gold]Strength[/gold] this turn and you gain X [gold]Blood[/gold]. Triggers once per attack, not per hit.",
   "SHIONTHEBRUISER-MAIM.cardText": "[gold]Maim[/gold] {Amount}.",
 
   "SHIONTHEBRUISER-TEAMUP.title": "Team-Up",
