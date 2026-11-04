@@ -116,7 +116,7 @@
   "SHIONTHEBRUISER-FRY_RELIC_TODO3.description": "The first time you gain [gold]Damage Debt[/gold] each combat, [gold]Refuse[/gold] {Refuse:diff()}.",
   "SHIONTHEBRUISER-FRY_RELIC_TODO3.flavor": "",
   "SHIONTHEBRUISER-THORN_BRACELET.title": "Thorn Bracelet",
-  "SHIONTHEBRUISER-THORN_BRACELET.description": "Whenever you lose HP, gain {Blood:diff()} [gold]Blood[/gold].\nWhenever you play a [gold]Blood Bend[/gold] card, gain {BendBlood:diff()} [gold]Blood[/gold] after you consumed your [gold]Blood[/gold].",
+  "SHIONTHEBRUISER-THORN_BRACELET.description": "Whenever you lose HP, gain {Blood:diff()} [gold]Blood[/gold].",
   "SHIONTHEBRUISER-THORN_BRACELET.flavor": "",
   "SHIONTHEBRUISER-THORN_BRACERS.title": "Thorn Bracers",
   "SHIONTHEBRUISER-THORN_BRACERS.description": "Whenever you play a [gold]Blood Bend[/gold] card, lose {HpLoss:diff()} HP after it resolves.\nWhenever you lose HP, gain {Blood:diff()} [gold]Blood[/gold].",
