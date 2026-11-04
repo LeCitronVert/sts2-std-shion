@@ -1,13 +1,13 @@
 63f7b34db8d8cdea90c76aacccf841ec
 ::res://::1793814160
-BETA_TEST_TODO.md::TextFile::-1::1793817617::0::1::::<><><>0<>0<><>::
+BETA_TEST_TODO.md::TextFile::-1::1793818247::0::1::::<><><>0<>0<><>::
 export_presets.cfg::TextFile::-1::1781940056::0::1::::<><><>0<>0<><>::
 README.md::TextFile::-1::1793637968::0::1::::<><><>0<>0<><>::
 ShionTheBruiser.json::JSON::-1::1792433998::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1793817653
+::res://bin/ExportRelease/net9.0/publish/::1793818311
 ShionTheBruiser.deps.json::JSON::-1::1793637085::0::1::::<><><>0<>0<><>::
 ::res://ci/::1792939391
 ::res://ci/game-refs/::1792939391
@@ -1287,7 +1287,7 @@ monsters.json::JSON::-1::1793532216::0::1::::<><><>0<>0<><>::
 orbs.json::JSON::-1::1793183274::0::1::::<><><>0<>0<><>::
 potions.json::JSON::-1::1793813903::0::1::::<><><>0<>0<><>::
 powers.json::JSON::-1::1793813903::0::1::::<><><>0<>0<><>::
-relics.json::JSON::-1::1793817604::0::1::::<><><>0<>0<><>::
+relics.json::JSON::-1::1793817868::0::1::::<><><>0<>0<><>::
 rest_site_ui.json::JSON::-1::1793017890::0::1::::<><><>0<>0<><>::
 static_hover_tips.json::JSON::-1::1793731611::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiser/scenes/::1793637921
@@ -1538,7 +1538,7 @@ SeelsLure.cs::CSharpScript::7719062052766084::1793636659::0::1::::<><><>0<>0<><>
 SeelsMagicalOverload.cs::CSharpScript::4804957577436101227::1792675405::0::1::::<><><>0<>0<><>::
 SeelsMassiveDefend.cs::CSharpScript::3482811000013571314::1793719838::0::1::::<><><>0<>0<><>::
 SeelsMismatchedMagic.cs::CSharpScript::5608666753833988339::1793531881::0::1::::<><><>0<>0<><>::
-SeelsMutilate.cs::CSharpScript::8420857855125168022::1793813553::0::1::::<><><>0<>0<><>::
+SeelsMutilate.cs::CSharpScript::8420857855125168022::1793818241::0::1::::<><><>0<>0<><>::
 SeelsNeverLearn.cs::CSharpScript::6988647790853174990::1793813608::0::1::::<><><>0<>0<><>::
 SeelsOpenWounds.cs::CSharpScript::8594439643653991949::1793719738::0::1::::<><><>0<>0<><>::
 SeelsOstysBestie.cs::CSharpScript::1012354723486886363::1793531997::0::1::::<><><>0<>0<><>::
@@ -1815,7 +1815,7 @@ FryTheCommander.cs::CSharpScript::3388522255496721692::1793207357::0::1::::<><><
 FryTheCommanderCardPool.cs::CSharpScript::2229281210919404376::1793478703::0::1::::<><><>0<>0<><>::
 FryTheCommanderPotionPool.cs::CSharpScript::8457779907626360332::1793207383::0::1::::<><><>0<>0<><>::
 FryTheCommanderRelicPool.cs::CSharpScript::1756786572221350776::1793207383::0::1::::<><><>0<>0<><>::
-SeelsTheReckless.cs::CSharpScript::2741939039580084337::1793813802::0::1::::<><><>0<>0<><>::
+SeelsTheReckless.cs::CSharpScript::2741939039580084337::1793818241::0::1::::<><><>0<>0<><>::
 SeelsTheRecklessCardPool.cs::CSharpScript::2469504198085505288::1793723253::0::1::::<><><>0<>0<><>::
 SeelsTheRecklessPotionPool.cs::CSharpScript::7367188993480158799::1793207383::0::1::::<><><>0<>0<><>::
 SeelsTheRecklessRelicPool.cs::CSharpScript::2697941172730210671::1793207383::0::1::::<><><>0<>0<><>::
@@ -1866,7 +1866,7 @@ AbbyMonster.cs::CSharpScript::7065894295935417984::1783259594::0::1::::<><><>0<>
 BloodInklet.cs::CSharpScript::8588995559894159750::1793532710::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiserCode/Orbs/::1793196896
 MonsterOrb.cs::CSharpScript::6037243293034713646::1793196896::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Patches/::1793817221
+::res://ShionTheBruiserCode/Patches/::1793817657
 AfflictionHooks.cs::CSharpScript::1383593816546956163::1792845922::0::1::::<><><>0<>0<><>::
 BerserkEndTurnPingPatch.cs::CSharpScript::6477938313587175322::1793464664::0::1::::<><><>0<>0<><>::
 CardAutoPlayTracker.cs::CSharpScript::7253820485177951645::1792504577::0::1::::<><><>0<>0<><>::
@@ -2173,7 +2173,7 @@ SouvenirPicture.cs::CSharpScript::4623660644902127345::1793012496::0::1::::<><><
 SpeedShoes.cs::CSharpScript::1396537418731675388::1793012358::0::1::::<><><>0<>0<><>::
 SpiderTea.cs::CSharpScript::951948574633264137::1792675405::0::1::::<><><>0<>0<><>::
 SpikesGloves.cs::CSharpScript::5192091340296943136::1783942051::0::1::::<><><>0<>0<><>::
-ThornBracelet.cs::CSharpScript::19867391376814369::1793817604::0::1::::<><><>0<>0<><>::
+ThornBracelet.cs::CSharpScript::19867391376814369::1793817868::0::1::::<><><>0<>0<><>::
 ThornBracers.cs::CSharpScript::6007280401560969219::1793817604::0::1::::<><><>0<>0<><>::
 ThornRing.cs::CSharpScript::8494844811727548093::1793305998::0::1::::<><><>0<>0<><>::
 TrainingManual.cs::CSharpScript::5170948076197605151::1793012358::0::1::::<><><>0<>0<><>::
