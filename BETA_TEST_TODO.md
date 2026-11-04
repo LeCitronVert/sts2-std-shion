@@ -31,14 +31,14 @@ Starting deck: 4 Strike, 4 Defend, 1 Blood Cage. Starter relic: Thorn Bracelet.
 ### 1.1 Core mechanics
 
 **Blood**
-- [ ] Losing HP from any source (enemy hit, self damage, Wounds…) with Thorn Bracelet gives exactly 1 Blood per HP-loss event, whatever the amount lost.
+- [ ] Losing HP from any source (enemy hit, self damage, Wounds…) with Thorn Bracelet gives exactly 2 Blood per HP-loss event, whatever the amount lost.
 - [ ] Fully blocked hits don't give Blood.
 - [ ] Blood stays between turns.
 
 **Blood Bend X**
 - [ ] Consumes ALL Blood. X = the Blood consumed (0 if you had none).
 - [ ] The "(X+1)" upgrades add 1 on top of the consumed Blood.
-- [ ] Thorn Bracers gives +1 Blood after **every** Blood Bend card, even with X = 0.
+- [ ] Thorn Bracelet gives +1 Blood after **every** Blood Bend card, even with X = 0.
 - [ ] Splash Armor and Recall Blood do nothing when X = 0.
 - [ ] Cerberus' Tip is used up by the **first** Blood Bend of the combat, even if X = 0 (literal reading of the spec).
 
@@ -315,8 +315,8 @@ Values are base (upgraded). "X" is the Blood Bend / energy X.
 
 ### 1.4 Relics
 
-- [ ] **Thorn Bracelet** — Whenever you lose HP, gain 1 Blood.
-- [ ] **Thorn Bracers** — Whenever you lose HP, gain 2 Blood. Whenever you play a Blood Bend card, gain 1 Blood after you consumed your Blood.
+- [ ] **Thorn Bracelet** — Whenever you lose HP, gain 2 Blood. Whenever you play a Blood Bend card, gain 1 Blood after you consumed your Blood.
+- [ ] **Thorn Bracers** — Whenever you play a Blood Bend card, lose 1 HP after it resolves. Whenever you lose HP, gain 1 Blood.
 - [ ] **Red Fang** — Every 10 Blood you gain, heal 1 HP.
 - [ ] **Megaphone** — While Vulnerable, you have 2 additional Dexterity.
 - [ ] **Lottery Ticket** — At the start of each combat, choose up to 3 cards in your Draw Pile, add Erratic to them and randomize their energy cost. Gain 1 Vulnerable for each card modified.
@@ -1418,6 +1418,10 @@ Shown for any player who owns the relic (Abby = Abby the Absol, Edge = Edge the 
 - [ ] **Fresh Lemonade**: Gamble any number, draw that many, heal per energy cost drawn.
 - [ ] **Megaphone**: every Gloat applied to you (cards, Laugh It Off...) applies 1 Vulnerable to ALL enemies.
 - [ ] **Lottery Ticket**: every play of an Erratic card gives 1 energy (no more start-of-combat choice).
+
+**Thorn Bracelet / Thorn Bracers swap**
+- [ ] Seels starts with Thorn Bracelet: lose HP → 2 Blood, each Blood Bend card → +1 Blood after consuming.
+- [ ] Upgrading it (Touch of Orobas) gives Thorn Bracers: lose 1 HP after each Blood Bend card resolves, lose HP → 1 Blood.
 
 **Visuals**
 - [ ] Mutilate portrait (Seras punch crop) looks right, small + big.
