@@ -9,7 +9,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Team-Up (anyone): add 1 (2) Slash into you and your partner's Hand, Draw Pile and Discard Pile. Exhaust.
+/// Team-Up (anyone): add 2 (3) Slashes into you and your partner's Hand, Draw Pile and Discard Pile. Exhaust.
 /// </summary>
 public class SeelsScratchinPals() : SeelsTeamUpCard(1,
     CardType.Skill,
@@ -19,7 +19,7 @@ public class SeelsScratchinPals() : SeelsTeamUpCard(1,
 
     protected override IEnumerable<CardKeyword> TeamUpKeywords => [CardKeyword.Exhaust];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Slashes", 1)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Slashes", 2)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<SeelsSlash>()];
 

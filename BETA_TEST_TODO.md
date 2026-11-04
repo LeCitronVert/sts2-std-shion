@@ -1058,7 +1058,7 @@ Content I skipped (incomplete in the spec):
 - [ ] Shion's Team-Ups still work exactly as before (their base class was split into `TeamUpCard` → `ShionTeamUpCard` / `SeelsTeamUpCard`): play one, the partner gets the Ethereal copy, the "Team-Up: (Class)" line and the partner text are right.
 
 **Seels Team-Ups** (2 players: Seels + the named class; only offered when that class is in the run)
-- [ ] **Scratchin' Pals** (anyone, 1): 1 (2) Slash into Seels' and the partner's Hand, Draw Pile and Discard Pile. Exhausts.
+- [ ] **Scratchin' Pals** (anyone, 1): 2 (3) Slashes into Seels' and the partner's Hand, Draw Pile and Discard Pile. Exhausts.
 - [ ] **Blowout Blast** (Shion): Seels' card costs 0, Shion's copy costs **X**. When Shion plays it: Seels Blood Bends, Shion deals 14 damage (Seels' X + Shion's X) times. Upgraded: +1 to each X. Previews: Seels' card shows "Your X", Shion's copy shows the total hits. Exhausts.
 - [ ] **Goopy Blood** (Slal, 2 → 1): Slal creating a Slimed → Seels +1 Strength. Seels creating a Wound → Slal +2 Random. Enemy-added Slimed/Wounds don't count.
 - [ ] **Mismatched Magic** (Fry, 1): Fry spends Stars → Seels loses 1 Blood, heals 2 (nothing without Blood). Seels Blood Bends → Fry loses 3 Stars, gains 10 Bad Faith (nothing under 3 Stars).
