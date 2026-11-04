@@ -34,7 +34,6 @@ public class SeelsTheReckless : PlaceholderCharacterModel, IEpochCharacter
         ModelDb.Card<SeelsDefend>(),
         ModelDb.Card<SeelsDefend>(),
         ModelDb.Card<SeelsBloodCage>(),
-        ModelDb.Card<SeelsMutilate>(),
     ];
 
     public override IReadOnlyList<RelicModel> StartingRelics =>

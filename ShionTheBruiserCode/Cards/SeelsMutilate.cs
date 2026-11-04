@@ -1,3 +1,4 @@
+using BaseLib.Utils;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
@@ -9,6 +10,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Enchantments;
 using MegaCrit.Sts2.Core.Models.Powers;
@@ -23,10 +25,15 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Maim 2. Deal 27 (33) damage. Gloat 1 (2).
 /// </summary>
+// Trashed for now: kept in the code, but out of the starter deck, rewards, shops and random generation.
+// Still referenced as the source card of MaimStrengthDown, so don't delete it.
+[Pool(typeof(TokenCardPool))]
 public class SeelsMutilate() : SeelsTheRecklessCard(3,
-    CardType.Attack, CardRarity.Basic,
+    CardType.Attack, CardRarity.Token,
     TargetType.AnyEnemy)
 {
+    public override bool CanBeGeneratedInCombat => false;
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [SeelsCardKeywords.Maim];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [

@@ -1458,3 +1458,13 @@ Shown for any player who owns the relic (Abby = Abby the Absol, Edge = Edge the 
 - The run history can't show only the first name without code: the game uses the same `title` key for character select and run history. It shows the full name.
 - Sea Glass names a character from `title`, so a small patch (`SeaGlassClassNamePatch`) swaps in `SEA_GLASS.(Character).character` from relics.json ("The Bruiser", matching the base game's "The Ironclad").
 - Epoch conditions follow the base game's "with the [red]Ironclad[/red]" style. Slal's epoch name color changed from gold to aqua to match his other text.
+
+## Mutilate trashed
+
+- [ ] Seels starts with 9 cards: 4 Strike, 4 Defend, Blood Cage. No Mutilate.
+- [ ] Mutilate never shows up in card rewards, shops or random card generation.
+- [ ] Maim still works on every other Maim card and its debuff is still titled "Maim" (the power keeps Mutilate as its internal source card).
+
+**Decisions I made**
+- Trashed, not deleted (confirmed): class, loc and portraits are kept, moved to the Token pool like Anchor Throw.
+- Starter deck goes down to 9 cards, nothing replaces it (confirmed).
