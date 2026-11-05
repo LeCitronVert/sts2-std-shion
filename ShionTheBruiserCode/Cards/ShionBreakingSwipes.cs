@@ -1,5 +1,8 @@
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -10,7 +13,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionBreakingSwipes() : ShionBerserkCard(1,
+public class ShionBreakingSwipes() : ShionBerserkCard(0,
     CardType.Attack, CardRarity.Rare,
     TargetType.AnyEnemy)
 {
@@ -49,9 +52,13 @@ public class ShionBreakingSwipes() : ShionBerserkCard(1,
         DynamicVars["VulnerablePower"].UpgradeValueBy(1);
     }
     
-    protected override PileType GetResultPileTypeForCardPlay()
+    // Same mechanism as the base game's Thrumming Hatchet: if this card was played
+    // last turn, return it to the hand at the start of this turn (before the draw).
+    public override async Task BeforeHandDraw(Player player, PlayerChoiceContext choiceContext, ICombatState combatState)
     {
-        PileType pileTypeForCardPlay = base.GetResultPileTypeForCardPlay();
-        return pileTypeForCardPlay != PileType.Discard ? pileTypeForCardPlay : PileType.Hand;
+        if (player != Owner) return;
+        if (!CombatManager.Instance.History.CardPlaysFinished.Any(e => e.HappenedLastPlayerTurn(Owner) && e.CardPlay.Card == this)) return;
+        if (Pile is { Type: PileType.Hand }) return;
+        await CardPileCmd.Add(this, PileType.Hand);
     }
 }
