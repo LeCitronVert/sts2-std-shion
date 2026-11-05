@@ -7,7 +7,7 @@ ShionTheBruiser.json::JSON::-1::1792433998::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1793822397
+::res://bin/ExportRelease/net9.0/publish/::1793827443
 ShionTheBruiser.deps.json::JSON::-1::1793637085::0::1::::<><><>0<>0<><>::
 ::res://ci/::1792939391
 ::res://ci/game-refs/::1792939391
@@ -1360,7 +1360,7 @@ MainFile.cs::CSharpScript::2954314548483070873::1793207387::0::1::::<><><>0<>0<>
 PartyDialogue.cs::CSharpScript::241308958335632356::1793733768::0::1::::<><><>0<>0<><>::
 SeelsPartyDialogues.cs::CSharpScript::4380548894581781510::1793733738::0::1::::<><><>0<>0<><>::
 ShionPartyDialogues.cs::CSharpScript::7951062430476225983::1793733768::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Cards/::1793815025
+::res://ShionTheBruiserCode/Cards/::1793827394
 AllOutAttack.cs::CSharpScript::2887618467325418642::1793646232::0::1::::<><><>0<>0<><>::
 Cacophony.cs::CSharpScript::1218577494853376132::1793646275::0::1::::<><><>0<>0<><>::
 CosmoDetermination.cs::CSharpScript::4903082444639403780::1793719838::0::1::::<><><>0<>0<><>::
@@ -1506,7 +1506,7 @@ SeelsCliffDropper.cs::CSharpScript::6719722594255501948::1792675405::0::1::::<><
 SeelsComboMeter.cs::CSharpScript::8030624145538347074::1793813675::0::1::::<><><>0<>0<><>::
 SeelsConcedeFirstBlow.cs::CSharpScript::7842065559913875220::1793636659::0::1::::<><><>0<>0<><>::
 SeelsCoolBandages.cs::CSharpScript::9166778165484552846::1792675405::0::1::::<><><>0<>0<><>::
-SeelsCopyKitty.cs::CSharpScript::6024950512476122838::1793813608::0::1::::<><><>0<>0<><>::
+SeelsCopyKitty.cs::CSharpScript::6024950512476122838::1793827394::0::1::::<><><>0<>0<><>::
 SeelsDarkPowers.cs::CSharpScript::8508917706150569326::1792675405::0::1::::<><><>0<>0<><>::
 SeelsDefend.cs::CSharpScript::6505793689247563564::1792675405::0::1::::<><><>0<>0<><>::
 SeelsDiceBlessing.cs::CSharpScript::3214532161403074512::1792675405::0::1::::<><><>0<>0<><>::
@@ -2185,12 +2185,12 @@ YellowChaosEmeralds.cs::CSharpScript::7947279272287764495::1793017115::0::1::::<
 ::res://ShionTheBruiserCode/RestSiteOptions/::1793018465
 Lull.cs::CSharpScript::1804038520924471915::1783271867::0::1::::<><><>0<>0<><>::
 Seek.cs::CSharpScript::8588524608089364226::1793017890::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Singletons/::1793815025
+::res://ShionTheBruiserCode/Singletons/::1793827389
 BloodCarryOverSingleton.cs::CSharpScript::6157223535071752777::1793813737::0::1::::<><><>0<>0<><>::
 MaimSingleton.cs::CSharpScript::7125466764686739455::1793815655::0::1::::<><><>0<>0<><>::
 ShionCritSingleton.cs::CSharpScript::3951621572379558951::1793457705::0::1::::<><><>0<>0<><>::
 SlalApparenceSingleton.cs::CSharpScript::6424703020693251239::1793013162::0::1::::<><><>0<>0<><>::
-TeamBlastSingleton.cs::CSharpScript::5790765917409709916::1793722606::0::1::::<><><>0<>0<><>::
+TeamBlastSingleton.cs::CSharpScript::5790765917409709916::1793827389::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiserCode/Timeline/::1793715664
 CharacterUnlockEpoch.cs::CSharpScript::2177026565359277390::1793207253::0::1::::<><><>0<>0<><>::
 DreamersEpoch.cs::CSharpScript::1284180167898971242::1793207404::0::1::::<><><>0<>0<><>::

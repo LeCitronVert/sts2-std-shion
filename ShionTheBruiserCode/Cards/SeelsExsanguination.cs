@@ -21,7 +21,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Blood Bend X. Deal 8 damage. Deal 5X additional damage. If the enemy is Vulnerable, deal double damage.
+/// Blood Bend X. Deal 4 damage. Deal 3X additional damage. If the enemy is Vulnerable, deal double damage.
 /// Exhaust. (Upgrade: lose Exhaust.)
 /// </summary>
 public class SeelsExsanguination() : SeelsTheRecklessCard(1,
@@ -33,8 +33,8 @@ public class SeelsExsanguination() : SeelsTheRecklessCard(1,
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CalculationBaseVar(8M),
-        new ExtraDamageVar(5M),
+        new CalculationBaseVar(4M),
+        new ExtraDamageVar(3M),
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => SeelsMechanicsHelper.PreviewBloodBendX(card)),
     ];
 

@@ -21,7 +21,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Maim 2. Deal 20 damage. Increase this card's damage by 10 this combat. Gloat 2.
+/// Maim 2. Deal 20 damage. Increase this card's damage by 10 this combat.
 /// </summary>
 public class SeelsBrutalTeachings() : SeelsTheRecklessCard(2,
     CardType.Attack, CardRarity.Rare,
@@ -33,12 +33,10 @@ public class SeelsBrutalTeachings() : SeelsTheRecklessCard(2,
         MaimHelper.Var(2M),
         new DamageVar(20M, ValueProp.Move),
         new DynamicVar("DamageIncrease", 10M),
-        new PowerVar<Gloat>(2M),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<Blood>(),
-        HoverTipFactory.FromPower<Gloat>(),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
@@ -50,7 +48,6 @@ public class SeelsBrutalTeachings() : SeelsTheRecklessCard(2,
             .WithHitFx("vfx/vfx_heavy_blunt")
             .Execute(choiceContext);
         DynamicVars.Damage.BaseValue += DynamicVars["DamageIncrease"].BaseValue;
-        await SeelsMechanicsHelper.Gloat(choiceContext, Owner.Creature, DynamicVars["Gloat"].BaseValue, this);
     }
 
     protected override void OnUpgrade()

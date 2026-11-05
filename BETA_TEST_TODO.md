@@ -1468,3 +1468,38 @@ Shown for any player who owns the relic (Abby = Abby the Absol, Edge = Edge the 
 **Decisions I made**
 - Trashed, not deleted (confirmed): class, loc and portraits are kept, moved to the Token pool like Anchor Throw.
 - Starter deck goes down to 9 cards, nothing replaces it (confirmed).
+
+## 26. Change Pending G (Seels numbers & Gloat pass, Slal bits)
+
+**Setup**
+- [ ] Rebuild, re-export the .pck and let MegaDot regenerate the `.import` files for the renamed `seels_running_jokester.png` (normal + `big/`). `SeelsRunningJokester.cs.uid` keeps the old uid.
+
+**Seels**
+- [ ] Gambling Addiction and Belittle already matched the sheet, so nothing changed.
+- [ ] Exsanguination: 1 cost. Blood Bend X. Deal 4 + 3X damage, doubled against Vulnerable. Exhaust (upgrade removes Exhaust). The in-combat preview matches.
+- [ ] Blood Cage: Skill. Blood Bend X. Gain 4 Block **once** (no longer X+1 times). Apply X Vulnerable (X+1 upgraded). The preview only shows the Vulnerable amount now.
+- [ ] Never Learn: 3 cost. Gains 4 Max HP if Blood > HP, then Blood Bend X and gain X **permanent** Strength (it stays at end of turn). Exhaust, Retain when upgraded.
+- [ ] Bloody Execution: 3 cost. Maim 2. 20 damage + 3 per Vulnerable (upgraded: 25 + 4).
+- [ ] Body Strike: Wounding. 14 damage. Gloat 1. No Maim and no extra Wound in the Discard Pile any more. Upgrade still -1 cost.
+- [ ] Steal Blood: Maim 2. The enemy loses 2 HP, then **always** (even if blocked or the HP loss is prevented) a random Attack in Hand gets Maim 1 and is upgraded, with no selection screen. Upgraded: ALL Attacks in Hand.
+- [ ] Running Joke is now "Running Jokester" (class/ID renamed, portrait still shows). Draws until a non-Attack, applies that much Vulnerable, then Gloat 1. Slal's Running Joke is unchanged.
+- [ ] Spectacular Break-in: Wounding. Adds 1 Glass 2 Slash (Slash+) to Hand, then 1 more **on top of the Draw Pile** for each Wound in Hand. The preview shows the Draw Pile count.
+- [ ] Improvised Acupuncture: starts at lose 2 HP / draw 2 (upgraded: lose 1 HP / draw 2). Still +1 HP loss each play this combat.
+- [ ] Blood Mixing: 2 cost. Per enemy: gain 1 Max HP, then lose 1 HP. ALL enemies lose 1 HP and 1 Strength. Exhaust, Innate when upgraded. The preview shows the Max HP and HP totals.
+- [ ] Scratch: 8 damage, all Scratches +1 (upgraded: 11, +2). Copies still go into the Draw Pile, and buffs survive downgrade.
+- [ ] Concede First Blow: 1 cost. Innate. Gloat 3. Exhaust. Upgrade adds Retain (no longer +1 Gloat).
+- [ ] Smug Look and Pin Them Down: Gloat 1.
+- [ ] Brutal Teachings: no Gloat any more (text, hover tip and effect).
+
+**Slal**
+- [ ] Pinball Move: Slal plays her attack animation, flies spinning to the top of the screen, then for each hit she bounces off a screen edge (not before the first hit) and slams into that hit's random enemy (blunt VFX + small shake). She flies back home at the end. Check with 0 hits (nothing happens), 1 hit, many hits, a target dying mid-sequence, and fast mode.
+- [ ] Slime Form: 2 cost (1 upgraded).
+
+**Decisions I made**
+- Never Learn's Strength is permanent (confirmed). The now-unused `NeverLearnStrength` power and its loc are deleted.
+- Steal Blood: no "if it did" condition, and the upgrade still hits ALL Attacks (confirmed). Picks use `CombatCardSelection` RNG. The unused selection prompt loc is removed.
+- Improvised Acupuncture upgrade = starts at 1 HP loss **and** keeps the +1 draw (confirmed).
+- Pinball Move: Slal is the ball (confirmed). Each hit's target is read through a `WithHitVfxNode` callback that adds no node.
+- "Joke" > "Jokester" read as renaming Seels' card to "Running Jokester", so it no longer shares Slal's card name. Gloat 1 goes at the end of the text.
+- Kept the current values the sheet doesn't give: Blood Cage keeps the X+1 Vulnerable upgrade, Body Strike keeps -1 cost, Spectacular Break-in upgrades its Slashes, Scratch keeps 0 cost, Blood Mixing keeps Innate on upgrade.
+- The "Ideas (ne pas implémenter encore)" rows were skipped.

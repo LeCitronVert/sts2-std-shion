@@ -19,9 +19,9 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Lose 1 HP for each enemy. ALL enemies lose 1 HP and 1 Strength. Exhaust. (Innate.)
+/// For each enemy, gain 1 Max HP and lose 1 HP. ALL enemies lose 1 HP and 1 Strength. Exhaust. (Innate.)
 /// </summary>
-public class SeelsBloodMixing() : SeelsTheRecklessCard(1,
+public class SeelsBloodMixing() : SeelsTheRecklessCard(2,
     CardType.Skill, CardRarity.Rare,
     TargetType.AllEnemies)
 {
@@ -30,12 +30,15 @@ public class SeelsBloodMixing() : SeelsTheRecklessCard(1,
     protected override HashSet<CardTag> CanonicalTags => [SeelsCardTags.Blood];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new MaxHpVar(1M),
         new HpLossVar(1M),
         new PowerVar<StrengthPower>(1M),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
         new CalculatedVar("HpLossAmount").WithMultiplier((card, _) =>
             card.CombatState!.HittableEnemies.Count * card.DynamicVars.HpLoss.BaseValue),
+        new CalculatedVar("MaxHpAmount").WithMultiplier((card, _) =>
+            card.CombatState!.HittableEnemies.Count * card.DynamicVars.MaxHp.BaseValue),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
@@ -45,6 +48,7 @@ public class SeelsBloodMixing() : SeelsTheRecklessCard(1,
 
         foreach (var _ in enemies)
         {
+            await CreatureCmd.GainMaxHp(Owner.Creature, DynamicVars.MaxHp.BaseValue);
             await SeelsMechanicsHelper.LoseHp(choiceContext, Owner.Creature, DynamicVars.HpLoss.BaseValue, this);
         }
 

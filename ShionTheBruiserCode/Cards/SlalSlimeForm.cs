@@ -11,9 +11,9 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Whenever you create a Status card, gain 4 Block. Costs 1 (0).
+/// Whenever you create a Status card, gain 4 Block. Costs 2 (1).
 /// </summary>
-public class SlalSlimeForm() : SlalTheEndlessCard(1,
+public class SlalSlimeForm() : SlalTheEndlessCard(2,
     CardType.Power, CardRarity.Uncommon,
     TargetType.Self)
 {

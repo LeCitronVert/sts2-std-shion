@@ -9,6 +9,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Models;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -50,13 +51,15 @@ public class SlalPinballMove() : SlalTheEndlessCard(1,
         var hits = CountCardsPlayedThisTurn(card);
         if (hits <= 0) return;
 
-        // Single multi-hit attack (re-rolls the random target per hit) so Vigor etc. apply to every hit
+        // Single multi-hit attack (re-rolls the random target per hit) so Vigor etc. apply to every hit.
+        // Slal is the ball: she flies around, bouncing off the screen edges and into each hit's target.
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .FromCard(card)
             .TargetingRandomOpponents(card.CombatState)
             .WithHitCount(hits)
-            .WithHitFx("vfx/vfx_attack_blunt")
+            .WithPinball(card.Owner.Creature)
             .Execute(choiceContext);
+        CreatureMotion.ReturnHome(card.Owner.Creature);
     }
 
     protected override void OnUpgrade()

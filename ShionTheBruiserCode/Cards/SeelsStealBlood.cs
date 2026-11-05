@@ -21,7 +21,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Maim 2. An enemy loses 2 HP. If it did, add Maim 1 to an Attack in your Hand and Upgrade it
+/// Maim 2. An enemy loses 2 HP. Add Maim 1 to a random Attack in your Hand and Upgrade it
 /// (to ALL Attacks in your Hand).
 /// </summary>
 public class SeelsStealBlood() : SeelsTheRecklessCard(1,
@@ -43,24 +43,13 @@ public class SeelsStealBlood() : SeelsTheRecklessCard(1,
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         ArgumentNullException.ThrowIfNull(play.Target);
-        var results = await CreatureCmd.Damage(choiceContext, play.Target, DynamicVars["EnemyHpLoss"].BaseValue,
+        await CreatureCmd.Damage(choiceContext, play.Target, DynamicVars["EnemyHpLoss"].BaseValue,
             ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, Owner.Creature, this);
-        if (results.Sum(r => r.UnblockedDamage) <= 0) return;
 
-        List<CardModel> attacks;
-        if (IsUpgraded)
+        var attacks = PileType.Hand.GetPile(Owner).Cards.Where(IsAttackToBuff).ToList();
+        if (!IsUpgraded)
         {
-            attacks = PileType.Hand.GetPile(Owner).Cards.Where(IsAttackToBuff).ToList();
-        }
-        else
-        {
-            attacks = (await CardSelectCmd.FromHand(
-                choiceContext,
-                Owner,
-                new CardSelectorPrefs(SelectionScreenPrompt, 1),
-                IsAttackToBuff,
-                this
-            )).ToList();
+            attacks = attacks.TakeRandom(1, Owner.RunState.Rng.CombatCardSelection).ToList();
         }
 
         foreach (var attack in attacks)

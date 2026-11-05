@@ -19,13 +19,18 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Draw cards until you draw a non-Attack card. Apply Vulnerable equal to the number of cards drawn this way.
+/// Draw cards until you draw a non-Attack card. Apply Vulnerable equal to the number of cards drawn this way. Gloat 1.
 /// </summary>
-public class SeelsRunningJoke() : SeelsTheRecklessCard(1,
+public class SeelsRunningJokester() : SeelsTheRecklessCard(1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.AnyEnemy)
 {
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<VulnerablePower>()];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<Gloat>(1M)];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromPower<VulnerablePower>(),
+        HoverTipFactory.FromPower<Gloat>(),
+    ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
@@ -43,6 +48,8 @@ public class SeelsRunningJoke() : SeelsTheRecklessCard(1,
         {
             await PowerCmd.Apply<VulnerablePower>(choiceContext, play.Target, drawn, Owner.Creature, this);
         }
+
+        await SeelsMechanicsHelper.Gloat(choiceContext, Owner.Creature, DynamicVars["Gloat"].BaseValue, this);
     }
 
     protected override void OnUpgrade()

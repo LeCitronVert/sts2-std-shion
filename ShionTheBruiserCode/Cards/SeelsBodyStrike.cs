@@ -21,7 +21,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Wounding. Maim 1. Deal 14 damage. If the enemy lost HP, add an additional Wound into your Discard Pile.
+/// Wounding. Deal 14 damage. Gloat 1.
 /// </summary>
 public class SeelsBodyStrike() : SeelsTheRecklessCard(1,
     CardType.Attack, CardRarity.Uncommon,
@@ -29,33 +29,28 @@ public class SeelsBodyStrike() : SeelsTheRecklessCard(1,
 {
     protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [SeelsCardKeywords.Wounding, SeelsCardKeywords.Maim];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [SeelsCardKeywords.Wounding];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        MaimHelper.Var(1M),
         new DamageVar(14M, ValueProp.Move),
+        new PowerVar<Gloat>(1M),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromCard<Wound>(),
-        HoverTipFactory.FromPower<Blood>(),
+        HoverTipFactory.FromPower<Gloat>(),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         ArgumentNullException.ThrowIfNull(play.Target);
         await SeelsMechanicsHelper.AddWounds(Owner, 1);
-        var attack = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_heavy_blunt")
             .Execute(choiceContext);
-
-        var hpLost = attack.Results.SelectMany(r => r).Sum(r => r.UnblockedDamage);
-        if (hpLost > 0)
-        {
-            await SeelsMechanicsHelper.AddWounds(Owner, 1, PileType.Discard);
-        }
+        await SeelsMechanicsHelper.Gloat(choiceContext, Owner.Creature, DynamicVars["Gloat"].BaseValue, this);
     }
 
     protected override void OnUpgrade()

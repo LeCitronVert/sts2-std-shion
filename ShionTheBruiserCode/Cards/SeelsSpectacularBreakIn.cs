@@ -21,7 +21,8 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Wounding. Add 1 Glass 2 Slash (Slash+) into your Hand for each Wound in your Hand.
+/// Wounding. Add 1 Glass 2 Slash (Slash+) into your Hand.
+/// Add 1 more on top of your Draw Pile for each Wound in your Hand.
 /// </summary>
 public class SeelsSpectacularBreakIn() : SeelsTheRecklessCard(1,
     CardType.Skill, CardRarity.Uncommon,
@@ -32,6 +33,7 @@ public class SeelsSpectacularBreakIn() : SeelsTheRecklessCard(1,
     public override IEnumerable<CardKeyword> CanonicalKeywords => [SeelsCardKeywords.Wounding];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CardsVar(1),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
         new CalculatedVar("SlashesAmount").WithMultiplier((card, _) => SeelsMechanicsHelper.PreviewWoundsInHandAfterWounding(card)),
@@ -46,15 +48,23 @@ public class SeelsSpectacularBreakIn() : SeelsTheRecklessCard(1,
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await SeelsMechanicsHelper.AddWounds(Owner, 1);
+        CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardsToCombat(CreateGlassSlashes(DynamicVars.Cards.IntValue), PileType.Hand, Owner));
+
+        // Counted once the Slash is in the Hand (it isn't a Wound, so it doesn't change the count).
         var amount = SeelsMechanicsHelper.GetWoundsInHand(Owner).Count();
-        var slashes = Enumerable.Range(0, amount).Select(_ =>
+        if (amount > 0)
+        {
+            CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardsToCombat(CreateGlassSlashes(amount), PileType.Draw, Owner, CardPilePosition.Top));
+        }
+    }
+
+    private List<CardModel> CreateGlassSlashes(int amount) =>
+        Enumerable.Range(0, amount).Select(_ =>
         {
             var slash = SeelsMechanicsHelper.CreateSlash(Owner, IsUpgraded);
             SeelsMechanicsHelper.Enchant<Glass>(slash, GlassAmount);
             return slash;
         }).ToList();
-        CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardsToCombat(slashes, PileType.Hand, Owner));
-    }
 
     protected override void OnUpgrade()
     {

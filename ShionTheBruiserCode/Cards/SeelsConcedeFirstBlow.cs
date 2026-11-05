@@ -19,15 +19,15 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gloat 2 (3). Exhaust.
+/// Innate. Gloat 3. Exhaust. (Retain.)
 /// </summary>
-public class SeelsConcedeFirstBlow() : SeelsTheRecklessCard(0,
+public class SeelsConcedeFirstBlow() : SeelsTheRecklessCard(1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Innate, CardKeyword.Exhaust];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<Gloat>(2M)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<Gloat>(3M)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Gloat>()];
 
@@ -38,6 +38,6 @@ public class SeelsConcedeFirstBlow() : SeelsTheRecklessCard(0,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Gloat"].UpgradeValueBy(1M);
+        AddKeyword(CardKeyword.Retain);
     }
 }

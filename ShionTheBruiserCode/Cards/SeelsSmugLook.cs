@@ -19,14 +19,14 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gloat 2. This turn, whenever you play a card, deal 2 damage to a random enemy. (0-cost)
+/// Gloat 1. This turn, whenever you play a card, deal 2 damage to a random enemy. (0-cost)
 /// </summary>
 public class SeelsSmugLook() : SeelsTheRecklessCard(1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<Gloat>(2M),
+        new PowerVar<Gloat>(1M),
         new PowerVar<SmugLook>(1M),
     ];
 

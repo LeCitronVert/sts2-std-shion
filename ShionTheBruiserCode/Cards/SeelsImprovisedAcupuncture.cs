@@ -19,14 +19,14 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Lose 1 HP. Draw as many cards (+1). Increase this card's HP loss by 1 this combat.
+/// Lose 2 (1) HP. Draw as many cards (+1). Increase this card's HP loss by 1 this combat.
 /// </summary>
 public class SeelsImprovisedAcupuncture() : SeelsTheRecklessCard(0,
     CardType.Skill, CardRarity.Common,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new HpLossVar(1M),
+        new HpLossVar(2M),
         new DynamicVar("ExtraDraw", 0M),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
@@ -44,6 +44,7 @@ public class SeelsImprovisedAcupuncture() : SeelsTheRecklessCard(0,
 
     protected override void OnUpgrade()
     {
+        DynamicVars.HpLoss.UpgradeValueBy(-1M);
         DynamicVars["ExtraDraw"].UpgradeValueBy(1M);
     }
 }

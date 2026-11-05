@@ -21,9 +21,9 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// If you have more Blood than you have HP, gain 4 Max HP. Blood Bend X. Gain X Strength this turn. Exhaust. (Retain.)
+/// If you have more Blood than you have HP, gain 4 Max HP. Blood Bend X. Gain X Strength. Exhaust. (Retain.)
 /// </summary>
-public class SeelsNeverLearn() : SeelsTheRecklessCard(1,
+public class SeelsNeverLearn() : SeelsTheRecklessCard(3,
     CardType.Skill, CardRarity.Rare,
     TargetType.Self)
 {
@@ -57,7 +57,7 @@ public class SeelsNeverLearn() : SeelsTheRecklessCard(1,
         var x = await SeelsMechanicsHelper.BloodBend(choiceContext, this);
         if (x > 0)
         {
-            await PowerCmd.Apply<NeverLearnStrength>(choiceContext, Owner.Creature, x, Owner.Creature, this);
+            await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, x, Owner.Creature, this);
         }
     }
 

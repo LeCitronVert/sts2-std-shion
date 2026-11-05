@@ -21,14 +21,12 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Blood Bend X. Gain 4 Block X+1 times. Apply X (X+1) Vulnerable.
+/// Blood Bend X. Gain 4 Block. Apply X (X+1) Vulnerable.
 /// </summary>
 public class SeelsBloodCage() : SeelsTheRecklessCard(0,
     CardType.Skill, CardRarity.Basic,
     TargetType.AnyEnemy)
 {
-    public const int BlockTimesBonus = 1;
-
     public override bool GainsBlock => true;
 
     protected override HashSet<CardTag> CanonicalTags => [SeelsCardTags.Blood];
@@ -38,10 +36,6 @@ public class SeelsBloodCage() : SeelsTheRecklessCard(0,
         new DynamicVar("Bonus", 0M),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
-        // Block is gained X+1 times, so modifiers apply to each gain
-        new CalculatedVar("BlockAmount").WithMultiplier((card, _) =>
-            (SeelsMechanicsHelper.PreviewBloodBendX(card) + BlockTimesBonus)
-            * PreviewHelper.ModifiedBlock(card, card.DynamicVars.Block.BaseValue, card.DynamicVars.Block.Props)),
         new CalculatedVar("VulnerableAmount").WithMultiplier((card, _) =>
             SeelsMechanicsHelper.PreviewBloodBendX(card) + card.DynamicVars["Bonus"].IntValue),
     ];
@@ -57,10 +51,7 @@ public class SeelsBloodCage() : SeelsTheRecklessCard(0,
         ArgumentNullException.ThrowIfNull(play.Target);
         var x = await SeelsMechanicsHelper.BloodBend(choiceContext, this);
 
-        for (var i = 0; i < x + BlockTimesBonus; i++)
-        {
-            await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
-        }
+        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
 
         var vulnerable = x + DynamicVars["Bonus"].IntValue;
         if (vulnerable > 0 && play.Target.IsAlive)

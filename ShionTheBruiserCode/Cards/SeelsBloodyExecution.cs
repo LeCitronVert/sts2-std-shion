@@ -21,9 +21,9 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Maim 2. Deal 12 (15) damage. Deals 4 (5) additional damage for each Vulnerable on the enemy.
+/// Maim 2. Deal 20 (25) damage. Deals 3 (4) additional damage for each Vulnerable on the enemy.
 /// </summary>
-public class SeelsBloodyExecution() : SeelsTheRecklessCard(2,
+public class SeelsBloodyExecution() : SeelsTheRecklessCard(3,
     CardType.Attack, CardRarity.Common,
     TargetType.AnyEnemy)
 {
@@ -33,8 +33,8 @@ public class SeelsBloodyExecution() : SeelsTheRecklessCard(2,
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         MaimHelper.Var(2M),
-        new DamageVar(12M, ValueProp.Move),
-        new DynamicVar("VulnerableDamage", 4M),
+        new DamageVar(20M, ValueProp.Move),
+        new DynamicVar("VulnerableDamage", 3M),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -61,7 +61,7 @@ public class SeelsBloodyExecution() : SeelsTheRecklessCard(2,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3M);
+        DynamicVars.Damage.UpgradeValueBy(5M);
         DynamicVars["VulnerableDamage"].UpgradeValueBy(1M);
     }
 }

@@ -18,6 +18,8 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Visuals;
 /// <item>Energy Volley: the target is pushed back a little on each hit, and comes back at the end.</item>
 /// <item>Dragon Smash: the target is sent flying to the top of the screen, bounces around the screen edges
 /// (one hit per collision), spinning, and the last hit slams it back in its place.</item>
+/// <item>Pinball Move: Dragon Smash's flight on the attacker, which bounces off the screen edges and slams into
+/// each hit's target.</item>
 /// </list>
 /// </summary>
 public static class CreatureMotion
@@ -122,6 +124,65 @@ public static class CreatureMotion
                 VfxCmd.PlayOnCreatureCenter(target, BluntVfx);
                 NGame.Instance?.ScreenShake(last ? ShakeStrength.Medium : ShakeStrength.Weak, ShakeDuration.Short);
             });
+    }
+
+    // ---------------------------------------------------------------- Pinball Move
+
+    /// <summary>How far from the enemy's center the attacker's center stops when it hits it.</summary>
+    private const float PinballContactDistance = 80f;
+
+    /// <summary>
+    /// Pinball Move's animation: Dragon Smash's flight, but on the attacker. Its attack animation plays once and
+    /// launches it towards the top of the screen, then for each hit it bounces off a screen edge (not before the first
+    /// hit) and slams into that hit's (random) target. Replaces the attack's hit VFX (played on each impact instead).
+    /// Call <see cref="ReturnHome"/> on the attacker after the attack.
+    /// </summary>
+    public static AttackCommand WithPinball(this AttackCommand command, Creature attacker)
+    {
+        Creature? target = null;
+        var hit = 0;
+        return command
+            .OnlyPlayAnimOnce()
+            .AfterAttackerAnim(async () =>
+            {
+                var duration = EnergyBlast.ScaledTime(FastLaunchTime, StandardLaunchTime);
+                if (duration > 0f) Fly(attacker, NextEdgePoint(attacker, launch: true), duration, landUpright: false);
+                await Cmd.CustomScaledWait(FastLaunchTime, StandardLaunchTime);
+            })
+            // Runs once the hit's random target is picked, before the damage: only remembers it (no node added).
+            .WithHitVfxNode(creature =>
+            {
+                target = creature;
+                return null;
+            })
+            .BeforeDamage(async () =>
+            {
+                hit++;
+                if (target is null || !attacker.IsAlive) return;
+                var duration = EnergyBlast.ScaledTime(FastBounceTime, StandardBounceTime);
+                if (hit > 1)
+                {
+                    if (duration > 0f) Fly(attacker, NextEdgePoint(attacker, launch: false), duration, landUpright: false);
+                    await Cmd.CustomScaledWait(FastBounceTime, StandardBounceTime);
+                }
+                if (duration > 0f) Fly(attacker, ContactPoint(attacker, target), duration, landUpright: false);
+                await Cmd.CustomScaledWait(FastBounceTime, StandardBounceTime);
+                VfxCmd.PlayOnCreatureCenter(target, BluntVfx);
+                NGame.Instance?.ScreenShake(ShakeStrength.Weak, ShakeDuration.Short);
+            });
+    }
+
+    /// <summary>
+    /// The point (global) where the attacker's center stops when it slams into the target: just short of the target's
+    /// center, on the attacker's side.
+    /// </summary>
+    private static Vector2? ContactPoint(Creature attacker, Creature target)
+    {
+        if (VisualsOf(attacker) is not { } attackerVisuals || VisualsOf(target) is not { } targetVisuals) return null;
+        var from = attackerVisuals.VfxSpawnPosition.GlobalPosition;
+        var to = targetVisuals.VfxSpawnPosition.GlobalPosition;
+        var direction = (to - from).Normalized();
+        return to - direction * PinballContactDistance;
     }
 
     /// <summary>

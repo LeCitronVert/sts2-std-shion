@@ -21,14 +21,14 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gloat 2. Add 1 Inky Slash (Slash+) into your Hand, and 2 more into your Draw Pile per energy this card costs.
+/// Gloat 1. Add 1 Inky Slash (Slash+) into your Hand, and 2 more into your Draw Pile per energy this card costs.
 /// </summary>
 public class SeelsPinThemDown() : SeelsTheRecklessCard(1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<Gloat>(2M),
+        new PowerVar<Gloat>(1M),
         new CardsVar(1),
         new DynamicVar("SlashesPerEnergy", 2M),
         new CalculationBaseVar(0),
