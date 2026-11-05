@@ -752,7 +752,7 @@
     "SHIONTHEBRUISER-SEELS_EYE_OPENING_REALIZATION.title": "Eye Opening Realization",
     "SHIONTHEBRUISER-SEELS_EYE_OPENING_REALIZATION.description": "Make ALL your [gold]Wounds[/gold] playable for [blue]1[/blue] energy.\nALL [gold]Wounds[/gold] in your [gold]Hand[/gold] are enchanted with [gold]Swift {Swift}[/gold].",
     "SHIONTHEBRUISER-SEELS_CONCEDE_FIRST_BLOW.title": "Concede First Blow",
-    "SHIONTHEBRUISER-SEELS_CONCEDE_FIRST_BLOW.description": "[gold]Gloat[/gold] {Gloat:diff()}.",
+    "SHIONTHEBRUISER-SEELS_CONCEDE_FIRST_BLOW.description": "[gold]Gloat[/gold] {Gloat:diff()}.\nCards cost {Concession:diff()} additional [gold]Energy[/gold] this turn.",
     "SHIONTHEBRUISER-SEELS_QUESTIONABLE_STRATEGY.title": "Questionable Strategy",
     "SHIONTHEBRUISER-SEELS_QUESTIONABLE_STRATEGY.description": "Fill your [gold]Hand[/gold] with [gold]Wounds[/gold].{InCombat:\n(Add {WoundsAmount:diff()} {WoundsAmount:plural:[gold]Wound[/gold]|[gold]Wounds[/gold]})|}\nGain {Block:diff()} [gold]Block[/gold].",
     "SHIONTHEBRUISER-SEELS_OPEN_WOUNDS.title": "Open Wounds",

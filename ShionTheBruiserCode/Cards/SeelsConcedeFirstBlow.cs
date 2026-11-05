@@ -19,7 +19,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Innate. Gloat 3. Exhaust. (Retain.)
+/// Innate. Gloat 3. Cards cost an additional energy this turn. Exhaust. (Retain.)
 /// </summary>
 public class SeelsConcedeFirstBlow() : SeelsTheRecklessCard(1,
     CardType.Skill, CardRarity.Uncommon,
@@ -27,13 +27,14 @@ public class SeelsConcedeFirstBlow() : SeelsTheRecklessCard(1,
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Innate, CardKeyword.Exhaust];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<Gloat>(3M)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<Gloat>(3M), new PowerVar<Concession>(1M)];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Gloat>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Gloat>(), HoverTipFactory.FromPower<Concession>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await SeelsMechanicsHelper.Gloat(choiceContext, Owner.Creature, DynamicVars["Gloat"].BaseValue, this);
+        await PowerCmd.Apply<Concession>(choiceContext, Owner.Creature, DynamicVars["Concession"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
