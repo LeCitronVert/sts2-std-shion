@@ -6,9 +6,11 @@ using Godot;
 using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Timeline;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Relics;
 using ShionTheBruiser.ShionTheBruiserCode.Timeline;
 using ShionTheBruiser.ShionTheBruiserCode.Timeline.BaseLibEpochs;
@@ -16,7 +18,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Timeline.BaseLibEpochs;
 namespace ShionTheBruiser.ShionTheBruiserCode.Character;
 
 
-public class SlalTheEndless : PlaceholderCharacterModel, IEpochCharacter
+public class SlalTheEndless : PlaceholderCharacterModel, IEpochCharacter, ICharacterSelectSkin
 {
     public const string CharacterId = "SlalTheEndless";
 
@@ -101,6 +103,15 @@ public class SlalTheEndless : PlaceholderCharacterModel, IEpochCharacter
     // Slimed Berserker's slime splash, for the goop cascade.
     public override string CharacterTransitionSfx =>
         "event:/sfx/enemy/enemy_attacks/slimed_berserker/slimed_berserker_slime";
+
+    // Character select playstyle icons (Patches/CharacterSelectSkinPatch.cs), text in characters.json
+    public IReadOnlyList<CharacterPlaystyle> Playstyles { get; } =
+    [
+        CharacterPlaystyle.Power<SlimedFreeThisTurn>("SLIMY"),
+        CharacterPlaystyle.Power<global::ShionTheBruiser.ShionTheBruiserCode.Powers.Random>("MEMORY"),
+        CharacterPlaystyle.Power<WeakPower>("WEAK"),
+        CharacterPlaystyle.Power<SlimeForm>("FORMS"),
+    ];
 
     public override string CustomMerchantAnimPath => Path.Join(MainFile.ResPath, "scenes",
         "slal_merchant.tscn");

@@ -1521,3 +1521,28 @@ Start a run with each character (normal speed, not Instant fast mode) and watch 
 - The game plays the transition in a fixed 0.8s and fades its own black overlay in on top (quadratic ease-in), so the effects are front-loaded. Phase timings are shader uniforms if they need retuning.
 - Godot copies the screen only once per frame, for the first shader that reads it, and the menus' blurred backdrops read it first. `Patches/CharacterTransitionScreenCapturePatch.cs` adds a `BackBufferCopy` right before the transition rect, visible only during our fade-outs, so the transition captures the full current screen.
 - Sounds: vanilla only has `wipe_ironclad` and `wipe_silent` (Defect, Necrobinder and Regent all reuse Ironclad's), so the old placeholder `wipe_defect` and `wipe_regent` played nothing. Seels gets Silent's. The others use enemy/companion sounds that match their effect better: Punch Construct double punch (Shion), Slimed Berserker slime (Slal), Osty attack (Fry).
+
+## Character select skin
+
+Open the character select screen (singleplayer, then multiplayer) and click through every character, then do it again with a gamepad.
+- [ ] Shion, Slal, Seels and Fry: the info panel sits on a plain semi-transparent dark backing with rounded corners. The name is white with a black outline (no checkered plate), and "THE BRUISER" / "THE GOOFBALL" / "THE RECKLESS" / "THE COMMANDER" sits above it in gold on a dark chip. It's easy to read.
+- [ ] The name is just the first name ("Shion", not "Shion, the Bruiser"). Check it also reads right elsewhere: compendium, run history, multiplayer lobby, Sea Glass (still "The Bruiser").
+- [ ] HP and Gold sit in a column at the right of the name (HP on top), on black chips with a gold line, centred on the name area. They don't overlap the name or the class name, and there's a small gap before the description.
+- [ ] The starting relic icon has no badge behind it and is vertically centred on its name + description, with faint gold lines above and below its row.
+- [ ] Shion shows 6 playstyle coins (Berserk, Galvanised, Defensive, Dragon, Energy, Critical) and Slal 4 (Slimy, Memory, Weak, Forms), with the right icons, in rows of 3. Seels and Fry show none yet.
+- [ ] Under the relic row, the backing narrows to the width of the coin grid, and neither the coins nor the backing reach the ascension selector or its text.
+- [ ] Hovering a coin highlights it and shows a tooltip above the coin grid (gold title, thin line, then the description). It goes away when the mouse leaves, and never covers the ascension selector or the character buttons.
+- [ ] The frame fits the panel for every character (long descriptions and the coin row included) and doesn't cover the character buttons at the bottom.
+- [ ] Gamepad: up from any character button goes to the first coin of the bottom row, up/down moves between rows, left/right runs through the coins with the tooltip following, down from the bottom row goes back to the selected character. Pressing confirm on a coin embarks normally and doesn't leave focus stuck.
+- [ ] After pressing Embark in multiplayer (waiting for others), the coins can't be focused or hovered. Unready brings them back.
+- [ ] A locked character keeps the frame and plate but shows no class name and no coins.
+- [ ] Switching to a vanilla character or Random gives back the vanilla panel exactly (gold name, fuzzy dark backdrop, HP/Gold row, relic icon position). Back out and re-enter the screen: still clean.
+- [ ] The character buttons and the banner at the bottom are unchanged.
+
+**Decisions I made**
+- Built on the D mockup, then toned down: the red checkered frame became a plain semi-transparent backing, and the checkered name plate, tooltip title and relic badge were dropped. The class name in D was dark text straight on the gold checkers, so it now sits on a dark chip in gold text, for contrast.
+- Everything is drawn in code on top of the vanilla panel (`Patches/CharacterSelectSkinPatch.cs`) and undone on the next selection, so no art is needed.
+- Uses the game's own fonts. The pixel font from the mockup (Silkscreen) isn't bundled; ask if you want it.
+- The tooltip is our own (styled like the mockup), not the game's hover tip.
+- New strings: `(character).className`, `(character).playstyle.(KEY).title/description` in characters.json, `SHIONTHEBRUISER-CHARACTER_SELECT.playstyles` in main_menu_ui.json. `title` and `titleObject` are now just the first name. Strings that only name the class ("Bruiser Cards", Sea Glass) and the epoch unlock texts that spell out "Shion, the Bruiser" were left as they are.
+- Seels and Fry get the skin but no playstyle row until their playstyles are given (`Playstyles` in their character class).

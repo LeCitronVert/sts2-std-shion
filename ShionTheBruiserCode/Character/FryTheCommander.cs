@@ -10,7 +10,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Timeline.BaseLibEpochs;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Character;
 
-public class FryTheCommander : PlaceholderCharacterModel, IEpochCharacter
+public class FryTheCommander : PlaceholderCharacterModel, IEpochCharacter, ICharacterSelectSkin
 {
     public const string CharacterId = "FryTheCommander";
 
@@ -25,6 +25,9 @@ public class FryTheCommander : PlaceholderCharacterModel, IEpochCharacter
 
     // Osty's attack (the Necrobinder's giant hand), for the shadow hand grabbing the screen.
     public override string CharacterTransitionSfx => "event:/sfx/characters/osty/osty_attack";
+
+    // Character select skin (Patches/CharacterSelectSkinPatch.cs). Playstyles not specified yet, so the row stays hidden.
+    public IReadOnlyList<CharacterPlaystyle> Playstyles { get; } = [];
 
     public override bool ShouldAlwaysShowStarCounter => true;
 

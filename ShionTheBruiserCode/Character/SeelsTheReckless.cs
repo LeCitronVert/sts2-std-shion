@@ -10,7 +10,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Timeline.BaseLibEpochs;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Character;
 
-public class SeelsTheReckless : PlaceholderCharacterModel, IEpochCharacter
+public class SeelsTheReckless : PlaceholderCharacterModel, IEpochCharacter, ICharacterSelectSkin
 {
     public const string CharacterId = "SeelsTheReckless";
 
@@ -25,6 +25,9 @@ public class SeelsTheReckless : PlaceholderCharacterModel, IEpochCharacter
 
     // The Silent's own wipe, the only other one vanilla has; fits the blade work.
     public override string CharacterTransitionSfx => "event:/sfx/ui/wipe_silent";
+
+    // Character select skin (Patches/CharacterSelectSkinPatch.cs). Playstyles not specified yet, so the row stays hidden.
+    public IReadOnlyList<CharacterPlaystyle> Playstyles { get; } = [];
 
     public override Color NameColor => Color;
     public override CharacterGender Gender => CharacterGender.Masculine;

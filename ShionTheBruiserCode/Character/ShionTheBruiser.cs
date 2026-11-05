@@ -11,13 +11,14 @@ using MegaCrit.Sts2.Core.Models.Characters;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Timeline;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Relics;
 using ShionTheBruiser.ShionTheBruiserCode.Timeline;
 using ShionTheBruiser.ShionTheBruiserCode.Timeline.BaseLibEpochs;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Character;
 
-public class ShionTheBruiser : PlaceholderCharacterModel, IEpochCharacter
+public class ShionTheBruiser : PlaceholderCharacterModel, IEpochCharacter, ICharacterSelectSkin
 {
     public const string CharacterId = "ShionTheBruiser";
 
@@ -128,6 +129,17 @@ public class ShionTheBruiser : PlaceholderCharacterModel, IEpochCharacter
     // Punch Construct's double punch, for the two impacts before the claw.
     public override string CharacterTransitionSfx =>
         "event:/sfx/enemy/enemy_attacks/punch_construct/punch_construct_attack_double";
+
+    // Character select playstyle icons (Patches/CharacterSelectSkinPatch.cs), text in characters.json
+    public IReadOnlyList<CharacterPlaystyle> Playstyles { get; } =
+    [
+        CharacterPlaystyle.Power<BerserkDrive>("BERSERK"),
+        CharacterPlaystyle.Power<VigorNextTurn>("GALVANISED"),
+        CharacterPlaystyle.Power<DefensiveDebuff>("DEFENSIVE"),
+        CharacterPlaystyle.Power<DragonsMight>("DRAGON"),
+        CharacterPlaystyle.Power<EnergyCharge>("ENERGY"),
+        CharacterPlaystyle.Image("CRITICAL", "critical_hits.png".PowerImagePath()),
+    ];
 
     public override string CustomMerchantAnimPath => Path.Join(MainFile.ResPath, "scenes",
         "shion_merchant.tscn");
