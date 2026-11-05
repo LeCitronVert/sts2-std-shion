@@ -121,6 +121,14 @@ public class ShionTheBruiser : PlaceholderCharacterModel, IEpochCharacter
             "shion_character.tscn"));
     }
 
+    // Character select → run wipe. Shader driven by NTransition's threshold tween.
+    public override string CustomCharacterSelectTransitionPath =>
+        $"{MainFile.ResPath}/materials/transitions/shion_transition_mat.tres";
+
+    // Punch Construct's double punch, for the two impacts before the claw.
+    public override string CharacterTransitionSfx =>
+        "event:/sfx/enemy/enemy_attacks/punch_construct/punch_construct_attack_double";
+
     public override string CustomMerchantAnimPath => Path.Join(MainFile.ResPath, "scenes",
         "shion_merchant.tscn");
     

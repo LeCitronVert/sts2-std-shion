@@ -19,6 +19,13 @@ public class FryTheCommander : PlaceholderCharacterModel, IEpochCharacter
     // No custom visuals yet: borrow the Regent's placeholder assets (he also uses Stars).
     public override string PlaceholderID => "regent";
 
+    // Character select → run wipe. Shader driven by NTransition's threshold tween.
+    public override string CustomCharacterSelectTransitionPath =>
+        $"{MainFile.ResPath}/materials/transitions/fry_transition_mat.tres";
+
+    // Osty's attack (the Necrobinder's giant hand), for the shadow hand grabbing the screen.
+    public override string CharacterTransitionSfx => "event:/sfx/characters/osty/osty_attack";
+
     public override bool ShouldAlwaysShowStarCounter => true;
 
     public override Color NameColor => Color;

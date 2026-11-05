@@ -1503,3 +1503,21 @@ Shown for any player who owns the relic (Abby = Abby the Absol, Edge = Edge the 
 - "Joke" > "Jokester" read as renaming Seels' card to "Running Jokester", so it no longer shares Slal's card name. Gloat 1 goes at the end of the text.
 - Kept the current values the sheet doesn't give: Blood Cage keeps the X+1 Vulnerable upgrade, Body Strike keeps -1 cost, Spectacular Break-in upgrades its Slashes, Scratch keeps 0 cost, Blood Mixing keeps Innate on upgrade.
 - The "Ideas (ne pas implémenter encore)" rows were skipped.
+
+## Character select transitions
+
+Start a run with each character (normal speed, not Instant fast mode) and watch the wipe into the run. Also check multiplayer, Custom Run and Daily, which use the same transition.
+- [ ] Shion: punch impact on the left (flash, shockwave, impact frame, cracks, shake), then on the right, a short beat, then three dragon claw gashes sweep right → left and rip open until the screen is black.
+- [ ] Slal: azure blue slime pours from the top with round drips, drags the screen down, and leaves darkness behind it.
+- [ ] Seels: 12 slashes from all directions, each with a quick white blade streak, lay black strokes over the screen (later ones wider). Each slash bleeds 3 black droplets that run down, until everything is covered.
+- [ ] Fry: a blurry hand shadow sharpens as it lands, grabs and shoves the screen back, crumples it into its fist, then pulls away downward.
+- [ ] Each one ends fully black, with no flash of the old screen before the run fades in.
+- [ ] The transition shows the character select screen as you left it (UI, panels, character art), not just the blurred backdrop behind it.
+- [ ] Sounds: Shion plays Punch Construct's double punch, Slal plays Slimed Berserker's slime, Seels plays the Silent wipe, Fry plays Osty's attack. Check that each one fits the 0.8s transition and isn't too loud next to the music.
+- [ ] A vanilla character's transition still looks and sounds the same.
+
+**Decisions I made**
+- Hooked up through BaseLib's `CustomCharacterSelectTransitionPath`, with one shader material per character in `ShionTheBruiser/materials/transitions/`. The effects are procedural shaders (`ShionTheBruiser/shaders/transitions/`), so they need no art.
+- The game plays the transition in a fixed 0.8s and fades its own black overlay in on top (quadratic ease-in), so the effects are front-loaded. Phase timings are shader uniforms if they need retuning.
+- Godot copies the screen only once per frame, for the first shader that reads it, and the menus' blurred backdrops read it first. `Patches/CharacterTransitionScreenCapturePatch.cs` adds a `BackBufferCopy` right before the transition rect, visible only during our fade-outs, so the transition captures the full current screen.
+- Sounds: vanilla only has `wipe_ironclad` and `wipe_silent` (Defect, Necrobinder and Regent all reuse Ironclad's), so the old placeholder `wipe_defect` and `wipe_regent` played nothing. Seels gets Silent's. The others use enemy/companion sounds that match their effect better: Punch Construct double punch (Shion), Slimed Berserker slime (Slal), Osty attack (Fry).

@@ -94,6 +94,14 @@ public class SlalTheEndless : PlaceholderCharacterModel, IEpochCharacter
             "slal_character.tscn"));
     }
 
+    // Character select → run wipe. Shader driven by NTransition's threshold tween.
+    public override string CustomCharacterSelectTransitionPath =>
+        $"{MainFile.ResPath}/materials/transitions/slal_transition_mat.tres";
+
+    // Slimed Berserker's slime splash, for the goop cascade.
+    public override string CharacterTransitionSfx =>
+        "event:/sfx/enemy/enemy_attacks/slimed_berserker/slimed_berserker_slime";
+
     public override string CustomMerchantAnimPath => Path.Join(MainFile.ResPath, "scenes",
         "slal_merchant.tscn");
 

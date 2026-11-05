@@ -19,6 +19,13 @@ public class SeelsTheReckless : PlaceholderCharacterModel, IEpochCharacter
     // No custom visuals yet: borrow the Silent's placeholder assets.
     public override string PlaceholderID => "silent";
 
+    // Character select → run wipe. Shader driven by NTransition's threshold tween.
+    public override string CustomCharacterSelectTransitionPath =>
+        $"{MainFile.ResPath}/materials/transitions/seels_transition_mat.tres";
+
+    // The Silent's own wipe, the only other one vanilla has; fits the blade work.
+    public override string CharacterTransitionSfx => "event:/sfx/ui/wipe_silent";
+
     public override Color NameColor => Color;
     public override CharacterGender Gender => CharacterGender.Masculine;
     public override int StartingHp => 75;
