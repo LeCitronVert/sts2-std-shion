@@ -1673,3 +1673,12 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - Events use one portrait each, as in vanilla: your images placed on the left of a dark 2560×1200 backdrop (the event screen's size), with a coloured glow. The Ninja uses vanilla's Trial portrait and the panini as the defendant sprite. `CustomVfxPath` in BaseLib does nothing, so no event uses it.
 - Text: colour tags mapped (shake → jitter, wavey → sine). Small fixes: "developped" → "developed", "upperhand" → "upper hand", "Low and behold" → "Lo and behold", "weakness lie" → "weaknesses lie", "rel to leave" → "relieved to leave", "a dice" kept. "(Collaborative choice.)" dropped since vanilla shows its own vote line.
 - Author Trial skipped, as asked.
+
+## Master Artisan Cleat rework
+
+- [ ] At the start of each combat (turn 1, before the opening draw), 1 random Rare Colourless card is added to your Hand.
+- [ ] That card costs 0 for the whole combat, including after being shuffled back and redrawn.
+- [ ] No more pickup card-selection screen when obtaining the relic.
+
+**Decisions I made**
+- Rarity unchanged (Rare). X-cost cards (if any Rare Colourless has one) are not made free, matching the mod's other "free" helpers.
