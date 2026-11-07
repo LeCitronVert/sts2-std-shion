@@ -163,21 +163,42 @@ public class CreaturePositioning(NCreature node)
 
     private static readonly HashSet<NCreatureVisuals> Flipped = [];
 
-    public static bool IsFlipped(NCreatureVisuals visuals) => Flipped.Contains(visuals);
+    /// <summary>Visuals turned around for a moment (<see cref="FlipBriefly"/>), on top of the power-driven flip.</summary>
+    private static readonly HashSet<NCreatureVisuals> BrieflyFlipped = [];
+
+    public static bool IsFlipped(NCreatureVisuals visuals) => Flipped.Contains(visuals) != BrieflyFlipped.Contains(visuals);
+
+    /// <summary>
+    /// Turns the creature around for <paramref name="seconds"/> (e.g. Reverse Beam's cast), then back.
+    /// Stacks with the power-driven flip: a creature already facing left faces right for that moment. Visual only.
+    /// </summary>
+    public static void FlipBriefly(NCreature? node, float seconds)
+    {
+        var visuals = node?.Visuals;
+        if (visuals == null || !GodotObject.IsInstanceValid(visuals) || !visuals.IsInsideTree()) return;
+        if (!BrieflyFlipped.Add(visuals)) return;
+        visuals.TreeExiting += () => BrieflyFlipped.Remove(visuals);
+        ApplyFlip(visuals);
+        visuals.GetTree().CreateTimer(seconds).Timeout += () =>
+        {
+            BrieflyFlipped.Remove(visuals);
+            ApplyFlip(visuals);
+        };
+    }
 
     /// <summary>Makes the visuals' horizontal scale negative when flipped, positive otherwise.</summary>
     public static void ApplyFlip(NCreatureVisuals visuals)
     {
         if (!GodotObject.IsInstanceValid(visuals)) return;
         var scale = visuals.Scale;
-        var x = Mathf.Abs(scale.X) * (Flipped.Contains(visuals) ? -1f : 1f);
+        var x = Mathf.Abs(scale.X) * (IsFlipped(visuals) ? -1f : 1f);
         if (!Mathf.IsEqualApprox(x, scale.X)) visuals.Scale = new Vector2(x, scale.Y);
     }
 
     /// <summary>Removes the flip for the duration of base game code that reads the visuals' scale as a size.</summary>
     public static void Unflip(NCreatureVisuals? visuals)
     {
-        if (visuals == null || !Flipped.Contains(visuals) || !GodotObject.IsInstanceValid(visuals)) return;
+        if (visuals == null || !IsFlipped(visuals) || !GodotObject.IsInstanceValid(visuals)) return;
         visuals.Scale = new Vector2(Mathf.Abs(visuals.Scale.X), visuals.Scale.Y);
     }
 }

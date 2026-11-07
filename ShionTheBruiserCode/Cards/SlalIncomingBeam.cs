@@ -1,4 +1,7 @@
+using Godot;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -66,7 +69,7 @@ public class SlalIncomingBeam() : SlalTheEndlessCard(0,
         if (enemies.Count > 0)
         {
             await CreatureCmd.TriggerAnim(card.Owner.Creature, "Cast", 0.5f);
-            var beam = NHyperbeamVfx.Create(card.Owner.Creature, enemies.Last());
+            var beam = CreateIncomingBeam(enemies);
             if (beam != null)
             {
                 NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(beam);
@@ -82,6 +85,29 @@ public class SlalIncomingBeam() : SlalTheEndlessCard(0,
 
         CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(
             SlalMechanicsHelper.CreateCard<SlalReverseBeam>(card.Owner, IsUpgraded), PileType.Discard, card.Owner));
+    }
+
+    /// <summary>Gap between the right edge of the screen and where the beam starts.</summary>
+    private const float OffScreenMargin = 150f;
+
+    /// <summary>
+    /// The beam comes from behind the enemies, from out of the screen on the right, and goes through all of them
+    /// towards the players (aimed at the enemy closest to the players). Visual only.
+    /// </summary>
+    private static NHyperbeamVfx? CreateIncomingBeam(List<Creature> enemies)
+    {
+        var container = NCombatRoom.Instance?.CombatVfxContainer;
+        if (container == null) return null;
+        var front = enemies
+            .Select(e => e.GetCreatureNode())
+            .Where(n => n != null && GodotObject.IsInstanceValid(n))
+            .MinBy(n => n!.VfxSpawnPosition.X);
+        if (front == null) return null;
+
+        var to = front.VfxSpawnPosition;
+        var screen = container.GetCanvasTransform().AffineInverse() * container.GetViewportRect();
+        var from = new Vector2(screen.End.X + OffScreenMargin, to.Y);
+        return NHyperbeamVfx.Create(from, to);
     }
 
     public override Task AfterCardGeneratedForCombat(CardModel card, Player? creator)

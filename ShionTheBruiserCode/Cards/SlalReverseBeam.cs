@@ -2,7 +2,9 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Nodes.Combat;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -16,6 +18,9 @@ public class SlalReverseBeam() : SlalTheEndlessCard(2,
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
+    /// <summary>How long Slal stays turned around (backwards cast).</summary>
+    private const float FlipTime = 1f;
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromCard<SlalIncomingBeam>(IsUpgraded),
     ];
@@ -25,6 +30,7 @@ public class SlalReverseBeam() : SlalTheEndlessCard(2,
         CardPlay play)
     {
         var card = this;
+        CreaturePositioning.FlipBriefly(card.Owner.Creature.GetCreatureNode(), FlipTime);
         await CreatureCmd.TriggerAnim(card.Owner.Creature, "Cast", card.Owner.Character.CastAnimDelay);
         CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(
             SlalMechanicsHelper.CreateCard<SlalIncomingBeam>(card.Owner, IsUpgraded), PileType.Draw, card.Owner, CardPilePosition.Random));
