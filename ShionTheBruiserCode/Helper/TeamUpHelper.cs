@@ -28,6 +28,16 @@ public static class TeamUpHelper
     }
 
     /// <summary>
+    /// Whether this player could play the card if they owned it: a Team-Up needs another player of its Partner's class.
+    /// Used when a player can get cards from another class's pool.
+    /// </summary>
+    public static bool IsPlayableByOwner(CardModel card, Player owner)
+    {
+        return card is not TeamUpCard teamUp
+            || owner.RunState.Players.Any(partner => partner != owner && IsPartnerCharacter(teamUp, partner.Character));
+    }
+
+    /// <summary>
     /// Team-Ups this player can initiate with the current team.
     /// </summary>
     public static IEnumerable<TeamUpCard> GetAvailableTeamUps(Player player)

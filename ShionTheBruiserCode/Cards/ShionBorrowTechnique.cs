@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
@@ -33,7 +34,7 @@ public class ShionBorrowTechnique() : ShionTheBruiserCard(1,
                     target.Player.RunState.CardMultiplayerConstraint
                 )
                 .Where<CardModel>(
-                    (Func<CardModel, bool>) (c => c.Type == CardType.Skill)), 
+                    (Func<CardModel, bool>) (c => c.Type == CardType.Skill && TeamUpHelper.IsPlayableByOwner(c, ogCard.Owner))), 
             1, 
             ogCard.Owner.RunState.Rng.CombatCardGeneration
         ).FirstOrDefault<CardModel>();

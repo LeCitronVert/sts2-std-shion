@@ -124,8 +124,10 @@ public sealed class TheGambler : DreamersEventModel
         RollCurse();
 
         // The result line needs CurseName resolved before it goes into the page text
-        var result = L10NLookup($"{Id.Entry}.{(IsLucky ? "LUCKY" : "QUITTER")}").GetFormattedText();
-        ((StringVar)DynamicVars[ResultKey]).StringValue = result;
+        // L10NLookup returns a bare LocString: the event's vars must be added before formatting
+        var resultLine = L10NLookup($"{Id.Entry}.{(IsLucky ? "LUCKY" : "QUITTER")}");
+        DynamicVars.AddTo(resultLine);
+        ((StringVar)DynamicVars[ResultKey]).StringValue = resultLine.GetFormattedText();
 
         var page = _plays == 0 ? "PLAY_ONCE_FIRST" : "PLAY_ONCE_AGAIN";
         _plays++;

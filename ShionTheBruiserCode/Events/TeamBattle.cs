@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Rewards;
 using MegaCrit.Sts2.Core.Runs;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Events;
 
@@ -17,7 +18,8 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Events;
 /// Fight them as a team: a Team Blast card reward (own pool + Colorless), add Clumsy.
 /// Fight your counterpart one on one: a Rare card reward, add Injury.
 /// Fight your teammate counterpart (only when the team has more than one class): two card rewards
-/// from the teammates' pools, never from the player's own pool.
+/// from the teammates' pools, never from the player's own pool. Team-Ups the player could not play (no other
+/// player of their Partner's class) are left out.
 /// </summary>
 public sealed class TeamBattle : DreamersEventModel
 {
@@ -84,7 +86,8 @@ public sealed class TeamBattle : DreamersEventModel
             List<Reward> rewards = [];
             for (var i = 0; i < 2; i++)
             {
-                rewards.Add(new CardReward(CardCreationOptions.ForNonCombatWithDefaultOdds(pools), 3, player));
+                rewards.Add(new CardReward(CardCreationOptions.ForNonCombatWithDefaultOdds(pools,
+                    c => TeamUpHelper.IsPlayableByOwner(c, player)), 3, player));
             }
             await RewardsCmd.OfferCustom(player, rewards);
         }
