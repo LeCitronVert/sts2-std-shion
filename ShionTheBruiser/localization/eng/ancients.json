@@ -414,7 +414,7 @@
   "PAEL.talk.SHIONTHEBRUISER-SEELS_THE_RECKLESS.0-0.next": "Show off",
   "PAEL.talk.SHIONTHEBRUISER-SEELS_THE_RECKLESS.0-1.char": "I mean, I've travelled from abroad, but tadaa!",
   "PAEL.talk.SHIONTHEBRUISER-SEELS_THE_RECKLESS.0-1.next": "Continue",
-  "PAEL.talk.SHIONTHEBRUISER-SEELS_THE_RECKLESS.0-2.char": "[i][font_size=22]Seels animates a mini-Pael using his blood.[/font_size][/i]",
+  "PAEL.talk.SHIONTHEBRUISER-SEELS_THE_RECKLESS.0-2.char": "[i][font_size=22]Seels animates a mini-Pael using their blood.[/font_size][/i]",
   "PAEL.talk.SHIONTHEBRUISER-SEELS_THE_RECKLESS.0-2.next": "Continue",
   "PAEL.talk.SHIONTHEBRUISER-SEELS_THE_RECKLESS.0-3.ancient": "[thinky_dots]How amusing.[/thinky_dots]",
   "PAEL.talk.SHIONTHEBRUISER-SEELS_THE_RECKLESS.0-3.next": "Continue",
@@ -450,7 +450,7 @@
   "TANX.talk.SHIONTHEBRUISER-SEELS_THE_RECKLESS.1-0r.ancient": "YOU LACK PASSION!! AND A WEAPON!!! GET BOTH!!!",
   "TANX.talk.SHIONTHEBRUISER-SEELS_THE_RECKLESS.2-0r.ancient": "FIGHT ME, HEMOMANCER!",
   "TANX.talk.SHIONTHEBRUISER-SEELS_THE_RECKLESS.2-0r.next": "Playfight",
-  "TANX.talk.SHIONTHEBRUISER-SEELS_THE_RECKLESS.2-1r.char": "[i][font_size=22]Seels playfights with Tanx using his magic.[/font_size][/i]",
+  "TANX.talk.SHIONTHEBRUISER-SEELS_THE_RECKLESS.2-1r.char": "[i][font_size=22]Seels playfights with Tanx using their magic.[/font_size][/i]",
   "TANX.talk.SHIONTHEBRUISER-SEELS_THE_RECKLESS.2-1r.next": "Continue",
   "TANX.talk.SHIONTHEBRUISER-SEELS_THE_RECKLESS.2-2r.ancient": "BEAUTIFUL!!",
 
@@ -638,7 +638,7 @@
   "NEOW.party.SHIONTHEBRUISER-SHION_THE_BRUISER.SEELS.3-4": "[i](side-eye)[/i]",
   "NEOW.party.SHIONTHEBRUISER-SHION_THE_BRUISER.SEELS.4-0": "Sooo, like... When did you develop that insane bloodlust?",
   "NEOW.party.SHIONTHEBRUISER-SHION_THE_BRUISER.SEELS.5-0": "See, if you came home more often, we wouldn't BE here.",
-  "NEOW.party.SHIONTHEBRUISER-SHION_THE_BRUISER.SEELS.6-0": "(Better start climbing fast before [gold]he[/gold] nags me...)",
+  "NEOW.party.SHIONTHEBRUISER-SHION_THE_BRUISER.SEELS.6-0": "(Better start climbing fast before [gold]they[/gold] nag me...)",
 
   "NEOW.party.SHIONTHEBRUISER-SEELS_THE_RECKLESS.IRONCLAD.0-0": "(There's someone...!)",
   "NEOW.party.SHIONTHEBRUISER-SEELS_THE_RECKLESS.IRONCLAD.0-1": "You... Are you with the Sacred Demon?",
