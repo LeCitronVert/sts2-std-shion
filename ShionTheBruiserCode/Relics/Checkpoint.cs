@@ -60,6 +60,37 @@ public class Checkpoint : CosmoRelic
 }
 
 /// <summary>
+/// RunState.AddVisitedMapCoord refuses coords that are already in the visited list, and RunManager.EnterMapCoord
+/// then silently skips entering the room — after NMapScreen has already faded to black. Going back to the Checkpoint
+/// rest site is exactly such a revisit, so let that one coord be appended again (the map screen, save and
+/// LoadIntoLatestMapCoord all just read the list in order and handle duplicates fine).
+/// </summary>
+[HarmonyPatch(typeof(RunState), nameof(RunState.AddVisitedMapCoord))]
+public static class CheckpointRevisitPatch
+{
+    private static readonly AccessTools.FieldRef<RunState, List<MapCoord>> VisitedRef =
+        AccessTools.FieldRefAccess<RunState, List<MapCoord>>("_visitedMapCoords");
+
+    private static readonly Action<RunState, int> SetNextRoomId =
+        AccessTools.MethodDelegate<Action<RunState, int>>(AccessTools.PropertySetter(typeof(RunState), nameof(RunState.NextRoomId)));
+
+    [HarmonyPrefix]
+    public static bool Prefix(RunState __instance, MapCoord coord, ref bool __result)
+    {
+        var visited = VisitedRef(__instance);
+        // Not a revisit, or re-adding the room we're already in (the vanilla double-entry guard): leave it to vanilla
+        if (visited.Count == 0 || !visited.Contains(coord) || visited[^1] == coord) return true;
+        if (__instance.Players.Count != 1 || !__instance.Players[0].Relics.OfType<Checkpoint>().Any(r => !r.WasUsed)) return true;
+        if (__instance.Map.GetPoint(visited[^1]) is not { } current || Checkpoint.LastRestSite(__instance, current)?.coord != coord) return true;
+
+        visited.Add(coord);
+        SetNextRoomId(__instance, 0);
+        __result = true;
+        return false;
+    }
+}
+
+/// <summary>
 /// Extra map destinations for the solo travel relics (Checkpoint, Secret Key).
 /// The map screen marks whatever this returns as travelable.
 /// </summary>
