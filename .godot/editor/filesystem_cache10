@@ -1,13 +1,13 @@
 63f7b34db8d8cdea90c76aacccf841ec
 ::res://::1794081530
-BETA_TEST_TODO.md::TextFile::-1::1794068669::0::1::::<><><>0<>0<><>::
+BETA_TEST_TODO.md::TextFile::-1::1794083941::0::1::::<><><>0<>0<><>::
 export_presets.cfg::TextFile::-1::1781940056::0::1::::<><><>0<>0<><>::
 README.md::TextFile::-1::1793637968::0::1::::<><><>0<>0<><>::
 ShionTheBruiser.json::JSON::-1::1792433998::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1794082168
+::res://bin/ExportRelease/net9.0/publish/::1794083970
 ShionTheBruiser.deps.json::JSON::-1::1794081984::0::1::::<><><>0<>0<><>::
 ::res://ci/::1792939391
 ::res://ci/game-refs/::1792939391
@@ -1422,7 +1422,7 @@ CosmoUnlockSync.cs::CSharpScript::3728460906655928414::1794067722::0::1::::<><><
 PartyDialogue.cs::CSharpScript::241308958335632356::1793733768::0::1::::<><><>0<>0<><>::
 SeelsPartyDialogues.cs::CSharpScript::4380548894581781510::1793733738::0::1::::<><><>0<>0<><>::
 ShionPartyDialogues.cs::CSharpScript::7951062430476225983::1793733768::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Cards/::1794072506
+::res://ShionTheBruiserCode/Cards/::1794083929
 AllOutAttack.cs::CSharpScript::2887618467325418642::1793646232::0::1::::<><><>0<>0<><>::
 Cacophony.cs::CSharpScript::1218577494853376132::1793646275::0::1::::<><><>0<>0<><>::
 CosmoDetermination.cs::CSharpScript::4903082444639403780::1793719838::0::1::::<><><>0<>0<><>::
@@ -1723,7 +1723,7 @@ ShionLatentCard.cs::CSharpScript::4652709906505411868::1782920242::0::1::::<><><
 ShionLurkingIntensity.cs::CSharpScript::4995594280808844593::1792264217::0::1::::<><><>0<>0<><>::
 ShionMightyDefend.cs::CSharpScript::3101948518899396975::1792264217::0::1::::<><><>0<>0<><>::
 ShionMightyGuard.cs::CSharpScript::2141877546263573749::1792607518::0::1::::<><><>0<>0<><>::
-ShionMonstermancy.cs::CSharpScript::1836834609815486717::1792264217::0::1::::<><><>0<>0<><>::
+ShionMonstermancy.cs::CSharpScript::1836834609815486717::1794083929::0::1::::<><><>0<>0<><>::
 ShionMonsterSpell.cs::CSharpScript::163893390171828777::1793527445::0::1::::<><><>0<>0<><>::
 ShionNap.cs::CSharpScript::2689136310202613344::1793527296::0::1::::<><><>0<>0<><>::
 ShionNightSlash.cs::CSharpScript::4882646842389114822::1792930544::0::1::::<><><>0<>0<><>::
@@ -1943,7 +1943,7 @@ BerserkEndTurnPingPatch.cs::CSharpScript::6477938313587175322::1793464664::0::1:
 CardAutoPlayTracker.cs::CSharpScript::7253820485177951645::1792504577::0::1::::<><><>0<>0<><>::
 ChaosEmeraldsMainMenuPatch.cs::CSharpScript::832528578811425573::1793453764::0::1::::<><><>0<>0<><>::
 ChaosEmeraldUnlockPatch.cs::CSharpScript::8884707403134773689::1793016863::0::1::::<><><>0<>0<><>::
-CharacterSelectSkinPatch.cs::CSharpScript::3662371285727204999::1794082146::0::1::::<><><>0<>0<><>::
+CharacterSelectSkinPatch.cs::CSharpScript::3662371285727204999::1794083654::0::1::::<><><>0<>0<><>::
 CharacterTransitionScreenCapturePatch.cs::CSharpScript::2897997679825396779::1793894852::0::1::::<><><>0<>0<><>::
 ColorfulPhilosophersPoolsPatch.cs::CSharpScript::8206314880392501074::1793012874::0::1::::<><><>0<>0<><>::
 ComeWhatMayPatches.cs::CSharpScript::5993873902602159769::1793306067::0::1::::<><><>0<>0<><>::
