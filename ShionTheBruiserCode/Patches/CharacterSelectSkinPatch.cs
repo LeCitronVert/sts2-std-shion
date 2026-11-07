@@ -13,8 +13,8 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Patches;
 /// Forum style skin for the character select info panel of our characters (ICharacterSelectSkin):
 /// semi-transparent backing, the first name ("className" key) above the class title, vanilla HP/Gold,
 /// the starting relic's icon centred on its text,
-/// and a grid of playstyle coins with their own tooltip on the right of the panel content, wrapping into as many columns
-/// as the panel height needs; the backing grows rightwards to hold it (the panel itself doesn't move).
+/// and a grid of playstyle coins with their own tooltip on the right of the panel content, filled left to right,
+/// PlaystyleColumns per row; the backing grows rightwards (and down if needed) to hold it (the panel itself doesn't move).
 /// The vanilla panel is shared by every character, so everything is added on top of it and undone on the next selection;
 /// vanilla characters, the random button and the character buttons themselves are left untouched.
 /// Gamepad: up from the character buttons enters the coin grid, arrows move inside it, down from the bottom row goes back.
@@ -39,6 +39,8 @@ public static class CharacterSelectSkinPatch
     /// <summary>Room between the panel content and the playstyle grid on its right.</summary>
     private const float PlaystyleGap = 28f;
     private const int PlaystyleHeaderGap = 10;
+    /// <summary>Playstyle coins per row; the grid fills left to right, then wraps down.</summary>
+    private const int PlaystyleColumns = 2;
     /// <summary>Extra room between the first name and the class title under it.</summary>
     private const float NameTitleGap = 24f;
     private const float TipWidth = 380f;
@@ -208,14 +210,14 @@ public static class CharacterSelectSkinPatch
         s.Playstyles = playstyles;
 
         // Header over a grid of coins, right of the panel content inside the (rightwards-extended) main backing.
-        // Refit picks the column count so the grid never gets taller than the panel content.
+        // Fixed PlaystyleColumns per row, filled left to right.
         var section = new VBoxContainer { Name = "ShionTheBruiserSkinPlaystyles", MouseFilter = Control.MouseFilterEnum.Ignore };
         section.AddThemeConstantOverride("separation", PlaystyleHeaderGap);
         var header = SmallCaps(screen, new LocString("main_menu_ui", "SHIONTHEBRUISER-CHARACTER_SELECT.playstyles").GetFormattedText(), 18);
         header.AddThemeColorOverride("font_color", GoldText);
         section.AddChild(header);
 
-        var row = new GridContainer { Name = "Coins", Columns = 1, MouseFilter = Control.MouseFilterEnum.Ignore };
+        var row = new GridContainer { Name = "Coins", Columns = PlaystyleColumns, MouseFilter = Control.MouseFilterEnum.Ignore };
         row.AddThemeConstantOverride("h_separation", CoinGap);
         row.AddThemeConstantOverride("v_separation", CoinGap);
         section.AddChild(row);
@@ -407,16 +409,6 @@ public static class CharacterSelectSkinPatch
                 float contentBottom = bottom;
                 if (section != null && s.Grid != null && GodotObject.IsInstanceValid(s.Grid) && s.Coins.Count > 0)
                 {
-                    // As many rows as fit next to the panel content, wrapping the rest into more columns
-                    float headerHeight = section.GetChild<Control>(0).GetCombinedMinimumSize().Y + PlaystyleHeaderGap;
-                    int rows = Math.Max(1, (int)((bottom - top - headerHeight + CoinGap) / (CoinSize + CoinGap)));
-                    int columns = (s.Coins.Count + rows - 1) / rows;
-                    if (s.Grid.Columns != columns)
-                    {
-                        s.Grid.Columns = columns;
-                        SetCoinNavigation(s, columns);
-                    }
-
                     var size = section.GetCombinedMinimumSize();
                     section.Size = size;
                     section.Position = vbox.Position + new Vector2(vbox.Size.X + PlaystyleGap, top);

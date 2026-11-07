@@ -7,7 +7,7 @@ ShionTheBruiser.json::JSON::-1::1792433998::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1794086058
+::res://bin/ExportRelease/net9.0/publish/::1794086466
 ShionTheBruiser.deps.json::JSON::-1::1794081984::0::1::::<><><>0<>0<><>::
 ::res://ci/::1792939391
 ::res://ci/game-refs/::1792939391
@@ -26,7 +26,7 @@ cosmo_icon.png::CompressedTexture2D::5823658573262251201::1794068555::1794068724
 cosmo_icon_outline.png::CompressedTexture2D::4823421426555408018::1794068562::1794068724::1::::<><><>0<>0<>d574c65d80ab514e2bb9175881c9214d<>res://.godot/imported/cosmo_icon_outline.png-5ae4704b6e85683f60fa0a0fa15975c7.ctex::
 cosmo_map.png::CompressedTexture2D::8105355013552257716::1794068555::1794068724::1::::<><><>0<>0<>e279e971932235c26d0222b40e3ffa71<>res://.godot/imported/cosmo_map.png-b604c26a8f0faab057b95ebc26667779.ctex::
 cosmo_map_outline.png::CompressedTexture2D::947208570367827263::1794068562::1794068724::1::::<><><>0<>0<>cff426f59ed88e0c3ced13e9aea04a3e<>res://.godot/imported/cosmo_map_outline.png-f21ae496c774e4f901fb2836c6ad0189.ctex::
-::res://ShionTheBruiser/images/card_portraits/::1794084403
+::res://ShionTheBruiser/images/card_portraits/::1794086061
 all_out_attack.png::CompressedTexture2D::8650508069548672495::1793531670::1793532504::1::::<><><>0<>0<>f13544a784a9bd6bc4af199c16023ac6<>res://.godot/imported/all_out_attack.png-f54bda6ad8a0255122c32f3428ec8847.ctex::
 cacophony.png::CompressedTexture2D::962768695978171583::1793531670::1793532504::1::::<><><>0<>0<>b0228e6efcff5de600830a63965a8281<>res://.godot/imported/cacophony.png-b36aeeecc62a0d86a299daa710989b20.ctex::
 card.png::CompressedTexture2D::1049500711854334682::1781940056::1782158780::1::::<><><>0<>0<>e86ff99e55e178dfa257e115aff98269<>res://.godot/imported/card.png-ed4193b7714d803835eb3395cc67803f.ctex::
@@ -474,7 +474,7 @@ slal_strike.png::CompressedTexture2D::5918578733995773492::1785182956::178518302
 slal_wall_of_text.png::CompressedTexture2D::6096153770101103649::1785189360::1785218102::1::::<><><>0<>0<>1e432662ce6d45f0e34680b5b23a1b9e<>res://.godot/imported/slal_wall_of_text.png-bb6e44530c48e57502c53b65e98b7223.ctex::
 special_stage.png::CompressedTexture2D::8845264401202963198::1793017840::1793018465::1::::<><><>0<>0<>2fbc103b8f3d1cc96cd06b92fe2b05b7<>res://.godot/imported/special_stage.png-cd0d00afe6492e2bd603f5bc33d24ee7.ctex::
 yes.png::CompressedTexture2D::5279192743463950200::1783248434::1783250447::1::::<><><>0<>0<>87bbd865506a411f480cb67c509dc39c<>res://.godot/imported/yes.png-816f261255c7e33f7f4cf5b55e6f45af.ctex::
-::res://ShionTheBruiser/images/card_portraits/big/::1794084403
+::res://ShionTheBruiser/images/card_portraits/big/::1794086061
 all_out_attack.png::CompressedTexture2D::6299955981734787318::1793531670::1793532504::1::::<><><>0<>0<>018e75d02c396f131e3b827ee30ad69e<>res://.godot/imported/all_out_attack.png-150cd7f91daff9bc3ec674ac1a176de0.ctex::
 berserk_drive.png::CompressedTexture2D::1173516633182531861::1783421669::1783421693::1::::<><><>0<>0<>a0e7ab2b45a81d3fbcd341103134a846<>res://.godot/imported/berserk_drive.png-005441c15d646c8791a92b1851669ba4.ctex::
 cacophony.png::CompressedTexture2D::2972143823063063703::1793531670::1793532504::1::::<><><>0<>0<>cb1ca32c3f4937d900b847c9d7093d92<>res://.godot/imported/cacophony.png-490c1868402284d9411fd89762322f28.ctex::
@@ -1943,7 +1943,7 @@ BerserkEndTurnPingPatch.cs::CSharpScript::6477938313587175322::1793464664::0::1:
 CardAutoPlayTracker.cs::CSharpScript::7253820485177951645::1792504577::0::1::::<><><>0<>0<><>::
 ChaosEmeraldsMainMenuPatch.cs::CSharpScript::832528578811425573::1793453764::0::1::::<><><>0<>0<><>::
 ChaosEmeraldUnlockPatch.cs::CSharpScript::8884707403134773689::1793016863::0::1::::<><><>0<>0<><>::
-CharacterSelectSkinPatch.cs::CSharpScript::3662371285727204999::1794086023::0::1::::<><><>0<>0<><>::
+CharacterSelectSkinPatch.cs::CSharpScript::3662371285727204999::1794086445::0::1::::<><><>0<>0<><>::
 CharacterTransitionScreenCapturePatch.cs::CSharpScript::2897997679825396779::1793894852::0::1::::<><><>0<>0<><>::
 ColorfulPhilosophersPoolsPatch.cs::CSharpScript::8206314880392501074::1793012874::0::1::::<><><>0<>0<><>::
 ComeWhatMayPatches.cs::CSharpScript::5993873902602159769::1793306067::0::1::::<><><>0<>0<><>::
