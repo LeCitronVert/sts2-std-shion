@@ -203,5 +203,90 @@
   "SHIONTHEBRUISER-CURSED_DICE.flavor": "You lost everything, which is just enough to buy you the right to never ever stop trying.",
   "SHIONTHEBRUISER-WHIMSICAL_HAT.title": "Whimsical Hat",
   "SHIONTHEBRUISER-WHIMSICAL_HAT.description": "At the start of combat, shuffle {Cards:diff()} [gold]Dazed[/gold] into your [gold]Draw Pile[/gold].\nAt the end of your turn, play a random [gold]Ethereal[/gold] card in your [gold]Hand[/gold].",
-  "SHIONTHEBRUISER-WHIMSICAL_HAT.flavor": "Hoof-knitted by a traveling magician, now a memento of a resentful procuror."
+  "SHIONTHEBRUISER-WHIMSICAL_HAT.flavor": "Hoof-knitted by a traveling magician, now a memento of a resentful procuror.",
+
+  "SHIONTHEBRUISER-SAILING_SHIP.title": "Sailing Ship",
+  "SHIONTHEBRUISER-SAILING_SHIP.description": "Whenever you gain or lose Max HP, ALL other players also gain or lose that much Max HP.",
+  "SHIONTHEBRUISER-SAILING_SHIP.flavor": "You should ALWAYS have a pirate buddy if you can help it. Or a genie. Preferably a genie who has a pirate buddy.",
+
+  "SHIONTHEBRUISER-CHECKPOINT.title": "Checkpoint",
+  "SHIONTHEBRUISER-CHECKPOINT.description": "Once, when choosing where to travel next, you may go back to the last [gold]Rest Site[/gold] you visited this Act.",
+  "SHIONTHEBRUISER-CHECKPOINT.flavor": "An artefact which has been charged with enough energy to allow you to perform a minor version of Chaos Control, a space-time warping technique.",
+
+  "SHIONTHEBRUISER-COMFY_CAPE.title": "Comfy Cape",
+  "SHIONTHEBRUISER-COMFY_CAPE.description": "Healing at [gold]Rest Sites[/gold] (including [gold]Mend[/gold]) heals an additional [blue]{Percent}%[/blue] of your Max HP.",
+  "SHIONTHEBRUISER-COMFY_CAPE.flavor": "The coveted \"blankie install\" is a technique only the most skilled capistas can perform.",
+
+  "SHIONTHEBRUISER-SUPER_BULLDOZURATOR_PUZZLITOWERSONIC.title": "Super Bulldozurator Puzzlitowersonic",
+  "SHIONTHEBRUISER-SUPER_BULLDOZURATOR_PUZZLITOWERSONIC.description": "Whenever you [gold]Smith[/gold] at a [gold]Rest Site[/gold], also [gold]Upgrade[/gold] a random card in your [gold]Deck[/gold].",
+  "SHIONTHEBRUISER-SUPER_BULLDOZURATOR_PUZZLITOWERSONIC.flavor": "The most loyal repair bot you will ever see! Enhanced in all sorts of ways, too! It was supposed to play the radio as well, but Radionomy had to go and be mean.",
+
+  "SHIONTHEBRUISER-PEACE_PROMISE.title": "Peace Promise",
+  "SHIONTHEBRUISER-PEACE_PROMISE.description": "Upon pickup, [gold]Transform[/gold] {Cards:diff()} of your basic Strikes.\nWhenever you play an Attack, lose {StrengthPower:diff()} [gold]Strength[/gold] this turn.",
+  "SHIONTHEBRUISER-PEACE_PROMISE.flavor": "\"No matter what happens, these feelings I have will never vanish.\"",
+  "SHIONTHEBRUISER-PEACE_PROMISE.infoText": "Peace Promise [gold]Transformed[/gold] these cards:",
+
+  "SHIONTHEBRUISER-CHAOS_RING.title": "Chaos Ring",
+  "SHIONTHEBRUISER-CHAOS_RING.description": "Upon pickup, obtain the [gold]Chaos Emerald[/gold] of another player's character, and add [blue]2[/blue] of their basic Defends to your [gold]Deck[/gold].",
+  "SHIONTHEBRUISER-CHAOS_RING.flavor": "Chaos takes many forms. Properly harnessed, it shapes your thoughts into reality. But apparently, someone was VERY unimaginative, here...",
+
+  "SHIONTHEBRUISER-LEAF_ROBE.title": "Leaf Robe",
+  "SHIONTHEBRUISER-LEAF_ROBE.description": "Whenever you [gold]Mend[/gold], heal [blue]{Percent}%[/blue] of your Max HP.",
+  "SHIONTHEBRUISER-LEAF_ROBE.flavor": "The role of a party's healer is a noble duty, but that doesn't mean you should ignore your own health.",
+
+  "SHIONTHEBRUISER-INVISIBLE_NOTEBOOK.title": "Invisible Notebook",
+  "SHIONTHEBRUISER-INVISIBLE_NOTEBOOK.description": "When your HP would be reduced to [blue]0[/blue], heal to [blue]{Heal}%[/blue] of your Max HP instead (works once).\nYour cards have no description.",
+  "SHIONTHEBRUISER-INVISIBLE_NOTEBOOK.flavor": "Many screams of despair echoed through space and time as a mysterious force wiped away long and passionate walls of text.",
+
+  "SHIONTHEBRUISER-FORCE_CURSOR.title": "Force Cursor",
+  "SHIONTHEBRUISER-FORCE_CURSOR.description": "[gold]Treasure[/gold] chests also contain a card reward.",
+  "SHIONTHEBRUISER-FORCE_CURSOR.flavor": "Focus on what is written and you'll find hidden messages beneath.",
+
+  "SHIONTHEBRUISER-IMMORTAL_ROSE.title": "Immortal Rose",
+  "SHIONTHEBRUISER-IMMORTAL_ROSE.description": "In your next {Cards:diff()} card rewards, a random card is [gold]Enchanted[/gold] with [gold]Sown[/gold].",
+  "SHIONTHEBRUISER-IMMORTAL_ROSE.flavor": "The colors, they won't stop.\nBright, beautiful colors\nFlashing, expanding, piercing\nRed, green, blue\nAn endless\ncacophony\nOf meaningless\nnoise",
+
+  "SHIONTHEBRUISER-LUCKY_GLOVE.title": "Lucky Glove",
+  "SHIONTHEBRUISER-LUCKY_GLOVE.description": "Once, you may [gold]Reroll[/gold] a card reward. If you do, the new cards are [gold]Upgraded[/gold].",
+  "SHIONTHEBRUISER-LUCKY_GLOVE.flavor": "Mobians often wear those for protection. It's got a certain je-ne-sais-quoi when worn by humans. A very cartoonish one.",
+
+  "SHIONTHEBRUISER-LEMONADE_BOTTLES.title": "Lemonade Bottles",
+  "SHIONTHEBRUISER-LEMONADE_BOTTLES.description": "Upon pickup, every other player gains {Gold:diff()} [gold]Gold[/gold].",
+  "SHIONTHEBRUISER-LEMONADE_BOTTLES.flavor": "Sit down, share with a pal, and watch as yet another problem rears its ugly head.",
+
+  "SHIONTHEBRUISER-POP_CORN.title": "Pop Corn",
+  "SHIONTHEBRUISER-POP_CORN.description": "Upon pickup, every other player gains {MaxHp:diff()} Max HP.",
+  "SHIONTHEBRUISER-POP_CORN.flavor": "Salted, or sweet? A true buddy brings both so all their friends are satisfied.",
+
+  "SHIONTHEBRUISER-POEM_OF_GRATITUDE.title": "Poem of Gratitude",
+  "SHIONTHEBRUISER-POEM_OF_GRATITUDE.description": "Upon pickup, ALL players obtain a random relic.\nYour next [gold]Elite[/gold] combat doesn't give you a relic.",
+  "SHIONTHEBRUISER-POEM_OF_GRATITUDE.flavor": "Before you know it, those you love and care about might be gone. Take the occasion today to share your feelings before it's too late.",
+
+  "SHIONTHEBRUISER-PLANET_EGG.title": "Planet Egg",
+  "SHIONTHEBRUISER-PLANET_EGG.description": "Upon pickup, choose [blue]1[/blue] of [blue]3[/blue] starting cards of other characters to add to your [gold]Deck[/gold]. Basic Strikes and Defends are never offered.",
+  "SHIONTHEBRUISER-PLANET_EGG.flavor": "This inflatable balloon could be passed for that one thing that give each planet their energy, but be reassured, it is not.",
+
+  "SHIONTHEBRUISER-FESTIVE_RIBBONS.title": "Festive Ribbons",
+  "SHIONTHEBRUISER-FESTIVE_RIBBONS.description": "Upon pickup, [gold]Upgrade[/gold] ALL your Defends.\nThe next [gold]Treasure[/gold] chest you open is empty.",
+  "SHIONTHEBRUISER-FESTIVE_RIBBONS.flavor": "See, THESE ones come already fastened. Behold, the wisdom from beyond your world.",
+
+  "SHIONTHEBRUISER-SOUVENIR_SEED.title": "Souvenir Seed",
+  "SHIONTHEBRUISER-SOUVENIR_SEED.description": "Upon pickup, ALL players [gold]Enchant[/gold] a random basic card in their [gold]Deck[/gold] with [gold]Sown[/gold].",
+  "SHIONTHEBRUISER-SOUVENIR_SEED.flavor": "A certain seed from a faraway planet. Raise it with the care and love it has given in its previous life.",
+
+  "SHIONTHEBRUISER-WATERING_CAN.title": "Watering Can",
+  "SHIONTHEBRUISER-WATERING_CAN.description": "The first time you [gold]Smith[/gold] an unenchanted card at a [gold]Rest Site[/gold], [gold]Enchant[/gold] it with [gold]Sown[/gold].",
+  "SHIONTHEBRUISER-WATERING_CAN.flavor": "Just like love, you should shower your friends with just enough water.",
+
+  "SHIONTHEBRUISER-SANTA_HAT.title": "Santa Hat",
+  "SHIONTHEBRUISER-SANTA_HAT.description": "Ignore the next [gold]Curse[/gold] that would be added to your [gold]Deck[/gold].",
+  "SHIONTHEBRUISER-SANTA_HAT.flavor": "The sight of the upcoming festivities fills you with jollyness.",
+
+  "SHIONTHEBRUISER-FLOS_FRIDGE.title": "Flo's Fridge",
+  "SHIONTHEBRUISER-FLOS_FRIDGE.description": "Upon pickup, procure a random potion.\nWhenever you enter a [gold]Boss[/gold] room, gain [blue]1[/blue] potion slot and procure a random potion.",
+  "SHIONTHEBRUISER-FLOS_FRIDGE.flavor": "How [i]does[/i] he never run out of drinks?",
+
+  "SHIONTHEBRUISER-SECRET_KEY.title": "Secret Key",
+  "SHIONTHEBRUISER-SECRET_KEY.description": "Once, after opening a [gold]Treasure[/gold] chest, you may travel to another [gold]Treasure[/gold] chest on the same row.",
+  "SHIONTHEBRUISER-SECRET_KEY.flavor": "Just be glad you didn't have to decipher obscure cryptography to get that one."
 }

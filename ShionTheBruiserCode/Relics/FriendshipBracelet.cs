@@ -13,19 +13,16 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 /// <summary>
-/// Neow relic (multiplayer, FriendshipBraceletNeowPatch). Choose a Team-Up to add to your Deck:
+/// Cosmo relic (multiplayer). Choose a Team-Up to add to your Deck:
 /// one per class in the party that has a Team-Up with yours, plus one that works with anyone.
 /// Then add a random Curse to your Deck.
+/// Not in the sheet's cursed pool even though it adds a Curse: Cosmo then adds a cursed option next to it.
 /// </summary>
-[Pool(typeof(EventRelicPool))]
-public class FriendshipBracelet : ShionTheBruiserRelic
+public class FriendshipBracelet : CosmoRelic
 {
-    public override RelicRarity Rarity => RelicRarity.Ancient;
+    public override CosmoAvailability CosmoAvailability => CosmoAvailability.MultiplayerOnly;
 
-    public override bool IsAllowedAtNeow(Player player)
-    {
-        return player.RunState.Players.Count > 1 && TeamUpHelper.GetAvailableTeamUps(player).Any();
-    }
+    public override bool IsAllowedAtCosmo(Player player) => TeamUpHelper.GetAvailableTeamUps(player).Any();
 
     public override async Task AfterObtained()
     {

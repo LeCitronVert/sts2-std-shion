@@ -1682,3 +1682,74 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 
 **Decisions I made**
 - Rarity unchanged (Rare). X-cost cards (if any Rare Colourless has one) are not made free, matching the mod's other "free" helpers.
+
+## 31. Cosmo, Mother of (re)Animation (new ancient + Warm Embrace epoch)
+- [ ] Open the project in MegaDot so the new images in `ShionTheBruiser/images/ancients/` and the scene `ShionTheBruiser/scenes/ancients/cosmo.tscn` get imported, then rebuild and re-export the pck.
+- [ ] Console tip: `ancient SHIONTHEBRUISER-COSMO` (or `event SHIONTHEBRUISER-COSMO`) to jump straight in.
+
+**Warm Embrace (epoch)**
+- [ ] Its slot appears in the Invitation7 column (row 5, under Fry's), opened by Shion's "The Call". On a save where The Call is already revealed, the slot should still show up after a restart (the save fixer adds missing child slots).
+- [ ] Obtained at the end of any run once 2 Chaos Emeralds are unlocked in the save. Text, unlock info ("Unlock 2 Chaos Emeralds") and unlock text ("Cosmo will sometimes welcome you…") look right. The story tab reads "Dreamers". The portrait is the placeholder for now.
+
+**When Cosmo shows up (instead of Neow)**
+- [ ] Never before Warm Embrace is revealed, never in custom/daily runs with modifiers, never in Acts 2 or 3.
+- [ ] Solo: shows up every run after a run where that character held a Chaos Emerald (win or loss), and only then. Neow comes back after a run without one.
+- [ ] MP: shows up when anyone in the party has Warm Embrace, every other run (Cosmo, Neow, Cosmo…), following the host's profile. Every player sees the same ancient. No desync.
+- [ ] Like Neow, she heals you to full on entering (heal VFX plays). The map's start node and the run history show her icon.
+
+**Visuals**
+- [ ] Warm backdrop with Cosmo on the left (scene: Figure at 156,100, 768×1020). Check her size and position next to the dialogue and options, at 16:9 and at a wider/narrower window. Nothing should overlap the option buttons.
+- [ ] Her dialogue bubbles are leaf green and use her icon. The name banner reads "Cosmo, Mother of (re)Animation".
+- [ ] The source art has the artist's credit ("Cosmo the Seedrian from Sonic X, fanart by AlexiSonicKST") under her feet. Decide whether to keep it.
+
+**Options (3 relics)**
+- [ ] Solo: 1 cursed relic (last) + 2 non-cursed. Never a "MP only" relic.
+- [ ] MP: 1 "MP only" relic + 1 cursed relic (unless the MP one is cursed: Power Core, Chaos Ring, Poem of Gratitude) + non-cursed for the rest. Never a "Solo only" relic.
+- [ ] Festive Ribbons and Secret Key never show up together. Picking a cursed relic shows the "Be careful with that one" closing text.
+- [ ] Power Core and Friendship Bracelet no longer appear at Neow. Master Emerald Shard Pendant no longer drops as a Shion Rare relic (only from Cosmo).
+
+**Relics**
+- [ ] Power Core / Friendship Bracelet (MP): unchanged effects (pick a Team Blast / Team-Up, then a random Curse).
+- [ ] Master Emerald Shard Pendant: Lull still works at rest sites, for any character.
+- [ ] Sailing Ship (MP): gaining Max HP (e.g. a Strawberry) gives every other living player the same; losing Max HP takes it from them. Two players with a Sailing Ship: no infinite loop (mirrored changes don't mirror again).
+- [ ] Checkpoint (solo): from any later map point of the act, the last Rest Site you visited also lights up as travelable. Going back uses it up (relic greys out); the map then continues from that Rest Site. Check the save/reload after going back, and that it doesn't break the map (spec note: "tell me if it completely breaks everything").
+- [ ] Comfy Cape: Rest heals 30% + 20% of Max HP. Being Mended by someone also gets the +20%.
+- [ ] Super Bulldozurator Puzzlitowersonic: after Smithing, a random other upgradable card is also Upgraded (shown).
+- [ ] Peace Promise (cursed): on pickup, 3 basic Strikes are Transformed (screen shows them). Each Attack you play gives "Peace Promise" −3 Strength until end of turn (stacks per Attack, all restored at end of turn).
+- [ ] Chaos Ring (MP, cursed): only offered if you unlocked (in your save) the emerald of another player's character that you don't hold. On pickup: that Chaos Emerald + 2 of that character's basic Defends. Check every client agrees on whether it's offered (no desync).
+- [ ] Leaf Robe (MP): after you Mend someone, you heal 15% of your Max HP.
+- [ ] Invisible Notebook (cursed): all your cards (hand, deck, rewards, shop) show no description. At 0 HP once: survive and heal to 50% Max HP, then the relic is spent.
+- [ ] Force Cursor: opening a Treasure chest also gives a 3-card reward. Check in MP: only the owner gets it.
+- [ ] Immortal Rose: your next 3 card rewards each have one card Enchanted with Sown (counter 3 → 0, then greyed out).
+- [ ] Lucky Glove: your card rewards show the Reroll button until you use it once. The rerolled cards are Upgraded. After that, no more Reroll buttons (even on other rewards of the same screen, once reopened).
+- [ ] Lemonade Bottles (MP): the other players get 100 Gold. Pop Corn (MP): the other players get 5 Max HP.
+- [ ] Poem of Gratitude (MP, cursed): every player (you included) gets a random relic. Your first Elite combat afterwards gives you no relic (the others still get theirs).
+- [ ] Planet Egg: choose 1 of 3 starting cards of other unlocked characters (no Strikes/Defends), e.g. Bash, Neutralize, Zap…
+- [ ] Festive Ribbons (solo, cursed): all Defends Upgraded on pickup. The first Treasure chest is empty, the next ones are normal.
+- [ ] Souvenir Seed: every player gets one random basic card Enchanted with Sown.
+- [ ] Watering Can: the first Smith of an unenchanted card Enchants it with Sown (relic then greys out). Smithing an already-enchanted card doesn't use it.
+- [ ] Santa Hat: the next Curse that would be added to your Deck isn't (relic flashes and greys out). Test with Power Core's Curse or an event Curse.
+- [ ] Flo's Fridge: a random potion on pickup. On entering each Boss room: +1 potion slot (kept for the run) and a random potion.
+- [ ] Secret Key (solo): after the mid-act Treasure chest, the other chests of that row are travelable once. Taking one uses the relic.
+
+**Dialogue (eng only)**
+- [ ] First ever visit (any character): the 6-line intro (2 narration lines, then "Coucou !"…).
+- [ ] Any character: repeatable lines ("You can't give up now!" / "{character name}! Stay determined!", "I believe in you!", "If only there was a peaceful way…"). Solo after holding an emerald: "I can't bring you back the emerald you found last time…".
+- [ ] Shion: 15 dialogues from the sheet. Seels: 14. One-time ones play at visits 1, 2, 5, 8… (default spacing). Repeatable ones join the pool from their slot.
+- [ ] Conditional ones (Solo / MP without other Dreamers / MP with all the other Dreamers / MP with another mod's character) play once their condition holds, even after their slot. One-time ones play only once (saved in `shionthebruiser_cosmo.json`).
+
+**Decisions I made**
+- Spawn (your answer): solo = had an emerald last run with that character; MP = alternate with Neow per the host's profile, if anyone has Warm Embrace. Emerald unlocks and the host's "Cosmo next" flag are added to the unlock data every lobby already sends, so all clients decide the same thing without new network messages. These extras aren't in the run save: a reloaded MP run sees them as empty (on every client alike). That only matters if you reload while Cosmo's options are still up.
+- Warm Embrace's slot is opened by Shion's "The Call" (the Dreamers' story starts with the first Dreamer). Row 5 of Invitation7, the first free row in Condensed Might's column.
+- Option order: regular gifts first, then the MP-only one, the cursed one last (like Neow). The filler relics never include a second MP-only relic. "Friendship Bracelet" isn't in the cursed pool on the sheet, so it gets a cursed option next to it even though it adds a Curse.
+- Chaos Ring gate (your answer): you must have unlocked the emerald of a partner's character and not hold it. The emerald is the solo one. The 2 Defends are the first basic Defend of that character's starting deck.
+- Checkpoint and Secret Key add extra travelable map points. Checkpoint goes back to the last Rest Site of the current act. Secret Key opens the unvisited chests of the same row.
+- Lucky Glove reuses the vanilla Reroll button (the Driftwood one). One use for the whole run.
+- Flo's Fridge: the Boss-room slot is permanent (your answer). It triggers on entering the Boss room.
+- Comfy Cape: +20% of Max HP, rounded down. Leaf Robe: 15%, rounded down (min 1).
+- Peace Promise's −3 Strength is a BaseLib temporary-down power (default temp-down icon), so no new power icon.
+- Conditional dialogues (your answer): a conditional one-time dialogue waits for its condition but not for its visit slot. It still waits for the unconditional one-time dialogues before it.
+- Names: "Super Bulldozurator Puzzlitowersonic" is the sheet's name; its note says the full name is still to be fetched. "Master Shard Pendant" keeps its existing title, "Master Emerald Shard Pendant".
+- Text: "{Class}" in Cosmo's line = the character's name. Small fixes: "revives you.." → "...", "english" → "English", "here's some something" → "here's something", "pretty stronger" → "pretty strong", "that one version of Fry I meant" → "I met", "Don't sweat it" got a period. I wrote the event page texts (opening, closing, cursed closing) and the button labels; the sheet didn't have them.
+- Cosmo's art: your image with a soft warm halo, on a generated warm backdrop (amber glow, light rays, floating motes, darker on the right for readability). Map icon (160px) and dialogue/run-history icon (128px) come from your dialog icon, with white outlines.
+- Not done: the epoch sheet's second, untitled row ("Unlock seven Chaos Emeralds") has no title or effect yet. Force Cursor's "the cursor changes to open chests" note is cosmetic and skipped.

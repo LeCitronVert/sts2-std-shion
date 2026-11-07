@@ -99,5 +99,11 @@
   "SHIONTHEBRUISER-FRY_UNLOCK_EPOCH.title": "TODO",
   "SHIONTHEBRUISER-FRY_UNLOCK_EPOCH.description": "TODO",
   "SHIONTHEBRUISER-FRY_UNLOCK_EPOCH.unlockInfo": "{IsRevealed:Played|Play} a run with the [blue]Reckless[/blue]{IsRevealed:| to reveal this Epoch}.",
-  "SHIONTHEBRUISER-FRY_UNLOCK_EPOCH.unlockText": "Unlocked [red]Fry, the Commander[/red] as a playable character."
+  "SHIONTHEBRUISER-FRY_UNLOCK_EPOCH.unlockText": "Unlocked [red]Fry, the Commander[/red] as a playable character.",
+
+  "STORY_SHIONTHEBRUISER-DREAMERSSTORY": "Dreamers",
+  "SHIONTHEBRUISER-WARM_EMBRACE_EPOCH.title": "Warm Embrace",
+  "SHIONTHEBRUISER-WARM_EMBRACE_EPOCH.description": "As the [red]Architect[/red] vanquishes you once more, you feel someone whisking you away before the [red]fatal blow[/red].\n[blue]Neow[/blue]...? No...\n\nThis time, you feel a great [green]warmth[/green] around you... As if someone was [sine]gently hugging[/sine] you, [green]healing[/green] your flesh and mind.\n\nYou wonder to who you owe the pleasure, but it looks like you might meet them soon enough.",
+  "SHIONTHEBRUISER-WARM_EMBRACE_EPOCH.unlockInfo": "{IsRevealed:Unlocked|Unlock} [blue]2[/blue] [gold]Chaos Emeralds[/gold]{IsRevealed:| to reveal this Epoch}.",
+  "SHIONTHEBRUISER-WARM_EMBRACE_EPOCH.unlockText": "[green]Cosmo[/green] will sometimes welcome you before you depart."
 }

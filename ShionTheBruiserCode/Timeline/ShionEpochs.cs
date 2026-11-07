@@ -36,6 +36,13 @@ public class ShionTheCallEpoch : CharacterUnlockEpoch<Character.ShionTheBruiser,
     public override EpochEra Era => EpochEra.Invitation1;
     public override int EraPosition => 5; // Rows 0-4 are taken: this column gets taller than the others
     protected override string PortraitFile => "shion/the_call";
+
+    // The Dreamers' shared story opens with the first Dreamer
+    public override EpochModel[] GetTimelineExpansion() =>
+    [
+        .. base.GetTimelineExpansion(),
+        .. new DreamersStory().Epochs,
+    ];
 }
 
 /// <summary>

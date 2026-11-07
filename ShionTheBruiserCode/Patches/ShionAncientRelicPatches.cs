@@ -69,7 +69,6 @@ public static class ThornRingVakuuOptionsPatch
 
 /// <summary>
 /// Neow: Turtle Hermit Shell can take her second blessing, 1 in 8 like a regular blessing (2 shown out of ~16).
-/// The first one is left to Friendship Bracelet (FriendshipBraceletNeowPatch).
 /// </summary>
 [HarmonyPatch(typeof(Neow), "GenerateInitialOptions")]
 public static class TurtleHermitShellNeowPatch

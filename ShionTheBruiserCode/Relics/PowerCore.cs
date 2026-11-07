@@ -12,20 +12,18 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 /// <summary>
-/// Neow relic (multiplayer, FriendshipBraceletNeowPatch). Choose 1 of 3 Team Blasts to add to your Deck:
+/// Cosmo relic (multiplayer, cursed). Choose 1 of 3 Team Blasts to add to your Deck:
 /// your character's own Team Blast if it has one, the rest generic (Colorless) ones. Then add a random Curse to your Deck.
 /// </summary>
-[Pool(typeof(EventRelicPool))]
-public class PowerCore : ShionTheBruiserRelic
+public class PowerCore : CosmoRelic
 {
     public const int Choices = 3;
 
-    public override RelicRarity Rarity => RelicRarity.Ancient;
+    public override CosmoAvailability CosmoAvailability => CosmoAvailability.MultiplayerOnly;
 
-    public override bool IsAllowedAtNeow(Player player)
-    {
-        return player.RunState.Players.Count > 1 && GetGenericTeamBlasts().Any();
-    }
+    public override bool IsCursedOption => true;
+
+    public override bool IsAllowedAtCosmo(Player player) => GetGenericTeamBlasts().Any();
 
     private static IEnumerable<CardModel> GetGenericTeamBlasts() =>
         ModelDb.CardPool<ColorlessCardPool>().AllCards.Where(DreamersMechanicsHelper.IsTeamBlast);

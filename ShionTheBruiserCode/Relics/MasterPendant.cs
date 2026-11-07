@@ -8,10 +8,13 @@ using ShionTheBruiser.ShionTheBruiserCode.RestSiteOptions;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
-public class MasterPendant() : ShionTheBruiserRelic
+/// <summary>
+/// Cosmo relic ("Master Shard Pendant"). You can Lull at Rest Sites to add one of Cosmo's cards to your Deck.
+/// Was one of Shion's Rare relics: now only Cosmo gives it.
+/// </summary>
+public class MasterPendant() : CosmoRelic
 {
-    public override RelicRarity Rarity =>
-        RelicRarity.Rare;
+    public override CosmoAvailability CosmoAvailability => CosmoAvailability.Always;
 
     public override bool TryModifyRestSiteOptions(Player player, ICollection<RestSiteOption> options)
     {

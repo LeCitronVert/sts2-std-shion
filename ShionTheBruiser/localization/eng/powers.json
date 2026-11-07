@@ -579,5 +579,9 @@
   "SHIONTHEBRUISER-STRIKE_FIRST_STRENGTH.smartDescription": "Gains [blue]{Amount}[/blue] [gold]Strength[/gold] until the end of the turn.",
   "SHIONTHEBRUISER-ACE_OF_SPADE.title": "Ace of Spade",
   "SHIONTHEBRUISER-ACE_OF_SPADE.description": "Gaining [gold]Strength[/gold] and [gold]Dexterity[/gold] from the [gold]Ace of Spade[/gold] cards in your [gold]Hand[/gold]. Lost when they leave your [gold]Hand[/gold].",
-  "SHIONTHEBRUISER-ACE_OF_SPADE.smartDescription": "Gaining [blue]{Amount}[/blue] [gold]Strength[/gold] and [gold]Dexterity[/gold] from the [gold]Ace of Spade[/gold] cards in your [gold]Hand[/gold]. Lost when they leave your [gold]Hand[/gold]."
+  "SHIONTHEBRUISER-ACE_OF_SPADE.smartDescription": "Gaining [blue]{Amount}[/blue] [gold]Strength[/gold] and [gold]Dexterity[/gold] from the [gold]Ace of Spade[/gold] cards in your [gold]Hand[/gold]. Lost when they leave your [gold]Hand[/gold].",
+
+  "SHIONTHEBRUISER-PEACE_PROMISE_STRENGTH_DOWN.title": "Peace Promise",
+  "SHIONTHEBRUISER-PEACE_PROMISE_STRENGTH_DOWN.description": "Loses [gold]Strength[/gold] until the end of the turn.",
+  "SHIONTHEBRUISER-PEACE_PROMISE_STRENGTH_DOWN.smartDescription": "Loses [blue]{Amount}[/blue] [gold]Strength[/gold] until the end of the turn."
 }
