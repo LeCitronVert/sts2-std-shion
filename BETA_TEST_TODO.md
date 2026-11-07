@@ -1546,3 +1546,50 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - The tooltip is our own (styled like the mockup), not the game's hover tip.
 - New strings: `(character).className`, `(character).playstyle.(KEY).title/description` in characters.json, `SHIONTHEBRUISER-CHARACTER_SELECT.playstyles` in main_menu_ui.json. `title` and `titleObject` are now just the first name. Strings that only name the class ("Bruiser Cards", Sea Glass) and the epoch unlock texts that spell out "Shion, the Bruiser" were left as they are.
 - Seels and Fry get the skin but no playstyle row until their playstyles are given (`Playstyles` in their character class).
+
+## 27. Change Pending H (Seels card pass, Go Crazy, Gamble tag, Slal Slime cards)
+
+**Setup**
+- [ ] Rebuild, re-export the .pck (cards.json and powers.json changed) and let MegaDot generate the `.uid` files for `SeelsFinalRush.cs`, `GoCrazyPatches.cs`, `BeastForm.cs`, `GoCrazy.cs` and `NeverLearn.cs`. `BeastFormStrength.cs.uid` is the old `SavageryStrength` uid, renamed.
+
+**Seels**
+- [ ] Beast Form: 3 cost Power, Ethereal. Whenever you play an Attack, gain 2 (3) Strength this turn (the Strength wears off at end of turn).
+- [ ] Savagery: 2 cost. The first time (2 times upgraded) you play an Attack each turn, a random card in your Hand becomes free this turn. The power's number counts down the uses left this turn and refills next turn. It picks cards that cost something first (not X-cost); with an empty Hand nothing happens but the use is spent.
+- [ ] Blind Assault: 2 cost (1 upgraded). Makes plain Corrupted Slashes (no longer Slashes+ when upgraded).
+- [ ] Blood Bath: Blood Bend X, gain 6X Block (6 + 6X upgraded) in **one** gain, so Dexterity applies once. Gain 2 Blur. Check the in-combat preview matches.
+- [ ] Blood Cage: now Exhausts.
+- [ ] Blood Prison: Blood Bend X. Gain 4 Block and X (X+1) Plating. Apply X (X+1) Vulnerable to ALL enemies. Exhaust. Plating gives Block at end of turn and goes down by 1 each turn.
+- [ ] Blood Punch: Lose 3 (2) HP. Deal 7 damage, +3 for each time you lost HP this combat (this card's own HP loss counts). Goes back into the Draw Pile at a random spot. Preview damage = what it deals. Check with Buffer/Intangible blocking the HP loss.
+- [ ] Burning Pain: Uncommon Skill, 2 cost (1 upgraded), Wounding. The next Blood Bend X gives X Strength and uses the charge, even with 0 Blood. Two copies = next 2 Blood Bends.
+- [ ] Combo Meter: upgrade now draws 1 card (cost stays 1).
+- [ ] Final Rush (new Rare, 2 cost): 2 damage to a random enemy per Slash in the Exhaust Pile, then adds Finishing Explosion to your Hand. Exhaust (upgrade removes Exhaust). Shows up in rewards; has no art (listed in MISSING_IMAGES).
+- [ ] Finishing Explosion: now a 0-cost token (not in rewards). 4 damage to ALL enemies + 2 (4 upgraded) per Slash in the Exhaust Pile. Exhaust.
+- [ ] Gambling Addiction: 1-cost Event card (no longer in rewards), Exhaust, Eternal, no upgrade. Deals damage = the energy it was played for (0 if free) to a random enemy, once per Erratic card you have. If it's in your Hand at end of turn, Gamble your whole Hand, Gambling Addiction included. Try two copies in Hand.
+- [ ] Go Crazy: Ancient 3-cost Power (Innate upgraded). Once per turn, a card you can't afford is playable: you spend all your energy and lose HP equal to the missing energy. Check: the card glows as playable, the counter goes to 0 after one use and refills next turn, X-cost cards and star costs aren't affected, two copies give 2 uses, and it works in multiplayer for the right player.
+- [ ] Magical Overload: enchanted Slashes created by Blind Assault, Press the Attack, Pin Them Down, Spectacular Break-in and Threatening Promise now count as modified cards (they didn't before).
+- [ ] Never Learn: 3 cost Power (Retain upgraded). When Gloat's energy arrives at the start of your turn, gain that much Strength (×2 with two copies). No longer Blood Bends or gives Max HP.
+- [ ] Private Joke: wording now "deal 3 damage to a random enemy".
+- [ ] Scarlet Shadow: Double (Triple) your Blood, no Blood Bend on play. Still Blood Bends at end of combat and Exhausts. Preview shows the Blood gained.
+- [ ] Sweat and Tears: Whenever you Blood Bend (even with 0 Blood, and replays count), gain 1 (2) energy. Copies stack into one power now.
+- [ ] Tornado Stance: Rare (no longer Ancient).
+- [ ] U-Turn: also discards drawn X-cost cards and Unplayable cards (Curses, Statuses), like Scrape.
+- [ ] Blood Bend + Chemical X: Blood Bend X gets +2 (Blood Bath, Blood Cage, Blood Prison, etc. and their previews), and Burning Pain counts it too. The heal stays at the Blood actually consumed. Chemical X doesn't flash for these.
+- [ ] Gamble tag added to Card Dealing, Wink, Cliff Dropper, Dice Blessing, Excited Wait, Illusion of Risk and Toss A Coin (nothing uses it yet).
+- [ ] Big Numbers: the power's number now shows the highest cost an Erratic card can reach (3 + stacks).
+
+**Slal**
+- [ ] Slime Hammer: Very Slimy. 10 damage + 2 per Slimy card you have. Exhaust (upgrade removes Exhaust instead of raising the bonus).
+- [ ] Slime Form: whenever you play a Slimy or Very Slimy card, gain 4 Block (no longer on creating Statuses). Cost unchanged (2, 1 upgraded).
+
+**Decisions I made**
+- Finishing Explosion upgrade = per-Slash bonus 2 → 4; Gambling Addiction damage = its own cost per Erratic card; Go Crazy HP = missing energy; Burning Pain charge is used up even at 0 Blood (all confirmed).
+- Savagery's old effect moved to Beast Form: the power is now `BeastForm`, its temporary Strength `BeastFormStrength` (renamed from `SavageryStrength`, loc key renamed too). `Savagery` is the new free-card power.
+- Kept current values the sheet doesn't give: Burning Pain stays 2 cost, Savagery upgrade +1 trigger, Sweat and Tears upgrade +1 energy, Never Learn 3 cost with Retain upgrade, Scarlet Shadow 0 cost, Slime Hammer 2 cost, Blood Prison 0 cost.
+- Blind Assault: the sheet's upgrade "1-cost" replaces the old Slashes+ upgrade.
+- Blood Prison: X+1 applies to both Plating and Vulnerable. It no longer deals damage.
+- Gambling Addiction: Gambles itself too, so it keeps coming back on top of your Draw Pile (Erratic). Damage ignores Strength. `//todo : upgrade not specified`, so it can't be upgraded.
+- Go Crazy is done with two Harmony patches (`GoCrazyPatches.cs`): one makes the card affordable, the other notes the missing energy before it's spent; the power takes the HP once the energy is spent.
+- Never Learn's Strength comes at the start of your turn, together with Gloat's energy (not when Gloat triggers).
+- Cursed Dice doesn't exist yet, so only the tag was added.
+- New power icons not made: Beast Form, Savagery (new effect), Go Crazy, Never Learn added/updated in MISSING_IMAGES.tsv, plus the Final Rush portrait.
+- The "Ideas (ne pas implémenter encore)" rows were skipped.

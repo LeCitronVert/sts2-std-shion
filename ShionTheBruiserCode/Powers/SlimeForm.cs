@@ -16,7 +16,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// Whenever you create a Status card, gain X Block.
+/// Whenever you play a Slimy (or Very Slimy) card, gain X Block.
 /// </summary>
 public class SlimeForm : SlalTheEndlessPower
 {
@@ -27,9 +27,9 @@ public class SlimeForm : SlalTheEndlessPower
         HoverTipFactory.Static(StaticHoverTip.Block),
     ];
 
-    public override async Task AfterCardGeneratedForCombat(CardModel card, Player? creator)
+    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (card.Type != CardType.Status || card.Owner != Owner.Player || creator != Owner.Player) return;
+        if (cardPlay.Card.Owner != Owner.Player || !SlalMechanicsHelper.IsSlimy(cardPlay.Card)) return;
 
         Flash();
         await CreatureCmd.GainBlock(Owner, Amount, ValueProp.Unpowered, null);

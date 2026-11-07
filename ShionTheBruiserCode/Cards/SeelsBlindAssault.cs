@@ -19,9 +19,9 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Transform 2 cards in your Hand into Corrupted Slashes (Slashes+).
+/// Transform 2 cards in your Hand into Corrupted Slashes. Costs 2 (1).
 /// </summary>
-public class SeelsBlindAssault() : SeelsTheRecklessCard(1,
+public class SeelsBlindAssault() : SeelsTheRecklessCard(2,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
@@ -29,7 +29,7 @@ public class SeelsBlindAssault() : SeelsTheRecklessCard(1,
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.Static(StaticHoverTip.Transform),
-        HoverTipFactory.FromCard<SeelsSlash>(IsUpgraded),
+        HoverTipFactory.FromCard<SeelsSlash>(),
         ..HoverTipFactory.FromEnchantment<Corrupted>(),
     ];
 
@@ -45,7 +45,7 @@ public class SeelsBlindAssault() : SeelsTheRecklessCard(1,
 
         foreach (var original in chosen)
         {
-            var slash = SeelsMechanicsHelper.CreateSlash(Owner, IsUpgraded);
+            var slash = SeelsMechanicsHelper.CreateSlash(Owner, false);
             SeelsMechanicsHelper.Enchant<Corrupted>(slash, 1);
             await CardCmd.Transform(original, slash);
         }
@@ -53,5 +53,6 @@ public class SeelsBlindAssault() : SeelsTheRecklessCard(1,
 
     protected override void OnUpgrade()
     {
+        EnergyCost.UpgradeBy(-1);
     }
 }

@@ -25,6 +25,8 @@ public class SeelsIllusionOfRisk() : SeelsTheRecklessCard(0,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
+    protected override HashSet<CardTag> CanonicalTags => [SeelsCardTags.Gamble];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("Gamble", 2M),
         new CardsVar(2),

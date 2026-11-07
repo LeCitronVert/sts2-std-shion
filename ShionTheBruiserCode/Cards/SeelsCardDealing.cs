@@ -20,6 +20,8 @@ public class SeelsCardDealing() : SeelsTheRecklessCard(1,
     CardType.Attack, CardRarity.Common,
     TargetType.AllEnemies)
 {
+    protected override HashSet<CardTag> CanonicalTags => [SeelsCardTags.Gamble];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(3M, ValueProp.Move),
         new CalculationBaseVar(0),

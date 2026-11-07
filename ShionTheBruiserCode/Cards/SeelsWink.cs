@@ -25,6 +25,8 @@ public class SeelsWink() : SeelsTheRecklessCard(0,
     CardType.Skill, CardRarity.Common,
     TargetType.AllEnemies)
 {
+    protected override HashSet<CardTag> CanonicalTags => [SeelsCardTags.Gamble];
+
     public override bool GainsBlock => true;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [

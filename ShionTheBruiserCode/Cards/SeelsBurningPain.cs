@@ -21,15 +21,18 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Whenever you Blood Bend with at least 2 Blood, gain 2 (3) Strength.
+/// Wounding. The next 1 time you Blood Bend X, gain X Strength. Costs 2 (1).
 /// </summary>
 public class SeelsBurningPain() : SeelsTheRecklessCard(2,
-    CardType.Power, CardRarity.Rare,
+    CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<BurningPain>(2M)];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [SeelsCardKeywords.Wounding];
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<BurningPain>(1M)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromCard<Wound>(),
         HoverTipFactory.FromKeyword(SeelsCardKeywords.BloodBend),
         HoverTipFactory.FromPower<Blood>(),
         HoverTipFactory.FromPower<StrengthPower>(),
@@ -37,11 +40,12 @@ public class SeelsBurningPain() : SeelsTheRecklessCard(2,
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
+        await SeelsMechanicsHelper.AddWounds(Owner, 1);
         await PowerCmd.Apply<BurningPain>(choiceContext, Owner.Creature, DynamicVars["BurningPain"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["BurningPain"].UpgradeValueBy(1M);
+        EnergyCost.UpgradeBy(-1);
     }
 }

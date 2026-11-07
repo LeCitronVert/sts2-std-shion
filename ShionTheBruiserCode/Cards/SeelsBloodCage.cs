@@ -21,7 +21,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Blood Bend X. Gain 4 Block. Apply X (X+1) Vulnerable.
+/// Blood Bend X. Gain 4 Block. Apply X (X+1) Vulnerable. Exhaust.
 /// </summary>
 public class SeelsBloodCage() : SeelsTheRecklessCard(0,
     CardType.Skill, CardRarity.Basic,
@@ -30,6 +30,8 @@ public class SeelsBloodCage() : SeelsTheRecklessCard(0,
     public override bool GainsBlock => true;
 
     protected override HashSet<CardTag> CanonicalTags => [SeelsCardTags.Blood];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new BlockVar(4M, ValueProp.Move),

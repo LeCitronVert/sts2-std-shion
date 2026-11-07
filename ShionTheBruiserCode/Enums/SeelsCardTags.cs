@@ -8,4 +8,8 @@ public static class SeelsCardTags
     /// <summary>Cards containing "Blood" (counted by Bloody Execution).</summary>
     [CustomEnum]
     public static CardTag Blood;
+
+    /// <summary>Cards about gambling (used by the Cursed Dice relic, not built yet).</summary>
+    [CustomEnum]
+    public static CardTag Gamble;
 }

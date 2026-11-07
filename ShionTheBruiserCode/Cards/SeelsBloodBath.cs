@@ -21,7 +21,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Blood Bend X. Gain 6 Block X (X+1) times. Gain 2 Blur.
+/// Blood Bend X. Gain 6X (6 + 6X) Block, all at once (Dexterity applies once). Gain 2 Blur.
 /// </summary>
 public class SeelsBloodBath() : SeelsTheRecklessCard(2,
     CardType.Skill, CardRarity.Common,
@@ -37,10 +37,8 @@ public class SeelsBloodBath() : SeelsTheRecklessCard(2,
         new PowerVar<BlurPower>(2M),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
-        // Block is gained X times, so modifiers apply to each gain
         new CalculatedVar("BlockAmount").WithMultiplier((card, _) =>
-            (SeelsMechanicsHelper.PreviewBloodBendX(card) + card.DynamicVars["Bonus"].IntValue)
-            * PreviewHelper.ModifiedBlock(card, card.DynamicVars.Block.BaseValue, card.DynamicVars.Block.Props)),
+            PreviewHelper.ModifiedBlock(card, TotalBlock(card, SeelsMechanicsHelper.PreviewBloodBendX(card)), card.DynamicVars.Block.Props)),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -49,13 +47,17 @@ public class SeelsBloodBath() : SeelsTheRecklessCard(2,
         HoverTipFactory.FromPower<BlurPower>(),
     ];
 
+    /// <summary>6 Block per X, plus 6 more per Bonus (upgrade).</summary>
+    private static decimal TotalBlock(CardModel card, int x) =>
+        card.DynamicVars.Block.BaseValue * (x + card.DynamicVars["Bonus"].IntValue);
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         var x = await SeelsMechanicsHelper.BloodBend(choiceContext, this);
-        var times = x + DynamicVars["Bonus"].IntValue;
-        for (var i = 0; i < times; i++)
+        var block = TotalBlock(this, x);
+        if (block > 0)
         {
-            await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
+            await CreatureCmd.GainBlock(Owner.Creature, block, DynamicVars.Block.Props, play);
         }
         await PowerCmd.Apply<BlurPower>(choiceContext, Owner.Creature, DynamicVars["BlurPower"].BaseValue, Owner.Creature, this);
     }

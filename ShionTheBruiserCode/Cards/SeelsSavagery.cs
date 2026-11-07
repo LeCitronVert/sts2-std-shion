@@ -19,15 +19,13 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Whenever you play an Attack, gain 2 (3) Strength this turn.
+/// The first 1 (2) time(s) you play an Attack each turn, a random card in your Hand is free to play that turn.
 /// </summary>
-public class SeelsSavagery() : SeelsTheRecklessCard(1,
+public class SeelsSavagery() : SeelsTheRecklessCard(2,
     CardType.Power, CardRarity.Uncommon,
     TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<Savagery>(2M)];
-
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>()];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<Savagery>(1M)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {

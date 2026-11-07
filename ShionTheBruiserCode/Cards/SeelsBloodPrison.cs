@@ -21,27 +21,31 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Blood Bend X. Deal 14 (20) damage to ALL enemies. Apply X (X+1) Vulnerable to ALL enemies (twice).
+/// Blood Bend X. Gain 4 Block and X (X+1) Plating. Apply X (X+1) Vulnerable to ALL enemies. Exhaust.
 /// </summary>
 public class SeelsBloodPrison() : SeelsTheRecklessCard(0,
     CardType.Skill, CardRarity.Ancient,
     TargetType.AllEnemies)
 {
+    public override bool GainsBlock => true;
+
     protected override HashSet<CardTag> CanonicalTags => [SeelsCardTags.Blood];
 
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(14M, ValueProp.Move),
+        new BlockVar(4M, ValueProp.Move),
+        new DynamicVar("Bonus", 0M),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
-        new CalculatedVar("VulnerableAmount").WithMultiplier((card, _) =>
+        new CalculatedVar("XAmount").WithMultiplier((card, _) =>
             SeelsMechanicsHelper.PreviewBloodBendX(card) + card.DynamicVars["Bonus"].IntValue),
-        new DynamicVar("Bonus", 0M),
-        new RepeatVar(1),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(SeelsCardKeywords.BloodBend),
         HoverTipFactory.FromPower<Blood>(),
+        HoverTipFactory.FromPower<PlatingPower>(),
         HoverTipFactory.FromPower<VulnerablePower>(),
     ];
 
@@ -50,23 +54,15 @@ public class SeelsBloodPrison() : SeelsTheRecklessCard(0,
         if (CombatState is null) return;
         var x = await SeelsMechanicsHelper.BloodBend(choiceContext, this) + DynamicVars["Bonus"].IntValue;
 
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
-            .TargetingAllOpponents(CombatState)
-            .WithHitFx("vfx/vfx_bloody_impact")
-            .Execute(choiceContext);
+        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
 
         if (x <= 0) return;
-        for (var i = 0; i < DynamicVars.Repeat.IntValue; i++)
-        {
-            await PowerCmd.Apply<VulnerablePower>(choiceContext, CombatState.HittableEnemies.ToList(), x, Owner.Creature, this);
-        }
+        await PowerCmd.Apply<PlatingPower>(choiceContext, Owner.Creature, x, Owner.Creature, this);
+        await PowerCmd.Apply<VulnerablePower>(choiceContext, CombatState.HittableEnemies.ToList(), x, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(6M);
         DynamicVars["Bonus"].UpgradeValueBy(1M);
-        DynamicVars.Repeat.UpgradeValueBy(1M);
     }
 }

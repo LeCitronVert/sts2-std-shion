@@ -16,12 +16,11 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// Whenever you Blood Bend with at least 2 Blood, gain X Strength.
+/// The next X times you Blood Bend, gain Strength equal to the Blood Bend's X.
+/// Any Blood Bend uses a charge, even one with 0 Blood.
 /// </summary>
 public class BurningPain : SeelsTheRecklessPower, ISeelsListener
 {
-    public const int MinBlood = 2;
-
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
@@ -32,8 +31,12 @@ public class BurningPain : SeelsTheRecklessPower, ISeelsListener
 
     public async Task AfterBloodBend(PlayerChoiceContext choiceContext, Player player, int x, CardModel? source)
     {
-        if (player != Owner.Player || x < MinBlood) return;
+        if (player != Owner.Player || Amount <= 0) return;
         Flash();
-        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, Amount, Owner, null);
+        await PowerCmd.Decrement(this);
+        if (x > 0)
+        {
+            await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, x, Owner, null);
+        }
     }
 }

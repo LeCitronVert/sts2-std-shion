@@ -5,6 +5,8 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.HoverTips;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
+
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
@@ -17,6 +19,9 @@ public class BigNumbers : SeelsTheRecklessPower
 
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
+
+    /// <summary>Shows the maximum cost an Erratic card can reach, not the stacks.</summary>
+    public override int DisplayAmount => SeelsMechanicsHelper.BaseErraticMaxCost + Amount;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(SeelsCardKeywords.Erratic)];
 

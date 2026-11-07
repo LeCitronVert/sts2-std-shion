@@ -1,3 +1,6 @@
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Players;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -8,39 +11,22 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// Every 4 Attacks you play, gain X Blood.
-/// Doesn't stack, like Orbit: each copy played is its own instance with its own counter.
+/// Whenever you Blood Bend, gain X energy.
 /// </summary>
-public class SweatAndTears : SeelsTheRecklessPower
+public class SweatAndTears : SeelsTheRecklessPower, ISeelsListener
 {
-    public const int AttacksPerTrigger = 4;
-
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
-    public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
 
-    /// <summary>Attacks left before the next Blood.</summary>
-    public override int DisplayAmount => AttacksPerTrigger - GetInternalData<Data>().attacksPlayed % AttacksPerTrigger;
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(SeelsCardKeywords.BloodBend),
+        HoverTipFactory.ForEnergy(this),
+    ];
 
-    protected override object InitInternalData() => new Data();
-
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Blood>()];
-
-    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    public async Task AfterBloodBend(PlayerChoiceContext choiceContext, Player player, int x, CardModel? source)
     {
-        if (cardPlay.Card.Owner.Creature != Owner || cardPlay.Card.Type != CardType.Attack || !cardPlay.IsFirstInSeries) return;
-
-        var data = GetInternalData<Data>();
-        data.attacksPlayed++;
-        InvokeDisplayAmountChanged();
-        if (data.attacksPlayed % AttacksPerTrigger != 0) return;
-
+        if (player != Owner.Player) return;
         Flash();
-        await SeelsMechanicsHelper.GainBlood(choiceContext, Owner, Amount);
-    }
-
-    private class Data
-    {
-        public int attacksPlayed;
+        await PlayerCmd.GainEnergy(Amount, player);
     }
 }

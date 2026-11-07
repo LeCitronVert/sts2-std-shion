@@ -21,7 +21,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Add a copy of the first Slash you play each turn into your Hand (stacks). Put this card into your Draw Pile. Ethereal.
+/// Add a copy of the first Slash you play each turn into your Hand (stacks). (Draw 1 card.) Put this card into your Draw Pile. Ethereal.
 /// </summary>
 public class SeelsComboMeter() : SeelsTheRecklessCard(1,
     CardType.Skill, CardRarity.Uncommon,
@@ -29,13 +29,20 @@ public class SeelsComboMeter() : SeelsTheRecklessCard(1,
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Ethereal];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<ComboMeter>(1M)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new PowerVar<ComboMeter>(1M),
+        new CardsVar(0),
+    ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<SeelsSlash>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await PowerCmd.Apply<ComboMeter>(choiceContext, Owner.Creature, DynamicVars["ComboMeter"].BaseValue, Owner.Creature, this);
+        if (DynamicVars.Cards.IntValue > 0)
+        {
+            await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
+        }
     }
 
     public override (PileType, CardPilePosition) ModifyCardPlayResultPileTypeAndPosition(CardModel card, bool isAutoPlay, ResourceInfo resources, PileType pileType, CardPilePosition position)
@@ -45,6 +52,6 @@ public class SeelsComboMeter() : SeelsTheRecklessCard(1,
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars.Cards.UpgradeValueBy(1M);
     }
 }

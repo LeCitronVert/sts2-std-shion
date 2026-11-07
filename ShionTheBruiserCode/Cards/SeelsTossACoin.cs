@@ -27,6 +27,8 @@ public class SeelsTossACoin() : SeelsTheRecklessCard(0,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.AnyAlly)
 {
+    protected override HashSet<CardTag> CanonicalTags => [SeelsCardTags.Gamble];
+
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(1)];

@@ -19,7 +19,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain 6 (9) Strength.
+/// Whenever you play an Attack, gain 2 (3) Strength this turn. Ethereal.
 /// </summary>
 public class SeelsBeastForm() : SeelsTheRecklessCard(3,
     CardType.Power, CardRarity.Rare,
@@ -27,17 +27,19 @@ public class SeelsBeastForm() : SeelsTheRecklessCard(3,
 {
     protected override HashSet<CardTag> CanonicalTags => [SlalCardTags.Form];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<StrengthPower>(6M)];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Ethereal];
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<BeastForm>(2M)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, DynamicVars.Strength.BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<BeastForm>(choiceContext, Owner.Creature, DynamicVars["BeastForm"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Strength.UpgradeValueBy(3M);
+        DynamicVars["BeastForm"].UpgradeValueBy(1M);
     }
 }

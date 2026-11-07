@@ -9,17 +9,17 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Very Slimy. Deal 6 damage. Deals 4 (6) additional damage for each Slimy card you have.
+/// Very Slimy. Deal 10 damage. Deal 2 additional damage for ALL of your Slimy cards. Exhaust (upgrade: no Exhaust).
 /// </summary>
 public class SlalSlimeHammer() : SlalSlimyCard(2,
     CardType.Attack, CardRarity.Uncommon,
     TargetType.AnyEnemy)
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [SlalCardKeywords.VerySlimy];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [SlalCardKeywords.VerySlimy, CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CalculationBaseVar(6),
-        new ExtraDamageVar(4),
+        new CalculationBaseVar(10),
+        new ExtraDamageVar(2),
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) =>
             card.Owner.PlayerCombatState?.AllCards.Count(c => SlalMechanicsHelper.IsSlimy(c)) ?? 0),
     ];
@@ -41,6 +41,6 @@ public class SlalSlimeHammer() : SlalSlimyCard(2,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.ExtraDamage.UpgradeValueBy(2);
+        RemoveKeyword(CardKeyword.Exhaust);
     }
 }

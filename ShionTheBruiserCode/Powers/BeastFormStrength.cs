@@ -4,4 +4,4 @@ using ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
-public class SavageryStrength : CustomTemporaryPowerModelWrapper<SeelsSavagery, StrengthPower>;
+public class BeastFormStrength : CustomTemporaryPowerModelWrapper<SeelsBeastForm, StrengthPower>;

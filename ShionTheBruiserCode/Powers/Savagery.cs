@@ -1,28 +1,53 @@
-using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// Whenever you play an Attack, gain X Strength this turn.
+/// The first X times you play an Attack each turn, a random card in your Hand is free to play that turn.
+/// The counter shows how many triggers are left this turn.
 /// </summary>
 public class Savagery : SeelsTheRecklessPower
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>()];
+    public override int DisplayAmount => Math.Max(0, Amount - _usedThisTurn);
 
-    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    private int _usedThisTurn;
+
+    public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (cardPlay.Card.Owner.Creature != Owner || cardPlay.Card.Type != CardType.Attack) return;
+        var player = Owner.Player;
+        if (player is null || cardPlay.Card.Owner != player || cardPlay.Card.Type != CardType.Attack || !cardPlay.IsFirstInSeries) return Task.CompletedTask;
+        if (DisplayAmount <= 0) return Task.CompletedTask;
 
+        _usedThisTurn++;
+        InvokeDisplayAmountChanged();
         Flash();
-        await PowerCmd.Apply<SavageryStrength>(choiceContext, Owner, Amount, Owner, null);
+
+        // Prefer cards that actually cost something; a card that's already free gains nothing.
+        var hand = PileType.Hand.GetPile(player).Cards.Where(c => c != cardPlay.Card).ToList();
+        var costly = hand.Where(c => !c.EnergyCost.CostsX && c.EnergyCost.GetWithModifiers(CostModifiers.All) > 0).ToList();
+        var pool = costly.Count > 0 ? costly : hand;
+        if (pool.Count == 0) return Task.CompletedTask;
+
+        var card = player.RunState.Rng.CombatCardSelection.NextItem(pool);
+        card?.SetToFreeThisTurn();
+        return Task.CompletedTask;
+    }
+
+    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
+    {
+        if (side == Owner.Side)
+        {
+            _usedThisTurn = 0;
+            InvokeDisplayAmountChanged();
+        }
+        return Task.CompletedTask;
     }
 }

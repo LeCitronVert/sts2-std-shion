@@ -21,56 +21,65 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Ethereal. Gain 1 energy. Lose 3 (1) HP.
-/// Whenever you Gamble X, put this card into your Hand (not from the Exhaust Pile).
-/// If this card is Exhausted, deal 5 damage to ALL enemies for each time you Gambled this combat.
+/// Event card. For each of your Erratic cards, deal damage equal to this card's energy cost to a random enemy.
+/// At the end of your turn, if this is in your Hand, Gamble your Hand (this card included). Exhaust. Eternal.
 /// </summary>
-public class SeelsGamblingAddiction() : SeelsTheRecklessCard(0,
-    CardType.Skill, CardRarity.Rare,
-    TargetType.Self), ISeelsListener
+public class SeelsGamblingAddiction() : SeelsTheRecklessCard(1,
+    CardType.Skill, CardRarity.Event,
+    TargetType.RandomEnemy)
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Ethereal];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, CardKeyword.Eternal];
+
+    public override bool HasTurnEndInHandEffect => true;
+
+    //todo : upgrade not specified
+    public override int MaxUpgradeLevel => 0;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new EnergyVar(1),
-        new HpLossVar(3M),
-        new DynamicVar("DamagePerGamble", 5M),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
         new CalculatedVar("DamageAmount").WithMultiplier((card, _) =>
-            card.CombatState is null ? 0 : SeelsMechanicsHelper.GetGambleCount(card.Owner.Creature) * card.DynamicVars["DamagePerGamble"].IntValue),
+            card.CombatState is null ? 0 : card.EnergyCost.GetAmountToSpend()),
+        new CalculatedVar("Hits").WithMultiplier((card, _) => CountErraticCards(card)),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.ForEnergy(this),
         HoverTipFactory.FromKeyword(SeelsCardKeywords.Gamble),
         HoverTipFactory.FromKeyword(SeelsCardKeywords.Erratic),
     ];
 
+    private static int CountErraticCards(CardModel card)
+    {
+        if (card.CombatState is null) return 0;
+        return SeelsMechanicsHelper.GetAllCombatCards(card.Owner).Count(SeelsMechanicsHelper.IsErratic);
+    }
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
-        await SeelsMechanicsHelper.LoseHp(choiceContext, Owner.Creature, DynamicVars.HpLoss.BaseValue, this);
+        if (CombatState is null) return;
+
+        // The energy cost it was played for (0 if it was made free).
+        var damage = play.Resources.EnergyValue;
+        var hits = CountErraticCards(this);
+        if (damage <= 0 || hits <= 0) return;
+
+        await DamageCmd.Attack(damage)
+            .FromCard(this)
+            .Unpowered()
+            .TargetingRandomOpponents(CombatState)
+            .WithHitCount(hits)
+            .WithHitFx("vfx/vfx_attack_blunt")
+            .Execute(choiceContext);
     }
 
-    public async Task AfterGamble(PlayerChoiceContext choiceContext, Player player, int amount, IReadOnlyList<CardModel> cards)
+    protected override async Task OnTurnEndInHand(PlayerChoiceContext choiceContext)
     {
-        if (player != Owner || Pile is null) return;
-        if (Pile.Type is not (PileType.Draw or PileType.Discard)) return;
-        await CardPileCmd.Add(this, PileType.Hand);
-    }
-
-    public override async Task AfterCardExhausted(PlayerChoiceContext choiceContext, CardModel card, bool causedByEthereal)
-    {
-        if (card != this || CombatState is null) return;
-        var damage = SeelsMechanicsHelper.GetGambleCount(Owner.Creature) * DynamicVars["DamagePerGamble"].BaseValue;
-        var enemies = CombatState.HittableEnemies.ToList();
-        if (damage <= 0 || enemies.Count == 0) return;
-        await CreatureCmd.Damage(choiceContext, enemies, damage, ValueProp.Unpowered, Owner.Creature, this);
+        // Another copy may already have Gambled this one away.
+        if (Pile?.Type != PileType.Hand) return;
+        await SeelsMechanicsHelper.GambleHand(choiceContext, Owner);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.HpLoss.UpgradeValueBy(-2M);
     }
 }

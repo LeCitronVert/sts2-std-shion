@@ -21,8 +21,9 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Lose 1 HP. Maim 1. Deal 7 damage. This combat, increase this card's damage by 5 and HP loss by 1.
-/// Put this card into your Draw Pile (on top of your Draw Pile instead).
+/// Lose 3 (2) HP. Maim 1. Deal 7 damage. Increase this card's damage by 3 for each time you lost HP this combat.
+/// Put this card into your Draw Pile.
+/// The HP lost by this play counts (it happens before the damage).
 /// </summary>
 public class SeelsBloodPunch() : SeelsTheRecklessCard(1,
     CardType.Attack, CardRarity.Uncommon,
@@ -34,36 +35,42 @@ public class SeelsBloodPunch() : SeelsTheRecklessCard(1,
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         MaimHelper.Var(1M),
-        new DamageVar(7M, ValueProp.Move),
-        new HpLossVar(1M),
-        new DynamicVar("DamageIncrease", 5M),
-        new DynamicVar("HpLossIncrease", 1M),
+        new HpLossVar(3M),
+        new CalculationBaseVar(7M),
+        new ExtraDamageVar(3M),
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => PreviewTimesLostHp(card)),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Blood>()];
+
+    /// <summary>Times lost HP this combat, counting the HP this card is about to make you lose.</summary>
+    private static int PreviewTimesLostHp(CardModel card)
+    {
+        if (card.CombatState is null) return 0;
+        return SeelsMechanicsHelper.TimesLostHpThisCombat(card.Owner.Creature) + (card.DynamicVars.HpLoss.IntValue > 0 ? 1 : 0);
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         ArgumentNullException.ThrowIfNull(play.Target);
         await SeelsMechanicsHelper.LoseHp(choiceContext, Owner.Creature, DynamicVars.HpLoss.BaseValue, this);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+        // The HP just lost is already in the history here, so count it directly (not through the preview).
+        var damage = DynamicVars.CalculationBase.BaseValue
+            + DynamicVars.ExtraDamage.BaseValue * SeelsMechanicsHelper.TimesLostHpThisCombat(Owner.Creature);
+        await DamageCmd.Attack(damage)
             .FromCard(this)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_bloody_impact")
             .Execute(choiceContext);
-
-        DynamicVars.Damage.BaseValue += DynamicVars["DamageIncrease"].BaseValue;
-        DynamicVars.HpLoss.BaseValue += DynamicVars["HpLossIncrease"].BaseValue;
     }
 
     public override (PileType, CardPilePosition) ModifyCardPlayResultPileTypeAndPosition(CardModel card, bool isAutoPlay, ResourceInfo resources, PileType pileType, CardPilePosition position)
     {
-        return card == this && pileType == PileType.Discard
-            ? (PileType.Draw, IsUpgraded ? CardPilePosition.Top : CardPilePosition.Random)
-            : (pileType, position);
+        return card == this && pileType == PileType.Discard ? (PileType.Draw, CardPilePosition.Random) : (pileType, position);
     }
 
     protected override void OnUpgrade()
     {
+        DynamicVars.HpLoss.UpgradeValueBy(-1M);
     }
 }

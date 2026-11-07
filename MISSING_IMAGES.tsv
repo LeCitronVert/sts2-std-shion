@@ -56,6 +56,7 @@ Excited Wait	Card	Seels	Seels bouncing in place, eyes sparkling at a card being 
 Exsanguination	Card	Seels	Blood draining from an enemy into a whirlpool	
 Eye Opening Realization	Card	Seels	Seels' eyes snapping wide open, wounds glinting with speed lines	
 Finishing Explosion	Card	Seels	A huge explosion of slash marks around an enemy	
+Final Rush	Card	Seels	Seels dashing through enemies in a flurry of afterimage slashes, about to detonate	
 Funny Dance	Card	Seels	Seels doing a goofy dance while attacks miss	
 Gambler's Luck	Card	Seels	A lucky coin spinning, shields forming from it	
 Gambling Addiction	Card	Seels	Seels hunched over a slot machine, eyes as spinning reels	
@@ -129,11 +130,12 @@ Live With The Pain	Power	Seels	Bandaged heart
 Live With The Pain+	Power	Seels	Bandaged heart (gold/upgraded variant of Live With The Pain)	
 Recall Blood	Power	Seels	Blood drop with a return arrow	
 Reckless	Power	Seels	Wild dice with a scribble	
-Savagery	Power	Seels	Claw marks dripping red	
+Beast Form	Power	Seels	Claw marks dripping red	
+Savagery	Power	Seels	A card with a claw-torn energy cost, showing 0	
 Show Off	Power	Seels	Flexing arm	
 Smug Look	Power	Seels	Smug face	
 Splash Armor	Power	Seels	Blood splash shaped like a shield	
-Sweat and Tears	Power	Seels	Sweat drop + tear drop	
+Sweat and Tears	Power	Seels	Sweat drop + tear drop falling into a blood drop, with an energy spark	
 Untelegraph Attacks	Power	Seels	Slash with a crossed-out eye	
 Weird Flex	Power	Seels	Flexing arm with a wound	
 Cerberus' Tip	Relic	Seels	A three-headed dog charm tip / triple fang	
@@ -293,3 +295,5 @@ Scarlet Shadow	Power	Seels	A red silhouette with a blood drop
 Legion of Death	Power	All	A skull surrounded by a ring of ghostly soldiers	
 Power Core	Relic	All	Only the outline is missing: currently a copy of the icon	
 Concession	Power	Seels	A white flag held up, with an energy orb weighed down by a chain	
+Go Crazy	Power	Seels	A cracked energy orb leaking blood, with a manic grin	
+Never Learn	Power	Seels	A smug face with a Strength up-arrow, a bruise on the cheek	

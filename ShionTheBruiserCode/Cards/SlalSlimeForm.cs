@@ -11,7 +11,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Whenever you create a Status card, gain 4 Block. Costs 2 (1).
+/// Whenever you play a Slimy card, gain 4 Block. Costs 2 (1).
 /// </summary>
 public class SlalSlimeForm() : SlalTheEndlessCard(2,
     CardType.Power, CardRarity.Uncommon,
@@ -24,6 +24,7 @@ public class SlalSlimeForm() : SlalTheEndlessCard(2,
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(SlalCardKeywords.Slimy),
         HoverTipFactory.Static(StaticHoverTip.Block),
     ];
 

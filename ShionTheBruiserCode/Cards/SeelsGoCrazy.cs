@@ -21,35 +21,22 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Add Maim 1 to ALL your Slashes.
+/// Once per turn, you can lose HP instead of spending the energy cost for a card in your Hand you do not have the energy to play.
+/// (You spend all your energy and lose HP equal to the energy you're missing.) (Innate.)
 /// </summary>
-public class SeelsGoCrazy() : SeelsTheRecklessCard(2,
-    CardType.Skill, CardRarity.Rare,
+public class SeelsGoCrazy() : SeelsTheRecklessCard(3,
+    CardType.Power, CardRarity.Ancient,
     TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("AddedMaim", 1M),
-    ];
-
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromKeyword(SeelsCardKeywords.Maim),
-        HoverTipFactory.FromCard<SeelsSlash>(),
-    ];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<GoCrazy>(1M)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        var slashes = SeelsMechanicsHelper.GetAllCombatCards(Owner)
-            .Where(c => SeelsMechanicsHelper.IsSlash(c) && c.Pile?.Type != PileType.Exhaust)
-            .ToList();
-        foreach (var slash in slashes)
-        {
-            MaimHelper.AddMaim(slash, DynamicVars["AddedMaim"].IntValue);
-        }
-        await Task.CompletedTask;
+        await PowerCmd.Apply<GoCrazy>(choiceContext, Owner.Creature, DynamicVars["GoCrazy"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-        //todo : upgrade not specified
+        AddKeyword(CardKeyword.Innate);
     }
 }

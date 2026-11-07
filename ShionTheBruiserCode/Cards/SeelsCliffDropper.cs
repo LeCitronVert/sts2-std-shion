@@ -20,6 +20,8 @@ public class SeelsCliffDropper() : SeelsTheRecklessCard(1,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
+    protected override HashSet<CardTag> CanonicalTags => [SeelsCardTags.Gamble];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<CliffDropper>(1M)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(SeelsCardKeywords.Gamble)];

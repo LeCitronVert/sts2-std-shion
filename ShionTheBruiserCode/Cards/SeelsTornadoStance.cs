@@ -25,7 +25,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// At the start of your turn, if this is in your Hand, add 1 (2) Slash(es) into your Discard Pile.
 /// </summary>
 public class SeelsTornadoStance() : SeelsTheRecklessCard(2,
-    CardType.Skill, CardRarity.Ancient,
+    CardType.Skill, CardRarity.Rare,
     TargetType.Self)
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain];

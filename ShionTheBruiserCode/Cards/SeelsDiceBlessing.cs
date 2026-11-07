@@ -20,6 +20,8 @@ public class SeelsDiceBlessing() : SeelsTheRecklessCard(2,
     CardType.Power, CardRarity.Uncommon,
     TargetType.Self)
 {
+    protected override HashSet<CardTag> CanonicalTags => [SeelsCardTags.Gamble];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<DiceBlessing>(1M)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(SeelsCardKeywords.Gamble), HoverTipFactory.FromKeyword(SeelsCardKeywords.Erratic)];

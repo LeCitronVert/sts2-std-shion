@@ -14,7 +14,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Every 4 Attacks you play, gain 1 (2) Blood. Each copy played is a separate power (like Orbit).
+/// Whenever you Blood Bend, gain 1 (2) energy.
 /// </summary>
 public class SeelsSweatAndTears() : SeelsTheRecklessCard(2,
     CardType.Power, CardRarity.Rare,
@@ -22,7 +22,10 @@ public class SeelsSweatAndTears() : SeelsTheRecklessCard(2,
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<SweatAndTears>(1M)];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Blood>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(SeelsCardKeywords.BloodBend),
+        HoverTipFactory.ForEnergy(this),
+    ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {

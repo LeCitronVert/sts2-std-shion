@@ -25,6 +25,8 @@ public class SeelsExcitedWait() : SeelsTheRecklessCard(1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
+    protected override HashSet<CardTag> CanonicalTags => [SeelsCardTags.Gamble];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DynamicVar("Gamble", 1M),
         new PowerVar<ExcitedWait>(1M),

@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
@@ -72,23 +73,26 @@ public static class SeelsMechanicsHelper
     public static async Task<int> BloodBend(PlayerChoiceContext choiceContext, Player player, CardModel? card)
     {
         var creature = player.Creature;
-        int x;
+        int blood;
         if (card is { CurrentPlayIndex: > 0 })
         {
             // Replay: reuses the X of the first play instead of spending Blood again.
             // Still heals and counts as a Blood Bend for the listeners.
-            x = SeriesBloodBendX.Get(card);
+            blood = SeriesBloodBendX.Get(card);
         }
         else
         {
-            x = GetBlood(creature);
+            blood = GetBlood(creature);
             await PowerCmd.Remove<Blood>(creature);
-            if (card is not null) SeriesBloodBendX.Set(card, x);
+            if (card is not null) SeriesBloodBendX.Set(card, blood);
         }
-        if (x > 0)
+        if (blood > 0)
         {
-            await CreatureCmd.Heal(creature, x);
+            await CreatureCmd.Heal(creature, blood);
         }
+
+        // X modifiers (Chemical X) raise X, but not the heal: it only counts the Blood consumed.
+        var x = ModifyBloodBendX(card, blood);
 
         if (creature.CombatState is not null)
         {
@@ -121,6 +125,17 @@ public static class SeelsMechanicsHelper
         return CombatManager.Instance.History.Entries
             .OfType<DamageReceivedEntry>()
             .Any(e => e.Receiver == creature && e.Result.UnblockedDamage > 0 && e.HappenedThisTurn(creature.CombatState));
+    }
+
+    /// <summary>
+    /// How many times the creature lost HP this combat (each unblocked damage instance, including self-inflicted HP loss).
+    /// </summary>
+    public static int TimesLostHpThisCombat(Creature creature)
+    {
+        if (creature.CombatState is null || !CombatManager.Instance.IsInProgress) return 0;
+        return CombatManager.Instance.History.Entries
+            .OfType<DamageReceivedEntry>()
+            .Count(e => e.Receiver == creature && e.Result.UnblockedDamage > 0);
     }
 
     // ── Gamble / Erratic ────────────────────────────────────────────────────
@@ -163,6 +178,17 @@ public static class SeelsMechanicsHelper
             source
         )).ToList();
 
+        if (cards.Count == 0) return cards;
+        await GambleCards(choiceContext, player, cards.Count, cards);
+        return cards;
+    }
+
+    /// <summary>
+    /// Gamble your whole Hand (no choice), the source card included if it's in your Hand. X = the number of cards.
+    /// </summary>
+    public static async Task<IReadOnlyList<CardModel>> GambleHand(PlayerChoiceContext choiceContext, Player player)
+    {
+        var cards = PileType.Hand.GetPile(player).Cards.ToList();
         if (cards.Count == 0) return cards;
         await GambleCards(choiceContext, player, cards.Count, cards);
         return cards;
@@ -247,7 +273,9 @@ public static class SeelsMechanicsHelper
     /// </summary>
     public static void CountModification(CardModel card)
     {
-        if (card.CombatState is null) return;
+        // Cards created in combat (e.g. enchanted Slashes) aren't in a pile yet, so card.CombatState is still null:
+        // check the owner's combat instead, or they wouldn't count.
+        if (card.Owner?.Creature.CombatState is null || !CombatManager.Instance.IsInProgress) return;
         EnsureCreatureHasSeelsTracker(card.Owner.Creature);
         card.Owner.Creature.GetPower<SeelsTracker>()?.CountModification(card);
     }
@@ -394,7 +422,17 @@ public static class SeelsMechanicsHelper
     /// </summary>
     public static int PreviewBloodBendX(CardModel card)
     {
-        return card.CombatState is null ? 0 : GetBlood(card.Owner.Creature);
+        return card.CombatState is null ? 0 : ModifyBloodBendX(card, GetBlood(card.Owner.Creature));
+    }
+
+    /// <summary>
+    /// Blood Bend X counts as an X value, so X modifiers like Chemical X apply to it.
+    /// A Blood Bend with no card (e.g. Scarlet Shadow's end of combat one) isn't modified.
+    /// </summary>
+    public static int ModifyBloodBendX(CardModel? card, int blood)
+    {
+        if (card?.Owner.Creature.CombatState is not { } combatState) return blood;
+        return Math.Max(0, Hook.ModifyXValue(combatState, card, blood));
     }
 
     /// <summary>

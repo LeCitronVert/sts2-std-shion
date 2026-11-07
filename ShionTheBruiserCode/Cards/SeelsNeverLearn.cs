@@ -21,44 +21,20 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// If you have more Blood than you have HP, gain 4 Max HP. Blood Bend X. Gain X Strength. Exhaust. (Retain.)
+/// Whenever you gain energy from Gloat, gain as much Strength.
 /// </summary>
 public class SeelsNeverLearn() : SeelsTheRecklessCard(3,
-    CardType.Skill, CardRarity.Rare,
+    CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new MaxHpVar(4M),
-        new CalculationBaseVar(0),
-        new CalculationExtraVar(1),
-        new CalculatedVar("StrengthAmount").WithMultiplier((card, _) => SeelsMechanicsHelper.PreviewBloodBendX(card)),
-    ];
-
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromKeyword(SeelsCardKeywords.BloodBend),
-        HoverTipFactory.FromPower<Blood>(),
+        HoverTipFactory.FromPower<Gloat>(),
         HoverTipFactory.FromPower<StrengthPower>(),
     ];
 
-    private bool IsActive => SeelsMechanicsHelper.GetBlood(Owner.Creature) > Owner.Creature.CurrentHp;
-
-    protected override bool ShouldGlowGoldInternal => IsActive;
-
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        // Checked before Blood Bending, which consumes the Blood.
-        if (IsActive)
-        {
-            await CreatureCmd.GainMaxHp(Owner.Creature, DynamicVars.MaxHp.BaseValue);
-        }
-
-        var x = await SeelsMechanicsHelper.BloodBend(choiceContext, this);
-        if (x > 0)
-        {
-            await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, x, Owner.Creature, this);
-        }
+        await PowerCmd.Apply<NeverLearn>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

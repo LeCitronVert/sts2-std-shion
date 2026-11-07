@@ -37,7 +37,9 @@ public class SeelsUTurn() : SeelsTheRecklessCard(2,
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
         var drawn = (await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner)).ToList();
 
-        var toDiscard = drawn.Where(c => c.Pile?.Type == PileType.Hand && c.EnergyCost.GetResolved() != 0).ToList();
+        // Like Scrape: X-cost cards and Unplayable cards (Curses, Statuses: cost -1) are discarded too.
+        var toDiscard = drawn.Where(c => c.Pile?.Type == PileType.Hand
+            && (c.EnergyCost.CostsX || c.EnergyCost.GetWithModifiers(CostModifiers.Local) != 0)).ToList();
         if (toDiscard.Count > 0)
         {
             await CardCmd.Discard(choiceContext, toDiscard);

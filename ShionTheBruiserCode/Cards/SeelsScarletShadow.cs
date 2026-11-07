@@ -19,7 +19,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Blood Bend X. Gain X Blood twice (3 times). At the end of combat, Blood Bend. Exhaust.
+/// Double (Triple) your Blood. At the end of combat, Blood Bend. Exhaust.
 /// </summary>
 public class SeelsScarletShadow() : SeelsTheRecklessCard(0,
     CardType.Skill, CardRarity.Rare,
@@ -28,11 +28,10 @@ public class SeelsScarletShadow() : SeelsTheRecklessCard(0,
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new RepeatVar(2),
+        new DynamicVar("Multiplier", 2M),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
-        new CalculatedVar("BloodAmount").WithMultiplier((card, _) =>
-            SeelsMechanicsHelper.PreviewBloodBendX(card) * card.DynamicVars.Repeat.IntValue),
+        new CalculatedVar("BloodAmount").WithMultiplier((card, _) => BloodToGain(card)),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -40,18 +39,21 @@ public class SeelsScarletShadow() : SeelsTheRecklessCard(0,
         HoverTipFactory.FromPower<Blood>(),
     ];
 
+    /// <summary>Blood gained to reach Multiplier times your current Blood.</summary>
+    private static int BloodToGain(CardModel card)
+    {
+        if (card.CombatState is null) return 0;
+        return SeelsMechanicsHelper.GetBlood(card.Owner.Creature) * (card.DynamicVars["Multiplier"].IntValue - 1);
+    }
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        var x = await SeelsMechanicsHelper.BloodBend(choiceContext, this);
-        for (var i = 0; i < DynamicVars.Repeat.IntValue; i++)
-        {
-            await SeelsMechanicsHelper.GainBlood(choiceContext, Owner.Creature, x, this);
-        }
+        await SeelsMechanicsHelper.GainBlood(choiceContext, Owner.Creature, BloodToGain(this), this);
         await PowerCmd.Apply<ScarletShadow>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Repeat.UpgradeValueBy(1M);
+        DynamicVars["Multiplier"].UpgradeValueBy(1M);
     }
 }
