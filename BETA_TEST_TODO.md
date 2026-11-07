@@ -1606,3 +1606,21 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 **Decisions I made**
 - "Galvanised Attack" = an Attack whose own Galvanised effect triggered on that play. Shield Breaker's Galvanised 9 doesn't make every Attack count. Cards now pass themselves to `ShionMechanicsHelper.TriggerGalvanised(card, threshold)` so the relic knows.
 - Effects are applied to the enemies the Attack hit, after it resolves (so the debuff doesn't boost that Attack's own damage).
+
+## 29. Relic List pass (missing relics + flavour texts)
+- [ ] Rebuild and re-export the pck (new relics + relics.json changes).
+- [ ] Cursed Dice: grant it with the console. Gambling Addiction is added to your Deck when you pick it up.
+- [ ] Cursed Dice: every combat card reward shows 1 extra card, a Gamble card from Seels' pool (Wink, Card Dealing, Dice Blessing...), and it doesn't repeat a card already in the reward. Also works when a non-Seels character holds it. No extra card on non-combat rewards (events, shops).
+- [ ] Whimsical Hat: grant it with the console. 2 Dazed are shuffled into your Draw Pile at the start of combat.
+- [ ] Whimsical Hat: at the end of your turn, a random Ethereal card in your Hand is played for free. Nothing happens if there isn't one. Dazed (Unplayable) is never picked.
+- [ ] MP: no desync from Whimsical Hat's pick (Shuffle RNG, end-of-turn only) or Cursed Dice's rewards.
+- [ ] Neither relic drops from chests, shops or elites (Event rarity, EventRelicPool). Both show in the Relic Collection.
+- [ ] Flavour texts now show for every Slal and Seels relic (Creative Spark through Crystal Garland). Creative Spark's flavour is no longer a copy of its effect.
+- [ ] Both new relics use the placeholder icon (rows added to MISSING_IMAGES.tsv).
+
+**Decisions I made**
+- "The Gambler" event doesn't exist in the mod or the base game, so Cursed Dice is in the event pool and can't be found yet. Same for Whimsical Hat, which has no source listed (both confirmed).
+- Whimsical Hat's autoplay is free, like Stampede (confirmed). "Daze" = the base game's Dazed.
+- Cursed Dice's extra card follows Lasting Candy, but on every combat reward: Common/Uncommon/Rare Seels cards with the Gamble tag, using the reward's normal rarity odds (confirmed).
+- Flavour texts were copied as written, except "suprisingly" → "surprisingly" (Genie's Advice) and a stray space in "apples !" (Apple Sauce). Keyboard Key's missing letters ("hrder", "t some point", "hve") look like a joke about a broken key, so I left them.
+- Not touched: the 6 Fry rows with no name or effect, the reviewer notes (shop relic suggestions, "remove or Boss" on Training Manual, Shell Bell / Souvenir Picture remarks), and effect-text differences. All other relics on the sheet already existed and their flavours already matched.
