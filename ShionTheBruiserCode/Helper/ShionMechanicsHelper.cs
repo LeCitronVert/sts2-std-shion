@@ -303,6 +303,23 @@ public static class ShionMechanicsHelper
         return true;
     }
 
+    // Cards whose own Galvanised effect triggered during their current play (Star Rod).
+    // Cleared with ConsumeCardGalvanised once the play ends.
+    private static readonly ConditionalWeakTable<CardModel, object> _galvanisedCards = new();
+
+    // TriggerGalvanised for a card's own Galvanised effect: also remembers that this card was Galvanised
+    public static bool TriggerGalvanised(CardModel card, int threshold)
+    {
+        if (!TriggerGalvanised(card.Owner.Creature, threshold)) return false;
+        _galvanisedCards.AddOrUpdate(card, card);
+        return true;
+    }
+
+    public static void ClearCardGalvanised(CardModel card) => _galvanisedCards.Remove(card);
+
+    // Whether the card's own Galvanised effect triggered since its play started, and clears it
+    public static bool ConsumeCardGalvanised(CardModel card) => _galvanisedCards.Remove(card);
+
     // Patch Up : Heals by X amount until you're at the Patch Up threshold (50%HP by default)
     /// <summary>
     /// HP a Patch Up of this amount would actually restore (capped by the Patch Up limit).

@@ -44,7 +44,7 @@ public class ShionEnergyShield() : ShionTheBruiserCard(1,
         var owner = card.Owner.Creature;
         await CreatureCmd.GainBlock(owner, card.DynamicVars.Block, play);
 
-        if (!ShionMechanicsHelper.TriggerGalvanised(owner, GalvanisedThreshold)) return;
+        if (!ShionMechanicsHelper.TriggerGalvanised(card, GalvanisedThreshold)) return;
 
         await CreatureCmd.GainBlock(owner, card.DynamicVars["GalvanisedBlock"].BaseValue, card.DynamicVars.Block.Props, play);
         // Fell Dragon makes it Galvanised without Vigor: never go below 0

@@ -65,7 +65,7 @@ public class ShionEnergyVolley() : ShionTheBruiserCard(1,
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
         // Also covers the cost increase, which is a Modify hook
-        ShionMechanicsHelper.TriggerGalvanised(card.Owner.Creature, FirstGalvanisedThreshold);
+        ShionMechanicsHelper.TriggerGalvanised(card, FirstGalvanisedThreshold);
         var hitCount = (int) ((CalculatedVar) card.DynamicVars["HitCount"]).Calculate(card.Owner.Creature);
         // The more hits, the faster; each hit pushes the target back a little, until the end of the attack
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)

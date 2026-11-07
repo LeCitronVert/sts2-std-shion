@@ -44,7 +44,7 @@ public class ShionCrunch() : ShionTheBruiserCard(0,
         var card = this;
         var owner = card.Owner.Creature;
 
-        if (!ShionMechanicsHelper.TriggerGalvanised(owner, GalvanisedThreshold))
+        if (!ShionMechanicsHelper.TriggerGalvanised(card, GalvanisedThreshold))
         {
             await CardCmd.Exhaust(choiceContext, card);
             await CardPileCmd.Draw(choiceContext, card.DynamicVars.Cards.IntValue, card.Owner);

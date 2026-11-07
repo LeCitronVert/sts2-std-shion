@@ -47,7 +47,7 @@ public class ShionBreakDown() : ShionBerserkCard(1,
     {
         ShionBreakDown card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
-        ShionMechanicsHelper.TriggerGalvanised(card.Owner.Creature, GalvanisedThreshold);
+        ShionMechanicsHelper.TriggerGalvanised(card, GalvanisedThreshold);
         await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
             .WithValueProp(ValueProp.Move)
             .WithHitCount(card.DynamicVars.Repeat.IntValue)

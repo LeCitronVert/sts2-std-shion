@@ -130,3 +130,34 @@ public static class MasterBallOrobasOptionsPatch
             configure: option => option.ThatDecreasesMaxHp(maxHpLoss)));
     }
 }
+
+/// <summary>
+/// Tanx: Star Rod joins his pool. He shows 3 of his 9 weapons (10 with Tri-Boomerang), so it shows up 3 times in 10,
+/// taking a random one of the 3 slots.
+/// </summary>
+[HarmonyPatch(typeof(Tanx), "GenerateInitialOptions")]
+public static class StarRodTanxPatch
+{
+    private const int PoolSize = 10;
+
+    [HarmonyPostfix]
+    public static void Postfix(Tanx __instance, ref IReadOnlyList<EventOption> __result)
+    {
+        if (!ShionAncientRelics.IsShion(__instance.Owner) || __result.Count == 0) return;
+        if (__instance.Rng.NextInt(PoolSize) >= __result.Count) return;
+
+        var list = __result.ToList();
+        list[__instance.Rng.NextInt(list.Count)] = ShionAncientRelics.Option(__instance, ModelDb.Relic<StarRod>());
+        __result = list;
+    }
+}
+
+[HarmonyPatch(typeof(Tanx), nameof(AncientEventModel.AllPossibleOptions), MethodType.Getter)]
+public static class StarRodTanxOptionsPatch
+{
+    [HarmonyPostfix]
+    public static void Postfix(Tanx __instance, ref IEnumerable<EventOption> __result)
+    {
+        __result = __result.Append(ShionAncientRelics.Option(__instance, ModelDb.Relic<StarRod>()));
+    }
+}

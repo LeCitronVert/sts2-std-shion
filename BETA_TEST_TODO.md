@@ -1593,3 +1593,16 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - Cursed Dice doesn't exist yet, so only the tag was added.
 - New power icons not made: Beast Form, Savagery (new effect), Go Crazy, Never Learn added/updated in MISSING_IMAGES.tsv, plus the Final Rush portrait.
 - The "Ideas (ne pas implémenter encore)" rows were skipped.
+
+## 28. Star Rod (Shion's Tanx relic)
+- [ ] Tanx offers Star Rod to Shion about 3 times in 10, in place of one of his 3 weapons. Shows in the Relic Collection and the `ancient` console command.
+- [ ] Icon, outline and big icon look right (made from star_rod.png: trimmed, fitted to 256×256, white silhouette outline).
+- [ ] Galvanised Attacks (Energy Ball, Energy Jolt, Energy Wave, Energy Volley, Flood, Break Down) apply one random effect after resolving: 1 Weak, 1 Vulnerable, 6 Confusion, 6 Doom or 3 Poison. One roll per play, given to every enemy the Attack hit that's still alive.
+- [ ] Doesn't trigger on non-Galvanised plays, under Spirit Break / Defensive, or from Energy Strike ("if not Galvanised"). Fell Dragon makes it always trigger.
+- [ ] Shield Breaker replays each roll separately when Galvanised.
+- [ ] Confusion from Star Rod isn't boosted by Slal's Random (no card source).
+- [ ] MP: no desync when it triggers (roll uses the Niche RNG, only in AfterCardPlayed).
+
+**Decisions I made**
+- "Galvanised Attack" = an Attack whose own Galvanised effect triggered on that play. Shield Breaker's Galvanised 9 doesn't make every Attack count. Cards now pass themselves to `ShionMechanicsHelper.TriggerGalvanised(card, threshold)` so the relic knows.
+- Effects are applied to the enemies the Attack hit, after it resolves (so the debuff doesn't boost that Attack's own damage).

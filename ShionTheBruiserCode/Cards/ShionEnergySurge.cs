@@ -50,7 +50,7 @@ public class ShionEnergySurge() : ShionTheBruiserCard(1,
             card)
         ;
         
-        if (!ShionMechanicsHelper.TriggerGalvanised(card.Owner.Creature, GalvanisedThreshold))
+        if (!ShionMechanicsHelper.TriggerGalvanised(card, GalvanisedThreshold))
         {
             return;
         }

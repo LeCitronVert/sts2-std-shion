@@ -195,5 +195,8 @@
   "SHIONTHEBRUISER-FRIENDSHIP_BRACELET.flavor": "What a cutie! You love your friends, don't you? Yes, you do!!",
   "SHIONTHEBRUISER-POWER_CORE.title": "Power Core",
   "SHIONTHEBRUISER-POWER_CORE.description": "Choose 1 of [blue]3[/blue] [gold]Team Blast[/gold] cards to add to your [gold]Deck[/gold]: your character's own if it has one, the others generic.\nAdd a random [gold]Curse[/gold] to your [gold]Deck[/gold].",
-  "SHIONTHEBRUISER-POWER_CORE.flavor": "This intriguing orb from another world can interface with an organic or synthetic being to confer them elemental powers. Those elements, of course, being 'fast', 'strong', or 'high'."
+  "SHIONTHEBRUISER-POWER_CORE.flavor": "This intriguing orb from another world can interface with an organic or synthetic being to confer them elemental powers. Those elements, of course, being 'fast', 'strong', or 'high'.",
+  "SHIONTHEBRUISER-STAR_ROD.title": "Star Rod",
+  "SHIONTHEBRUISER-STAR_ROD.description": "[gold]Galvanised[/gold] Attacks apply, at random, one of these effects: {WeakPower:diff()} [gold]Weak[/gold], {VulnerablePower:diff()} [gold]Vulnerable[/gold], {Confusion:diff()} [gold]Confusion[/gold], {DoomPower:diff()} [gold]Doom[/gold] or {PoisonPower:diff()} [gold]Poison[/gold].",
+  "SHIONTHEBRUISER-STAR_ROD.flavor": "Crystalised dreams make up this powerful artefact from another world. If you breathe your own into it, nothing is impossible!"
 }

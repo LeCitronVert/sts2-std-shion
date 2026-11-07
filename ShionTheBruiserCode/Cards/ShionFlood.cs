@@ -38,7 +38,7 @@ public class ShionFlood() : ShionTheBruiserCard(1,
     {
         ShionFlood card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
-        ShionMechanicsHelper.TriggerGalvanised(card.Owner.Creature, GalvanisedThreshold);
+        ShionMechanicsHelper.TriggerGalvanised(card, GalvanisedThreshold);
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .WithHitCount((int) ((CalculatedVar) card.DynamicVars["HitAmount"]).Calculate(card.Owner.Creature))
             .FromCard(card)
