@@ -7,7 +7,7 @@ ShionTheBruiser.json::JSON::-1::1792433998::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1794070050
+::res://bin/ExportRelease/net9.0/publish/::1794072542
 ShionTheBruiser.deps.json::JSON::-1::1793894095::0::1::::<><><>0<>0<><>::
 ::res://ci/::1792939391
 ::res://ci/game-refs/::1792939391
@@ -1308,9 +1308,9 @@ team_blast_bar.png::CompressedTexture2D::3159766184385900582::1793177713::179317
 team_blast_locked.png::CompressedTexture2D::7621079854370452256::1793177713::1793178089::1::::<><><>0<>0<>013933bfc0053016122d75e6bb53c76f<>res://.godot/imported/team_blast_locked.png-af6d45a45c3d33d30fc47cd1c14ac63b.ctex::
 team_blast_ready.png::CompressedTexture2D::8331283540066729296::1793177713::1793178089::1::::<><><>0<>0<>8f45cec4072dfa0ce28aea63f7bd5405<>res://.godot/imported/team_blast_ready.png-abb4ee67caa30497b30d7a53924e66fb.ctex::
 ::res://ShionTheBruiser/localization/::1781940056
-::res://ShionTheBruiser/localization/eng/::1794062898
+::res://ShionTheBruiser/localization/eng/::1794072506
 ancients.json::JSON::-1::1794068358::0::1::::<><><>0<>0<><>::
-cards.json::JSON::-1::1794062220::0::1::::<><><>0<>0<><>::
+cards.json::JSON::-1::1794072506::0::1::::<><><>0<>0<><>::
 card_keywords.json::JSON::-1::1793822358::0::1::::<><><>0<>0<><>::
 card_selection.json::JSON::-1::1793183274::0::1::::<><><>0<>0<><>::
 characters.json::JSON::-1::1794058886::0::1::::<><><>0<>0<><>::
@@ -1418,7 +1418,7 @@ CosmoUnlockSync.cs::CSharpScript::3728460906655928414::1794067722::0::1::::<><><
 PartyDialogue.cs::CSharpScript::241308958335632356::1793733768::0::1::::<><><>0<>0<><>::
 SeelsPartyDialogues.cs::CSharpScript::4380548894581781510::1793733738::0::1::::<><><>0<>0<><>::
 ShionPartyDialogues.cs::CSharpScript::7951062430476225983::1793733768::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Cards/::1794062608
+::res://ShionTheBruiserCode/Cards/::1794072506
 AllOutAttack.cs::CSharpScript::2887618467325418642::1793646232::0::1::::<><><>0<>0<><>::
 Cacophony.cs::CSharpScript::1218577494853376132::1793646275::0::1::::<><><>0<>0<><>::
 CosmoDetermination.cs::CSharpScript::4903082444639403780::1793719838::0::1::::<><><>0<>0<><>::
@@ -1631,7 +1631,7 @@ SeelsStormblood.cs::CSharpScript::4370019146926767739::1793531926::0::1::::<><><
 SeelsStrike.cs::CSharpScript::6433719204288765791::1792675405::0::1::::<><><>0<>0<><>::
 SeelsStrikeFirst.cs::CSharpScript::1064115863556208048::1793813608::0::1::::<><><>0<>0<><>::
 SeelsSummonWrath.cs::CSharpScript::1707565433106933600::1793813553::0::1::::<><><>0<>0<><>::
-SeelsSweatAndTears.cs::CSharpScript::3083032763432357652::1794051993::0::1::::<><><>0<>0<><>::
+SeelsSweatAndTears.cs::CSharpScript::3083032763432357652::1794072506::0::1::::<><><>0<>0<><>::
 SeelsTeamUpCard.cs::CSharpScript::7949464841026389075::1793531704::0::1::::<><><>0<>0<><>::
 SeelsTheRecklessCard.cs::CSharpScript::7852991413023044338::1792675405::0::1::::<><><>0<>0<><>::
 SeelsThreateningPromise.cs::CSharpScript::7243714620615483258::1793636724::0::1::::<><><>0<>0<><>::
