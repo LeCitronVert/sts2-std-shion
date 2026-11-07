@@ -48,8 +48,7 @@ public class ShionBreakingSwipes() : ShionBerserkCard(0,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3);
-        DynamicVars["VulnerablePower"].UpgradeValueBy(1);
+        DynamicVars.Damage.UpgradeValueBy(4);
     }
     
     // Same mechanism as the base game's Thrumming Hatchet: if this card was played
