@@ -1,5 +1,5 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1793814160
+::res://::1794078659
 BETA_TEST_TODO.md::TextFile::-1::1794068669::0::1::::<><><>0<>0<><>::
 export_presets.cfg::TextFile::-1::1781940056::0::1::::<><><>0<>0<><>::
 README.md::TextFile::-1::1793637968::0::1::::<><><>0<>0<><>::
@@ -7,8 +7,8 @@ ShionTheBruiser.json::JSON::-1::1792433998::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1794072542
-ShionTheBruiser.deps.json::JSON::-1::1793894095::0::1::::<><><>0<>0<><>::
+::res://bin/ExportRelease/net9.0/publish/::1794079851
+ShionTheBruiser.deps.json::JSON::-1::1794079851::0::1::::<><><>0<>0<><>::
 ::res://ci/::1792939391
 ::res://ci/game-refs/::1792939391
 ::res://ShionTheBruiser/::1793893889
@@ -26,7 +26,7 @@ cosmo_icon.png::CompressedTexture2D::5823658573262251201::1794068555::1794068724
 cosmo_icon_outline.png::CompressedTexture2D::4823421426555408018::1794068562::1794068724::1::::<><><>0<>0<>d574c65d80ab514e2bb9175881c9214d<>res://.godot/imported/cosmo_icon_outline.png-5ae4704b6e85683f60fa0a0fa15975c7.ctex::
 cosmo_map.png::CompressedTexture2D::8105355013552257716::1794068555::1794068724::1::::<><><>0<>0<>e279e971932235c26d0222b40e3ffa71<>res://.godot/imported/cosmo_map.png-b604c26a8f0faab057b95ebc26667779.ctex::
 cosmo_map_outline.png::CompressedTexture2D::947208570367827263::1794068562::1794068724::1::::<><><>0<>0<>cff426f59ed88e0c3ced13e9aea04a3e<>res://.godot/imported/cosmo_map_outline.png-f21ae496c774e4f901fb2836c6ad0189.ctex::
-::res://ShionTheBruiser/images/card_portraits/::1793894098
+::res://ShionTheBruiser/images/card_portraits/::1794078695
 all_out_attack.png::CompressedTexture2D::8650508069548672495::1793531670::1793532504::1::::<><><>0<>0<>f13544a784a9bd6bc4af199c16023ac6<>res://.godot/imported/all_out_attack.png-f54bda6ad8a0255122c32f3428ec8847.ctex::
 cacophony.png::CompressedTexture2D::962768695978171583::1793531670::1793532504::1::::<><><>0<>0<>b0228e6efcff5de600830a63965a8281<>res://.godot/imported/cacophony.png-b36aeeecc62a0d86a299daa710989b20.ctex::
 card.png::CompressedTexture2D::1049500711854334682::1781940056::1782158780::1::::<><><>0<>0<>e86ff99e55e178dfa257e115aff98269<>res://.godot/imported/card.png-ed4193b7714d803835eb3395cc67803f.ctex::
@@ -81,6 +81,7 @@ seels_echoes_of_pain.png::CompressedTexture2D::1881032142509386991::1793477564::
 seels_excited_wait.png::CompressedTexture2D::3932956192096182756::1793477564::1793477913::1::::<><><>0<>0<>ddcf7d59a610c1e25ec155219f1d5300<>res://.godot/imported/seels_excited_wait.png-fbd83539508f6f2a50ddba9de4a8283e.ctex::
 seels_exsanguination.png::CompressedTexture2D::3951903402004988095::1793477565::1793477913::1::::<><><>0<>0<>866580f21cb7ad219000177840f7cf08<>res://.godot/imported/seels_exsanguination.png-1b1a64ec8f03654961d52a1367596f8c.ctex::
 seels_eye_opening_realization.png::CompressedTexture2D::1043229624898001072::1793477565::1793477913::1::::<><><>0<>0<>d0258fd20d595799e7dabf8fc21a8de1<>res://.godot/imported/seels_eye_opening_realization.png-2f19c8428b89bb8577cd7eb527a17b63.ctex::
+seels_final_rush.png::CompressedTexture2D::2572160034575430786::1794078659::1794078695::1::::<><><>0<>0<>fec3439b2e4b99910313417cb6b62ac8<>res://.godot/imported/seels_final_rush.png-420d4ac936456218a99b3350bb948b7c.ctex::
 seels_final_showdown.png::CompressedTexture2D::5762147086545034685::1793477857::1793477913::1::::<><><>0<>0<>0fa8f878ea6a622b59efc0c5f65e2a7e<>res://.godot/imported/seels_final_showdown.png-60962846162c177ed21ba37c6ebc70ce.ctex::
 seels_finishing_explosion.png::CompressedTexture2D::2503926196280138348::1793477566::1793477913::1::::<><><>0<>0<>83267ce7735b4323dd7a28bbc23b307e<>res://.godot/imported/seels_finishing_explosion.png-ea0df892f332b4f0cd516571e7416691.ctex::
 seels_funny_dance.png::CompressedTexture2D::1413522689027702611::1793477566::1793477913::1::::<><><>0<>0<>ef78a2b1515bf02657f768a97e8c7a7d<>res://.godot/imported/seels_funny_dance.png-b18abbeea9c3c44df5e75efba6346ce4.ctex::
@@ -472,7 +473,7 @@ slal_strike.png::CompressedTexture2D::5918578733995773492::1785182956::178518302
 slal_wall_of_text.png::CompressedTexture2D::6096153770101103649::1785189360::1785218102::1::::<><><>0<>0<>1e432662ce6d45f0e34680b5b23a1b9e<>res://.godot/imported/slal_wall_of_text.png-bb6e44530c48e57502c53b65e98b7223.ctex::
 special_stage.png::CompressedTexture2D::8845264401202963198::1793017840::1793018465::1::::<><><>0<>0<>2fbc103b8f3d1cc96cd06b92fe2b05b7<>res://.godot/imported/special_stage.png-cd0d00afe6492e2bd603f5bc33d24ee7.ctex::
 yes.png::CompressedTexture2D::5279192743463950200::1783248434::1783250447::1::::<><><>0<>0<>87bbd865506a411f480cb67c509dc39c<>res://.godot/imported/yes.png-816f261255c7e33f7f4cf5b55e6f45af.ctex::
-::res://ShionTheBruiser/images/card_portraits/big/::1793894098
+::res://ShionTheBruiser/images/card_portraits/big/::1794078695
 all_out_attack.png::CompressedTexture2D::6299955981734787318::1793531670::1793532504::1::::<><><>0<>0<>018e75d02c396f131e3b827ee30ad69e<>res://.godot/imported/all_out_attack.png-150cd7f91daff9bc3ec674ac1a176de0.ctex::
 berserk_drive.png::CompressedTexture2D::1173516633182531861::1783421669::1783421693::1::::<><><>0<>0<>a0e7ab2b45a81d3fbcd341103134a846<>res://.godot/imported/berserk_drive.png-005441c15d646c8791a92b1851669ba4.ctex::
 cacophony.png::CompressedTexture2D::2972143823063063703::1793531670::1793532504::1::::<><><>0<>0<>cb1ca32c3f4937d900b847c9d7093d92<>res://.godot/imported/cacophony.png-490c1868402284d9411fd89762322f28.ctex::
@@ -530,6 +531,7 @@ seels_echoes_of_pain.png::CompressedTexture2D::8482799843936957393::1793477564::
 seels_excited_wait.png::CompressedTexture2D::2686032110034326269::1793477564::1793477913::1::::<><><>0<>0<>30847f2a6c138df995c7bac32b897b6a<>res://.godot/imported/seels_excited_wait.png-24221081290e65b7fabc6a9f8ec02cc0.ctex::
 seels_exsanguination.png::CompressedTexture2D::4481432720365076681::1793477565::1793477914::1::::<><><>0<>0<>33cfcf23a86272089382238e4bcf7367<>res://.godot/imported/seels_exsanguination.png-0e9da2d0c3c4893777cec4eba3f737ac.ctex::
 seels_eye_opening_realization.png::CompressedTexture2D::2223355496600789665::1793477565::1793477913::1::::<><><>0<>0<>b119880a19656c33f60dc457e6e827ba<>res://.godot/imported/seels_eye_opening_realization.png-898998013946baef206e882bf904cbf1.ctex::
+seels_final_rush.png::CompressedTexture2D::7448353565165784549::1794078659::1794078695::1::::<><><>0<>0<>27cd9fb8f04040a8f56e5deea4436a1a<>res://.godot/imported/seels_final_rush.png-a5689cf0b7233eb9328a233652c5ab0e.ctex::
 seels_final_showdown.png::CompressedTexture2D::6245595853865791181::1793477857::1793477914::1::::<><><>0<>0<>bb9854a6750b1eeca7a90916a2e91395<>res://.godot/imported/seels_final_showdown.png-670ef7085ab841359cc03bfc6e439800.ctex::
 seels_finishing_explosion.png::CompressedTexture2D::4922423449669304919::1793477566::1793477914::1::::<><><>0<>0<>6b2cc2660d83d17520d4d7af60f474a8<>res://.godot/imported/seels_finishing_explosion.png-5aae89bb9c59460e0f424548e8d17aec.ctex::
 seels_funny_dance.png::CompressedTexture2D::7136604142720456580::1793477566::1793477914::1::::<><><>0<>0<>3fa4a55e4689ec05a9e6a45990eabc76<>res://.godot/imported/seels_funny_dance.png-d17db5d00678c27ff413baf921ae1065.ctex::
@@ -1933,13 +1935,13 @@ AbbyMonster.cs::CSharpScript::7065894295935417984::1783259594::0::1::::<><><>0<>
 BloodInklet.cs::CSharpScript::8588995559894159750::1793532710::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiserCode/Orbs/::1793196896
 MonsterOrb.cs::CSharpScript::6037243293034713646::1793196896::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Patches/::1794062608
+::res://ShionTheBruiserCode/Patches/::1794079791
 AfflictionHooks.cs::CSharpScript::1383593816546956163::1792845922::0::1::::<><><>0<>0<><>::
 BerserkEndTurnPingPatch.cs::CSharpScript::6477938313587175322::1793464664::0::1::::<><><>0<>0<><>::
 CardAutoPlayTracker.cs::CSharpScript::7253820485177951645::1792504577::0::1::::<><><>0<>0<><>::
 ChaosEmeraldsMainMenuPatch.cs::CSharpScript::832528578811425573::1793453764::0::1::::<><><>0<>0<><>::
 ChaosEmeraldUnlockPatch.cs::CSharpScript::8884707403134773689::1793016863::0::1::::<><><>0<>0<><>::
-CharacterSelectSkinPatch.cs::CSharpScript::3662371285727204999::1793901546::0::1::::<><><>0<>0<><>::
+CharacterSelectSkinPatch.cs::CSharpScript::3662371285727204999::1794079791::0::1::::<><><>0<>0<><>::
 CharacterTransitionScreenCapturePatch.cs::CSharpScript::2897997679825396779::1793894852::0::1::::<><><>0<>0<><>::
 ColorfulPhilosophersPoolsPatch.cs::CSharpScript::8206314880392501074::1793012874::0::1::::<><><>0<>0<><>::
 ComeWhatMayPatches.cs::CSharpScript::5993873902602159769::1793306067::0::1::::<><><>0<>0<><>::
