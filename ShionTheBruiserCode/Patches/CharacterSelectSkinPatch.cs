@@ -11,12 +11,13 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Patches;
 
 /// <summary>
 /// Forum style skin for the character select info panel of our characters (ICharacterSelectSkin):
-/// semi-transparent backing, the first name ("className" key) above the class title, HP/Gold on black chips (vanilla position),
+/// semi-transparent backing, the first name ("className" key) above the class title, vanilla HP/Gold,
 /// the starting relic's icon centred on its text,
-/// and a single row of playstyle coins with their own tooltip; the backing grows upwards to hold it (the panel itself doesn't move).
+/// and a grid of playstyle coins with their own tooltip on the right of the panel content, wrapping into as many columns
+/// as the panel height needs; the backing grows rightwards to hold it (the panel itself doesn't move).
 /// The vanilla panel is shared by every character, so everything is added on top of it and undone on the next selection;
 /// vanilla characters, the random button and the character buttons themselves are left untouched.
-/// Gamepad: up from the character buttons enters the coin row, left/right moves, down goes back.
+/// Gamepad: up from the character buttons enters the coin grid, arrows move inside it, down from the bottom row goes back.
 /// </summary>
 [HarmonyPatch]
 public static class CharacterSelectSkinPatch
@@ -35,8 +36,9 @@ public static class CharacterSelectSkinPatch
     private const int FrameRadius = 10;
     private const float CoinSize = 52f;
     private const int CoinGap = 10;
-    /// <summary>Room between the playstyle row and the panel content under it.</summary>
-    private const float PlaystyleGap = 18f;
+    /// <summary>Room between the panel content and the playstyle grid on its right.</summary>
+    private const float PlaystyleGap = 28f;
+    private const int PlaystyleHeaderGap = 10;
     /// <summary>Extra room between the first name and the class title under it.</summary>
     private const float NameTitleGap = 24f;
     private const float TipWidth = 380f;
@@ -51,9 +53,7 @@ public static class CharacterSelectSkinPatch
         public readonly Dictionary<Control, NodePath> OriginalTops = [];
         public Control? Frame;
         public Control? Section;
-        public Control? Grid;
-        public Control? HpChip;
-        public Control? GoldChip;
+        public GridContainer? Grid;
         public PanelContainer? Tip;
         public Label? TipTitle;
         public RichTextLabel? TipBody;
@@ -134,8 +134,6 @@ public static class CharacterSelectSkinPatch
         var s = States.GetOrCreateValue(screen);
         var panel = InfoPanel(screen);
         var vbox = panel.GetNode<VBoxContainer>("VBoxContainer");
-        var spacer = vbox.GetNode<Control>("HpGoldSpacer");
-        var hpGold = spacer.GetNode<BoxContainer>("HpGold");
         var relic = vbox.GetNode<Control>("Relic");
         var nine = panel.GetNodeOrNull<CanvasItem>("NinePatchRect");
         Label name = screen.GetNode<Label>("InfoPanel/VBoxContainer/Name");
@@ -160,9 +158,8 @@ public static class CharacterSelectSkinPatch
 
         if (!s.Hooked)
         {
-            // Description length changes the panel height: keep the frame and chips fitted to it
+            // Description length changes the panel height: keep the frame and playstyle grid fitted to it
             vbox.Connect(Container.SignalName.SortChildren, Callable.From(() => Refit(screen)));
-            ((Container)hpGold).Connect(Container.SignalName.SortChildren, Callable.From(() => Refit(screen)));
             s.Hooked = true;
         }
 
@@ -170,7 +167,7 @@ public static class CharacterSelectSkinPatch
 
         bool hasPlaystyles = !locked && skin.Playstyles.Count > 0;
 
-        // Backing: plain semi-transparent rounded panel. With playstyles it reaches up a little further to hold their row,
+        // Backing: plain semi-transparent rounded panel. With playstyles it reaches further right to hold their grid,
         // so the panel itself keeps its vanilla position.
         var frame = Track(s, Box("ShionTheBruiserSkinFrame", PanelBg, Colors.Transparent, 0));
         SetCorners(frame, FrameRadius, FrameRadius, FrameRadius, FrameRadius);
@@ -197,14 +194,6 @@ public static class CharacterSelectSkinPatch
             name.AddChild(Track(s, chip));
         }
 
-        // HP/Gold: left where vanilla puts them, on plain black chips
-        s.HpChip = Track(s, Box("ShionTheBruiserSkinHpChip", Colors.Black, Colors.Transparent, 0));
-        s.GoldChip = Track(s, Box("ShionTheBruiserSkinGoldChip", Colors.Black, Colors.Transparent, 0));
-        spacer.AddChild(s.HpChip);
-        spacer.AddChild(s.GoldChip);
-        spacer.MoveChild(s.HpChip, 0);
-        spacer.MoveChild(s.GoldChip, 1);
-
         if (hasPlaystyles) BuildPlaystyles(screen, s, vbox, panel, character, skin.Playstyles, button);
 
         Refit(screen);
@@ -218,16 +207,17 @@ public static class CharacterSelectSkinPatch
     {
         s.Playstyles = playstyles;
 
-        // One line: header then every coin, inside the (upwards-extended) main backing
-        var section = new HBoxContainer { Name = "ShionTheBruiserSkinPlaystyles", MouseFilter = Control.MouseFilterEnum.Ignore };
-        section.AddThemeConstantOverride("separation", 16);
+        // Header over a grid of coins, right of the panel content inside the (rightwards-extended) main backing.
+        // Refit picks the column count so the grid never gets taller than the panel content.
+        var section = new VBoxContainer { Name = "ShionTheBruiserSkinPlaystyles", MouseFilter = Control.MouseFilterEnum.Ignore };
+        section.AddThemeConstantOverride("separation", PlaystyleHeaderGap);
         var header = SmallCaps(screen, new LocString("main_menu_ui", "SHIONTHEBRUISER-CHARACTER_SELECT.playstyles").GetFormattedText(), 18);
         header.AddThemeColorOverride("font_color", GoldText);
-        header.SizeFlagsVertical = Control.SizeFlags.ShrinkCenter;
         section.AddChild(header);
 
-        var row = new HBoxContainer { Name = "Coins", MouseFilter = Control.MouseFilterEnum.Ignore };
-        row.AddThemeConstantOverride("separation", CoinGap);
+        var row = new GridContainer { Name = "Coins", Columns = 1, MouseFilter = Control.MouseFilterEnum.Ignore };
+        row.AddThemeConstantOverride("h_separation", CoinGap);
+        row.AddThemeConstantOverride("v_separation", CoinGap);
         section.AddChild(row);
         s.Section = section;
         s.Grid = row;
@@ -267,7 +257,7 @@ public static class CharacterSelectSkinPatch
             s.Coins.Add(coin);
         }
 
-        // Free-floating above the panel (placed in Refit), not in the VBox, so the panel isn't pushed down
+        // Free-floating beside the panel content (placed in Refit), not in the VBox, so the panel isn't resized
         panel.AddChild(Track(s, section));
 
         // Tooltip, drawn over the panel
@@ -315,18 +305,33 @@ public static class CharacterSelectSkinPatch
         s.TipTitle = title;
         s.TipBody = body;
 
-        // Gamepad: character buttons ↑ the first coin, left/right runs through the coins, ↓ goes back to the selected character
-        int count = s.Coins.Count;
+        // Gamepad: character buttons ↑ the first coin; moves inside the grid are set in SetCoinNavigation once its columns are known
         foreach (var charButton in screen.GetNode<Control>("CharSelectButtons/ButtonContainer").GetChildren().OfType<Control>().Where(c => c.Visible))
         {
             s.OriginalTops[charButton] = charButton.FocusNeighborTop;
             charButton.FocusNeighborTop = s.Coins[0].GetPath();
         }
+        SetCoinNavigation(s, row.Columns);
+    }
+
+    /// <summary>
+    /// Up/down moves between rows, left/right runs through every coin in order,
+    /// ↓ from the bottom row goes back to the selected character.
+    /// </summary>
+    private static void SetCoinNavigation(SkinState s, int columns)
+    {
+        var origin = s.FocusOrigin;
+        if (origin == null || !GodotObject.IsInstanceValid(origin)) return;
+        int count = s.Coins.Count;
+        int lastRowStart = (count - 1) / columns * columns;
         for (int i = 0; i < count; i++)
         {
             var coin = s.Coins[i];
-            coin.FocusNeighborTop = coin.GetPath();
-            coin.FocusNeighborBottom = origin.GetPath();
+            coin.FocusNeighborTop = (i >= columns ? s.Coins[i - columns] : coin).GetPath();
+            // From a short last row, the coin above-right falls through to the last coin
+            coin.FocusNeighborBottom = i + columns < count ? s.Coins[i + columns].GetPath()
+                : i < lastRowStart ? s.Coins[count - 1].GetPath()
+                : origin.GetPath();
             coin.FocusNeighborLeft = s.Coins[Math.Max(i - 1, 0)].GetPath();
             coin.FocusNeighborRight = s.Coins[Math.Min(i + 1, count - 1)].GetPath();
             coin.FocusPrevious = coin.FocusNeighborLeft;
@@ -361,8 +366,8 @@ public static class CharacterSelectSkinPatch
         if (!GodotObject.IsInstanceValid(coin) || !GodotObject.IsInstanceValid(s.Tip) || !s.Tip.Visible) return;
 
         s.Tip.ResetSize();
-        // Above the coin row, lined up with its left edge: below it would cover the panel.
-        // If that runs off the top of the screen, beside the row instead.
+        // Above the coin grid, lined up with its left edge: below it would cover the panel.
+        // If that runs off the top of the screen, right of the backing instead.
         var anchor = s.Grid != null && GodotObject.IsInstanceValid(s.Grid) ? s.Grid.GetGlobalRect() : coin.GetGlobalRect();
         var above = new Vector2(anchor.Position.X, anchor.Position.Y - 14 - s.Tip.Size.Y);
         var viewportTop = s.Tip.GetViewportRect().Position.Y;
@@ -379,7 +384,7 @@ public static class CharacterSelectSkinPatch
 
     // ───────────────────────────── Layout ─────────────────────────────
 
-    /// <summary>Fits the frame around the visible panel content and the chips behind HP/Gold.</summary>
+    /// <summary>Fits the frame around the visible panel content and the playstyle grid on its right.</summary>
     private static void Refit(NCharacterSelectScreen screen)
     {
         if (!States.TryGetValue(screen, out var s) || !s.Active) return;
@@ -397,27 +402,33 @@ public static class CharacterSelectSkinPatch
                 float bottom = children.Max(c => c.Position.Y + c.Size.Y);
                 var section = s.Section != null && GodotObject.IsInstanceValid(s.Section) ? s.Section : null;
 
-                // One backing for the vanilla panel content, reaching up over the playstyle row when there is one
-                float contentTop = top;
+                // One backing for the vanilla panel content, reaching right over the playstyle grid when there is one
                 float width = vbox.Size.X;
-                if (section != null)
+                float contentBottom = bottom;
+                if (section != null && s.Grid != null && GodotObject.IsInstanceValid(s.Grid) && s.Coins.Count > 0)
                 {
+                    // As many rows as fit next to the panel content, wrapping the rest into more columns
+                    float headerHeight = section.GetChild<Control>(0).GetCombinedMinimumSize().Y + PlaystyleHeaderGap;
+                    int rows = Math.Max(1, (int)((bottom - top - headerHeight + CoinGap) / (CoinSize + CoinGap)));
+                    int columns = (s.Coins.Count + rows - 1) / rows;
+                    if (s.Grid.Columns != columns)
+                    {
+                        s.Grid.Columns = columns;
+                        SetCoinNavigation(s, columns);
+                    }
+
                     var size = section.GetCombinedMinimumSize();
                     section.Size = size;
-                    contentTop = top - PlaystyleGap - size.Y;
-                    section.Position = vbox.Position + new Vector2(0, contentTop);
-                    width = Math.Max(width, size.X);
+                    section.Position = vbox.Position + new Vector2(vbox.Size.X + PlaystyleGap, top);
+                    width = vbox.Size.X + PlaystyleGap + size.X;
+                    contentBottom = Math.Max(bottom, top + size.Y);
                 }
-                float frameTop = contentTop - FramePad;
+                float frameTop = top - FramePad;
                 s.Frame.Position = vbox.Position + new Vector2(-FramePad, frameTop);
-                s.Frame.Size = new Vector2(width + FramePad * 2, bottom + FramePad - frameTop);
+                s.Frame.Size = new Vector2(width + FramePad * 2, contentBottom + FramePad - frameTop);
             }
         }
 
-        var hpGold = vbox.GetNodeOrNull<Control>("HpGoldSpacer/HpGold");
-        if (hpGold == null) return;
-        FitChip(s.HpChip, hpGold, hpGold.GetNodeOrNull<Control>("Hp"));
-        FitChip(s.GoldChip, hpGold, hpGold.GetNodeOrNull<Control>("Gold"));
     }
 
     /// <summary>Centres the relic icon on the relic's name + description block instead of hanging at its top.</summary>
@@ -432,13 +443,6 @@ public static class CharacterSelectSkinPatch
         float textBottom = description.Position.Y + Math.Max(description.GetContentHeight(), 1);
         float iconTop = (textTop + textBottom) / 2f - icon.Size.Y / 2f;
         icon.Position = new Vector2(icon.Position.X, Math.Max(iconTop, 0));
-    }
-
-    private static void FitChip(Control? chip, Control hpGold, Control? target)
-    {
-        if (chip == null || target == null || !GodotObject.IsInstanceValid(chip)) return;
-        chip.Position = hpGold.Position + target.Position + new Vector2(-10, -5);
-        chip.Size = target.Size + new Vector2(28, 10);
     }
 
     // ───────────────────────────── Revert ─────────────────────────────
@@ -461,7 +465,8 @@ public static class CharacterSelectSkinPatch
         }
         s.Added.Clear();
         s.Coins.Clear();
-        s.Frame = s.Section = s.Grid = s.HpChip = s.GoldChip = null;
+        s.Frame = s.Section = null;
+        s.Grid = null;
         s.Tip = null;
         s.TipTitle = null;
         s.TipBody = null;
