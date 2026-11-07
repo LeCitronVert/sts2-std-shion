@@ -15,7 +15,7 @@ public class ShionEnergyJolt() : ShionTheBruiserCard(2,
     CardType.Attack, CardRarity.Uncommon,
     TargetType.AnyEnemy)
 {
-    public const int GalvanisedThreshold = 7;
+    public const int GalvanisedThreshold = 6;
     
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(3, ValueProp.Move),

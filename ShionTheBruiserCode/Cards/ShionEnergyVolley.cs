@@ -16,8 +16,8 @@ public class ShionEnergyVolley() : ShionTheBruiserCard(1,
     CardType.Attack, CardRarity.Uncommon,
     TargetType.AnyEnemy)
 {
-    public const int FirstGalvanisedThreshold = 10;
-    public const int SecondGalvanisedThreshold = 20;
+    public const int FirstGalvanisedThreshold = 3;
+    public const int SecondGalvanisedThreshold = 10;
     
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(1, ValueProp.Move),

@@ -13,7 +13,7 @@ public class ShionEnergySurge() : ShionTheBruiserCard(1,
     CardType.Skill, CardRarity.Common,
     TargetType.Self)
 {
-    public const int GalvanisedThreshold = 12;
+    public const int GalvanisedThreshold = 6;
     
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<StrengthPower>(1),
