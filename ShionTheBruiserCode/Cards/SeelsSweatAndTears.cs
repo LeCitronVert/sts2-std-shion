@@ -20,7 +20,7 @@ public class SeelsSweatAndTears() : SeelsTheRecklessCard(2,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<SweatAndTears>(1M)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(1)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(SeelsCardKeywords.BloodBend),
@@ -29,11 +29,11 @@ public class SeelsSweatAndTears() : SeelsTheRecklessCard(2,
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await PowerCmd.Apply<SweatAndTears>(choiceContext, Owner.Creature, DynamicVars["SweatAndTears"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<SweatAndTears>(choiceContext, Owner.Creature, DynamicVars.Energy.BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["SweatAndTears"].UpgradeValueBy(1M);
+        DynamicVars.Energy.UpgradeValueBy(1M);
     }
 }

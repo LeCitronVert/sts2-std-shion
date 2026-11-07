@@ -7,7 +7,7 @@ ShionTheBruiser.json::JSON::-1::1792433998::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1794068721
+::res://bin/ExportRelease/net9.0/publish/::1794070050
 ShionTheBruiser.deps.json::JSON::-1::1793894095::0::1::::<><><>0<>0<><>::
 ::res://ci/::1792939391
 ::res://ci/game-refs/::1792939391
@@ -19,7 +19,7 @@ abby_cry.mp3::AudioStreamMP3::5378262688525908553::1783257218::1783257373::1::::
 ::res://ShionTheBruiser/audio/sfx/::1793464780
 confusion_bowling.mp3::AudioStreamMP3::4153081571096850742::1793453037::1793464780::1::::<><><>0<>0<>fc97d7249487d300f0fb3d8a02acee51<>res://.godot/imported/confusion_bowling.mp3-2705cab83dae997481d70474804fb493.mp3str::
 ::res://ShionTheBruiser/images/::1794068555
-::res://ShionTheBruiser/images/ancients/::1794068555
+::res://ShionTheBruiser/images/ancients/::1794068725
 cosmo.png::CompressedTexture2D::2228132123023893981::1794068555::1794068724::1::::<><><>0<>0<>3467efedb01acd269f790ac612c89275<>res://.godot/imported/cosmo.png-260586b15d4dd65ef42381e4bfe0e3d3.ctex::
 cosmo_backdrop.png::CompressedTexture2D::2558209550675157928::1794068555::1794068725::1::::<><><>0<>0<>75b6f7fb1ccc6f27286acb9d0a3f605e<>res://.godot/imported/cosmo_backdrop.png-92e1a5618bcb1642dccd37086a21ac09.ctex::
 cosmo_icon.png::CompressedTexture2D::5823658573262251201::1794068555::1794068724::1::::<><><>0<>0<>e34234d001019fa96a7b9b5f74971a2c<>res://.godot/imported/cosmo_icon.png-2a9a5cecad96d509ed20a218d00c8f9d.ctex::
@@ -1408,7 +1408,7 @@ shion_transition.gdshader::Shader::8399508371254944682::1793894003::0::1::::<><>
 slal_transition.gdshader::Shader::519783521250603426::1793894975::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiserCode/::1794062082
 MainFile.cs::CSharpScript::2954314548483070873::1793207387::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Ancients/::1794068234
+::res://ShionTheBruiserCode/Ancients/::1794068724
 Cosmo.cs::CSharpScript::6842918864366238933::1794067883::0::1::::<><><>0<>0<><>::
 CosmoAccess.cs::CSharpScript::3844629896305559527::1794068234::0::1::::<><><>0<>0<><>::
 CosmoDialogues.cs::CSharpScript::1013802793022231297::1794068229::0::1::::<><><>0<>0<><>::
@@ -1979,7 +1979,7 @@ ShionTheBruiserPotion.cs::CSharpScript::9201725349623556408::1783339625::0::1:::
 SlalTheEndlessPotion.cs::CSharpScript::8376483660968667012::1784597711::0::1::::<><><>0<>0<><>::
 SlimePotion.cs::CSharpScript::7989781476553595685::1793813802::0::1::::<><><>0<>0<><>::
 UltraSpicyBrew.cs::CSharpScript::9048578971562818039::1784853353::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Powers/::1794068032
+::res://ShionTheBruiserCode/Powers/::1794068724
 AceOfSpade.cs::CSharpScript::899769670653131295::1793740867::0::1::::<><><>0<>0<><>::
 AggravatingDemeanor.cs::CSharpScript::8129228658966784852::1793719953::0::1::::<><><>0<>0<><>::
 AnchoredDown.cs::CSharpScript::5901246561197500973::1792505028::0::1::::<><><>0<>0<><>::
@@ -2190,7 +2190,7 @@ WeakNextTurn.cs::CSharpScript::5782250778147587320::1792676641::0::1::::<><><>0<
 WeirdFlex.cs::CSharpScript::8875926172854278857::1793813722::0::1::::<><><>0<>0<><>::
 WizardDidIt.cs::CSharpScript::3441598820766030206::1792675405::0::1::::<><><>0<>0<><>::
 YellowEmeraldChallenge.cs::CSharpScript::9066026223788165407::1793092462::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Relics/::1794068139
+::res://ShionTheBruiserCode/Relics/::1794069147
 AbbyTheAbsol.cs::CSharpScript::4933717058365350120::1793306016::0::1::::<><><>0<>0<><>::
 AppleSauce.cs::CSharpScript::6128642512040451757::1793295307::0::1::::<><><>0<>0<><>::
 BattleGloves.cs::CSharpScript::8565195483457157643::1784413134::0::1::::<><><>0<>0<><>::
@@ -2202,7 +2202,7 @@ Champagne.cs::CSharpScript::462454136885199896::1793452164::0::1::::<><><>0<>0<>
 ChaoEggshell.cs::CSharpScript::7020309206761549810::1793012290::0::1::::<><><>0<>0<><>::
 ChaosEmeraldRelic.cs::CSharpScript::624059600647419324::1793016578::0::1::::<><><>0<>0<><>::
 ChaosRing.cs::CSharpScript::8219120507868837961::1794068050::0::1::::<><><>0<>0<><>::
-Checkpoint.cs::CSharpScript::7452670066405997629::1794067987::0::1::::<><><>0<>0<><>::
+Checkpoint.cs::CSharpScript::7452670066405997629::1794069147::0::1::::<><><>0<>0<><>::
 ChoiceBand.cs::CSharpScript::8821199811291539698::1793012290::0::1::::<><><>0<>0<><>::
 ComfyCape.cs::CSharpScript::5229932216187163639::1794068008::0::1::::<><><>0<>0<><>::
 CommanderCap.cs::CSharpScript::5748431079974314787::1793012290::0::1::::<><><>0<>0<><>::
@@ -2291,7 +2291,7 @@ MaimSingleton.cs::CSharpScript::7125466764686739455::1793815655::0::1::::<><><>0
 ShionCritSingleton.cs::CSharpScript::3951621572379558951::1793457705::0::1::::<><><>0<>0<><>::
 SlalApparenceSingleton.cs::CSharpScript::6424703020693251239::1793013162::0::1::::<><><>0<>0<><>::
 TeamBlastSingleton.cs::CSharpScript::5790765917409709916::1793827389::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Timeline/::1794067772
+::res://ShionTheBruiserCode/Timeline/::1794068724
 CharacterUnlockEpoch.cs::CSharpScript::2177026565359277390::1793207253::0::1::::<><><>0<>0<><>::
 DreamersEpoch.cs::CSharpScript::1284180167898971242::1793207404::0::1::::<><><>0<>0<><>::
 DreamersEpochPatches.cs::CSharpScript::5299717185404551713::1793207332::0::1::::<><><>0<>0<><>::

@@ -772,7 +772,7 @@
     "SHIONTHEBRUISER-SEELS_BRUTAL_TEACHINGS.title": "Brutal Teachings",
     "SHIONTHEBRUISER-SEELS_BRUTAL_TEACHINGS.description": "Deal {Damage:diff()} damage.\nIncrease this card's damage by {DamageIncrease:diff()} this combat.",
     "SHIONTHEBRUISER-SEELS_SWEAT_AND_TEARS.title": "Sweat and Tears",
-    "SHIONTHEBRUISER-SEELS_SWEAT_AND_TEARS.description": "Whenever you [gold]Blood Bend[/gold], gain {SweatAndTears:energyIcons()}.",
+    "SHIONTHEBRUISER-SEELS_SWEAT_AND_TEARS.description": "Whenever you [gold]Blood Bend[/gold], gain {Energy:energyIcons()}.",
     "SHIONTHEBRUISER-SEELS_CLIFF_DROPPER.title": "Cliff Dropper",
     "SHIONTHEBRUISER-SEELS_CLIFF_DROPPER.description": "Whenever you [gold]Gamble[/gold], draw {CliffDropper:diff()} card.",
     "SHIONTHEBRUISER-SEELS_DARK_POWERS.title": "Dark Powers",
