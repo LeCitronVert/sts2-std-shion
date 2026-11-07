@@ -39,6 +39,8 @@ public static class CharacterSelectSkinPatch
     /// <summary>HP/Gold column: top edge relative to the bottom of the name (centres two 40px rows on it).</summary>
     private const float HpGoldTop = -131f;
     private const int HpGoldSeparation = 14;
+    /// <summary>Extra room between the first name / HP-Gold row and the class title under it.</summary>
+    private const float NameTitleGap = 24f;
     /// <summary>Room between the HP/Gold column and the right edge of the backing, for the chips' padding.</summary>
     private const float HpGoldRightInset = 18f;
     private const float TipWidth = 380f;
@@ -71,6 +73,7 @@ public static class CharacterSelectSkinPatch
         public VerticalAlignment NameVAlign;
         public bool NinePatchVisible;
         public Vector2 SpacerMinSize;
+        public Vector2 NameMinSize;
         public float HpGoldTop, HpGoldBottom, HpGoldLeft, HpGoldRight, HpGoldAnchorLeft, HpGoldAnchorRight;
         public Control.GrowDirection HpGoldGrow;
         public bool HpGoldVertical;
@@ -156,6 +159,7 @@ public static class CharacterSelectSkinPatch
             s.NameVAlign = name.VerticalAlignment;
             s.NinePatchVisible = nine?.Visible ?? true;
             s.SpacerMinSize = spacer.CustomMinimumSize;
+            s.NameMinSize = name.CustomMinimumSize;
             s.HpGoldTop = hpGold.OffsetTop;
             s.HpGoldBottom = hpGold.OffsetBottom;
             s.HpGoldLeft = hpGold.OffsetLeft;
@@ -208,7 +212,9 @@ public static class CharacterSelectSkinPatch
         name.AddThemeColorOverride("font_outline_color", Colors.Black);
         name.AddThemeConstantOverride("outline_size", 22);
         name.VerticalAlignment = VerticalAlignment.Bottom;
-
+        // Taller label (text stays bottom-aligned) so the title sits lower, clear of the first name / HP-Gold row
+        name.CustomMinimumSize = s.NameMinSize;
+        name.CustomMinimumSize = new Vector2(s.NameMinSize.X, Mathf.Max(s.NameMinSize.Y, name.GetMinimumSize().Y) + NameTitleGap);
 
         var classKey = $"{character.Id.Entry}.className";
         if (!locked && LocString.Exists("characters", classKey))
@@ -229,8 +235,8 @@ public static class CharacterSelectSkinPatch
         hpGold.GrowHorizontal = Control.GrowDirection.Begin; // grows leftwards from the right edge to fit "65/65"
         hpGold.OffsetLeft = 0;
         hpGold.OffsetRight = -HpGoldRightInset;
-        hpGold.OffsetTop = HpGoldTop;
-        hpGold.OffsetBottom = HpGoldTop;
+        hpGold.OffsetTop = HpGoldTop - NameTitleGap;
+        hpGold.OffsetBottom = HpGoldTop - NameTitleGap;
         s.HpChip = Track(s, Box("ShionTheBruiserSkinHpChip", Colors.Black, Colors.Transparent, 0));
         s.GoldChip = Track(s, Box("ShionTheBruiserSkinGoldChip", Colors.Black, Colors.Transparent, 0));
         spacer.AddChild(s.HpChip);
@@ -524,6 +530,7 @@ public static class CharacterSelectSkinPatch
         name.AddThemeColorOverride("font_outline_color", s.NameOutlineColor);
         name.AddThemeConstantOverride("outline_size", s.NameOutlineSize);
         name.VerticalAlignment = s.NameVAlign;
+        name.CustomMinimumSize = s.NameMinSize;
 
         var panel = InfoPanel(screen);
         var nine = panel.GetNodeOrNull<CanvasItem>("NinePatchRect");
