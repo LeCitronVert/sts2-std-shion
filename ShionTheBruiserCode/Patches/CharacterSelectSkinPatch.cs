@@ -217,7 +217,13 @@ public static class CharacterSelectSkinPatch
         header.AddThemeColorOverride("font_color", GoldText);
         section.AddChild(header);
 
-        var row = new GridContainer { Name = "Coins", Columns = PlaystyleColumns, MouseFilter = Control.MouseFilterEnum.Ignore };
+        var row = new GridContainer
+        {
+            Name = "Coins",
+            Columns = PlaystyleColumns,
+            SizeFlagsHorizontal = Control.SizeFlags.ExpandFill,
+            MouseFilter = Control.MouseFilterEnum.Ignore,
+        };
         row.AddThemeConstantOverride("h_separation", CoinGap);
         row.AddThemeConstantOverride("v_separation", CoinGap);
         section.AddChild(row);
@@ -255,7 +261,15 @@ public static class CharacterSelectSkinPatch
             coin.MouseExited += () => { if (!coin.HasFocus()) HideTip(screen); };
             coin.FocusExited += () => HideTip(screen);
 
-            row.AddChild(coin);
+            // Each coin sits centred in an expanding cell, so the columns share the section's width evenly (space-around)
+            var cell = new CenterContainer
+            {
+                Name = $"Cell{i}",
+                SizeFlagsHorizontal = Control.SizeFlags.ExpandFill,
+                MouseFilter = Control.MouseFilterEnum.Ignore,
+            };
+            cell.AddChild(coin);
+            row.AddChild(cell);
             s.Coins.Add(coin);
         }
 
