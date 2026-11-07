@@ -687,6 +687,8 @@
     "SHIONTHEBRUISER-SEELS_COPY_KITTY.description": "Play a copy of ALL the cards another player played this turn and [gold]Exhaust[/gold] them.",
     "SHIONTHEBRUISER-SEELS_GAMBLING_ADDICTION.title": "Gambling Addiction",
     "SHIONTHEBRUISER-SEELS_GAMBLING_ADDICTION.description": "Deal damage equal to this card's energy cost to a random enemy for ALL of your [gold]Erratic[/gold] cards.{InCombat:\n(Deal {DamageAmount} damage {Hits} {Hits:plural:time|times})|}\nAt the end of your turn, if this is in your [gold]Hand[/gold], [gold]Gamble[/gold] your [gold]Hand[/gold].",
+    "SHIONTHEBRUISER-SEELS_GREAT_FORTUNES.title": "Great Fortunes",
+    "SHIONTHEBRUISER-SEELS_GREAT_FORTUNES.description": "If this card is [gold]Transformed[/gold] or [gold]Exhausted[/gold], gain [blue]{Gold}[/blue] [gold]Gold[/gold].",
     "SHIONTHEBRUISER-SEELS_BLOOD_BATH.title": "Blood Bath",
     "SHIONTHEBRUISER-SEELS_BLOOD_BATH.description": "[gold]Blood Bend[/gold] X.\nGain {IfUpgraded:show:{Block:diff()} + |}{Block:diff()}X [gold]Block[/gold].\nGain {BlurPower:diff()} [gold]Blur[/gold].{InCombat:\n(Gain {BlockAmount:diff()} [gold]Block[/gold])|}",
     "SHIONTHEBRUISER-SEELS_JOLTING_PAIN.title": "Jolting Pain",

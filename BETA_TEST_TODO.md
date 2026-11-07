@@ -1624,3 +1624,52 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - Cursed Dice's extra card follows Lasting Candy, but on every combat reward: Common/Uncommon/Rare Seels cards with the Gamble tag, using the reward's normal rarity odds (confirmed).
 - Flavour texts were copied as written, except "suprisingly" → "surprisingly" (Genie's Advice) and a stray space in "apples !" (Apple Sauce). Keyboard Key's missing letters ("hrder", "t some point", "hve") look like a joke about a broken key, so I left them.
 - Not touched: the 6 Fry rows with no name or effect, the reviewer notes (shop relic suggestions, "remove or Boss" on Training Manual, Shell Bell / Souvenir Picture remarks), and effect-text differences. All other relics on the sheet already existed and their flavours already matched.
+
+## 30. Special Events pass (Ninja Trial, Team Battle, The Gambler, Monster Soul)
+- [ ] Open the project in MegaDot so the 4 new images in `ShionTheBruiser/images/events/` get imported, then rebuild and re-export the pck.
+- [ ] Console tip: `event` with the event id (`SHIONTHEBRUISER-THE_GAMBLER`, `SHIONTHEBRUISER-MONSTER_SOUL`, `SHIONTHEBRUISER-TEAM_BATTLE`, vanilla `TRIAL`) to jump straight in.
+
+**The Trial: Ninja (new defendant in the vanilla event)**
+- [ ] Accepting the Trial rolls the Ninja about 1 time in 4. Merchant, Noble and Nondescript still show up, equally often.
+- [ ] Visuals: the vanilla "trial started" portrait, with the panini drawn where vanilla's defendants stand. Check size and position (`NinjaTrialPatch.CreateDefendant`: position 568,700, scale 0.6).
+- [ ] Innocent: Doubt is added to your Deck, then you pick 1 card to Upgrade. The result page starts with "IT IS DECIDED" (vanilla adds it).
+- [ ] Guilty: the option flashes as damaging. You take 8 damage (hit sound plays), then get 2 relics among Kusarigama / Nunchaku / Kunai / Shuriken you don't own. With 3 of them owned: the last one + 1 truly random. With all 4: 2 truly random.
+- [ ] Reject → Accept still leads to the trials (Ninja included).
+
+**Team Battle (multiplayer only, Hive or Glory)**
+- [ ] Never shows in solo, nor in Act 1. Shows the vanilla "collaborative event, vote" line.
+- [ ] Fight them as a team: everyone gets a card reward of Team Blast cards (their own class's + generic Colorless ones), and Clumsy.
+- [ ] Fight your counterpart one on one: everyone gets a Rare card reward from their own pool, and Injury.
+- [ ] Fight your teammate's counterpart: only offered when the team has at least 2 different classes. Everyone gets 2 card rewards from their teammates' classes (mixed when there are several), never from their own class.
+- [ ] MP: same 2 or 3 options on every client, no desync after the vote.
+
+**The Gambler (any act, after Seels' Asc 2 is unlocked)**
+- [ ] Only appears once Seels' "Roll With The Punches" epoch is revealed (by anyone in the run), and only when every player has 120+ Gold.
+- [ ] Do not play: pick a card, it's Transformed into Shame (Eternal cards can't be picked). Leaves the event.
+- [ ] Play once: pays 40 Gold, rolls a new curse. The first roll never gives Shame; no curse repeats until all 13 have shown, then it starts over. First and later plays have different text; the man's line names the curse.
+- [ ] After a roll, "Do not play" transforms into the rolled curse. When Great Fortunes is rolled, it becomes "Celebrate": adds Great Fortunes, then leaves.
+- [ ] Below 40 Gold, "Play once" turns into the locked "Broke" option.
+- [ ] Play until you win: lose ALL your Gold, get the Cursed Dice (and its Gambling Addiction). Leaves the event.
+- [ ] Portrait looks right (Eggman on the left, text readable on the right).
+
+**Great Fortunes (new Seels curse)**
+- [ ] Curse frame. Unplayable, Innate, Sly, Exhaust, Retain, Eternal. Starts each combat in your Hand and stays there.
+- [ ] Discarding it auto-plays it (Sly), which Exhausts it: +150 Gold.
+- [ ] Exhausting it any other way: +150 Gold. Transforming it in combat: +150 Gold.
+- [ ] Can't be removed or transformed out of your Deck (Eternal). Never rolled by random-curse effects (Neow's Bones, Sere Talon, Cursed Run).
+- [ ] MP: no desync from the gold (paid inside the transform/exhaust command).
+
+**Monster Soul (any act, after Shion's Asc 2 is unlocked)**
+- [ ] Only appears once Shion's "If One Doesn't Cut It..." epoch is revealed (by anyone in the run).
+- [ ] Hold onto the Crystal: lose 10 Max HP (option flashes red at 10 Max HP or less), Monstermancy added to your Deck.
+- [ ] Smash the Crystal: heal to full, Regret added to your Deck.
+- [ ] The outcome text changes for Shion / another Dreamer (Slal, Fry, Seels) / a vanilla character.
+
+**Decisions I made**
+- "Asc 2" gates = Asc 2 unlocked = the existing "win a run in Ascension 1" epochs (confirmed). In MP it counts if anyone in the run has it, like vanilla's event unlocks.
+- Great Fortunes is Unplayable like every curse (your list had no cost). Sly + Exhaust is what pays out when discarded. It sits in the vanilla curse pool (for the curse frame) but opts out of random curse generation. Text: "If this card is Transformed or Exhausted, gain 150 Gold."
+- Team Blast reward = cards with the Team Blast keyword (confirmed). Rare reward = your own class's pool. No real combat happens in Team Battle (the text tells how the fight went).
+- Gambler's "Do not play": you pick the card (confirmed). Its outcome text says the current curse ("Doubt for the quitter it is, then…") instead of always "Shame".
+- Events use one portrait each, as in vanilla: your images placed on the left of a dark 2560×1200 backdrop (the event screen's size), with a coloured glow. The Ninja uses vanilla's Trial portrait and the panini as the defendant sprite. `CustomVfxPath` in BaseLib does nothing, so no event uses it.
+- Text: colour tags mapped (shake → jitter, wavey → sine). Small fixes: "developped" → "developed", "upperhand" → "upper hand", "Low and behold" → "Lo and behold", "weakness lie" → "weaknesses lie", "rel to leave" → "relieved to leave", "a dice" kept. "(Collaborative choice.)" dropped since vanilla shows its own vote line.
+- Author Trial skipped, as asked.

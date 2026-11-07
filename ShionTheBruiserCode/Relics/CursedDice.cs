@@ -15,7 +15,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Enums;
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 /// <summary>
-/// Event relic, any character (meant for "The Gambler" event, which doesn't exist yet, so it can't drop for now).
+/// Event relic, any character. Obtained from "The Gambler" event (Events/TheGambler.cs, "Play until you win").
 /// Upon pickup, add Gambling Addiction to your Deck. Your combat card rewards gain an additional Gamble card
 /// (a Gamble-tagged card from Seels' pool, whoever holds it). Reward hook modelled on Lasting Candy.
 /// </summary>
