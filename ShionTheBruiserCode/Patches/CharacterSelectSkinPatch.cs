@@ -11,7 +11,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Patches;
 
 /// <summary>
 /// Forum style skin for the character select info panel of our characters (ICharacterSelectSkin):
-/// semi-transparent backing, the class name above the first name and HP/Gold in a column on its right,
+/// semi-transparent backing, the first name ("className" key) above the class title and HP/Gold in a column on its right,
 /// the starting relic's icon centred on its text,
 /// and playstyle coins in rows of 3 with their own tooltip, sitting on top of the panel (without moving it).
 /// The vanilla panel is shared by every character, so everything is added on top of it and undone on the next selection;
@@ -203,7 +203,7 @@ public static class CharacterSelectSkinPatch
             s.FrameTop = frameTop;
         }
 
-        // Name: white outlined first name, class name chip above it, HP/Gold on its right
+        // Name: white outlined class title ("The Bruiser"), first name chip above it ("className" key), HP/Gold on its right
         name.AddThemeColorOverride("font_color", Colors.White);
         name.AddThemeColorOverride("font_outline_color", Colors.Black);
         name.AddThemeConstantOverride("outline_size", 22);

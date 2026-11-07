@@ -18,7 +18,7 @@ public sealed record CharacterPlaystyle(string Key, Func<string> IconPath)
 
 /// <summary>
 /// Characters implementing this get the forum style info panel on the character select screen
-/// (Patches/CharacterSelectSkinPatch.cs): class name above the first name ("(Character ID).className") and a row of playstyle icons.
+/// (Patches/CharacterSelectSkinPatch.cs): first name ("(Character ID).className") above the class title ("(Character ID).title") and a row of playstyle icons.
 /// </summary>
 public interface ICharacterSelectSkin
 {
