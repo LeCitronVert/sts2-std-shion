@@ -50,11 +50,29 @@ public static class SeelsMechanicsHelper
         return creature.GetPowerAmount<Blood>();
     }
 
+    /// <summary>
+    /// Blood gained after the last enemy died but before combat actually ended (e.g. Maim on the killing blow).
+    /// PowerCmd.Apply ignores everything while the combat is ending, so it's held here and granted by
+    /// <see cref="Singletons.BloodCarryOverSingleton"/> once the combat has ended (before the leftover Blood is saved).
+    /// </summary>
+    private static readonly Dictionary<Creature, decimal> PendingEndOfCombatBlood = new();
+
     public static async Task GainBlood(PlayerChoiceContext choiceContext, Creature creature, decimal amount, CardModel? source = null)
     {
         if (amount <= 0) return;
+        if (CombatManager.Instance.IsEnding)
+        {
+            PendingEndOfCombatBlood[creature] = PendingEndOfCombatBlood.GetValueOrDefault(creature) + amount;
+            return;
+        }
         await PowerCmd.Apply<Blood>(choiceContext, creature, amount, creature, source);
     }
+
+    /// <summary>Removes and returns the Blood held for a creature while its combat was ending.</summary>
+    public static decimal TakePendingEndOfCombatBlood(Creature creature) =>
+        PendingEndOfCombatBlood.Remove(creature, out var amount) ? amount : 0;
+
+    public static void ClearPendingEndOfCombatBlood() => PendingEndOfCombatBlood.Clear();
 
     /// <summary>X of the first play of a card's current series, reused by its replays.</summary>
     private static readonly SpireField<CardModel, int> SeriesBloodBendX = new(() => 0);

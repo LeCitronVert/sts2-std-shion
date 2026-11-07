@@ -30,6 +30,14 @@ public class BloodCarryOverSingleton() : CustomSingletonModel(HookType.Combat)
     {
         foreach (var player in room.CombatState.Players)
         {
+            // Blood gained on the killing blow (Maim...) couldn't be applied while the combat was ending.
+            // IsInProgress is false now, so it can be applied (and counts as gained, e.g. Red Fang).
+            var pending = SeelsMechanicsHelper.TakePendingEndOfCombatBlood(player.Creature);
+            if (pending > 0 && player.Creature.IsAlive)
+            {
+                await SeelsMechanicsHelper.GainBlood(new ThrowingPlayerChoiceContext(), player.Creature, pending);
+            }
+
             // Scarlet Shadow: Blood Bend at the end of combat, before the leftover Blood is saved.
             if (player.Creature.IsAlive && player.Creature.HasPower<ScarletShadow>())
             {
@@ -37,6 +45,14 @@ public class BloodCarryOverSingleton() : CustomSingletonModel(HookType.Combat)
             }
             SavedBlood.Set(player, player.Creature.IsAlive ? SeelsMechanicsHelper.GetBlood(player.Creature) : 0);
         }
+        SeelsMechanicsHelper.ClearPendingEndOfCombatBlood();
+    }
+
+    public override Task BeforeCombatStart()
+    {
+        // Leftovers from a lost combat (AfterCombatEnd doesn't run on a loss).
+        SeelsMechanicsHelper.ClearPendingEndOfCombatBlood();
+        return Task.CompletedTask;
     }
 
     public override async Task AfterPlayerTurnStartEarly(PlayerChoiceContext choiceContext, Player player)
