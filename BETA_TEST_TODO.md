@@ -1753,3 +1753,9 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - Text: "{Class}" in Cosmo's line = the character's name. Small fixes: "revives you.." → "...", "english" → "English", "here's some something" → "here's something", "pretty stronger" → "pretty strong", "that one version of Fry I meant" → "I met", "Don't sweat it" got a period. I wrote the event page texts (opening, closing, cursed closing) and the button labels; the sheet didn't have them.
 - Cosmo's art: your image with a soft warm halo, on a generated warm backdrop (amber glow, light rays, floating motes, darker on the right for readability). Map icon (160px) and dialogue/run-history icon (128px) come from your dialog icon, with white outlines.
 - Not done: the epoch sheet's second, untitled row ("Unlock seven Chaos Emeralds") has no title or effect yet. Force Cursor's "the cursor changes to open chests" note is cosmetic and skipped.
+
+## Event-only cards (Monstermancy, Gambling Addiction)
+
+- [ ] **Monstermancy** never appears in card rewards, shops, random generation or transforms. You only get it from Monster Soul ("Hold onto the Crystal").
+- [ ] **Gambling Addiction** never appears in card rewards (Cursed Dice's extra Gamble card included). You only get it from Cursed Dice (The Gambler event).
+- [ ] Monstermancy still shows Shion's purple frame, with the Event rarity banner.

@@ -10,7 +10,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 public class ShionMonstermancy() : ShionBerserkCard(1,
-    CardType.Power, CardRarity.Rare,
+    CardType.Power, CardRarity.Event,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
