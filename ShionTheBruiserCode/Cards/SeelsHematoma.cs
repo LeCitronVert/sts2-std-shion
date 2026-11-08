@@ -61,7 +61,8 @@ public class SeelsHematoma() : SeelsTheRecklessCard(1,
         {
             var wound = CombatState.CreateCard<Wound>(Owner);
             await CardCmd.Transform(original, wound);
-            SeelsMechanicsHelper.Enchant<Swift>(wound, DynamicVars["Swift"].BaseValue);
+            // Wounds are Status cards, which CardCmd.Enchant refuses → must force it
+            SeelsMechanicsHelper.ForceEnchant<Swift>(wound, DynamicVars["Swift"].BaseValue);
             wounds.Add(wound);
         }
 
