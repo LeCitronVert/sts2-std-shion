@@ -33,7 +33,7 @@ public static class MonsterPowersHelper
         [typeof(PersonalHivePower)] = As<ThornsPower>(),
         [typeof(PlatingPower)] = As<PlatingPower>(),
         [typeof(SteamEruptionPower)] = As<VigorPower>(),
-        [typeof(PlowPower)] = As<RitualPower>(),
+        [typeof(PlowPower)] = As<Guard>(),
         [typeof(SandpitPower)] = As<PlatingPower>(),
         [typeof(ChainsOfBindingPower)] = As<NeurosurgePower>(),
         [typeof(VitalSparkPower)] = As<RegenPower>(),
