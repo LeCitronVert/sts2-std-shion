@@ -10,15 +10,17 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 /// <summary>
-/// Blood is shown on the health bar instead of as a power icon: a dark scarlet segment right after the current HP,
-/// in the missing HP part of the bar (Blood is capped by missing HP, so it always fits), and the amount in scarlet
-/// just right of the bar. Hovering the creature still shows Blood's hover tip.
+/// Blood is shown on the health bar instead of as a power icon, as a health bar segment like Poison / Doom:
+/// a copy of the game's Poison segment (same nine-patch fill texture, inside the bar's mask) tinted dark scarlet,
+/// right after the current HP, in the missing HP part of the bar (Blood is capped by missing HP, so it always fits).
+/// It tucks under the HP / Poison segments' rounded edge like Poison does under HP, and under the orange damage trail.
+/// The amount is in scarlet just right of the bar. Hovering the creature still shows Blood's hover tip.
 /// Visual only.
 /// </summary>
 [HarmonyPatch(typeof(NHealthBar), nameof(NHealthBar.RefreshValues))]
 public static class BloodHealthBarPatch
 {
-    private const string SegmentName = "SeelsBloodSegment";
+    private const string SegmentName = "SeelsBloodForeground";
     private const string LabelName = "SeelsBloodLabel";
 
     /// <summary>Same minimum width as the game's foreground (NHealthBar._minSize).</summary>
@@ -26,16 +28,17 @@ public static class BloodHealthBarPatch
 
     private const float LabelGap = 6f;
 
-    private static readonly Color SegmentColor = new(0.55f, 0.02f, 0.09f, 0.95f);
+    /// <summary>Poison's self_modulate is (0.47, 0.75, 0.24) and HP's is (0.8, 0.05, 0.05): Blood is a darker crimson.</summary>
+    private static readonly Color SegmentColor = new(0.42f, 0.0f, 0.1f);
     private static readonly Color LabelColor = new(1f, 0.25f, 0.3f);
     private static readonly Color LabelOutlineColor = new(0.2f, 0f, 0.02f);
 
     private static readonly AccessTools.FieldRef<NHealthBar, Creature> CreatureRef =
         AccessTools.FieldRefAccess<NHealthBar, Creature>("_creature");
-    private static readonly AccessTools.FieldRef<NHealthBar, Control> ForegroundContainerRef =
-        AccessTools.FieldRefAccess<NHealthBar, Control>("_hpForegroundContainer");
-    private static readonly AccessTools.FieldRef<NHealthBar, Control> ForegroundRef =
-        AccessTools.FieldRefAccess<NHealthBar, Control>("_hpForeground");
+    private static readonly AccessTools.FieldRef<NHealthBar, Control> PoisonForegroundRef =
+        AccessTools.FieldRefAccess<NHealthBar, Control>("_poisonForeground");
+    private static readonly AccessTools.FieldRef<NHealthBar, Control> MiddlegroundRef =
+        AccessTools.FieldRefAccess<NHealthBar, Control>("_hpMiddleground");
     private static readonly AccessTools.FieldRef<NHealthBar, MegaLabel> HpLabelRef =
         AccessTools.FieldRefAccess<NHealthBar, MegaLabel>("_hpLabel");
     private static readonly Func<NHealthBar, float> MaxFgWidth =
@@ -45,31 +48,34 @@ public static class BloodHealthBarPatch
     public static void Postfix(NHealthBar __instance)
     {
         var creature = CreatureRef(__instance);
-        var container = ForegroundContainerRef(__instance);
-        if (creature is null || container is null || !GodotObject.IsInstanceValid(container)) return;
+        var poison = PoisonForegroundRef(__instance);
+        if (creature is null || poison is null || !GodotObject.IsInstanceValid(poison)) return;
+        var mask = poison.GetParent();
+        if (mask is null) return;
 
-        var blood = creature.IsAlive ? SeelsMechanicsHelper.GetBlood(creature) : 0;
-        var segment = container.GetNodeOrNull<ColorRect>(SegmentName);
+        var blood = creature.IsAlive && !creature.HpDisplay.IsInfinite() ? SeelsMechanicsHelper.GetBlood(creature) : 0;
+        var segment = mask.GetNodeOrNull<NinePatchRect>(SegmentName);
         var label = __instance.HpBarContainer?.GetNodeOrNull<Label>(LabelName);
 
-        if (blood <= 0 || creature.MaxHp <= 0)
+        if (blood <= 0 || creature.MaxHp <= 0 || creature.CurrentHp <= 0)
         {
             if (segment != null) segment.Visible = false;
             if (label != null) label.Visible = false;
             return;
         }
 
-        segment ??= CreateSegment(container, ForegroundRef(__instance));
+        segment ??= CreateSegment(__instance, poison, mask);
         label ??= CreateLabel(__instance);
 
-        // Same width the game uses for the HP foreground
+        // Same maths as NHealthBar.GetFgWidth; offsets are relative to the full-width anchors, like Poison / Doom's.
         var width = MaxFgWidth(__instance);
-        var hpWidth = Math.Max((float)creature.CurrentHp / creature.MaxHp * width, MinHpWidth);
-        var bloodEnd = Math.Min((float)(creature.CurrentHp + blood) / creature.MaxHp * width, width);
+        var hpEnd = Math.Max((float)creature.CurrentHp / creature.MaxHp * width, MinHpWidth);
+        var bloodEnd = Math.Min(Math.Max((float)(creature.CurrentHp + blood) / creature.MaxHp * width, MinHpWidth), width);
 
-        segment.Visible = bloodEnd > hpWidth;
-        segment.OffsetLeft = hpWidth;
-        segment.OffsetRight = bloodEnd;
+        segment.Visible = bloodEnd > hpEnd;
+        // Starts under the HP segment's rounded right edge, like Poison under HP
+        segment.OffsetLeft = Math.Max(0f, hpEnd - segment.PatchMarginLeft);
+        segment.OffsetRight = bloodEnd - width;
 
         if (label != null)
         {
@@ -78,24 +84,22 @@ public static class BloodHealthBarPatch
         }
     }
 
-    private static ColorRect CreateSegment(Control container, Control foreground)
+    private static NinePatchRect CreateSegment(NHealthBar bar, Control poison, Node mask)
     {
-        var segment = new ColorRect
-        {
-            Name = SegmentName,
-            Color = SegmentColor,
-            MouseFilter = Control.MouseFilterEnum.Ignore,
-            // Left-anchored; the horizontal offsets are set on every refresh. Same height as the HP foreground.
-            AnchorLeft = 0f,
-            AnchorRight = 0f,
-            AnchorTop = foreground.AnchorTop,
-            AnchorBottom = foreground.AnchorBottom,
-            OffsetTop = foreground.OffsetTop,
-            OffsetBottom = foreground.OffsetBottom,
-        };
-        container.AddChild(segment);
-        // Right after the HP foreground, so the poison / doom overlays still draw over it
-        container.MoveChild(segment, foreground.GetIndex() + 1);
+        // Copy of the Poison segment: same texture, patch margins, anchors and height
+        var segment = (NinePatchRect)poison.Duplicate((int)(Node.DuplicateFlags.Groups | Node.DuplicateFlags.UseInstantiation));
+        segment.Name = SegmentName;
+        segment.UniqueNameInOwner = false;
+        segment.SelfModulate = SegmentColor;
+        segment.Modulate = Colors.White;
+        segment.MouseFilter = Control.MouseFilterEnum.Ignore;
+        segment.AnchorLeft = 0f;
+        segment.AnchorRight = 1f;
+        mask.AddChild(segment);
+        // Drawn first in the mask: under the orange damage trail (so it shows once the trail settles) and under the
+        // HP / Poison / Doom segments
+        var middleground = MiddlegroundRef(bar);
+        mask.MoveChild(segment, middleground != null && middleground.GetParent() == mask ? middleground.GetIndex() : 0);
         return segment;
     }
 
