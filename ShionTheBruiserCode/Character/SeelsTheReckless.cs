@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Timeline;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Relics;
 using ShionTheBruiser.ShionTheBruiserCode.Timeline;
 using ShionTheBruiser.ShionTheBruiserCode.Timeline.BaseLibEpochs;
@@ -26,8 +27,15 @@ public class SeelsTheReckless : PlaceholderCharacterModel, IEpochCharacter, ICha
     // The Silent's own wipe, the only other one vanilla has; fits the blade work.
     public override string CharacterTransitionSfx => "event:/sfx/ui/wipe_silent";
 
-    // Character select skin (Patches/CharacterSelectSkinPatch.cs). Playstyles not specified yet, so the row stays hidden.
-    public IReadOnlyList<CharacterPlaystyle> Playstyles { get; } = [];
+    // Character select playstyle icons (Patches/CharacterSelectSkinPatch.cs), text in characters.json
+    public IReadOnlyList<CharacterPlaystyle> Playstyles { get; } =
+    [
+        CharacterPlaystyle.Power<Blood>("BLOOD_BEND"),
+        CharacterPlaystyle.Power<GamblersLuck>("GAMBLE"),
+        CharacterPlaystyle.Power<ComboMeter>("SLASH"),
+        CharacterPlaystyle.Power<BleedInstructions>("WOUNDS"),
+        CharacterPlaystyle.Power<Gloat>("GLOAT"),
+    ];
 
     public override Color NameColor => Color;
     public override CharacterGender Gender => CharacterGender.Masculine;

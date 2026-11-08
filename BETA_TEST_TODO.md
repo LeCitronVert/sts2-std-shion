@@ -1812,3 +1812,11 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - Cosmo's Plea's line is a thought bubble (your note), using the game's ThinkCmd, so it is purely visual.
 - Hematoma follow-up: your new text has no Wounding, so I removed it. The upgrade still gives +2 Block. A Wound you pick is still replaced by a new Swift 1 Wound. The "free this turn" part is a hidden power that ends at end of turn, so nothing on the cards has to be undone.
 - Not done: the "Ideas (ne pas implémenter encore)" section.
+
+## Seels playstyles
+
+- [ ] Seels' character select panel shows 5 playstyle coins, in rows of 2: Blood Bend (Blood icon), Gamble (Gambler's Luck icon), Slash (Combo Meter icon), Wounds (Bleed Instructions icon), Gloat (Gloat icon).
+- [ ] Hovering each coin shows its title and description as given. The panel backing grows to fit the 3 rows. Fry still shows no playstyles.
+
+**Decisions I made**
+- Icons are the big icons of the matching Seels powers. Keys in characters.json: BLOOD_BEND, GAMBLE, SLASH, WOUNDS, GLOAT.
