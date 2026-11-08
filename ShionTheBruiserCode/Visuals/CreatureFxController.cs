@@ -49,6 +49,7 @@ public static class CreatureFxPatch
 /// <item>Come What May: rare sweat drops from Shion's head (scenes/fx/tears.tscn), more often with more stacks, only for Shion.</item>
 /// <item>Defensive / Mighty Guard: honeycomb barrier in front of the creature (scenes/fx/hex_shell.tscn).</item>
 /// <item>Dragonsong: music notes around the creature, one per point of reduction (scenes/fx/music_notes.tscn).</item>
+/// <item>Blood: scarlet wisps circling the creature, one per Blood up to 10, then bigger with more Blood (scenes/fx/blood_wisps.tscn).</item>
 /// <item>Full Nelson / Frontliner: the player moves behind the held enemy / in front of the team (<see cref="CreaturePositioning"/>).</item>
 /// <item>Eleventh Hour / Extreme Speed: 80% slower animations and a black and white body.</item>
 /// <item>Lurking Intensity / Flow Charge: red / orange particles (scenes/fx/rising_particles.tscn).</item>
@@ -118,6 +119,7 @@ public class CreatureFxController
     private Node2D? _defensiveShell;
     private Node2D? _mightyGuardShell;
     private Node2D? _notes;
+    private Node2D? _bloodWisps;
     private Node2D? _lurkingParticles;
     private Node2D? _flowChargeParticles;
     private Node2D? _zzz;
@@ -289,6 +291,10 @@ public class CreatureFxController
             : 0;
         SetEffect(ref _notes, "music_notes", noteCount > 0, n => n.Call("set_area", _bounds));
         _notes?.Call("set_count", noteCount);
+
+        var blood = alive ? SeelsMechanicsHelper.GetBlood(_creature) : 0;
+        SetEffect(ref _bloodWisps, "blood_wisps", blood > 0, n => n.Call("set_area", _bounds));
+        _bloodWisps?.Call("set_blood", blood);
 
         SetEffect(ref _lurkingParticles, "rising_particles", alive && _creature.HasPower<LurkingIntensity>(), n =>
         {

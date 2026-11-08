@@ -21,7 +21,8 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain 7 (9) Block. Wounding. Play ALL Status cards in your Hand and draw as many cards.
+/// Gain 7 (9) Block. Transform any number of cards in your Hand into Swift 1 Wounds. They are free to play this turn
+/// (see <see cref="HematomaWounds"/>).
 /// </summary>
 public class SeelsHematoma() : SeelsTheRecklessCard(1,
     CardType.Skill, CardRarity.Common,
@@ -29,32 +30,45 @@ public class SeelsHematoma() : SeelsTheRecklessCard(1,
 {
     public override bool GainsBlock => true;
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [SeelsCardKeywords.Wounding];
-
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new BlockVar(7M, ValueProp.Move),
-        new CalculationBaseVar(0),
-        new CalculationExtraVar(1),
-        // Counts the Wound this card adds first
-        new CalculatedVar("DrawAmount").WithMultiplier((card, _) => SeelsMechanicsHelper.PreviewStatusesInHandAfterWounding(card)),
+        new DynamicVar("Swift", 1M),
     ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Wound>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromCard<Wound>(),
+        ..HoverTipFactory.FromEnchantment<Swift>(DynamicVars["Swift"].IntValue),
+    ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
-        await SeelsMechanicsHelper.AddWounds(Owner, 1);
 
-        var statuses = PileType.Hand.GetPile(Owner).Cards.Where(c => c.Type == CardType.Status).ToList();
-        if (statuses.Count == 0) return;
+        var handCount = PileType.Hand.GetPile(Owner).Cards.Count;
+        if (handCount == 0 || CombatState is null) return;
 
-        foreach (var status in statuses)
+        var chosen = (await CardSelectCmd.FromHand(
+            choiceContext,
+            Owner,
+            new CardSelectorPrefs(SelectionScreenPrompt, 0, handCount),
+            null,
+            this
+        )).ToList();
+        if (chosen.Count == 0) return;
+
+        List<CardModel> wounds = [];
+        foreach (var original in chosen)
         {
-            if (Owner.Creature.IsDead) return;
-            await SeelsMechanicsHelper.PlayEvenIfUnplayable(choiceContext, status);
+            var wound = CombatState.CreateCard<Wound>(Owner);
+            await CardCmd.Transform(original, wound);
+            SeelsMechanicsHelper.Enchant<Swift>(wound, DynamicVars["Swift"].BaseValue);
+            wounds.Add(wound);
         }
-        await CardPileCmd.Draw(choiceContext, statuses.Count, Owner);
+
+        // A second Hematoma this turn adds to the same (hidden) power
+        var power = Owner.Creature.GetPower<HematomaWounds>()
+                    ?? await PowerCmd.Apply<HematomaWounds>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
+        power?.AddWounds(wounds);
     }
 
     protected override void OnUpgrade()

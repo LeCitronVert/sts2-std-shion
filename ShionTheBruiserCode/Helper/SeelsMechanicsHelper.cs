@@ -57,15 +57,36 @@ public static class SeelsMechanicsHelper
     /// </summary>
     private static readonly Dictionary<Creature, decimal> PendingEndOfCombatBlood = new();
 
+    /// <summary>Blood is capped by missing HP.</summary>
+    public static int GetBloodCap(Creature creature) => Math.Max(0, creature.MaxHp - creature.CurrentHp);
+
+    /// <summary>
+    /// Gains Blood, up to the cap (missing HP). Blood gained beyond the cap is lost (not counted as gained, e.g. Red Fang).
+    /// </summary>
     public static async Task GainBlood(PlayerChoiceContext choiceContext, Creature creature, decimal amount, CardModel? source = null)
     {
         if (amount <= 0) return;
         if (CombatManager.Instance.IsEnding)
         {
+            // Capped when it's actually granted, once the combat has ended
             PendingEndOfCombatBlood[creature] = PendingEndOfCombatBlood.GetValueOrDefault(creature) + amount;
             return;
         }
+        amount = Math.Min(amount, GetBloodCap(creature) - GetBlood(creature));
+        if (amount <= 0) return;
         await PowerCmd.Apply<Blood>(choiceContext, creature, amount, creature, source);
+        // In case a modifier raised the amount above the cap
+        await TrimBloodToCap(choiceContext, creature);
+    }
+
+    /// <summary>Removes the Blood above the cap (missing HP), e.g. after healing.</summary>
+    public static async Task TrimBloodToCap(PlayerChoiceContext choiceContext, Creature creature)
+    {
+        var blood = creature.GetPower<Blood>();
+        if (blood is null) return;
+        var excess = blood.Amount - GetBloodCap(creature);
+        if (excess <= 0) return;
+        await PowerCmd.ModifyAmount(choiceContext, blood, -excess, null, null, silent: true);
     }
 
     /// <summary>Removes and returns the Blood held for a creature while its combat was ending.</summary>

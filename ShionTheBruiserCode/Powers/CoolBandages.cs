@@ -25,13 +25,6 @@ public class CoolBandages : SeelsTheRecklessPower
 
     private bool IsAffected(CardModel card) => card.Owner.Creature == Owner && SeelsMechanicsHelper.IsWound(card);
 
-    /// <summary>Keeps the highest HP loss when stacking an upgraded and a non-upgraded copy.</summary>
-    public void SetHpLoss(decimal hpLoss)
-    {
-        if (hpLoss <= DynamicVars.HpLoss.BaseValue) return;
-        AddToSecondaryValue(DynamicVars.HpLoss.Name, hpLoss - DynamicVars.HpLoss.BaseValue);
-    }
-
     public override bool TryModifyKeywordsInCombat(CardModel card, ISet<CardKeyword> keywords)
     {
         return IsAffected(card) && keywords.Remove(CardKeyword.Unplayable);

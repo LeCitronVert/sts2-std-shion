@@ -24,7 +24,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// Exhaust ALL your Wounds. Gain 1 Blood per enchanted card Exhausted this way. Gloat 2. Exhaust.
 /// </summary>
 public class SeelsShedThePain() : SeelsTheRecklessCard(2,
-    CardType.Skill, CardRarity.Rare,
+    CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];

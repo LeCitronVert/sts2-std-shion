@@ -53,6 +53,7 @@ public class Cosmo : CustomAncientModel
         ModelDb.Relic<SantaHat>(),
         ModelDb.Relic<FlosFridge>(),
         ModelDb.Relic<SecretKey>(),
+        ModelDb.Relic<CosmosRulebook>(),
     ];
 
     // Only used for AllPossibleOptions (Relic Collection, "ancient" console command): the real roll is GenerateInitialOptions.

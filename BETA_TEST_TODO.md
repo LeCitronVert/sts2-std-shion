@@ -1759,3 +1759,56 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - [ ] **Monstermancy** never appears in card rewards, shops, random generation or transforms. You only get it from Monster Soul ("Hold onto the Crystal").
 - [ ] **Gambling Addiction** never appears in card rewards (Cursed Dice's extra Gamble card included). You only get it from Cursed Dice (The Gambler event).
 - [ ] Monstermancy still shows Shion's purple frame, with the Event rarity banner.
+
+## 32. Change Pending I-1 pass (Seels rework, Blood display, Cosmo's Rulebook, Slal tweaks)
+- [ ] Open the project in MegaDot so `seels_hack.png` (both sizes) and `scenes/fx/blood_wisps.tscn` get imported, then rebuild and re-export the pck.
+
+**Blood**
+- [ ] Blood is capped by missing HP. At full HP, Thorn Bracelet / Maim / Shed the Pain give no Blood. With 5 missing HP and 3 Blood, gaining 4 Blood only gives 2.
+- [ ] Healing removes the Blood above the cap (heal potion, Red Fang, Reaper-style heals…). Blood Bend still heals X normally (its Blood is spent first).
+- [ ] Carried-over Blood is capped when it comes back at the start of the next combat (e.g. after resting at a campfire).
+- [ ] No Blood icon in the power row. Instead, a dark scarlet segment fills the missing-HP part of the health bar right after the current HP, and the amount shows in scarlet just right of the bar. Also on the small MP health bars. Hovering Seels still shows Blood's hover tip.
+- [ ] Scarlet wisps circle Seels: one per Blood up to 10, then they grow with more Blood (up to 2.5x at 35+). They fade out when Blood is spent.
+- [ ] Red Fang only counts Blood actually gained (not the part lost to the cap).
+- [ ] Maim on the killing blow still grants Blood (fixed in commit 4f433c9 "Seels: Maim: Earn blood if lethal"). Check this build is after it. Remember the cap: no Blood at full HP.
+
+**Seels cards**
+- [ ] Beast Form+: costs 2. Strength stays 2.
+- [ ] Blood Bath: Exhaust.
+- [ ] Eye Opening Realization: costs 0.
+- [ ] Blood Drop: Starter rarity. Seels' starting deck is now 4 Strike, 4 Defend, Blood Cage, Blood Drop. It no longer shows up in rewards.
+- [ ] Cool Bandages (Common): gain 6 (8) Block, next 3 (5) Wounds are free and make ALL enemies lose 4 HP. Playing it twice stacks the Wounds count (3 + 3 = 6).
+- [ ] Hack (new, Uncommon, 0 cost, targets an enemy): add 1 (2) Slash into your Hand, Blood Bend X, the enemy loses X Strength and you gain X Strength this turn. Exhaust. Preview shows X in combat. New art.
+- [ ] Hematoma (follow-up rework): gain 7 (9) Block, then pick any number of cards in your Hand (0 is fine). Each is Transformed into a Wound enchanted with Swift 1. Those Wounds are playable and cost 0 until the end of the turn, then go back to Unplayable. Other Wounds are unaffected. Two Hematomas in one turn both work. No Wounding anymore.
+- [ ] Gambling Addiction+: costs 0. Note: its damage equals the energy it was played for, so at 0 cost it deals 0 unless Erratic/Gamble raises its cost.
+- [ ] Bloody Execution (Rare, no Maim anymore): only playable when it would kill. It only glows when at least one enemy is killable, and you can only aim at enemies it would kill (damage after Strength/Vulnerable/bonus, minus the enemy's Block, ≥ its HP). Upgrade: 25 damage, +4 per Vulnerable.
+- [ ] Shed the Pain: Uncommon.
+- [ ] Do This All Day: puts a copy of ALL Slashes from the Exhaust Pile into the Draw Pile (originals stay exhausted). Upgraded: the copies are upgraded.
+- [ ] Strike First (Common): 5 (6) damage, 2 (3) Strength this turn if the enemy intends to attack.
+- [ ] Summon Wrath: after playing it, your next Attack this turn has its base damage multiplied by the number of identical cards you have (all piles, upgraded/enchanted copies included, the played card counts) and costs that many HP when played. Test the 3 sheet examples:
+  - [ ] Finishing Explosion with 1 copy → lose 1 HP, normal damage.
+  - [ ] Strike with 4 Strikes total (one Erratic) → 6 × 4 = 24 damage, lose 4 HP.
+  - [ ] Glass 2 Slash+ with 1 Strength, 6 Slashes in total → 7 × 6 = 42 + 1 = 43 damage, lose 6 HP.
+- [ ] Summon Wrath: while active, every Attack in your Hand shows its multiplied damage and a "Summon Wrath: lose X HP." line. It wears off at the end of your turn. Multi-hit Attacks multiply every hit; the HP is lost once, before the Attack resolves. Upgraded: no Exhaust.
+
+**Cosmo's Rulebook / Cosmo's Plea**
+- [ ] Cosmo's Rulebook is in Cosmo's non-cursed pool (solo and MP). Upon pickup, a Cosmo's Plea is added to your Deck (with the card preview).
+- [ ] Cosmo's Plea (Ancient, 1 cost): gain 10 (14) Block, ALL Attacks in your Hand go on top of your Draw Pile. Exhaust. Upgraded: Retain. You get a thought bubble: "Maybe violence is not the issue here." Works for every character.
+
+**Slal**
+- [ ] Octopus Form: no Dexterity anymore.
+- [ ] Volatile Form: triggers on Tokens and Statuses only (no more Curses). A Token that Exhausts itself when played triggers once, not twice. A Token/Status Exhausted by something else (or by Ethereal) still triggers.
+- [ ] Plot Twist: Exhaust. Burst of Laughter: Exhaust.
+- [ ] Running Joke: no longer Slimy (no Slimed added when played).
+
+**Decisions I made**
+- Your answers: full Blood rework; Blood Drop added to the starting deck (10 cards); Rulebook is just part of Cosmo's non-cursed pool; Bloody Execution drops Maim, Volatile Form drops Curses, Hematoma plays the Wounds in your Hand only, Beast Form+ only costs 2.
+- Blood: I read "Main cards" as Maim cards and left "gained by losing HP" to Thorn Bracelet, as before. Blood gained above the cap is simply lost.
+- Blood health-bar look: a flat dark scarlet segment plus the number right of the bar. Wisps are drawn in code (no art): glowing red flames with short trails. Past 10 Blood they grow by 6% per Blood, up to 2.5x.
+- Bloody Execution's "would kill" check uses the previewed damage minus Block. It ignores crits and HP-loss effects like Intangible, because some of those roll RNG and can't be used for a preview.
+- Summon Wrath: the multiplier applies after the card's enchantment and before Strength, which matches the sheet's 43 example. Playing Summon Wrath twice affects your next 2 Attacks (one each), not one Attack twice. Free extra plays of the same Attack (e.g. Echo Form-style replays) keep the multiplier but the HP is only lost once.
+- Cool Bandages: the HP loss no longer upgrades (always 4), so stacking an upgraded and a normal copy just adds the Wounds counts.
+- Cosmo's Rulebook flavor text is your sheet note, lightly reworded. The art is still missing (MISSING_IMAGES.tsv), as are Cosmo's Plea's art and the Summon Wrath power icon. Hack's two Strength powers use BaseLib's default temporary icons.
+- Cosmo's Plea's line is a thought bubble (your note), using the game's ThinkCmd, so it is purely visual.
+- Hematoma follow-up: your new text has no Wounding, so I removed it. The upgrade still gives +2 Block. A Wound you pick is still replaced by a new Swift 1 Wound. The "free this turn" part is a hidden power that ends at end of turn, so nothing on the cards has to be undone.
+- Not done: the "Ideas (ne pas implémenter encore)" section.

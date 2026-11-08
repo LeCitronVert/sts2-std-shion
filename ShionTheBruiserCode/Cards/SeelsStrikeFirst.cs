@@ -21,10 +21,10 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Maim 1. Deal 5 (7) damage. If the enemy intends to attack, gain 3 (4) Strength this turn.
+/// Maim 1. Deal 5 (6) damage. If the enemy intends to attack, gain 2 (3) Strength this turn.
 /// </summary>
 public class SeelsStrikeFirst() : SeelsTheRecklessCard(0,
-    CardType.Attack, CardRarity.Uncommon,
+    CardType.Attack, CardRarity.Common,
     TargetType.AnyEnemy)
 {
     protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];
@@ -34,7 +34,7 @@ public class SeelsStrikeFirst() : SeelsTheRecklessCard(0,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         MaimHelper.Var(1M),
         new DamageVar(5M, ValueProp.Move),
-        new PowerVar<StrengthPower>(3M),
+        new PowerVar<StrengthPower>(2M),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -65,7 +65,7 @@ public class SeelsStrikeFirst() : SeelsTheRecklessCard(0,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(2M);
+        DynamicVars.Damage.UpgradeValueBy(1M);
         DynamicVars.Strength.UpgradeValueBy(1M);
     }
 }

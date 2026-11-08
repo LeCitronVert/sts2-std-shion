@@ -10,15 +10,14 @@ using ShionTheBruiser.ShionTheBruiserCode.Enums;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Always Novel. Slimy. Deal 4 (5) damage. Add a copy of this card into your Draw Pile.
+/// Always Novel. Deal 4 (5) damage. Add a copy of this card into your Draw Pile.
 /// </summary>
-public class SlalRunningJoke(): SlalSlimyCard(0,
+public class SlalRunningJoke(): SlalTheEndlessCard(0,
     CardType.Attack, CardRarity.Common,
     TargetType.AnyEnemy)
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
         SlalCardKeywords.AlwaysNovel,
-        SlalCardKeywords.Slimy,
     ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
@@ -27,7 +26,6 @@ public class SlalRunningJoke(): SlalSlimyCard(0,
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(SlalCardKeywords.Novel),
-        HoverTipFactory.FromCard<Slimed>(),
     ];
 
     protected override async Task OnPlay(

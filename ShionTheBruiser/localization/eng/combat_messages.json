@@ -68,5 +68,6 @@
   "MONSTER_SPELL.OtherBerserk.0": "[red]Amusing![/red]",
   "MONSTER_SPELL.OtherBerserk.1": "[red]Observe well![/red]",
   "MONSTER_SPELL.OtherBerserk.2": "[red][jitter]Remember this?[/jitter][/red]",
-  "MONSTER_SPELL.OtherBerserk.3": "[red][shake rate=20 level=8]HAHAHAHAHA![/shake][/red]"
+  "MONSTER_SPELL.OtherBerserk.3": "[red][shake rate=20 level=8]HAHAHAHAHA![/shake][/red]",
+  "SHIONTHEBRUISER-COSMO_PLEA.thought": "Maybe violence is not the issue here."
 }

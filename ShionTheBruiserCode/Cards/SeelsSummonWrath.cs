@@ -21,38 +21,26 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Lose 2 HP. Put 2 random Attacks from your Draw Pile into your Hand (and Upgrade them).
-/// Increase this card's HP loss by 1 this combat.
+/// The base damage of the next 1 Attack you play this turn is multiplied by the number of ALL identical cards you have,
+/// but makes you lose that same number of HP. Exhaust (upgrade: no Exhaust). See <see cref="SummonWrath"/>.
 /// </summary>
 public class SeelsSummonWrath() : SeelsTheRecklessCard(0,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new HpLossVar(2M),
-        new CardsVar(2),
-        new DynamicVar("HpLossIncrease", 1M),
-    ];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<SummonWrath>(1M)];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<SummonWrath>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await SeelsMechanicsHelper.LoseHp(choiceContext, Owner.Creature, DynamicVars.HpLoss.BaseValue, this);
-
-        var attacks = PileType.Draw.GetPile(Owner).Cards
-            .Where(c => c.Type == CardType.Attack)
-            .ToList()
-            .TakeRandom(DynamicVars.Cards.IntValue, Owner.RunState.Rng.CombatCardSelection)
-            .ToList();
-        foreach (var attack in attacks)
-        {
-            if (IsUpgraded && attack.IsUpgradable) CardCmd.Upgrade(attack);
-            await CardPileCmd.Add(attack, PileType.Hand);
-        }
-
-        DynamicVars.HpLoss.BaseValue += DynamicVars["HpLossIncrease"].BaseValue;
+        await PowerCmd.Apply<SummonWrath>(choiceContext, Owner.Creature, DynamicVars["SummonWrath"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
+        RemoveKeyword(CardKeyword.Exhaust);
     }
 }

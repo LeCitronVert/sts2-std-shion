@@ -19,7 +19,8 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Put ALL Slashes from your Exhaust Pile into your Discard Pile (Draw Pile).
+/// Put a copy of ALL Slashes from your Exhaust Pile into your Draw Pile (and upgrade them).
+/// The originals stay in the Exhaust Pile.
 /// </summary>
 public class SeelsDoThisAllDay() : SeelsTheRecklessCard(2,
     CardType.Skill, CardRarity.Rare,
@@ -41,7 +42,15 @@ public class SeelsDoThisAllDay() : SeelsTheRecklessCard(2,
         var slashes = GetExhaustedSlashes(this);
         if (slashes.Count == 0) return;
 
-        await CardPileCmd.Add(slashes, IsUpgraded ? PileType.Draw : PileType.Discard, IsUpgraded ? CardPilePosition.Random : CardPilePosition.Bottom);
+        var copies = slashes.Select(s => s.CreateClone()).ToList();
+        if (IsUpgraded)
+        {
+            foreach (var copy in copies.Where(c => c.IsUpgradable))
+            {
+                CardCmd.Upgrade(copy);
+            }
+        }
+        CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardsToCombat(copies, PileType.Draw, Owner, CardPilePosition.Random));
     }
 
     protected override void OnUpgrade()

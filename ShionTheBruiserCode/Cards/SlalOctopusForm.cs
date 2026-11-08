@@ -20,11 +20,9 @@ public class SlalOctopusForm() : SlalTheEndlessCard(0,
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<OctopusForm>(1),
-        new PowerVar<DexterityPower>(1),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<DexterityPower>(),
         HoverTipFactory.FromPower<StrengthPower>(),
     ];
 
@@ -33,13 +31,6 @@ public class SlalOctopusForm() : SlalTheEndlessCard(0,
         CardPlay play)
     {
         var card = this;
-        await PowerCmd.Apply<DexterityPower>(
-            choiceContext,
-            card.Owner.Creature,
-            card.DynamicVars.Dexterity.BaseValue,
-            card.Owner.Creature,
-            card
-        );
         await PowerCmd.Apply<OctopusForm>(
             choiceContext,
             card.Owner.Creature,

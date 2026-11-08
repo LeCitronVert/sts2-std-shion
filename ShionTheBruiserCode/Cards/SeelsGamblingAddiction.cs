@@ -22,7 +22,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
 /// Event card. For each of your Erratic cards, deal damage equal to this card's energy cost to a random enemy.
-/// At the end of your turn, if this is in your Hand, Gamble your Hand (this card included). Exhaust. Eternal.
+/// At the end of your turn, if this is in your Hand, Gamble your Hand (this card included). Exhaust. Eternal. Upgrade: costs 0.
 /// </summary>
 public class SeelsGamblingAddiction() : SeelsTheRecklessCard(1,
     CardType.Skill, CardRarity.Event,
@@ -31,9 +31,6 @@ public class SeelsGamblingAddiction() : SeelsTheRecklessCard(1,
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, CardKeyword.Eternal];
 
     public override bool HasTurnEndInHandEffect => true;
-
-    //todo : upgrade not specified
-    public override int MaxUpgradeLevel => 0;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CalculationBaseVar(0),
@@ -81,5 +78,6 @@ public class SeelsGamblingAddiction() : SeelsTheRecklessCard(1,
 
     protected override void OnUpgrade()
     {
+        EnergyCost.UpgradeBy(-1);
     }
 }

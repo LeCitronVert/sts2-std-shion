@@ -19,13 +19,17 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// The next 3 Wounds are free to play and make ALL enemies lose 4 (6) HP when played.
+/// Gain 6 (8) Block. The next 3 (5) Wounds are free to play and make ALL enemies lose 4 HP when played.
+/// Playing it again stacks the Wounds count.
 /// </summary>
 public class SeelsCoolBandages() : SeelsTheRecklessCard(1,
-    CardType.Skill, CardRarity.Uncommon,
+    CardType.Skill, CardRarity.Common,
     TargetType.Self)
 {
+    public override bool GainsBlock => true;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new BlockVar(6M, ValueProp.Move),
         new PowerVar<CoolBandages>(3M),
         new HpLossVar(4M),
     ];
@@ -34,12 +38,13 @@ public class SeelsCoolBandages() : SeelsTheRecklessCard(1,
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        var power = await PowerCmd.Apply<CoolBandages>(choiceContext, Owner.Creature, DynamicVars["CoolBandages"].BaseValue, Owner.Creature, this);
-        power?.SetHpLoss(DynamicVars.HpLoss.BaseValue);
+        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
+        await PowerCmd.Apply<CoolBandages>(choiceContext, Owner.Creature, DynamicVars["CoolBandages"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.HpLoss.UpgradeValueBy(2M);
+        DynamicVars.Block.UpgradeValueBy(2M);
+        DynamicVars["CoolBandages"].UpgradeValueBy(2M);
     }
 }

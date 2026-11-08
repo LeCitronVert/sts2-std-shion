@@ -21,7 +21,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Blood Bend X. Gain 6X (6 + 6X) Block, all at once (Dexterity applies once). Gain 2 Blur.
+/// Blood Bend X. Gain 6X (6 + 6X) Block, all at once (Dexterity applies once). Gain 2 Blur. Exhaust.
 /// </summary>
 public class SeelsBloodBath() : SeelsTheRecklessCard(2,
     CardType.Skill, CardRarity.Common,
@@ -30,6 +30,8 @@ public class SeelsBloodBath() : SeelsTheRecklessCard(2,
     public override bool GainsBlock => true;
 
     protected override HashSet<CardTag> CanonicalTags => [SeelsCardTags.Blood];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new BlockVar(6M, ValueProp.Move),

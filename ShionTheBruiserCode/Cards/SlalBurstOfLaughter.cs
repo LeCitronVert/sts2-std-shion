@@ -9,12 +9,14 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain 1 Weak. Gain 1 (2) energy.
+/// Gain 1 Weak. Gain 1 (2) energy. Exhaust.
 /// </summary>
 public class SlalBurstOfLaughter() : SlalTheEndlessCard(0,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<WeakPower>(1),
         new EnergyVar(1),

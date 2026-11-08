@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
@@ -21,24 +22,21 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Maim 2. Deal 20 (25) damage. Deals 3 (4) additional damage for each Vulnerable on the enemy.
+/// Deal 20 (25) damage. Deals 3 (4) additional damage for each Vulnerable on the enemy.
+/// Can only be played if it would kill the enemy (after its Block; see <see cref="Patches.BloodyExecutionTargetPatch"/>).
 /// </summary>
 public class SeelsBloodyExecution() : SeelsTheRecklessCard(3,
-    CardType.Attack, CardRarity.Common,
+    CardType.Attack, CardRarity.Rare,
     TargetType.AnyEnemy)
 {
     protected override HashSet<CardTag> CanonicalTags => [SeelsCardTags.Blood];
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [SeelsCardKeywords.Maim];
-
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        MaimHelper.Var(2M),
         new DamageVar(20M, ValueProp.Move),
         new DynamicVar("VulnerableDamage", 3M),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<Blood>(),
         HoverTipFactory.FromPower<VulnerablePower>(),
     ];
 
@@ -47,6 +45,24 @@ public class SeelsBloodyExecution() : SeelsTheRecklessCard(3,
     {
         if (cardSource != this || target is null) return 0m;
         return SeelsMechanicsHelper.GetVulnerable(target) * DynamicVars["VulnerableDamage"].BaseValue;
+    }
+
+    /// <summary>Playable (and glowing) only while at least one enemy can be killed by it.</summary>
+    protected override bool IsPlayable =>
+        CombatState?.HittableEnemies.Any(WouldKill) ?? false;
+
+    protected override bool ShouldGlowGoldInternal => IsPlayable;
+
+    /// <summary>
+    /// Whether this card's damage (with every modifier, as previewed) gets through the enemy's Block and kills it.
+    /// Pure: only reads the damage hooks (no HP-loss hooks, some of them roll RNG).
+    /// </summary>
+    public bool WouldKill(Creature target)
+    {
+        if (CombatState is null || !target.IsAlive) return false;
+        var damage = Hook.ModifyDamage(Owner.RunState, CombatState, target, Owner.Creature, DynamicVars.Damage.BaseValue,
+            DynamicVars.Damage.Props, this, ModifyDamageHookType.All, CardPreviewMode.None, out _);
+        return Math.Max(0m, Math.Floor(damage) - target.Block) >= target.CurrentHp;
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)

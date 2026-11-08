@@ -21,7 +21,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Wounding. Make ALL your Wounds playable for 1 energy. All Wounds in your Hand are enchanted with Swift 3 (4).
 /// </summary>
-public class SeelsEyeOpeningRealization() : SeelsTheRecklessCard(1,
+public class SeelsEyeOpeningRealization() : SeelsTheRecklessCard(0,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {

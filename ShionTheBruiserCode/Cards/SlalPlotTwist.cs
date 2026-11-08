@@ -10,12 +10,14 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
 /// Gain 1 Flashback. Choose to Mimic 2 or Shapeshift (upgraded: and upgrade that card, i.e. the offered cards are upgraded).
-/// Not written: when Flashback plays it, it always Shapeshifts.
+/// Not written: when Flashback plays it, it always Shapeshifts. Exhaust.
 /// </summary>
 public class SlalPlotTwist() : SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Common,
     TargetType.Self)
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<Flashback>(1),
         new CardsVar(2),

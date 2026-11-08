@@ -22,7 +22,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// Wounding. Lose 2 HP. Gain 1 (2) energy.
 /// </summary>
 public class SeelsBloodDrop() : SeelsTheRecklessCard(0,
-    CardType.Skill, CardRarity.Common,
+    CardType.Skill, CardRarity.Basic,
     TargetType.Self)
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [SeelsCardKeywords.Wounding];

@@ -19,7 +19,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Whenever you play an Attack, gain 2 (3) Strength this turn. Ethereal.
+/// Whenever you play an Attack, gain 2 Strength this turn. Ethereal. Upgrade: costs 2.
 /// </summary>
 public class SeelsBeastForm() : SeelsTheRecklessCard(3,
     CardType.Power, CardRarity.Rare,
@@ -40,6 +40,6 @@ public class SeelsBeastForm() : SeelsTheRecklessCard(3,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["BeastForm"].UpgradeValueBy(1M);
+        EnergyCost.UpgradeBy(-1);
     }
 }
