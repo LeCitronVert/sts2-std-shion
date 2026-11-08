@@ -30,8 +30,6 @@ public class SeelsGamblingAddiction() : SeelsTheRecklessCard(1,
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, CardKeyword.Eternal];
 
-    public override bool HasTurnEndInHandEffect => true;
-
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
@@ -69,8 +67,12 @@ public class SeelsGamblingAddiction() : SeelsTheRecklessCard(1,
             .Execute(choiceContext);
     }
 
-    protected override async Task OnTurnEndInHand(PlayerChoiceContext choiceContext)
+    // Not HasTurnEndInHandEffect/OnTurnEndInHand: the game moves the card to the Play pile before that hook and to
+    // the Discard pile after it, so the card would never Gamble itself (and would be pulled back off the Draw Pile).
+    // BeforeFlush runs at end of turn while the Hand is still intact, before it's discarded.
+    public override async Task BeforeFlush(PlayerChoiceContext choiceContext, Player player)
     {
+        if (player != Owner || CombatState is null) return;
         // Another copy may already have Gambled this one away.
         if (Pile?.Type != PileType.Hand) return;
         await SeelsMechanicsHelper.GambleHand(choiceContext, Owner);
