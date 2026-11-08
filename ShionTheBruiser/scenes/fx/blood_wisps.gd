@@ -3,6 +3,7 @@ extends Node2D
 ## Seels' Blood: scarlet will-o'-wisps circling the creature.
 ## One wisp per Blood for the first 10; past 10, the wisps grow instead (bigger with more Blood).
 ## Driven from C# (CreatureFxController.cs) through set_area() and set_blood().
+## Wisps on the far half of the orbit are drawn on a sibling node moved behind the creature's body.
 
 const MAX_WISPS := 10
 const CORE := Color(1.0, 0.55, 0.55)
@@ -23,6 +24,31 @@ var _wisps: Array = []
 var _time := 0.0
 var _scale := 1.0
 var _target_scale := 1.0
+## Sibling drawn behind the creature's body, for the wisps on the far side of the orbit
+var _back: Node2D
+
+
+func _ready() -> void:
+	_back = Node2D.new()
+	_back.name = "BloodWispsBack"
+	_back.draw.connect(func() -> void: _draw_wisps(_back, false))
+	_attach_back.call_deferred()
+
+
+func _attach_back() -> void:
+	var parent := get_parent()
+	if parent == null or not is_instance_valid(_back) or _back.get_parent() != null:
+		return
+	parent.add_child(_back)
+	parent.move_child(_back, 0)
+	_back.position = position
+	_back.scale = scale
+
+
+## Freed with this node (not on exit_tree, so moving the creature around the tree keeps it)
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_PREDELETE and is_instance_valid(_back):
+		_back.queue_free()
 
 
 ## area: the creature's bounds (local)
@@ -67,8 +93,12 @@ func _process(delta: float) -> void:
 			wisp["phase"] = lerp_angle(wisp["phase"], wisp["target_phase"], minf(delta * 3.0, 1.0))
 	_wisps = _wisps.filter(func(w: Dictionary) -> bool: return not (w["leaving"] and w["alpha"] <= 0.0))
 	visible = not _wisps.is_empty()
+	if is_instance_valid(_back):
+		_back.visible = visible
 	if visible:
 		queue_redraw()
+		if is_instance_valid(_back):
+			_back.queue_redraw()
 
 
 func _wisp_position(wisp: Dictionary, time: float) -> Vector2:
@@ -79,11 +109,19 @@ func _wisp_position(wisp: Dictionary, time: float) -> Vector2:
 
 
 func _draw() -> void:
+	# Before the back layer is attached, draw everything here
+	_draw_wisps(self, true, not (is_instance_valid(_back) and _back.is_inside_tree()))
+
+
+## front: draws the near half of the orbit (on this node, in front of the body), else the far half (on _back)
+func _draw_wisps(canvas: Node2D, front: bool, all := false) -> void:
 	# Back wisps first, so the front ones are drawn over them
 	var order := _wisps.duplicate()
 	order.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return sin(a["phase"] + _time * orbit_speed) < sin(b["phase"] + _time * orbit_speed))
 	for wisp in order:
 		var depth := sin(wisp["phase"] + _time * orbit_speed)  # -1 = behind, 1 = in front
+		if not all and (depth >= 0.0) != front:
+			continue
 		var size := wisp_radius * _scale * lerpf(0.7, 1.1, (depth + 1.0) * 0.5)
 		var alpha: float = wisp["alpha"] * lerpf(0.5, 1.0, (depth + 1.0) * 0.5)
 		var flicker := 0.85 + 0.15 * sin(_time * 9.0 + wisp["flicker"])
@@ -91,10 +129,10 @@ func _draw() -> void:
 		for i in range(trail_length, 0, -1):
 			var p := _wisp_position(wisp, _time - i * 0.045)
 			var k := 1.0 - float(i) / (trail_length + 1)
-			draw_circle(p, size * 0.75 * k, Color(GLOW, alpha * 0.35 * k))
+			canvas.draw_circle(p, size * 0.75 * k, Color(GLOW, alpha * 0.35 * k))
 		var pos := _wisp_position(wisp, _time)
 		# Soft glow, flame, then bright core
-		draw_circle(pos, size * 2.0 * flicker, Color(GLOW, alpha * 0.18))
-		draw_circle(pos, size * 1.3 * flicker, Color(GLOW, alpha * 0.45))
-		draw_circle(pos + Vector2(0.0, -size * 0.35), size * 0.9, Color(GLOW, alpha * 0.85))
-		draw_circle(pos, size * 0.5, Color(CORE, alpha))
+		canvas.draw_circle(pos, size * 2.0 * flicker, Color(GLOW, alpha * 0.18))
+		canvas.draw_circle(pos, size * 1.3 * flicker, Color(GLOW, alpha * 0.45))
+		canvas.draw_circle(pos + Vector2(0.0, -size * 0.35), size * 0.9, Color(GLOW, alpha * 0.85))
+		canvas.draw_circle(pos, size * 0.5, Color(CORE, alpha))
