@@ -1906,6 +1906,7 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - [ ] Rings > 0: yellow aura (Shion's gold aura flames) with rare blue sparks, and "Egg Reverie" music (loops).
 - [ ] Rings = 0: no aura, red sparks, occasional sweat drops, and "Egg Panicky" music (loops). It switches back when you get Rings again.
 - [ ] When an enemy dies: all your Emerald Powers in Hand, Discard and Exhaust go to random spots in the Draw Pile.
+- [ ] Team Blast + Super Form: after a Team Blast was played, killing an enemy unlocks the gauge and sets it back to 0 for the whole team, so it can fill and give Team Blasts again in the same fight. If the Team Blast itself kills, the reset happens once it finishes (the other copies are still Exhausted, no chaining). In MP the gauge stays the same for everyone.
 
 **The Architect (Act 4 boss)**
 - [ ] Map boss node: placeholder icon (Grey Chaos Emeralds). Entering it plays the intro lines one bubble at a time (Continue), in his victory room:

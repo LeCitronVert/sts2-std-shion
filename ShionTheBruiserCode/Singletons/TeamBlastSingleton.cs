@@ -32,6 +32,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Singletons;
 /// <item>Elite and Boss fights fill the gauge <see cref="EliteMultiplier"/> / <see cref="BossMultiplier"/> times as
 /// fast.</item>
 /// <item>Entering a Rest Site resets the gauge to 0 (see <see cref="Patches.TeamBlastRestSiteResetPatch"/>).</item>
+/// <item>Super Form (Act 4): an enemy dying unlocks a used gauge and sets it back to 0 for the team (<see cref="ResetUsedGauge"/>).</item>
 /// </list>
 /// The gauge value is saved with the run, on every player (all clients keep the same value).
 /// </summary>
@@ -172,6 +173,38 @@ public class TeamBlastSingleton : CustomSingletonModel
         }
     }
 
+    /// <summary>A Team Blast is being played right now (between BeforeCardPlayed and AfterCardPlayed).</summary>
+    private bool _playingTeamBlast;
+
+    /// <summary>A reset was asked while the Team Blast was still being played: done once it's finished.</summary>
+    private bool _resetPending;
+
+    /// <summary>
+    /// Super Form (Act 4): once the gauge was used this combat, it's unlocked and back to 0 for the whole team, so it
+    /// can fill again. If the Team Blast itself caused it, waits until that Team Blast is done (its other copies get
+    /// Exhausted first, so they can't be chained). Returns whether the gauge was (or will be) reset.
+    /// </summary>
+    public bool ResetUsedGauge()
+    {
+        if (!IsActive || !IsLocked || _combatState == null) return false;
+        if (_playingTeamBlast)
+        {
+            _resetPending = true;
+            return true;
+        }
+        DoResetUsedGauge();
+        return true;
+    }
+
+    private void DoResetUsedGauge()
+    {
+        _resetPending = false;
+        IsLocked = false;
+        _usedTeamBlast = null;
+        _remainder = 0m;
+        if (_combatState != null) SetGauge(_combatState, 0);
+    }
+
     /// <summary>Called when the party enters a Rest Site: the gauge goes back to 0.</summary>
     public static void ResetGauge(IEnumerable<Player> players) => SetGauge(players, 0);
 
@@ -265,6 +298,7 @@ public class TeamBlastSingleton : CustomSingletonModel
 
         IsLocked = true;
         _usedTeamBlast = cardPlay.Card;
+        _playingTeamBlast = true;
 
         // Lights on the team, Dramatic Entrance, then the Team Blast proper
         var owner = cardPlay.Card.Owner;
@@ -290,6 +324,9 @@ public class TeamBlastSingleton : CustomSingletonModel
                 await CardCmd.Exhaust(choiceContext, card);
             }
         }
+
+        _playingTeamBlast = false;
+        if (_resetPending) DoResetUsedGauge();
     }
 
     /// <summary>
@@ -320,6 +357,8 @@ public class TeamBlastSingleton : CustomSingletonModel
         IsActive = false;
         IsLocked = false;
         _usedTeamBlast = null;
+        _playingTeamBlast = false;
+        _resetPending = false;
         _hiddenPile.Clear();
         _allowedCopies.Clear();
         _pendingRemoval.Clear();

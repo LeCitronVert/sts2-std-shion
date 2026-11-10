@@ -614,6 +614,6 @@
   "SHIONTHEBRUISER-RING_BOUNTY.description": "When defeated, every player gains Rings. At the end of each of its turns, decreases by the number of turns it has been alive.",
   "SHIONTHEBRUISER-RING_BOUNTY.smartDescription": "When defeated, every player gains [blue]{Amount}[/blue] Rings. At the end of each of its turns, decreases by the number of turns it has been alive.",
   "SHIONTHEBRUISER-SUPER_FORM_POWER.title": "Super Form",
-  "SHIONTHEBRUISER-SUPER_FORM_POWER.description": "Unblocked damage you take is absorbed by your Rings first.\nWhenever an enemy is defeated, shuffle all your [gold]Emerald Powers[/gold] into your [gold]Draw Pile[/gold].",
-  "SHIONTHEBRUISER-SUPER_FORM_POWER.smartDescription": "Unblocked damage you take is absorbed by your Rings first.\nWhenever an enemy is defeated, shuffle all your [gold]Emerald Powers[/gold] into your [gold]Draw Pile[/gold]."
+  "SHIONTHEBRUISER-SUPER_FORM_POWER.description": "Unblocked damage you take is absorbed by your Rings first.\nWhenever an enemy is defeated, shuffle all your [gold]Emerald Powers[/gold] into your [gold]Draw Pile[/gold]. If the [gold]Team Blast[/gold] gauge was used, it resets for the whole team.",
+  "SHIONTHEBRUISER-SUPER_FORM_POWER.smartDescription": "Unblocked damage you take is absorbed by your Rings first.\nWhenever an enemy is defeated, shuffle all your [gold]Emerald Powers[/gold] into your [gold]Draw Pile[/gold]. If the [gold]Team Blast[/gold] gauge was used, it resets for the whole team."
 }

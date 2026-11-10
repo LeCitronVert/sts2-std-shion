@@ -53,7 +53,8 @@ public class SuperForm : ShionTheBruiserRelic
 /// <summary>
 /// Unblocked damage you take is absorbed by your Rings (Gold) first, 1 Ring per point, until you run out.
 /// Damage you deal yourself isn't absorbed.
-/// Whenever an enemy dies, shuffle all your Emerald Powers into your Draw Pile, wherever they are.
+/// Whenever an enemy dies, shuffle all your Emerald Powers into your Draw Pile, wherever they are, and if the Team Blast
+/// gauge was used this combat, it's unlocked and back to 0 for the whole team.
 /// Visuals (aura, sparks, sweat, Ring health bar segment, music): <see cref="SuperFormFx"/>, <see cref="RingVisuals"/>.
 /// </summary>
 public sealed class SuperFormPower : ShionTheBruiserPower
@@ -93,6 +94,9 @@ public sealed class SuperFormPower : ShionTheBruiserPower
     public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
     {
         if (creature.Side == Owner.Side || Owner.IsDead || Owner.Player is not { } player) return;
+
+        // A used Team Blast gauge is unlocked and back to 0 for the whole team
+        if (Singletons.TeamBlastSingleton.Instance?.ResetUsedGauge() == true) Flash();
 
         // Those already in the Draw Pile stay where they are
         var emeraldPowers = new[] { PileType.Hand, PileType.Discard, PileType.Exhaust }
