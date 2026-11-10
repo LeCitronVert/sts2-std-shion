@@ -1865,3 +1865,66 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - [ ] **Water** (was Emerald Power: Cyan) and **Ivy** (was Double Down) now have the **Emerald Power** keyword: when you play one, it Exhausts ALL your other Emerald Powers (Vision included), wherever they are. Both still Exhaust themselves.
 - [ ] Cyan / Green Chaos Emerald tooltips show the new names and the Emerald Power keyword.
 - [ ] Portraits still show (files renamed to `emerald_power_water.png` / `emerald_power_ivy.png`; MegaDot needs to reimport them).
+
+## 34. Act 4: Strife
+- [ ] Open the project in MegaDot so the new files get imported, then rebuild and re-export the pck: `audio/music/*.mp3`, `audio/sfx/s3k_6a.wav`, `images/relics/super_form.png`, `images/ui/ring.png`, `images/powers/ring_bounty.png` (+ big), `images/map/strife_architect_boss*.png`, `scenes/ancients/strife_shrine.tscn`, `scenes/encounters/strife_architect.tscn`, and the edited `scenes/fx/shion_auras.gd`.
+- [ ] Quick way to test: get a combo "Chaos Emeralds" relic on every player (Seek with all 7 unlocked, or the `relic` console command), then reach the Act 3 Architect.
+
+**Unlock and cutscene (end of Act 3)**
+- [ ] Without a combo Emerald on every player, the Act 3 Architect ends the run as usual.
+- [ ] With one on every player (solo and MP): the Architect's dialogue and strike play as usual, then everything but the players fades to black. The players lie "dead" with their health bars and relics still shown.
+- [ ] "All Clear" starts and loops. After 2 s, the 7 Emeralds come out of your own character and spin around them.
+- [ ] One by one, each player gets every Chaos Emerald relic they don't have yet (the combo one and any from Chaos Ring aren't duplicated). The matching gem pulses.
+- [ ] The gems converge into your character, the screen flashes gently to white, S3K_6A plays, and everyone gets **Super Form**. Then Act 4 starts.
+- [ ] MP: all clients stay in sync through the cutscene (no desync and the same relics for everyone).
+
+**Act 4 map**
+- [ ] The act is named Strife. A single path: shadowed Chaos Emeralds node → Merchant → Rest Site → the Architect. Glory's map and rest site art.
+- [ ] The first node's map icon is a dark silhouette of the Grey Chaos Emeralds. Entering it fully heals you (even with Weary Traveler / high Ascension) and gives 100 Gold. There's no dialogue and no choice, only Proceed.
+- [ ] "All Clear" keeps playing in Act 4 outside of fights (no FMOD act music or ambience on the map, the shop or the rest site).
+- [ ] Save, quit and continue in Act 4: the run comes back with 4 acts, Super Form, the Ring icon and the music.
+
+**Super Form**
+- [ ] The top bar's Gold icon becomes the Ring while you hold Super Form.
+- [ ] At the start of each fight you get the Super Form power. Unblocked damage takes Rings (Gold) instead of HP, 1 per point, until you run out. Damage you deal to yourself isn't absorbed.
+- [ ] A yellow segment fills the health bar from the left (Rings / Max HP, full when Rings ≥ Max HP), and updates when your Rings change.
+- [ ] Rings > 0: yellow aura (Shion's gold aura flames) with rare blue sparks, and "Egg Reverie" music (loops).
+- [ ] Rings = 0: no aura, red sparks, occasional sweat drops, and "Egg Panicky" music (loops). It switches back when you get Rings again.
+- [ ] When an enemy dies: all your Emerald Powers in Hand, Discard and Exhaust go to random spots in the Draw Pile.
+
+**The Architect (Act 4 boss)**
+- [ ] Map boss node: placeholder icon (Grey Chaos Emeralds). Entering it plays the intro lines one bubble at a time (Continue), in his victory room:
+  - [ ] Random greeting (3), random second line (3), "Unless….", "Those gems…", "Fine, then, Ironclad." (Shion/Slal/Seels/Fry: "Fine, then, “Bruiser”. Or was it “Shion”?"), "I'll give you a modicum of time.", then the character's threat (Ironclad, Silent, Defect, Regent, Necrobinder, Shion, Slal, Seels with purple Blight, Fry, others). Then Fight.
+- [ ] His health bar is hidden; instead "Damage: N" counts all damage he took this fight. He never dies from damage, Doom, etc.
+- [ ] Field Experiment: damage he takes is split evenly between his living summons (the remainder goes to random ones, 1 each).
+- [ ] Make Your Point: unblocked damage to him lowers his Strength by that much (shared with his summons) until the end of his turn. The icon shows the current reduction.
+- [ ] Growing Impatience (10): after playing more than 10 cards in a turn, your turn ends (each player is counted separately). Its number goes down by 1 at the end of each buff cycle.
+- [ ] Turn 1 he summons Bygone Effigy + Byrdonis. While summons are alive he cycles: +1 Strength, +10 Block, +5 Vigor, heal 10%, Intensify, +2 Strength, +12 Block, +7 Vigor, heal 12%, Impatience. Then it repeats with every value one tier higher (each Intensify adds a tier).
+- [ ] Strength and Vigor go on him and are copied to every summon, including ones that arrive later (they get his current amount when they join). Block and Heal go straight to the summons.
+- [ ] When his last summon dies, his intent changes right away:
+  - [ ] After 2 summons since his last big attack: unknown intent → he says a random line (Puny. / Weak. / … / I can't be bothered.) → then attacks every player for the party's combined Max HP (his Strength and Vigor count).
+  - [ ] Otherwise: summon intent → the next line of the cycle: Act 1 boss not fought this run → Phrog Parasite + Skulking Colony → Act 1 boss → Phantasmal Gardeners + Terror Eel → Act 2 boss → Decimillipede + Entomancer → Act 2 boss → Infested Prisms + Knights → Act 3 boss → Mecha Knight + Soul Nexus → Act 3 boss.
+  - [ ] After the whole cycle and the last big attack: unknown intent → "ENOUGH!!!" (shaking) → "Enough…" (wavy) → he is "defeated" and the fight ends.
+- [ ] The 2 bosses of the same act are different, and neither is a boss you fought this run (Double Boss Act 3: falls back to the other bosses).
+- [ ] Summons spread out in front of him and don't overlap the players. Phrog's Wrigglers, Gardeners, Decimillipede segments, Knights, The Kin, Queen, Kaiser Crab… spawn and act without errors.
+- [ ] Ring Bounty on every summon (Elites 50, Bosses 100, things they spawn mid-fight 0): when it dies, every player gains that many Rings. At the end of each of its turns it drops by its turns alive (−1, −2, −3…).
+
+**Ending and scores**
+- [ ] After the fight: empty rewards → Proceed → "The fool implementing this mod hasn't gotten to this part, yet." / "You will know your fate soon enough." / "No congratulations from me, for now, I'm afraid." → Proceed.
+- [ ] The run ends as a win: "Victory!" banner, "PLACEHOLDER / Ironclad probably won. I think." + damage dealt, and confetti falling over the screen.
+- [ ] Once the Architect was defeated once: run history shows "Damage dealt to the Architect: N (Best: M)" under the quote of every Act 4 run, and the Chaos Emeralds menu lists the best damage per character and mode (Solo / Multiplayer). Saved per profile.
+- [ ] Dying in Act 4 is a loss (the Act 3 win no longer counts). The damage you dealt is still recorded.
+
+**Decisions I made**
+- Your answers: new Emerald relics only for missing colors; Super Form states are Rings > 0 vs Rings = 0; his Strength/Vigor are mirrored onto summons (Block/Heal go to them directly); Field Experiment splits evenly; Ring Bounty Elites 50 / Bosses 100, set per monster in `Strife/StrifeConfig.cs` (`BountyByMonster`); his 8 big-attack lines; the big attack hits every player for the full combined Max HP; unfought bosses come from the act you visited.
+- The unlock check is "every player holds a combo Chaos Emerald relic". Seek only gives combo relics when all 7 are unlocked in that player's save, so this covers both conditions. It only reads run state, so it's MP-safe and survives save/load.
+- The summon cycle lists *encounters* (Bygone Effigy Elite, Knights Elite, etc.), so each line summons the whole Elite group (4 Gardeners, 3 Knights, Decimillipede's 3 segments). The list, buff values, Intensify step, card limit and bounties are all in `StrifeConfig.cs`.
+- "Monte la puissance de tous les effets de buffs suivants": each Intensify adds one tier to every later buff (Strength +1, Block +2, Vigor +2, Heal +2% per tier). This gives exactly your second-half values, then keeps growing on the next loops.
+- Creatures spawned mid-fight by a summon (Wrigglers etc.) get a Ring Bounty of 0 (`SpawnedBounty`, flagged `//todo : choose bounty`).
+- Growing Impatience follows the text literally: the 11th card ends your turn (at Limit 10). Autoplayed cards count. Minimum Limit 1.
+- The "defeated" Architect has no death animation, so he flinches and the fight ends.
+- No line was given for Intensify, so he doesn't say anything there.
+- The Architect's boss map icon and Super Form's relic outline are placeholders (listed in MISSING_IMAGES.tsv). So are the power icons for Field Experiment, Make Your Point, Growing Impatience and Super Form. Ring Bounty uses ring.png, as you asked.
+- Placeholders "TODO": Super Form flavor, the shrine's epithet and its unused dialogue keys (required by the loc checker).
+- Music is played through BaseLib's ModAudio, looping in code (the .import files can stay `loop=false`). The cutscene and all of Act 4 mute the game's FMOD act music.
+- The damage score is the total damage the Architect took (whole party), saved under your character and mode.

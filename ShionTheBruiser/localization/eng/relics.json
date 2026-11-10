@@ -291,5 +291,8 @@
   "SHIONTHEBRUISER-SECRET_KEY.flavor": "Just be glad you didn't have to decipher obscure cryptography to get that one.",
   "SHIONTHEBRUISER-COSMOS_RULEBOOK.title": "Cosmo's Rulebook",
   "SHIONTHEBRUISER-COSMOS_RULEBOOK.description": "Upon pickup, add {Cards:diff()} [gold]Cosmo's Plea[/gold] to your [gold]Deck[/gold].",
-  "SHIONTHEBRUISER-COSMOS_RULEBOOK.flavor": "There's actually only one rule, about preventable deaths. The book is only this big to hammer home that there are no others."
+  "SHIONTHEBRUISER-COSMOS_RULEBOOK.flavor": "There's actually only one rule, about preventable deaths. The book is only this big to hammer home that there are no others.",
+  "SHIONTHEBRUISER-SUPER_FORM.title": "Super Form",
+  "SHIONTHEBRUISER-SUPER_FORM.description": "At the start of each fight, enter [gold]Super Form[/gold].\nYour [gold]Gold[/gold] becomes Rings.",
+  "SHIONTHEBRUISER-SUPER_FORM.flavor": "TODO"
 }

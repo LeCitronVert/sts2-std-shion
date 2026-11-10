@@ -56,6 +56,16 @@ public static class ChaosEmeraldsScreen
         progress.Add("Total", ChaosEmeraldHelper.AllColors.Length);
         column.AddChild(MakeLabel(progress.GetFormattedText(), font, 32));
 
+        // Act 4: best damage dealt to the Architect, once he was "defeated" at least once
+        if (Strife.StrifeScores.HasDefeatedArchitect)
+        {
+            column.AddChild(MakeLabel(Loc("SHIONTHEBRUISER-STRIFE_SCORES.title"), font, 36));
+            foreach (var (character, multiplayer, damage) in Strife.StrifeScores.AllBest())
+            {
+                column.AddChild(MakeLabel(Strife.StrifeScores.FormatBestLine(character, multiplayer, damage), font, 24));
+            }
+        }
+
         var back = new Button
         {
             Text = Loc("SHIONTHEBRUISER-CHAOS_EMERALDS_SCREEN.back"),
