@@ -50,10 +50,25 @@ public abstract class StrifeDialogueEvent : EventModel, BaseLib.Abstracts.ICusto
 
     protected override void SetInitialEventState(bool isPreFinished) => SetEventState(EmptyLocString, GenerateInitialOptionsWrapper());
 
+    /// <summary>
+    /// In a shared event every option needs all players' votes. So in multiplayer the lines play on their own, one
+    /// bubble after another (local only), and the only option is the last one (Fight), which everyone votes for so
+    /// they all enter the fight together. Solo: one Continue click per line.
+    /// </summary>
+    private bool AutoAdvance => IsShared && Owner?.RunState.Players.Count > 1;
+
+    private bool _finished;
+
+    /// <summary>How long each auto-advanced line stays, from its length.</summary>
+    private const float SecondsPerChar = 0.06f;
+    private const float MinLineTime = 2.2f;
+    private const float MaxLineTime = 6f;
+
     protected override IReadOnlyList<EventOption> GenerateInitialOptions()
     {
         _lineIndex = 0;
-        return [OptionForCurrentLine()];
+        _finished = false;
+        return [AutoAdvance ? LastOption() : OptionForCurrentLine()];
     }
 
     public override void OnRoomEnter()
@@ -66,8 +81,24 @@ public abstract class StrifeDialogueEvent : EventModel, BaseLib.Abstracts.ICusto
     private async Task ShowFirstLine()
     {
         await Cmd.Wait(0.75f);
-        if (_lineIndex == 0) ShowCurrentLine();
+        if (_lineIndex != 0 || _finished) return;
+        ShowCurrentLine();
+        if (!AutoAdvance) return;
+
+        // Multiplayer: the next lines follow by themselves (visual only, every client at its own pace)
+        while (!_finished && _lineIndex < Lines.Count - 1)
+        {
+            var length = Lines[_lineIndex].GetFormattedText().Length;
+            await Cmd.Wait(Math.Clamp(length * SecondsPerChar, MinLineTime, MaxLineTime));
+            if (_finished) return;
+            _lineIndex++;
+            ShowCurrentLine();
+        }
     }
+
+    private EventOption LastOption() =>
+        new EventOption(this, Finish, new LocString(Table, LastOptionKey + ".title"), EmptyLocString,
+            LastOptionKey, Array.Empty<IHoverTip>()).ThatWontSaveToChoiceHistory();
 
     private EventOption OptionForCurrentLine()
     {
@@ -87,6 +118,7 @@ public abstract class StrifeDialogueEvent : EventModel, BaseLib.Abstracts.ICusto
 
     private async Task Finish()
     {
+        _finished = true;
         HideBubble();
         await OnLastOption();
     }

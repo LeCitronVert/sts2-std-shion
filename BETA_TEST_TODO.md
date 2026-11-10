@@ -1913,6 +1913,7 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 **The Architect (Act 4 boss)**
 - [ ] Map boss node: placeholder icon (Grey Chaos Emeralds). Entering it plays the intro lines one bubble at a time (Continue), in his victory room:
   - [ ] Random greeting (3), random second line (3), "Unless….", "Those gems…", "Fine, then, Ironclad." (Shion/Slal/Seels/Fry: "Fine, then, “Bruiser”. Or was it “Shion”?"), "I'll give you a modicum of time.", then the character's threat (Ironclad, Silent, Defect, Regent, Necrobinder, Shion, Slal, Seels with purple Blight, Fry, others). Then Fight.
+- [ ] MP: the intro lines play by themselves (one bubble after another, timed by length) and the only button is Fight, so there's a single vote instead of one per line. Solo still has one Continue per line.
 - [ ] His health bar is hidden; instead "Damage: N" counts all damage he took this fight. He never dies from damage, Doom, etc.
 - [ ] Field Experiment: damage he takes is split evenly between his living summons (the remainder goes to random ones, 1 each).
 - [ ] Make Your Point: unblocked damage to him lowers his Strength by that much (not his summons') until the end of his turn. The icon shows the current reduction.
