@@ -132,7 +132,7 @@ public static class StrifeConfig
 
     // ── Growing Impatience ───────────────────────────────────────────────────
 
-    /// <summary>Growing Impatience: after playing more than this many cards in a turn, your turn ends.</summary>
+    /// <summary>Growing Impatience: after playing this many cards in a turn, your turn ends.</summary>
     public const int StartingCardLimit = 10;
     public const int MinimumCardLimit = 1;
 

@@ -170,7 +170,8 @@ public sealed class MakeYourPoint : ShionTheBruiserPower
 }
 
 /// <summary>
-/// After playing more than (Limit) cards in a single turn, your turn ends. Each player is counted separately.
+/// After playing (Limit) cards in a single turn, your turn ends and you can't play any more. Each player is counted
+/// separately; a card replayed several times in a row counts once.
 /// Its number is the Limit; the Architect lowers it during his buff cycle.
 /// </summary>
 public sealed class GrowingImpatience : ShionTheBruiserPower
@@ -181,28 +182,36 @@ public sealed class GrowingImpatience : ShionTheBruiserPower
     // Created on first use: a field initializer would be shared with the canonical model by MutableClone
     private Dictionary<Player, int>? _playedThisTurn;
 
-    /// <summary>
-    /// Cards that player can still play this turn: the (Limit + 1)th card ends it, so it still counts.
-    /// Read-only (for the indicator next to the energy counter).
-    /// </summary>
-    public int CardsLeft(Player player) => Math.Max(0, Amount + 1 - (_playedThisTurn?.GetValueOrDefault(player) ?? 0));
+    private int Played(Player player) => _playedThisTurn?.GetValueOrDefault(player) ?? 0;
+
+    /// <summary>Cards that player can still play this turn (for the indicator next to the energy counter).</summary>
+    public int CardsLeft(Player player) => Math.Max(0, Amount - Played(player));
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var player = cardPlay.Card.Owner;
         if (player.Creature.IsDead || CombatManager.Instance.IsOverOrEnding) return;
         if (Owner.CombatState?.CurrentSide != CombatSide.Player) return;
+        // A card played several times in a row (replays) counts once
+        if (!cardPlay.IsFirstInSeries) return;
 
         _playedThisTurn ??= new Dictionary<Player, int>();
-        var played = _playedThisTurn.GetValueOrDefault(player) + 1;
+        var played = Played(player) + 1;
         _playedThisTurn[player] = played;
-        // "After playing more than (Limit) cards"
-        if (played <= Amount) return;
+        if (played < Amount) return;
 
         Flash();
-        // Like Void Form: every client ends that player's turn at the same point
-        PlayerCmd.EndTurn(player, canBackOut: false);
+        // Like Void Form: every client ends that player's turn at the same point. In multiplayer that only marks them
+        // as done (the turn ends once everyone is), so ShouldPlay also stops them from playing anything else.
+        PlayerCmd.EndTurn(cardPlay.Card.Owner, false);
         await Task.CompletedTask;
+    }
+
+    /// <summary>Once a player has played their (Limit) cards, they can't play any more this turn (autoplays included).</summary>
+    public override bool ShouldPlay(CardModel card, AutoPlayType autoPlayType)
+    {
+        if (Owner.CombatState?.CurrentSide != CombatSide.Player || card.Owner is not { } player) return true;
+        return Played(player) < Amount;
     }
 
     public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)

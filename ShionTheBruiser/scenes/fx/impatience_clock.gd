@@ -51,7 +51,7 @@ func _draw() -> void:
 		draw_line(center + dir * inner, center + dir * (radius - 4.0), rim, 2.0 if i % 3 == 0 else 1.0, true)
 
 	# Minute hand: a full turn means the turn is used up. Hour hand stays at 12 for a simple, readable face.
-	var used := 1.0 - float(max(_left, 0)) / float(_limit + 1)
+	var used := 1.0 - float(max(_left, 0)) / float(_limit)
 	var sweep := TAU * used
 	var minute := Vector2(sin(sweep), -cos(sweep)) * (radius - 7.0)
 	draw_line(center, center + Vector2(0.0, -(radius - 12.0)), hand_color, 3.0, true)

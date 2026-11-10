@@ -1914,8 +1914,8 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - [ ] His health bar is hidden; instead "Damage: N" counts all damage he took this fight. He never dies from damage, Doom, etc.
 - [ ] Field Experiment: damage he takes is split evenly between his living summons (the remainder goes to random ones, 1 each).
 - [ ] Make Your Point: unblocked damage to him lowers his Strength by that much (not his summons') until the end of his turn. The icon shows the current reduction.
-- [ ] Growing Impatience (10): after playing more than 10 cards in a turn, your turn ends (each player is counted separately). Its number goes down by 1 at the end of each buff cycle.
-- [ ] Growing Impatience indicator: right of your energy counter, a clock (drawn in code) then the number of cards you can still play this turn (11 at Limit 10: the 11th ends your turn). It counts down with each card played, resets each turn, pops when it changes, and turns red on the last 2. The clock's hand sweeps as the turn runs out. Hovering it shows Growing Impatience's tooltip. Only shown in the Architect fight.
+- [ ] Growing Impatience (10): after playing 10 cards in a turn, your turn ends and you can't play anything else (autoplays included). Each player is counted separately; a card replayed several times in a row counts once. MP: you're marked as done and can't play more, and the turn ends once your partner ends theirs. Its number goes down by 1 at the end of each buff cycle.
+- [ ] Growing Impatience indicator: right of your energy counter, a clock (drawn in code) then the number of cards you can still play this turn (starts at 10, the 10th card ends your turn). It counts down with each card played, resets each turn, pops when it changes, and turns red on the last 2. The clock's hand sweeps as the turn runs out. Hovering it shows Growing Impatience's tooltip. Only shown in the Architect fight.
 - [ ] Open the project in MegaDot once so `scenes/fx/impatience_clock.tscn` / `.gd` get imported.
 - [ ] Turn 1 he summons Bygone Effigy + Byrdonis. While summons are alive he cycles: +1 Strength, +10 Block, +5 Vigor, heal 10%, Intensify, +2 Strength, +12 Block, +7 Vigor, heal 12%, Impatience. Then it repeats with every value one tier higher (each Intensify adds a tier).
 - [ ] Strength and Vigor go on him and are copied to every summon, including ones that arrive later (they get his current amount when they join). Block and Heal go straight to the summons.
@@ -1940,7 +1940,7 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - The summon cycle lists *encounters* (Bygone Effigy Elite, Knights Elite, etc.), so each line summons the whole Elite group (4 Gardeners, 3 Knights, Decimillipede's 3 segments). The list, buff values, Intensify step, card limit and bounties are all in `StrifeConfig.cs`.
 - "Monte la puissance de tous les effets de buffs suivants": each Intensify adds one tier to every later buff (Strength +1, Block +2, Vigor +2, Heal +2% per tier). This gives exactly your second-half values, then keeps growing on the next loops.
 - Creatures spawned mid-fight by a summon (Wrigglers etc.) get a Ring Bounty of 0 (`SpawnedBounty`, flagged `//todo : choose bounty`).
-- Growing Impatience follows the text literally: the 11th card ends your turn (at Limit 10). Autoplayed cards count. Minimum Limit 1.
+- Growing Impatience: the 10th card (at Limit 10) ends your turn (changed from "more than 10" after testing). Autoplayed cards count. Minimum Limit 1.
 - The "defeated" Architect has no death animation, so he flinches and the fight ends.
 - No line was given for Intensify, so he doesn't say anything there.
 - The Architect's boss map icon and Super Form's relic outline are placeholders (listed in MISSING_IMAGES.tsv). So are the power icons for Field Experiment, Make Your Point, Growing Impatience and Super Form. Ring Bounty uses ring.png, as you asked.
