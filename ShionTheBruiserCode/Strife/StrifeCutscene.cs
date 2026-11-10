@@ -48,7 +48,7 @@ public sealed class StrifeCutscene
         if (player == null) return;
 
         var bounds = player.Visuals.Bounds;
-        _orbit = new Node2D { Name = "StrifeEmeraldOrbit", Position = bounds.Position + bounds.Size * 0.5f, ZIndex = 5 };
+        _orbit = new Node2D { Name = "StrifeEmeraldOrbit", Position = bounds.Position + bounds.Size * 0.5f };
         player.Visuals.AddChild(_orbit);
         _maxRadius = Math.Max(bounds.Size.X * 0.75f, 150f);
     }
@@ -117,7 +117,6 @@ public sealed class StrifeCutscene
             var a = _angle + Mathf.Tau * i / _gems.Count;
             // Slightly flattened orbit, so it reads as circling around the body
             sprite.Position = new Vector2(Mathf.Cos(a) * _radius, Mathf.Sin(a) * _radius * 0.55f);
-            sprite.ZIndex = Mathf.Sin(a) >= 0 ? 1 : -1;
             i++;
         }
     }
@@ -147,7 +146,7 @@ public sealed class StrifeCutscene
     /// <summary>The screen fades gently to white, and stays white until <see cref="FadeOutWhite"/> (after Act 4 is entered).</summary>
     public void Flash()
     {
-        _white = new ColorRect { Color = new Color(1f, 1f, 1f, 0f), MouseFilter = Control.MouseFilterEnum.Ignore, ZIndex = 100 };
+        _white = new ColorRect { Color = new Color(1f, 1f, 1f, 0f), MouseFilter = Control.MouseFilterEnum.Ignore };
         _white.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
         ShionVfx.AddToScreen(_white);
         _white.CreateTween().TweenProperty(_white, "color:a", 1f, 0.6f).SetEase(Tween.EaseType.Out);

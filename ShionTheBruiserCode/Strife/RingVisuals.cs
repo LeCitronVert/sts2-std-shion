@@ -136,7 +136,7 @@ public static class RingHealthBarPatch
 
 /// <summary>
 /// Super Form on a player's body: a yellow, Super Saiyan-like aura drawn in code that lights the body
-/// (scenes/fx/super_form_aura.tscn), with rare blue sparks
+/// (scenes/fx/super_form_aura.tscn), with rare blue electric sparks drawn by the same scene
 /// while they have Rings; at 0 Rings, the aura goes away, the sparks turn red and they sweat now and then.
 /// Also keeps the Ring health bar segment and the local player's music up to date. Visual only.
 /// </summary>
@@ -146,14 +146,13 @@ public sealed class SuperFormFx
 
     private const float PollInterval = 0.2f;
 
-    private static readonly Color BlueSparks = new(0.35f, 0.65f, 1.6f);
-    private static readonly Color RedSparks = new(1.6f, 0.25f, 0.2f);
+    private static readonly Color BlueSparks = new(0.45f, 0.75f, 1f);
+    private static readonly Color RedSparks = new(1f, 0.25f, 0.2f);
 
     private readonly NCreature _node;
     private readonly Creature _creature;
     private readonly Rect2 _bounds;
     private Node2D? _aura;
-    private Node2D? _sparks;
     private Node2D? _sweat;
 
     private (bool Active, int Rings)? _last;
@@ -195,38 +194,31 @@ public sealed class SuperFormFx
         if (LocalContext.IsMe(player) && (wasActive != active || hadRings != hasRings)) StrifeMusic.Refresh();
     }
 
+    /// <summary>The aura and the sparks are both drawn by scenes/fx/super_form_aura.tscn.</summary>
+    private Node2D? EnsureAura()
+    {
+        if (_aura != null) return GodotObject.IsInstanceValid(_aura) ? _aura : null;
+        if (!GodotObject.IsInstanceValid(_node.Visuals)) return null;
+        _aura = GD.Load<PackedScene>(FxScene("super_form_aura")).Instantiate<Node2D>();
+        _node.Visuals.AddChild(_aura);
+        // Behind the body
+        _node.Visuals.MoveChild(_aura, 0);
+        _aura.Call("set_area", _bounds);
+        // The aura's light only lights bodies on this layer (players already are, see CreatureFxController)
+        if (_node.Visuals.GetCurrentBody() is CanvasItem body) body.LightMask |= CreatureFxController.AuraLightLayer;
+        return _aura;
+    }
+
     private void SetAura(bool on)
     {
-        if (_aura == null)
-        {
-            if (!on) return;
-            _aura = GD.Load<PackedScene>(FxScene("super_form_aura")).Instantiate<Node2D>();
-            _node.Visuals.AddChild(_aura);
-            // Behind the body
-            _node.Visuals.MoveChild(_aura, 0);
-            _aura.Call("set_area", _bounds);
-            // The aura's light only lights bodies on this layer (players already are, see CreatureFxController)
-            if (_node.Visuals.GetCurrentBody() is CanvasItem body) body.LightMask |= CreatureFxController.AuraLightLayer;
-        }
-        if (GodotObject.IsInstanceValid(_aura)) _aura.Call("set_active", on);
+        if (_aura == null && !on) return;
+        EnsureAura()?.Call("set_aura", on);
     }
 
     private void SetSparks(bool on, bool blue)
     {
-        if (_sparks == null)
-        {
-            if (!on) return;
-            _sparks = GD.Load<PackedScene>(FxScene("berserk_sparks")).Instantiate<Node2D>();
-            // Rarer than Berserk's
-            _sparks.Set("min_interval", 1.2f);
-            _sparks.Set("max_interval", 3.0f);
-            _sparks.Set("double_spark_chance", 0.15f);
-            _node.Visuals.AddChild(_sparks);
-            _sparks.Call("set_area", _bounds.Grow(20f));
-        }
-        if (!GodotObject.IsInstanceValid(_sparks)) return;
-        _sparks.Modulate = blue ? BlueSparks : RedSparks;
-        _sparks.Call("set_active", on);
+        if (_aura == null && !on) return;
+        EnsureAura()?.Call("set_sparks", on, blue ? BlueSparks : RedSparks);
     }
 
     private void SetSweat(bool on)

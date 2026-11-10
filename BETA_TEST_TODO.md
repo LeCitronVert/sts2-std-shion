@@ -1890,6 +1890,8 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - [ ] While he has summons, the Architect leans back (smaller, up and to the right, behind them) and his summons stay to his left: you can hover him without a summon in the way. He stands back up when his last summon dies, and the others close the gap.
 - [ ] Summon placement: each summoned encounter keeps its own original layout (Gardeners, Knights, Decimillipede segments, The Kin… where they normally stand). When a line summons two encounters, the one with more creatures stands back (up, right, a bit smaller) and the other a step forward (down, left, drawn on top). Knights are behind Infested Prism. In each encounter the leftmost is on top. Wrigglers and other mid-fight spawns join their encounter's layout. The Architect leans back while he has summons.
 - [ ] Fixed: a huge hit (more than 999,999) made the Architect "die" visually (his sprite vanished while he kept acting). A hit now never takes him below 1 HP, and the full damage still counts for his damage counter, Field Experiment and Make Your Point.
+- [ ] Fixed: the Architect's summons were drawn above the pause menu. They're stacked by draw order now; the pause menu covers them.
+- [ ] Fixed: the Super Form aura never showed (its script failed to load). It shows now.
 - [ ] Fixed: killing the last Decimillipede segment made the Architect (and Entomancer, if alive) vanish. Only the segments fade out now.
 - [ ] Debuffs on the Architect (Make Your Point, Strength down, etc.) are no longer copied to his summons. Only his own Strength/Vigor buffs are shared: summons that join later get the Strength his buffs gave him (not his debuffed total) and his current Vigor.
 - [ ] No music at all once he's "defeated" (from his "ENOUGH!!!" to the end of the run).
@@ -1903,8 +1905,8 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - [ ] The top bar's Gold icon becomes the Ring while you hold Super Form.
 - [ ] At the start of each fight you get the Super Form power. Unblocked damage takes Rings (Gold) instead of HP, 1 per point, until you run out. Damage you deal to yourself isn't absorbed.
 - [ ] A yellow segment fills the health bar from the left (Rings / Max HP, full when Rings ≥ Max HP), and updates when your Rings change.
-- [ ] Rings > 0: a Super Saiyan-like golden aura drawn in code (layered flames with tongues flickering upward, rising streaks) that lights the character's body with a pulsing gold light, plus rare blue sparks and "Egg Reverie" music (loops). It fades in and out smoothly. Open the project in MegaDot once so `scenes/fx/super_form_aura.tscn` / `.gd` get imported.
-- [ ] Rings = 0: no aura, red sparks, occasional sweat drops, and "Egg Panicky" music (loops). It switches back when you get Rings again.
+- [ ] Rings > 0: a Super Saiyan-like golden aura drawn in code (layered flames with tongues flickering upward, rising streaks) that lights the character's body with a pulsing gold light, plus rare blue electric sparks (zigzag bolts drawn by the same script, not Berserk's sparks) and "Egg Reverie" music (loops). It fades in and out smoothly. Open the project in MegaDot once so `scenes/fx/super_form_aura.tscn` / `.gd` get imported.
+- [ ] Rings = 0: no aura, red electric sparks, occasional sweat drops, and "Egg Panicky" music (loops). It switches back when you get Rings again.
 - [ ] When an enemy dies: all your Emerald Powers in Hand, Discard and Exhaust go to random spots in the Draw Pile.
 - [ ] Team Blast + Super Form: after a Team Blast was played, killing an enemy unlocks the gauge and sets it back to 0 for the whole team, so it can fill and give Team Blasts again in the same fight. If the Team Blast itself kills, the reset happens once it finishes (the other copies are still Exhausted, no chaining). In MP the gauge stays the same for everyone.
 

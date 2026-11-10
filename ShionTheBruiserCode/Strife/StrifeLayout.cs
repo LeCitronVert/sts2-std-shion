@@ -95,9 +95,6 @@ public static class StrifeLayout
     private static readonly Vector2 BackOffset = new(110f, -70f);
     private const float BackScale = 0.9f;
     private static readonly Vector2 FrontOffset = new(-170f, 100f);
-    private const int FrontZ = 30;
-    private const int SingleZ = 20;
-    private const int BackZ = 10;
 
     private const float LeanScale = 0.78f;
     private static readonly Vector2 LeanOffset = new(160f, -150f);
@@ -147,19 +144,30 @@ public static class StrifeLayout
         {
             var home = HomeOf(architect);
             var leaning = summons.Count > 0;
-            architect.ZIndex = leaning ? -1 : 0;
+            architect.ZIndex = 0;
             Move(architect, leaning ? home + LeanOffset : home, Vector2.One * (leaning ? LeanScale : 1f));
+            // Drawn first among the enemies: behind his summons
+            architect.GetParent()?.MoveChild(architect, 0);
         }
         if (summons.Count == 0) return;
 
         var roomScale = room.CreatureNodes.FirstOrDefault()?.Entity?.CombatState?.Encounter?.GetCameraScaling() ?? 1f;
+        var drawOrder = new List<(NCreature Node, int Depth, float X)>();
         foreach (var members in summons.GroupBy(n => Membership.TryGetValue(n.Entity, out var g) ? g : null))
         {
-            ArrangeGroup(members.Key, members.ToList(), roomScale);
+            drawOrder.AddRange(ArrangeGroup(members.Key, members.ToList(), roomScale));
+        }
+
+        // Draw order by sibling order, not ZIndex: ZIndex also put them above the pause menu. Background encounter
+        // first, foreground last; in each, the leftmost last (on top).
+        foreach (var (node, _, _) in drawOrder.OrderBy(e => e.Depth).ThenByDescending(e => e.X))
+        {
+            if (node.GetParent() is { } parent) parent.MoveChild(node, parent.GetChildCount() - 1);
         }
     }
 
-    private static void ArrangeGroup(Group? group, List<NCreature> members, float roomScale)
+    /// <returns>Each creature with its depth (0 back, 1 alone, 2 front) and its target x, for the draw order.</returns>
+    private static List<(NCreature, int, float)> ArrangeGroup(Group? group, List<NCreature> members, float roomScale)
     {
         // The encounter's own camera zoom (bosses are often zoomed out), relative to this room's
         var zoom = group == null ? 1f : group.Encounter.GetCameraScaling() / roomScale;
@@ -178,15 +186,16 @@ public static class StrifeLayout
         }
         foreach (var (node, position) in DefaultRow(unslotted, group?.Encounter.GetCameraScaling() ?? 1f)) positions[node] = position;
 
-        // Leftmost on top, the front encounter above the back one
-        var baseZ = group?.IsFront == true ? FrontZ : group?.IsBack == true ? BackZ : SingleZ;
-        var ordered = positions.OrderBy(kv => kv.Value.X).ToList();
-        for (var i = 0; i < ordered.Count; i++)
+        var depthRank = group?.IsFront == true ? 2 : group?.IsBack == true ? 0 : 1;
+        var result = new List<(NCreature, int, float)>();
+        foreach (var (node, position) in positions)
         {
-            var (node, position) = ordered[i];
-            node.ZIndex = baseZ + ordered.Count - i;
-            Move(node, position * scale + offset, Vector2.One * scale);
+            var target = position * scale + offset;
+            node.ZIndex = 0;
+            Move(node, target, Vector2.One * scale);
+            result.Add((node, depthRank, target.X));
         }
+        return result;
     }
 
     /// <summary>Same maths as the game's NCombatRoom.PositionEnemies.</summary>
