@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bgn42xekgvjc1"
-path="res://.godot/imported/emerald_power_ivy.png-820a6ca2c2b48ea13cb167dca01be686.ctex"
+path="res://.godot/imported/emerald_power_ivy.png-83cc7b29d7207ce9caa74b9b3bf2c608.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://ShionTheBruiser/images/card_portraits/big/emerald_power_ivy.png"
-dest_files=["res://.godot/imported/emerald_power_ivy.png-820a6ca2c2b48ea13cb167dca01be686.ctex"]
+dest_files=["res://.godot/imported/emerald_power_ivy.png-83cc7b29d7207ce9caa74b9b3bf2c608.ctex"]
 
 [params]
 

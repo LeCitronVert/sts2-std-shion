@@ -1883,6 +1883,8 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - [ ] The first node's map icon is a dark silhouette of the Grey Chaos Emeralds. Entering it fully heals you (even with Weary Traveler / high Ascension) and gives 100 Gold. There's no dialogue and no choice, only Proceed.
 - [ ] "All Clear" keeps playing in Act 4 outside of fights (no FMOD act music or ambience on the map, the shop or the rest site).
 - [ ] Save, quit and continue in Act 4: the run comes back with 4 acts, Super Form, the Ring icon and the music.
+- [ ] Fixed: entering Act 4's Rest Site crashed ("Unexpected act"), and Act 4 saves couldn't be loaded. The Rest Site now uses Glory's campfire animation, and the save from that crash should load again.
+- [ ] Fixed (MP): every Act 4 fight would have crashed on HP scaling. Act 4 now uses Act 3's multiplayer HP scaling.
 
 **Super Form**
 - [ ] The top bar's Gold icon becomes the Ring while you hold Super Form.
