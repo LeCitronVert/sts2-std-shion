@@ -181,6 +181,12 @@ public sealed class GrowingImpatience : ShionTheBruiserPower
     // Created on first use: a field initializer would be shared with the canonical model by MutableClone
     private Dictionary<Player, int>? _playedThisTurn;
 
+    /// <summary>
+    /// Cards that player can still play this turn: the (Limit + 1)th card ends it, so it still counts.
+    /// Read-only (for the indicator next to the energy counter).
+    /// </summary>
+    public int CardsLeft(Player player) => Math.Max(0, Amount + 1 - (_playedThisTurn?.GetValueOrDefault(player) ?? 0));
+
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var player = cardPlay.Card.Owner;

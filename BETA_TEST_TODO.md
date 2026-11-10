@@ -1914,6 +1914,8 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - [ ] Field Experiment: damage he takes is split evenly between his living summons (the remainder goes to random ones, 1 each).
 - [ ] Make Your Point: unblocked damage to him lowers his Strength by that much (not his summons') until the end of his turn. The icon shows the current reduction.
 - [ ] Growing Impatience (10): after playing more than 10 cards in a turn, your turn ends (each player is counted separately). Its number goes down by 1 at the end of each buff cycle.
+- [ ] Growing Impatience indicator: right of your energy counter, a clock (drawn in code) then the number of cards you can still play this turn (11 at Limit 10: the 11th ends your turn). It counts down with each card played, resets each turn, pops when it changes, and turns red on the last 2. The clock's hand sweeps as the turn runs out. Hovering it shows Growing Impatience's tooltip. Only shown in the Architect fight.
+- [ ] Open the project in MegaDot once so `scenes/fx/impatience_clock.tscn` / `.gd` get imported.
 - [ ] Turn 1 he summons Bygone Effigy + Byrdonis. While summons are alive he cycles: +1 Strength, +10 Block, +5 Vigor, heal 10%, Intensify, +2 Strength, +12 Block, +7 Vigor, heal 12%, Impatience. Then it repeats with every value one tier higher (each Intensify adds a tier).
 - [ ] Strength and Vigor go on him and are copied to every summon, including ones that arrive later (they get his current amount when they join). Block and Heal go straight to the summons.
 - [ ] When his last summon dies, his intent changes right away:
