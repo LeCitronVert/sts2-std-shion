@@ -1873,6 +1873,7 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 **Unlock and cutscene (end of Act 3)**
 - [ ] Without a combo Emerald on every player, the Act 3 Architect ends the run as usual.
 - [ ] With one on every player (solo and MP): the Architect's dialogue and strike play as usual, then everything but the players fades to black. The players lie "dead" with their health bars and relics still shown.
+- [ ] MP: the "Waiting for other players..." overlay is hidden during the Emeralds cutscene.
 - [ ] "All Clear" starts and loops. After 2 s, the 7 Emeralds come out of your own character and spin around them.
 - [ ] One by one, each player gets every Chaos Emerald relic they don't have yet (the combo one and any from Chaos Ring aren't duplicated). The matching gem pulses.
 - [ ] The gems converge into your character, the screen flashes gently to white, S3K_6A plays, and everyone gets **Super Form**. Then Act 4 starts.
@@ -1905,7 +1906,7 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - [ ] The top bar's Gold icon becomes the Ring while you hold Super Form.
 - [ ] At the start of each fight you get the Super Form power. Unblocked damage takes Rings (Gold) instead of HP, 1 per point, until you run out. Damage you deal to yourself isn't absorbed.
 - [ ] A yellow segment fills the health bar from the left (Rings / Max HP, full when Rings ≥ Max HP), and updates when your Rings change.
-- [ ] Rings > 0: a Super Saiyan-like golden aura drawn in code (layered flames with tongues flickering upward, rising streaks) that lights the character's body with a pulsing gold light, plus rare blue electric sparks (zigzag bolts drawn by the same script, not Berserk's sparks) and "Egg Reverie" music (loops). It fades in and out smoothly. Open the project in MegaDot once so `scenes/fx/super_form_aura.tscn` / `.gd` get imported.
+- [ ] Rings > 0: a Super Saiyan-like golden aura drawn in code: tall flame tongues rising from the ground behind the body, taller than the head (tallest in the middle), orange edges / gold / pale core, embers drifting up, slightly transparent that lights the character's body with a pulsing gold light, plus rare blue electric sparks (zigzag bolts drawn by the same script, not Berserk's sparks) and "Egg Reverie" music (loops). It fades in and out smoothly. Open the project in MegaDot once so `scenes/fx/super_form_aura.tscn` / `.gd` get imported.
 - [ ] Rings = 0: no aura, red electric sparks, occasional sweat drops, and "Egg Panicky" music (loops). It switches back when you get Rings again.
 - [ ] When an enemy dies: all your Emerald Powers in Hand, Discard and Exhaust go to random spots in the Draw Pile.
 - [ ] Team Blast + Super Form: after a Team Blast was played, killing an enemy unlocks the gauge and sets it back to 0 for the whole team, so it can fill and give Team Blasts again in the same fight. If the Team Blast itself kills, the reset happens once it finishes (the other copies are still Exhausted, no chaining). In MP the gauge stays the same for everyone.

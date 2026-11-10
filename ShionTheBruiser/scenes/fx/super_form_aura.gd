@@ -2,29 +2,31 @@ extends Node2D
 
 ## Super Form's look (Act 4), all drawn in code. Driven from C# (SuperFormFx in Strife/RingVisuals.cs) through
 ## set_area(), set_aura() and set_sparks(). Placed behind the body, in the creature visuals' coordinates.
-## - Aura (with Rings): a Super Saiyan-like golden flame around the creature, flame tongues licking upward, rising
-##   energy streaks, and a pulsing gold light that lights the body.
+## - Aura (with Rings): a Super Saiyan-like golden aura. Tall flame tongues rise from the ground behind the body,
+##   higher than the head (tallest in the middle): orange outside, gold, then a bright pale core. Embers drift up,
+##   and a pulsing gold light lights the body. Slightly transparent.
 ## - Sparks: rare electric sparks crackling around the body (blue with Rings, red at 0 Rings).
 
 ## Light layer only players' bodies are on (CreatureFxController.AuraLightLayer), so the light doesn't hit enemies
 const LIGHT_LAYER := 1 << 19
-const POINTS := 64
+## Points on each side of a flame tongue
+const TONGUE_STEPS := 10
 
-@export var outer_color := Color(1.0, 0.62, 0.08, 0.42)
-@export var middle_color := Color(1.0, 0.84, 0.2, 0.5)
-@export var core_color := Color(1.0, 0.97, 0.72, 0.4)
-@export var streak_color := Color(1.0, 0.92, 0.45, 0.85)
+## Overall opacity of the flames (they're additive, so this keeps them from washing the character out)
+@export var opacity := 0.7
+@export var outer_color := Color(1.0, 0.5, 0.06, 0.55)
+@export var middle_color := Color(1.0, 0.78, 0.18, 0.55)
+@export var core_color := Color(1.0, 0.96, 0.75, 0.5)
+@export var ember_color := Color(1.0, 0.9, 0.4, 0.95)
 @export var light_color := Color(1.0, 0.82, 0.3)
 
-## Aura size compared to the creature's bounds
-@export var width_scale := 1.3
-@export var height_scale := 1.3
-## Height of the flame tongues, as a part of the aura's height
-@export var tongue_height := 0.22
-@export var tongue_count := 9
-@export var flicker_speed := 9.0
-@export var streaks_per_second := 22.0
-@export var light_energy := 0.95
+## Flames: how wide (compared to the body) and how tall (compared to the body) they rise from the feet
+@export var width_scale := 1.5
+@export var height_scale := 1.55
+@export var tongue_count := 11
+@export var flicker_speed := 7.0
+@export var embers_per_second := 18.0
+@export var light_energy := 0.9
 @export var fade_duration := 0.3
 
 ## Sparks: random delay between two sparks, how long one lasts, how many zigzags
@@ -40,9 +42,10 @@ var _time := 0.0
 var _aura_on := false
 var _aura_strength := 0.0
 var _aura_tween: Tween
-var _phases: Array[float] = []
-var _streaks: Array[Dictionary] = []
-var _streak_timer := 0.0
+## One per flame tongue: position across the aura (-1..1), height and width factors, flicker phase and speed
+var _tongues: Array[Dictionary] = []
+var _embers: Array[Dictionary] = []
+var _ember_timer := 0.0
 var _light: PointLight2D
 
 var _sparks_on := false
@@ -59,7 +62,18 @@ func _ready() -> void:
 	light_mask = 0
 
 	for i in tongue_count:
-		_phases.append(randf() * TAU)
+		var across: float = -1.0 + 2.0 * (float(i) + 0.5) / float(tongue_count)
+		across += randf_range(-0.06, 0.06)
+		# Tallest in the middle, lower on the sides
+		var bell: float = exp(-across * across * 1.6)
+		_tongues.append({
+			"x": across,
+			"height": lerpf(0.45, 1.0, bell) * randf_range(0.85, 1.1),
+			"width": randf_range(0.16, 0.26),
+			"phase": randf() * TAU,
+			"speed": randf_range(0.8, 1.3),
+			"sway": randf_range(-0.12, 0.12),
+		})
 
 	var gradient := Gradient.new()
 	gradient.set_color(0, Color(1, 1, 1, 1))
@@ -119,16 +133,17 @@ func _process(delta: float) -> void:
 	var pulse: float = 0.85 + 0.1 * sin(_time * 6.0) + 0.05 * sin(_time * 17.0)
 	_light.energy = light_energy * _aura_strength * pulse
 
-	# Rising streaks
+	# Embers drifting up
 	if _aura_on:
-		_streak_timer -= delta
-		while _streak_timer <= 0.0:
-			_streak_timer += 1.0 / streaks_per_second
-			_spawn_streak()
-	for streak in _streaks:
-		streak["y"] = float(streak["y"]) - float(streak["speed"]) * delta
-		streak["life"] = float(streak["life"]) - delta
-	_streaks = _streaks.filter(func(s: Dictionary) -> bool: return float(s["life"]) > 0.0)
+		_ember_timer -= delta
+		while _ember_timer <= 0.0:
+			_ember_timer += 1.0 / embers_per_second
+			_spawn_ember()
+	for ember in _embers:
+		ember["y"] = float(ember["y"]) - float(ember["speed"]) * delta
+		ember["x"] = float(ember["x"]) + sin(_time * 3.0 + float(ember["phase"])) * 20.0 * delta
+		ember["life"] = float(ember["life"]) - delta
+	_embers = _embers.filter(func(e: Dictionary) -> bool: return float(e["life"]) > 0.0)
 
 	# Sparks
 	if _sparks_on:
@@ -143,14 +158,17 @@ func _process(delta: float) -> void:
 	queue_redraw()
 
 
-func _spawn_streak() -> void:
-	var half: float = _area.size.x * width_scale * 0.45
-	var x: float = _area.get_center().x + randf_range(-half, half)
-	var y: float = _area.end.y - randf() * _area.size.y * 0.5
-	var life: float = randf_range(0.35, 0.6)
-	_streaks.append({
-		"x": x, "y": y, "speed": randf_range(420.0, 700.0), "length": randf_range(22.0, 48.0),
-		"life": life, "max_life": life, "width": randf_range(1.5, 3.0),
+func _spawn_ember() -> void:
+	var half: float = _area.size.x * width_scale * 0.5
+	var life: float = randf_range(0.6, 1.1)
+	_embers.append({
+		"x": _area.get_center().x + randf_range(-half, half),
+		"y": _area.end.y - randf() * _area.size.y * 0.8,
+		"speed": randf_range(160.0, 320.0),
+		"size": randf_range(1.5, 3.5),
+		"phase": randf() * TAU,
+		"life": life,
+		"max_life": life,
 	})
 
 
@@ -169,50 +187,51 @@ func _spawn_spark() -> void:
 	_sparks.append({"points": points, "life": spark_lifetime})
 
 
-## Flame silhouette: an egg shape standing on the feet, with flickering tongues on its upper half
-func _shape(shape_scale: float, time_offset: float) -> PackedVector2Array:
-	var rx: float = _area.size.x * width_scale * 0.5 * shape_scale
-	var ry: float = _area.size.y * height_scale * 0.5 * shape_scale
-	var feet: float = _area.end.y + 8.0
-	var center := Vector2(_area.get_center().x, feet - ry)
-	var points := PackedVector2Array()
-	for i in POINTS:
-		var a: float = TAU * float(i) / float(POINTS)
-		var up: float = cos(a)  # 1 at the top, -1 at the bottom
-		var p := Vector2(sin(a) * rx, -up * ry)
+## One flame tongue rising from the feet: wide at the base, pointed at the top, waving as it goes up
+func _tongue(tongue: Dictionary, layer_scale: float, time_offset: float) -> PackedVector2Array:
+	var feet: float = _area.end.y + 6.0
+	var aura_half: float = _area.size.x * width_scale * 0.5
+	var base_x: float = _area.get_center().x + float(tongue["x"]) * aura_half * layer_scale
+	var t_speed: float = flicker_speed * float(tongue["speed"])
+	var phase: float = float(tongue["phase"]) + time_offset
+	var flicker: float = 0.85 + 0.15 * sin(_time * t_speed + phase) + 0.05 * sin(_time * t_speed * 2.3 + phase)
+	var height: float = _area.size.y * height_scale * float(tongue["height"]) * flicker * layer_scale
+	var half_width: float = aura_half * float(tongue["width"]) * layer_scale
+	var sway: float = float(tongue["sway"]) * height
 
-		if up > -0.2:
-			# Tongues: peaks spread around the upper part, each flickering on its own
-			var t: float = (a / TAU) * float(tongue_count)
-			var k: int = int(floorf(t)) % tongue_count
-			var within: float = t - floorf(t)
-			var peak: float = pow(sin(within * PI), 3.0)
-			var flicker: float = 0.55 + 0.45 * sin(_time * flicker_speed + _phases[k] + time_offset)
-			var rise: float = pow(maxf(up + 0.2, 0.0) / 1.2, 0.8)
-			var reach: float = tongue_height * ry * 2.0 * peak * flicker * rise
-			# Tongues lean upward rather than outward, like rising flames
-			p += Vector2(p.x * 0.15 / maxf(rx, 1.0), -1.0).normalized() * reach
-
-		var point := center + p
-		point.y = minf(point.y, feet)  # Flat bottom at the feet
-		points.append(point)
-	return points
+	var left := PackedVector2Array()
+	var right := PackedVector2Array()
+	for i in TONGUE_STEPS + 1:
+		var t: float = float(i) / float(TONGUE_STEPS)
+		var wobble: float = sin(_time * t_speed * 1.4 + phase + t * 5.0) * half_width * 0.35 * t
+		var center_x: float = base_x + sway * t * t + wobble
+		var w: float = half_width * pow(1.0 - t, 0.75)
+		var y: float = feet - height * t
+		left.append(Vector2(center_x - w, y))
+		right.append(Vector2(center_x + w, y))
+	right.reverse()
+	left.append_array(right)
+	return left
 
 
 func _draw() -> void:
 	if _aura_strength > 0.0:
-		# The whole aura breathes a little
-		var breath: float = 1.0 + 0.03 * sin(_time * 4.0)
-		draw_colored_polygon(_shape(1.0 * breath, 0.0), _faded(outer_color))
-		draw_colored_polygon(_shape(0.84 * breath, 1.3), _faded(middle_color))
-		draw_colored_polygon(_shape(0.64 * breath, 2.6), _faded(core_color))
+		var strength: float = _aura_strength * opacity
+		for tongue in _tongues:
+			draw_colored_polygon(_tongue(tongue, 1.0, 0.0), _faded(outer_color, strength))
+		for tongue in _tongues:
+			draw_colored_polygon(_tongue(tongue, 0.78, 1.1), _faded(middle_color, strength))
+		# The bright core: only the middle tongues, closer to the body
+		for tongue in _tongues:
+			if absf(float(tongue["x"])) < 0.55:
+				draw_colored_polygon(_tongue(tongue, 0.55, 2.2), _faded(core_color, strength))
 
-		for streak in _streaks:
-			var fade: float = float(streak["life"]) / float(streak["max_life"])
-			var color := streak_color
-			color.a *= fade * _aura_strength
-			var start := Vector2(float(streak["x"]), float(streak["y"]))
-			draw_line(start, start + Vector2(0.0, float(streak["length"])), color, float(streak["width"]), true)
+		for ember in _embers:
+			var fade: float = float(ember["life"]) / float(ember["max_life"])
+			var size: float = float(ember["size"])
+			var color := ember_color
+			color.a *= fade * strength
+			draw_rect(Rect2(float(ember["x"]) - size * 0.5, float(ember["y"]) - size, size, size * 2.0), color)
 
 	for spark in _sparks:
 		var fade: float = float(spark["life"]) / spark_lifetime
@@ -225,7 +244,7 @@ func _draw() -> void:
 		draw_polyline(points, core, 2.0, true)
 
 
-func _faded(color: Color) -> Color:
+func _faded(color: Color, strength: float) -> Color:
 	var result := color
-	result.a *= _aura_strength
+	result.a *= strength
 	return result

@@ -57,6 +57,8 @@ public static class StrifeTransition
     private static async Task EnterStrife(RunState state)
     {
         var cutscene = StrifeCutscene.Start(state);
+        // The Architect's room shows "Waiting for other players..." in multiplayer once you're done: not during the cutscene
+        MegaCrit.Sts2.Core.Nodes.Rooms.NCombatRoom.Instance?.SetWaitingForOtherPlayersOverlayVisible(visible: false);
         {
             if (cutscene != null) await cutscene.FadeToBlack();
             StrifeMusic.CutsceneActive = true;
