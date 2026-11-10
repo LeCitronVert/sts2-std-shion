@@ -94,7 +94,7 @@ public static class StrifeLayout
 
     private static readonly Vector2 BackOffset = new(110f, -70f);
     private const float BackScale = 0.9f;
-    private static readonly Vector2 FrontOffset = new(-90f, 40f);
+    private static readonly Vector2 FrontOffset = new(-170f, 100f);
     private const int FrontZ = 30;
     private const int SingleZ = 20;
     private const int BackZ = 10;
