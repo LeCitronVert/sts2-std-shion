@@ -9,7 +9,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
-public class MightyGuard() : ShionTheBruiserPower
+public class HyperGuard() : ShionTheBruiserPower
 {
     public override PowerType Type =>
         PowerType.Buff;

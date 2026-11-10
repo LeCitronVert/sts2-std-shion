@@ -1,7 +1,7 @@
 extends Node2D
 
 ## A honeycomb barrier in front of a creature (Scintilla-like), while it has Defensive (pale, thin)
-## or Mighty Guard (azure, thicker). Driven from C# (CreatureFxController.cs) through
+## or Hyper Guard (azure, thicker). Driven from C# (CreatureFxController.cs) through
 ## set_style(), set_area() and set_active().
 ## The cells are laid out on a panel wrapped around a vertical cylinder: cells near its sides are squashed,
 ## so the barrier looks curved. Cells pop in from the center outwards, shimmer while active and
@@ -14,7 +14,7 @@ extends Node2D
 @export var disappear_time := 0.35
 
 var _color := Color(0.88, 0.85, 1.0)
-## Edge width; Mighty Guard also adds an inner layer
+## Edge width; Hyper Guard also adds an inner layer
 var _thickness := 2.5
 var _layers := 1
 ## Panel center (in front of the creature) and size, local to this node

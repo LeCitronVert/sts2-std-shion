@@ -9,7 +9,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Counter the next 4 hindrances. Extend Guard and Mighty Guard by 1 (2) turn(s). Defensive.
+/// Counter the next 4 hindrances. Extend Guard and Hyper Guard by 1 (2) turn(s). Defensive.
 /// </summary>
 public class ShionDefensiveStrategies() : ShionDefensiveCard(2,
     CardType.Skill, CardRarity.Uncommon,
@@ -23,7 +23,7 @@ public class ShionDefensiveStrategies() : ShionDefensiveCard(2,
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(ShionCardKeywords.Defensive),
         HoverTipFactory.FromPower<Guard>(),
-        HoverTipFactory.FromPower<MightyGuard>(),
+        HoverTipFactory.FromPower<HyperGuard>(),
         HoverTipFactory.FromPower<CounterStrategy>()
     ];
 
@@ -47,9 +47,9 @@ public class ShionDefensiveStrategies() : ShionDefensiveCard(2,
         {
             await PowerCmd.Apply<Guard>(choiceContext, owner, extension, owner, card);
         }
-        if (owner.HasPower<MightyGuard>())
+        if (owner.HasPower<HyperGuard>())
         {
-            await PowerCmd.Apply<MightyGuard>(choiceContext, owner, extension, owner, card);
+            await PowerCmd.Apply<HyperGuard>(choiceContext, owner, extension, owner, card);
         }
 
         await ApplyDefensiveToPlayer();

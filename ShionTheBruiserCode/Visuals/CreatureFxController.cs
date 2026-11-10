@@ -47,7 +47,7 @@ public static class CreatureFxPatch
 /// <item>Berserk Form: the base game's smoky vignette (Nightmare's) around the screen, only on the screen of the player who has it.</item>
 /// <item>Codependency: salmon pink glow and light (scenes/fx/aura_light.tscn).</item>
 /// <item>Come What May: rare sweat drops from Shion's head (scenes/fx/tears.tscn), more often with more stacks, only for Shion.</item>
-/// <item>Defensive / Mighty Guard: honeycomb barrier in front of the creature (scenes/fx/hex_shell.tscn).</item>
+/// <item>Defensive / Hyper Guard: honeycomb barrier in front of the creature (scenes/fx/hex_shell.tscn).</item>
 /// <item>Dragonsong: music notes around the creature, one per point of reduction (scenes/fx/music_notes.tscn).</item>
 /// <item>Blood: scarlet wisps circling the creature, one per Blood up to 10, then bigger with more Blood (scenes/fx/blood_wisps.tscn).</item>
 /// <item>Full Nelson / Frontliner: the player moves behind the held enemy / in front of the team (<see cref="CreaturePositioning"/>).</item>
@@ -80,7 +80,7 @@ public class CreatureFxController
     private const int NapZCount = 4;
 
     private static readonly Color DefensiveColor = new(0.88f, 0.85f, 1f);
-    private static readonly Color MightyGuardColor = new(0.2f, 0.65f, 1f);
+    private static readonly Color HyperGuardColor = new(0.2f, 0.65f, 1f);
     private static readonly Color LurkingIntensityColor = new(1f, 0.15f, 0.15f);
     private static readonly Color FlowChargeColor = new(1f, 0.55f, 0.1f);
 
@@ -117,7 +117,7 @@ public class CreatureFxController
     private Node2D? _codependencyLight;
     private Node2D? _tears;
     private Node2D? _defensiveShell;
-    private Node2D? _mightyGuardShell;
+    private Node2D? _hyperGuardShell;
     private Node2D? _notes;
     private Node2D? _bloodWisps;
     private Node2D? _lurkingParticles;
@@ -279,9 +279,9 @@ public class CreatureFxController
             n.Call("set_style", DefensiveColor, 2.5f, 1);
             n.Call("set_area", _bounds, facing);
         });
-        SetEffect(ref _mightyGuardShell, "hex_shell", alive && _creature.HasPower<MightyGuard>(), n =>
+        SetEffect(ref _hyperGuardShell, "hex_shell", alive && _creature.HasPower<HyperGuard>(), n =>
         {
-            n.Call("set_style", MightyGuardColor, 5f, 2);
+            n.Call("set_style", HyperGuardColor, 5f, 2);
             n.Call("set_area", _bounds.Grow(12f), facing);
         });
 

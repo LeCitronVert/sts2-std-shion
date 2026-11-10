@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://mghunlpqyknr"
-path="res://.godot/imported/mighty_guard.png-304a847e06c438246d5dfa9193acb699.ctex"
+uid="uid://gtdxncls07sq"
+path="res://.godot/imported/hyper_guard.png-221371feaa00b44036b9af575442b1d4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ShionTheBruiser/images/powers/mighty_guard.png"
-dest_files=["res://.godot/imported/mighty_guard.png-304a847e06c438246d5dfa9193acb699.ctex"]
+source_file="res://ShionTheBruiser/images/powers/big/hyper_guard.png"
+dest_files=["res://.godot/imported/hyper_guard.png-221371feaa00b44036b9af575442b1d4.ctex"]
 
 [params]
 

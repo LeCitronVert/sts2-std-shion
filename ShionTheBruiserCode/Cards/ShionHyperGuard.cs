@@ -8,16 +8,16 @@ using MegaCrit.Sts2.Core.HoverTips;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
-public class ShionMightyGuard() : ShionDefensiveCard(2,
+public class ShionHyperGuard() : ShionDefensiveCard(2,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<MightyGuard>(1),
+        new PowerVar<HyperGuard>(1),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<MightyGuard>(),
+        HoverTipFactory.FromPower<HyperGuard>(),
     ];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [ShionCardKeywords.Defensive, CardKeyword.Exhaust];
 
@@ -26,7 +26,7 @@ public class ShionMightyGuard() : ShionDefensiveCard(2,
         CardPlay play)
     {
         var card = this;
-        await PowerCmd.Apply<MightyGuard>(choiceContext, card.Owner.Creature, DynamicVars["MightyGuard"].BaseValue, card.Owner.Creature, card);
+        await PowerCmd.Apply<HyperGuard>(choiceContext, card.Owner.Creature, DynamicVars["HyperGuard"].BaseValue, card.Owner.Creature, card);
         await ApplyDefensiveToPlayer();
     }
 

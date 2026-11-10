@@ -8,7 +8,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Enums;
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// Whenever you play a Defensive card, your Guard and Mighty Guard last X more turns.
+/// Whenever you play a Defensive card, your Guard and Hyper Guard last X more turns.
 /// </summary>
 public class DefensiveStrategies : ShionTheBruiserPower
 {
@@ -21,7 +21,7 @@ public class DefensiveStrategies : ShionTheBruiserPower
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromKeyword(ShionCardKeywords.Defensive),
         HoverTipFactory.FromPower<Guard>(),
-        HoverTipFactory.FromPower<MightyGuard>(),
+        HoverTipFactory.FromPower<HyperGuard>(),
     ];
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -38,9 +38,9 @@ public class DefensiveStrategies : ShionTheBruiserPower
             await PowerCmd.Apply<Guard>(choiceContext, power.Owner, Amount, power.Owner, null);
             extended = true;
         }
-        if (power.Owner.HasPower<MightyGuard>())
+        if (power.Owner.HasPower<HyperGuard>())
         {
-            await PowerCmd.Apply<MightyGuard>(choiceContext, power.Owner, Amount, power.Owner, null);
+            await PowerCmd.Apply<HyperGuard>(choiceContext, power.Owner, Amount, power.Owner, null);
             extended = true;
         }
         if (extended) Flash();

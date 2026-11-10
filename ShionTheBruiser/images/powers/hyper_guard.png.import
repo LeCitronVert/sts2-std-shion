@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://0wfn67dxq3yy"
-path="res://.godot/imported/shion_mighty_guard.png-f26742bf31c3509b4daa764983870ca9.ctex"
+uid="uid://mghunlpqyknr"
+path="res://.godot/imported/hyper_guard.png-953488cb2aef2301856bae9eaaf35d35.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ShionTheBruiser/images/card_portraits/big/shion_mighty_guard.png"
-dest_files=["res://.godot/imported/shion_mighty_guard.png-f26742bf31c3509b4daa764983870ca9.ctex"]
+source_file="res://ShionTheBruiser/images/powers/hyper_guard.png"
+dest_files=["res://.godot/imported/hyper_guard.png-953488cb2aef2301856bae9eaaf35d35.ctex"]
 
 [params]
 

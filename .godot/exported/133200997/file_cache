@@ -38,3 +38,5 @@ res://ShionTheBruiser/materials/transitions/slal_transition_mat.tres::344d395640
 res://ShionTheBruiser/scenes/fx/novel_butterfly.tscn::4978e405f700890f9f6a8fdb1eea6fe4::1794060428::res://.godot/exported/133200997/export-e44b53785ec561e0127dc5126c365797-novel_butterfly.scn
 res://ShionTheBruiser/scenes/ancients/cosmo.tscn::cc48a19b9f1e2145ef5e240381565781::1794068582::res://.godot/exported/133200997/export-3ec18023df1cfc2d7cbf4d8e3dda8779-cosmo.scn
 res://ShionTheBruiser/scenes/fx/blood_wisps.tscn::9216a064ae01d17e25b42788fd5ea8f8::1794130517::res://.godot/exported/133200997/export-f70fdf7262e3a8be6562e9411ca149e0-blood_wisps.scn
+res://ShionTheBruiser/scenes/fx/falling_gag.tscn::d55e3b7953b15bc37f4a9f8e76bd010b::1794297101::res://.godot/exported/133200997/export-052a253025e45a038c7cfdcfe888c5a6-falling_gag.scn
+res://ShionTheBruiser/scenes/fx/whirl.tscn::b0253112a8f4566adcd784fa06577cea::1794297123::res://.godot/exported/133200997/export-81f828e0ae2605c767fe77a8dd5752a0-whirl.scn
