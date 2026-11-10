@@ -11,12 +11,13 @@ public class GreenChaosEmerald() : ChaosEmeraldRelic
     public override ChaosEmeraldColor Color => ChaosEmeraldColor.Green;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromCard<EmeraldDoubleDown>(),
+        HoverTipFactory.FromCard<EmeraldPowerIvy>(),
+        HoverTipFactory.FromKeyword(DreamersKeywords.EmeraldPower),
     ];
 
     public override async Task BeforeCombatStart()
     {
-        var card = Owner.Creature.CombatState?.CreateCard<EmeraldDoubleDown>(Owner);
+        var card = Owner.Creature.CombatState?.CreateCard<EmeraldPowerIvy>(Owner);
 
         if (card is null)
         {

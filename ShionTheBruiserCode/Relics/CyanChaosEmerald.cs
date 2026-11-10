@@ -7,19 +7,20 @@ using ShionTheBruiser.ShionTheBruiserCode.Enums;
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 /// <summary>
-/// At the start of each combat, shuffle an Emerald Power: Cyan into your Draw Pile.
+/// At the start of each combat, shuffle an Water into your Draw Pile.
 /// </summary>
 public class CyanChaosEmerald() : ChaosEmeraldRelic
 {
     public override ChaosEmeraldColor Color => ChaosEmeraldColor.Cyan;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromCard<EmeraldPowerCyan>(),
+        HoverTipFactory.FromCard<EmeraldPowerWater>(),
+        HoverTipFactory.FromKeyword(DreamersKeywords.EmeraldPower),
     ];
 
     public override async Task BeforeCombatStart()
     {
-        var card = Owner.Creature.CombatState?.CreateCard<EmeraldPowerCyan>(Owner);
+        var card = Owner.Creature.CombatState?.CreateCard<EmeraldPowerWater>(Owner);
         if (card is null) return;
 
         CardCmd.PreviewCardPileAdd(

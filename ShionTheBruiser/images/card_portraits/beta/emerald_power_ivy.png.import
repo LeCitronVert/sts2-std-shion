@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bgn42xekgvjc1"
-path="res://.godot/imported/emerald_double_down.png-820a6ca2c2b48ea13cb167dca01be686.ctex"
+uid="uid://40viqs824o2v"
+path="res://.godot/imported/emerald_power_ivy.png-60e95ec5dc9e9d3352473abd8aadfb74.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ShionTheBruiser/images/card_portraits/big/emerald_double_down.png"
-dest_files=["res://.godot/imported/emerald_double_down.png-820a6ca2c2b48ea13cb167dca01be686.ctex"]
+source_file="res://ShionTheBruiser/images/card_portraits/beta/emerald_power_ivy.png"
+dest_files=["res://.godot/imported/emerald_power_ivy.png-60e95ec5dc9e9d3352473abd8aadfb74.ctex"]
 
 [params]
 

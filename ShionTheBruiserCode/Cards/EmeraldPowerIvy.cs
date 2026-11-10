@@ -11,16 +11,18 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Powers;
 using BaseLib.Utils;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Green Chaos Emerald card: apply the last debuff the enemy received again, as many times as the enemy's Weak.
+/// Green Chaos Emerald card (Emerald Power): apply the last debuff the enemy received again, as many times as the enemy's Weak.
 /// </summary>
 [Pool(typeof(TokenCardPool))]
-public class EmeraldDoubleDown() : ShionTheBruiserCard(0,
+public class EmeraldPowerIvy() : ShionTheBruiserCard(0,
     CardType.Skill, CardRarity.Token,
     TargetType.AnyEnemy)
 {
@@ -33,7 +35,7 @@ public class EmeraldDoubleDown() : ShionTheBruiserCard(0,
         new DoubleDownPowerVar(),
     ];
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, DreamersKeywords.EmeraldPower];
     public override bool CanBeGeneratedInCombat => false;
     public override bool CanBeGeneratedByModifiers => false;
 
@@ -49,9 +51,10 @@ public class EmeraldDoubleDown() : ShionTheBruiserCard(0,
 
         var lastDebuff = LastDebuffReceived(play.Target);
         var amount = AmountToApply(play.Target);
-        if (lastDebuff is null || amount == 0) return;
+        if (lastDebuff is not null && amount != 0)
+            await PowerCmd.Apply(choiceContext, lastDebuff.ToMutable(), play.Target, amount, Owner.Creature, this);
 
-        await PowerCmd.Apply(choiceContext, lastDebuff.ToMutable(), play.Target, amount, Owner.Creature, this);
+        await DreamersMechanicsHelper.ExhaustAllEmeraldPowers(choiceContext, play);
     }
 
     protected override void OnUpgrade()

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5ke7fbnat3dt"
-path="res://.godot/imported/emerald_power_cyan.png-1b46593125dd94cad40868bac763df06.ctex"
+uid="uid://ds7ocblmtwpnl"
+path="res://.godot/imported/emerald_power_water.png-cbaf347916b6a15496c4d76933eb36cd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ShionTheBruiser/images/card_portraits/big/emerald_power_cyan.png"
-dest_files=["res://.godot/imported/emerald_power_cyan.png-1b46593125dd94cad40868bac763df06.ctex"]
+source_file="res://ShionTheBruiser/images/card_portraits/emerald_power_water.png"
+dest_files=["res://.godot/imported/emerald_power_water.png-cbaf347916b6a15496c4d76933eb36cd.ctex"]
 
 [params]
 

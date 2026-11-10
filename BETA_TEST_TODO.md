@@ -702,7 +702,7 @@ Content I skipped (incomplete in the spec):
 - [ ] **Slime Form**: upgrade now reduces the cost to 1 (Block per Slimed stays 3).
 - [ ] **Share Secrets** is a Skill: apply 15 Confusion, add a Fresh Idea (+ if upgraded) to Draw Pile, Hand and Discard Pile. No damage.
 - [ ] **Surprise Shapeshift** applies Confusion *before* dealing damage, so it can execute with its own hit.
-- [ ] **Emerald Power: Cyan**: 4 cost, upgrade reduces it by 2 (no more Retain). Still gets 1 cheaper when drawn.
+- [ ] **Water** (was Emerald Power: Cyan): 4 cost, upgrade reduces it by 2 (no more Retain). Still gets 1 cheaper when drawn.
 - [ ] Epoch 3 (**Mimickery**) unlocks **Absorption** instead of **Cartoonish Mimickery**. Cartoonish Mimickery is available from the start.
 
 ### 5.2 Keywords
@@ -1859,3 +1859,9 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - The anvil and flower pot are drawn in code, so no art is needed. Gags trigger Slal's Cast animation instead of the attack lunge.
 - Elaborate Flourish art: you sent a screenshot in chat, which I can't save to disk. It's listed in MISSING_IMAGES.tsv.
 - Not done: the "Ideas (ne pas implémenter encore)" section and page 2.
+
+## Emerald Powers: Water & Ivy
+
+- [ ] **Water** (was Emerald Power: Cyan) and **Ivy** (was Double Down) now have the **Emerald Power** keyword: when you play one, it Exhausts ALL your other Emerald Powers (Vision included), wherever they are. Both still Exhaust themselves.
+- [ ] Cyan / Green Chaos Emerald tooltips show the new names and the Emerald Power keyword.
+- [ ] Portraits still show (files renamed to `emerald_power_water.png` / `emerald_power_ivy.png`; MegaDot needs to reimport them).

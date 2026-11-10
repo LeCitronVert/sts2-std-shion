@@ -1,4 +1,6 @@
 using BaseLib.Utils;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -12,14 +14,14 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Play a copy of ALL the Power cards you played this combat.
 /// Whenever you draw this card, reduce its cost by 1 this combat. Exhaust. (Costs 2 less)
-/// Shuffled into the Draw Pile by the Cyan Chaos Emerald.
+/// Emerald Power. Shuffled into the Draw Pile by the Cyan Chaos Emerald.
 /// </summary>
 [Pool(typeof(TokenCardPool))]
-public class EmeraldPowerCyan() : ShionTheBruiserCard(4,
+public class EmeraldPowerWater() : ShionTheBruiserCard(4,
     CardType.Skill, CardRarity.Token,
     TargetType.Self)
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, DreamersKeywords.EmeraldPower];
     public override bool CanBeGeneratedInCombat => false;
     public override bool CanBeGeneratedByModifiers => false;
 
@@ -60,6 +62,8 @@ public class EmeraldPowerCyan() : ShionTheBruiserCard(4,
             await CardPileCmd.AddGeneratedCardToCombat(copy, PileType.Hand, card.Owner);
             await CardCmd.AutoPlay(choiceContext, copy, null);
         }
+
+        await DreamersMechanicsHelper.ExhaustAllEmeraldPowers(choiceContext, play);
     }
 
     protected override void OnUpgrade()
