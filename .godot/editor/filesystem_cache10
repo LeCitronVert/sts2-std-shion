@@ -1,5 +1,5 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1794308152
+::res://::1794348700
 BETA_TEST_TODO.md::TextFile::-1::1794323898::0::1::::<><><>0<>0<><>::
 export_presets.cfg::TextFile::-1::1781940056::0::1::::<><><>0<>0<><>::
 README.md::TextFile::-1::1793637968::0::1::::<><><>0<>0<><>::
@@ -1371,7 +1371,7 @@ edge_chao.gd::GDScript::5685643953746631835::1793637921::0::1::::<>Node2D<><>0<>
 edge_chao.tscn::PackedScene::-1::1793637924::0::1::::<><><>0<>0<><>::res://ShionTheBruiser/scenes/companions/edge_chao.gd
 ::res://ShionTheBruiser/scenes/encounters/::1794316680
 strife_architect.tscn::PackedScene::-1::1794316680::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiser/scenes/fx/::1794323862
+::res://ShionTheBruiser/scenes/fx/::1794323907
 anger_mark.gd::GDScript::5838515801273528314::1793528598::0::1::::<>Node2D<><>0<>0<><>::
 anger_mark.tscn::PackedScene::-1::1793526859::0::1::::<><><>0<>0<><>::res://ShionTheBruiser/scenes/fx/anger_mark.gd
 aura_light.gd::GDScript::2468822509292760861::1793527046::0::1::::<>Node2D<><>0<>0<><>::
@@ -2382,7 +2382,7 @@ HasTargetVar.cs::CSharpScript::3245866986048990123::1792689672::0::1::::<><><>0<
 InCombatPowerAmountVar.cs::CSharpScript::2379550944823328950::1792757131::0::1::::<><><>0<>0<><>::
 PatchUpVar.cs::CSharpScript::3704163300152184645::1793734094::0::1::::<><><>0<>0<><>::
 VigorRefundVar.cs::CSharpScript::2659734043316397022::1792675405::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Visuals/::1794323653
+::res://ShionTheBruiserCode/Visuals/::1794323907
 AnimationRestartPatch.cs::CSharpScript::4570962197437255581::1793527116::0::1::::<><><>0<>0<><>::
 BloodHealthBarPatch.cs::CSharpScript::7948626422957363071::1794136669::0::1::::<><><>0<>0<><>::
 ChaosEmeraldsScreen.cs::CSharpScript::2715992751403064611::1794316554::0::1::::<><><>0<>0<><>::

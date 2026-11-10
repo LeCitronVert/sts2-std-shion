@@ -113,8 +113,18 @@ public class SpecialStage() : ShionTheBruiserCard(-1,
         _triggered = false;
 
         var owner = Owner;
-        var relic = GrantsCombo ? ChaosEmeraldHelper.ComboRelic(color) : ChaosEmeraldHelper.SoloRelic(color);
+
+        // Several Special Stages can be in the deck at once (e.g. duplicated): their challenges all stacked,
+        // but the owner only ever gets one Emerald. The first quest to resolve grants it (combo if any of
+        // the triggered quests grants the combo); the others are simply removed.
+        var grantsCombo = GrantsCombo || owner.Deck.Cards
+            .OfType<SpecialStage>()
+            .Any(s => s != this && s._triggered && s.GrantsCombo);
+
         await CardPileCmd.RemoveFromDeck(this);
+        if (ChaosEmeraldHelper.HasOwnEmerald(owner)) return;
+
+        var relic = grantsCombo ? ChaosEmeraldHelper.ComboRelic(color) : ChaosEmeraldHelper.SoloRelic(color);
         await RelicCmd.Obtain(relic.ToMutable(), owner);
     }
 }
