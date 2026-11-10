@@ -1928,6 +1928,7 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - [ ] After the fight: empty rewards → Proceed → "The fool implementing this mod hasn't gotten to this part, yet." / "You will know your fate soon enough." / "No congratulations from me, for now, I'm afraid." → Proceed.
 - [ ] The run ends as a win: "Victory!" banner, "PLACEHOLDER / Ironclad probably won. I think." + damage dealt, and confetti falling over the screen.
 - [ ] Once the Architect was defeated once: run history shows "Damage dealt to the Architect: N (Best: M)" under the quote of every Act 4 run, and the Chaos Emeralds menu lists the best damage per character and mode (Solo / Multiplayer). Saved per profile.
+- [ ] Dying in the Architect fight: the death message reads "The Ironclad didn't measure up to the Architect's design." (game over screen and run history).
 - [ ] Dying in Act 4 is a loss (the Act 3 win no longer counts). The damage you dealt is still recorded.
 
 **Decisions I made**
