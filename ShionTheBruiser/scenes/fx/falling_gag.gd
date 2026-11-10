@@ -3,6 +3,7 @@ extends Node2D
 ## Slal's cartoon gags: something heavy falls from the sky onto the target's head.
 ##   "anvil": a black anvil lands with a CLONK, squashes the target, little stars spin, then it fades away.
 ##   "flower_pot": a terracotta pot with a flower lands, shatters into shards and dirt, the flower flips away.
+## Both leave the target a bit flatter for the rest of the combat, more with every gag (see _squash_target).
 ## Spawned from C# (SlalVfx.PlayFallingGag) in the target's visuals, then play(kind, at, fall_height) is called.
 ## Purely visual (randf is fine here: nothing in the game state depends on it).
 
@@ -20,6 +21,16 @@ const STAR := Color(1.0, 0.9, 0.3)
 @export var fall_time := 0.42
 @export var anvil_size := 70.0
 @export var pot_size := 46.0
+
+## Lasting flattening per gag (fraction of the target's height), the anvil's is 3x the flower pot's
+const POT_FLATTEN := 0.04
+const ANVIL_FLATTEN := POT_FLATTEN * 3.0
+## The target never gets flatter than this (each gag adds less the closer it gets)
+const FLATTEN_MAX := 0.55
+## Metas on the target's body: how flat it is so far, its scale before any gag, the running squash tween
+const FLATTEN_META := &"slal_gag_flatten"
+const BASE_SCALE_META := &"slal_gag_base_scale"
+const TWEEN_META := &"slal_gag_squash_tween"
 
 var kind := "anvil"
 var _impact_at := Vector2.ZERO
@@ -39,6 +50,13 @@ func _ready() -> void:
 
 func play(gag_kind: String, at: Vector2, fall_height: float) -> void:
 	kind = gag_kind
+	# The head is lower on a target the previous gags flattened (the body's origin is at its feet)
+	var body := _target_body()
+	if body != null:
+		var lowered := body.position.y + (at.y - body.position.y) * (1.0 - _flatten_of(body))
+		# Still starts from the same spot above the screen
+		fall_height += lowered - at.y
+		at.y = lowered
 	_impact_at = at
 	_fall_height = fall_height
 	_y = fall_height
@@ -96,24 +114,66 @@ func _land() -> void:
 		tween.tween_callback(queue_free)
 
 
-## Squashes the creature the gag lands on (its visuals are our parent), then it springs back.
+## Squashes the creature the gag lands on (its visuals are our parent), then it springs back, but not all the way:
+## each gag leaves the target a bit flatter for the rest of the combat, pressed down from where it landed.
+## The flattening builds up with every gag (the anvil's 3x the flower pot's) and slows down near FLATTEN_MAX.
 func _squash_target() -> void:
+	var body := _target_body()
+	if body == null:
+		return
+	var base := _base_scale(body)
+	var before := _flatten_of(body)
+	var after := before + (ANVIL_FLATTEN if kind == "anvil" else POT_FLATTEN) * (1.0 - before / FLATTEN_MAX)
+	body.set_meta(FLATTEN_META, after)
+
+	var strength := 0.72 if kind == "anvil" else 0.85
+	var hold := 0.12 if kind == "anvil" else 0.04
+	var squashed := _flat_scale(base, before) * Vector2((2.0 - strength) * 0.95, strength)
+	var rest := _flat_scale(base, after)
+
+	# A gag landing while the previous one's squash is still going takes over from it
+	if body.has_meta(TWEEN_META):
+		var previous: Tween = body.get_meta(TWEEN_META)
+		if previous != null and previous.is_valid():
+			previous.kill()
+	var tween := body.create_tween()
+	body.set_meta(TWEEN_META, tween)
+	tween.tween_property(body, "scale", squashed, 0.06)
+	tween.tween_interval(hold)
+	tween.tween_property(body, "scale", rest, 0.4).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+
+	# The gag stays on the head while it goes down and back up (the body's origin is at its feet)
+	# (_impact_at is already on the head as flattened by the previous gags, see play())
+	var feet := body.position.y
+	var height := _impact_at.y - feet
+	var current := _flat_scale(base, before).y
+	var follow := create_tween()
+	follow.tween_property(self, "position", Vector2(_impact_at.x, feet + height * squashed.y / current), 0.06)
+	follow.tween_interval(hold)
+	follow.tween_property(self, "position", Vector2(_impact_at.x, feet + height * rest.y / current), 0.4).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+
+
+func _target_body() -> Node2D:
 	var target := get_parent() as Node2D
 	if target == null:
-		return
-	var body: Node2D = target.call("GetCurrentBody") if target.has_method("GetCurrentBody") else target
-	var base := body.scale
-	var strength := 0.72 if kind == "anvil" else 0.85
-	var tween := body.create_tween()
-	tween.tween_property(body, "scale", Vector2(base.x * (2.0 - strength) * 0.95, base.y * strength), 0.06)
-	tween.tween_interval(0.12 if kind == "anvil" else 0.04)
-	tween.tween_property(body, "scale", base, 0.4).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
-	# The gag stays on the head while it goes down and back up (the body's origin is at its feet)
-	var dip := Vector2(0.0, (_impact_at.y - body.position.y) * (strength - 1.0))
-	var follow := create_tween()
-	follow.tween_property(self, "position", _impact_at + dip, 0.06)
-	follow.tween_interval(0.12 if kind == "anvil" else 0.04)
-	follow.tween_property(self, "position", _impact_at, 0.4).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+		return null
+	return target.call("GetCurrentBody") if target.has_method("GetCurrentBody") else target
+
+
+## The body's scale before any gag flattened it (remembered on the first one).
+func _base_scale(body: Node2D) -> Vector2:
+	if not body.has_meta(BASE_SCALE_META):
+		body.set_meta(BASE_SCALE_META, body.scale)
+	return body.get_meta(BASE_SCALE_META)
+
+
+func _flatten_of(body: Node2D) -> float:
+	return body.get_meta(FLATTEN_META, 0.0)
+
+
+## Shorter by "flatten", and a bit wider to keep some volume (keeps the sign of a flipped body).
+func _flat_scale(base: Vector2, flatten: float) -> Vector2:
+	return Vector2(base.x * (1.0 + flatten * 0.6), base.y * (1.0 - flatten))
 
 
 func _process(delta: float) -> void:

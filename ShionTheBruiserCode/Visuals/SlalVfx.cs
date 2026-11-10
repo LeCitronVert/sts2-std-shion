@@ -10,7 +10,8 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Visuals;
 /// every client plays them on its own when the card resolves.
 /// <list type="bullet">
 /// <item>Elaborate Flourish: Slal whirls on herself with colorful streaks (scenes/fx/whirl.tscn).</item>
-/// <item>Anvil Gag / Funny Gag: an anvil or a flower pot falls on the target's head (scenes/fx/falling_gag.tscn).</item>
+/// <item>Anvil Gag / Funny Gag: an anvil or a flower pot falls on the target's head (scenes/fx/falling_gag.tscn),
+/// leaving it a bit flatter for the rest of the combat (builds up with every gag, the anvil 3x more).</item>
 /// </list>
 /// </summary>
 public static class SlalVfx
