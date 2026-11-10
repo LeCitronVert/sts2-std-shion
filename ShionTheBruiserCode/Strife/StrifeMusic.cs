@@ -42,9 +42,17 @@ public static class StrifeMusic
 
     private static bool IsPlaying => _player != null && GodotObject.IsInstanceValid(_player) && _player.IsInsideTree();
 
+    /// <summary>Set once the Act 4 Architect is "defeated": no more music for the rest of the run.</summary>
+    public static bool Silenced { get; set; }
+
     /// <summary>Picks the track for the current situation, and switches to it if needed.</summary>
     public static void Refresh()
     {
+        if (Silenced)
+        {
+            Stop();
+            return;
+        }
         var state = StrifeRun.State;
         if (!CutsceneActive && !StrifeAct.IsStrife(state))
         {

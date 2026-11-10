@@ -61,6 +61,10 @@ public sealed class SuperFormPower : ShionTheBruiserPower
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
 
+    // Same icon as the Super Form relic
+    public override string CustomPackedIconPath => "super_form.png".RelicImagePath();
+    public override string CustomBigIconPath => "super_form.png".RelicImagePath();
+
     private int _pendingRingLoss;
 
     private int Rings => Owner.Player?.Gold ?? 0;

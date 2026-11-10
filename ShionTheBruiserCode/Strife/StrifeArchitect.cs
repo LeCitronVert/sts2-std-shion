@@ -54,6 +54,9 @@ public sealed class StrifeArchitect : CustomMonsterModel
     /// <summary>How many Intensify buffs he did.</summary>
     public int Tier { get; private set; }
 
+    /// <summary>Strength his own buffs gave him (shared with summons that join later; debuffs don't count).</summary>
+    public int SharedStrength { get; private set; }
+
     /// <summary>Damage taken this fight (his score).</summary>
     public long TotalDamage { get; private set; }
 
@@ -167,11 +170,11 @@ public sealed class StrifeArchitect : CustomMonsterModel
             ? [PickUnfoughtBoss(actIndex)]
             : entry.Encounters.Select(e => e()).ToList();
 
-        foreach (var canonical in encounters)
+        for (var index = 0; index < encounters.Count; index++)
         {
-            var encounter = canonical.ToMutable();
+            var encounter = encounters[index].ToMutable();
             encounter.GenerateMonstersWithSlots(CombatState.RunState);
-            StrifeLayout.BeginGroup(encounter);
+            StrifeLayout.BeginGroup(encounter, index, encounters.Count);
 
             var design = Design;
             if (design != null) design.PendingSummonType = encounter.RoomType;
@@ -185,6 +188,7 @@ public sealed class StrifeArchitect : CustomMonsterModel
             finally
             {
                 if (design != null) design.PendingSummonType = null;
+                StrifeLayout.EndGroup();
             }
         }
     }
@@ -233,11 +237,14 @@ public sealed class StrifeArchitect : CustomMonsterModel
         switch (kind)
         {
             case BuffKind.Strength:
-                // His own Strength: shared with every summon
+                // On him and every summon; later summons get SharedStrength when they join
+                SharedStrength += value;
                 await PowerCmd.Apply<StrengthPower>(context, Creature, value, Creature, null);
+                foreach (var summon in summons) await PowerCmd.Apply<StrengthPower>(context, summon, value, Creature, null);
                 break;
             case BuffKind.Vigor:
                 await PowerCmd.Apply<VigorPower>(context, Creature, value, Creature, null);
+                foreach (var summon in summons) await PowerCmd.Apply<VigorPower>(context, summon, value, Creature, null);
                 break;
             case BuffKind.Block:
                 foreach (var summon in summons) await CreatureCmd.GainBlock(summon, value, ValueProp.Move, null);
@@ -275,6 +282,9 @@ public sealed class StrifeArchitect : CustomMonsterModel
 
     private async Task DefeatedMove(IReadOnlyList<Creature> _)
     {
+        // Silence from here to the end of the run (the FMOD act music stays off too)
+        StrifeMusic.Silenced = true;
+        StrifeMusic.Refresh();
         TalkCmd.Play(new LocString("monsters", $"{LocPrefix}.DEFEATED.0"), Creature, VfxColor.Red, VfxDuration.Standard);
         await Cmd.Wait(2.2f);
         TalkCmd.Play(new LocString("monsters", $"{LocPrefix}.DEFEATED.1"), Creature, VfxColor.DarkGray, VfxDuration.Standard);

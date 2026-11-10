@@ -16,10 +16,11 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Strife;
 
 /// <summary>
 /// Hidden power on the Act 4 Architect. Like Obscura and Parafright, his buffs are shared with ALL the enemies he summons:
-/// every summon gets his current Strength and Vigor when it joins, and every later change of his Strength (and gain of
-/// Vigor) is copied onto every living summon. Also:
+/// his Strength / Vigor buffs go on him and every living summon (<see cref="StrifeArchitect"/>'s buff move), and a summon
+/// that joins later gets the Strength his buffs gave him and his current Vigor. Debuffs on him are never shared. Also:
 /// <list type="bullet">
-/// <item>His HP is infinite behind the scenes: it goes back to full after each hit and he can't die until he's "defeated".
+/// <item>His HP is infinite behind the scenes: a hit never takes him below 1 HP, it goes back to full after each hit, and
+/// he can't die until he's "defeated".
 /// The damage he takes is added up instead (<see cref="StrifeArchitect.TotalDamage"/>).</item>
 /// <item>Gives each enemy that joins the fight its Ring Bounty (<see cref="StrifeConfig.BountyFor"/>).</item>
 /// <item>Triggers <see cref="FieldExperiment"/> and <see cref="MakeYourPoint"/> when he takes damage.</item>
@@ -55,25 +56,23 @@ public sealed class ArchitectsDesign : ShionTheBruiserPower
         var bounty = StrifeConfig.BountyFor(creature.Monster, PendingSummonType);
         if (bounty > 0) await PowerCmd.Apply<RingBounty>(context, creature, bounty, Owner, null);
 
-        var strength = Owner.GetPowerAmount<StrengthPower>();
-        if (strength != 0) await PowerCmd.Apply<StrengthPower>(context, creature, strength, Owner, null);
+        // Only what his own buffs gave him: debuffs on him (Make Your Point, players' Strength down...) aren't shared
+        var strength = Architect?.SharedStrength ?? 0;
+        if (strength > 0) await PowerCmd.Apply<StrengthPower>(context, creature, strength, Owner, null);
         var vigor = Owner.GetPowerAmount<VigorPower>();
         if (vigor > 0) await PowerCmd.Apply<VigorPower>(context, creature, vigor, Owner, null);
     }
 
-    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount,
-        Creature? applier, CardModel? cardSource)
-    {
-        if (power.Owner != Owner || amount == 0) return;
-        // Vigor is only shared when he gains it: his own big attack using it up doesn't take it from the summons
-        var share = power is StrengthPower || (power is VigorPower && amount > 0);
-        if (!share) return;
+    /// <summary>Damage of the current hit before it was capped (see <see cref="ModifyHpLostAfterOstyLate"/>).</summary>
+    private decimal _uncappedHpLoss;
 
-        foreach (var summon in LivingSummons.ToList())
-        {
-            if (power is StrengthPower) await PowerCmd.Apply<StrengthPower>(choiceContext, summon, amount, Owner, null);
-            else await PowerCmd.Apply<VigorPower>(choiceContext, summon, amount, Owner, null);
-        }
+    // Only called by real damage. The hit never takes him below 1 HP: at 0 his node plays its death and is removed,
+    // even though the death itself is prevented. The full amount still counts (score, Field Experiment, Make Your Point).
+    public override decimal ModifyHpLostAfterOstyLate(Creature target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    {
+        if (target != Owner || AllowDeath || amount <= 0) return amount;
+        _uncappedHpLoss += amount;
+        return Math.Min(amount, Math.Max(0, Owner.CurrentHp - 1));
     }
 
     public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result,
@@ -81,7 +80,9 @@ public sealed class ArchitectsDesign : ShionTheBruiserPower
     {
         if (target != Owner || AllowDeath) return;
 
-        var total = result.TotalDamage;
+        var unblocked = (int)Math.Max(result.UnblockedDamage, _uncappedHpLoss);
+        _uncappedHpLoss = 0;
+        var total = result.BlockedDamage + unblocked;
         Architect?.AddDamage(total);
         // Infinite HP behind the scenes
         if (Owner.CurrentHp < Owner.MaxHp) Owner.SetCurrentHpInternal(Owner.MaxHp);
@@ -91,9 +92,9 @@ public sealed class ArchitectsDesign : ShionTheBruiserPower
             await fieldExperiment.Spread(choiceContext, total, LivingSummons.ToList());
         }
 
-        if (result.UnblockedDamage > 0 && Owner.GetPower<MakeYourPoint>() is { } makeYourPoint)
+        if (unblocked > 0 && Owner.GetPower<MakeYourPoint>() is { } makeYourPoint)
         {
-            await makeYourPoint.Reduce(choiceContext, result.UnblockedDamage);
+            await makeYourPoint.Reduce(choiceContext, unblocked);
         }
     }
 

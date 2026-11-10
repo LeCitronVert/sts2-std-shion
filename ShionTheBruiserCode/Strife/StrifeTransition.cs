@@ -148,5 +148,6 @@ public static class StrifeRunLaunchPatch
     public static void Postfix()
     {
         StrifeVictory.ResetForNewRun();
+        StrifeMusic.Silenced = false;
     }
 }
