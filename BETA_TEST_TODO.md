@@ -1874,6 +1874,7 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - [ ] Without a combo Emerald on every player, the Act 3 Architect ends the run as usual.
 - [ ] With one on every player (solo and MP): the Architect's dialogue and strike play as usual, then everything but the players fades to black. The players lie "dead" with their health bars and relics still shown.
 - [ ] MP: the "Waiting for other players..." overlay is hidden during the Emeralds cutscene.
+- [ ] Shion vs. the Act 3 Architect: her 20 hits are energy blasts like her Energy cards (Energy animation, a blast per hit, damage number when it lands). Same damage split as before.
 - [ ] "All Clear" starts and loops. After 2 s, the 7 Emeralds come out of your own character and spin around them.
 - [ ] One by one, each player gets every Chaos Emerald relic they don't have yet (the combo one and any from Chaos Ring aren't duplicated). The matching gem pulses.
 - [ ] The gems converge into your character, the screen flashes gently to white, S3K_6A plays, and everyone gets **Super Form**. Then Act 4 starts.
@@ -1892,7 +1893,6 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - [ ] Summon placement: each summoned encounter keeps its own original layout (Gardeners, Knights, Decimillipede segments, The Kin… where they normally stand). When a line summons two encounters, the one with more creatures stands back (up, right, a bit smaller) and the other a step forward (down, left, drawn on top). Knights are behind Infested Prism. In each encounter the leftmost is on top. Wrigglers and other mid-fight spawns join their encounter's layout. The Architect leans back while he has summons.
 - [ ] Fixed: a huge hit (more than 999,999) made the Architect "die" visually (his sprite vanished while he kept acting). A hit now never takes him below 1 HP, and the full damage still counts for his damage counter, Field Experiment and Make Your Point.
 - [ ] Fixed: the Architect's summons were drawn above the pause menu. They're stacked by draw order now; the pause menu covers them.
-- [ ] Fixed: the Super Form aura never showed (its script failed to load). It shows now.
 - [ ] Fixed: killing the last Decimillipede segment made the Architect (and Entomancer, if alive) vanish. Only the segments fade out now.
 - [ ] Debuffs on the Architect (Make Your Point, Strength down, etc.) are no longer copied to his summons. Only his own Strength/Vigor buffs are shared: summons that join later get the Strength his buffs gave him (not his debuffed total) and his current Vigor.
 - [ ] No music at all once he's "defeated" (from his "ENOUGH!!!" to the end of the run).
@@ -1906,7 +1906,7 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - [ ] The top bar's Gold icon becomes the Ring while you hold Super Form.
 - [ ] At the start of each fight you get the Super Form power. Unblocked damage takes Rings (Gold) instead of HP, 1 per point, until you run out. Damage you deal to yourself isn't absorbed.
 - [ ] A yellow segment fills the health bar from the left (Rings / Max HP, full when Rings ≥ Max HP), and updates when your Rings change.
-- [ ] Rings > 0: a Super Saiyan-like golden aura drawn in code: tall flame tongues rising from the ground behind the body, taller than the head (tallest in the middle), orange edges / gold / pale core, embers drifting up, slightly transparent that lights the character's body with a pulsing gold light, plus rare blue electric sparks (zigzag bolts drawn by the same script, not Berserk's sparks) and "Egg Reverie" music (loops). It fades in and out smoothly. Open the project in MegaDot once so `scenes/fx/super_form_aura.tscn` / `.gd` get imported.
+- [ ] Rings > 0: Super Saiyan-like gold aura = the game's power-up flames (Inflame / Corruption), recolored gold by a shader and re-spawned every 0.7 s so they overlap into a steady aura, slightly transparent. Plus rare blue electric sparks (drawn in code, not Berserk's) and "Egg Reverie" music (loops). Open the project in MegaDot once so `scenes/fx/super_form_flames_add/_mix.gdshader` and `super_form_sparks.tscn/.gd` get imported. If some flame parts stay red, they use their own shader (expected, tell me).
 - [ ] Rings = 0: no aura, red electric sparks, occasional sweat drops, and "Egg Panicky" music (loops). It switches back when you get Rings again.
 - [ ] When an enemy dies: all your Emerald Powers in Hand, Discard and Exhaust go to random spots in the Draw Pile.
 - [ ] Team Blast + Super Form: after a Team Blast was played, killing an enemy unlocks the gauge and sets it back to 0 for the whole team, so it can fill and give Team Blasts again in the same fight. If the Team Blast itself kills, the reset happens once it finishes (the other copies are still Exhausted, no chaining). In MP the gauge stays the same for everyone.

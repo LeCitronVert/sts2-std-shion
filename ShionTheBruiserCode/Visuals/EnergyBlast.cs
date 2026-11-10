@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Combat;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Saves;
 using MegaCrit.Sts2.Core.Settings;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
@@ -69,6 +70,19 @@ public static class EnergyBlast
     };
 
     private static float TravelTime => ScaledTime(FastTravelTime, StandardTravelTime);
+
+    /// <summary>
+    /// Throws a blast from the attacker to the target outside of an attack command (e.g. the Architect's victory
+    /// scene). Visual only. Returns its travel time (0 when there's nothing to show, like in Instant mode).
+    /// </summary>
+    public static float Launch(Creature attacker, Creature target, float speed = 1f)
+    {
+        speed = Math.Max(speed, 0.1f);
+        var container = NCombatRoom.Instance?.CombatVfxContainer;
+        if (container == null || Create(attacker, target, speed) is not { } blast) return 0f;
+        container.AddChild(blast);
+        return TravelTime / speed;
+    }
 
     private static Node2D? Create(Creature attacker, Creature target, float speed)
     {

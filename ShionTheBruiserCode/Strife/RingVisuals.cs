@@ -135,8 +135,8 @@ public static class RingHealthBarPatch
 }
 
 /// <summary>
-/// Super Form on a player's body: a yellow, Super Saiyan-like aura drawn in code that lights the body
-/// (scenes/fx/super_form_aura.tscn), with rare blue electric sparks drawn by the same scene
+/// Super Form on a player's body: a gold Super Saiyan-like aura (the game's power-up flames, recolored and looped, see
+/// <see cref="SuperFormFlames"/>), with rare blue electric sparks drawn in code (super_form_sparks.tscn)
 /// while they have Rings; at 0 Rings, the aura goes away, the sparks turn red and they sweat now and then.
 /// Also keeps the Ring health bar segment and the local player's music up to date. Visual only.
 /// </summary>
@@ -152,7 +152,8 @@ public sealed class SuperFormFx
     private readonly NCreature _node;
     private readonly Creature _creature;
     private readonly Rect2 _bounds;
-    private Node2D? _aura;
+    private Godot.Timer? _flameTimer;
+    private Node2D? _sparks;
     private Node2D? _sweat;
 
     private (bool Active, int Rings)? _last;
@@ -194,31 +195,45 @@ public sealed class SuperFormFx
         if (LocalContext.IsMe(player) && (wasActive != active || hadRings != hasRings)) StrifeMusic.Refresh();
     }
 
-    /// <summary>The aura and the sparks are both drawn by scenes/fx/super_form_aura.tscn.</summary>
-    private Node2D? EnsureAura()
-    {
-        if (_aura != null) return GodotObject.IsInstanceValid(_aura) ? _aura : null;
-        if (!GodotObject.IsInstanceValid(_node.Visuals)) return null;
-        _aura = GD.Load<PackedScene>(FxScene("super_form_aura")).Instantiate<Node2D>();
-        _node.Visuals.AddChild(_aura);
-        // Behind the body
-        _node.Visuals.MoveChild(_aura, 0);
-        _aura.Call("set_area", _bounds);
-        // The aura's light only lights bodies on this layer (players already are, see CreatureFxController)
-        if (_node.Visuals.GetCurrentBody() is CanvasItem body) body.LightMask |= CreatureFxController.AuraLightLayer;
-        return _aura;
-    }
-
+    /// <summary>
+    /// The game's power-up flames (Inflame, Corruption...), recolored gold and re-spawned in a loop so the 1-second
+    /// bursts overlap into a steady aura (<see cref="SuperFormFlames"/>).
+    /// </summary>
     private void SetAura(bool on)
     {
-        if (_aura == null && !on) return;
-        EnsureAura()?.Call("set_aura", on);
+        if (_flameTimer == null)
+        {
+            if (!on) return;
+            _flameTimer = new Godot.Timer { WaitTime = SuperFormFlames.Interval };
+            _flameTimer.Timeout += () =>
+            {
+                if (_creature.IsAlive) SuperFormFlames.Spawn(_creature);
+            };
+            _node.AddChild(_flameTimer);
+        }
+        if (!GodotObject.IsInstanceValid(_flameTimer)) return;
+        if (on && _flameTimer.IsStopped())
+        {
+            SuperFormFlames.Spawn(_creature);
+            _flameTimer.Start();
+        }
+        else if (!on)
+        {
+            _flameTimer.Stop();
+        }
     }
 
+    /// <summary>Electric sparks drawn in code (scenes/fx/super_form_sparks.tscn).</summary>
     private void SetSparks(bool on, bool blue)
     {
-        if (_aura == null && !on) return;
-        EnsureAura()?.Call("set_sparks", on, blue ? BlueSparks : RedSparks);
+        if (_sparks == null)
+        {
+            if (!on || !GodotObject.IsInstanceValid(_node.Visuals)) return;
+            _sparks = GD.Load<PackedScene>(FxScene("super_form_sparks")).Instantiate<Node2D>();
+            _node.Visuals.AddChild(_sparks);
+            _sparks.Call("set_area", _bounds);
+        }
+        if (GodotObject.IsInstanceValid(_sparks)) _sparks.Call("set_sparks", on, blue ? BlueSparks : RedSparks);
     }
 
     private void SetSweat(bool on)
@@ -252,5 +267,51 @@ public static class SuperFormFxPatch
         }
         __instance.Visuals.Connect(Node.SignalName.Ready, Callable.From(() => SuperFormFx.Attach(__instance)),
             (uint)GodotObject.ConnectFlags.OneShot);
+    }
+}
+
+/// <summary>
+/// Spawns the game's power-up flame burst (NPowerUpVfx, red flames of Inflame / Corruption) on a creature, recolored to
+/// a Super Saiyan gold: every node's material is swapped for a hue-shift shader with the same blend mode
+/// (scenes/fx/super_form_flames_add / _mix.gdshader). Nodes that already have their own shader keep it.
+/// Each burst lasts about 1 s and fades by itself; spawning one every <see cref="Interval"/> makes a steady aura.
+/// Visual only. Fragile on purpose: it depends on how that base game scene is built.
+/// </summary>
+public static class SuperFormFlames
+{
+    public const float Interval = 0.7f;
+
+    private static string Shader(string mode) => Path.Join(MainFile.ResPath, "scenes", "fx", $"super_form_flames_{mode}.gdshader");
+
+    private static readonly AccessTools.FieldRef<MegaCrit.Sts2.Core.Nodes.Vfx.NPowerUpVfx, Sprite2D> BackVfxRef =
+        AccessTools.FieldRefAccess<MegaCrit.Sts2.Core.Nodes.Vfx.NPowerUpVfx, Sprite2D>("_backVfx");
+
+    private static Shader? _add;
+    private static Shader? _mix;
+
+    public static void Spawn(Creature creature)
+    {
+        try
+        {
+            if (MegaCrit.Sts2.Core.Nodes.Vfx.NPowerUpVfx.CreateNormal(creature) is not { } vfx) return;
+            // _Ready already ran (it's added right away) and moved its back sprite to the back VFX layer
+            Recolor(vfx);
+            if (BackVfxRef(vfx) is { } back && GodotObject.IsInstanceValid(back)) Recolor(back);
+        }
+        catch (Exception ex)
+        {
+            MainFile.Logger.Error($"Super Form flames: {ex}");
+        }
+    }
+
+    private static void Recolor(Node root)
+    {
+        if (root is CanvasItem item && item.Material is not ShaderMaterial)
+        {
+            var additive = item.Material is CanvasItemMaterial { BlendMode: CanvasItemMaterial.BlendModeEnum.Add };
+            var shader = additive ? _add ??= GD.Load<Shader>(Shader("add")) : _mix ??= GD.Load<Shader>(Shader("mix"));
+            if (shader != null) item.Material = new ShaderMaterial { Shader = shader };
+        }
+        foreach (var child in root.GetChildren()) Recolor(child);
     }
 }
