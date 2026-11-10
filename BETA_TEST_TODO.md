@@ -1903,7 +1903,7 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - [ ] The top bar's Gold icon becomes the Ring while you hold Super Form.
 - [ ] At the start of each fight you get the Super Form power. Unblocked damage takes Rings (Gold) instead of HP, 1 per point, until you run out. Damage you deal to yourself isn't absorbed.
 - [ ] A yellow segment fills the health bar from the left (Rings / Max HP, full when Rings ≥ Max HP), and updates when your Rings change.
-- [ ] Rings > 0: yellow aura (Shion's gold aura flames) with rare blue sparks, and "Egg Reverie" music (loops).
+- [ ] Rings > 0: a Super Saiyan-like golden aura drawn in code (layered flames with tongues flickering upward, rising streaks) that lights the character's body with a pulsing gold light, plus rare blue sparks and "Egg Reverie" music (loops). It fades in and out smoothly. Open the project in MegaDot once so `scenes/fx/super_form_aura.tscn` / `.gd` get imported.
 - [ ] Rings = 0: no aura, red sparks, occasional sweat drops, and "Egg Panicky" music (loops). It switches back when you get Rings again.
 - [ ] When an enemy dies: all your Emerald Powers in Hand, Discard and Exhaust go to random spots in the Draw Pile.
 - [ ] Team Blast + Super Form: after a Team Blast was played, killing an enemy unlocks the gauge and sets it back to 0 for the whole team, so it can fill and give Team Blasts again in the same fight. If the Team Blast itself kills, the reset happens once it finishes (the other copies are still Exhausted, no chaining). In MP the gauge stays the same for everyone.

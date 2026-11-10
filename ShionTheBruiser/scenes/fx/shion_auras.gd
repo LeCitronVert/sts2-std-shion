@@ -2,7 +2,6 @@ extends Node2D
 
 ## Stackable auras displayed behind Shion, each casting a light of its colour on her.
 ## Other players only get Burlesque Wind-Up's aura (Spirit Break's blue flames).
-## Super Form (Act 4) uses its own instance of this scene, with the gold aura's flames (SuperFormFx in RingVisuals.cs).
 ## Driven from C# (CreatureFxController.cs) through set_auras().
 ## This node is placed at Shion's feet, horizontally centered on her.
 ## Auras are ordered by application: the first one is in front and the smallest,
@@ -24,19 +23,16 @@ const AURA_COLORS := {
 	"spirit_break": Color8(16, 152, 241),
 	"spirit_burst": Color8(253, 82, 8),
 	"burlesque_wind_up": Color8(16, 152, 241),
-	"super_form": Color8(255, 214, 40),
 }
 
 ## Auras that reuse another aura's spritesheet
 const AURA_SHEETS := {
 	"burlesque_wind_up": "spirit_break",
-	"super_form": "crit_above_50_or_vigor_above_20",
 }
 
 ## Size multiplier of some auras' flames (on top of the stacking scale)
 const AURA_SCALES := {
 	"burlesque_wind_up": 1.3,
-	"super_form": 1.35,
 }
 
 ## Opacity of some auras' flames (their light is unchanged)

@@ -135,7 +135,8 @@ public static class RingHealthBarPatch
 }
 
 /// <summary>
-/// Super Form on a player's body: a yellow, Super Saiyan-like aura (Shion's gold aura spritesheet) with rare blue sparks
+/// Super Form on a player's body: a yellow, Super Saiyan-like aura drawn in code that lights the body
+/// (scenes/fx/super_form_aura.tscn), with rare blue sparks
 /// while they have Rings; at 0 Rings, the aura goes away, the sparks turn red and they sweat now and then.
 /// Also keeps the Ring health bar segment and the local player's music up to date. Visual only.
 /// </summary>
@@ -143,7 +144,6 @@ public sealed class SuperFormFx
 {
     private static string FxScene(string name) => Path.Join(MainFile.ResPath, "scenes", "fx", name + ".tscn");
 
-    private const string AuraName = "super_form";
     private const float PollInterval = 0.2f;
 
     private static readonly Color BlueSparks = new(0.35f, 0.65f, 1.6f);
@@ -200,12 +200,15 @@ public sealed class SuperFormFx
         if (_aura == null)
         {
             if (!on) return;
-            _aura = GD.Load<PackedScene>(FxScene("shion_auras")).Instantiate<Node2D>();
+            _aura = GD.Load<PackedScene>(FxScene("super_form_aura")).Instantiate<Node2D>();
             _node.Visuals.AddChild(_aura);
+            // Behind the body
             _node.Visuals.MoveChild(_aura, 0);
-            _aura.Position = new Vector2(_bounds.GetCenter().X, _bounds.End.Y);
+            _aura.Call("set_area", _bounds);
+            // The aura's light only lights bodies on this layer (players already are, see CreatureFxController)
+            if (_node.Visuals.GetCurrentBody() is CanvasItem body) body.LightMask |= CreatureFxController.AuraLightLayer;
         }
-        if (GodotObject.IsInstanceValid(_aura)) _aura.Call("set_auras", on ? new[] { AuraName } : Array.Empty<string>());
+        if (GodotObject.IsInstanceValid(_aura)) _aura.Call("set_active", on);
     }
 
     private void SetSparks(bool on, bool blue)
