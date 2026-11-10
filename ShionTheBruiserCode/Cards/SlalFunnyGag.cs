@@ -1,3 +1,4 @@
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -39,12 +40,19 @@ public class SlalFunnyGag() : SlalTheEndlessCard(2,
     {
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
+
+        // A flower pot falls on the target's head; the hit lands when it does
+        if (SlalVfx.PlayFallingGag(play.Target, SlalVfx.Gag.FlowerPot))
+        {
+            await CreatureCmd.TriggerAnim(card.Owner.Creature, "Cast", 0f);
+            await Cmd.Wait(SlalVfx.GagFallTime);
+        }
+
         await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
             .FromCard(card)
             .Targeting(play.Target)
-            // Bludgeon's hit
-            .WithHitFx("vfx/vfx_heavy_blunt", null, "heavy_attack.mp3")
-            .WithHitVfxSpawnedAtBase()
+            .WithNoAttackerAnim()
+            .WithHitFx(null, null, "heavy_attack.mp3")
             .Execute(choiceContext);
 
         if (play.Target.IsAlive)

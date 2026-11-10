@@ -7,7 +7,7 @@ ShionTheBruiser.json::JSON::-1::1792433998::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1794140418
+::res://bin/ExportRelease/net9.0/publish/::1794149412
 ShionTheBruiser.deps.json::JSON::-1::1794136989::0::1::::<><><>0<>0<><>::
 ::res://ci/::1792939391
 ::res://ci/game-refs/::1792939391
@@ -1426,7 +1426,7 @@ CosmoUnlockSync.cs::CSharpScript::3728460906655928414::1794067722::0::1::::<><><
 PartyDialogue.cs::CSharpScript::241308958335632356::1793733768::0::1::::<><><>0<>0<><>::
 SeelsPartyDialogues.cs::CSharpScript::4380548894581781510::1793733738::0::1::::<><><>0<>0<><>::
 ShionPartyDialogues.cs::CSharpScript::7951062430476225983::1793733768::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Cards/::1794136289
+::res://ShionTheBruiserCode/Cards/::1794148701
 AllOutAttack.cs::CSharpScript::2887618467325418642::1793646232::0::1::::<><><>0<>0<><>::
 Cacophony.cs::CSharpScript::1218577494853376132::1793646275::0::1::::<><><>0<>0<><>::
 CosmoDetermination.cs::CSharpScript::4903082444639403780::1793719838::0::1::::<><><>0<>0<><>::
@@ -1588,12 +1588,12 @@ SeelsFinalShowdown.cs::CSharpScript::4138197658593422283::1793636724::0::1::::<>
 SeelsFinishingExplosion.cs::CSharpScript::1160194743687475408::1794051837::0::1::::<><><>0<>0<><>::
 SeelsFunnyDance.cs::CSharpScript::2028373038831993643::1793813553::0::1::::<><><>0<>0<><>::
 SeelsGamblersLuck.cs::CSharpScript::5389455118786054848::1793719782::0::1::::<><><>0<>0<><>::
-SeelsGamblingAddiction.cs::CSharpScript::7153523749065137731::1794130094::0::1::::<><><>0<>0<><>::
+SeelsGamblingAddiction.cs::CSharpScript::7153523749065137731::1794149235::0::1::::<><><>0<>0<><>::
 SeelsGoCrazy.cs::CSharpScript::6017482086666146502::1794051949::0::1::::<><><>0<>0<><>::
 SeelsGoopyBlood.cs::CSharpScript::2887840617324041031::1793531881::0::1::::<><><>0<>0<><>::
 SeelsGreatFortunes.cs::CSharpScript::5602091313227004825::1794062061::0::1::::<><><>0<>0<><>::
 SeelsHack.cs::CSharpScript::6249355296931758557::1794130303::0::1::::<><><>0<>0<><>::
-SeelsHematoma.cs::CSharpScript::7104748932478991169::1794131108::0::1::::<><><>0<>0<><>::
+SeelsHematoma.cs::CSharpScript::7104748932478991169::1794148701::0::1::::<><><>0<>0<><>::
 SeelsHighReward.cs::CSharpScript::1474094662463647555::1793813737::0::1::::<><><>0<>0<><>::
 SeelsHoldBreath.cs::CSharpScript::8558626494296313331::1792675405::0::1::::<><><>0<>0<><>::
 SeelsHumiliate.cs::CSharpScript::7112220101027106515::1792689809::0::1::::<><><>0<>0<><>::

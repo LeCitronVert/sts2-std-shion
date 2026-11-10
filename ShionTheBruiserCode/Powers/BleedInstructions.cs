@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -10,6 +11,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
 /// If you lose HP at least once during your turn, draw X additional cards at the start of your next turn.
+/// The icon flashes each time you lose HP during your turn. HP lost earlier in the turn the power is played counts too.
 /// </summary>
 public class BleedInstructions : SeelsTheRecklessPower
 {
@@ -19,11 +21,27 @@ public class BleedInstructions : SeelsTheRecklessPower
     private bool _lostHpThisTurn;
     private bool _drawBonusNextTurn;
 
+    public override Task AfterApplied(Creature? applier, CardModel? cardSource)
+    {
+        // Played after already losing HP this turn: that counts.
+        if (Owner.CombatState?.CurrentSide == Owner.Side && LostHpThisTurn(Owner))
+        {
+            _lostHpThisTurn = true;
+            Flash();
+        }
+        return Task.CompletedTask;
+    }
+
+    private static bool LostHpThisTurn(Creature creature) =>
+        CombatManager.Instance.History.Entries.OfType<DamageReceivedEntry>()
+            .Any(e => e.HappenedThisTurn(creature.CombatState) && e.Receiver == creature && e.Result.UnblockedDamage > 0);
+
     public override Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
         if (target == Owner && result.UnblockedDamage > 0 && Owner.CombatState?.CurrentSide == Owner.Side)
         {
             _lostHpThisTurn = true;
+            Flash();
         }
         return Task.CompletedTask;
     }

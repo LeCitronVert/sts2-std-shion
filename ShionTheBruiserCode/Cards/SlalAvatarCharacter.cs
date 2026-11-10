@@ -11,7 +11,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// TD Fact: apply 3 Confusion. Increase this card's Confusion by 1 (2) each time you play a Novel card this combat. Exhaust.
+/// TD Fact: apply 3 Confusion. Increase this card's Confusion by 1 (2) each time you play a Novel card this combat. Always Novel.
 /// Only the Novel cards played while this card is in combat count.
 /// (The class keeps its old name so existing saves still find it.)
 /// </summary>
@@ -20,7 +20,7 @@ public class SlalAvatarCharacter() : SlalTheEndlessCard(1,
     CardType.Skill, CardRarity.Rare,
     TargetType.AnyEnemy)
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [SlalCardKeywords.AlwaysNovel];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<Confusion>(3),

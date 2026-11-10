@@ -1,3 +1,4 @@
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -49,6 +50,12 @@ public class SlalElaborateFlourish() : SlalTheEndlessCard(1,
     {
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
+
+        // Slal whirls on herself (visual only)
+        if (SlalVfx.PlayWhirl(card.Owner.Creature))
+        {
+            await Cmd.Wait(SlalVfx.WhirlTime * 0.6f);
+        }
 
         var times = TimesApplied(card, play.Target);
         for (var i = 0; i < times && play.Target.IsAlive; i++)

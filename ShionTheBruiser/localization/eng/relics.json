@@ -222,7 +222,7 @@
   "SHIONTHEBRUISER-SUPER_BULLDOZURATOR_PUZZLITOWERSONIC.flavor": "The most loyal repair bot you will ever see! Enhanced in all sorts of ways, too! It was supposed to play the radio as well, but Radionomy had to go and be mean.",
 
   "SHIONTHEBRUISER-PEACE_PROMISE.title": "Peace Promise",
-  "SHIONTHEBRUISER-PEACE_PROMISE.description": "Upon pickup, [gold]Transform[/gold] {Cards:diff()} of your basic Strikes.\nWhenever you play an Attack, lose {StrengthPower:diff()} [gold]Strength[/gold] this turn.",
+  "SHIONTHEBRUISER-PEACE_PROMISE.description": "Upon pickup, [gold]Transform[/gold] {Cards:diff()} of your basic Strikes into an Attack, a Skill and a Power.\nWhenever you play an Attack, lose {StrengthPower:diff()} [gold]Strength[/gold] this turn.",
   "SHIONTHEBRUISER-PEACE_PROMISE.flavor": "\"No matter what happens, these feelings I have will never vanish.\"",
   "SHIONTHEBRUISER-PEACE_PROMISE.infoText": "Peace Promise [gold]Transformed[/gold] these cards:",
 

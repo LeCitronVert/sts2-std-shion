@@ -21,7 +21,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Maim 2. An enemy loses 2 HP. Add Maim 1 to a random Attack in your Hand and Upgrade it
+/// Maim 2. An enemy loses 2 HP. Add Maim 1 to a random Attack in your Hand
 /// (to ALL Attacks in your Hand).
 /// </summary>
 public class SeelsStealBlood() : SeelsTheRecklessCard(1,
@@ -55,7 +55,6 @@ public class SeelsStealBlood() : SeelsTheRecklessCard(1,
         foreach (var attack in attacks)
         {
             MaimHelper.AddMaim(attack, DynamicVars["AddedMaim"].IntValue);
-            if (attack.IsUpgradable) CardCmd.Upgrade(attack);
         }
     }
 

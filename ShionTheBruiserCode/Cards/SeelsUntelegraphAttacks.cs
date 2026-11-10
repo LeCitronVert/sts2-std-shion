@@ -14,34 +14,26 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Add 2 Slashes (Slashes+) into your Hand. Gamble 2. All Slashes now hit a number of times equal to their energy cost +1.
+/// ALL Attacks now hit a number of times equal to their energy cost +1 and gain Erratic when played.
+/// See <see cref="UntelegraphAttacks"/> for the details.
 /// </summary>
-public class SeelsUntelegraphAttacks() : SeelsTheRecklessCard(2,
+public class SeelsUntelegraphAttacks() : SeelsTheRecklessCard(4,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.SingleplayerOnly;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<UntelegraphAttacks>(1M),
-        new CardsVar(2),
-        new DynamicVar("Gamble", 2M),
-    ];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<UntelegraphAttacks>(1M)];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromCard<SeelsSlash>(IsUpgraded),
-        HoverTipFactory.FromKeyword(SeelsCardKeywords.Gamble),
-        HoverTipFactory.FromKeyword(SeelsCardKeywords.Erratic),
-    ];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(SeelsCardKeywords.Erratic)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await SeelsMechanicsHelper.AddSlashes(Owner, DynamicVars.Cards.IntValue, PileType.Hand, IsUpgraded);
-        await SeelsMechanicsHelper.Gamble(choiceContext, Owner, DynamicVars["Gamble"].IntValue, this);
         await PowerCmd.Apply<UntelegraphAttacks>(choiceContext, Owner.Creature, DynamicVars["UntelegraphAttacks"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
+        EnergyCost.UpgradeBy(-1);
     }
 }

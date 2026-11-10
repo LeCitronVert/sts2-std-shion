@@ -11,20 +11,21 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// Add a copy of the first X Slashes you play each turn into your Hand.
+/// Add a copy of the first X 0-cost Attacks you play each turn into your Hand.
+/// "0-cost" means no energy was paid for that play (X-cost played for 0, free or autoplayed Attacks count).
 /// </summary>
 public class ComboMeter : SeelsTheRecklessPower
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<SeelsSlash>()];
-
     private int _triggersThisTurn;
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (cardPlay.Card.Owner.Creature != Owner || !SeelsMechanicsHelper.IsSlash(cardPlay.Card)) return;
+        if (cardPlay.Card.Owner.Creature != Owner || cardPlay.Card.Type != CardType.Attack) return;
+        // Only once per play, even when the card is replayed.
+        if (cardPlay.PlayIndex != 0 || cardPlay.Resources.EnergySpent != 0) return;
         if (_triggersThisTurn >= Amount || Owner.CombatState is null) return;
 
         _triggersThisTurn++;

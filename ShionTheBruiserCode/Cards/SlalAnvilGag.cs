@@ -1,3 +1,4 @@
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -49,10 +50,18 @@ public class SlalAnvilGag() : SlalTheEndlessCard(1,
         // Its Flashback raises the damage before the hit
         await SlalMechanicsHelper.GainMemory(choiceContext, card.Owner.Creature, card.DynamicVars["Memory"].BaseValue, card);
 
+        // An anvil falls on the target's head; the hit lands when it does
+        if (SlalVfx.PlayFallingGag(play.Target, SlalVfx.Gag.Anvil))
+        {
+            await CreatureCmd.TriggerAnim(card.Owner.Creature, "Cast", 0f);
+            await Cmd.Wait(SlalVfx.GagFallTime);
+        }
+
         await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
             .FromCard(card)
             .Targeting(play.Target)
-            .WithHitFx("vfx/vfx_attack_blunt", tmpSfx: "heavy_attack.mp3")
+            .WithNoAttackerAnim()
+            .WithHitFx(null, tmpSfx: "heavy_attack.mp3")
             .Execute(choiceContext);
 
         var random = SlalMechanicsHelper.GetRandom(card.Owner.Creature);

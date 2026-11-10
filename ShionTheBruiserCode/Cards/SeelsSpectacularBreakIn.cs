@@ -24,7 +24,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// Wounding. Add 1 Glass 2 Slash (Slash+) into your Hand.
 /// Add 1 more on top of your Draw Pile for each Wound in your Hand.
 /// </summary>
-public class SeelsSpectacularBreakIn() : SeelsTheRecklessCard(1,
+public class SeelsSpectacularBreakIn() : SeelsTheRecklessCard(2,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {

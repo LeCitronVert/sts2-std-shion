@@ -21,7 +21,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Add a copy of the first Slash you play each turn into your Hand (stacks). (Draw 1 card.) Put this card into your Draw Pile. Ethereal.
+/// Add a copy of the first 0-cost Attack you play each turn into your Hand (stacks). (Draw 1 card.) Put this card into your Draw Pile. Ethereal.
 /// </summary>
 public class SeelsComboMeter() : SeelsTheRecklessCard(1,
     CardType.Skill, CardRarity.Uncommon,
@@ -33,8 +33,6 @@ public class SeelsComboMeter() : SeelsTheRecklessCard(1,
         new PowerVar<ComboMeter>(1M),
         new CardsVar(0),
     ];
-
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<SeelsSlash>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {

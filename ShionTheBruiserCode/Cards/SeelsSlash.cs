@@ -13,7 +13,6 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
 /// Token. Deal 3 damage to a random enemy. Draw 1 card. Exhaust.
-/// Untelegraph Attacks makes it hit a number of times equal to its energy cost + X.
 /// </summary>
 [Pool(typeof(TokenCardPool))]
 public class SeelsSlash() : SeelsTheRecklessCard(0,
@@ -25,16 +24,7 @@ public class SeelsSlash() : SeelsTheRecklessCard(0,
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(3M, ValueProp.Move),
         new CardsVar(1),
-        new CalculationBaseVar(0),
-        new CalculationExtraVar(1),
-        new CalculatedVar("HitAmount").WithMultiplier((card, _) => GetHitCount(card)),
     ];
-
-    private static int GetHitCount(CardModel card)
-    {
-        var untelegraph = card.Owner.Creature.GetPowerAmount<UntelegraphAttacks>();
-        return untelegraph > 0 ? card.EnergyCost.GetResolved() + untelegraph : 1;
-    }
 
     protected override async Task OnPlay(
         PlayerChoiceContext choiceContext,
@@ -45,7 +35,6 @@ public class SeelsSlash() : SeelsTheRecklessCard(0,
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this)
             .TargetingRandomOpponents(CombatState)
-            .WithHitCount(GetHitCount(this))
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 

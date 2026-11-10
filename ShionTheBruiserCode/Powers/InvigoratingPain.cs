@@ -16,7 +16,8 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// Whenever you play a Wound, Exhaust it, gain X Vigor and draw 1 card.
+/// Whenever you play or Exhaust a Wound from your Hand, gain X Vigor and draw 1 card.
+/// A played Wound that then gets Exhausted (from the Play pile) only triggers once.
 /// </summary>
 public class InvigoratingPain : SeelsTheRecklessPower
 {
@@ -30,17 +31,42 @@ public class InvigoratingPain : SeelsTheRecklessPower
         HoverTipFactory.FromPower<VigorPower>(),
     ];
 
-    // The Wound is Exhausted instead of going to its usual pile.
-    public override (PileType, CardPilePosition) ModifyCardPlayResultPileTypeAndPosition(CardModel card, bool isAutoPlay, ResourceInfo resources, PileType pileType, CardPilePosition position)
+    // Wounds that just went from the Hand to the Exhaust Pile (AfterCardExhausted doesn't say where it came from).
+    private class Data
     {
-        return card.Owner.Creature == Owner && SeelsMechanicsHelper.IsWound(card) ? (PileType.Exhaust, position) : (pileType, position);
+        public readonly HashSet<CardModel> exhaustedFromHand = [];
+    }
+
+    protected override object InitInternalData() => new Data();
+
+    public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? clonedBy)
+    {
+        if (oldPileType == PileType.Hand && card.Pile?.Type == PileType.Exhaust && IsOwnWound(card))
+        {
+            GetInternalData<Data>().exhaustedFromHand.Add(card);
+        }
+        return Task.CompletedTask;
+    }
+
+    public override async Task AfterCardExhausted(PlayerChoiceContext choiceContext, CardModel card, bool causedByEthereal)
+    {
+        if (!GetInternalData<Data>().exhaustedFromHand.Remove(card)) return;
+        await Trigger(choiceContext);
     }
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (cardPlay.Card.Owner.Creature != Owner || !SeelsMechanicsHelper.IsWound(cardPlay.Card) || Owner.Player is null) return;
-        Flash();
+        if (!IsOwnWound(cardPlay.Card)) return;
         // AfterCardPlayed runs once the Wound has resolved, so this Vigor isn't added mid-attack.
+        await Trigger(choiceContext);
+    }
+
+    private bool IsOwnWound(CardModel card) => card.Owner.Creature == Owner && SeelsMechanicsHelper.IsWound(card);
+
+    private async Task Trigger(PlayerChoiceContext choiceContext)
+    {
+        if (Owner.Player is null) return;
+        Flash();
         await PowerCmd.Apply<VigorPower>(choiceContext, Owner, Amount, Owner, null);
         await CardPileCmd.Draw(choiceContext, Draw, Owner.Player);
     }

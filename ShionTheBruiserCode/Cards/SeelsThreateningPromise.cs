@@ -31,9 +31,10 @@ public class SeelsThreateningPromise() : SeelsTheRecklessCard(1,
         new HasTargetVar(),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
-        // One Slash per Vulnerable on the enemy after the application
+        // One Slash per Vulnerable on the enemy after the application (Artifact blocks it, so nothing is added then)
         new CalculatedVar("SlashesAmount").WithMultiplier((card, target) =>
-            target is null ? 0 : SeelsMechanicsHelper.GetVulnerable(target) + card.DynamicVars.Vulnerable.BaseValue),
+            target is null ? 0 : SeelsMechanicsHelper.GetVulnerable(target)
+                + PreviewHelper.ModifiedPowerApplied<VulnerablePower>(card, card.DynamicVars.Vulnerable.BaseValue, target)),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [

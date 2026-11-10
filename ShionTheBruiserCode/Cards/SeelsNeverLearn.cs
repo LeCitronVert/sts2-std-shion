@@ -39,6 +39,6 @@ public class SeelsNeverLearn() : SeelsTheRecklessCard(3,
 
     protected override void OnUpgrade()
     {
-        AddKeyword(CardKeyword.Retain);
+        EnergyCost.UpgradeBy(-1);
     }
 }

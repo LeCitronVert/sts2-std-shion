@@ -46,4 +46,16 @@ public static class PreviewHelper
         if (amount <= 0 || card.CombatState is null) return amount;
         return Hook.ModifyPowerAmountGiven(card.CombatState, ModelDb.Power<Confusion>(), card.Owner.Creature, amount, target, card, out _);
     }
+
+    /// <summary>
+    /// Amount of power T the target would actually receive if the card applied this amount to it:
+    /// the giver's modifiers, then the target's (Artifact blocks a debuff entirely, so this returns 0).
+    /// </summary>
+    public static decimal ModifiedPowerApplied<T>(CardModel card, decimal amount, Creature target) where T : PowerModel
+    {
+        if (amount <= 0 || card.CombatState is null) return amount;
+        var power = ModelDb.Power<T>();
+        var given = Hook.ModifyPowerAmountGiven(card.CombatState, power, card.Owner.Creature, amount, target, card, out _);
+        return Hook.ModifyPowerAmountReceived(card.CombatState, power, target, given, card.Owner.Creature, out _);
+    }
 }

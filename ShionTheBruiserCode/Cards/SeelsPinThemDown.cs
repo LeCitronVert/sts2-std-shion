@@ -23,7 +23,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Gloat 1. Add 1 Inky Slash (Slash+) into your Hand, and 2 more into your Draw Pile per energy this card costs.
 /// </summary>
-public class SeelsPinThemDown() : SeelsTheRecklessCard(1,
+public class SeelsPinThemDown() : SeelsTheRecklessCard(2,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {

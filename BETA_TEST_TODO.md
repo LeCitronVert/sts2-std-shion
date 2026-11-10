@@ -1820,3 +1820,42 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 
 **Decisions I made**
 - Icons are the big icons of the matching Seels powers. Keys in characters.json: BLOOD_BEND, GAMBLE, SLASH, WOUNDS, GLOAT.
+
+## 33. Change Pending J pass (Seels tweaks, Untelegraph Attacks rework, Slal tweaks, gag VFX)
+- [ ] Open the project in MegaDot so `scenes/fx/falling_gag.tscn` and `scenes/fx/whirl.tscn` (and their scripts) get imported, then rebuild and re-export the pck.
+
+**Seels**
+- [ ] Combo Meter: copies the first 0-cost Attack you play each turn (any Attack, not only Slashes). "0-cost" = no energy paid for that play: a 0-cost card, an Erratic card rolled at 0, an X-cost played for 0 and free/autoplayed Attacks all count. A 1-cost Strike doesn't. Upgrade still draws 1.
+- [ ] Shed The Pain: costs 1 (0 upgraded), no Exhaust. Gain 1 energy per enchanted Wound Exhausted (preview shows the energy). Gloat 2.
+- [ ] Invigorating Pain: played Wounds now go to the Discard Pile (no auto-Exhaust). Triggers (3 (5) Vigor + draw 1) when you play a Wound, and when a Wound is Exhausted from your Hand (e.g. Shed The Pain: once per Wound in your Hand, not for Wounds in the Draw/Discard Pile). A Wound that is played and then Exhausts only triggers once.
+- [ ] Untelegraph Attacks: costs 4 (3 upgraded), only applies the power (no more Slashes/Gamble). Still single-player only.
+  - [ ] ALL your Attacks hit (energy paid + 1) times: Strike 2, Twin Strike 2, Whirlwind at 0 → 1, at 2 → 3, a free/autoplayed Strike → 1.
+  - [ ] Each Attack you play gains Erratic (cost randomized when drawn again).
+  - [ ] Attacks in your Hand show "Untelegraph Attacks: hits N times." while it's active.
+  - [ ] Slash no longer has its own Untelegraph line (the shared one replaces it).
+- [ ] Threatening Promise: against an enemy with Artifact, the "Slashes added" preview no longer counts the Vulnerable that Artifact blocks.
+- [ ] Bleed Instructions: the power icon flashes each time you lose HP during your turn. Playing it after you already lost HP this turn still gives the draw next turn (icon flashes when played).
+- [ ] Spectacular Break-in: costs 2.
+- [ ] Pin Them Down: costs 2 (so 4 Inky Slashes go into the Draw Pile).
+- [ ] Steal Blood: the Attacks that get Maim are no longer upgraded.
+- [ ] Never Learn+: costs 2, no Retain.
+
+**Slal**
+- [ ] Elaborate Flourish: Slal whirls on herself (flips like a spinning top, colorful streaks) before the Confusion is applied.
+- [ ] Peace Promise: Transforms your 3 basic Strikes into an Attack, a Skill and a Power (one each). Playing an Attack makes you lose 2 Strength this turn.
+- [ ] Random: reaching 10 gives 1 Memory only (no more Strength).
+- [ ] Proof Reading (new version): costs 1 (0 upgraded), Always Novel, no Exhaust. Mimic 3, then gain 1 Strength per Flashback (preview shows it) and lose ALL Flashback. The old version is kept commented out at the bottom of `SlalProofReading.cs` (with its old loc line).
+- [ ] TD Fact: no Exhaust, Always Novel.
+- [ ] Anvil Gag: a black anvil falls from above the screen onto the target's head, squashes it, little stars spin, then it fades. The damage lands with it.
+- [ ] Funny Gag: a flower pot falls onto the target's head and shatters (shards, dirt, the flower flips away). The damage lands with it.
+- [ ] Cosmo: "Ironclad! Stay determined!" (no "The" before the class name).
+
+**Decisions I made**
+- Your answers: Blood Drop unchanged; "energy cost" = energy actually paid (X for X-cost, 0 for free/autoplay); gag VFX drawn in code; Shed The Pain and Proof Reading lose Exhaust; Never Learn+ only costs 2; Invigorating Pain no longer Exhausts.
+- Untelegraph Attacks overwrites the hit count of each attack command the card makes (other hit-count bonuses are overwritten too). Damage that isn't an attack command (HP loss like Steal Blood's) isn't multiplied. An Attack that's already Erratic doesn't flash the power again.
+- Combo Meter's copy is a fresh copy (upgraded if the original was), like before: no enchantment, and its cost isn't the Erratic roll.
+- Invigorating Pain's Exhaust trigger uses Vigor directly. If a Wound gets Exhausted from your Hand in the middle of an attack's hits, that Vigor might not be counted for that attack (rare, not seen in our cards).
+- Peace Promise falls back to any card if your pool has no card of the needed type (it never fails).
+- The anvil and flower pot are drawn in code, so no art is needed. Gags trigger Slal's Cast animation instead of the attack lunge.
+- Elaborate Flourish art: you sent a screenshot in chat, which I can't save to disk. It's listed in MISSING_IMAGES.tsv.
+- Not done: the "Ideas (ne pas implémenter encore)" section and page 2.

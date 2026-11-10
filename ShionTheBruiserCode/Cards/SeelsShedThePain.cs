@@ -21,21 +21,19 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Exhaust ALL your Wounds. Gain 1 Blood per enchanted card Exhausted this way. Gloat 2. Exhaust.
+/// Exhaust ALL your Wounds. Gain 1 energy per enchanted card Exhausted this way. Gloat 2.
 /// </summary>
-public class SeelsShedThePain() : SeelsTheRecklessCard(2,
+public class SeelsShedThePain() : SeelsTheRecklessCard(1,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("BloodPerCard", 1M),
+        new EnergyVar(1),
         new PowerVar<Gloat>(2M),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
-        new CalculatedVar("BloodAmount").WithMultiplier((card, _) =>
-            GetWoundsToExhaust(card).Count(c => c.Enchantment is not null) * card.DynamicVars["BloodPerCard"].BaseValue),
+        new CalculatedVar("EnergyAmount").WithMultiplier((card, _) =>
+            GetWoundsToExhaust(card).Count(c => c.Enchantment is not null) * card.DynamicVars.Energy.BaseValue),
     ];
 
     private static List<CardModel> GetWoundsToExhaust(CardModel card) =>
@@ -45,7 +43,7 @@ public class SeelsShedThePain() : SeelsTheRecklessCard(2,
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromCard<Wound>(),
-        HoverTipFactory.FromPower<Blood>(),
+        HoverTipFactory.ForEnergy(this),
         HoverTipFactory.FromPower<Gloat>(),
     ];
 
@@ -59,7 +57,10 @@ public class SeelsShedThePain() : SeelsTheRecklessCard(2,
             await CardCmd.Exhaust(choiceContext, wound);
         }
 
-        await SeelsMechanicsHelper.GainBlood(choiceContext, Owner.Creature, enchanted * DynamicVars["BloodPerCard"].BaseValue, this);
+        if (enchanted > 0)
+        {
+            await PlayerCmd.GainEnergy(enchanted * DynamicVars.Energy.BaseValue, Owner);
+        }
         await SeelsMechanicsHelper.Gloat(choiceContext, Owner.Creature, DynamicVars["Gloat"].BaseValue, this);
     }
 

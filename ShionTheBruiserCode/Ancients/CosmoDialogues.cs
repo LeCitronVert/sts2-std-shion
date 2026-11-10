@@ -124,7 +124,9 @@ public static class CosmoDialogues
 
         if (picked == null) return null;
 
+        // "The Ironclad" -> "Ironclad": Cosmo calls you by the class name alone.
         var className = owner.Character.Title.GetFormattedText();
+        if (className.StartsWith("The ", StringComparison.OrdinalIgnoreCase)) className = className[4..];
         foreach (var line in picked.Lines)
         {
             line.LineText?.Add("Class", className);
