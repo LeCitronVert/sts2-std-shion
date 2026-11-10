@@ -852,7 +852,6 @@ Content I skipped (incomplete in the spec):
 
 ## 13. Come What May rework
 
-- [ ] New image (`images/ui/stars/shion_stars_icon.png`): run a Godot export (Publish) once so it gets imported, or Shion's star counter keeps the vanilla star.
 - [ ] Playing it gives **9 Stars**. Text: "Gain 9 ★".
 - [ ] At the start of each turn: lose 1 HP, gain 1 Energy, **1 Star**, and draw 1 card. Two stacks → 2 of each (HP loss scales too).
 - [ ] Power tooltip shows the Star gain with the stack count.
