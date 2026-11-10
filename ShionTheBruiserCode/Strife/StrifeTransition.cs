@@ -56,8 +56,8 @@ public static class StrifeTransition
 
     private static async Task EnterStrife(RunState state)
     {
+        var cutscene = StrifeCutscene.Start(state);
         {
-            var cutscene = StrifeCutscene.Start(state);
             if (cutscene != null) await cutscene.FadeToBlack();
             StrifeMusic.CutsceneActive = true;
             StrifeMusic.Refresh();
@@ -94,6 +94,7 @@ public static class StrifeTransition
 
         StrifeMusic.CutsceneActive = false;
         await RunManager.Instance.EnterAct(state.Acts.Count - 1);
+        cutscene?.FadeOutWhite();
         StrifeMusic.Refresh();
     }
 

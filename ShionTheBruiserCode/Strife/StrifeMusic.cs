@@ -156,4 +156,12 @@ public static class StrifeMusicControllerPatches
 
     [HarmonyPrefix, HarmonyPatch(nameof(NRunMusicController.TriggerEliteSecondPhase))]
     public static bool TriggerEliteSecondPhase() => !ShouldSkip();
+
+    // After a rest site option, the campfire's FMOD ambience "goes out". In Act 4 it was never started and its act bank
+    // is unloaded (StopMusic), and calling it crashed the game natively (after a Smith).
+    [HarmonyPrefix, HarmonyPatch(nameof(NRunMusicController.TriggerCampfireGoingOut))]
+    public static bool TriggerCampfireGoingOut() => !ShouldSkip();
+
+    [HarmonyPrefix, HarmonyPatch(nameof(NRunMusicController.StopCustomMusic))]
+    public static bool StopCustomMusic() => !ShouldSkip();
 }

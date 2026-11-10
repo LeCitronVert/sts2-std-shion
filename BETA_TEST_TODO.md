@@ -1890,6 +1890,9 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - [ ] While he has summons, the Architect leans back (smaller, up and to the right, behind them) and his summons stay to his left: you can hover him without a summon in the way. He stands back up when his last summon dies, and the others close the gap.
 - [ ] Summons stand in front of the Architect on 2 staggered rows of 4 spots. Left to right the spots alternate front / back; the back row is higher and a bit smaller. Front row is drawn over the back row; in each row the leftmost is on top. With few summons, the spots spread out and center. He leans further back (up/right) so his upper body stays hoverable.
 - [ ] Kaiser Crab is never summoned (it crashed: its body is part of its own boss background). If no other Act 2 boss is left unfought, he falls back to an already-fought one.
+- [ ] Fixed: Smithing (or any option that puts the fire out) at Act 4's Rest Site crashed the game. The campfire's FMOD "going out" sound is now skipped in Act 4 (its sound bank isn't loaded there).
+- [ ] The Architect's last speech bubble fades away as the Emeralds cutscene starts.
+- [ ] After the Emeralds converge, the screen fades to white and stays white until Act 4's map is up, then fades out.
 - [ ] Music loops: All Clear plays to 0:53, then back to 0:00. Egg Reverie plays to 2:52, then back to 0:03. Egg Panicky plays to 1:14, then back to 0:01. No gap or click at the jump.
 
 **Super Form**

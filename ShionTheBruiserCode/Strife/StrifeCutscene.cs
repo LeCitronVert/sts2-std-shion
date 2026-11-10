@@ -2,7 +2,10 @@ using Godot;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Context;
+using MegaCrit.Sts2.Core.Helpers;
+using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Nodes.Combat;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.TestSupport;
@@ -18,7 +21,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Strife;
 /// <list type="number">
 /// <item>Everything but the players fades to black; the players lie "dead", with their health bars and relics.</item>
 /// <item>The seven Emeralds come out of the local player and spin around them, pulsing one by one.</item>
-/// <item>They converge back into the player, and the screen flashes gently to white.</item>
+/// <item>They converge back into the player, and the screen fades gently to white, staying white until Act 4 starts.</item>
 /// </list>
 /// </summary>
 public sealed class StrifeCutscene
@@ -36,6 +39,7 @@ public sealed class StrifeCutscene
     private float _radius;
     private float _angle;
     private float _maxRadius;
+    private ColorRect? _white;
 
     private StrifeCutscene(NCombatRoom room, NCreature? player)
     {
@@ -58,6 +62,7 @@ public sealed class StrifeCutscene
 
     public async Task FadeToBlack()
     {
+        HideSpeechBubbles();
         var tween = _room.CreateTween().SetParallel();
         // Always one tweener, so the tween runs (and finishes) even if there's nothing else to fade
         tween.TweenInterval(FadeTime);
@@ -139,15 +144,38 @@ public sealed class StrifeCutscene
         _orbit.QueueFree();
     }
 
-    /// <summary>A gentle white flash over the whole screen.</summary>
+    /// <summary>The screen fades gently to white, and stays white until <see cref="FadeOutWhite"/> (after Act 4 is entered).</summary>
     public void Flash()
     {
-        var flash = new ColorRect { Color = new Color(1f, 1f, 1f, 0f), MouseFilter = Control.MouseFilterEnum.Ignore };
-        flash.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
-        ShionVfx.AddToScreen(flash);
-        var tween = flash.CreateTween();
-        tween.TweenProperty(flash, "color:a", 0.85f, 0.35f).SetEase(Tween.EaseType.Out);
-        tween.TweenProperty(flash, "color:a", 0f, 1.6f).SetEase(Tween.EaseType.In);
-        tween.TweenCallback(Callable.From(flash.QueueFree));
+        _white = new ColorRect { Color = new Color(1f, 1f, 1f, 0f), MouseFilter = Control.MouseFilterEnum.Ignore, ZIndex = 100 };
+        _white.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
+        ShionVfx.AddToScreen(_white);
+        _white.CreateTween().TweenProperty(_white, "color:a", 1f, 0.6f).SetEase(Tween.EaseType.Out);
+    }
+
+    public void FadeOutWhite()
+    {
+        if (_white == null || !GodotObject.IsInstanceValid(_white)) return;
+        var white = _white;
+        _white = null;
+        var tween = white.CreateTween();
+        tween.TweenProperty(white, "color:a", 0f, 1.2f).SetEase(Tween.EaseType.In);
+        tween.TweenCallback(Callable.From(white.QueueFree));
+    }
+
+    /// <summary>The Architect's last line (a speech bubble that never goes away on its own) leaves with the room.</summary>
+    private void HideSpeechBubbles()
+    {
+        if (NGame.Instance is not { } game) return;
+        foreach (var bubble in FindBubbles(game)) TaskHelper.RunSafely(bubble.AnimOut());
+    }
+
+    private static IEnumerable<NSpeechBubbleVfx> FindBubbles(Node root)
+    {
+        foreach (var child in root.GetChildren())
+        {
+            if (child is NSpeechBubbleVfx bubble && GodotObject.IsInstanceValid(bubble)) yield return bubble;
+            foreach (var nested in FindBubbles(child)) yield return nested;
+        }
     }
 }
