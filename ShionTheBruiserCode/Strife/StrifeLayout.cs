@@ -15,7 +15,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Strife;
 /// spawn, like Phrog Parasite's Wrigglers) find their slots in <see cref="StrifeArchitectEncounter.Slots"/>. Set from his
 /// summon move, so it's the same on every client.</item>
 /// <item>Visual only: the fight's scene only has the Architect's marker, so the summoned slots get a marker the first
-/// time a creature uses them, then the enemies are laid out again (<see cref="Arrange"/>).</item>
+/// time a creature uses them, then the enemies are laid out again (<see cref="Arrange"/>), up to 4 front + 4 back spots.</item>
 /// </list>
 /// </summary>
 public static class StrifeLayout
@@ -40,9 +40,8 @@ public static class StrifeLayout
 
     /// <summary>Left edge of the summons' area, right of the screen center (same as the game's enemy layout).</summary>
     private const float AreaLeft = 150f;
-    private const float AreaRight = 940f;
+    private const float AreaRight = 900f;
     private const float Baseline = 200f;
-    private const float Gap = 40f;
     private const float MoveTime = 0.35f;
 
     private static readonly Func<NCombatRoom, Control?> EncounterSlotsGetter =
@@ -59,9 +58,10 @@ public static class StrifeLayout
     }
 
     /// <summary>
-    /// While he has summons, the Architect leans back (smaller, further up and to the right, drawn behind them) and his
-    /// summons are spread to his left, in summon order, so his hitbox stays free to hover. The leftmost summon is drawn
-    /// on top of the ones to its right. Without summons he comes back to his marker.
+    /// While he has summons, the Architect leans back (smaller, further up and to the right, drawn behind them) so his
+    /// upper body stays free to hover. His summons stand in front of him on two staggered rows of 4 spots: going left to
+    /// right, the spots alternate front row / back row (back row higher and a bit smaller, for depth). Front row is drawn
+    /// above the back row, and in each row the leftmost summon is drawn on top. Without summons he comes back to his marker.
     /// </summary>
     public static void Arrange(NCombatRoom room)
     {
@@ -71,47 +71,40 @@ public static class StrifeLayout
             .Where(n => GodotObject.IsInstanceValid(n) && n.Entity is { Side: CombatSide.Enemy } e && e.Monster is not StrifeArchitect && e.IsAlive)
             .ToList();
 
-        var areaRight = AreaRight;
         if (architect != null)
         {
             var home = HomeOf(architect);
             var leaning = summons.Count > 0;
-            var scale = leaning ? LeanScale : 1f;
-            var target = leaning ? home + LeanOffset : home;
             architect.ZIndex = leaning ? -1 : 0;
-            Move(architect, target, Vector2.One * scale);
-
-            if (leaning)
-            {
-                var bounds = architect.Visuals.Bounds;
-                var left = target.X + bounds.Position.X * scale;
-                areaRight = Math.Min(AreaRight, left - ArchitectGap);
-            }
+            Move(architect, leaning ? home + LeanOffset : home, Vector2.One * (leaning ? LeanScale : 1f));
         }
         if (summons.Count == 0) return;
 
-        var widths = summons.Select(n => n.Visuals.Bounds.Size.X).ToList();
-        var total = widths.Sum();
-        var width = Math.Max(areaRight - AreaLeft, 1f);
-        var gap = summons.Count > 1 ? Math.Min(Gap, (width - total) / (summons.Count - 1)) : 0f;
-        var used = total + gap * (summons.Count - 1);
-        var x = AreaLeft + Math.Max(0f, (width - used) * 0.5f);
+        // Spots spread over the whole area; with few summons they're further apart, centered
+        var count = summons.Count;
+        var width = AreaRight - AreaLeft;
+        var step = width / Math.Max(count, SpotsPerRow);
+        var start = AreaLeft + (width - step * (count - 1)) * 0.5f;
 
-        for (var i = 0; i < summons.Count; i++)
+        for (var i = 0; i < count; i++)
         {
             var node = summons[i];
-            // Crowded rows alternate up and down a little, like the game's own layout
-            var target = new Vector2(x + widths[i] * 0.5f, Baseline - (gap < 0f && i % 2 == 1 ? 40f : 0f));
-            x += widths[i] + gap;
-            // Leftmost on top
-            node.ZIndex = 1 + summons.Count - i;
-            Move(node, target, null);
+            // 1 summon alone stays on the front row; otherwise the spots alternate front / back
+            var back = count > 1 && i % 2 == 1;
+            var target = new Vector2(start + step * i, back ? Baseline - BackRowRise : Baseline);
+            node.ZIndex = (back ? BackRowZ : FrontRowZ) + count - i;
+            Move(node, target, Vector2.One * (back ? BackRowScale : 1f));
         }
     }
 
+    private const int SpotsPerRow = 4;
+    private const float BackRowRise = 120f;
+    private const float BackRowScale = 0.86f;
+    private const int FrontRowZ = 20;
+    private const int BackRowZ = 1;
+
     private const float LeanScale = 0.78f;
-    private static readonly Vector2 LeanOffset = new(140f, -110f);
-    private const float ArchitectGap = 10f;
+    private static readonly Vector2 LeanOffset = new(160f, -150f);
     private const string HomeMeta = "strife_home";
 
     /// <summary>His position at his marker, remembered the first time he's moved.</summary>

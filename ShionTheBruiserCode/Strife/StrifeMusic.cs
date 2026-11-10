@@ -11,6 +11,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Strife;
 /// Act 4's music, played through BaseLib's ModAudio (looping) instead of the game's FMOD act music:
 /// <list type="bullet">
 /// <item>"All Clear" from the Chaos Emeralds cutscene on, and everywhere in Act 4 outside of fights.</item>
+/// <item>Each track loops between its own points (<see cref="LoopPoints"/>).</item>
 /// <item>In a fight with Super Form: "Egg Reverie" while the local player has Rings, "Egg Panicky" at 0 Rings.</item>
 /// </list>
 /// Visual/audio only: never touches the game state.
@@ -24,8 +25,17 @@ public static class StrifeMusic
     public static readonly string EggPanic = Audio("music", "egg_panic.mp3");
     public static readonly string TransformSfx = Audio("sfx", "s3k_6a.wav");
 
+    /// <summary>Custom loop points, in seconds: when a track reaches LoopEnd, it jumps back to LoopStart.</summary>
+    private static readonly Dictionary<string, (double LoopStart, double LoopEnd)> LoopPoints = new()
+    {
+        [AllClear] = (0.0, 53.0),
+        [EggReverie] = (3.0, 2 * 60 + 52.0),
+        [EggPanic] = (1.0, 60 + 14.0),
+    };
+
     private static string? _current;
     private static AudioStreamPlayer? _player;
+    private static bool _loopWatcherConnected;
 
     /// <summary>Set during the end-of-Act-3 cutscene, before Act 4 is part of the run.</summary>
     public static bool CutsceneActive { get; set; }
@@ -61,17 +71,38 @@ public static class StrifeMusic
         // itself, which left the music silent until the next switch
         Stop();
         var sound = new ModSound(path, ModAudio.SoundType.Music);
+        var loopStart = LoopPoints.TryGetValue(path, out var points) ? points.LoopStart : 0.0;
+        // Looping at the end of the file is only a fallback: WatchLoop jumps back at LoopEnd
         switch (sound.GetOrLoadStream())
         {
             case AudioStreamMP3 mp3:
                 mp3.Loop = true;
+                mp3.LoopOffset = loopStart;
                 break;
             case AudioStreamOggVorbis ogg:
                 ogg.Loop = true;
+                ogg.LoopOffset = loopStart;
                 break;
         }
         _player = ModAudio.PlaySoundInRun(sound);
         _current = path;
+        ConnectLoopWatcher();
+    }
+
+    private static void ConnectLoopWatcher()
+    {
+        if (_loopWatcherConnected || Engine.GetMainLoop() is not SceneTree tree) return;
+        tree.ProcessFrame += WatchLoop;
+        _loopWatcherConnected = true;
+    }
+
+    /// <summary>Every frame: once the current track passes its LoopEnd, seek back to its LoopStart.</summary>
+    private static void WatchLoop()
+    {
+        if (_current == null || !IsPlaying || !_player!.Playing) return;
+        if (!LoopPoints.TryGetValue(_current, out var points)) return;
+        var position = _player.GetPlaybackPosition() + AudioServer.GetTimeSinceLastMix();
+        if (position >= points.LoopEnd) _player.Seek((float)(points.LoopStart + (position - points.LoopEnd)));
     }
 
     public static void Stop()

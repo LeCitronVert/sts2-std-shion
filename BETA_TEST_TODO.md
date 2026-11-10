@@ -1888,7 +1888,9 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - [ ] Fixed: the Architect's intro and ending showed raw loc keys. They now show the real lines and button labels.
 - [ ] Fixed: at 0 Rings the music went silent instead of playing Egg Panicky. Every music switch (All Clear → Egg Reverie → Egg Panicky → back) should now play.
 - [ ] While he has summons, the Architect leans back (smaller, up and to the right, behind them) and his summons stay to his left: you can hover him without a summon in the way. He stands back up when his last summon dies, and the others close the gap.
-- [ ] With several summons, the leftmost one is drawn on top of the ones to its right.
+- [ ] Summons stand in front of the Architect on 2 staggered rows of 4 spots. Left to right the spots alternate front / back; the back row is higher and a bit smaller. Front row is drawn over the back row; in each row the leftmost is on top. With few summons, the spots spread out and center. He leans further back (up/right) so his upper body stays hoverable.
+- [ ] Kaiser Crab is never summoned (it crashed: its body is part of its own boss background). If no other Act 2 boss is left unfought, he falls back to an already-fought one.
+- [ ] Music loops: All Clear plays to 0:53, then back to 0:00. Egg Reverie plays to 2:52, then back to 0:03. Egg Panicky plays to 1:14, then back to 0:01. No gap or click at the jump.
 
 **Super Form**
 - [ ] The top bar's Gold icon becomes the Ring while you hold Super Form.

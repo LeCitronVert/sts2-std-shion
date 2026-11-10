@@ -46,6 +46,14 @@ public static class StrifeConfig
     /// <summary>How many summon lines before each big attack.</summary>
     public const int SummonsPerBigAttack = 2;
 
+    /// <summary>
+    /// Bosses the Architect never summons. Kaiser Crab's body is part of its own boss background (Crusher and Rocket look
+    /// it up there), so it can't exist in the Architect's room: it hangs and crashes.
+    /// </summary>
+    public static readonly IReadOnlySet<Type> UnsummonableBosses = new HashSet<Type> { typeof(KaiserCrabBoss) };
+
+    public static bool CanBeSummoned(EncounterModel encounter) => !UnsummonableBosses.Contains(encounter.GetType());
+
     /// <summary>Boss pools by act index, all act variants of that index (used when the visited act has no unfought boss left).</summary>
     public static IEnumerable<ActModel> ActsOfIndex(int actIndex) => actIndex switch
     {

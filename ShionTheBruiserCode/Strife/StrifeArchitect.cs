@@ -210,13 +210,14 @@ public sealed class StrifeArchitect : CustomMonsterModel
         var pick = Pick(visited.Where(e => !fought.Contains(e.Id) && !used.Contains(e.Id)))
                    ?? Pick(variants.Where(e => !fought.Contains(e.Id) && !used.Contains(e.Id)))
                    ?? Pick(visited.Where(e => !used.Contains(e.Id)))
-                   ?? Pick(visited.Concat(variants))!;
+                   ?? Pick(visited.Concat(variants))
+                   ?? ModelDb.Encounter<MegaCrit.Sts2.Core.Models.Encounters.TheInsatiableBoss>();
         used.Add(pick.Id);
         return pick;
 
         EncounterModel? Pick(IEnumerable<EncounterModel> pool)
         {
-            var list = pool.DistinctBy(e => e.Id).ToList();
+            var list = pool.Where(CanBeSummoned).DistinctBy(e => e.Id).ToList();
             return list.Count == 0 ? null : RunRng.MonsterAi.NextItem(list);
         }
     }
