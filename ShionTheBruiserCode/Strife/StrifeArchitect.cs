@@ -170,11 +170,19 @@ public sealed class StrifeArchitect : CustomMonsterModel
             ? [PickUnfoughtBoss(actIndex)]
             : entry.Encounters.Select(e => e()).ToList();
 
-        for (var index = 0; index < encounters.Count; index++)
+        var mutables = encounters.Select(e =>
         {
-            var encounter = encounters[index].ToMutable();
-            encounter.GenerateMonstersWithSlots(CombatState.RunState);
-            StrifeLayout.BeginGroup(encounter, index, encounters.Count);
+            var mutable = e.ToMutable();
+            mutable.GenerateMonstersWithSlots(CombatState.RunState);
+            return mutable;
+        }).ToList();
+        // The encounter with the most creatures stands in the background (the first one on a tie)
+        var backIndex = mutables.Select((e, i) => (e.MonstersWithSlots.Count, i)).OrderByDescending(t => t.Count).ThenBy(t => t.i).First().i;
+
+        for (var index = 0; index < mutables.Count; index++)
+        {
+            var encounter = mutables[index];
+            StrifeLayout.BeginGroup(encounter, index == backIndex ? 0 : 1, mutables.Count);
 
             var design = Design;
             if (design != null) design.PendingSummonType = encounter.RoomType;

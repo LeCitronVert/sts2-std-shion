@@ -17,8 +17,8 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Strife;
 /// spawn, like Phrog Parasite's Wrigglers) find their slots in <see cref="StrifeArchitectEncounter.Slots"/>. Set from his
 /// summon move, so it's the same on every client.</item>
 /// <item>Visual only: each summoned encounter keeps its own layout (its scene's slot markers, or the game's default row
-/// for encounters without a scene). When one summon line has two encounters, the first one stands back (up, to the
-/// right, a bit smaller) and the second one a step forward (down, to the left, drawn on top). The Architect leans back
+/// for encounters without a scene). When one summon line has two encounters, the one with the most creatures stands back
+/// (up, to the right, a bit smaller) and the other one a step forward (down, to the left, drawn on top). The Architect leans back
 /// while he has summons.</item>
 /// </list>
 /// </summary>
@@ -28,7 +28,7 @@ public static class StrifeLayout
 
     public static IReadOnlyList<string> SummonedSlots => Slots;
 
-    /// <summary>One encounter he summoned: its layout, and its place in its summon line.</summary>
+    /// <summary>One encounter he summoned: its layout, and its depth in its summon line (0 = background).</summary>
     private sealed class Group(EncounterModel encounter, int indexInLine, int lineSize)
     {
         public EncounterModel Encounter { get; } = encounter;
