@@ -1,4 +1,5 @@
 using HarmonyLib;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.RestSite;
 using MegaCrit.Sts2.Core.Rooms;
@@ -65,5 +66,48 @@ public static class StrifeMultiplayerScalingPatch
     public static void Prefix(ref int actIndex)
     {
         if (actIndex > 2) actIndex = 2;
+    }
+}
+
+/// <summary>
+/// When the last Decimillipede segment dies, the base game fades out and removes the node of EVERY enemy in the fight
+/// (it assumes the encounter is only segments). In the Architect's fight that removed him (and Entomancer) too: he kept
+/// acting with no node. There, only the segments fade out. Visual only (same logic, filtered list).
+/// </summary>
+[HarmonyPatch(typeof(MegaCrit.Sts2.Core.Models.Powers.ReattachPower), "DoFadeOutOnAllSegments")]
+public static class StrifeDecimillipedeFadeOutPatch
+{
+    [HarmonyPrefix]
+    public static bool Prefix(MegaCrit.Sts2.Core.Models.Powers.ReattachPower __instance)
+    {
+        if (!StrifeLayout.IsStrifeFight(__instance.Owner) || __instance.Owner.CombatState is not { } combatState) return true;
+
+        var room = MegaCrit.Sts2.Core.Nodes.Rooms.NCombatRoom.Instance;
+        var nodes = new List<MegaCrit.Sts2.Core.Nodes.Combat.NCreature>();
+        foreach (var enemy in combatState.Enemies.Where(e => e.HasPower<MegaCrit.Sts2.Core.Models.Powers.ReattachPower>()))
+        {
+            if (room?.GetCreatureNode(enemy) is not { } node) continue;
+            node.AnimHideIntent();
+            nodes.Add(node);
+        }
+        if (nodes.Count == 0 || MegaCrit.Sts2.Core.Nodes.Vfx.NMonsterDeathVfx.Create(nodes) is not { } vfx) return false;
+
+        var parent = nodes[0].GetParent();
+        parent.AddChildSafely(vfx);
+        parent.MoveChildSafely(vfx, nodes[0].GetIndex());
+        var deathAnimation = MegaCrit.Sts2.Core.Helpers.TaskHelper.RunSafely(PlayAndRemove(vfx, nodes));
+        foreach (var node in nodes)
+        {
+            node.DeathAnimationTask = deathAnimation;
+            room?.RemoveCreatureNode(node);
+        }
+        return false;
+    }
+
+    private static async Task PlayAndRemove(MegaCrit.Sts2.Core.Nodes.Vfx.NMonsterDeathVfx vfx, List<MegaCrit.Sts2.Core.Nodes.Combat.NCreature> nodes)
+    {
+        await MegaCrit.Sts2.Core.Commands.Cmd.Wait(0.25f, ignoreCombatEnd: true);
+        await vfx.PlayVfx();
+        foreach (var node in nodes) node.QueueFreeSafely();
     }
 }
