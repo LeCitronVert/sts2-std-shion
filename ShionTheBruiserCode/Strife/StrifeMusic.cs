@@ -57,6 +57,9 @@ public static class StrifeMusic
         if (!ResourceLoader.Exists(path)) return;
 
         NRunMusicController.Instance?.StopMusic();
+        // Removed first: BaseLib's ModAudio throws ("Collection was modified") when it replaces a playing music track
+        // itself, which left the music silent until the next switch
+        Stop();
         var sound = new ModSound(path, ModAudio.SoundType.Music);
         switch (sound.GetOrLoadStream())
         {

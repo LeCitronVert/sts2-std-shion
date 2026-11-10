@@ -99,7 +99,12 @@ public sealed class ArchitectsDesign : ShionTheBruiserPower
 
     public override Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
     {
-        if (creature != Owner && creature.Side == Owner.Side && Owner.IsAlive) Architect?.OnSummonDied();
+        if (creature != Owner && creature.Side == Owner.Side && Owner.IsAlive)
+        {
+            Architect?.OnSummonDied();
+            // Visual only: he stands back up once his last summon is gone, and the others close the gap
+            StrifeLayout.ArrangeDeferred();
+        }
         return Task.CompletedTask;
     }
 }

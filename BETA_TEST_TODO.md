@@ -1885,6 +1885,10 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - [ ] Save, quit and continue in Act 4: the run comes back with 4 acts, Super Form, the Ring icon and the music.
 - [ ] Fixed: entering Act 4's Rest Site crashed ("Unexpected act"), and Act 4 saves couldn't be loaded. The Rest Site now uses Glory's campfire animation, and the save from that crash should load again.
 - [ ] Fixed (MP): every Act 4 fight would have crashed on HP scaling. Act 4 now uses Act 3's multiplayer HP scaling.
+- [ ] Fixed: the Architect's intro and ending showed raw loc keys. They now show the real lines and button labels.
+- [ ] Fixed: at 0 Rings the music went silent instead of playing Egg Panicky. Every music switch (All Clear → Egg Reverie → Egg Panicky → back) should now play.
+- [ ] While he has summons, the Architect leans back (smaller, up and to the right, behind them) and his summons stay to his left: you can hover him without a summon in the way. He stands back up when his last summon dies, and the others close the gap.
+- [ ] With several summons, the leftmost one is drawn on top of the ones to its right.
 
 **Super Form**
 - [ ] The top bar's Gold icon becomes the Ring while you hold Super Form.

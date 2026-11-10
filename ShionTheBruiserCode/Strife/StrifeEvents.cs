@@ -21,8 +21,9 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Strife;
 /// <summary>
 /// Shared base of the Act 4 Architect cutscenes: Combat layout (the Architect stands in his victory room), one speech
 /// bubble per line, a button to go to the next line. Lines are built for the local player's character (text only).
+/// ICustomModel: BaseLib then gives the Id the mod prefix, which the loc keys use (SHIONTHEBRUISER-...).
 /// </summary>
-public abstract class StrifeDialogueEvent : EventModel
+public abstract class StrifeDialogueEvent : EventModel, BaseLib.Abstracts.ICustomModel
 {
     protected const string Table = "events";
 

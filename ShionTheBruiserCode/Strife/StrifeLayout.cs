@@ -15,7 +15,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Strife;
 /// spawn, like Phrog Parasite's Wrigglers) find their slots in <see cref="StrifeArchitectEncounter.Slots"/>. Set from his
 /// summon move, so it's the same on every client.</item>
 /// <item>Visual only: the fight's scene only has the Architect's marker, so the summoned slots get a marker the first
-/// time a creature uses them, then every enemy is laid out again in front of the Architect.</item>
+/// time a creature uses them, then the enemies are laid out again (<see cref="Arrange"/>).</item>
 /// </list>
 /// </summary>
 public static class StrifeLayout
@@ -58,17 +58,41 @@ public static class StrifeLayout
         slots.AddChild(new Marker2D { Name = slot, Position = new Vector2(1500f, 740f) });
     }
 
-    /// <summary>The Architect stays at his marker, behind; his summons are spread in front of him, in summon order.</summary>
+    /// <summary>
+    /// While he has summons, the Architect leans back (smaller, further up and to the right, drawn behind them) and his
+    /// summons are spread to his left, in summon order, so his hitbox stays free to hover. The leftmost summon is drawn
+    /// on top of the ones to its right. Without summons he comes back to his marker.
+    /// </summary>
     public static void Arrange(NCombatRoom room)
     {
+        var architect = room.CreatureNodes.FirstOrDefault(n =>
+            GodotObject.IsInstanceValid(n) && n.Entity?.Monster is StrifeArchitect);
         var summons = room.CreatureNodes
             .Where(n => GodotObject.IsInstanceValid(n) && n.Entity is { Side: CombatSide.Enemy } e && e.Monster is not StrifeArchitect && e.IsAlive)
             .ToList();
+
+        var areaRight = AreaRight;
+        if (architect != null)
+        {
+            var home = HomeOf(architect);
+            var leaning = summons.Count > 0;
+            var scale = leaning ? LeanScale : 1f;
+            var target = leaning ? home + LeanOffset : home;
+            architect.ZIndex = leaning ? -1 : 0;
+            Move(architect, target, Vector2.One * scale);
+
+            if (leaning)
+            {
+                var bounds = architect.Visuals.Bounds;
+                var left = target.X + bounds.Position.X * scale;
+                areaRight = Math.Min(AreaRight, left - ArchitectGap);
+            }
+        }
         if (summons.Count == 0) return;
 
         var widths = summons.Select(n => n.Visuals.Bounds.Size.X).ToList();
         var total = widths.Sum();
-        var width = AreaRight - AreaLeft;
+        var width = Math.Max(areaRight - AreaLeft, 1f);
         var gap = summons.Count > 1 ? Math.Min(Gap, (width - total) / (summons.Count - 1)) : 0f;
         var used = total + gap * (summons.Count - 1);
         var x = AreaLeft + Math.Max(0f, (width - used) * 0.5f);
@@ -79,10 +103,36 @@ public static class StrifeLayout
             // Crowded rows alternate up and down a little, like the game's own layout
             var target = new Vector2(x + widths[i] * 0.5f, Baseline - (gap < 0f && i % 2 == 1 ? 40f : 0f));
             x += widths[i] + gap;
-            node.ZIndex = 1;
-            node.CreateTween().TweenProperty(node, "position", target, MoveTime)
-                .SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Cubic);
+            // Leftmost on top
+            node.ZIndex = 1 + summons.Count - i;
+            Move(node, target, null);
         }
+    }
+
+    private const float LeanScale = 0.78f;
+    private static readonly Vector2 LeanOffset = new(140f, -110f);
+    private const float ArchitectGap = 10f;
+    private const string HomeMeta = "strife_home";
+
+    /// <summary>His position at his marker, remembered the first time he's moved.</summary>
+    private static Vector2 HomeOf(NCreature architect)
+    {
+        if (architect.HasMeta(HomeMeta)) return architect.GetMeta(HomeMeta).AsVector2();
+        architect.SetMeta(HomeMeta, architect.Position);
+        return architect.Position;
+    }
+
+    private static void Move(NCreature node, Vector2 position, Vector2? scale)
+    {
+        var tween = node.CreateTween().SetParallel();
+        tween.TweenProperty(node, "position", position, MoveTime).SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Cubic);
+        if (scale is { } s) tween.TweenProperty(node, "scale", s, MoveTime).SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Cubic);
+    }
+
+    /// <summary>Lays the room out again on the next frame (after a summon is added or dies).</summary>
+    public static void ArrangeDeferred()
+    {
+        if (NCombatRoom.Instance is { } room) Callable.From(() => { if (GodotObject.IsInstanceValid(room)) Arrange(room); }).CallDeferred();
     }
 }
 
@@ -101,6 +151,6 @@ public static class StrifeAddCreaturePatch
     {
         if (!StrifeLayout.IsStrifeFight(creature) || creature.Monster is StrifeArchitect || creature.Side != CombatSide.Enemy) return;
         // Wait a frame: the new node's visuals (and their bounds) are added deferred
-        Callable.From(() => StrifeLayout.Arrange(__instance)).CallDeferred();
+        StrifeLayout.ArrangeDeferred();
     }
 }
