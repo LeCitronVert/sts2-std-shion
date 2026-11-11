@@ -111,3 +111,22 @@ public static class StrifeDecimillipedeFadeOutPatch
         foreach (var node in nodes) node.QueueFreeSafely();
     }
 }
+
+/// <summary>
+/// The enemy turn's start takes its list of creatures first, then runs the Before-turn-start hooks and a short wait, and only
+/// then clears each one's Block. If one of them is removed from combat in between, clearing its Block throws (its
+/// CombatState is null), so the enemy turn never starts and the game hangs. In the Architect's fight, damage dealt to
+/// him at that point (e.g. Confusion) is spread to his summons by Field Experiment and can kill one.
+/// A creature that is no longer in combat skips its turn start. Same on every client.
+/// </summary>
+[HarmonyPatch(typeof(MegaCrit.Sts2.Core.Entities.Creatures.Creature), nameof(MegaCrit.Sts2.Core.Entities.Creatures.Creature.AfterTurnStart))]
+public static class RemovedCreatureTurnStartPatch
+{
+    [HarmonyPrefix]
+    public static bool Prefix(MegaCrit.Sts2.Core.Entities.Creatures.Creature __instance, ref Task __result)
+    {
+        if (__instance.CombatState != null) return true;
+        __result = Task.CompletedTask;
+        return false;
+    }
+}
