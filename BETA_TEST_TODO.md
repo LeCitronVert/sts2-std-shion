@@ -1950,3 +1950,29 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - Placeholders "TODO": Super Form flavor, the shrine's epithet and its unused dialogue keys (required by the loc checker).
 - Music is played through BaseLib's ModAudio, looping in code (the .import files can stay `loop=false`). The cutscene and all of Act 4 mute the game's FMOD act music.
 - The damage score is the total damage the Architect took (whole party), saved under your character and mode.
+
+## 35. Seels Architect dialogue + Act 4 co-op pings
+
+**Setup**
+- [ ] Re-export the .pck (localization changed: `ancients.json`, `characters.json`).
+
+**Seels vs. the Act 3 Architect** (one dialogue per run, in order, like Shion's)
+- [ ] 1st time: Architect "And what do we have here?" → [Answer] → Seels "Yeah, don't mind me…" → "… Excuse you?" → "What, want to be a problem? Sure!" → [Fight] → both attack.
+- [ ] 2nd time: Seels "Ah-ha! Gotcha now!" → "You have a poor concept of stealth…" → "Eh? Aw, crapbask-" → [Uh-oh] → the Architect attacks.
+- [ ] 3rd time: "I'll give you that: your magic is actually interesting." → "However, it has one major flaw." → [Ask] → "Oh, yeah? What is that?" → "It's wielded by an idiot." → "Grrr…! I'll SHOW YOU…!" → [Fight] → both attack.
+
+**Act 4 Architect fight: "hurry up" end-turn pings (multiplayer)**
+- [ ] "Enemies up" = at least one of his summons is alive. "Architect up" = none are alive.
+- [ ] Shion: "The final push! Come on, everyone!" / "An opening! ATTACK!". Berserk: "OUT OF THE WAY, WORMS!" / "I promised, didn't I? I promised I would come for you…", **in red**. Dead: "Keep… pushing, guys…" / "You can… do this…. Please…".
+- [ ] Seels: "Heads up, there's still some mooks to take care of!" / "Ooh, there's the big bad! I call dibs!". Dead: "Ow… bummer…" / "Yeah… whatever…".
+- [ ] Ironclad: "Make quick work of these." / "LET ME DEAL THE FINAL BLOW!!". Dead: "…".
+- [ ] Silent: "…!" / "!!!!". Dead: "…" / "…!!!".
+- [ ] Defect: "*supportive beeps*" / "*excited beeps*". Dead: "…".
+- [ ] Regent: "Dispatch his minions, minions!" / "I shall strike him down myself!". Dead: "…".
+- [ ] Necrobinder: "These don't matter… Kill them fast." / "Let Osty strangle his life away!". Dead: "…".
+- [ ] Slal, Fry and other mods' characters keep their normal pings in this fight. Outside Act 4, Shion's Berserk ping ("You're such a tease...") still works.
+
+**Decisions I made**
+- Your answers: Shion's struck-through "Architect up – Dead" line is kept; Ironclad's line fixed to "LET ME DEAL THE FINAL BLOW!!".
+- Button labels: [Answer], [Uh-oh], [Ask]; "Continue" / "Fight" for the rest.
+- Ping lines live in `characters.json` as `SHIONTHEBRUISER-STRIFE_PING.{CHARACTER}.{enemiesUp|architectUp}[Berserk|Dead]` and are picked in `Patches/BerserkEndTurnPingPatch.cs`. A missing key falls back to the normal ping, so you can add Slal/Fry lines later without touching code.

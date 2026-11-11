@@ -197,7 +197,8 @@ public sealed class StrifeArchitectIntro : StrifeDialogueEvent
         ];
     }
 
-    private static string ThreatKey(CharacterModel character) => character switch
+    /// <summary>Per-character key suffix for Act 4 lines (also used by the Act 4 co-op pings).</summary>
+    internal static string ThreatKey(CharacterModel character) => character switch
     {
         Ironclad => "IRONCLAD",
         Silent => "SILENT",
