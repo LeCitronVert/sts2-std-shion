@@ -136,10 +136,10 @@ public static class RingHealthBarPatch
 }
 
 /// <summary>
-/// Super Form on a player's body: a gold Super Saiyan-like aura (the game's power-up flames, kept alive and recolored,
-/// see <see cref="SuperFormAura"/>) with yellow particles rising around them (scenes/fx/rising_particles.tscn, like
+/// Super Form on a player's body: a Super Saiyan-like aura (a yellow glow and light, see <see cref="SuperFormGlow"/>,
+/// plus the game's power-up VFX kept alive with only the base of its gold flames, see <see cref="SuperFormAura"/>) with yellow particles rising around them (scenes/fx/rising_particles.tscn, like
 /// Lurking Intensity's) and rare blue electric sparks drawn in code (super_form_sparks.tscn) while they have Rings;
-/// at 0 Rings, the aura and particles go away, the sparks turn red and they sweat now and then.
+/// at 0 Rings, the aura, glow and particles go away, the sparks turn red and they sweat now and then.
 /// Also keeps the Ring health bar segment and the local player's music up to date. Visual only.
 /// </summary>
 public sealed class SuperFormFx
@@ -156,6 +156,7 @@ public sealed class SuperFormFx
     private readonly Creature _creature;
     private readonly Rect2 _bounds;
     private readonly SuperFormAura _aura;
+    private SuperFormGlow? _glow;
     private Node2D? _particles;
     private Node2D? _sparks;
     private Node2D? _sweat;
@@ -167,7 +168,7 @@ public sealed class SuperFormFx
         _node = node;
         _creature = node.Entity;
         _bounds = new Rect2(node.Visuals.Bounds.Position, node.Visuals.Bounds.Size);
-        _aura = new SuperFormAura(node);
+        _aura = new SuperFormAura(node, _bounds);
     }
 
     public static void Attach(NCreature node)
@@ -197,12 +198,23 @@ public sealed class SuperFormFx
         var hadRings = (_last?.Rings ?? 0) > 0;
         _last = state;
 
+        SetGlow(active && hasRings);
         SetParticles(active && hasRings);
         SetSparks(active, hasRings);
         SetSweat(active && !hasRings);
         RingVisuals.RefreshHealthBar(_node);
 
         if (LocalContext.IsMe(player) && (wasActive != active || hadRings != hasRings)) StrifeMusic.Refresh();
+    }
+
+    private void SetGlow(bool on)
+    {
+        if (_glow == null)
+        {
+            if (!on || !GodotObject.IsInstanceValid(_node.Visuals)) return;
+            _glow = SuperFormGlow.Create(_node.Visuals, _bounds, _node.GetCanvasLayerNode()?.Layer ?? 0);
+        }
+        _glow.SetActive(on);
     }
 
     /// <summary>Yellow particles rising around the body, like Lurking Intensity's red ones.</summary>
@@ -267,15 +279,20 @@ public static class SuperFormFxPatch
 }
 
 /// <summary>
-/// Super Form's steady aura, like Demon Form's: the game's power-up VFX (NPowerUpVfx, the flame columns behind the body
-/// and the sparkles / beams in front) spawned once and kept alive. Its own script fades and frees it after 1 s, so its
-/// processing is turned off; we fade it in / out ourselves and keep it on the creature if they move.
-/// The 3D flames get gold colors on a copy of their material; the front sparkles and beams are already yellow.
-/// Visual only. Fragile on purpose: it depends on how that base game scene is built (vfx_power_up_3d_back.tscn).
+/// The game's power-up VFX (NPowerUpVfx), spawned once and kept alive: the sparkles in front (its thin front beams hidden),
+/// and the flame columns behind the body cut down to their base around the feet (faded out above it by a shader), recolored
+/// gold. Its own script fades and frees it after 1 s, so its processing is turned off; we fade it in / out ourselves and
+/// keep it on the creature if they move. <see cref="SuperFormGlow"/> adds the glow above.
+/// Visual only. Fragile on purpose: it depends on how that base game scene is built (vfx_power_up.tscn).
 /// </summary>
-public sealed class SuperFormAura(NCreature node)
+public sealed class SuperFormAura(NCreature node, Rect2 bounds)
 {
     private const float FadeTime = 0.3f;
+    private const int ViewportSize = 540;
+
+    // Fractions of the body's height above the feet: flames fully visible below the first, gone above the second
+    private const float FlameFullHeight = 0.08f;
+    private const float FlameCutHeight = 0.38f;
 
     // The base game's flames are Color(1, 0.28, 0) / Color(1, 0.71, 0)
     private static readonly Color FlameColor = new(1f, 0.68f, 0.05f);
@@ -283,6 +300,22 @@ public sealed class SuperFormAura(NCreature node)
 
     private static readonly AccessTools.FieldRef<NPowerUpVfx, Sprite2D> BackVfxRef =
         AccessTools.FieldRefAccess<NPowerUpVfx, Sprite2D>("_backVfx");
+
+    private static Shader? _baseShader;
+
+    /// <summary>Additive like the game's, with the sprite faded out above <c>cut</c> (UV y).</summary>
+    private static Shader BaseShader => _baseShader ??= new Shader
+    {
+        Code = """
+            shader_type canvas_item;
+            render_mode blend_add;
+            uniform float cut = 0.0;
+            uniform float full = 1.0;
+            void fragment() {
+                COLOR.a *= smoothstep(cut, full, UV.y);
+            }
+            """,
+    };
 
     private NPowerUpVfx? _vfx;
     private Sprite2D? _back;
@@ -320,9 +353,12 @@ public sealed class SuperFormAura(NCreature node)
                 return false;
             }
             vfx.SetProcess(false);
+            // No thin vertical light beams in front of the body
+            if (vfx.GetNodeOrNull<CanvasItem>("FrontVfx/beams_front") is { } beams) beams.Visible = false;
             _vfx = vfx;
             _back = back;
             _backOffset = back.GlobalPosition - vfx.GlobalPosition;
+            CutToBase(back);
             SetAlpha(0f);
             Recolor(vfx);
 
@@ -339,6 +375,22 @@ public sealed class SuperFormAura(NCreature node)
             Free();
             return false;
         }
+    }
+
+    /// <summary>Only the base of the flame columns, around the feet. Relative to the sprite, so it holds when moving.</summary>
+    private void CutToBase(Sprite2D back)
+    {
+        var visuals = node.Visuals.GetGlobalTransform();
+        var feetY = (visuals * bounds.End).Y;
+        var bodyHeight = bounds.Size.Y * visuals.Scale.Y;
+        var height = ViewportSize * back.GlobalScale.Y;
+        var top = back.GlobalPosition.Y - height / 2f;
+        float ToUv(float y) => (y - top) / height;
+
+        var material = new ShaderMaterial { Shader = BaseShader };
+        material.SetShaderParameter("cut", ToUv(feetY - bodyHeight * FlameCutHeight));
+        material.SetShaderParameter("full", ToUv(feetY - bodyHeight * FlameFullHeight));
+        back.Material = material;
     }
 
     /// <summary>Gold flames, on a copy of the material (the base game's is shared with every power-up).</summary>
@@ -401,5 +453,88 @@ public sealed class SuperFormAura(NCreature node)
         _vfx = null;
         _back = null;
         _on = false;
+    }
+}
+
+/// <summary>
+/// Super Form's yellow glow: a soft additive halo drawn behind the body, plus a yellow PointLight2D that lights the
+/// character and what's around them. Child of the creature's visuals, so it follows them. Visual only.
+/// </summary>
+public sealed class SuperFormGlow
+{
+    private const float FadeTime = 0.3f;
+    private const int TextureSize = 256;
+    private const float LightEnergy = 0.55f;
+
+    private static readonly Color HaloColor = new(1f, 0.82f, 0.2f);
+    private static readonly Color LightColor = new(1f, 0.85f, 0.35f);
+
+    private readonly Node2D _root;
+    private readonly PointLight2D _light;
+    private Tween? _tween;
+
+    private SuperFormGlow(Node2D root, PointLight2D light)
+    {
+        _root = root;
+        _light = light;
+    }
+
+    public static SuperFormGlow Create(Node visuals, Rect2 bounds, int canvasLayer)
+    {
+        var center = bounds.GetCenter() + new Vector2(0f, bounds.Size.Y * 0.05f);
+        var root = new Node2D { Name = "SuperFormGlow", Visible = false, Modulate = new Color(1f, 1f, 1f, 0f) };
+
+        var halo = new Sprite2D
+        {
+            Texture = Radial(HaloColor, [0.55f, 0.3f, 0.1f, 0f]),
+            Material = new CanvasItemMaterial { BlendMode = CanvasItemMaterial.BlendModeEnum.Add },
+            Position = center,
+            Scale = new Vector2(bounds.Size.X * 1.7f, bounds.Size.Y * 1.35f) / TextureSize,
+        };
+        root.AddChild(halo);
+
+        var light = new PointLight2D
+        {
+            Texture = Radial(Colors.White, [1f, 0.6f, 0.2f, 0f]),
+            Color = LightColor,
+            Energy = 0f,
+            BlendMode = Light2D.BlendModeEnum.Add,
+            Position = center,
+            TextureScale = Math.Max(bounds.Size.X, bounds.Size.Y) * 2f / TextureSize,
+            RangeLayerMin = canvasLayer,
+            RangeLayerMax = canvasLayer,
+        };
+        root.AddChild(light);
+
+        visuals.AddChild(root);
+        // Behind the body
+        visuals.MoveChild(root, 0);
+        return new SuperFormGlow(root, light);
+    }
+
+    /// <summary>Radial falloff: alphas at 0, 35%, 70% and 100% of the radius.</summary>
+    private static GradientTexture2D Radial(Color color, float[] alphas) => new()
+    {
+        Width = TextureSize,
+        Height = TextureSize,
+        Fill = GradientTexture2D.FillEnum.Radial,
+        FillFrom = new Vector2(0.5f, 0.5f),
+        FillTo = new Vector2(0.5f, 0f),
+        Gradient = new Gradient
+        {
+            Offsets = [0f, 0.35f, 0.7f, 1f],
+            Colors = alphas.Select(a => new Color(color, a)).ToArray(),
+        },
+    };
+
+    public void SetActive(bool on)
+    {
+        if (!GodotObject.IsInstanceValid(_root)) return;
+        _tween?.Kill();
+        if (on) _root.Visible = true;
+        _tween = _root.CreateTween().SetParallel();
+        _tween.TweenProperty(_root, "modulate:a", on ? 1f : 0f, FadeTime);
+        _tween.TweenProperty(_light, "energy", on ? LightEnergy : 0f, FadeTime);
+        if (!on) _tween.Chain().TweenCallback(Callable.From(() => _root.Visible = false));
     }
 }
