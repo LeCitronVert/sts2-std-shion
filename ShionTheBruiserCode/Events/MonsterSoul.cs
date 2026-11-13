@@ -18,13 +18,14 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Events;
 /// (= "If One Doesn't Cut It..." revealed: win a run in Ascension 1 with Shion), then for any character.
 /// Hold onto the Crystal: lose 10 Max HP, obtain Monstermancy.
 /// Smash the Crystal: heal to full HP, add a Regret to your Deck.
+/// Make a Quick Buck: gain 100 Gold (same outcome text for everyone).
 /// The outcome text depends on who picks: Shion, another Dreamer (Slal, Fry, Seels) or anyone else.
 /// </summary>
 public sealed class MonsterSoul : DreamersEventModel
 {
     private const string MaxHpLossKey = "MaxHpLoss";
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new MaxHpVar(MaxHpLossKey, 10m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new MaxHpVar(MaxHpLossKey, 10m), new GoldVar(100)];
 
     public override bool IsAllowed(IRunState runState) =>
         runState.UnlockState.IsEpochRevealed<ShionIfOneDoesntCutItEpoch>();
@@ -34,6 +35,7 @@ public sealed class MonsterSoul : DreamersEventModel
         new EventOption(this, Hold, $"{Id.Entry}.pages.INITIAL.options.HOLD", HoverTipFactory.FromCardWithCardHoverTips<ShionMonstermancy>())
             .ThatDecreasesMaxHp(DynamicVars[MaxHpLossKey].BaseValue),
         new EventOption(this, Smash, $"{Id.Entry}.pages.INITIAL.options.SMASH", HoverTipFactory.FromCardWithCardHoverTips<Regret>()),
+        new EventOption(this, Sell, $"{Id.Entry}.pages.INITIAL.options.SELL"),
     ];
 
     private async Task Hold()
@@ -53,6 +55,12 @@ public sealed class MonsterSoul : DreamersEventModel
         }
         await CardPileCmd.AddCurseToDeck<Regret>(Owner);
         SetEventFinished(L10NLookup($"{Id.Entry}.pages.SMASH_{WhoSuffix}.description"));
+    }
+
+    private async Task Sell()
+    {
+        await PlayerCmd.GainGold(DynamicVars.Gold.BaseValue, Owner!);
+        SetEventFinished(L10NLookup($"{Id.Entry}.pages.SELL.description"));
     }
 
     private string WhoSuffix => Owner!.Character switch
