@@ -137,7 +137,7 @@ public static class StrifeLayout
         var architect = room.CreatureNodes.FirstOrDefault(n =>
             GodotObject.IsInstanceValid(n) && n.Entity?.Monster is StrifeArchitect);
         var summons = room.CreatureNodes
-            .Where(n => GodotObject.IsInstanceValid(n) && n.Entity is { Side: CombatSide.Enemy } e && e.Monster is not StrifeArchitect && e.IsAlive)
+            .Where(n => GodotObject.IsInstanceValid(n) && n.Entity is { Side: CombatSide.Enemy } e && e.Monster is not StrifeArchitect && StrifeArchitect.IsStillFighting(e))
             .ToList();
 
         if (architect != null)

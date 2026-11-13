@@ -74,7 +74,14 @@ public sealed class StrifeArchitect : CustomMonsterModel
 
     private ArchitectsDesign? Design => Creature.GetPower<ArchitectsDesign>();
 
-    private bool AnySummonAlive => CombatState.GetTeammatesOf(Creature).Any(c => c != Creature && c.IsAlive);
+    private bool AnySummonAlive => CombatState.GetTeammatesOf(Creature).Any(c => c != Creature && IsStillFighting(c));
+
+    /// <summary>
+    /// Alive, or "dead" but held in the fight by a power that brings it back (Test Subject's first two phases,
+    /// Waterfall Giant about to blow): the same powers that stop the base game's combat from ending.
+    /// </summary>
+    public static bool IsStillFighting(Creature creature) =>
+        creature.IsAlive || creature.Powers.Any(p => p.ShouldStopCombatFromEnding() && !p.ShouldCreatureBeRemovedFromCombatAfterDeath(creature));
 
     private bool CycleDone => NextSummonIndex >= SummonCycle.Count;
 
