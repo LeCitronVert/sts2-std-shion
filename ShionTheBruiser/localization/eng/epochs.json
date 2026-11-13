@@ -50,8 +50,9 @@
   "SHIONTHEBRUISER-SLAL_RECONNAISSANCE_EPOCH.title": "Reconnaissance",
   "SHIONTHEBRUISER-SLAL_RECONNAISSANCE_EPOCH.description": "That big [blue]tower[/blue] looks promising. Cool places to explore, interesting people to meet.\n\nEven [aqua]fellow slimes[/aqua]! Not very talkative though.\n\nHe was told there is an [blue]Architect[/blue] up there. Wearing a mask, creating new stuff, running the place.\n\nThey have [i]so much[/i] in common. A future [aqua]friend[/aqua] for sure.",
   "SHIONTHEBRUISER-SLAL_RECONNAISSANCE_EPOCH.unlockInfo": "{IsRevealed:Played|Play} a run with the [purple]Bruiser[/purple]{IsRevealed:| to reveal this Epoch}.",
+  "SHIONTHEBRUISER-SLAL_RECONNAISSANCE_EPOCH.unlock": "The [aqua]Goofball[/aqua] creates its own portal and carelessly explores the [gold]Spire[/gold].",
   "SHIONTHEBRUISER-SLAL_RECONNAISSANCE_EPOCH.unlockText": "Unlocked [aqua]Slal, the Goofball[/aqua] as a playable character.",
-  "SHIONTHEBRUISER-SLAL_INFINITE_WORLDS_EPOCH.unlock": "The [aqua]Goofball[.aqua] creates its own portal and carelessly explores the [gold]Spire[/gold].",
+  "SHIONTHEBRUISER-SLAL_INFINITE_WORLDS_EPOCH.unlock": "The [aqua]Goofball[/aqua] creates its own portal and carelessly explores the [gold]Spire[/gold].",
 
   "SHIONTHEBRUISER-SLAL_MISTAKE_EPOCH.title": "Mistake",
   "SHIONTHEBRUISER-SLAL_MISTAKE_EPOCH.description": "These [aqua]precious gems[/aqua]. They should not be here.\n\nIt is probably his fault. [sine]It generally is.[/sine]\n\nHe needs to fix this. Those emeralds share their power to whoever completes their challenge.\n\nHe can do that. By accident. He can do many, many, [red]impossible[/red] things by accident.",
@@ -64,6 +65,7 @@
   "SHIONTHEBRUISER-SEELS_UNLOCK_EPOCH.title": "Finally!",
   "SHIONTHEBRUISER-SEELS_UNLOCK_EPOCH.description": "Yay!\n\nThe interdimensional Swiss Cheese that is our [gold]Chao Garden[/gold] is riddled with portals to other worlds! Now [jitter]THAT'S[/jitter] interesting!\n\nNo doubt that's where [blue]Slal[/blue] ran off to. This smells like [gold]adventure[/gold], I tell ya'!\n\nIt also smells like [red]bloodlust[/red] over there, but that's probably nothing.",
   "SHIONTHEBRUISER-SEELS_UNLOCK_EPOCH.unlockInfo": "{IsRevealed:Played|Play} a run with the [aqua]Goofball[/aqua]{IsRevealed:| to reveal this Epoch}.",
+  "SHIONTHEBRUISER-SEELS_UNLOCK_EPOCH.unlock": "TODO",
   "SHIONTHEBRUISER-SEELS_UNLOCK_EPOCH.unlockText": "The Reckless charges towards the [gold]Spire[/gold], ready for their next bold move.",
 
   "SHIONTHEBRUISER-SEELS_HOLD_ON_EPOCH.title": "Hold On...",
@@ -99,6 +101,7 @@
   "SHIONTHEBRUISER-FRY_UNLOCK_EPOCH.title": "TODO",
   "SHIONTHEBRUISER-FRY_UNLOCK_EPOCH.description": "TODO",
   "SHIONTHEBRUISER-FRY_UNLOCK_EPOCH.unlockInfo": "{IsRevealed:Played|Play} a run with the [blue]Reckless[/blue]{IsRevealed:| to reveal this Epoch}.",
+  "SHIONTHEBRUISER-FRY_UNLOCK_EPOCH.unlock": "TODO",
   "SHIONTHEBRUISER-FRY_UNLOCK_EPOCH.unlockText": "Unlocked [red]Fry, the Commander[/red] as a playable character.",
 
   "STORY_SHIONTHEBRUISER-DREAMERSSTORY": "Dreamers",

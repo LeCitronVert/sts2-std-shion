@@ -45,6 +45,21 @@ public static class CustomEpochRegistry
             typeToIdDictionary[epoch.GetType()] = epoch.Id;
         }
 
+#if STS2_BETA
+        // Beta builds the multiplayer epoch net ids from EpochModel.AllEpochs (types), and derives AllEpochIds and
+        // EpochIdsHashSet from it. Without this, any custom epoch in the unlock state throws while serializing
+        // the run (combat replay at combat end), which hangs the game.
+        var allEpochs = (List<Type>)AccessTools.Field(typeof(EpochModel), "_allEpochs").GetValue(null)!;
+        foreach (var epoch in CustomEpochs)
+        {
+            if (!allEpochs.Contains(epoch.GetType()))
+                allEpochs.Add(epoch.GetType());
+        }
+        // Drop the derived caches in case something read them before mod init
+        AccessTools.Field(typeof(EpochModel), "_allEpochIds").SetValue(null, null);
+        AccessTools.Field(typeof(EpochModel), "_epochIdsHashSet").SetValue(null, null);
+#endif
+
         MainFile.Logger.Info($"Registered {CustomEpochs.Count} custom epochs and {CustomStories.Count} custom stories");
     }
 
@@ -56,12 +71,15 @@ public static class CustomEpochRegistry
     [HarmonyPatch]
     private static class Patches
     {
+#if !STS2_BETA
+        // Beta: the ids come from _allEpochs, filled in Register
         [HarmonyPatch(typeof(EpochModel), nameof(EpochModel.AllEpochIds), MethodType.Getter)]
         [HarmonyPostfix]
         private static void InsertEpochIds(ref IReadOnlyList<string> __result)
         {
             __result = [.. __result, .. CustomEpochs.Select(e => e.Id)];
         }
+#endif
 
         [HarmonyPatch(typeof(SaveManager), "GetCardUnlockEpochIds")]
         [HarmonyPostfix]

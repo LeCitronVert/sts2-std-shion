@@ -27,6 +27,7 @@
   "SHIONTHEBRUISER-SHION_THE_BRUISER.pronounSubject": "she",
   "SHIONTHEBRUISER-SHION_THE_BRUISER.title": "The Bruiser",
   "SHIONTHEBRUISER-SHION_THE_BRUISER.titleObject": "Shion",
+  "SHIONTHEBRUISER-SHION_THE_BRUISER.shortTitle": "Shion, the Bruiser",
   "SHIONTHEBRUISER-SHION_THE_BRUISER.unlockText": "Play a single run with [green]{Prerequisite}[/green] to unlock this character.",
 
   "SHIONTHEBRUISER-SLAL_THE_ENDLESS.aromaPrinciple": "[sine][aqua]No thought... Random strategy...[/aqua][/sine]",
@@ -52,6 +53,7 @@
   "SHIONTHEBRUISER-SLAL_THE_ENDLESS.pronounSubject": "he",
   "SHIONTHEBRUISER-SLAL_THE_ENDLESS.title": "The Goofball",
   "SHIONTHEBRUISER-SLAL_THE_ENDLESS.titleObject": "Slal",
+  "SHIONTHEBRUISER-SLAL_THE_ENDLESS.shortTitle": "Slal, the Goofball",
   "SHIONTHEBRUISER-SLAL_THE_ENDLESS.unlockText": "Play a single run with [purple]{Prerequisite}[/purple] to unlock this character.",
 
   "SHIONTHEBRUISER-FRY_THE_COMMANDER.aromaPrinciple": "Command",
@@ -69,6 +71,7 @@
   "SHIONTHEBRUISER-FRY_THE_COMMANDER.pronounSubject": "he",
   "SHIONTHEBRUISER-FRY_THE_COMMANDER.title": "The Commander",
   "SHIONTHEBRUISER-FRY_THE_COMMANDER.titleObject": "Fry",
+  "SHIONTHEBRUISER-FRY_THE_COMMANDER.shortTitle": "Fry, the Commander",
   "SHIONTHEBRUISER-FRY_THE_COMMANDER.unlockText": "Play a single run with [blue]{Prerequisite}[/blue] to unlock this character.",
   "SHIONTHEBRUISER-SEELS_THE_RECKLESS.aromaPrinciple": "Flow to the rhythm... of blood, and music...",
   "SHIONTHEBRUISER-SEELS_THE_RECKLESS.banter.alive.endTurnPing": "C'mon, get moving, already!",
@@ -95,6 +98,7 @@
   "SHIONTHEBRUISER-SEELS_THE_RECKLESS.pronounSubject": "they",
   "SHIONTHEBRUISER-SEELS_THE_RECKLESS.title": "The Reckless",
   "SHIONTHEBRUISER-SEELS_THE_RECKLESS.titleObject": "Seels",
+  "SHIONTHEBRUISER-SEELS_THE_RECKLESS.shortTitle": "Seels, the Reckless",
   "SHIONTHEBRUISER-SEELS_THE_RECKLESS.unlockText": "Play a single run with [gold]{Prerequisite}[/gold] to unlock this character.",
 
   "SHIONTHEBRUISER-STRIFE_PING.SHION.enemiesUp": "The final push! Come on, everyone!",
