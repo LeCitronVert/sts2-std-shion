@@ -22,8 +22,9 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Strife;
 /// <item>His HP is infinite behind the scenes: a hit never takes him below 1 HP, it goes back to full after each hit, and
 /// he can't die until he's "defeated".
 /// The damage he takes is added up instead (<see cref="StrifeArchitect.TotalDamage"/>).</item>
+/// <item>During a DPS check (<see cref="MakeYourPoint"/>) his HP is the check's health bar instead (still never below 1:
+/// emptying it stuns him).</item>
 /// <item>Gives each enemy that joins the fight its Ring Bounty (<see cref="StrifeConfig.BountyFor"/>).</item>
-/// <item>Triggers <see cref="FieldExperiment"/> and <see cref="MakeYourPoint"/> when he takes damage.</item>
 /// </list>
 /// </summary>
 public sealed class ArchitectsDesign : ShionTheBruiserPower
@@ -42,9 +43,6 @@ public sealed class ArchitectsDesign : ShionTheBruiserPower
     public RoomType? PendingSummonType { get; set; }
 
     private StrifeArchitect? Architect => Owner.Monster as StrifeArchitect;
-
-    private IEnumerable<Creature> LivingSummons =>
-        Owner.CombatState?.GetTeammatesOf(Owner).Where(c => c != Owner && c.IsAlive) ?? [];
 
     public override bool ShouldDie(Creature creature) => creature != Owner || AllowDeath;
 
@@ -84,18 +82,14 @@ public sealed class ArchitectsDesign : ShionTheBruiserPower
         _uncappedHpLoss = 0;
         var total = result.BlockedDamage + unblocked;
         Architect?.AddDamage(total);
+
+        if (Architect is { InCheck: true } architect)
+        {
+            await architect.OnCheckDamaged(unblocked);
+            return;
+        }
         // Infinite HP behind the scenes
         if (Owner.CurrentHp < Owner.MaxHp) Owner.SetCurrentHpInternal(Owner.MaxHp);
-
-        if (total > 0 && Owner.GetPower<FieldExperiment>() is { } fieldExperiment)
-        {
-            await fieldExperiment.Spread(choiceContext, total, LivingSummons.ToList());
-        }
-
-        if (unblocked > 0 && Owner.GetPower<MakeYourPoint>() is { } makeYourPoint)
-        {
-            await makeYourPoint.Reduce(choiceContext, unblocked);
-        }
     }
 
     public override Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
@@ -110,63 +104,41 @@ public sealed class ArchitectsDesign : ShionTheBruiserPower
     }
 }
 
-/// <summary>All damage applied to the Architect is spread evenly between the other enemies, if any are alive.</summary>
+/// <summary>
+/// While other enemies are alive (or about to come back), the Architect can't be targeted nor hit, and takes no damage.
+/// </summary>
 public sealed class FieldExperiment : ShionTheBruiserPower
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public async Task Spread(PlayerChoiceContext choiceContext, int damage, IReadOnlyList<Creature> summons)
-    {
-        if (summons.Count == 0 || damage <= 0) return;
-        Flash();
+    private bool Protects(Creature? creature) =>
+        creature == Owner && Owner.IsAlive && Owner.Monster is StrifeArchitect { AnySummonAlive: true, InCheck: false };
 
-        var share = damage / summons.Count;
-        var remainder = damage % summons.Count;
-        // The remainder goes to random summons, one point each
-        var extra = summons.ToList();
-        Owner.CombatState!.RunState.Rng.CombatTargets.Shuffle(extra);
-        var bonus = extra.Take(remainder).ToHashSet();
+    public override bool ShouldAllowHitting(Creature creature) => !Protects(creature);
 
-        foreach (var summon in summons)
-        {
-            var amount = share + (bonus.Contains(summon) ? 1 : 0);
-            if (amount <= 0 || summon.IsDead) continue;
-            await CreatureCmd.Damage(choiceContext, summon, amount, ValueProp.Unpowered, (Creature?)null, null);
-        }
-    }
+    public override bool ShouldAllowTargeting(Creature target) => !Protects(target);
+
+    // In case something hits him anyway (random targets picked before, damage that ignores hitting...)
+    public override decimal ModifyDamageCap(Creature? target, ValueProp props, Creature? dealer, CardModel? cardSource) =>
+        Protects(target) ? 0m : decimal.MaxValue;
+
+    public override decimal ModifyHpLostBeforeOsty(Creature target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource) =>
+        Protects(target) ? 0m : amount;
 }
 
 /// <summary>
-/// Dealing unblocked damage to the Architect reduces his Strength by that much until the end of his turn.
-/// Always shown; its number is the Strength currently taken away.
+/// DPS check. After the Architect's line, his health bar shows up and he attacks every turn (50% more each consecutive
+/// turn) until it's emptied, which stuns him. Each of his attacks makes the next checks deal 20% more damage, with one
+/// more hit, and gives them 20% more health. Information only: the logic is in <see cref="StrifeArchitect"/>.
 /// </summary>
 public sealed class MakeYourPoint : ShionTheBruiserPower
 {
-    public override PowerType Type => PowerType.Debuff;
+    public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
 
-    private int _reduction;
-
-    public override int DisplayAmount => _reduction;
-
-    public async Task Reduce(PlayerChoiceContext choiceContext, int amount)
-    {
-        if (amount <= 0) return;
-        Flash();
-        _reduction += amount;
-        InvokeDisplayAmountChanged();
-        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, -amount, Owner, null);
-    }
-
-    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
-    {
-        if (side != Owner.Side || _reduction <= 0) return;
-        var restored = _reduction;
-        _reduction = 0;
-        InvokeDisplayAmountChanged();
-        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, restored, Owner, null);
-    }
+    /// <summary>Visual only: when a check starts or is broken.</summary>
+    public void Trigger() => Flash();
 }
 
 /// <summary>

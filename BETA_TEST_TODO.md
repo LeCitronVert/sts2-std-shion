@@ -1976,3 +1976,34 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - Your answers: Shion's struck-through "Architect up – Dead" line is kept; Ironclad's line fixed to "LET ME DEAL THE FINAL BLOW!!".
 - Button labels: [Answer], [Uh-oh], [Ask]; "Continue" / "Fight" for the rest.
 - Ping lines live in `characters.json` as `SHIONTHEBRUISER-STRIFE_PING.{CHARACTER}.{enemiesUp|architectUp}[Berserk|Dead]` and are picked in `Patches/BerserkEndTurnPingPatch.cs`. A missing key falls back to the normal ping, so you can add Slal/Fry lines later without touching code.
+
+## 36. Act 4 Architect: Field Experiment immunity, new buff cycle, Make Your Point DPS checks
+
+**Setup**
+- [ ] Re-export the .pck (localization changed: `powers.json`).
+
+**Field Experiment**
+- [ ] While any summon is alive (Test Subject between phases counts too), you can't target the Architect, AoE skips him, and nothing damages him. His damage counter doesn't go up.
+- [ ] Once they're all dead he can be targeted again.
+
+**Buff cycle** (goes to him + every living summon for Strength/Vigor; Block/Plating/Heal go to summons only; later summons still copy his Strength and Vigor)
+- [ ] 1st loop: +2 Strength → 20 Block → +7 Vigor → heal 5% Max HP → Intensify.
+- [ ] 2nd loop: +4 Strength → 20 Block + 10 Plating → +14 Vigor → heal 10% → Growing Impatience −1 card.
+- [ ] Later loops keep doubling: 8 Str / 20 Block + 20 Plating / 28 Vigor / 20% heal, then 40%, and the heal stops at 50%.
+
+**Make Your Point (DPS check)**
+- [ ] After 2 summon lines are dead: his line (unknown intent), then his health bar shows up (real red bar with numbers, the "Damage" counter is hidden) and his intent is the attack.
+- [ ] Bar = 300 × players (dead players count) × (1 + 0.2 × attack turns so far). 400 base at Ascension 8+.
+- [ ] 1st check: 100 damage (150 at Ascension 9+), plus his Strength/Vigor. If you don't empty the bar he attacks again next turn for 150, then 225 (compounding ×1.5). The bar keeps its damage between those turns.
+- [ ] Each attack he makes adds +20% damage and +1 hit to later checks (total split between hits). Example: after 1 attack, the next check is 120 as 60×2 with a 360 HP bar (solo).
+- [ ] Emptying the bar: Stunned intent right away, the bar is replaced by the damage counter, he skips his turn, then summons the next line. After the last line's check: "defeated".
+- [ ] Damage dealt during the check still counts toward the score.
+- [ ] Multiplayer: bar, intent, and stun timing match on every client.
+
+**Decisions I made**
+- Your answers: doubling per Intensify (Block stays 20, Plating +10 per tier), Strength/Vigor on him too (so they add to his attack), the total is split between hits, the bar persists and a stun skips his turn.
+- "Each time this happens" = each attack turn he actually made. That same counter drives the bar's Cycles, the +20% damage, and the +1 hit, and only for **later** checks.
+- The consecutive +50% compounds (100 → 150 → 225). The +20% per attack is additive (1 + 0.2n), like the bar formula. Both are tunables in `StrifeConfig`.
+- His line turn (unknown intent) before the check is kept. Damage dealt to him on that turn only goes to the score.
+- Make Your Point no longer touches Strength. It's now an info-only buff icon that flashes when a check starts and when it's broken.
+- The old "attack for the party's combined Max HP" is gone.

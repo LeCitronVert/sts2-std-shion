@@ -114,21 +114,48 @@ public static class StrifeConfig
         BuffKind.Strength, BuffKind.Block, BuffKind.Vigor, BuffKind.HealPercent, BuffKind.Impatience,
     ];
 
-    /// <summary>Value of a buff at tier 0 (before any Intensify), and how much each Intensify adds.</summary>
-    public static (int Base, int PerTier) BuffValues(BuffKind kind) => kind switch
+    /// <summary>Value of a buff at tier 0 (before any Intensify). Each Intensify doubles it.</summary>
+    public static int BuffBaseValue(BuffKind kind) => kind switch
     {
-        BuffKind.Strength => (1, 1),
-        BuffKind.Block => (10, 2),
-        BuffKind.Vigor => (5, 2),
-        BuffKind.HealPercent => (10, 2),
-        _ => (0, 0),
+        BuffKind.Strength => 2,
+        BuffKind.Block => 20,
+        BuffKind.Vigor => 7,
+        BuffKind.HealPercent => 5,
+        _ => 0,
     };
 
-    public static int BuffValue(BuffKind kind, int tier)
+    /// <summary>The Block buff doesn't double: each Intensify adds this much Plating to it instead.</summary>
+    public const int PlatingPerTier = 10;
+
+    /// <summary>The heal buff never heals more than this % of Max HP.</summary>
+    public const int MaxHealPercent = 50;
+
+    public static int BuffValue(BuffKind kind, int tier) => kind switch
     {
-        var (b, perTier) = BuffValues(kind);
-        return b + perTier * tier;
-    }
+        BuffKind.Block => BuffBaseValue(kind),
+        BuffKind.HealPercent => Math.Min(MaxHealPercent, BuffBaseValue(kind) << Math.Min(tier, 16)),
+        _ => BuffBaseValue(kind) << Math.Min(tier, 16),
+    };
+
+    public static int PlatingValue(int tier) => PlatingPerTier * tier;
+
+    // ── Make Your Point (DPS checks) ─────────────────────────────────────────
+
+    /// <summary>Damage of his attack (total, split between the hits). Ascension 9 (Deadly Enemies) uses the second one.</summary>
+    public const int CheckAttackDamage = 100;
+    public const int CheckAttackDamageAscension = 150;
+
+    /// <summary>Each consecutive turn he attacks in the same check, the damage is multiplied by (1 + this).</summary>
+    public const decimal ConsecutiveAttackBoost = 0.5m;
+
+    /// <summary>Each attack he made makes the later checks deal (this) more damage (additive) and one more hit.</summary>
+    public const decimal AttackCycleDamageBoost = 0.2m;
+    public const int AttackCycleExtraHits = 1;
+
+    /// <summary>Health bar of a check: HpBase × players (dead ones too) × (1 + PerAttack × attacks he made). Ascension 8 (Tough Enemies) uses the second base.</summary>
+    public const int CheckHpBase = 300;
+    public const int CheckHpBaseAscension = 400;
+    public const decimal CheckHpPerAttack = 0.2m;
 
     // ── Growing Impatience ───────────────────────────────────────────────────
 

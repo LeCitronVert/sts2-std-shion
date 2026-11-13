@@ -9,7 +9,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Strife;
 
 /// <summary>
 /// The Act 4 Architect's HP is infinite: instead of his health bar, the total damage he took this fight is shown.
-/// Visual only.
+/// During a DPS check (Make Your Point) his real health bar is shown instead. Visual only.
 /// </summary>
 [HarmonyPatch(typeof(NHealthBar), nameof(NHealthBar.RefreshValues))]
 public static class ArchitectDamageBarPatch
@@ -28,7 +28,8 @@ public static class ArchitectDamageBarPatch
     public static void Postfix(NHealthBar __instance)
     {
         if (CreatureRef(__instance) is not { Monster: StrifeArchitect architect }) return;
-        if (__instance.HpBarContainer is { } bar) bar.Modulate = Colors.Transparent;
+        var inCheck = architect.InCheck;
+        if (__instance.HpBarContainer is { } bar) bar.Modulate = inCheck ? Colors.White : Colors.Transparent;
 
         var label = __instance.GetNodeOrNull<Label>(LabelName);
         if (label == null)
@@ -44,6 +45,7 @@ public static class ArchitectDamageBarPatch
 
     private static void SetText(Label label, StrifeArchitect architect)
     {
+        label.Visible = !architect.InCheck;
         var text = new LocString("monsters", "SHIONTHEBRUISER-STRIFE_ARCHITECT.DAMAGE_COUNTER");
         text.Add("Damage", architect.TotalDamage);
         label.Text = text.GetFormattedText();

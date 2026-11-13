@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Animation;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
@@ -23,10 +24,12 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Strife;
 /// <list type="bullet">
 /// <item>No summon alive: summons the next line of <see cref="StrifeConfig.SummonCycle"/>.</item>
 /// <item>Summons alive: goes through <see cref="StrifeConfig.BuffCycle"/> (buffs reach his summons, see <see cref="ArchitectsDesign"/>).</item>
-/// <item>Once his summons are all dead: if he summoned twice since his last attack, he says a line (unknown intent), then
-/// attacks for the combined Max HP of the party. Once the whole cycle was summoned (and that attack done), he is
-/// "defeated". Otherwise he summons the next line.</item>
+/// <item>Once his summons are all dead: if he summoned twice since his last check, he says a line (unknown intent), then
+/// starts a DPS check (<see cref="MakeYourPoint"/>): his health bar shows up and he attacks every turn (stronger each
+/// consecutive turn) until the players empty it. That stuns him for a turn. Once the whole cycle was summoned (and that
+/// check broken), he is "defeated". Otherwise he summons the next line.</item>
 /// </list>
+/// While his summons are alive he can't be hit (<see cref="FieldExperiment"/>).
 /// </summary>
 public sealed class StrifeArchitect : CustomMonsterModel
 {
@@ -57,6 +60,21 @@ public sealed class StrifeArchitect : CustomMonsterModel
     /// <summary>Strength his own buffs gave him (shared with summons that join later; debuffs don't count).</summary>
     public int SharedStrength { get; private set; }
 
+    /// <summary>Attack turns he made this fight (every check after that is stronger: more damage, more hits, more HP).</summary>
+    public int AttackTurns { get; private set; }
+
+    /// <summary>A DPS check is running: his health bar is shown and he attacks every turn until it's emptied.</summary>
+    public bool InCheck { get; private set; }
+
+    /// <summary>What's left of the current check's health bar.</summary>
+    public int CheckHp { get; private set; }
+
+    /// <summary><see cref="AttackTurns"/> when the current check started (the check's scaling).</summary>
+    private int _attacksBeforeCheck;
+
+    /// <summary>Attacks made in the current check (each one boosts the next).</summary>
+    private int _consecutiveAttacks;
+
     /// <summary>Damage taken this fight (his score).</summary>
     public long TotalDamage { get; private set; }
 
@@ -74,7 +92,7 @@ public sealed class StrifeArchitect : CustomMonsterModel
 
     private ArchitectsDesign? Design => Creature.GetPower<ArchitectsDesign>();
 
-    private bool AnySummonAlive => CombatState.GetTeammatesOf(Creature).Any(c => c != Creature && IsStillFighting(c));
+    public bool AnySummonAlive => CombatState.GetTeammatesOf(Creature).Any(c => c != Creature && IsStillFighting(c));
 
     /// <summary>
     /// Alive, or "dead" but held in the fight by a power that brings it back (Test Subject's first two phases,
@@ -85,14 +103,48 @@ public sealed class StrifeArchitect : CustomMonsterModel
 
     private bool CycleDone => NextSummonIndex >= SummonCycle.Count;
 
-    private int PartyMaxHp
+    private static bool HasAscension(AscensionLevel level)
+    {
+        // The canonical model (Bestiary, previews outside of a run) has no run
+        try { return AscensionHelper.HasAscension(level); }
+        catch (InvalidOperationException) { return false; }
+        catch (NullReferenceException) { return false; }
+    }
+
+    private int PlayerCount
     {
         get
         {
-            // The canonical model (Bestiary, previews outside of a fight) has no creature
-            try { return CombatState.Players.Sum(p => p.Creature.MaxHp); }
-            catch (InvalidOperationException) { return 0; }
-            catch (NullReferenceException) { return 0; }
+            try { return Math.Max(1, CombatState.Players.Count); }
+            catch (InvalidOperationException) { return 1; }
+            catch (NullReferenceException) { return 1; }
+        }
+    }
+
+    /// <summary>Hits of the current check's attacks: one more for every attack he made before it.</summary>
+    public int CheckHits => 1 + AttackCycleExtraHits * _attacksBeforeCheck;
+
+    /// <summary>Total damage of his next attack (split between <see cref="CheckHits"/>), before Strength and Vigor.</summary>
+    public int CheckTotalDamage
+    {
+        get
+        {
+            decimal damage = HasAscension(AscensionLevel.DeadlyEnemies) ? CheckAttackDamageAscension : CheckAttackDamage;
+            damage *= 1m + AttackCycleDamageBoost * _attacksBeforeCheck;
+            for (var i = 0; i < _consecutiveAttacks; i++) damage *= 1m + ConsecutiveAttackBoost;
+            return (int)Math.Ceiling(damage);
+        }
+    }
+
+    private int CheckHitDamage => (int)Math.Ceiling(CheckTotalDamage / (decimal)CheckHits);
+
+    /// <summary>HpBase × players (dead ones too) × (1 + 0.2 × attack turns he made).</summary>
+    private int NewCheckMaxHp
+    {
+        get
+        {
+            decimal hpBase = HasAscension(AscensionLevel.ToughEnemies) ? CheckHpBaseAscension : CheckHpBase;
+            return (int)Math.Ceiling(hpBase * PlayerCount * (1m + CheckHpPerAttack * AttackTurns));
         }
     }
 
@@ -108,7 +160,7 @@ public sealed class StrifeArchitect : CustomMonsterModel
     {
         _summon = new MoveState("SUMMON", SummonMove, new SummonIntent());
         _taunt = new MoveState("TAUNT", TauntMove, new UnknownIntent());
-        _bigAttack = new MoveState("BIG_ATTACK", BigAttackMove, new SingleAttackIntent(() => PartyMaxHp));
+        _bigAttack = new MoveState("BIG_ATTACK", BigAttackMove, new ArchitectAttackIntent(() => CheckHitDamage, () => CheckHits));
         _defeated = new MoveState("DEFEATED", DefeatedMove, new UnknownIntent());
         _buffs = new Dictionary<BuffKind, MoveState>
         {
@@ -137,6 +189,7 @@ public sealed class StrifeArchitect : CustomMonsterModel
 
     private MoveState Decide()
     {
+        if (InCheck) return _bigAttack;
         if (AnySummonAlive) return _buffs[BuffCycle[BuffIndex % BuffCycle.Count]];
         if (SummonsSinceAttack >= SummonsPerBigAttack) return _taunt;
         if (CycleDone) return _defeated;
@@ -262,7 +315,12 @@ public sealed class StrifeArchitect : CustomMonsterModel
                 foreach (var summon in summons) await PowerCmd.Apply<VigorPower>(context, summon, value, Creature, null);
                 break;
             case BuffKind.Block:
-                foreach (var summon in summons) await CreatureCmd.GainBlock(summon, value, ValueProp.Move, null);
+                var plating = PlatingValue(Tier);
+                foreach (var summon in summons)
+                {
+                    await CreatureCmd.GainBlock(summon, value, ValueProp.Move, null);
+                    if (plating > 0) await PowerCmd.Apply<PlatingPower>(context, summon, plating, Creature, null);
+                }
                 break;
             case BuffKind.HealPercent:
                 foreach (var summon in summons) await CreatureCmd.Heal(summon, Math.Ceiling(summon.MaxHp * value / 100m));
@@ -284,12 +342,54 @@ public sealed class StrifeArchitect : CustomMonsterModel
         var line = RunRng.MonsterAi.NextInt(BigAttackLineCount);
         TalkCmd.Play(new LocString("monsters", $"{LocPrefix}.BIG_ATTACK_LINE.{line}"), Creature, VfxColor.DarkGray, VfxDuration.Long);
         await Cmd.CustomScaledWait(0.6f, 1.2f);
+        StartCheck();
+    }
+
+    /// <summary>Make Your Point: his health bar shows up, the players must empty it before he stops attacking.</summary>
+    private void StartCheck()
+    {
+        SummonsSinceAttack = 0;
+        _attacksBeforeCheck = AttackTurns;
+        _consecutiveAttacks = 0;
+        CheckHp = NewCheckMaxHp;
+        InCheck = true;
+        Creature.GetPower<MakeYourPoint>()?.Trigger();
+        // Display first: the HP change refreshes the health bar
+        Creature.HpDisplay = HpDisplay.Normal;
+        Creature.SetMaxHpInternal(CheckHp);
+        Creature.SetCurrentHpInternal(CheckHp);
+        DamageChanged?.Invoke(this);
+    }
+
+    /// <summary>Unblocked damage he took during a check (real damage only). Emptying the bar stuns him.</summary>
+    public async Task OnCheckDamaged(int unblocked)
+    {
+        if (!InCheck || unblocked <= 0) return;
+        CheckHp = Math.Max(0, CheckHp - unblocked);
+        if (CheckHp > 0)
+        {
+            Creature.SetCurrentHpInternal(CheckHp);
+            return;
+        }
+
+        InCheck = false;
+        Creature.GetPower<MakeYourPoint>()?.Trigger();
+        Creature.HpDisplay = HpDisplay.InfiniteWithoutNumbers;
+        Creature.SetMaxHpInternal(InfiniteHp);
+        Creature.SetCurrentHpInternal(InfiniteHp);
+        DamageChanged?.Invoke(this);
+        // Then the next summon line (or his defeat)
+        await CreatureCmd.Stun(Creature, "DECIDE");
     }
 
     private async Task BigAttackMove(IReadOnlyList<Creature> _)
     {
-        SummonsSinceAttack = 0;
-        await DamageCmd.Attack(PartyMaxHp).FromMonster(this)
+        if (!InCheck) return;
+        var hits = CheckHits;
+        var damage = CheckHitDamage;
+        AttackTurns++;
+        _consecutiveAttacks++;
+        await DamageCmd.Attack(damage).WithHitCount(hits).FromMonster(this)
             .WithAttackerAnim("Attack", 0.5f)
             .WithHitFx("vfx/vfx_attack_lightning")
             .Execute(null);
@@ -325,6 +425,18 @@ public sealed class StrifeArchitect : CustomMonsterModel
         animator.AddAnyState("Dead", dead);
         return animator;
     }
+}
+
+/// <summary>The Architect's DPS-check attack: one total split between hits (shown as single when it's one hit).</summary>
+public sealed class ArchitectAttackIntent : MultiAttackIntent
+{
+    public ArchitectAttackIntent(Func<decimal> damageCalc, Func<int> repeatCalc) : base(0, repeatCalc)
+    {
+        DamageCalc = damageCalc;
+    }
+
+    protected override LocString IntentLabelFormat =>
+        new("intents", Repeats > 1 ? "FORMAT_DAMAGE_MULTI" : "FORMAT_DAMAGE_SINGLE");
 }
 
 /// <summary>
