@@ -303,8 +303,9 @@ public static class ShionMechanicsHelper
         return true;
     }
 
-    // Cards whose own Galvanised effect triggered during their current play (Star Rod).
-    // Cleared with ConsumeCardGalvanised once the play ends.
+    // Cards whose own Galvanised effect triggered during their current play (Star Rod, Edge the Chao).
+    // Readers clear it in BeforeCardPlayed and check it with WasCardGalvanised once the play ends
+    // (non-consuming, so several relics can read the same play).
     private static readonly ConditionalWeakTable<CardModel, object> _galvanisedCards = new();
 
     // TriggerGalvanised for a card's own Galvanised effect: also remembers that this card was Galvanised
@@ -317,8 +318,8 @@ public static class ShionMechanicsHelper
 
     public static void ClearCardGalvanised(CardModel card) => _galvanisedCards.Remove(card);
 
-    // Whether the card's own Galvanised effect triggered since its play started, and clears it
-    public static bool ConsumeCardGalvanised(CardModel card) => _galvanisedCards.Remove(card);
+    // Whether the card's own Galvanised effect triggered since its play started
+    public static bool WasCardGalvanised(CardModel card) => _galvanisedCards.TryGetValue(card, out _);
 
     // Patch Up : Heals by X amount until you're at the Patch Up threshold (50%HP by default)
     /// <summary>

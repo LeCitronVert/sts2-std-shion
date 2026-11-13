@@ -23,7 +23,7 @@
     "SHIONTHEBRUISER-SHION_COME_WHAT_MAY.title": "Come What May",
     "SHIONTHEBRUISER-SHION_ENERGY_SPARK.description": "Gain {VigorPower:diff()} [gold]Vigor[/gold].\nDraw {Cards:diff()} {Cards:plural:card|cards}.\n[gold]Critical Draw:[/gold] {CriticalDraw:diff()}%",
     "SHIONTHEBRUISER-SHION_ENERGY_SPARK.title": "Energy Spark",
-    "SHIONTHEBRUISER-SHION_ENERGY_BALL.description": "Deal {CalculatedDamage:diff()} damage.\n[gold]Galvanised 1:[/gold] Deals {ExtraDamage:diff()} additional damage, then gain {VigorRefundPercent:diff()}% of the [gold]Vigor[/gold] consumed next turn.{InCombat:\n(Gain {VigorRefund:diff()} [gold]Vigor[/gold] next turn)|}",
+    "SHIONTHEBRUISER-SHION_ENERGY_BALL.description": "Deal {CalculatedDamage:diff()} damage.\n[gold]Galvanised 1:[/gold] Deals {ExtraDamage:diff()} additional damage, then gain {VigorNextTurn:diff()} [gold]Vigor[/gold] next turn.",
     "SHIONTHEBRUISER-SHION_ENERGY_BALL.title": "Energy Ball",
     "SHIONTHEBRUISER-SHION_CRITICAL_STRIKE.description": "Deal {Damage:diff()} damage.\n[gold]Berserk:[/gold] This Attack always deals [gold]Critical Hits[/gold].",
     "SHIONTHEBRUISER-SHION_CRITICAL_STRIKE.title": "Critical Strike",

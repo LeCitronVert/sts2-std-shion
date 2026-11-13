@@ -90,7 +90,7 @@ public class StarRod : ShionTheBruiserRelic
         _currentAttack = null;
         _hitEnemies.Clear();
 
-        if (!ShionMechanicsHelper.ConsumeCardGalvanised(card) || targets.Count == 0) return;
+        if (!ShionMechanicsHelper.WasCardGalvanised(card) || targets.Count == 0) return;
 
         Flash();
         var owner = Owner.Creature;

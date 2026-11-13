@@ -7,7 +7,7 @@ ShionTheBruiser.json::JSON::-1::1794498961::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1781941777
-::res://bin/ExportRelease/net9.0/publish/::1794499408
+::res://bin/ExportRelease/net9.0/publish/::1794566922
 ShionTheBruiser.deps.json::JSON::-1::1794499193::0::1::::<><><>0<>0<><>::
 ::res://ci/::1792939391
 ::res://ci/game-refs/::1792939391
@@ -1335,7 +1335,7 @@ combat_messages.json::JSON::-1::1794138227::0::1::::<><><>0<>0<><>::
 enchantments.json::JSON::-1::1792675405::0::1::::<><><>0<>0<><>::
 encounters.json::JSON::-1::1794321072::0::1::::<><><>0<>0<><>::
 epochs.json::JSON::-1::1794068305::0::1::::<><><>0<>0<><>::
-events.json::JSON::-1::1794319339::0::1::::<><><>0<>0<><>::
+events.json::JSON::-1::1794566882::0::1::::<><><>0<>0<><>::
 main_menu_ui.json::JSON::-1::1794316645::0::1::::<><><>0<>0<><>::
 monsters.json::JSON::-1::1794316645::0::1::::<><><>0<>0<><>::
 orbs.json::JSON::-1::1793183274::0::1::::<><><>0<>0<><>::
@@ -1941,7 +1941,7 @@ SlalCardKeywords.cs::CSharpScript::6802432698703623791::1793567535::0::1::::<><>
 SlalCardTags.cs::CSharpScript::1358202875028359775::1793567535::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiserCode/Events/::1794062828
 DreamersEventModel.cs::CSharpScript::7089611983064730628::1794062082::0::1::::<><><>0<>0<><>::
-MonsterSoul.cs::CSharpScript::5387253509491663435::1794062082::0::1::::<><><>0<>0<><>::
+MonsterSoul.cs::CSharpScript::5387253509491663435::1794566882::0::1::::<><><>0<>0<><>::
 NinjaTrialPatch.cs::CSharpScript::7970732125826455399::1794062250::0::1::::<><><>0<>0<><>::
 TeamBattle.cs::CSharpScript::2145944776590101777::1794063267::0::1::::<><><>0<>0<><>::
 TheGambler.cs::CSharpScript::2724165014916345818::1794062828::0::1::::<><><>0<>0<><>::

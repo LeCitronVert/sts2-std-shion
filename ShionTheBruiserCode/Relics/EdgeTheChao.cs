@@ -1,7 +1,7 @@
 using BaseLib.Extensions;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -9,7 +9,9 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Character;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Extensions;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
@@ -28,38 +30,38 @@ public class EdgeTheChao() : ShionTheBruiserRelic
     public override RelicRarity Rarity =>
         RelicRarity.Rare;
 
-    public const int RefundPercent = 20;
-    public const int RefundCap = 15;
-    
+    public const int VigorNextTurnAmount = 5;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("RefundPercent", RefundPercent),
-        new DynamicVar("RefundCap", RefundCap)
+        new PowerVar<VigorNextTurn>(VigorNextTurnAmount)
     ];
-    
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(ShionCardKeywords.Galvanised),
         HoverTipFactory.FromPower<VigorPower>(),
         HoverTipFactory.FromPower<VigorNextTurn>()
     ];
 
-    public override async Task AfterPowerAmountChanged(
-        PlayerChoiceContext context,
-        PowerModel power,
-        decimal amount,
-        Creature? applier,
-        CardModel? cardSource)
+    // Galvanised Attack = an Attack whose own Galvanised effect triggered during this play
+    // (tracked by ShionMechanicsHelper.TriggerGalvanised(CardModel, ...), shared with Star Rod).
+    public override Task BeforeCardPlayed(CardPlay cardPlay)
     {
-        if (power.Owner != Owner.Creature || power is not VigorPower || amount >= 0)
+        var card = cardPlay.Card;
+        if (card.Owner != Owner || card.Type != CardType.Attack) return Task.CompletedTask;
+
+        // Each play (replays included) starts fresh
+        ShionMechanicsHelper.ClearCardGalvanised(card);
+        return Task.CompletedTask;
+    }
+
+    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        var card = cardPlay.Card;
+        if (card.Owner != Owner || card.Type != CardType.Attack || !ShionMechanicsHelper.WasCardGalvanised(card))
             return;
 
-        // Rounded down per consumption so Vigor stays a whole number.
-        var vigorNextTurn = Math.Min(Math.Floor(-amount * RefundPercent / 100M), RefundCap);
-        if (vigorNextTurn <= 0)
-            return;
-
-        // Applying VigorNextTurn (not VigorPower) mid-attack is safe: it doesn't touch
-        // VigorPower's pending attack command, so no deferral to AfterAttack is needed.
         Flash();
         CompanionVisuals.PlayEdgeProc(Owner.Creature);
-        await PowerCmd.Apply<VigorNextTurn>(context, Owner.Creature, vigorNextTurn, Owner.Creature, null);
+        await PowerCmd.Apply<VigorNextTurn>(choiceContext, Owner.Creature, DynamicVars["VigorNextTurn"].BaseValue, Owner.Creature, null);
     }
 }
