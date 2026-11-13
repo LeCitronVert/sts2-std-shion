@@ -58,13 +58,24 @@ public class SeelsBloodPunch() : SeelsTheRecklessCard(1,
         var damage = DynamicVars.CalculationBase.BaseValue
             + DynamicVars.ExtraDamage.BaseValue * SeelsMechanicsHelper.TimesLostHpThisCombat(Owner.Creature);
         await DamageCmd.Attack(damage)
-            .FromCard(this)
+            .FromCard(this, play)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_bloody_impact")
             .Execute(choiceContext);
     }
 
-    public override (PileType, CardPilePosition) ModifyCardPlayResultPileTypeAndPosition(CardModel card, bool isAutoPlay, ResourceInfo resources, PileType pileType, CardPilePosition position)
+#if STS2_BETA
+    public override CardLocation ModifyCardPlayResultLocation(CardModel card, bool isAutoPlay, ResourceInfo resources, CardLocation location)
+    {
+        var (pileType, position) = ModifyResultPile(card, location.pileType, location.position);
+        return location with { pileType = pileType, position = position };
+    }
+#else
+    public override (PileType, CardPilePosition) ModifyCardPlayResultPileTypeAndPosition(CardModel card, bool isAutoPlay, ResourceInfo resources, PileType pileType, CardPilePosition position) =>
+        ModifyResultPile(card, pileType, position);
+#endif
+
+    private (PileType, CardPilePosition) ModifyResultPile(CardModel card, PileType pileType, CardPilePosition position)
     {
         return card == this && pileType == PileType.Discard ? (PileType.Draw, CardPilePosition.Random) : (pileType, position);
     }

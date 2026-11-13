@@ -70,7 +70,7 @@ public class SeelsBlowoutBlast() : SeelsTeamUpCard(0,
         if (hits <= 0) return;
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, play)
             .Targeting(play.Target)
             .WithHitCount(hits)
             .WithHitFx("vfx/vfx_bloody_impact")

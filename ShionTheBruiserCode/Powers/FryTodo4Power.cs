@@ -17,7 +17,11 @@ public class FryTodo4Power : FryTheCommanderPower
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>()];
 
+#if STS2_BETA
+    public override async Task AfterBlockBroken(PlayerChoiceContext choiceContext, Creature creature, Creature? breaker)
+#else
     public override async Task AfterBlockBroken(Creature creature)
+#endif
     {
         if (creature != Owner) return;
 

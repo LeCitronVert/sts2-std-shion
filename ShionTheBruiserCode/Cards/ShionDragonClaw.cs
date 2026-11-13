@@ -25,7 +25,7 @@ public class ShionDragonClaw() : ShionTheBruiserCard(2,
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
         await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
-            .FromCard(card)
+            .FromCard(card, play)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext)

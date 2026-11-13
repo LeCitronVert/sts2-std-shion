@@ -58,7 +58,7 @@ public class SlalAnvilGag() : SlalTheEndlessCard(1,
         }
 
         await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
-            .FromCard(card)
+            .FromCard(card, play)
             .Targeting(play.Target)
             .WithNoAttackerAnim()
             .WithHitFx(null, tmpSfx: "heavy_attack.mp3")

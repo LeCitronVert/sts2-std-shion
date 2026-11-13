@@ -46,7 +46,7 @@ public class SeelsBodyStrike() : SeelsTheRecklessCard(1,
         ArgumentNullException.ThrowIfNull(play.Target);
         await SeelsMechanicsHelper.AddWounds(Owner, 1);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, play)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_heavy_blunt")
             .Execute(choiceContext);

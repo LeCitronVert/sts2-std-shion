@@ -82,9 +82,10 @@ public static class CharacterSelectSkinPatch
     [HarmonyPatch(typeof(NCharacterSelectScreen), nameof(NCharacterSelectScreen.SelectCharacter))]
     [HarmonyPostfix]
     [HarmonyPriority(Priority.Low)] // after BaseLib's own SelectCharacter postfixes
-    public static void AfterSelectCharacter(NCharacterSelectScreen __instance, NCharacterSelectButton charSelectButton,
-        CharacterModel characterModel)
+    public static void AfterSelectCharacter(NCharacterSelectScreen __instance, NCharacterSelectButton charSelectButton)
     {
+        // Read from the button: beta dropped SelectCharacter's characterModel parameter (on main it's the same model)
+        var characterModel = charSelectButton.Character;
         try
         {
             Revert(__instance, restoreFocus: false);

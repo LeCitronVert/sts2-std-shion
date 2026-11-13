@@ -42,7 +42,7 @@ public class FryCapeSwish() : FryTheCommanderCard(0,
             for (var i = 0; i < x && CombatState is not null; i++)
             {
                 await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                    .FromCard(this)
+                    .FromCard(this, play)
                     .TargetingAllOpponents(CombatState)
                     .WithHitFx("vfx/vfx_attack_slash")
                     .Execute(ctx);

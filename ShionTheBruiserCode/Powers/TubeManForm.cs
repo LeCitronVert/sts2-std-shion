@@ -1,3 +1,4 @@
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -28,6 +29,6 @@ public class TubeManForm : SlalTheEndlessPower
         if (!gainedOrLost && !applied) return;
 
         Flash();
-        await CreatureCmd.Damage(choiceContext, CombatState.HittableEnemies.ToList(), Amount, ValueProp.Unpowered, Owner, null);
+        await Sts2Compat.Damage(choiceContext, CombatState.HittableEnemies.ToList(), Amount, ValueProp.Unpowered, Owner, null, null);
     }
 }

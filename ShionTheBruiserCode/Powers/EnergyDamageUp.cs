@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Models;
@@ -19,7 +20,11 @@ public class EnergyDamageUp() : ShionTheBruiserPower
         Decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource
+#if STS2_BETA
+        , CardPlay? cardPlay
+#endif
+    )
     {
         return 
             !props.IsPoweredAttack() 

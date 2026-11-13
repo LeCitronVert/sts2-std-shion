@@ -46,7 +46,7 @@ public abstract class CustomEpochModel : EpochModel
             return false;
         }
 
-        [HarmonyPatch(typeof(EpochModel), nameof(PackedPortraitPath), MethodType.Getter)]
+        [HarmonyPatch(typeof(EpochModel), "PackedPortraitPath" /* private on beta */, MethodType.Getter)]
         [HarmonyPrefix]
         private static bool CustomEpochPackedPortraitPath(EpochModel __instance, ref string? __result)
         {

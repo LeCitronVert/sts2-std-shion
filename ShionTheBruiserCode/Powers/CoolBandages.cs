@@ -43,7 +43,7 @@ public class CoolBandages : SeelsTheRecklessPower
         if (!IsAffected(cardPlay.Card) || Owner.CombatState is null) return;
 
         Flash();
-        await CreatureCmd.Damage(choiceContext, Owner.CombatState.HittableEnemies.ToList(), DynamicVars.HpLoss.BaseValue, ValueProp.Unblockable | ValueProp.Unpowered, Owner, null);
+        await Sts2Compat.Damage(choiceContext, Owner.CombatState.HittableEnemies.ToList(), DynamicVars.HpLoss.BaseValue, ValueProp.Unblockable | ValueProp.Unpowered, Owner, null, null);
         await PowerCmd.Decrement(this);
     }
 }

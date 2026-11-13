@@ -31,7 +31,7 @@ public class SlalBellMemory(): SlalTheEndlessCard(2,
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
-            .FromCard(card)
+            .FromCard(card, play)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .WithHitCount(DynamicVars.Repeat.IntValue)

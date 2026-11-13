@@ -51,7 +51,11 @@ public class BloodyDaggers : TeamUpPower, ISeelsListener
     }
 
     // The Shiv's X is the Partner's Blood when it hits; it is consumed once the Shiv has been played.
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource
+#if STS2_BETA
+        , CardPlay? cardPlay
+#endif
+    )
     {
         if (!IsPartnerBloodyShiv(cardSource) || dealer != cardSource!.Owner.Creature || !props.IsPoweredAttack()) return 0m;
         return SeelsMechanicsHelper.GetBlood(dealer);

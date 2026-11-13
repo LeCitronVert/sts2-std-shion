@@ -51,7 +51,7 @@ public class ShionBreakDown() : ShionBerserkCard(1,
         await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
             .WithValueProp(ValueProp.Move)
             .WithHitCount(card.DynamicVars.Repeat.IntValue)
-            .FromCard(card)
+            .FromCard(card, play)
             .Targeting(play.Target)
             .WithEnergyBlast(card, "vfx/vfx_attack_blunt")
             .Execute(choiceContext);

@@ -41,7 +41,7 @@ public class SeelsBelittle() : SeelsTheRecklessCard(2,
     {
         if (CombatState is null) return;
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, play)
             .TargetingRandomOpponents(CombatState)
             .WithHitCount(DynamicVars.Repeat.IntValue)
             .WithHitFx("vfx/vfx_attack_blunt")

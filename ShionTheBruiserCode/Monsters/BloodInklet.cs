@@ -29,7 +29,11 @@ public class BloodInklet : CustomMonsterModel
 
     public override int MaxInitialHp => 1;
 
+#if STS2_BETA
+    public override bool IsInteractable => Creature.IsAlive;
+#else
     public override bool IsHealthBarVisible => Creature.IsAlive;
+#endif
 
     public override string? CustomVisualPath => InkletVisualsPath;
 
@@ -55,7 +59,11 @@ public class BloodInklet : CustomMonsterModel
         {
             inklet = await PlayerCmd.AddPet<BloodInklet>(player);
             // The combat room makes every pet but Osty non-interactable (no hover, no health bar), like Byrdpip
+#if STS2_BETA
+            NCombatRoom.Instance?.GetCreatureNode(inklet)?.SetIsInteractable(true, true);
+#else
             NCombatRoom.Instance?.SetCreatureIsInteractable(inklet, true);
+#endif
             await PowerCmd.Apply<BloodInkletPower>(choiceContext, inklet, 1, player.Creature, source);
             await CreatureCmd.SetMaxHp(inklet, maxHp);
             await CreatureCmd.Heal(inklet, maxHp, false);

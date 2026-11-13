@@ -451,7 +451,7 @@ public static class SeelsMechanicsHelper
     public static async Task LoseHp(PlayerChoiceContext choiceContext, Creature creature, decimal amount, CardModel? source)
     {
         if (amount <= 0) return;
-        await CreatureCmd.Damage(choiceContext, creature, amount, ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, creature, source);
+        await Sts2Compat.Damage(choiceContext, creature, amount, ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, creature, source, null);
     }
 
     // ── Previews ────────────────────────────────────────────────────────────

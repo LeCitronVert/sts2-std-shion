@@ -1,3 +1,4 @@
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -62,6 +63,6 @@ public class VolatileForm : SlalTheEndlessPower
         if (enemy == null) return;
 
         Flash();
-        await CreatureCmd.Damage(choiceContext, enemy, Amount, ValueProp.Unpowered, Owner, null);
+        await Sts2Compat.Damage(choiceContext, enemy, Amount, ValueProp.Unpowered, Owner, null, null);
     }
 }

@@ -59,7 +59,7 @@ public class AbbyTheAbsol : CritContributorRelic, ICritHitRateContributor, IOnCr
         await Cmd.Wait(0.3f);
         await DamageCmd
             .Attack(damageResult.TotalDamage)
-            .FromCard(sourceCard)
+            .FromCard(sourceCard, null)
             .Unpowered()
             .Targeting(target)
             .WithAttackerAnim(

@@ -52,10 +52,10 @@ public class ShionShieldBuster() : ShionTheBruiserCard(1,
         var damage = GetDamage(card, target);
         if (target.Block > 0)
         {
-            await CreatureCmd.LoseBlock(target, target.Block);
+            await Sts2Compat.LoseBlock(choiceContext, target, target.Block, card.Owner.Creature);
         }
         await DamageCmd.Attack(damage)
-            .FromCard(card)
+            .FromCard(card, play)
             .Targeting(target)
             .WithHitFx("vfx/vfx_heavy_blunt")
             .Execute(choiceContext)

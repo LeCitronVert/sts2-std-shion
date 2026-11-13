@@ -21,8 +21,10 @@ public class InCombatPowerAmountVar<TPower>(string key) : DynamicVar(key, 0) whe
         PreviewValue = _amount;
     }
 
+#if !STS2_BETA // beta formats from PreviewValue, which UpdateCardPreview sets
     protected override decimal GetBaseValueForIConvertible()
     {
         return _amount;
     }
+#endif
 }

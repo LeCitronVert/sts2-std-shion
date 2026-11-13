@@ -34,7 +34,7 @@ public class FryNuke() : FryTheCommanderCard(3,
         if (CombatState is null) return;
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, play)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_heavy_blunt")
             .Execute(choiceContext);
@@ -42,7 +42,7 @@ public class FryNuke() : FryTheCommanderCard(3,
         foreach (var other in CombatState.HittableEnemies.Where(e => e != play.Target).ToList())
         {
             await DamageCmd.Attack(DynamicVars["OtherDamage"].BaseValue)
-                .FromCard(this)
+                .FromCard(this, play)
                 .Targeting(other)
                 .Execute(choiceContext);
         }

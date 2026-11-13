@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Models;
@@ -35,7 +36,11 @@ public class PleasureInPain() : ShionTheBruiserPower
         Decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource
+#if STS2_BETA
+        , CardPlay? cardPlay
+#endif
+    )
     {
         return target != this.Owner || !props.IsPoweredAttack() ? 1M : 1 + (DamageTakenIncrease / 100M);
     }

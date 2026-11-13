@@ -45,11 +45,19 @@ public class SeelsIllusionOfRisk() : SeelsTheRecklessCard(0,
         EnergyCost.AddThisTurn(DynamicVars.Energy.IntValue);
     }
 
+#if STS2_BETA
+    protected override CardLocation GetResultLocationForCardPlay()
+    {
+        var location = base.GetResultLocationForCardPlay();
+        return location.pileType != PileType.Discard ? location : location with { pileType = PileType.Hand };
+    }
+#else
     protected override PileType GetResultPileTypeForCardPlay()
     {
         var pileType = base.GetResultPileTypeForCardPlay();
         return pileType != PileType.Discard ? pileType : PileType.Hand;
     }
+#endif
 
     protected override void OnUpgrade()
     {

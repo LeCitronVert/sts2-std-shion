@@ -54,7 +54,7 @@ public class SlalPinballMove() : SlalTheEndlessCard(1,
         // Single multi-hit attack (re-rolls the random target per hit) so Vigor etc. apply to every hit.
         // Slal is the ball: she flies around, bouncing off the screen edges and into each hit's target.
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
-            .FromCard(card)
+            .FromCard(card, play)
             .TargetingRandomOpponents(card.CombatState)
             .WithHitCount(hits)
             .WithPinball(card.Owner.Creature)

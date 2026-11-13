@@ -25,7 +25,7 @@ public class ShionDarkArts() : ShionBerserkCard(2,
         var card = this;
         if (!ShionMechanicsHelper.TriggerBerserk(card.Owner.Creature))
         {
-            await CreatureCmd.Damage(choiceContext, card.Owner.Creature, card.DynamicVars.HpLoss.BaseValue, ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, card);
+            await Sts2Compat.Damage(choiceContext, card.Owner.Creature, card.DynamicVars.HpLoss.BaseValue, ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, card, play);
         }
         await PowerCmd.Apply<DarkArts>(choiceContext, card.Owner.Creature, card.DynamicVars["DarkArts"].BaseValue, card.Owner.Creature, card);
     }

@@ -1,3 +1,4 @@
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -52,7 +53,7 @@ public class CursedDice : SeelsTheRecklessRelic
         if (fresh.Count > 0) gambleCards = fresh;
         if (gambleCards.Count == 0) return false;
 
-        var rewardOptions = new CardCreationOptions(gambleCards, CardCreationSource.Other, creationOptions.RarityOdds)
+        var rewardOptions = Sts2Compat.FromCards(gambleCards, CardCreationSource.Other, creationOptions.RarityOdds)
             .WithFlags(CardCreationFlags.NoModifyHooks | CardCreationFlags.NoCardPoolModifications);
         var card = CardFactory.CreateForReward(Owner, 1, rewardOptions).FirstOrDefault()?.Card;
         if (card == null) return false;

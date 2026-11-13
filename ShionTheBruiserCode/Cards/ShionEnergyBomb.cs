@@ -42,7 +42,7 @@ public class ShionEnergyBomb() : CritContributorCard(3,
     {
         var card = this;
         if (card.CombatState != null)
-            await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue).FromCard(card)
+            await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue).FromCard(card, play)
                 .TargetingAllOpponents(card.CombatState).WithHitFx(tmpSfx: "heavy_attack.mp3")
                 .WithEnergyBlast(card, "vfx/vfx_attack_blunt", ImpactFrameOnce())
                 .Execute(choiceContext);

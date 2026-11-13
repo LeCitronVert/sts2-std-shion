@@ -1,3 +1,4 @@
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -49,7 +50,7 @@ public class SailingShip : CosmoRelic
             creature.Player!.Relics.OfType<SailingShip>().First().Flash();
             foreach (var other in creature.Player.RunState.Players.Where(p => p != creature.Player && !p.Creature.IsDead))
             {
-                await CreatureCmd.LoseMaxHp(choiceContext, other.Creature, amount, false);
+                await Sts2Compat.LoseMaxHp(choiceContext, other.Creature, amount, null);
             }
         }
         finally

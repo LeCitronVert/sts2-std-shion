@@ -91,7 +91,11 @@ public sealed class SuperFormPower : ShionTheBruiserPower
         await PlayerCmd.LoseGold(loss, player, GoldLossType.Lost);
     }
 
-    public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
+    public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature,
+#if STS2_BETA
+        CardModel? source,
+#endif
+        bool wasRemovalPrevented, float deathAnimLength)
     {
         if (creature.Side == Owner.Side || Owner.IsDead || Owner.Player is not { } player) return;
 

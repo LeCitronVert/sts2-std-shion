@@ -44,7 +44,7 @@ public class ShionFeint() : CritContributorCard(2,
         ArgumentNullException.ThrowIfNull(target);
         
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
-            .FromCard(card)
+            .FromCard(card, play)
             .Targeting(target)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext)

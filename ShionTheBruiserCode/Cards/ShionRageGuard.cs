@@ -40,13 +40,12 @@ public class ShionRageGuard() : ShionDefensiveCard(1,
         }
         else
         {
-            await CreatureCmd.Damage(
+            await Sts2Compat.Damage(
                 choiceContext,
                 card.Owner.Creature,
                 card.DynamicVars.HpLoss.BaseValue,
                 ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move,
-                this
-            );
+                this, play);
         }
         await CreatureCmd.GainBlock(card.Owner.Creature, card.DynamicVars.Block, play);
         await PowerCmd.Apply<Guard>(choiceContext, card.Owner.Creature, card.DynamicVars["Guard"].IntValue, card.Owner.Creature, this);

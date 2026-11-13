@@ -44,7 +44,7 @@ public class Seek(Player owner) : CustomRestSiteOption(owner)
         var synchronizer = RunManager.Instance.PlayerChoiceSynchronizer;
         var choiceId = synchronizer.ReserveChoiceId(Owner);
         var choiceContext = new BlockingPlayerChoiceContext();
-        await choiceContext.SignalPlayerChoiceBegun(PlayerChoiceOptions.None);
+        await choiceContext.SignalPlayerChoiceBegun(Owner, PlayerChoiceOptions.None);
 
         bool allUnlocked;
         if (LocalContext.IsMe(Owner) && RunManager.Instance.NetService.Type != NetGameType.Replay)

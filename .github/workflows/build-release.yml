@@ -1,8 +1,11 @@
 # Builds the mod (dll + pck) on every push to main and publishes it as a GitHub release
 # containing a ready-to-drop-in ShionTheBruiser/ folder for the game's mods directory.
 #
-# Game DLLs needed to compile live in ci/game-refs/. Refresh them after a game update:
-#   cp ".../data_sts2_macos_x86_64/"{sts2,0Harmony}.dll ci/game-refs/
+# Game DLLs needed to compile live in ci/game-refs/ (main branch) and ci/game-refs-beta/ (beta branch).
+# Refresh them after a game update, from a game install on that branch:
+#   cp ".../data_sts2_macos_x86_64/"{sts2,0Harmony}.dll ci/game-refs/        # main
+#   cp ".../data_sts2_macos_x86_64/"{sts2,0Harmony}.dll ci/game-refs-beta/   # beta
+# The release holds one zip per branch (the .pck is shared; only the dll and manifest differ).
 
 name: Build & Release
 
@@ -88,6 +91,19 @@ jobs:
           cd "$Sts2Path/mods"
           zip -r "$GITHUB_WORKSPACE/$MOD_NAME.zip" "$MOD_NAME"
 
+      # Same mod compiled against the beta game (STS2_BETA); reuses the main build's .pck.
+      - name: Build for beta branch
+        run: |
+          beta="$RUNNER_TEMP/sts2-beta"
+          mkdir -p "$beta/data_sts2_linuxbsd_x86_64" "$beta/mods"
+          cp ci/game-refs-beta/*.dll "$beta/data_sts2_linuxbsd_x86_64/"
+          dotnet build "$MOD_NAME.csproj" -c Release -p:Sts2Path="$beta" -p:Sts2Beta=true
+          out="$beta/mods/$MOD_NAME"
+          test -f "$out/$MOD_NAME.dll" || { echo "::error::beta $MOD_NAME.dll missing"; exit 1; }
+          cp "$Sts2Path/mods/$MOD_NAME/$MOD_NAME.pck" "$out/"
+          cd "$beta/mods"
+          zip -r "$GITHUB_WORKSPACE/$MOD_NAME-beta.zip" "$MOD_NAME"
+
       - name: Write release notes
         run: |
           # Latest build-* tag reachable from the parent, so a re-run on an already-tagged commit
@@ -106,6 +122,7 @@ jobs:
             git log --no-merges --format='- %s (%h)' "$range"
             echo
             echo "**Install:** unzip into the game's \`mods\` folder so you get \`mods/$MOD_NAME/\`."
+            echo "Use \`$MOD_NAME.zip\` on the main game branch, \`$MOD_NAME-beta.zip\` on the public beta."
           } > release-notes.md
           cat release-notes.md
 
@@ -117,4 +134,6 @@ jobs:
           target_commitish: ${{ github.sha }}
           make_latest: true
           body_path: release-notes.md
-          files: ${{ env.MOD_NAME }}.zip
+          files: |
+            ${{ env.MOD_NAME }}.zip
+            ${{ env.MOD_NAME }}-beta.zip

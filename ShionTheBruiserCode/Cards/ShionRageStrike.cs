@@ -38,18 +38,17 @@ public class ShionRageStrike() : ShionBerserkCard(2,
         }
         else
         {
-            await CreatureCmd.Damage(
+            await Sts2Compat.Damage(
                 choiceContext,
                 card.Owner.Creature,
                 card.DynamicVars.HpLoss.BaseValue,
                 ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move,
-                this
-            );
+                this, play);
         }
         
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .WithValueProp(ValueProp.Move)
-            .FromCard(card)
+            .FromCard(card, play)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext)

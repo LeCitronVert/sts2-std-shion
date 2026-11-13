@@ -52,7 +52,7 @@ public class SeelsBloodMixing() : SeelsTheRecklessCard(2,
             await SeelsMechanicsHelper.LoseHp(choiceContext, Owner.Creature, DynamicVars.HpLoss.BaseValue, this);
         }
 
-        await CreatureCmd.Damage(choiceContext, enemies, DynamicVars.HpLoss.BaseValue, ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, Owner.Creature, this);
+        await Sts2Compat.Damage(choiceContext, enemies, DynamicVars.HpLoss.BaseValue, ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, Owner.Creature, this, play);
         await PowerCmd.Apply<StrengthPower>(choiceContext, CombatState.HittableEnemies.ToList(), -DynamicVars.Strength.BaseValue, Owner.Creature, this);
     }
 

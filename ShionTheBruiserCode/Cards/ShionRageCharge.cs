@@ -39,13 +39,12 @@ public class ShionRageCharge() : ShionBerserkCard(1,
         }
         else
         {
-            await CreatureCmd.Damage(
+            await Sts2Compat.Damage(
                 choiceContext,
                 card.Owner.Creature,
                 card.DynamicVars.HpLoss.BaseValue,
                 ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move,
-                this
-            );
+                this, play);
         }
         
         await PowerCmd.Apply<CritRateUp>(choiceContext, card.Owner.Creature, card.DynamicVars["BuffAmount"].BaseValue, card.Owner.Creature, card);

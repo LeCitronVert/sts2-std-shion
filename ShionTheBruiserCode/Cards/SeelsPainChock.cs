@@ -44,7 +44,7 @@ public class SeelsPainChock() : SeelsTheRecklessCard(1,
         var wounds = SeelsMechanicsHelper.GetWoundsInHand(Owner).Count();
         var damage = DynamicVars.CalculationBase.BaseValue + DynamicVars.ExtraDamage.BaseValue * wounds;
         await DamageCmd.Attack(damage)
-            .FromCard(this)
+            .FromCard(this, play)
             .TargetingAllOpponents(CombatState)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);

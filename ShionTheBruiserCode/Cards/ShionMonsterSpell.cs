@@ -128,7 +128,7 @@ public class ShionMonsterSpell() : ShionTheBruiserCard(2,
             ArgumentNullException.ThrowIfNull(play.Target);
             await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
                 .WithHitCount(card.DynamicVars.Repeat.IntValue)
-                .FromCard(card)
+                .FromCard(card, play)
                 .Targeting(play.Target)
                 .WithHitFx("vfx/vfx_attack_blunt")
                 .Execute(choiceContext)

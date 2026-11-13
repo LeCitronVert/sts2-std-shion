@@ -79,7 +79,11 @@ public static class ConfusionSpinOff
 
     private static async Task SpinOff(NCreature node, CancellationToken cancelToken)
     {
+#if STS2_BETA
+        node.AnimateOutStateDisplay();
+#else
         node.AnimDisableUi();
+#endif
         node.AnimHideIntent();
         node.Hitbox.MouseFilter = Control.MouseFilterEnum.Ignore;
 

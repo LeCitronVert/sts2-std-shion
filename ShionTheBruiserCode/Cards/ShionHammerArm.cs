@@ -35,7 +35,7 @@ public class ShionHammerArm() : ShionBerserkCard(1,
         var cardSource = this;
         ArgumentNullException.ThrowIfNull(play.Target);
         await DamageCmd.Attack(cardSource.DynamicVars.Damage.BaseValue)
-            .FromCard(cardSource)
+            .FromCard(cardSource, play)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_heavy_blunt")
             .Execute(choiceContext)

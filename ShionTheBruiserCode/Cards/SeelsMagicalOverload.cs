@@ -34,7 +34,7 @@ public class SeelsMagicalOverload() : SeelsTheRecklessCard(1,
         if (hits <= 0) return;
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, play)
             .TargetingRandomOpponents(CombatState)
             .WithHitCount(hits)
             .WithHitFx("vfx/vfx_attack_blunt")

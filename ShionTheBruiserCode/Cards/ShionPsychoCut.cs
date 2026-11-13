@@ -32,7 +32,7 @@ public class ShionPsychoCut() : ShionTheBruiserCard(1,
         
         ArgumentNullException.ThrowIfNull(play.Target);
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
-            .FromCard(card)
+            .FromCard(card, play)
             .Targeting(play.Target)
             .WithEnergyBlast(card, "vfx/vfx_attack_slash")
             .Execute(choiceContext)

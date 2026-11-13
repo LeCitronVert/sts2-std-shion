@@ -58,8 +58,13 @@ public static class StrifeRestSiteCharacterPatch
 /// Multiplayer HP scaling is defined for acts 1-3 only and throws for Act 4 (every creature of the Architect fight).
 /// Act 4 uses Act 3's scaling (×1.3 bosses, ×1.2 the rest). Same on every client.
 /// </summary>
+#if STS2_BETA
+[HarmonyPatch(typeof(MegaCrit.Sts2.Core.Models.MultiplayerScalingModel),
+    nameof(MegaCrit.Sts2.Core.Models.MultiplayerScalingModel.GetMultiplayerScaling))]
+#else
 [HarmonyPatch(typeof(MegaCrit.Sts2.Core.Models.Singleton.MultiplayerScalingModel),
     nameof(MegaCrit.Sts2.Core.Models.Singleton.MultiplayerScalingModel.GetMultiplayerScaling))]
+#endif
 public static class StrifeMultiplayerScalingPatch
 {
     [HarmonyPrefix]

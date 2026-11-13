@@ -33,7 +33,7 @@ public class FryYouNukeEm() : FryCooldownCard(1,
     {
         if (CombatState is null) return;
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, play)
             .TargetingAllOpponents(CombatState)
             .WithHitFx("vfx/vfx_heavy_blunt")
             .Execute(choiceContext);

@@ -29,7 +29,11 @@ public class Stormblood : TeamUpPower
         HoverTipFactory.FromPower<Blood>(),
     ];
 
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource
+#if STS2_BETA
+        , CardPlay? cardPlay
+#endif
+    )
     {
         if (dealer == null || !Partners.Contains(dealer) || Owner.IsDead) return 0m;
         if (!props.IsPoweredAttack() || cardSource is not { Type: CardType.Attack }) return 0m;

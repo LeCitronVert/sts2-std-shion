@@ -67,7 +67,7 @@ public class SlalTrueSize() : SlalTheEndlessCard(3,
         // Not the CalculatedDamage var: it would count the new Slimed twice
         var damage = PileType.Discard.GetPile(card.Owner).Cards.Count;
         await DamageCmd.Attack(damage)
-            .FromCard(card)
+            .FromCard(card, play)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_blunt", tmpSfx: "heavy_attack.mp3")
             .Execute(choiceContext);

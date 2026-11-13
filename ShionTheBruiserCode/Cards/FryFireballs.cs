@@ -38,7 +38,7 @@ public class FryFireballs() : FryCooldownCard(0,
         if (CombatState is null) return;
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, play)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);
@@ -46,7 +46,7 @@ public class FryFireballs() : FryCooldownCard(0,
         foreach (var other in CombatState.HittableEnemies.Where(e => e != play.Target).ToList())
         {
             await DamageCmd.Attack(DynamicVars["OtherDamage"].BaseValue)
-                .FromCard(this)
+                .FromCard(this, play)
                 .Targeting(other)
                 .WithHitFx("vfx/vfx_attack_blunt")
                 .Execute(choiceContext);

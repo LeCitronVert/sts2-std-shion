@@ -33,7 +33,7 @@ public class SeelsSlash() : SeelsTheRecklessCard(0,
         if (CombatState is null) return;
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, play)
             .TargetingRandomOpponents(CombatState)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

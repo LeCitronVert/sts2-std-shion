@@ -1,3 +1,4 @@
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -32,7 +33,7 @@ public class MasterBall : ShionTheBruiserRelic
 
     public override async Task AfterObtained()
     {
-        await CreatureCmd.LoseMaxHp(new ThrowingPlayerChoiceContext(), Owner.Creature, DynamicVars.HpLoss.BaseValue, isFromCard: false);
+        await Sts2Compat.LoseMaxHp(new ThrowingPlayerChoiceContext(), Owner.Creature, DynamicVars.HpLoss.BaseValue, null);
         await RelicCmd.Obtain(ModelDb.Relic<AbbyTheAbsol>().ToMutable(), Owner);
 
         List<CardPileAddResult> results = [

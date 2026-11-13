@@ -49,7 +49,7 @@ public class SlalFunnyGag() : SlalTheEndlessCard(2,
         }
 
         await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
-            .FromCard(card)
+            .FromCard(card, play)
             .Targeting(play.Target)
             .WithNoAttackerAnim()
             .WithHitFx(null, null, "heavy_attack.mp3")

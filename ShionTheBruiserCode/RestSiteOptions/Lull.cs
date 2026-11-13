@@ -1,3 +1,4 @@
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
@@ -32,7 +33,7 @@ public class Lull(Player owner) : CustomRestSiteOption(owner)
         var cardResultList = CardFactory.CreateForReward(
             Owner,
             3,
-            new CardCreationOptions(cardList, CardCreationSource.Other, CardRarityOddsType.Uniform)
+            Sts2Compat.FromCards(cardList, CardCreationSource.Other, CardRarityOddsType.Uniform)
         );
         var cards = new List<CardModel>();
         foreach (var cardCreationResult in cardResultList)

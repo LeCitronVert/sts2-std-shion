@@ -1,3 +1,4 @@
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
@@ -41,7 +42,7 @@ public class PoemOfGratitude : CosmoRelic
         Status = RelicStatus.Active;
         foreach (var player in Owner.RunState.Players)
         {
-            await RelicCmd.Obtain(RelicFactory.PullNextRelicFromFront(player).ToMutable(), player);
+            await RelicCmd.Obtain(Sts2Compat.PullNextRelicForReward(player).ToMutable(), player);
         }
     }
 

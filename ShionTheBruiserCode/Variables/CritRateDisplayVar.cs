@@ -47,6 +47,7 @@ public class CritRateDisplayVar : DynamicVar
     /// Returns the current effective crit rate as a rounded integer percentage (0–100+),
     /// computed lazily at render time from the live combat state.
     /// </summary>
+#if !STS2_BETA // beta formats from PreviewValue and no longer lets vars compute it lazily; this var is unused
     protected override decimal GetBaseValueForIConvertible()
     {
         MainFile.Logger.Info($"[CritRateDisplayVar] GetBaseValueForIConvertible called. _isAttackRate={_isAttackRate}");
@@ -75,6 +76,7 @@ public class CritRateDisplayVar : DynamicVar
         MainFile.Logger.Info($"[CritRateDisplayVar] Final result: rate={rate:P0}, rounded={result}");
         return result;
     }
+#endif
 }
 
 

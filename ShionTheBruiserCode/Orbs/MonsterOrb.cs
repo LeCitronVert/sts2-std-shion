@@ -60,7 +60,11 @@ public class MonsterOrb : CustomOrbModel
 
     public override async Task AfterTurnStartOrbTrigger(PlayerChoiceContext choiceContext)
     {
+#if STS2_BETA
+        await TriggerPassive(choiceContext, null); // beta: applies passive trigger-count modifiers, like base orbs
+#else
         await Passive(choiceContext, null);
+#endif
     }
 
     public override async Task Passive(PlayerChoiceContext choiceContext, Creature? target)
@@ -69,7 +73,11 @@ public class MonsterOrb : CustomOrbModel
         {
             throw new InvalidOperationException("Monster orbs cannot target creatures.");
         }
+#if STS2_BETA
+        ActivatePassive();
+#else
         Trigger();
+#endif
         PlayPassiveSfx();
 
         foreach (var intent in ShionInstinctualPremonitions.GetEnemyIntents(Owner.Creature.CombatState))

@@ -56,7 +56,11 @@ public class Codependency : ShionTheBruiserPower
         Decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource
+#if STS2_BETA
+        , CardPlay? cardPlay
+#endif
+    )
     {
         return dealer != this.Owner || !props.IsPoweredAttack()  ? 1M : GetDamageBoost();
     }
@@ -92,7 +96,11 @@ public class Codependency : ShionTheBruiserPower
         return Task.CompletedTask;
     }
 
-    public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
+    public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature,
+#if STS2_BETA
+        CardModel? source,
+#endif
+        bool wasRemovalPrevented, float deathAnimLength)
     {
         if (creature != Applier) return;
         

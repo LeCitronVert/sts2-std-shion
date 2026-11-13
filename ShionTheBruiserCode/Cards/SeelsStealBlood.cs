@@ -43,8 +43,8 @@ public class SeelsStealBlood() : SeelsTheRecklessCard(1,
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         ArgumentNullException.ThrowIfNull(play.Target);
-        await CreatureCmd.Damage(choiceContext, play.Target, DynamicVars["EnemyHpLoss"].BaseValue,
-            ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, Owner.Creature, this);
+        await Sts2Compat.Damage(choiceContext, play.Target, DynamicVars["EnemyHpLoss"].BaseValue,
+            ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, Owner.Creature, this, play);
 
         var attacks = PileType.Hand.GetPile(Owner).Cards.Where(IsAttackToBuff).ToList();
         if (!IsUpgraded)

@@ -31,11 +31,11 @@ public class ShionChaosCrash() : ShionBerserkCard(1,
         }
         else
         {
-            await CreatureCmd.Damage(choiceContext, card.Owner.Creature, card.DynamicVars.HpLoss.BaseValue, ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, card);
+            await Sts2Compat.Damage(choiceContext, card.Owner.Creature, card.DynamicVars.HpLoss.BaseValue, ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, card, play);
         }
         
         if (card.CombatState != null)
-            await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue).FromCard(card)
+            await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue).FromCard(card, play)
                 .TargetingAllOpponents(card.CombatState).WithHitFx("vfx/vfx_attack_blunt", tmpSfx: "heavy_attack.mp3")
                 .Execute(choiceContext);
     }

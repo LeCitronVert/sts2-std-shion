@@ -68,7 +68,7 @@ public class SeelsPaybackTime() : SeelsTheRecklessCard(0,
         if (x > 0 && damage > 0)
         {
             await DamageCmd.Attack(damage)
-                .FromCard(this)
+                .FromCard(this, play)
                 .Targeting(play.Target)
                 .WithHitCount(x)
                 .WithHitFx("vfx/vfx_bloody_impact")

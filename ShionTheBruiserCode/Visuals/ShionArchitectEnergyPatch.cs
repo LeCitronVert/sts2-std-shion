@@ -3,6 +3,7 @@ using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ancients;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Events;
@@ -51,9 +52,15 @@ public static class ShionArchitectEnergyPatch
         var shion = owner.Creature;
         var hits = owner.Character.GetArchitectAttackVfx().Count;
         // Same RNG use as the base game (shuffle, then the split), so the numbers match it
+#if STS2_BETA
+        var rng = Rng.Chaotic;
+        var order = Enumerable.Range(0, hits).ToList();
+        order.UnstableShuffle(rng);
+#else
         var rng = RngGetter(architectEvent);
         var order = Enumerable.Range(0, hits).ToList();
         rng.Shuffle(order);
+#endif
         var damage = DivideWildly(ScoreGetter(architectEvent), hits, rng);
         var vfxContainer = NCombatRoom.Instance?.CombatVfxContainer;
         var anim = Character.ShionTheBruiser.GetEnergyAnimIfApplicable(owner.Character);

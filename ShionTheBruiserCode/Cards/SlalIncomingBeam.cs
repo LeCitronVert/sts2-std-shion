@@ -78,7 +78,7 @@ public class SlalIncomingBeam() : SlalTheEndlessCard(0,
         }
 
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
-            .FromCard(card)
+            .FromCard(card, play)
             .TargetingAllOpponents(card.CombatState)
             .WithNoAttackerAnim()
             .Execute(choiceContext);

@@ -59,7 +59,7 @@ public class SeelsGamblingAddiction() : SeelsTheRecklessCard(1,
         if (damage <= 0 || hits <= 0) return;
 
         await DamageCmd.Attack(damage)
-            .FromCard(this)
+            .FromCard(this, play)
             .Unpowered()
             .TargetingRandomOpponents(CombatState)
             .WithHitCount(hits)

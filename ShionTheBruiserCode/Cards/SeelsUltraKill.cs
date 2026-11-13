@@ -52,7 +52,7 @@ public class SeelsUltraKill() : SeelsTheRecklessCard(6,
         ArgumentNullException.ThrowIfNull(play.Target);
         await SeelsMechanicsHelper.LoseHp(choiceContext, Owner.Creature, GetHpLoss(this), this);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, play)
             .Targeting(play.Target)
             .WithHitCount(DynamicVars.Repeat.IntValue)
             .WithHitFx("vfx/vfx_heavy_blunt")

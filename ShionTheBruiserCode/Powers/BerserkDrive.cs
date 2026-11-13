@@ -37,7 +37,11 @@ public class BerserkDrive : ShionTheBruiserPower
         Decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource
+#if STS2_BETA
+        , CardPlay? cardPlay
+#endif
+    )
     {
         if (null == dealer) return 1M;
         

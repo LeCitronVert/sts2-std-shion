@@ -42,7 +42,7 @@ public class SeelsFinishingExplosion() : SeelsTheRecklessCard(0,
         if (CombatState is null) return;
 
         await DamageCmd.Attack(DynamicVars.CalculatedDamage)
-            .FromCard(this)
+            .FromCard(this, play)
             .TargetingAllOpponents(CombatState)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);

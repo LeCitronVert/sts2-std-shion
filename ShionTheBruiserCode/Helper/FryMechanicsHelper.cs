@@ -169,7 +169,7 @@ public static class FryMechanicsHelper
         IsValkyrDamage = true;
         try
         {
-            await CreatureCmd.Damage(choiceContext, targetList, amount, ValueProp.Move, null, null);
+            await Sts2Compat.Damage(choiceContext, targetList, amount, ValueProp.Move, null, null, null);
         }
         finally
         {

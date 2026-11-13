@@ -30,7 +30,7 @@ public class FryAWizardDidIt() : FryTheCommanderCard(3,
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await CreatureCmd.LoseMaxHp(choiceContext, Owner.Creature, DynamicVars.MaxHp.BaseValue, true);
+        await Sts2Compat.LoseMaxHp(choiceContext, Owner.Creature, DynamicVars.MaxHp.BaseValue, this);
         await PowerCmd.Apply<WizardDidIt>(choiceContext, Owner.Creature, DynamicVars["WizardDidIt"].BaseValue, Owner.Creature, this);
     }
 

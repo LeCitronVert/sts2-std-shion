@@ -43,7 +43,7 @@ public class SeelsCardDealing() : SeelsTheRecklessCard(1,
 
         // Damage first, so we don't Gamble for nothing.
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, play)
             .TargetingAllOpponents(CombatState)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

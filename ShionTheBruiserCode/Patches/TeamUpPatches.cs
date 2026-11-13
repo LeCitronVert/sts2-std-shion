@@ -56,7 +56,11 @@ public static class TeamUpDescriptionPatch
 /// Every loot (rewards, shops, transforms...) filters its cards here.
 /// Team-Ups are only offered when the run has both their Initiator's and their Partner's class.
 /// </summary>
+#if STS2_BETA
+[HarmonyPatch(typeof(CardFactory), "FilterForRun")] // renamed on beta, same signature
+#else
 [HarmonyPatch(typeof(CardFactory), "FilterForPlayerCount")]
+#endif
 public static class TeamUpLootPatch
 {
     [HarmonyPostfix]

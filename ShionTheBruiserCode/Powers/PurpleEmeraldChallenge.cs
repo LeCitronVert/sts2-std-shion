@@ -45,7 +45,11 @@ public class PurpleEmeraldChallenge : EmeraldChallengePower
         return Task.CompletedTask;
     }
 
-    public override decimal ModifyDamageCap(Creature? target, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageCap(Creature? target, ValueProp props, Creature? dealer, CardModel? cardSource
+#if STS2_BETA
+        , CardPlay? cardPlay
+#endif
+    )
     {
         if (target != Owner || cardSource is null) return decimal.MaxValue;
         return Math.Max(0, Cap - _damageTakenFromCard.GetValueOrDefault(cardSource));

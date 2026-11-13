@@ -41,7 +41,7 @@ public class ShionFlood() : ShionTheBruiserCard(1,
         ShionMechanicsHelper.TriggerGalvanised(card, GalvanisedThreshold);
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .WithHitCount((int) ((CalculatedVar) card.DynamicVars["HitAmount"]).Calculate(card.Owner.Creature))
-            .FromCard(card)
+            .FromCard(card, play)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext)

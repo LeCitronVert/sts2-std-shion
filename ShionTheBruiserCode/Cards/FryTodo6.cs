@@ -42,7 +42,7 @@ public class FryTodo6() : FryTheCommanderCard(1, //todo : choose cost
         var block = play.Target.Block;
         if (block <= 0) return;
 
-        await CreatureCmd.LoseBlock(play.Target, block);
+        await Sts2Compat.LoseBlock(choiceContext, play.Target, block, Owner.Creature);
         await FryMechanicsHelper.LoseDamageDebt(choiceContext, Owner.Creature, block, this);
     }
 

@@ -34,7 +34,7 @@ public class FryTodo19() : FryTheCommanderCard(0, //todo : choose cost
     {
         ArgumentNullException.ThrowIfNull(play.Target);
         var attack = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, play)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

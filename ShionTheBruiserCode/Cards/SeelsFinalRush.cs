@@ -42,7 +42,7 @@ public class SeelsFinalRush() : SeelsTheRecklessCard(2,
         if (hits > 0)
         {
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                .FromCard(this)
+                .FromCard(this, play)
                 .TargetingRandomOpponents(CombatState)
                 .WithHitCount(hits)
                 .WithHitFx("vfx/vfx_attack_blunt")

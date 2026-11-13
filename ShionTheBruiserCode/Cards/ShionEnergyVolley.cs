@@ -70,7 +70,7 @@ public class ShionEnergyVolley() : ShionTheBruiserCard(1,
         // The more hits, the faster; each hit pushes the target back a little, until the end of the attack
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .WithHitCount(hitCount)
-            .FromCard(card)
+            .FromCard(card, play)
             .Targeting(play.Target)
             .WithEnergyBlast(card, "vfx/vfx_attack_slash", CreatureMotion.Knockback, VolleySpeed(hitCount))
             .Execute(choiceContext)

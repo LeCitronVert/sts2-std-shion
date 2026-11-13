@@ -36,7 +36,7 @@ public class SlalRunningJoke(): SlalTheEndlessCard(0,
         ArgumentNullException.ThrowIfNull(play.Target);
 
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
-            .FromCard(card)
+            .FromCard(card, play)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

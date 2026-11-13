@@ -46,7 +46,7 @@ public class ShionStellarStrike() : ShionLatentCard(3,
         try
         {
             await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
-                .FromCard(card)
+                .FromCard(card, play)
                 .Targeting(play.Target)
                 .WithHitFx("vfx/vfx_heavy_blunt")
                 .WithHitVfxNode(ShionVfx.CreateStellarExplosion)

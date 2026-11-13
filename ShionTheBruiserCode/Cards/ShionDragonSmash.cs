@@ -32,7 +32,7 @@ public class ShionDragonSmash() : ShionTheBruiserCard(0,
         // The first strike sends the target flying (no damage), then each hit is a bounce off a screen edge
         // and the last one slams it back in its place. The hit VFX play on each collision.
         await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
-            .FromCard(card)
+            .FromCard(card, play)
             .Targeting(play.Target)
             .WithHitCount(xAmount)
             .WithDragonSmash(play.Target, xAmount)

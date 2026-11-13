@@ -1,3 +1,4 @@
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Events;
@@ -40,7 +41,7 @@ public sealed class MonsterSoul : DreamersEventModel
 
     private async Task Hold()
     {
-        await CreatureCmd.LoseMaxHp(new ThrowingPlayerChoiceContext(), Owner!.Creature, DynamicVars[MaxHpLossKey].BaseValue, isFromCard: false);
+        await Sts2Compat.LoseMaxHp(new ThrowingPlayerChoiceContext(), Owner!.Creature, DynamicVars[MaxHpLossKey].BaseValue, null);
         var card = Owner.RunState.CreateCard(ModelDb.Card<ShionMonstermancy>(), Owner);
         CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(card, PileType.Deck), 2f);
         SetEventFinished(L10NLookup($"{Id.Entry}.pages.HOLD_{WhoSuffix}.description"));

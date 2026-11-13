@@ -21,8 +21,10 @@ public class HasTargetVar() : DynamicVar(Key, 0)
         PreviewValue = _hasTarget ? 1 : 0;
     }
 
+#if !STS2_BETA // beta formats from PreviewValue, which UpdateCardPreview sets
     protected override decimal GetBaseValueForIConvertible()
     {
         return _hasTarget ? 1 : 0;
     }
+#endif
 }

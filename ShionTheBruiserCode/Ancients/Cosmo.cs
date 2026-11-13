@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Commands;
 using BaseLib.Abstracts;
 using BaseLib.Utils;
 using Godot;
@@ -100,8 +101,21 @@ public class Cosmo : CustomAncientModel
 
     protected override IReadOnlyList<EventOption> GenerateInitialOptions() =>
         RollOptions()
-            .Select(relic => RelicOption(relic.ToMutable(), "INITIAL", ((ICosmoOption)relic).IsCursedOption ? CursedDonePage : null))
+            .Select(relic => CosmoRelicOption(relic.ToMutable(), ((ICosmoOption)relic).IsCursedOption))
             .ToList();
+
+#if STS2_BETA
+    // Beta dropped RelicOption's custom done page: finish normally, then swap in the cursed one.
+    private EventOption CosmoRelicOption(RelicModel relic, bool cursed) => RelicOption(relic, async () =>
+    {
+        await RelicCmd.Obtain(relic, Owner!);
+        Done();
+        if (cursed) SetEventFinished(L10NLookup(CursedDonePage));
+    }, "INITIAL");
+#else
+    private EventOption CosmoRelicOption(RelicModel relic, bool cursed) =>
+        RelicOption(relic, "INITIAL", cursed ? CursedDonePage : null);
+#endif
 
     private List<RelicModel> RollOptions()
     {

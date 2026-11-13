@@ -2,6 +2,7 @@ using HarmonyLib;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Events;
+using MegaCrit.Sts2.Core.Random;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Unlocks;
 using ShionTheBruiser.ShionTheBruiserCode.Relics;
@@ -40,7 +41,12 @@ public static class CosmoSpawn
 }
 
 /// <summary>Swaps Act 1's Neow for Cosmo once the rooms are rolled. Uses no RNG, so later rolls are unchanged.</summary>
+#if STS2_BETA
+// Beta added a GenerateRooms(RunState) overload that calls this one
+[HarmonyPatch(typeof(ActModel), nameof(ActModel.GenerateRooms), [typeof(Rng), typeof(UnlockState), typeof(bool), typeof(bool)])]
+#else
 [HarmonyPatch(typeof(ActModel), nameof(ActModel.GenerateRooms))]
+#endif
 public static class CosmoSpawnPatch
 {
     [HarmonyPostfix]

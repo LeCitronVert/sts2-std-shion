@@ -44,7 +44,7 @@ public class FryImplausibleDeniability() : FryTheCommanderCard(1, //todo : choos
         var damage = FryMechanicsHelper.GetDamageDebt(creature);
         if (damage > 0)
         {
-            await CreatureCmd.Damage(choiceContext, creature, damage, ValueProp.Unpowered | ValueProp.Move, creature, this);
+            await Sts2Compat.Damage(choiceContext, creature, damage, ValueProp.Unpowered | ValueProp.Move, creature, this, play);
         }
     }
 

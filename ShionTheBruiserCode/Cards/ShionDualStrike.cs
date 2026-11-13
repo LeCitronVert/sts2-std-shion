@@ -39,7 +39,7 @@ public class ShionDualStrike() : ShionTeamUpCard(1,
         }
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, play)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);
@@ -52,16 +52,32 @@ public class ShionDualStrike() : ShionTeamUpCard(1,
         return [..initiator.Creature.Powers, ..initiator.Relics.Where(r => !r.IsMelted)];
     }
 
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource
+#if STS2_BETA
+        , CardPlay? cardPlay
+#endif
+    )
     {
         return InitiatorModifiers(dealer, cardSource)
+#if STS2_BETA
+            .Sum(m => m.ModifyDamageAdditive(target, amount, props, Initiator!.Creature, cardSource, cardPlay));
+#else
             .Sum(m => m.ModifyDamageAdditive(target, amount, props, Initiator!.Creature, cardSource));
+#endif
     }
 
-    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource
+#if STS2_BETA
+        , CardPlay? cardPlay
+#endif
+    )
     {
         return InitiatorModifiers(dealer, cardSource)
+#if STS2_BETA
+            .Aggregate(1m, (multiplier, m) => multiplier * m.ModifyDamageMultiplicative(target, amount, props, Initiator!.Creature, cardSource, cardPlay));
+#else
             .Aggregate(1m, (multiplier, m) => multiplier * m.ModifyDamageMultiplicative(target, amount, props, Initiator!.Creature, cardSource));
+#endif
     }
 
     // Crit contributors only count their owner's attacks, so the Initiator's are asked for their general bonus.

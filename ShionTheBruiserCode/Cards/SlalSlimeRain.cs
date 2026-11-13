@@ -57,7 +57,7 @@ public class SlalSlimeRain(): SlalSlimyCard(2,
         await AddSlimed();
 
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
-            .FromCard(card)
+            .FromCard(card, play)
             .TargetingAllOpponents(card.CombatState)
             .WithHitFx("vfx/vfx_attack_blunt", tmpSfx: "heavy_attack.mp3")
             .Execute(choiceContext);
@@ -67,7 +67,11 @@ public class SlalSlimeRain(): SlalSlimyCard(2,
     /// While in the Hand, the damage shown includes the Slimed its own Very Slimy will create before the hit.
     /// Once played, the real Slimed raise the damage instead (the card is no longer in the Hand).
     /// </summary>
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource
+#if STS2_BETA
+        , CardPlay? cardPlay
+#endif
+    )
     {
         if (cardSource != this || Pile?.Type != PileType.Hand) return 0m;
         return DynamicVars["Increase"].BaseValue * SlimedToAdd(PileType.Hand.GetPile(Owner).Cards.Count);

@@ -26,7 +26,7 @@ public class RecallBlood : SeelsTheRecklessPower, ISeelsListener
 
         Flash();
         var amount = x * Amount;
-        await CreatureCmd.Damage(choiceContext, Owner.CombatState.HittableEnemies.ToList(), amount, ValueProp.Unblockable | ValueProp.Unpowered, Owner, null);
+        await Sts2Compat.Damage(choiceContext, Owner.CombatState.HittableEnemies.ToList(), amount, ValueProp.Unblockable | ValueProp.Unpowered, Owner, null, null);
         await PowerCmd.Apply<VigorNextTurn>(choiceContext, Owner, amount, Owner, null);
     }
 }

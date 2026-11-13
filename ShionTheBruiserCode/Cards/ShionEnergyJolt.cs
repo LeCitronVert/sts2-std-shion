@@ -43,7 +43,7 @@ public class ShionEnergyJolt() : ShionTheBruiserCard(2,
         // Checked before the Attack resolves, since it consumes Vigor
         var isGalvanised = ShionMechanicsHelper.TriggerGalvanised(card, GalvanisedThreshold);
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
-            .FromCard(card)
+            .FromCard(card, play)
             .Targeting(play.Target)
             .WithEnergyBlast(card, "vfx/vfx_attack_slash")
             .Execute(choiceContext);

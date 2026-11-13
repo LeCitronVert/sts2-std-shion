@@ -33,7 +33,7 @@ public class ShionNightSlash() : CritContributorCard(3,
         ArgumentNullException.ThrowIfNull(play.Target);
         await ShionMechanicsHelper.EnsureCreatureHasCritTracker(card.Owner.Creature);
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
-            .FromCard(card)
+            .FromCard(card, play)
             .Targeting(play.Target)
             .WithEnergyBlast(card, "vfx/vfx_attack_slash")
             .Execute(choiceContext)

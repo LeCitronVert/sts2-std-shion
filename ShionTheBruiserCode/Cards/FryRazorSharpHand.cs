@@ -31,7 +31,7 @@ public class FryRazorSharpHand() : FryTheCommanderCard(1, //todo : choose cost
     {
         ArgumentNullException.ThrowIfNull(play.Target);
         var attack = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, play)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

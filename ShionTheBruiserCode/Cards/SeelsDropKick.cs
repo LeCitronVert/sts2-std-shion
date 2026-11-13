@@ -35,7 +35,7 @@ public class SeelsDropKick() : SeelsTheRecklessCard(1,
         await SeelsMechanicsHelper.AddWounds(Owner, 1);
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, play)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_heavy_blunt")
             .Execute(choiceContext);

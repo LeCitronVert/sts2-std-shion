@@ -35,7 +35,7 @@ public class SeelsAnOpening() : SeelsTheRecklessCard(0,
         var intendedToAttack = SeelsMechanicsHelper.IntendsToAttack(play.Target);
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, play)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

@@ -129,7 +129,11 @@ public static class NinjaTrialPatch
             }
             else
             {
+#if STS2_BETA
+                relic = RelicFactory.PullNextRelicFromFront(owner, trial.Rng); // like the base Trial on beta
+#else
                 relic = RelicFactory.PullNextRelicFromFront(owner);
+#endif
             }
             await RelicCmd.Obtain(relic.ToMutable(), owner);
         }

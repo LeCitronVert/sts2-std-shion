@@ -59,7 +59,7 @@ public class SeelsHighReward() : SeelsTheRecklessCard(1,
         try
         {
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                .FromCard(this)
+                .FromCard(this, play)
                 .Targeting(play.Target)
                 .WithHitCount(lostHp ? LostHpHits : 1)
                 .WithHitFx("vfx/vfx_attack_slash")

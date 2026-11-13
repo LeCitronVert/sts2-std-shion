@@ -46,7 +46,7 @@ public class ShionEnergyBall() : ShionTheBruiserCard(1,
 
         var isGalvanised = ShionMechanicsHelper.TriggerGalvanised(card, GalvanisedThreshold);
         await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
-            .FromCard(card)
+            .FromCard(card, play)
             .Targeting(play.Target)
             .WithEnergyBlast(card, "vfx/vfx_attack_slash")
             .Execute(choiceContext);

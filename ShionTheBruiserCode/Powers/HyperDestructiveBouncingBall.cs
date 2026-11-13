@@ -1,3 +1,4 @@
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -29,7 +30,7 @@ public class HyperDestructiveBouncingBall : FryTheCommanderPower
             var enemies = Owner.CombatState.HittableEnemies.ToList();
             var target = player.RunState.Rng.CombatTargets.NextItem(enemies);
             if (target is null) break;
-            await CreatureCmd.Damage(choiceContext, target, Damage, ValueProp.Unpowered, Owner, null);
+            await Sts2Compat.Damage(choiceContext, target, Damage, ValueProp.Unpowered, Owner, null, null);
         }
 
         await PowerCmd.ModifyAmount(choiceContext, this, HitIncrease, Owner, null);

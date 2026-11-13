@@ -43,7 +43,7 @@ public class ShionEnergyWave() : ShionTheBruiserCard(1,
         
         if (card.CombatState != null)
             await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
-                .FromCard(card)
+                .FromCard(card, play)
                 .WithValueProp(ValueProp.Move)
                 .TargetingAllOpponents(card.CombatState)
                 .WithHitFx(tmpSfx: "heavy_attack.mp3")

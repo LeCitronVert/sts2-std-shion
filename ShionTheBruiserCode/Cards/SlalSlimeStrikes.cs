@@ -57,7 +57,7 @@ public class SlalSlimeStrikes(): SlalSlimyCard(1,
 
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .WithHitCount(hits)
-            .FromCard(card)
+            .FromCard(card, play)
             .Targeting(play.Target)
             // Gunk Up's goop
             .WithHitFx(null, null, "blunt_attack.mp3")

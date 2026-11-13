@@ -38,7 +38,7 @@ public class ShionBloodRondo() : ShionBerserkCard(1,
         var card = this;
         ArgumentNullException.ThrowIfNull(play.Target);
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
-            .FromCard(card)
+            .FromCard(card, play)
             .Targeting(play.Target)
             .WithHitCount(GetHits(card.Owner.Creature))
             .WithHitFx("vfx/vfx_attack_blunt")

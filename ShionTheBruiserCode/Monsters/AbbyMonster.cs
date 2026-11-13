@@ -11,7 +11,11 @@ public class AbbyMonster: CustomMonsterModel
 
     public override int MaxInitialHp => 9999;
 
+#if STS2_BETA
+    public override bool IsInteractable => false;
+#else
     public override bool IsHealthBarVisible => false;
+#endif
 
     protected override MonsterMoveStateMachine GenerateMoveStateMachine()
     {

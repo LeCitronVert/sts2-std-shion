@@ -33,7 +33,7 @@ public class ShionCriticalStrike() : CritContributorCard(2,
         await ShionMechanicsHelper.EnsureCreatureHasCritTracker(card.Owner.Creature);
         ShionMechanicsHelper.TriggerBerserk(card.Owner.Creature);
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
-            .FromCard(card)
+            .FromCard(card, play)
             .Targeting(play.Target)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);

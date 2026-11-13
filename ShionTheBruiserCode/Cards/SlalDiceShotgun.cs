@@ -42,7 +42,7 @@ public class SlalDiceShotgun() : SlalTheEndlessCard(1,
         // Dagger Spray's sound and visuals
         SfxCmd.Play(DaggerSpraySfx);
         await DamageCmd.Attack(card.DynamicVars.CalculatedDamage)
-            .FromCard(card)
+            .FromCard(card, play)
             .TargetingAllOpponents(card.CombatState)
             .WithAttackerFx(() => NDaggerSprayFlurryVfx.Create(card.Owner.Creature, DaggerSprayColor, goingRight: true))
             .BeforeDamage(() =>

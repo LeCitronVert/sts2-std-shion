@@ -92,7 +92,11 @@ public sealed class ArchitectsDesign : ShionTheBruiserPower
         if (Owner.CurrentHp < Owner.MaxHp) Owner.SetCurrentHpInternal(Owner.MaxHp);
     }
 
-    public override Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
+    public override Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature,
+#if STS2_BETA
+        CardModel? source,
+#endif
+        bool wasRemovalPrevented, float deathAnimLength)
     {
         if (creature != Owner && creature.Side == Owner.Side && Owner.IsAlive)
         {
@@ -120,7 +124,11 @@ public sealed class FieldExperiment : ShionTheBruiserPower
     public override bool ShouldAllowTargeting(Creature target) => !Protects(target);
 
     // In case something hits him anyway (random targets picked before, damage that ignores hitting...)
-    public override decimal ModifyDamageCap(Creature? target, ValueProp props, Creature? dealer, CardModel? cardSource) =>
+    public override decimal ModifyDamageCap(Creature? target, ValueProp props, Creature? dealer, CardModel? cardSource
+#if STS2_BETA
+        , CardPlay? cardPlay
+#endif
+    ) =>
         Protects(target) ? 0m : decimal.MaxValue;
 
     public override decimal ModifyHpLostBeforeOsty(Creature target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource) =>

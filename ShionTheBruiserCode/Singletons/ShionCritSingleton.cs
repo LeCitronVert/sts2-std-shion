@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Entities.Cards;
 // Critical/ShionCritSingleton.cs
 
 using BaseLib.Abstracts;
@@ -123,7 +124,11 @@ public class ShionCritSingleton : CustomSingletonModel
     /// so rolling here desyncs multiplayer. The per-hit roll happens in <see cref="RollPendingHit"/>.
     /// </summary>
     public override decimal ModifyDamageMultiplicative(
-        Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+        Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource
+#if STS2_BETA
+        , CardPlay? cardPlay
+#endif
+    )
     {
         if (dealer == null || !dealer.HasPower<ShionCritTrackerPower>() || !props.IsPoweredAttack())
             return 1m;
