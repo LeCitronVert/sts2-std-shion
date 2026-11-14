@@ -14,7 +14,6 @@ public class ShionTouchOfForesight() : ShionDefensiveCard(1,
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
         ShionCardKeywords.Defensive,
-        CardKeyword.Ethereal,
         CardKeyword.Exhaust,
     ];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
@@ -40,6 +39,7 @@ public class ShionTouchOfForesight() : ShionDefensiveCard(1,
 
     protected override void OnUpgrade()
     {
-        RemoveKeyword(CardKeyword.Ethereal);
+        DynamicVars["TemporaryBuffer"].UpgradeValueBy(1);
+        DynamicVars["CounterStrategy"].UpgradeValueBy(1);
     }
 }
