@@ -9,8 +9,8 @@ ShionTheBruiser.json::JSON::-1::1794498961::0::1::::<><><>0<>0<><>::
 ::res://bin/ExportRelease/net9.0/::1794599726
 ::res://bin/ExportRelease/net9.0/publish/::1794580160
 ShionTheBruiser.deps.json::JSON::-1::1794499193::0::1::::<><><>0<>0<><>::
-::res://bin/ExportRelease/net9.0/publish-beta/::1794599726
-ShionTheBruiser.deps.json::JSON::-1::1794599726::0::1::::<><><>0<>0<><>::
+::res://bin/ExportRelease/net9.0/publish-beta/::1794656287
+ShionTheBruiser.deps.json::JSON::-1::1794656287::0::1::::<><><>0<>0<><>::
 ::res://ci/::1794598486
 ::res://ci/game-refs/::1792939391
 ::res://ci/game-refs-beta/::1794598486
@@ -1950,11 +1950,11 @@ TeamBattle.cs::CSharpScript::2145944776590101777::1794063267::0::1::::<><><>0<>0
 TheGambler.cs::CSharpScript::2724165014916345818::1794062828::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiserCode/Extensions/::1784594829
 StringExtensions.cs::CSharpScript::7657938563527260869::1784594829::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Helper/::1794598233
+::res://ShionTheBruiserCode/Helper/::1794599729
 ChaosEmeraldHelper.cs::CSharpScript::5035153769625751730::1793017875::0::1::::<><><>0<>0<><>::
 DreamersMechanicsHelper.cs::CSharpScript::1367708701330932763::1793532107::0::1::::<><><>0<>0<><>::
 FryMechanicsHelper.cs::CSharpScript::5896359720773048801::1794598096::0::1::::<><><>0<>0<><>::
-MaimHelper.cs::CSharpScript::392007258857544104::1793822358::0::1::::<><><>0<>0<><>::
+MaimHelper.cs::CSharpScript::392007258857544104::1794655824::0::1::::<><><>0<>0<><>::
 MonsterMagicHelper.cs::CSharpScript::2424719276935796326::1782837107::0::1::::<><><>0<>0<><>::
 MonsterPowersHelper.cs::CSharpScript::6250185130500123800::1794138367::0::1::::<><><>0<>0<><>::
 MonsterSpellLines.cs::CSharpScript::1409701177486583119::1793527530::0::1::::<><><>0<>0<><>::
@@ -2016,7 +2016,7 @@ ShionTheBruiserPotion.cs::CSharpScript::9201725349623556408::1783339625::0::1:::
 SlalTheEndlessPotion.cs::CSharpScript::8376483660968667012::1784597711::0::1::::<><><>0<>0<><>::
 SlimePotion.cs::CSharpScript::7989781476553595685::1793813802::0::1::::<><><>0<>0<><>::
 UltraSpicyBrew.cs::CSharpScript::9048578971562818039::1784853353::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Powers/::1794598112
+::res://ShionTheBruiserCode/Powers/::1794600423
 AceOfSpade.cs::CSharpScript::899769670653131295::1793740867::0::1::::<><><>0<>0<><>::
 AggravatingDemeanor.cs::CSharpScript::8129228658966784852::1793719953::0::1::::<><><>0<>0<><>::
 AnchoredDown.cs::CSharpScript::5901246561197500973::1792505028::0::1::::<><><>0<>0<><>::
@@ -2061,7 +2061,7 @@ ContinuityThread.cs::CSharpScript::4035396133213721992::1793451721::0::1::::<><>
 CoolBandages.cs::CSharpScript::4887038531725767910::1794598112::0::1::::<><><>0<>0<><>::
 CounterStrategy.cs::CSharpScript::7633700097038938229::1792870448::0::1::::<><><>0<>0<><>::
 CreativeSpirit.cs::CSharpScript::6167201472665542690::1792264217::0::1::::<><><>0<>0<><>::
-CriticalAttackNext.cs::CSharpScript::3045316320708616909::1791655608::0::1::::<><><>0<>0<><>::
+CriticalAttackNext.cs::CSharpScript::3045316320708616909::1794600423::0::1::::<><><>0<>0<><>::
 CriticalDraw.cs::CSharpScript::1437147261964541114::1784496083::0::1::::<><><>0<>0<><>::
 CriticalDrawPower.cs::CSharpScript::661017190971709337::1784495203::0::1::::<><><>0<>0<><>::
 CritRateUp.cs::CSharpScript::949192775608573404::1783231099::0::1::::<><><>0<>0<><>::
@@ -2327,9 +2327,9 @@ YellowChaosEmeralds.cs::CSharpScript::7947279272287764495::1793017115::0::1::::<
 ::res://ShionTheBruiserCode/RestSiteOptions/::1793018465
 Lull.cs::CSharpScript::1804038520924471915::1794598190::0::1::::<><><>0<>0<><>::
 Seek.cs::CSharpScript::8588524608089364226::1794598190::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Singletons/::1794084645
+::res://ShionTheBruiserCode/Singletons/::1794656025
 BloodCarryOverSingleton.cs::CSharpScript::6157223535071752777::1794084645::0::1::::<><><>0<>0<><>::
-MaimSingleton.cs::CSharpScript::7125466764686739455::1793815655::0::1::::<><><>0<>0<><>::
+MaimSingleton.cs::CSharpScript::7125466764686739455::1794656025::0::1::::<><><>0<>0<><>::
 ShionCritSingleton.cs::CSharpScript::3951621572379558951::1794597682::0::1::::<><><>0<>0<><>::
 SlalApparenceSingleton.cs::CSharpScript::6424703020693251239::1793013162::0::1::::<><><>0<>0<><>::
 TeamBlastSingleton.cs::CSharpScript::5790765917409709916::1794597745::0::1::::<><><>0<>0<><>::

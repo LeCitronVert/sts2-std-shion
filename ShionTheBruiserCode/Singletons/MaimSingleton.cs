@@ -26,7 +26,9 @@ public class MaimSingleton() : CustomSingletonModel(HookType.Combat)
         return MaimHelper.OnAttackFinished(choiceContext, command);
     }
 
-    public override Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
+    // AfterDamageGiven, not AfterDamageReceived: CreatureCmd.Damage skips AfterDamageReceived for a creature the hit
+    // killed, so the killing blow would never be seen. AfterDamageGiven fires for every damage result.
+    public override Task AfterDamageGiven(PlayerChoiceContext choiceContext, Creature? dealer, DamageResult result, ValueProp props, Creature target, CardModel? cardSource)
     {
         return MaimHelper.OnDamageReceived(choiceContext, target, result.UnblockedDamage, cardSource);
     }

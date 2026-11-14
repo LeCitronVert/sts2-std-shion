@@ -1,4 +1,5 @@
 using BaseLib.Utils;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -60,25 +61,47 @@ public static class MaimHelper
     }
 
     /// <summary>
-    /// Cards whose attack is currently executing (counted, since an attack can trigger another attack from the same card).
+    /// Attacks currently executing, per card (a stack, since an attack can trigger another attack from the same card),
+    /// each with the enemies that lost HP from it so far.
     /// Their HP loss is handled once per attack in <see cref="OnAttackFinished"/> instead of per hit.
     /// </summary>
-    private static readonly Dictionary<CardModel, int> AttacksInProgress = new();
+    private static readonly Dictionary<CardModel, List<HashSet<Creature>>> AttacksInProgress = new();
 
     public static void OnAttackStarted(AttackCommand command)
     {
         if (command.ModelSource is not CardModel card) return;
-        AttacksInProgress[card] = AttacksInProgress.GetValueOrDefault(card) + 1;
+        if (!AttacksInProgress.TryGetValue(card, out var stack))
+        {
+            AttacksInProgress[card] = stack = new List<HashSet<Creature>>();
+        }
+        stack.Add(new HashSet<Creature>());
     }
 
     /// <summary>
-    /// Called for every damage instance. Only handles HP loss that isn't part of an attack (e.g. "an enemy loses X HP").
+    /// Called for every damage instance. HP loss that isn't part of an attack (e.g. "an enemy loses X HP") triggers Maim right away;
+    /// HP loss from an attack is recorded and triggers Maim once the attack finishes.
     /// </summary>
     public static async Task OnDamageReceived(PlayerChoiceContext choiceContext, Creature target, int hpLost, CardModel? cardSource)
     {
-        if (cardSource is null || hpLost <= 0) return;
-        if (AttacksInProgress.ContainsKey(cardSource)) return;
-        await TriggerMaim(choiceContext, target, cardSource);
+        if (cardSource is not null && hpLost > 0)
+        {
+            if (AttacksInProgress.TryGetValue(cardSource, out var stack) && stack.Count > 0)
+            {
+                stack[^1].Add(target);
+            }
+            else
+            {
+                await TriggerMaim(choiceContext, target, cardSource);
+            }
+        }
+
+        // Killing blow: the game doesn't dispatch AfterAttack once the combat is ending (Hook.IterateCombatHookListeners
+        // yields nothing), so the attacks in progress would never trigger their Maim. Trigger it now instead
+        // (the Blood is held by GainBlood and granted in BloodCarryOverSingleton.AfterCombatEnd).
+        if (CombatManager.Instance.IsEnding)
+        {
+            await FlushAttacksInProgress(choiceContext);
+        }
     }
 
     /// <summary>
@@ -87,22 +110,32 @@ public static class MaimHelper
     public static async Task OnAttackFinished(PlayerChoiceContext choiceContext, AttackCommand command)
     {
         if (command.ModelSource is not CardModel card) return;
-        if (AttacksInProgress.TryGetValue(card, out var count))
-        {
-            if (count <= 1) AttacksInProgress.Remove(card);
-            else AttacksInProgress[card] = count - 1;
-        }
+        if (!AttacksInProgress.TryGetValue(card, out var stack) || stack.Count == 0) return;
 
-        var targetsThatLostHp = command.Results
-            .SelectMany(r => r)
-            .Where(r => r.UnblockedDamage > 0)
-            .Select(r => r.Receiver)
-            .Distinct()
-            .ToList();
+        var targetsThatLostHp = stack[^1];
+        stack.RemoveAt(stack.Count - 1);
+        if (stack.Count == 0) AttacksInProgress.Remove(card);
 
-        foreach (var target in targetsThatLostHp)
+        foreach (var target in targetsThatLostHp.ToList())
         {
             await TriggerMaim(choiceContext, target, card);
+        }
+    }
+
+    /// <summary>Triggers the Maim of every attack in progress for the enemies that lost HP from it so far (once each).</summary>
+    private static async Task FlushAttacksInProgress(PlayerChoiceContext choiceContext)
+    {
+        foreach (var (card, stack) in AttacksInProgress.ToList())
+        {
+            foreach (var targets in stack)
+            {
+                var pending = targets.ToList();
+                targets.Clear();
+                foreach (var target in pending)
+                {
+                    await TriggerMaim(choiceContext, target, card);
+                }
+            }
         }
     }
 
