@@ -2025,3 +2025,46 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 **Decisions I made**
 - Your answers: keep Slash+ on the upgrade, 3s per frame, copy only the Enchantment for Combo Meter.
 - Combo Meter: if the copy can't take the enchantment, it's just skipped (same check as Slal's copy helper). Copying it doesn't count as a modification for Magical Overload.
+
+## 38. New Team-Ups: Arrow Rain → Impromptu Lesson
+
+**Setup**
+- [ ] Re-export the .pck (10 new card portraits + big versions, localization changed: `cards.json`, `powers.json`, `card_keywords.json`).
+- [ ] The Fool cards (Arrow Rain, Aim Assist, Fool-ow Up Attack, Cruel Shot, Impromptu Lesson) only exist in the **beta** build. Check the main build still loads and shows the other 5.
+
+**Fool Team Blast**
+- [ ] Arrow Rain (Fool pool): every other living player gets an Aim Assist in their Hand. Upgraded: Aim Assist+ and they gain 1 Energy.
+- [ ] Aim Assist (X cost): the Fool who used Arrow Rain gains 10X Aim (12X upgraded), then Aim Assist Exhausts. The text shows their name in combat, plus the Aim it would give now. Can't be played if that Fool is dead.
+
+**Team-Ups**
+- [ ] Fool-ow Up Attack (Shion → Fool, 1 cost, 0 upgraded, Exhaust): the next time the Fool Shoots an Arrow, Shion throws an energy blast at that enemy with the base damage of the card that shot it. Only once, then the power goes away. If the Arrow's target died first, the blast goes to a random enemy.
+  - [ ] The blast counts as an Energy Attack: Energy Damage Up and Spikes Gloves boost it.
+- [ ] Cruel Shot (Seels → Fool, 3 cost): the Fool Shoots an Arrow for 30 damage, Maim 30: Seels applies it (enemy loses 30 Strength this turn) and Seels gains the 1 Blood, not the Fool. If Seels is dead, the Maim still applies but nobody gains Blood. Does nothing without an available Arrow (glows red). Upgraded: no Exhaust.
+- [ ] Double Down (Ironclad → anyone, 1 cost, Exhaust): both players get One-Two Punch 1 (2 upgraded): their next Attack(s) this turn are played twice.
+- [ ] Vicious Strike (Silent → anyone, 1 cost): the partner deals 6 (9) damage with both players' modifiers (Strength, Vigor, crit…), then applies Poison equal to the HP lost. Fully blocked = no Poison.
+- [ ] Royal Scheme (Regent → anyone, 0 cost, Exhaust, upgraded Retain): the partner's Hand fills with random Colorless cards. For the rest of the turn, each Colorless card they play gives the Regent a copy costing 0 for the combat.
+- [ ] Expy (Necrobinder → anyone, 2 cost, 1 upgraded, Exhaust): the partner Summons an Osty with the Necrobinder's Osty's current HP. Card preview shows that HP in combat.
+  - [ ] At the start of the next player turn, the copy goes away. If it survived, the Necrobinder Summons its remaining HP.
+  - [ ] Partner who already has an Osty (another Necrobinder): the copy only adds Max HP, and only that Max HP is taken back.
+- [ ] CONNECT (Defect → anyone, 2 cost, Ethereal; upgraded not Ethereal): each Orb the Defect Evokes is Channeled by the partner too. Each Power the partner plays gives the Defect 1 Focus.
+- [ ] Impromptu Lesson (Fool → anyone, 2 cost, 1 upgraded):
+  - [ ] Partner's Strikes also Shoot an Arrow at the same enemy (random if it died) for the Strike's base damage. A non-Fool partner gets an Arrow slot (arrow UI shows up). No Arrow available = no extra shot.
+  - [ ] Partner's Defends give them Aim equal to the base Block.
+  - [ ] The Fool gains Aim equal to the unblocked damage of the partner's Arrows.
+- [ ] Each Team-Up shows the right "Team-Up: Class" line on both sides (Fool → "Fool"), and only shows up in loot with the right classes in the run.
+
+**Visuals**
+- [ ] The 10 portraits look right (center-cropped to the card ratio). Vicious Strike, Expy and Impromptu Lesson art was small (~400px wide), so the big versions are upscaled and may look soft.
+- [ ] No power icons yet for Fool-ow Up Attack, Royal Scheme, Expy, CONNECT and Impromptu Lesson (listed in `MISSING_IMAGES.tsv`).
+
+**Decisions I made**
+- Your answers: Cruel Shot deals 30. Impromptu Lesson's Arrow is an extra shot, and the partner gets a slot if needed. Expy's remaining HP goes to the Necrobinder. Vicious Strike's Poison = HP lost.
+- "Base damage" = the card's Damage value before modifiers (or its calculated damage for cards like Perfected Strike). "Base Block" works the same way.
+- Fool-ow Up's blast comes from a hidden Energy-tagged token owned by Shion ("Fool-ow Up Blast", same art). It's never put in a pile, so it doesn't count as a played card (no Maid Outfit or Spirit Burst trigger).
+- Cruel Shot has no Shoot tag: otherwise Seels would get an Arrow slot just for holding it. Cards can now name who gets credit for their Maim (`IMaimCredited` in `MaimHelper.cs`). Only Cruel Shot uses it.
+- Expy copies the Osty's **current** HP, and killing the copy can count as an Osty death for other effects.
+- CONNECT: the CONNECT copy the partner plays doesn't give Focus itself.
+- Royal Scheme counts any Colorless card the partner plays this turn (not only the ones it made). X-cost copies keep X.
+- Double Down uses the game's One-Two Punch power (the "see One-Two Punch" note).
+- Dual Strike and Vicious Strike now share the "both players' modifiers" code (`Helper/TeamUpAttackHelper.cs`). Dual Strike should play exactly as before.
+- Aim Assist: Exhaust (added on request).

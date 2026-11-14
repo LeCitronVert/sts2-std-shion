@@ -182,3 +182,8 @@ Field Experiment	Power	Act 4 (Architect)	A flask or petri dish with small creatu
 Make Your Point	Power	Act 4 (Architect)	A cracked fist or a shattered sword tip, dark grey		Currently borrows ring_bounty.png
 Growing Impatience	Power	Act 4 (Architect)	An hourglass running out, sand turning red		Currently borrows ring_bounty.png
 The Architect (boss map node)	Map	Act 4	Architect head silhouette for the boss map node, + _outline		Placeholder: grey Chaos Emerald icon in images/map/strife_architect_boss*.png
+Fool-ow Up Attack	Power	Shion + Fool (Team-Up)	An arrow trailing a glowing energy ball		Currently uses the generic power.png
+Royal Scheme	Power	Regent + anyone (Team-Up)	A crown over a fanned hand of grey cards		Currently uses the generic power.png
+Expy	Power	Necrobinder + anyone (Team-Up)	A translucent, flickering copy of Osty		Currently uses the generic power.png
+CONNECT	Power	Defect + anyone (Team-Up)	Two orbs linked by a cable		Currently uses the generic power.png
+Impromptu Lesson	Power	Fool + anyone (Team-Up)	A chalkboard with a bow and arrow sketch		Currently uses the generic power.png

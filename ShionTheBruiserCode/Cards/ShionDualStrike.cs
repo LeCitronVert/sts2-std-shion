@@ -33,10 +33,7 @@ public class ShionDualStrike() : ShionTeamUpCard(1,
     protected override async Task OnTeamUp(PlayerChoiceContext choiceContext, CardPlay play, Player initiator, Player partner)
     {
         ArgumentNullException.ThrowIfNull(play.Target);
-        if (initiator.Creature.HasPower<ShionCritTrackerPower>())
-        {
-            await ShionMechanicsHelper.EnsureCreatureHasCritTracker(partner.Creature);
-        }
+        await TeamUpAttackHelper.EnsureCritTracker(initiator, partner);
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, play)
@@ -45,24 +42,16 @@ public class ShionDualStrike() : ShionTeamUpCard(1,
             .Execute(choiceContext);
     }
 
-    // The Initiator's own modifiers (Strength, Vigor, relics...) only apply to their attacks, so they're asked here as if they dealt this one.
-    private IEnumerable<AbstractModel> InitiatorModifiers(Creature? dealer, CardModel? cardSource)
-    {
-        if (cardSource != this || Initiator is not { } initiator || dealer != Owner.Creature) return [];
-        return [..initiator.Creature.Powers, ..initiator.Relics.Where(r => !r.IsMelted)];
-    }
-
     public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource
 #if STS2_BETA
         , CardPlay? cardPlay
 #endif
     )
     {
-        return InitiatorModifiers(dealer, cardSource)
 #if STS2_BETA
-            .Sum(m => m.ModifyDamageAdditive(target, amount, props, Initiator!.Creature, cardSource, cardPlay));
+        return TeamUpAttackHelper.ModifyDamageAdditive(this, target, amount, props, dealer, cardSource, cardPlay);
 #else
-            .Sum(m => m.ModifyDamageAdditive(target, amount, props, Initiator!.Creature, cardSource));
+        return TeamUpAttackHelper.ModifyDamageAdditive(this, target, amount, props, dealer, cardSource);
 #endif
     }
 
@@ -72,20 +61,14 @@ public class ShionDualStrike() : ShionTeamUpCard(1,
 #endif
     )
     {
-        return InitiatorModifiers(dealer, cardSource)
 #if STS2_BETA
-            .Aggregate(1m, (multiplier, m) => multiplier * m.ModifyDamageMultiplicative(target, amount, props, Initiator!.Creature, cardSource, cardPlay));
+        return TeamUpAttackHelper.ModifyDamageMultiplicative(this, target, amount, props, dealer, cardSource, cardPlay);
 #else
-            .Aggregate(1m, (multiplier, m) => multiplier * m.ModifyDamageMultiplicative(target, amount, props, Initiator!.Creature, cardSource));
+        return TeamUpAttackHelper.ModifyDamageMultiplicative(this, target, amount, props, dealer, cardSource);
 #endif
     }
 
-    // Crit contributors only count their owner's attacks, so the Initiator's are asked for their general bonus.
-    public decimal GetCritHitRateBonus(CardModel? sourceCard)
-    {
-        if (sourceCard != this || Initiator is not { } initiator) return 0m;
-        return InitiatorModifiers(Owner.Creature, this).OfType<ICritHitRateContributor>().Sum(c => c.GetCritHitRateBonus(null));
-    }
+    public decimal GetCritHitRateBonus(CardModel? sourceCard) => TeamUpAttackHelper.GetCritHitRateBonus(this, sourceCard);
 
     protected override void OnUpgrade()
     {

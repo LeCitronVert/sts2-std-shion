@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
@@ -15,6 +16,15 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Helper;
 public interface IConditionalMaim
 {
     int ConditionalMaim { get; }
+}
+
+/// <summary>
+/// A card whose Maim is applied by another player than its owner, who also gets the Blood (Cruel Shot: the Fool shoots, Seels Maims).
+/// </summary>
+public interface IMaimCredited
+{
+    /// <summary>The player who applies the Maim and gains the Blood. Null to use the card's owner.</summary>
+    Player? MaimCredit { get; }
 }
 
 /// <summary>
@@ -141,7 +151,9 @@ public static class MaimHelper
 
     private static async Task TriggerMaim(PlayerChoiceContext choiceContext, Creature target, CardModel cardSource)
     {
-        var owner = cardSource.Owner?.Creature;
+        // A credited player who died can't apply it: the card's owner does, and nobody gets the Blood.
+        var credited = (cardSource as IMaimCredited)?.MaimCredit?.Creature;
+        var owner = credited is { IsAlive: true } ? credited : cardSource.Owner?.Creature;
         if (owner is null || target.Side == owner.Side) return;
 
         var maim = GetMaim(cardSource);
@@ -151,7 +163,7 @@ public static class MaimHelper
         {
             await PowerCmd.Apply<MaimStrengthDown>(choiceContext, target, maim, owner, cardSource);
         }
-        if (owner.IsAlive)
+        if (owner.IsAlive && (credited == null || credited == owner))
         {
             await SeelsMechanicsHelper.GainBlood(choiceContext, owner, BloodGained, cardSource);
         }
