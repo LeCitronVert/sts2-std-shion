@@ -22,5 +22,12 @@ public abstract class SeelsTheRecklessCard(int cost, CardType type, CardRarity r
     public override string CustomPortraitPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".BigCardImagePath();
     public override string PortraitPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".CardImagePath();
     public override string BetaPortraitPath => $"beta/{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".CardImagePath();
+
+    // ── Animation ────────────────────────────────────────────────────────────
+    /// <summary>
+    /// Animation Seels plays when he plays this card (Singletons/SeelsAnimationSingleton.cs): "Cast" for Skills and
+    /// Powers, none for Attacks (their damage plays "Attack"). Blood Bend Skills return null: Blood Bend plays "Blood".
+    /// </summary>
+    public virtual string? PlayAnimation => Type is CardType.Skill or CardType.Power ? "Cast" : null;
 }
 

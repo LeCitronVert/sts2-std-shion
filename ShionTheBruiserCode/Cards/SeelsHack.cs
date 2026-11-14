@@ -45,6 +45,9 @@ public class SeelsHack() : SeelsTheRecklessCard(0,
         HoverTipFactory.FromPower<StrengthPower>(),
     ];
 
+    // Blood Bend plays the "Blood" animation instead of "Cast"
+    public override string? PlayAnimation => null;
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         ArgumentNullException.ThrowIfNull(play.Target);

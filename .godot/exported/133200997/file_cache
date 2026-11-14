@@ -10,7 +10,7 @@ res://ShionTheBruiser/scenes/fx/berserk_sparks.tscn::914fb33b194d3194473288e6ec4
 res://ShionTheBruiser/scenes/fx/crit_indicator.tscn::7d432d29bf511e9fb7e9830a77eb078a::1792503855::res://.godot/exported/133200997/export-12010982c5eb65e6e8210fd6009a8402-crit_indicator.scn
 res://ShionTheBruiser/scenes/fx/energy_blast.tscn::a001b1ce74cf61df874b008ea78bcba1::1792503923::res://.godot/exported/133200997/export-90ec196ae62e8416432c4f8a9470782e-energy_blast.scn
 res://ShionTheBruiser/scenes/fx/shion_auras.tscn::f2269fb71a5f0eff11d7e4968a650fa2::1792503896::res://.godot/exported/133200997/export-7e8ad1dd980be1d36bb55caed1ec25a1-shion_auras.scn
-res://ShionTheBruiser/scenes/slal_rest.tscn::256e8d9577746fe878605e2327301da0::1792929289::res://.godot/exported/133200997/export-7c9a29a3ce85156465a5df9205b9fbfa-slal_rest.scn
+res://ShionTheBruiser/scenes/slal_rest.tscn::4ce66fc82d209939712929db97dcc3a5::1794657164::res://.godot/exported/133200997/export-7c9a29a3ce85156465a5df9205b9fbfa-slal_rest.scn
 res://ShionTheBruiser/scenes/fx/team_blast_gauge.tscn::9758935eb8373647d394f1e4a00e2eee::1793177900::res://.godot/exported/133200997/export-f3dfd06e92240c3aecf87b9279fe0f5c-team_blast_gauge.scn
 res://ShionTheBruiser/scenes/fx/memory_bulbs.tscn::3bee0c3228a1bd65673c6ede2645a36c::1793312803::res://.godot/exported/133200997/export-fd38f93f30a54b8bcaced6eaab1c2610-memory_bulbs.scn
 res://ShionTheBruiser/scenes/fx/come_what_may_speedlines.tscn::0412f018c511038c991498b91a11f896::1793467171::res://.godot/exported/133200997/export-9466466c34944041ac855cf7b66ea466-come_what_may_speedlines.scn
@@ -44,3 +44,4 @@ res://ShionTheBruiser/scenes/ancients/strife_shrine.tscn::0386694418c1ebd69035e9
 res://ShionTheBruiser/scenes/encounters/strife_architect.tscn::bc636b6701545509ee88219e6ac55d3d::1794316680::res://.godot/exported/133200997/export-f0264c955ef30cd9bba641e5611a3893-strife_architect.scn
 res://ShionTheBruiser/scenes/fx/impatience_clock.tscn::926ec9c1392295180c1ee1da1e308739::1794321756::res://.godot/exported/133200997/export-20d8f5ea933bc4218e42ea1801c1dc82-impatience_clock.scn
 res://ShionTheBruiser/scenes/fx/super_form_sparks.tscn::9b03d4404306145ce8fb75023589d48c::1794323682::res://.godot/exported/133200997/export-3c5e76c14944939976667c52b88e64c6-super_form_sparks.scn
+res://ShionTheBruiser/scenes/seels_character.tscn::e33136a5d76685f8876de2d915b48fec::1794657716::res://.godot/exported/133200997/export-fdcb55fc6db176ace4a244967bd75d59-seels_character.scn

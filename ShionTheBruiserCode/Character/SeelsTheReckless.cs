@@ -1,9 +1,12 @@
 using BaseLib.Abstracts;
+using BaseLib.Utils.NodeFactories;
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Timeline;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
+using ShionTheBruiser.ShionTheBruiserCode.Extensions;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Relics;
 using ShionTheBruiser.ShionTheBruiserCode.Timeline;
@@ -17,8 +20,44 @@ public class SeelsTheReckless : PlaceholderCharacterModel, IEpochCharacter, ICha
 
     public static readonly Color Color = new("f1c232");
 
-    // No custom visuals yet: borrow the Silent's placeholder assets.
+    // Merchant, rest site and energy counter have no custom art yet: they still borrow the Silent's.
     public override string PlaceholderID => "silent";
+
+    // Custom visuals
+    public override Control CustomIcon
+    {
+        get
+        {
+            var icon = NodeFactory<Control>.CreateFromResource(CustomIconTexturePath);
+            icon.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
+            return icon;
+        }
+    }
+
+    public override string CustomIconTexturePath => "seels/ui_icon_seels.png".CharacterUiPath();
+    public override string CustomCharacterSelectIconPath => "seels/ui_portrait_seels.png".CharacterUiPath();
+    public override string CustomCharacterSelectLockedIconPath => "char_select_char_name_locked.png".CharacterUiPath();
+    public override string CustomMapMarkerPath => "seels/UI_map_seels.png".CharacterUiPath();
+
+    public override string? CustomIconOutlineTexturePath => "seels/ui_icon_seels_white.png".CharacterUiPath();
+
+    // Claws: 1 weak, 1 strong, 3 weak (the Architect shuffles the order)
+    public override List<string> GetArchitectAttackVfx() =>
+    [
+        "vfx/vfx_attack_slash",
+        "vfx/vfx_bloody_impact",
+        "vfx/vfx_attack_slash",
+        "vfx/vfx_attack_slash",
+        "vfx/vfx_attack_slash",
+    ];
+
+    // Animations: idle, attack, cast, blood (Blood Bend), hit. Multi-hit attacks restart on the slash frame.
+    // Cast: Singletons/SeelsAnimationSingleton.cs, blood: SeelsMechanicsHelper.BloodBend.
+    public override NCreatureVisuals CreateCustomVisuals()
+    {
+        return NodeFactory<NCreatureVisuals>.CreateFromScene(Path.Join(MainFile.ResPath, "scenes",
+            "seels_character.tscn"));
+    }
 
     // Character select → run wipe. Shader driven by NTransition's threshold tween.
     public override string CustomCharacterSelectTransitionPath =>

@@ -107,22 +107,15 @@ Energy Icon	UI	Fry
 Map Icon	UI	Fry			
 Wallpaper	UI	Fry			
 Select Portrait	UI	Fry			
-Idle	Character	Seels			
-Strike	Character	Seels			
-Hit	Character	Seels			
-Skill	Character	Seels			
-Die	Character	Seels			
+Die	Character	Seels			Combat uses the Hit frames as a stand-in until this exists (scenes/seels_character.tscn)
 Rest	Character	Seels			
 Marchand	Character	Seels			
 Main Pointe	Character	Seels			
 Main Pierre	Character	Seels			
 Main Feuille	Character	Seels			
 Main Ciseaux	Character	Seels			
-Character Icon	UI	Seels			
 Energy Icon	UI	Seels			
-Map Icon	UI	Seels			
 Wallpaper	UI	Seels			
-Select Portrait	UI	Seels			
 Main Pointe	Character	Slal			
 Main Pierre	Character	Slal			
 Main Feuille	Character	Slal			

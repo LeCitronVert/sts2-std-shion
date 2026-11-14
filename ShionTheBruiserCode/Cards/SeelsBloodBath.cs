@@ -53,6 +53,9 @@ public class SeelsBloodBath() : SeelsTheRecklessCard(2,
     private static decimal TotalBlock(CardModel card, int x) =>
         card.DynamicVars.Block.BaseValue * (x + card.DynamicVars["Bonus"].IntValue);
 
+    // Blood Bend plays the "Blood" animation instead of "Cast"
+    public override string? PlayAnimation => null;
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         var x = await SeelsMechanicsHelper.BloodBend(choiceContext, this);

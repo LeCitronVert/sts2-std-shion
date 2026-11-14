@@ -10,7 +10,9 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Visuals;
 /// Both do nothing when that animation is already playing. On multi-hit attacks, the next hit comes before
 /// the attack animation ends, so the character only animated once for several hits.
 /// This runs before BaseLib's own SetAnimationTrigger prefix: if the same animation is still playing,
-/// it is rewound to its first frame and sped up so each hit gets a full loop.
+/// it is rewound and sped up so each hit gets a full loop.
+/// It rewinds to the sprite's <c>repeat_frame_&lt;animation&gt;</c> metadata if set (e.g. Seels' attack skips its
+/// wind-up and goes straight into the slash), or to the first frame otherwise.
 /// It must keep playing: stopping it would freeze the sprite, since setting <c>animation</c> doesn't resume it.
 /// shion_visuals.gd resets the speed when going back to idle.
 /// </summary>
@@ -33,7 +35,7 @@ public static class AnimationRestartPatch
 
         if (sprite.IsPlaying() && sprite.Animation == animation)
         {
-            sprite.SetFrameAndProgress(0, 0f);
+            sprite.SetFrameAndProgress(GetRepeatFrame(sprite, animation), 0f);
             sprite.SpeedScale = RepeatSpeedScale * CreatureLook.GetSpriteSpeed(sprite);
         }
         else
@@ -41,6 +43,14 @@ public static class AnimationRestartPatch
             // Slowed down by Eleventh Hour, Nap... (CreatureLook)
             sprite.SpeedScale = CreatureLook.GetSpriteSpeed(sprite);
         }
+    }
+
+    private static int GetRepeatFrame(AnimatedSprite2D sprite, StringName animation)
+    {
+        var meta = $"repeat_frame_{animation}";
+        if (!sprite.HasMeta(meta)) return 0;
+        var frame = sprite.GetMeta(meta).AsInt32();
+        return Mathf.Clamp(frame, 0, sprite.SpriteFrames.GetFrameCount(animation) - 1);
     }
 
     // Same names BaseLib tries, in the same order

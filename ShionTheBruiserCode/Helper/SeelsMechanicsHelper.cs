@@ -14,6 +14,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
+using ShionTheBruiser.ShionTheBruiserCode.Character;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -112,6 +113,10 @@ public static class SeelsMechanicsHelper
     public static async Task<int> BloodBend(PlayerChoiceContext choiceContext, Player player, CardModel? card)
     {
         var creature = player.Creature;
+        // Seels has his own Blood animation; anyone else (Team-Ups) casts.
+        var animation = player.Character is SeelsTheReckless ? "Blood" : "Cast";
+        await CreatureCmd.TriggerAnim(creature, animation, player.Character.CastAnimDelay);
+
         int blood;
         if (card is { CurrentPlayIndex: > 0 })
         {
