@@ -5,13 +5,14 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Models;
 using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// Add a copy of the first X 0-cost Attacks you play each turn into your Hand.
+/// Add a copy of the first X 0-cost Attacks you play each turn into your Hand. The copy keeps the original's Enchantment.
 /// "0-cost" means no energy was paid for that play (X-cost played for 0, free or autoplayed Attacks count).
 /// </summary>
 public class ComboMeter : SeelsTheRecklessPower
@@ -32,6 +33,14 @@ public class ComboMeter : SeelsTheRecklessPower
         Flash();
         var copy = Owner.CombatState.CreateCard(cardPlay.Card.CanonicalInstance, Owner.Player!);
         if (cardPlay.Card.IsUpgraded) CardCmd.Upgrade(copy);
+        if (cardPlay.Card.Enchantment is { } enchantment)
+        {
+            var copiedEnchantment = ModelDb.GetById<EnchantmentModel>(enchantment.Id).ToMutable();
+            if (copiedEnchantment.CanEnchant(copy))
+            {
+                CardCmd.Enchant(copiedEnchantment, copy, enchantment.Amount);
+            }
+        }
         CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(copy, PileType.Hand, Owner.Player));
     }
 

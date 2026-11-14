@@ -21,7 +21,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Maim 1. Deal 5 (6) damage. If the enemy intends to attack, gain 2 (3) Strength this turn.
+/// Deal 5 (6) damage. If the enemy intends to attack, gain 2 (3) Strength this turn.
 /// </summary>
 public class SeelsStrikeFirst() : SeelsTheRecklessCard(0,
     CardType.Attack, CardRarity.Common,
@@ -29,17 +29,13 @@ public class SeelsStrikeFirst() : SeelsTheRecklessCard(0,
 {
     protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [SeelsCardKeywords.Maim];
-
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        MaimHelper.Var(1M),
         new DamageVar(5M, ValueProp.Move),
         new PowerVar<StrengthPower>(2M),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<StrengthPower>(),
-        HoverTipFactory.FromPower<Blood>(),
     ];
 
     protected override bool ShouldGlowGoldInternal =>

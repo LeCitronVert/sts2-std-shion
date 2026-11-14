@@ -2007,3 +2007,21 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - His line turn (unknown intent) before the check is kept. Damage dealt to him on that turn only goes to the score.
 - Make Your Point no longer touches Strength. It's now an info-only buff icon that flashes when a check starts and when it's broken.
 - The old "attack for the party's combined Max HP" is gone.
+
+## 37. Change Pending K: Pin Them Down, Combo Meter, Strike First, Seels crit line, Slal rest anim
+
+**Setup**
+- [ ] Re-export the .pck (Slal rest scene and localization changed).
+
+**Cards**
+- [ ] Pin Them Down (2 cost): Gloat 2. Adds 1 Inky Slash to your Hand and 1 more to your Draw Pile per energy it costs (2 at base cost). Upgraded: 2 per energy (4 at base cost), and the Slashes are Slash+. The in-combat preview follows cost changes.
+- [ ] Combo Meter: the copy keeps the original Attack's Enchantment and amount (for example an Inky Slash gives an Inky copy). It still copies the upgrade.
+- [ ] Strike First: no Maim keyword and no Blood tooltip. Damage and Strength are the same as before.
+
+**Visuals / text**
+- [ ] Seels can say "*dabs*" as a crit line (5th line in the random pool).
+- [ ] Slal rest site: each of the 4 frames lasts 3s (12s loop instead of 1s).
+
+**Decisions I made**
+- Your answers: keep Slash+ on the upgrade, 3s per frame, copy only the Enchantment for Combo Meter.
+- Combo Meter: if the copy can't take the enchantment, it's just skipped (same check as Slal's copy helper). Copying it doesn't count as a modification for Magical Overload.
