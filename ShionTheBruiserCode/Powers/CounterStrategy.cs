@@ -37,8 +37,10 @@ public class CounterStrategy() : ShionTheBruiserPower, ICardAfflictionListener
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier,
         CardModel? cardSource)
     {
-        // Debuffs ticking down aren't received, and Defensive is your own stance, not a hindrance
-        if (power.Type != PowerType.Debuff || power.Owner != Owner || amount <= 0 || power is DefensiveDebuff)
+        // Same classification as vanilla Artifact: negative Strength/Dexterity count as debuffs, while a debuff
+        // ticking down (negative amount on a non-negative power) reads as Buff. Defensive is your own stance.
+        if (power.GetTypeForAmount(amount) != PowerType.Debuff || power.Owner != Owner || !power.IsVisible
+            || power is DefensiveDebuff)
         {
             return;
         }
