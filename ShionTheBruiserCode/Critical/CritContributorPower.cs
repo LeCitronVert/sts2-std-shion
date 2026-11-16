@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -36,5 +37,14 @@ public abstract class CritContributorPower : ShionTheBruiserPower
                 cardSource: null);
         }
     }
-}
 
+    /// <summary>
+    /// PowerCmd.Remove fires no AfterPowerAmountChanged, so refresh the cached crit
+    /// display once this contributor is actually gone from the owner.
+    /// </summary>
+    public override async Task AfterRemoved(Creature oldOwner)
+    {
+        await base.AfterRemoved(oldOwner);
+        oldOwner.GetPower<ShionCritTrackerPower>()?.RecalculateCritRates();
+    }
+}

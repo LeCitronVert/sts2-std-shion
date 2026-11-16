@@ -43,10 +43,14 @@ public class CriticalAttackNext : CritContributorPower, ICritHitRateContributor
 
     public decimal GetCritHitRateBonus(CardModel? sourceCard)
     {
+        // AfterPowerAmountChanged fires while the power is still attached at 0 (removal happens after),
+        // so the tracker's recalculation would otherwise still count this power.
+        if (Amount <= 0)
+            return 0;
+
         if (sourceCard == null || sourceCard.Owner.Creature == Owner)
             return 1;
-        
+
         return 0;
-        
     }
 }

@@ -3,6 +3,8 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using ShionTheBruiser.ShionTheBruiserCode.Singletons;
 using Godot;
+using MegaCrit.Sts2.Core.Helpers;
+using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Patches;
 
@@ -45,64 +47,47 @@ public class CriticalDamageDisplayPatch
     }
 
     /// <summary>
-    /// Postfix patch on _Ready to customize tween colors for critical hits.
-    /// This runs when the VFX node is added to the scene, before AnimVfx creates the tween.
+    /// Replaces NDamageNumVfx.AnimVfx for critical hits with a gold/orange version of the same animation.
+    /// Vanilla awaits its own tween and frees the node once it ends, and a killed tween counts as ended,
+    /// so killing it to recolor (as this patch used to) freed the number one frame after it spawned.
     /// </summary>
-    [HarmonyPatch("_Ready", MethodType.Normal)]
-    [HarmonyPostfix]
-    public static void ReadyPostfix(NDamageNumVfx __instance)
+    [HarmonyPatch("AnimVfx")]
+    [HarmonyPrefix]
+    public static bool AnimVfxPrefix(NDamageNumVfx __instance, ref Task __result)
     {
-        try
-        {
-            // Check if this is a critical hit in our tracking dictionary
-            if (!_criticalHitInfo.TryGetValue(__instance, out var critInfo) || !critInfo.isCrit)
-                return;
+        if (!_criticalHitInfo.Remove(__instance, out var critInfo) || !critInfo.isCrit)
+            return true;
 
-            MainFile.Logger.Info($"[CriticalDamageDisplay] _Ready postfix - setting up crit colors");
+        __result = CritAnimVfx(__instance, critInfo.isBlocked);
+        return false;
+    }
 
-            // Get the tween field that was just created
-            var tweenField = typeof(NDamageNumVfx).GetField("_tween", 
-                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            
-            if (tweenField is null)
-                return;
+    private static readonly AccessTools.FieldRef<NDamageNumVfx, Tween?> TweenRef =
+        AccessTools.FieldRefAccess<NDamageNumVfx, Tween?>("_tween");
 
-            var tween = tweenField.GetValue(__instance) as Tween;
-            if (tween is not null)
-            {
-                // Kill the existing tween with default colors
-                tween.Kill();
-                MainFile.Logger.Info($"[CriticalDamageDisplay] Killed default tween");
-            }
+    private static async Task CritAnimVfx(NDamageNumVfx vfx, bool isBlocked)
+    {
+        Color critColor = isBlocked
+            ? new Color(1.0f, 0.5f, 0.0f, 1.0f)  // Orange for blocked crit
+            : new Color(1.0f, 0.85f, 0.2f, 1.0f); // Gold for unblocked crit
 
-            // Determine the color based on whether it's blocked
-            Godot.Color critColor = critInfo.isBlocked 
-                ? new Godot.Color(1.0f, 0.5f, 0.0f, 1.0f)  // Orange for blocked crit: RGB(1.0, 0.5, 0.0)
-                : new Godot.Color(1.0f, 0.85f, 0.2f, 1.0f); // Gold for unblocked crit: RGB(1.0, 0.85, 0.2)
+        var tween = vfx.CreateTween().SetParallel();
+        tween.TweenProperty(vfx, "modulate", critColor, 0.5f)
+            .SetEase(Tween.EaseType.Out)
+            .SetTrans(Tween.TransitionType.Cubic);
+        tween.TweenProperty(vfx, "modulate:a", 0.0f, 2.0f)
+            .SetEase(Tween.EaseType.In)
+            .SetTrans(Tween.TransitionType.Quad);
+        tween.TweenProperty(vfx, "scale", Vector2.One, 1.2f)
+            .SetEase(Tween.EaseType.Out)
+            .SetTrans(Tween.TransitionType.Quad)
+            .From(Vector2.One * 2.5f);
 
-            // Create a new tween with the critical hit colors
-            var newTween = __instance.CreateTween().SetParallel();
-            newTween.TweenProperty(__instance, "modulate", critColor, 0.5f)
-                .SetEase(Tween.EaseType.Out)
-                .SetTrans(Tween.TransitionType.Cubic);
-            newTween.TweenProperty(__instance, "modulate:a", 0.0f, 2.0f)
-                .SetEase(Tween.EaseType.In)
-                .SetTrans(Tween.TransitionType.Quad);
-            newTween.TweenProperty(__instance, "scale", Vector2.One, 1.2f)
-                .SetEase(Tween.EaseType.Out)
-                .SetTrans(Tween.TransitionType.Quad)
-                .From(Vector2.One * 2.5f);
+        // Vanilla's _ExitTree kills _tween
+        TweenRef(vfx) = tween;
 
-            // Update the tween field with our new tween
-            tweenField.SetValue(__instance, newTween);
-
-            MainFile.Logger.Info($"[CriticalDamageDisplay] Created custom tween - " + 
-                (critInfo.isBlocked ? "Orange (Blocked)" : "Gold (Unblocked)"));
-        }
-        catch (Exception ex)
-        {
-            MainFile.Logger.Error($"[CriticalDamageDisplay] Error in _Ready postfix: {ex.Message}");
-        }
+        await tween.AwaitFinished(vfx);
+        vfx.QueueFreeSafely();
     }
 
     /// <summary>

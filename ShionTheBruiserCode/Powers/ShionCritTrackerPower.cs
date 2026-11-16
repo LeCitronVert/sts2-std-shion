@@ -50,7 +50,7 @@ public class ShionCritTrackerPower : ShionTheBruiserPower
         return new HoverTip(this, description.GetFormattedText(), true);
     }
 
-    private void RecalculateCritRates()
+    public void RecalculateCritRates()
     {
         if (Owner.CombatState == null)
         {
