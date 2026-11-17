@@ -9,8 +9,8 @@ ShionTheBruiser.json::JSON::-1::1794498961::0::1::::<><><>0<>0<><>::
 ::res://bin/ExportRelease/net9.0/::1794599726
 ::res://bin/ExportRelease/net9.0/publish/::1794580160
 ShionTheBruiser.deps.json::JSON::-1::1794499193::0::1::::<><><>0<>0<><>::
-::res://bin/ExportRelease/net9.0/publish-beta/::1794860672
-ShionTheBruiser.deps.json::JSON::-1::1794860672::0::1::::<><><>0<>0<><>::
+::res://bin/ExportRelease/net9.0/publish-beta/::1794900963
+ShionTheBruiser.deps.json::JSON::-1::1794900963::0::1::::<><><>0<>0<><>::
 ::res://ci/::1794598486
 ::res://ci/game-refs/::1792939391
 ::res://ci/game-refs-beta/::1794598486
@@ -2019,7 +2019,7 @@ AbbyMonster.cs::CSharpScript::7065894295935417984::1794597728::0::1::::<><><>0<>
 BloodInklet.cs::CSharpScript::8588995559894159750::1794598190::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiserCode/Orbs/::1793196896
 MonsterOrb.cs::CSharpScript::6037243293034713646::1794598190::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Patches/::1794356430
+::res://ShionTheBruiserCode/Patches/::1794900863
 AfflictionHooks.cs::CSharpScript::1383593816546956163::1792845922::0::1::::<><><>0<>0<><>::
 BerserkEndTurnPingPatch.cs::CSharpScript::6477938313587175322::1794356430::0::1::::<><><>0<>0<><>::
 BloodyExecutionTargetPatch.cs::CSharpScript::5272088704215391780::1794130192::0::1::::<><><>0<>0<><>::
@@ -2047,7 +2047,7 @@ RestSiteOptionPatches.cs::CSharpScript::5859460897548258494::1791501155::0::1:::
 SatedPatch.cs::CSharpScript::7062723142091543022::1793290483::0::1::::<><><>0<>0<><>::
 SeaGlassClassNamePatch.cs::CSharpScript::6849256767010419353::1793817221::0::1::::<><><>0<>0<><>::
 SeekRestSitePatch.cs::CSharpScript::2938708185198662857::1793016819::0::1::::<><><>0<>0<><>::
-ShionAncientRelicPatches.cs::CSharpScript::1924961160751329131::1794068180::0::1::::<><><>0<>0<><>::
+ShionAncientRelicPatches.cs::CSharpScript::1924961160751329131::1794900863::0::1::::<><><>0<>0<><>::
 TeamBlastHiddenPilePatch.cs::CSharpScript::2785949779694875366::1793177883::0::1::::<><><>0<>0<><>::
 TeamBlastRestSiteResetPatch.cs::CSharpScript::5469159569133076223::1793486290::0::1::::<><><>0<>0<><>::
 TeamUpPatches.cs::CSharpScript::4786867569928225186::1794598398::0::1::::<><><>0<>0<><>::
