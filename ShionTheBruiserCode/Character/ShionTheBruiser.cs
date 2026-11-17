@@ -25,6 +25,10 @@ public class ShionTheBruiser : PlaceholderCharacterModel, IEpochCharacter, IChar
     public static readonly Color Color = new("9234eb");
 
     public override Color NameColor => Color;
+#if STS2_BETA
+    // Dread banner name tint; vanilla uses its class colour at C0 (~0.75) alpha.
+    public override Color DreadNameColor => new(Color, 0.75f);
+#endif
     public override CharacterGender Gender => CharacterGender.Feminine;
     public override int StartingHp => 70;
 

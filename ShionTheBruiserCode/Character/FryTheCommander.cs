@@ -32,6 +32,10 @@ public class FryTheCommander : PlaceholderCharacterModel, IEpochCharacter, IChar
     public override bool ShouldAlwaysShowStarCounter => true;
 
     public override Color NameColor => Color;
+#if STS2_BETA
+    // Dread banner name tint; vanilla uses its class colour at C0 (~0.75) alpha.
+    public override Color DreadNameColor => new(Color, 0.75f);
+#endif
     public override CharacterGender Gender => CharacterGender.Masculine;
     public override int StartingHp => 80;
 
