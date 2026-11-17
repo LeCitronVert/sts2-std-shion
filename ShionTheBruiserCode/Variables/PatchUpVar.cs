@@ -41,10 +41,11 @@ public class PatchUpVar: DynamicVar
 
     // Read-only: hover tips are display-only, never mutate state here.
     // _owner is protected, so it can only be read through a PatchUpVar reference (clones keep the type).
+    // Owner asserts mutability: canonical models (Dusty Tome preview, card library) have no owner.
     private static Creature? GetOwnerCreature(DynamicVar var) => (var as PatchUpVar)?._owner switch
     {
-        CardModel card => card.Owner?.Creature,
-        PowerModel power => power.Owner,
+        CardModel { IsMutable: true } card => card.Owner?.Creature,
+        PowerModel { IsMutable: true } power => power.Owner,
         _ => null,
     };
 }
