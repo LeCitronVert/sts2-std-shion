@@ -9,8 +9,8 @@ ShionTheBruiser.json::JSON::-1::1794498961::0::1::::<><><>0<>0<><>::
 ::res://bin/ExportRelease/net9.0/::1794599726
 ::res://bin/ExportRelease/net9.0/publish/::1794580160
 ShionTheBruiser.deps.json::JSON::-1::1794499193::0::1::::<><><>0<>0<><>::
-::res://bin/ExportRelease/net9.0/publish-beta/::1794833918
-ShionTheBruiser.deps.json::JSON::-1::1794833918::0::1::::<><><>0<>0<><>::
+::res://bin/ExportRelease/net9.0/publish-beta/::1794860672
+ShionTheBruiser.deps.json::JSON::-1::1794860672::0::1::::<><><>0<>0<><>::
 ::res://ci/::1794598486
 ::res://ci/game-refs/::1792939391
 ::res://ci/game-refs-beta/::1794598486
@@ -2065,7 +2065,7 @@ ShionTheBruiserPotion.cs::CSharpScript::9201725349623556408::1783339625::0::1:::
 SlalTheEndlessPotion.cs::CSharpScript::8376483660968667012::1784597711::0::1::::<><><>0<>0<><>::
 SlimePotion.cs::CSharpScript::7989781476553595685::1793813802::0::1::::<><><>0<>0<><>::
 UltraSpicyBrew.cs::CSharpScript::9048578971562818039::1784853353::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Powers/::1794662019
+::res://ShionTheBruiserCode/Powers/::1794860619
 AceOfSpade.cs::CSharpScript::899769670653131295::1793740867::0::1::::<><><>0<>0<><>::
 AggravatingDemeanor.cs::CSharpScript::8129228658966784852::1793719953::0::1::::<><><>0<>0<><>::
 AnchoredDown.cs::CSharpScript::5901246561197500973::1792505028::0::1::::<><><>0<>0<><>::
@@ -2109,7 +2109,7 @@ Confusion.cs::CSharpScript::8048853769951691982::1793452321::0::1::::<><><>0<>0<
 Connect.cs::CSharpScript::1283569466890221259::1794661448::0::1::::<><><>0<>0<><>::
 ContinuityThread.cs::CSharpScript::4035396133213721992::1793451721::0::1::::<><><>0<>0<><>::
 CoolBandages.cs::CSharpScript::4887038531725767910::1794598112::0::1::::<><><>0<>0<><>::
-CounterStrategy.cs::CSharpScript::7633700097038938229::1792870448::0::1::::<><><>0<>0<><>::
+CounterStrategy.cs::CSharpScript::7633700097038938229::1794860619::0::1::::<><><>0<>0<><>::
 CreativeSpirit.cs::CSharpScript::6167201472665542690::1792264217::0::1::::<><><>0<>0<><>::
 CriticalAttackNext.cs::CSharpScript::3045316320708616909::1794833572::0::1::::<><><>0<>0<><>::
 CriticalDraw.cs::CSharpScript::1437147261964541114::1784496083::0::1::::<><><>0<>0<><>::

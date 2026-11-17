@@ -16,15 +16,26 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Patches;
 /// </summary>
 public static class ShionAncientRelics
 {
+#if STS2_BETA
+    // Beta dropped RelicOption's custom done page (and Neow's DONE pages with it): every relic uses the default one.
+    private static readonly MethodInfo RelicOption = AccessTools.Method(typeof(AncientEventModel), "RelicOption",
+        [typeof(RelicModel), typeof(string)]);
+#else
     private static readonly MethodInfo RelicOption = AccessTools.Method(typeof(AncientEventModel), "RelicOption",
         [typeof(RelicModel), typeof(string), typeof(string)]);
+#endif
 
     public static bool IsShion(Player? player) => player?.Character is Character.ShionTheBruiser;
 
     public static EventOption Option(AncientEventModel ancient, RelicModel relic, string? customDonePage = null,
         Func<EventOption, EventOption>? configure = null)
     {
-        var option = (EventOption)RelicOption.Invoke(ancient, [relic.ToMutable(), "INITIAL", customDonePage])!;
+#if STS2_BETA
+        object?[] args = [relic.ToMutable(), "INITIAL"];
+#else
+        object?[] args = [relic.ToMutable(), "INITIAL", customDonePage];
+#endif
+        var option = (EventOption)RelicOption.Invoke(ancient, args)!;
         return configure?.Invoke(option) ?? option;
     }
 
