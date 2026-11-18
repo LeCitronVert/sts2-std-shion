@@ -125,9 +125,7 @@ public sealed class FieldExperiment : ShionTheBruiserPower
 
     // In case something hits him anyway (random targets picked before, damage that ignores hitting...)
     public override decimal ModifyDamageCap(Creature? target, ValueProp props, Creature? dealer, CardModel? cardSource
-#if STS2_BETA
         , CardPlay? cardPlay
-#endif
     ) =>
         Protects(target) ? 0m : decimal.MaxValue;
 

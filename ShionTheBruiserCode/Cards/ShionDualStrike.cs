@@ -43,29 +43,17 @@ public class ShionDualStrike() : ShionTeamUpCard(1,
     }
 
     public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource
-#if STS2_BETA
         , CardPlay? cardPlay
-#endif
     )
     {
-#if STS2_BETA
         return TeamUpAttackHelper.ModifyDamageAdditive(this, target, amount, props, dealer, cardSource, cardPlay);
-#else
-        return TeamUpAttackHelper.ModifyDamageAdditive(this, target, amount, props, dealer, cardSource);
-#endif
     }
 
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource
-#if STS2_BETA
         , CardPlay? cardPlay
-#endif
     )
     {
-#if STS2_BETA
         return TeamUpAttackHelper.ModifyDamageMultiplicative(this, target, amount, props, dealer, cardSource, cardPlay);
-#else
-        return TeamUpAttackHelper.ModifyDamageMultiplicative(this, target, amount, props, dealer, cardSource);
-#endif
     }
 
     public decimal GetCritHitRateBonus(CardModel? sourceCard) => TeamUpAttackHelper.GetCritHitRateBonus(this, sourceCard);

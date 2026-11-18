@@ -37,9 +37,7 @@ public class PleasureInPain() : ShionTheBruiserPower
         ValueProp props,
         Creature? dealer,
         CardModel? cardSource
-#if STS2_BETA
         , CardPlay? cardPlay
-#endif
     )
     {
         return target != this.Owner || !props.IsPoweredAttack() ? 1M : 1 + (DamageTakenIncrease / 100M);

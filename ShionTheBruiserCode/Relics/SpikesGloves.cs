@@ -35,9 +35,7 @@ public class SpikesGloves() : ShionTheBruiserRelic
         ValueProp props,
         Creature? dealer,
         CardModel? cardSource
-#if STS2_BETA
         , CardPlay? cardPlay
-#endif
     )
     {
         return 

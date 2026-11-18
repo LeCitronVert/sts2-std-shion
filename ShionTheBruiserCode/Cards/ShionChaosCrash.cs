@@ -31,7 +31,7 @@ public class ShionChaosCrash() : ShionBerserkCard(1,
         }
         else
         {
-            await Sts2Compat.Damage(choiceContext, card.Owner.Creature, card.DynamicVars.HpLoss.BaseValue, ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, card, play);
+            await CreatureCmd.Damage(choiceContext, card.Owner.Creature, card.DynamicVars.HpLoss.BaseValue, ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, card, play);
         }
         
         if (card.CombatState != null)

@@ -68,9 +68,7 @@ public class SlalSlimeRain(): SlalSlimyCard(2,
     /// Once played, the real Slimed raise the damage instead (the card is no longer in the Hand).
     /// </summary>
     public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource
-#if STS2_BETA
         , CardPlay? cardPlay
-#endif
     )
     {
         if (cardSource != this || Pile?.Type != PileType.Hand) return 0m;

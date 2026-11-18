@@ -4,7 +4,7 @@
   "author": "ShionP",
   "description": "Includes 4 characters you've never heard of.",
   "version": "v0.0.1",
-  "min_game_version": "0.107.0",
+  "min_game_version": "0.111.1",
   "has_pck": true,
   "has_dll": true,
   "dependencies": [

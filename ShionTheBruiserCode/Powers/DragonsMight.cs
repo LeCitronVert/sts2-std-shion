@@ -21,9 +21,7 @@ public class DragonsMight : ShionTheBruiserPower
         ValueProp props,
         Creature? dealer,
         CardModel? cardSource
-#if STS2_BETA
         , CardPlay? cardPlay
-#endif
     )
     {
         return 

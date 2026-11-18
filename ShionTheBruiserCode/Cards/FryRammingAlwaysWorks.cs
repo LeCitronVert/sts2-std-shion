@@ -38,7 +38,7 @@ public class FryRammingAlwaysWorks() : FryTheCommanderCard(1,
         ArgumentNullException.ThrowIfNull(play.Target);
         if (play.Target.Block > 0)
         {
-            await Sts2Compat.LoseBlock(choiceContext, play.Target, play.Target.Block, Owner.Creature);
+            await CreatureCmd.LoseBlock(choiceContext, play.Target, play.Target.Block, Owner.Creature);
         }
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
@@ -52,7 +52,7 @@ public class FryRammingAlwaysWorks() : FryTheCommanderCard(1,
             await PowerCmd.Apply<VulnerablePower>(choiceContext, play.Target, DynamicVars.Vulnerable.BaseValue, Owner.Creature, this);
         }
 
-        await Sts2Compat.Damage(choiceContext, Owner.Creature, DynamicVars.HpLoss.BaseValue, ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, Owner.Creature, this, play);
+        await CreatureCmd.Damage(choiceContext, Owner.Creature, DynamicVars.HpLoss.BaseValue, ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, Owner.Creature, this, play);
     }
 
     protected override void OnUpgrade()

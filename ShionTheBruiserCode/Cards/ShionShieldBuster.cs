@@ -52,7 +52,7 @@ public class ShionShieldBuster() : ShionTheBruiserCard(1,
         var damage = GetDamage(card, target);
         if (target.Block > 0)
         {
-            await Sts2Compat.LoseBlock(choiceContext, target, target.Block, card.Owner.Creature);
+            await CreatureCmd.LoseBlock(choiceContext, target, target.Block, card.Owner.Creature);
         }
         await DamageCmd.Attack(damage)
             .FromCard(card, play)

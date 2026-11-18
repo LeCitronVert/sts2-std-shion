@@ -57,9 +57,7 @@ public class Codependency : ShionTheBruiserPower
         ValueProp props,
         Creature? dealer,
         CardModel? cardSource
-#if STS2_BETA
         , CardPlay? cardPlay
-#endif
     )
     {
         return dealer != this.Owner || !props.IsPoweredAttack()  ? 1M : GetDamageBoost();

@@ -30,7 +30,7 @@ public class HyperDestructiveBouncingBall : FryTheCommanderPower
             var enemies = Owner.CombatState.HittableEnemies.ToList();
             var target = player.RunState.Rng.CombatTargets.NextItem(enemies);
             if (target is null) break;
-            await Sts2Compat.Damage(choiceContext, target, Damage, ValueProp.Unpowered, Owner, null, null);
+            await CreatureCmd.Damage(choiceContext, target, Damage, ValueProp.Unpowered, Owner, null, null);
         }
 
         await PowerCmd.ModifyAmount(choiceContext, this, HitIncrease, Owner, null);

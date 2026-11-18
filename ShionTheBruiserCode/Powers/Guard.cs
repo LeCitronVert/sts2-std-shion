@@ -23,9 +23,7 @@ public class Guard: ShionTheBruiserPower
         ValueProp props,
         Creature? dealer,
         CardModel? cardSource
-#if STS2_BETA
         , CardPlay? cardPlay
-#endif
     )
     {
         return target != this.Owner ? 1M : 0.8M;

@@ -33,31 +33,19 @@ public static class TeamUpAttackHelper
     }
 
     public static decimal ModifyDamageAdditive(TeamUpCard card, Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource
-#if STS2_BETA
         , CardPlay? cardPlay
-#endif
     )
     {
         return InitiatorModifiers(card, dealer, cardSource)
-#if STS2_BETA
             .Sum(m => m.ModifyDamageAdditive(target, amount, props, card.Initiator!.Creature, cardSource, cardPlay));
-#else
-            .Sum(m => m.ModifyDamageAdditive(target, amount, props, card.Initiator!.Creature, cardSource));
-#endif
     }
 
     public static decimal ModifyDamageMultiplicative(TeamUpCard card, Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource
-#if STS2_BETA
         , CardPlay? cardPlay
-#endif
     )
     {
         return InitiatorModifiers(card, dealer, cardSource)
-#if STS2_BETA
             .Aggregate(1m, (multiplier, m) => multiplier * m.ModifyDamageMultiplicative(target, amount, props, card.Initiator!.Creature, cardSource, cardPlay));
-#else
-            .Aggregate(1m, (multiplier, m) => multiplier * m.ModifyDamageMultiplicative(target, amount, props, card.Initiator!.Creature, cardSource));
-#endif
     }
 
     // Crit contributors only count their owner's attacks, so the Initiator's are asked for their general bonus.

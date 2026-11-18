@@ -46,9 +46,7 @@ public class SeelsExsanguination() : SeelsTheRecklessCard(1,
 
     // Double damage against Vulnerable enemies (also shows in the targeted damage preview).
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource
-#if STS2_BETA
         , CardPlay? cardPlay
-#endif
     )
     {
         return cardSource == this && target is not null && target.HasPower<VulnerablePower>() ? 2m : 1m;

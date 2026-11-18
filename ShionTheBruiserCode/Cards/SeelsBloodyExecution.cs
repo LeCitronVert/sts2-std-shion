@@ -42,9 +42,7 @@ public class SeelsBloodyExecution() : SeelsTheRecklessCard(3,
 
     // Bonus per Vulnerable on the target (also shows in the targeted damage preview).
     public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource
-#if STS2_BETA
         , CardPlay? cardPlay
-#endif
     )
     {
         if (cardSource != this || target is null) return 0m;
@@ -64,7 +62,7 @@ public class SeelsBloodyExecution() : SeelsTheRecklessCard(3,
     public bool WouldKill(Creature target)
     {
         if (CombatState is null || !target.IsAlive) return false;
-        var damage = Sts2Compat.ModifyDamage(Owner.RunState, CombatState, target, Owner.Creature, DynamicVars.Damage.BaseValue,
+        var damage = Hook.ModifyDamage(Owner.RunState, CombatState, target, Owner.Creature, DynamicVars.Damage.BaseValue,
             DynamicVars.Damage.Props, this, null, ModifyDamageHookType.All, CardPreviewMode.None, out _);
         return Math.Max(0m, Math.Floor(damage) - target.Block) >= target.CurrentHp;
     }

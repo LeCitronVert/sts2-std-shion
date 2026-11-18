@@ -23,7 +23,8 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Patches;
         typeof(CardModel), typeof(CardPlay), typeof(ModifyDamageHookType)])]
 #else
 [HarmonyPatch(typeof(CreatureCmd), nameof(CreatureCmd.Damage),
-    [typeof(PlayerChoiceContext), typeof(IEnumerable<Creature>), typeof(decimal), typeof(ValueProp), typeof(Creature), typeof(CardModel)])]
+    [typeof(PlayerChoiceContext), typeof(IEnumerable<Creature>), typeof(decimal), typeof(ValueProp), typeof(Creature),
+        typeof(CardModel), typeof(CardPlay)])]
 #endif
 public static class CritHitRollPatch
 {
@@ -35,8 +36,9 @@ public static class CritHitRollPatch
         ShionCritSingleton.Instance?.RollPendingHit(dealer, targetData.Select(d => d.target), props, cardSource);
     }
 #else
-    public static void Prefix(IEnumerable<Creature> targets, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public static void Prefix(IEnumerable<Creature>? targets, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
+        if (targets is null) return;
         ShionCritSingleton.Instance?.RollPendingHit(dealer, targets, props, cardSource);
     }
 #endif

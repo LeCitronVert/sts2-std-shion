@@ -125,9 +125,7 @@ public class ShionCritSingleton : CustomSingletonModel
     /// </summary>
     public override decimal ModifyDamageMultiplicative(
         Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource
-#if STS2_BETA
         , CardPlay? cardPlay
-#endif
     )
     {
         if (dealer == null || !dealer.HasPower<ShionCritTrackerPower>() || !props.IsPoweredAttack())

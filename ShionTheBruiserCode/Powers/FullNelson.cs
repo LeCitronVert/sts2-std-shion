@@ -23,9 +23,7 @@ public class FullNelson() : ShionTheBruiserPower
         ValueProp props,
         Creature? dealer,
         CardModel? cardSource
-#if STS2_BETA
         , CardPlay? cardPlay
-#endif
     )
     {
         return target != this.Owner || (props & ValueProp.Unpowered) != 0 ? 1M : 2M;

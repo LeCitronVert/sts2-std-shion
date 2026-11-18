@@ -29,7 +29,7 @@ public class SmugLook : SeelsTheRecklessPower
         if (target is null) return;
 
         Flash();
-        await Sts2Compat.Damage(choiceContext, target, DynamicVars.Damage.BaseValue, ValueProp.Unpowered, Owner, null, null);
+        await CreatureCmd.Damage(choiceContext, target, DynamicVars.Damage.BaseValue, ValueProp.Unpowered, Owner, null, null);
     }
 
     public override Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)

@@ -46,11 +46,7 @@ public abstract class StrifeDialogueEvent : EventModel, BaseLib.Abstracts.ICusto
 
     private List<LocString> Lines => _lines ??= BuildLines();
 
-#if STS2_BETA
     private Creature? Architect => _combatSynchronizer?.CombatStateForLayout?.Enemies.FirstOrDefault();
-#else
-    private Creature? Architect => _combatStateForCombatLayout?.Enemies.FirstOrDefault();
-#endif
 
     protected override void SetInitialEventState(bool isPreFinished) => SetEventState(EmptyLocString, GenerateInitialOptionsWrapper());
 

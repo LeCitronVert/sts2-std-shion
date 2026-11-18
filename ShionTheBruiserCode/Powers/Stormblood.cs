@@ -30,9 +30,7 @@ public class Stormblood : TeamUpPower
     ];
 
     public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource
-#if STS2_BETA
         , CardPlay? cardPlay
-#endif
     )
     {
         if (dealer == null || !Partners.Contains(dealer) || Owner.IsDead) return 0m;

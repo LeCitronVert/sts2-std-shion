@@ -43,7 +43,7 @@ public class SlalFrontflipAndAHalf() : SlalTheEndlessCard(1,
         if (block <= 0) return;
 
         await SlalMechanicsHelper.ApplyToAllEnemies<Confusion>(choiceContext, card.Owner.Creature, block, card);
-        await Sts2Compat.LoseBlock(choiceContext, card.Owner.Creature, block, card.Owner.Creature);
+        await CreatureCmd.LoseBlock(choiceContext, card.Owner.Creature, block, card.Owner.Creature);
     }
 
     protected override void OnUpgrade()

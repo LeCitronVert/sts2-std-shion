@@ -19,9 +19,7 @@ public class BloodyHandprint : FryTheCommanderPower
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<DamageDebt>()];
 
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource
-#if STS2_BETA
         , CardPlay? cardPlay
-#endif
     )
     {
         if (dealer != Owner || !props.IsPoweredAttack()) return 1m;

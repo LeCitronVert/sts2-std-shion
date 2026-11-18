@@ -40,7 +40,7 @@ public class ShionRageGuard() : ShionDefensiveCard(1,
         }
         else
         {
-            await Sts2Compat.Damage(
+            await CreatureCmd.Damage(
                 choiceContext,
                 card.Owner.Creature,
                 card.DynamicVars.HpLoss.BaseValue,

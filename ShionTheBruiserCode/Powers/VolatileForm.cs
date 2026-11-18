@@ -63,6 +63,6 @@ public class VolatileForm : SlalTheEndlessPower
         if (enemy == null) return;
 
         Flash();
-        await Sts2Compat.Damage(choiceContext, enemy, Amount, ValueProp.Unpowered, Owner, null, null);
+        await CreatureCmd.Damage(choiceContext, enemy, Amount, ValueProp.Unpowered, Owner, null, null);
     }
 }

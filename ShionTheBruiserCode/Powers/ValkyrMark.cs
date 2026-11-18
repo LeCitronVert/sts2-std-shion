@@ -23,9 +23,7 @@ public class ValkyrMark : FryTheCommanderPower
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(FryCardKeywords.Valkyrs)];
 
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource
-#if STS2_BETA
         , CardPlay? cardPlay
-#endif
     )
     {
         return target == Owner && FryMechanicsHelper.IsValkyrDamage ? 2m : 1m;

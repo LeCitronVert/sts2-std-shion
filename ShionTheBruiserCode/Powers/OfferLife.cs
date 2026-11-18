@@ -33,9 +33,7 @@ public class OfferLife : ShionTheBruiserPower
     }
 
     public override decimal ModifyDamageCap(Creature? target, ValueProp props, Creature? dealer, CardModel? cardSource
-#if STS2_BETA
         , CardPlay? cardPlay
-#endif
     )
     {
         return target == Owner ? 0m : decimal.MaxValue;

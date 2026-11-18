@@ -38,7 +38,7 @@ public class ShionRageStrike() : ShionBerserkCard(2,
         }
         else
         {
-            await Sts2Compat.Damage(
+            await CreatureCmd.Damage(
                 choiceContext,
                 card.Owner.Creature,
                 card.DynamicVars.HpLoss.BaseValue,

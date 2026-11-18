@@ -56,7 +56,7 @@ public class SeelsBigTargetSign() : SeelsTheRecklessCard(0,
         var enemies = CombatState.HittableEnemies.ToList();
         if (enemies.Count > 0)
         {
-            await Sts2Compat.Damage(choiceContext, enemies, DynamicVars["EnemyHpLoss"].BaseValue,
+            await CreatureCmd.Damage(choiceContext, enemies, DynamicVars["EnemyHpLoss"].BaseValue,
                 ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, Owner.Creature, this, play);
         }
 

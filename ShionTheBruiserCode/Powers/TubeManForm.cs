@@ -29,6 +29,6 @@ public class TubeManForm : SlalTheEndlessPower
         if (!gainedOrLost && !applied) return;
 
         Flash();
-        await Sts2Compat.Damage(choiceContext, CombatState.HittableEnemies.ToList(), Amount, ValueProp.Unpowered, Owner, null, null);
+        await CreatureCmd.Damage(choiceContext, CombatState.HittableEnemies.ToList(), Amount, ValueProp.Unpowered, Owner, null, null);
     }
 }

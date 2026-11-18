@@ -2,11 +2,11 @@
     <Import Project=".\Sts2PathDiscovery.props"/>
 
     <!--
-      Game branch detection. The beta (v0.113+) changed many hook signatures, so the mod is compiled per branch:
+      Game branch detection. The beta (v0.113+) still differs from live (v0.111.1+) in some hooks, so the mod is compiled per branch:
       STS2_BETA is defined when building against a beta game, and code uses #if STS2_BETA / #else for the differences.
       Auto-detected from the release_info.json next to the game data; force with -p:Sts2Beta=true / false
-      (the CI refs in ci/game-refs have no release_info.json and default to main).
-      Once the beta ships to main, drop the #else branches and this block.
+      (the CI refs in ci/game-refs are live's and have no release_info.json, so they default to live).
+      Once the beta ships to live, drop the #else branches and this block.
     -->
     <PropertyGroup>
         <Sts2BetaMinVersion>0.113.0</Sts2BetaMinVersion>
@@ -137,7 +137,7 @@
                           File="$(ModsPath)$(MSBuildProjectName)/$(AssemblyName).json"
                           Lines="$(BetaManifest)" Overwrite="true" Encoding="UTF-8"/>
         <Message Condition="'$(Sts2Beta)' == 'true'" Text="Built for the STS2 beta branch (STS2_BETA) $(Sts2GameVersion)" Importance="high"/>
-        <Message Condition="'$(Sts2Beta)' != 'true'" Text="Built for the STS2 main branch $(Sts2GameVersion)" Importance="high"/>
+        <Message Condition="'$(Sts2Beta)' != 'true'" Text="Built for the STS2 live branch $(Sts2GameVersion)" Importance="high"/>
     </Target>
 
     <Target Name="CopyQuickPck" AfterTargets="PackPck" Condition="Exists('$(PckPackerOutputPath)') And '$(PckPackerSkipped)' != 'true'">

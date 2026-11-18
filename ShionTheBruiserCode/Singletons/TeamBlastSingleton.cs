@@ -338,16 +338,11 @@ public class TeamBlastSingleton : CustomSingletonModel
     /// Done here and not with ExhaustOnNextPlay in <see cref="BeforeCardPlayed"/>: the result pile is picked before
     /// BeforeCardPlayed runs, so setting it there came too late.
     /// </summary>
-#if STS2_BETA
     public override CardLocation ModifyCardPlayResultLocation(CardModel card, bool isAutoPlay, ResourceInfo resources, CardLocation location)
     {
         var (pileType, position) = ModifyResultPile(card, location.pileType, location.position);
         return location with { pileType = pileType, position = position };
     }
-#else
-    public override (PileType, CardPilePosition) ModifyCardPlayResultPileTypeAndPosition(CardModel card, bool isAutoPlay, ResourceInfo resources, PileType pileType, CardPilePosition position) =>
-        ModifyResultPile(card, pileType, position);
-#endif
 
     private (PileType, CardPilePosition) ModifyResultPile(CardModel card, PileType pileType, CardPilePosition position)
     {

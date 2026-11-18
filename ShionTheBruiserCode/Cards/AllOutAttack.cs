@@ -56,31 +56,19 @@ public class AllOutAttack() : TeamBlastCard(CardType.Attack, TargetType.AnyEnemy
     }
 
     public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource
-#if STS2_BETA
         , CardPlay? cardPlay
-#endif
     )
     {
         return OtherModifiers(dealer, cardSource)
-#if STS2_BETA
             .Sum(x => x.Model.ModifyDamageAdditive(target, amount, props, x.Player, cardSource, cardPlay));
-#else
-            .Sum(x => x.Model.ModifyDamageAdditive(target, amount, props, x.Player, cardSource));
-#endif
     }
 
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource
-#if STS2_BETA
         , CardPlay? cardPlay
-#endif
     )
     {
         return OtherModifiers(dealer, cardSource)
-#if STS2_BETA
             .Aggregate(1m, (multiplier, x) => multiplier * x.Model.ModifyDamageMultiplicative(target, amount, props, x.Player, cardSource, cardPlay));
-#else
-            .Aggregate(1m, (multiplier, x) => multiplier * x.Model.ModifyDamageMultiplicative(target, amount, props, x.Player, cardSource));
-#endif
     }
 
     // Crit contributors only count their owner's attacks, so the other players' are asked for their general bonus.

@@ -23,7 +23,8 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Patches;
         typeof(CardModel), typeof(CardPlay), typeof(ModifyDamageHookType)])]
 #else
 [HarmonyPatch(typeof(CreatureCmd), nameof(CreatureCmd.Damage),
-    [typeof(PlayerChoiceContext), typeof(IEnumerable<Creature>), typeof(decimal), typeof(ValueProp), typeof(Creature), typeof(CardModel)])]
+    [typeof(PlayerChoiceContext), typeof(IEnumerable<Creature>), typeof(decimal), typeof(ValueProp), typeof(Creature),
+        typeof(CardModel), typeof(CardPlay)])]
 #endif
 public static class InstantMattressRedirectPatch
 {
@@ -38,10 +39,11 @@ public static class InstantMattressRedirectPatch
         if (Redirect(ref targets)) targetData = dataList.Zip(targets, (d, t) => d with { target = t }).ToList();
     }
 #else
-    public static void Prefix(ref IEnumerable<Creature> targets, ValueProp props, Creature? dealer)
+    public static void Prefix(ref IEnumerable<Creature>? targets, ValueProp props, Creature? dealer)
     {
-        if (dealer is not { IsEnemy: true } || !props.IsPoweredAttack()) return;
-        Redirect(ref targets);
+        if (dealer is not { IsEnemy: true } || !props.IsPoweredAttack() || targets is null) return;
+        var list = targets;
+        if (Redirect(ref list)) targets = list;
     }
 #endif
 

@@ -20,9 +20,7 @@ public class IgnoreVulnerable : SlalTheEndlessPower
     public override PowerStackType StackType => PowerStackType.Single;
 
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource
-#if STS2_BETA
         , CardPlay? cardPlay
-#endif
     )
     {
         if (target != Owner) return 1m;
@@ -31,11 +29,7 @@ public class IgnoreVulnerable : SlalTheEndlessPower
         var vulnerable = Owner.GetPower<VulnerablePower>();
         if (vulnerable is null) return 1m;
 
-#if STS2_BETA
         var multiplier = vulnerable.ModifyDamageMultiplicative(target, amount, props, dealer, cardSource, cardPlay);
-#else
-        var multiplier = vulnerable.ModifyDamageMultiplicative(target, amount, props, dealer, cardSource);
-#endif
         return multiplier > 0m ? 1m / multiplier : 1m;
     }
 

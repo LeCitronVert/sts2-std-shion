@@ -26,9 +26,7 @@ public class BackSlap : SlalTheEndlessPower
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<WeakPower>()];
 
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource
-#if STS2_BETA
         , CardPlay? cardPlay
-#endif
     )
     {
         if (target != Owner || !props.IsPoweredAttack() || dealer == null || !dealer.HasPower<WeakPower>())
