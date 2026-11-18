@@ -1,0 +1,65 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <!--
+      Universal build: one mod folder that runs on both game branches.
+
+        dotnet build Loader/ShionTheBruiser.Loader.csproj [-c Release]
+
+      builds the mod twice (ShionTheBruiser.Live.dll against live, ShionTheBruiser.Beta.dll against the beta, both via
+      ../ShionTheBruiser.csproj with -p:Sts2Universal=true), then this loader as ShionTheBruiser.dll, and copies all
+      three plus the manifest into the mods folder. At startup the loader checks the game version and loads the
+      matching DLL (see BranchLoader.cs). The .pck isn't touched: export it as usual (it's the same on both branches).
+
+      Each branch builds against the local game install if it's on that branch, otherwise against the
+      ci/game-refs(-beta) copies. Override with -p:Sts2LiveDataDir=... / -p:Sts2BetaDataDir=...
+      A plain build of ShionTheBruiser.csproj still deploys a single-branch ShionTheBruiser.dll over the loader
+      (the leftover .Live/.Beta DLLs are then ignored).
+    -->
+    <Import Project="../Sts2PathDiscovery.props"/>
+    <Import Project="../Sts2Branches.props"/>
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <ModId>ShionTheBruiser</ModId>
+        <AssemblyName>$(ModId)</AssemblyName>
+        <RootNamespace>$(ModId).Loader</RootNamespace>
+        <NoWarn>$(NoWarn);MSB3270</NoWarn>
+
+        <ModProject>$(MSBuildThisFileDirectory)../$(ModId).csproj</ModProject>
+        <ModManifest>$(MSBuildThisFileDirectory)../$(ModId).json</ModManifest>
+        <CiRefsDir>$(MSBuildThisFileDirectory)../ci/</CiRefsDir>
+        <!-- Built against live; it only touches APIs that are identical on both branches (ModManager, ReleaseInfoManager). -->
+        <LoaderRefsDir>$(CiRefsDir)game-refs</LoaderRefsDir>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Sts2LiveDataDir Condition="'$(Sts2LiveDataDir)' == '' and '$(Sts2InstallIsBeta)' != 'true' and Exists('$(Sts2DataDir)/sts2.dll')">$(Sts2DataDir)</Sts2LiveDataDir>
+        <Sts2LiveDataDir Condition="'$(Sts2LiveDataDir)' == ''">$(CiRefsDir)game-refs</Sts2LiveDataDir>
+        <Sts2BetaDataDir Condition="'$(Sts2BetaDataDir)' == '' and '$(Sts2InstallIsBeta)' == 'true' and Exists('$(Sts2DataDir)/sts2.dll')">$(Sts2DataDir)</Sts2BetaDataDir>
+        <Sts2BetaDataDir Condition="'$(Sts2BetaDataDir)' == ''">$(CiRefsDir)game-refs-beta</Sts2BetaDataDir>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Reference Include="sts2">
+            <HintPath>$(LoaderRefsDir)/sts2.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <!-- The loader reads the beta threshold from here, so it can't drift from the build's. -->
+        <AssemblyMetadata Include="Sts2BetaMinVersion" Value="$(Sts2BetaMinVersion)"/>
+    </ItemGroup>
+
+    <Target Name="BuildBranchDlls" BeforeTargets="Build">
+        <Message Text="Universal build: live refs $(Sts2LiveDataDir), beta refs $(Sts2BetaDataDir)" Importance="high"/>
+        <MSBuild Projects="$(ModProject)" Targets="Restore" Properties="MSBuildRestoreSessionId=$([System.Guid]::NewGuid());Sts2DataDir=$(Sts2LiveDataDir)"/>
+        <MSBuild Projects="$(ModProject)" Targets="Build"
+                 Properties="Configuration=$(Configuration);Sts2Universal=true;Sts2Beta=false;Sts2DataDir=$(Sts2LiveDataDir)"/>
+        <MSBuild Projects="$(ModProject)" Targets="Build"
+                 Properties="Configuration=$(Configuration);Sts2Universal=true;Sts2Beta=true;Sts2DataDir=$(Sts2BetaDataDir)"/>
+    </Target>
+
+    <Target Name="CopyLoaderToModsFolder" AfterTargets="Build">
+        <Copy SourceFiles="$(TargetPath);$(TargetDir)$(TargetName).pdb;$(ModManifest)" DestinationFolder="$(ModsPath)$(ModId)/"/>
+        <Message Text="Universal build deployed to $(ModsPath)$(ModId)/ ($(ModId).dll loader + .Live/.Beta)" Importance="high"/>
+    </Target>
+</Project>

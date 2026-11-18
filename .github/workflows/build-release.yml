@@ -104,6 +104,20 @@ jobs:
           cd "$beta/mods"
           zip -r "$GITHUB_WORKSPACE/$MOD_NAME-beta.zip" "$MOD_NAME"
 
+      # One folder for both branches: a loader ShionTheBruiser.dll picks ShionTheBruiser.Live.dll or .Beta.dll
+      # at startup (see Loader/). Live builds against the fake install (ci/game-refs), beta against ci/game-refs-beta.
+      - name: Build universal (both branches)
+        run: |
+          mods="$RUNNER_TEMP/universal/mods/"
+          dotnet build Loader/$MOD_NAME.Loader.csproj -c Release -p:ModsPath="$mods"
+          out="$mods$MOD_NAME"
+          for f in "$MOD_NAME.dll" "$MOD_NAME.Live.dll" "$MOD_NAME.Beta.dll" "$MOD_NAME.json"; do
+            test -f "$out/$f" || { echo "::error::universal $f missing"; exit 1; }
+          done
+          cp "$Sts2Path/mods/$MOD_NAME/$MOD_NAME.pck" "$out/"
+          cd "$mods"
+          zip -r "$GITHUB_WORKSPACE/$MOD_NAME-universal.zip" "$MOD_NAME"
+
       - name: Write release notes
         run: |
           # Latest build-* tag reachable from the parent, so a re-run on an already-tagged commit
@@ -122,7 +136,8 @@ jobs:
             git log --no-merges --format='- %s (%h)' "$range"
             echo
             echo "**Install:** unzip into the game's \`mods\` folder so you get \`mods/$MOD_NAME/\`."
-            echo "Use \`$MOD_NAME.zip\` on the main game branch, \`$MOD_NAME-beta.zip\` on the public beta."
+            echo "Use \`$MOD_NAME.zip\` on the main game branch, \`$MOD_NAME-beta.zip\` on the public beta,"
+            echo "or \`$MOD_NAME-universal.zip\` (experimental) on either."
           } > release-notes.md
           cat release-notes.md
 
@@ -137,3 +152,4 @@ jobs:
           files: |
             ${{ env.MOD_NAME }}.zip
             ${{ env.MOD_NAME }}-beta.zip
+            ${{ env.MOD_NAME }}-universal.zip

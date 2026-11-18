@@ -1,0 +1,20 @@
+<Project>
+    <!--
+      Game branch detection, shared by the mod (ShionTheBruiser.csproj) and the universal loader (Loader/).
+      The beta (v0.113+) still differs from live (v0.111.1+) in some hooks, so the mod is compiled per branch:
+      STS2_BETA is defined when building against a beta game, and code uses #if STS2_BETA / #else for the differences.
+      Import after Sts2PathDiscovery.props (needs Sts2DataDir).
+      Sts2InstallIsBeta: whether the game install at Sts2DataDir is on the beta, from the release_info.json next to
+      the game data. False when there's none (e.g. the CI refs in ci/game-refs).
+      The loader picks its DLL at runtime with the same Sts2BetaMinVersion rule.
+    -->
+    <PropertyGroup>
+        <Sts2BetaMinVersion>0.113.0</Sts2BetaMinVersion>
+        <Sts2ReleaseInfoPath>$(Sts2DataDir)/../release_info.json</Sts2ReleaseInfoPath>
+        <Sts2InstallIsBeta>false</Sts2InstallIsBeta>
+    </PropertyGroup>
+    <PropertyGroup Condition="Exists('$(Sts2ReleaseInfoPath)')">
+        <Sts2GameVersion>$([System.Text.RegularExpressions.Regex]::Match($([System.IO.File]::ReadAllText('$(Sts2ReleaseInfoPath)')), '"version":\s*"v?(\d+\.\d+\.\d+)').Groups[1].Value)</Sts2GameVersion>
+        <Sts2InstallIsBeta Condition="'$(Sts2GameVersion)' != '' and $([MSBuild]::VersionGreaterThanOrEquals('$(Sts2GameVersion)', '$(Sts2BetaMinVersion)'))">true</Sts2InstallIsBeta>
+    </PropertyGroup>
+</Project>

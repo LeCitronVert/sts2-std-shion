@@ -1,24 +1,28 @@
 ﻿<Project Sdk="Godot.NET.Sdk/4.5.1" InitialTargets="CheckDependencyPaths">
     <Import Project=".\Sts2PathDiscovery.props"/>
+    <Import Project=".\Sts2Branches.props"/>
 
     <!--
-      Game branch detection. The beta (v0.113+) still differs from live (v0.111.1+) in some hooks, so the mod is compiled per branch:
-      STS2_BETA is defined when building against a beta game, and code uses #if STS2_BETA / #else for the differences.
-      Auto-detected from the release_info.json next to the game data; force with -p:Sts2Beta=true / false
+      Game branch (see Sts2Branches.props): auto-detected from the game install; force with -p:Sts2Beta=true / false
       (the CI refs in ci/game-refs are live's and have no release_info.json, so they default to live).
       Once the beta ships to live, drop the #else branches and this block.
     -->
     <PropertyGroup>
-        <Sts2BetaMinVersion>0.113.0</Sts2BetaMinVersion>
-        <Sts2ReleaseInfoPath>$(Sts2DataDir)/../release_info.json</Sts2ReleaseInfoPath>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Sts2Beta)' == '' and Exists('$(Sts2ReleaseInfoPath)')">
-        <Sts2GameVersion>$([System.Text.RegularExpressions.Regex]::Match($([System.IO.File]::ReadAllText('$(Sts2ReleaseInfoPath)')), '"version":\s*"v?(\d+\.\d+\.\d+)').Groups[1].Value)</Sts2GameVersion>
-        <Sts2Beta Condition="'$(Sts2GameVersion)' != '' and $([MSBuild]::VersionGreaterThanOrEquals('$(Sts2GameVersion)', '$(Sts2BetaMinVersion)'))">true</Sts2Beta>
-    </PropertyGroup>
-    <PropertyGroup>
-        <Sts2Beta Condition="'$(Sts2Beta)' == ''">false</Sts2Beta>
+        <Sts2Beta Condition="'$(Sts2Beta)' == ''">$(Sts2InstallIsBeta)</Sts2Beta>
         <DefineConstants Condition="'$(Sts2Beta)' == 'true'">$(DefineConstants);STS2_BETA</DefineConstants>
+    </PropertyGroup>
+
+    <!--
+      Universal build (driven by Loader/ShionTheBruiser.Loader.csproj, -p:Sts2Universal=true): this project is built once per
+      branch as ShionTheBruiser.Live.dll / ShionTheBruiser.Beta.dll with separate obj/bin dirs, and the loader
+      (shipped as ShionTheBruiser.dll) loads the one matching the running game. A plain build is unchanged.
+    -->
+    <PropertyGroup Condition="'$(Sts2Universal)' == 'true'">
+        <Sts2BranchName Condition="'$(Sts2Beta)' == 'true'">Beta</Sts2BranchName>
+        <Sts2BranchName Condition="'$(Sts2Beta)' != 'true'">Live</Sts2BranchName>
+        <AssemblyName>$(MSBuildProjectName).$(Sts2BranchName)</AssemblyName>
+        <IntermediateOutputPath>$(BaseIntermediateOutputPath)universal/$(Sts2BranchName)/$(Configuration)/</IntermediateOutputPath>
+        <OutputPath>$(BaseOutputPath)universal/$(Sts2BranchName)/$(Configuration)/</OutputPath>
     </PropertyGroup>
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
@@ -66,10 +70,13 @@
 
     <ItemGroup>
         <Compile Remove="ShionTheBruiser/**"/>
+        <Compile Remove="Loader/**"/>
         <Compile Remove="materials/**"/>
         <Compile Remove="shaders/**"/>
         <Compile Remove="images/**"/>
         <EmbeddedResource Remove="ShionTheBruiser/**"/>
+        <EmbeddedResource Remove="Loader/**"/>
+        <None Remove="Loader/**"/>
         <EmbeddedResource Remove="materials/**"/>
         <EmbeddedResource Remove="shaders/**"/>
         <EmbeddedResource Remove="images/**"/>
@@ -126,14 +133,15 @@
     <Target Name="CopyToModsFolderOnBuild" AfterTargets="PostBuildEvent">
         <Message Text="Copying .dll .pdb and .json to mods folder." Importance="high"/>
         <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/"/>
-        <Copy Condition="'$(Sts2Beta)' != 'true'" SourceFiles="$(AssemblyName).json" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/"/>
+        <!-- Universal builds leave the manifest to the loader. -->
+        <Copy Condition="'$(Sts2Beta)' != 'true' and '$(Sts2Universal)' != 'true'" SourceFiles="$(MSBuildProjectName).json" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/"/>
         <Copy SourceFiles="$(TargetDir)$(TargetName).pdb" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/"/>
         <!-- A beta build doesn't run on main: raise min_game_version in the copied manifest so the game refuses it
              cleanly instead of failing on missing methods. -->
-        <PropertyGroup Condition="'$(Sts2Beta)' == 'true'">
-            <BetaManifest>$([System.Text.RegularExpressions.Regex]::Replace($([System.IO.File]::ReadAllText('$(AssemblyName).json')), '("min_game_version":\s*")[^"]*', '${1}$(Sts2BetaMinVersion)'))</BetaManifest>
+        <PropertyGroup Condition="'$(Sts2Beta)' == 'true' and '$(Sts2Universal)' != 'true'">
+            <BetaManifest>$([System.Text.RegularExpressions.Regex]::Replace($([System.IO.File]::ReadAllText('$(MSBuildProjectName).json')), '("min_game_version":\s*")[^"]*', '${1}$(Sts2BetaMinVersion)'))</BetaManifest>
         </PropertyGroup>
-        <WriteLinesToFile Condition="'$(Sts2Beta)' == 'true'"
+        <WriteLinesToFile Condition="'$(Sts2Beta)' == 'true' and '$(Sts2Universal)' != 'true'"
                           File="$(ModsPath)$(MSBuildProjectName)/$(AssemblyName).json"
                           Lines="$(BetaManifest)" Overwrite="true" Encoding="UTF-8"/>
         <Message Condition="'$(Sts2Beta)' == 'true'" Text="Built for the STS2 beta branch (STS2_BETA) $(Sts2GameVersion)" Importance="high"/>
