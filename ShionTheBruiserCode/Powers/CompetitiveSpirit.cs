@@ -71,7 +71,9 @@ public class CompetitiveSpirit() : ShionTheBruiserPower
             AdaptAmountAsNeeded((int)amount);
         }
         
-        if (Owner != power.Owner && power.Type == PowerType.Buff)
+        // Only actual gains count: a buff losing stacks (Slippery, Plated Armor...) reports a negative amount,
+        // and negative Strength/Dexterity is a debuff (same classification as vanilla Artifact).
+        if (Owner != power.Owner && amount > 0 && power.GetTypeForAmount(amount) == PowerType.Buff && power.IsVisible)
         {
             await GainStrengthIfOtherBuff();
         }
