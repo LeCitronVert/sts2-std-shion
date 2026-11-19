@@ -876,7 +876,7 @@
     "SHIONTHEBRUISER-SHION_BIGGEST_GAMBLE.title": "Biggest Gamble",
     "SHIONTHEBRUISER-SHION_BIGGEST_GAMBLE.description": "Randomize the cost of ALL cards in you and your partner's [gold]Hands[/gold] this turn ([blue]0[/blue] to [blue]{MaxRandomCost}[/blue]).\nFor each card that doesn't cost more than before, its owner gains {StrengthPower:diff()} [gold]Strength[/gold] and [gold]Dexterity[/gold].",
     "SHIONTHEBRUISER-SHION_BIGGEST_GAMBLE.partnerDescription": "Randomize the cost of ALL cards in you and your partner's [gold]Hands[/gold] this turn ([blue]0[/blue] to [blue]{MaxRandomCost}[/blue]).\nFor each card that doesn't cost more than before, its owner gains {StrengthPower:diff()} [gold]Strength[/gold] and [gold]Dexterity[/gold].",
-    "SHIONTHEBRUISER-SHION_DRAGON_TIGER_FLASH.title": "Dragon-Tiger Flash",
+    "SHIONTHEBRUISER-SHION_DRAGON_TIGER_FLASH.title": "Dragon-Tiger Pride",
     "SHIONTHEBRUISER-SHION_DRAGON_TIGER_FLASH.description": "Whenever you [gold]Patch Up[/gold], your partner loses that much [gold]Damage Debt[/gold].\nWhenever your partner ends their turn with [gold]Refuse[/gold], gain {BlockPerRefuse:diff()} [gold]Block[/gold].",
     "SHIONTHEBRUISER-SHION_DRAGON_TIGER_FLASH.partnerDescription": "Whenever your partner [gold]Patches Up[/gold], lose that much [gold]Damage Debt[/gold].\nWhenever you end your turn with [gold]Refuse[/gold], your partner gains {BlockPerRefuse:diff()} [gold]Block[/gold].",
     "SHIONTHEBRUISER-SEELS_SCRATCHIN_PALS.title": "Scratchin' Pals",

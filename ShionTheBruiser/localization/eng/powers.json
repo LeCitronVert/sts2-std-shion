@@ -544,7 +544,7 @@
   "SHIONTHEBRUISER-ECCENTRICS.title": "Eccentrics",
   "SHIONTHEBRUISER-DRAGON_TIGER_FLASH.description": "Whenever you [gold]Patch Up[/gold], your partner loses that much [gold]Damage Debt[/gold].\nWhenever your partner ends their turn with [gold]Refuse[/gold], gain [gold]Block[/gold].",
   "SHIONTHEBRUISER-DRAGON_TIGER_FLASH.smartDescription": "Whenever you [gold]Patch Up[/gold], your partner loses that much [gold]Damage Debt[/gold]{Amount:cond:>1? (x[blue]{Amount}[/blue])|}.\nWhenever your partner ends their turn with [gold]Refuse[/gold], gain [blue]{BlockPerRefuse}[/blue] [gold]Block[/gold]{Amount:cond:>1? (x[blue]{Amount}[/blue])|}.",
-  "SHIONTHEBRUISER-DRAGON_TIGER_FLASH.title": "Dragon-Tiger Flash",
+  "SHIONTHEBRUISER-DRAGON_TIGER_FLASH.title": "Dragon-Tiger Pride",
   "SHIONTHEBRUISER-GOOPY_BLOOD.title": "Goopy Blood",
   "SHIONTHEBRUISER-GOOPY_BLOOD.description": "Whenever your partner creates a [gold]Slimed[/gold], gain [gold]Strength[/gold].\nWhenever you create a [gold]Wound[/gold], your partner gains [gold]Random[/gold].",
   "SHIONTHEBRUISER-GOOPY_BLOOD.smartDescription": "Whenever your partner creates a [gold]Slimed[/gold], gain [blue]{Strength}[/blue] [gold]Strength[/gold]{Amount:cond:>1? (x[blue]{Amount}[/blue])|}.\nWhenever you create a [gold]Wound[/gold], your partner gains [blue]{Random}[/blue] [gold]Random[/gold]{Amount:cond:>1? (x[blue]{Amount}[/blue])|}.",
