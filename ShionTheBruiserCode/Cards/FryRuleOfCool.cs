@@ -23,6 +23,8 @@ public class FryRuleOfCool() : FryTheCommanderCard(1,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
+    public override int CanonicalStarCost => 1;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<RuleOfCool>(1M)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)

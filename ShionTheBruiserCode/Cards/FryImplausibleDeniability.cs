@@ -19,10 +19,12 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Lose half of your Damage Debt. Take damage equal to your Damage Debt.
 /// </summary>
-public class FryImplausibleDeniability() : FryTheCommanderCard(1, //todo : choose cost
+public class FryImplausibleDeniability() : FryTheCommanderCard(0,
     CardType.Skill, CardRarity.Common,
     TargetType.Self)
 {
+    public override int CanonicalStarCost => 3;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),

@@ -17,13 +17,13 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Request 2. The Valkyrs deal 9 (12) damage to a random enemy X times.
+/// Costs X Stars. Request 2. The Valkyrs deal 9 (12) damage to a random enemy X times.
 /// </summary>
 public class FryAttackPatternAlpha() : FryTheCommanderCard(0,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
-    protected override bool HasEnergyCostX => true;
+    public override bool HasStarCostX => true;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [FryCardKeywords.Request, FryCardKeywords.Valkyrs];
 
@@ -34,7 +34,7 @@ public class FryAttackPatternAlpha() : FryTheCommanderCard(0,
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        var x = ResolveEnergyXValue();
+        var x = ResolveStarXValue();
         if (x <= 0) return;
 
         await FryMechanicsHelper.Request(choiceContext, this, DynamicVars["Request"].IntValue, async ctx =>

@@ -2068,3 +2068,56 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - Double Down uses the game's One-Two Punch power (the "see One-Two Punch" note).
 - Dual Strike and Vicious Strike now share the "both players' modifiers" code (`Helper/TeamUpAttackHelper.cs`). Dual Strike should play exactly as before.
 - Aim Assist: Exhaust (added on request).
+
+## 39. Fry pass (Al notes): names, costs, relics, Team-Ups, card art
+
+**Setup**
+- [ ] Re-export the .pck (109 new Fry card portraits + big versions; localization changed: `cards.json`, `powers.json`, `relics.json`, `orbs.json`, `monsters.json`).
+- [ ] Old saves/runs holding Fry's renamed cards or relics may lose them (the IDs changed, e.g. `FRY_TODO1` → `FRY_ALL_YOUR_POWERS_COMBINED`).
+- [ ] Sacred Bow and Arrows only exists in the **beta** build. Check the main build still loads and shows the other 9 Fry Team-Ups.
+
+**Renames (the cards' effects are unchanged)**
+- [ ] The 26 TODO cards show their names: All Your Powers Combined, Stealth Mentor, Big Good, Turns Red, Regenerating Mana, Defend Command, Fast as Lightning, No-Sell, Unbelievably Impatient, Fission Mailed, Salt the Earth, Praetorian Guard, Time Master, Out-Gambitted, Curb-Stomp Battle, Right on the Tick, Master of All, Double Tap, Mana Drain, Crippling the Competition, I Will Tear Your Arms Off, Multi-Melee Master, Affably Evil, Combat Pragmatist, Faux Affably Evil. Their powers are renamed too.
+- [ ] Nuke is now Slap-On-The-Wrist Nuke.
+- [ ] No Endor Holocaust (was TODO 6) is **trashed**: it never shows up in rewards, shops or random generation.
+
+**Cost changes**
+- [ ] Energy: Razor-Sharp Hand 2, Just in Time 2, Call on Me 1, Kinda Busy Here 2, Scotty Time 2, What Were You Thinking? 2, Mecha Expansion Pack 2, Time Master 2, Out-Gambitted 2.
+- [ ] Now cost Stars: Implausible Deniability 0+3★, Bottomless Magazines 0+1★, Last Chance Hit Point 0+5★, Curb-Stomp Battle 0+5★, Casting A Shadow 0+1★, Fake Texting 0+1★, Rule of Cool 1+1★, Summon Bigger Fish 1+2★, Salt the Earth 1+1★, Praetorian Guard 1+1★.
+- [ ] Attack Pattern Alpha costs **X Stars** now (like Artistic License), not X energy.
+
+**Relics**
+- [ ] Starter relics are called Battleworn Cape / Pristine Cape, and the common is called Old Medal. All three have flavour text.
+- [ ] Leaf Bracer (Uncommon): spending Stars gives 1 Block per Star spent.
+- [ ] Strategies Manual (Uncommon): each Non-Native card played gives 1 Strength.
+- [ ] Stock Valkyr Frame (Rare): unblocked Attack damage makes the Valkyrs hit the same enemy for 25% of it (rounded down, so hits under 4 damage give nothing). Valkyr damage doesn't trigger it again.
+- [ ] Inhibitor Ring (Rare): the first time you reach 10+ Stars in a combat, gain 10 more. Grey once used.
+- [ ] Broken Clockwatch (Rare): every time any of your Requested counters ticks down (start of turn, Just in Time, Scotty Time…), gain 1 Vigor. Several counters = several Vigor.
+- [ ] Old Wand (Shop): every Request waits 2 more turns (a Request 0 becomes Request 2), then triggers twice.
+
+**Team-Ups (Fry → partner)**
+- [ ] Powerful and Helpless (Shion, 1): Shion's Patch Ups do nothing (she plays her hit animation), she can't revive (Lizard Tail, Fairy… ignored), and deals +50% Attack damage (+100% upgraded). Fry's Requests give 2 (4) Strength + Dexterity instead of their effect, including immediate ones.
+- [ ] Our Mages Are Different (Seels, 2 → 1): after Seels plays a card that Blood Bent X ≥ 1, it comes back to her Hand with Cooldown and Retain, costs 0 for X turns, and does nothing if played during that time (then goes to the Discard). Fry gains 1 Star whenever he loses HP.
+- [ ] Made of Explodium (Slal, 2 → 1, Exhaust): next HP loss for each player gives that much Flashback, with an Inferno-style explosion.
+- [ ] Decapitation Strike (anyone, 2 → 1): partner deals 9 + Fry's Stars + their own unique buffs. Both players' modifiers apply. The preview shows the total on the partner's copy. Has the Strike tag.
+- [ ] Draw Sword, Draw Blood (Ironclad, 1): Ironclad's Attacks deal +1 (+2) and give Fry 1 (2) Star(s) each.
+- [ ] Perfect Poison (Silent, 2 → 1, Exhaust): each player's next Attack applies Poison equal to its unblocked damage (each hit).
+- [ ] Spell Blade (Regent, 1, Innate upgraded): Fry Forges half of each Regent Forge (rounded down). Fry's Sovereign Blade costs 1 less, and each time he plays it, the Regent gets an Ethereal copy.
+- [ ] SkeleBot 9000 (Necrobinder, 3, Retain upgraded, Exhaust): both players get a grey, flipped Punch Construct (20 HP) that takes attack damage for them (before Osty). At end of turn it hits the frontmost enemy once per Attacking intent and gives its owner Block once per Blocking intent. A Necrobinder Summon of X adds X Blocking intents, and Fry spending X Stars adds X Attacking intents. It goes back to 1/1 each turn.
+- [ ] Remote Body (Defect, 1, no Exhaust upgraded): both players Channel a Shipping Orb (Fry gets an orb slot). +1 Charge per completed Request or other Orb Evoked; at 5 it Evokes itself → next turn: draw 5, gain 5 energy and 5 Stars.
+- [ ] Sacred Bow and Arrows (Fool, beta): Fry pays X Stars, and the Fool's copy costs 3 energy and Shoots X Arrows for 10 (14) each. It stops when the Fool runs out of Arrows.
+- [ ] Each Team-Up shows "Team-Up: <class>" on both sides and only shows up in loot when the partner's class is in the run.
+
+**Visuals**
+- [ ] Fry's card portraits look right. They're center-cropped to the card ratio, and most source images were under 1000px wide, so the big versions are upscaled (Blatant Lies and Fission Mailed are the smallest).
+- [ ] No art for Perfect Poison or No Endor Holocaust. There are no icons yet for the 6 new relics, the Team-Up powers or the Shipping Orb (all listed in `MISSING_IMAGES.tsv`).
+- [ ] VFX not done: Shion's enemy-style death with Powerful and Helpless, Fry's glitch effect on completed Requests, Our Mages' blue-blood Stars effect, Perfect Poison's green hit tint, Spell Blade's blue flame. Made of Explodium's explosion IS done.
+
+**Decisions I made**
+- Your answers: No Endor Holocaust is renamed + trashed. Star-only costs are 0 energy + Stars. Fake Texting is unchanged. All 10 Team-Ups are in.
+- "Prestine Cape" is spelled **Pristine Cape**. I also fixed sheet typos in the flavour text ("loosing", "despondant").
+- Salt the Earth's art comes from `scorched_earth.png`.
+- Corrupted Punch Construct: 5 damage per Attacking intent and 5 Block per Blocking intent (`//todo` in `CorruptedPunchConstructPower`). Remote Body costs 1 (`//todo : choose cost`).
+- Our Mages Are Different: X = the Blood actually Bent. X = 0 gives no Cooldown. Exhausting Blood Bend cards don't come back.
+- Recycled Animation is left as "the first time you spend Stars each turn" (the sheet's "first #1# Stars" reads the same at 1).
+- Stealth Mentor still picks the cards at random (the sheet doesn't say who chooses).

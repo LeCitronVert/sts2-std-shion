@@ -79,17 +79,17 @@ Refuse X	Power	Fry	Hand palm-out 'stop'
 Requested	Power	Fry	Radio/earpiece with a countdown		
 Rule of Cool	Power	Fry	Sunglasses		
 Summon Bigger Fish	Power	Fry	Big fish silhouette		
-TODO (FryTodo11Power)	Power	Fry	Card with a lock + small shield		
-TODO (FryTodo15Power)	Power	Fry	Countdown timer with a boot/wing		
-TODO (FryTodo17Power)	Power	Fry	Timer at 0 with a lightning bolt		
-TODO (FryTodo1Power)	Power	Fry	Two hands high-fiving with a star		
-TODO (FryTodo4Power)	Power	Fry	Broken shield with an up arrow		
-TODO (FryTodo8Power)	Power	Fry	Battery saving charge (4 pips)		
+Fission Mailed	Power	Fry	Card with a lock + small shield		
+Out-Gambitted	Power	Fry	Countdown timer with a boot/wing		
+Right on the Tick	Power	Fry	Timer at 0 with a lightning bolt		
+All Your Powers Combined	Power	Fry	Two hands high-fiving with a star		
+Turns Red	Power	Fry	Broken shield with an up arrow		
+Fast as Lightning	Power	Fry	Battery saving charge (4 pips)		
 Ultimate Form	Power	Fry	Golden flaring aura		
 Valkyr Mark	Power	Fry	Winged target reticle		
-TODO (FryRelicTodo1)	Relic	Fry	A star-shaped battery / energy capsule		
-TODO (FryRelicTodo2)	Relic	Fry	A bigger, upgraded star capsule (upgraded version of the first one)		
-TODO (FryRelicTodo3)	Relic	Fry	A rubber stamp marked 'REFUSED'		
+Battleworn Cape	Relic	Fry	A tattered, battle-worn cape		
+Pristine Cape	Relic	Fry	The same cape, spotless and shiny (upgraded Battleworn Cape)		
+Old Medal	Relic	Fry	A grizzled old military medal		
 TODO (FryUnlockEpoch)	Epoch	Fry	Fry's introduction scene (Fry's story isn't written yet)		
 Idle	Character	Fry			
 Strike	Character	Fry			
@@ -187,3 +187,21 @@ Royal Scheme	Power	Regent + anyone (Team-Up)	A crown over a fanned hand of grey 
 Expy	Power	Necrobinder + anyone (Team-Up)	A translucent, flickering copy of Osty		Currently uses the generic power.png
 CONNECT	Power	Defect + anyone (Team-Up)	Two orbs linked by a cable		Currently uses the generic power.png
 Impromptu Lesson	Power	Fool + anyone (Team-Up)	A chalkboard with a bow and arrow sketch		Currently uses the generic power.png
+Leaf Bracer	Relic	Fry	A bracer made of leaves	
+Strategies Manual	Relic	Fry	A worn tactics manual	
+Stock Valkyr Frame	Relic	Fry	A generic, mass-produced Valkyr armour frame	
+Inhibitor Ring	Relic	Fry	A plain ring with a dampening glyph	
+Broken Clockwatch	Relic	Fry	A cracked pocket watch	
+Old Wand	Relic	Fry	A simple, worn wooden wand	
+Perfect Poison	Card	Fry + Silent (Team-Up)		No art in fry_cards; uses the default portrait
+No Endor Holocaust	Card	Fry		Trashed for now; no art in fry_cards
+Powerful and Helpless	Power	Fry + Shion (Team-Up)	A cracked heart next to a flexed arm	Currently uses the generic power.png
+Our Mages Are Different	Power	Fry + Seels (Team-Up)	A blue star dripping like blood	Currently uses the generic power.png
+Made of Explodium	Power	Fry + Slal (Team-Up)	A cartoon explosion	Currently uses the generic power.png
+Draw Sword, Draw Blood	Power	Fry + Ironclad (Team-Up)	A sword half-drawn from its sheath, with a star	Currently uses the generic power.png
+Perfect Poison	Power	Fry + Silent (Team-Up)	A green-tinted blade dripping poison	Currently uses the generic power.png
+Spell Blade	Power	Fry + Regent (Team-Up)	A sword wreathed in blue flame	Currently uses the generic power.png
+SkeleBot 9000	Power	Fry + Necrobinder (Team-Up)	A grey punch construct head	Currently uses the generic power.png
+Corrupted Punch Construct	Power	Fry + Necrobinder (Team-Up)	A grey punch construct fist	Currently uses the generic power.png
+Shipping Delivery	Power	Fry + Defect (Team-Up)	A delivery box with a star	Currently uses the generic power.png
+Shipping Orb	Orb	Fry + Defect (Team-Up)	Uses the Requested icon (see Requested)	Dark Orb tinted Fry's red; shows no icon until requested.png exists

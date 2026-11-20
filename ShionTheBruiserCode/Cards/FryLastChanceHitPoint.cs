@@ -19,10 +19,12 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Until your next turn, gain Hardened Shell equal to your HP minus 1. Refuse 1. Exhaust. (Retain.)
 /// </summary>
-public class FryLastChanceHitPoint() : FryTheCommanderCard(2, //todo : choose cost
+public class FryLastChanceHitPoint() : FryTheCommanderCard(0,
     CardType.Skill, CardRarity.Rare,
     TargetType.Self)
 {
+    public override int CanonicalStarCost => 5;
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [

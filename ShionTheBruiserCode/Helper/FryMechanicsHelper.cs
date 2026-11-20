@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Helper;
 
@@ -14,6 +15,9 @@ public interface IFryListener
 {
     /// <summary>Called when a Requested counter reaches 0, before its effect triggers.</summary>
     Task AfterRequestCounterReachedZero(PlayerChoiceContext choiceContext, Requested request) => Task.CompletedTask;
+
+    /// <summary>Called each time a Requested counter ticks down (including the tick that brings it to 0).</summary>
+    Task AfterRequestCounterTicked(PlayerChoiceContext choiceContext, Requested request) => Task.CompletedTask;
 }
 
 public static class FryMechanicsHelper
@@ -116,11 +120,24 @@ public static class FryMechanicsHelper
 
     /// <summary>
     /// Request X: the effect triggers at the start of your turn in X turns (immediately if X is 0 or less).
-    /// Summon Bigger Fish can lower X.
+    /// Summon Bigger Fish can lower X. Old Wand adds 2 turns and makes the effect trigger an additional time.
     /// </summary>
     public static async Task Request(PlayerChoiceContext choiceContext, CardModel card, int turns, Func<PlayerChoiceContext, Task> effect)
     {
         var creature = card.Owner.Creature;
+        var oldWand = card.Owner.GetRelic<OldWand>();
+        if (oldWand is not null)
+        {
+            turns += oldWand.DynamicVars["Turns"].IntValue;
+            var once = effect;
+            effect = async ctx =>
+            {
+                oldWand.Flash();
+                await once(ctx);
+                await once(ctx);
+            };
+        }
+
         var biggerFish = creature.GetPower<SummonBiggerFish>();
         if (biggerFish is not null && biggerFish.TryConsume())
         {
@@ -129,7 +146,10 @@ public static class FryMechanicsHelper
 
         if (turns <= 0)
         {
-            await effect(choiceContext);
+            if (!await PowerfulAndHelpless.TryReplaceRequest(choiceContext, creature))
+            {
+                await effect(choiceContext);
+            }
             return;
         }
 

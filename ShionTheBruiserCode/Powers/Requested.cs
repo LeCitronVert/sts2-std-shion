@@ -48,12 +48,14 @@ public class Requested : FryTheCommanderPower
         if (Amount > amount)
         {
             await PowerCmd.ModifyAmount(choiceContext, this, -amount, Owner, null, true);
+            await NotifyTicked(choiceContext);
             return;
         }
 
         _triggered = true;
         Flash();
         await PowerCmd.Remove(this);
+        await NotifyTicked(choiceContext);
 
         if (Owner.CombatState is not null)
         {
@@ -63,9 +65,18 @@ public class Requested : FryTheCommanderPower
             }
         }
 
-        if (_effect is not null && Owner.IsAlive)
+        if (_effect is not null && Owner.IsAlive && !await PowerfulAndHelpless.TryReplaceRequest(choiceContext, Owner))
         {
             await _effect(choiceContext);
+        }
+    }
+
+    private async Task NotifyTicked(PlayerChoiceContext choiceContext)
+    {
+        if (Owner.CombatState is null) return;
+        foreach (var listener in Owner.CombatState.IterateHookListeners().OfType<IFryListener>().ToList())
+        {
+            await listener.AfterRequestCounterTicked(choiceContext, this);
         }
     }
 

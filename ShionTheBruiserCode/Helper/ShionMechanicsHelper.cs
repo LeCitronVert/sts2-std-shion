@@ -333,6 +333,13 @@ public static class ShionMechanicsHelper
 
     public static async Task PatchUpCreature(int amount, Creature creature)
     {
+        // Powerful and Helpless: the partner can't Patch Up, and flinches when trying to.
+        if (PowerfulAndHelpless.IsHelpless(creature))
+        {
+            await CreatureCmd.TriggerAnim(creature, "Hit", 0f);
+            return;
+        }
+
         var amountToHeal = GetPatchUpHealAmount(amount, creature);
         
         if (amountToHeal <= 0) return;

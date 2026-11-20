@@ -19,7 +19,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Deal 3 damage. Decrease ALL your Requested counters by 1.
 /// </summary>
-public class FryJustInTime() : FryTheCommanderCard(0, //todo : choose cost
+public class FryJustInTime() : FryTheCommanderCard(2,
     CardType.Attack, CardRarity.Common,
     TargetType.AnyEnemy)
 {

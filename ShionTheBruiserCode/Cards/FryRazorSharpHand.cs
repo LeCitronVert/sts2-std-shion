@@ -19,7 +19,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Deal 9 damage. Lose Damage Debt equal to the unblocked damage dealt.
 /// </summary>
-public class FryRazorSharpHand() : FryTheCommanderCard(1, //todo : choose cost
+public class FryRazorSharpHand() : FryTheCommanderCard(2,
     CardType.Attack, CardRarity.Common,
     TargetType.AnyEnemy)
 {

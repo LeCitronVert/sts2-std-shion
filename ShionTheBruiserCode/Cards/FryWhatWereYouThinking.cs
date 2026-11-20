@@ -19,7 +19,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Request 5, minus 1 for each 10 Damage Debt you have. The Valkyrs deal 20 damage to ALL enemies. Apply 3 Weak to ALL enemies.
 /// </summary>
-public class FryWhatWereYouThinking() : FryTheCommanderCard(1, //todo : choose cost
+public class FryWhatWereYouThinking() : FryTheCommanderCard(2,
     CardType.Skill, CardRarity.Rare,
     TargetType.AllEnemies)
 {

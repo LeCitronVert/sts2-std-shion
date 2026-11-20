@@ -19,7 +19,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Deal damage equal to your Damage Debt. Triple if your Damage Debt is larger than or equal to your HP.
 /// </summary>
-public class FryDesperationAttack() : FryTheCommanderCard(1, //todo : choose cost
+public class FryDesperationAttack() : FryTheCommanderCard(1,
     CardType.Attack, CardRarity.Common,
     TargetType.AnyEnemy)
 {

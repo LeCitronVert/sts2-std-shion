@@ -24,7 +24,7 @@ public static class ComeWhatMayHealPatch
 }
 
 /// <summary>
-/// Come What May: you can't revive during this fight. Death preventers (Lizard Tail, Fairy in a Bottle...) are ignored.
+/// Come What May (and Powerful and Helpless partners): you can't revive during this fight. Death preventers (Lizard Tail, Fairy in a Bottle...) are ignored.
 /// </summary>
 [HarmonyPatch(typeof(Hook), nameof(Hook.ShouldDie))]
 public static class ComeWhatMayDeathPatch
@@ -32,7 +32,8 @@ public static class ComeWhatMayDeathPatch
     [HarmonyPostfix]
     public static void Postfix(Creature creature, ref bool __result, ref AbstractModel? preventer)
     {
-        if (__result || !creature.HasPower<ComeWhatMay>()) return;
+        // Powerful and Helpless (Team-Up): its partners can't revive either.
+        if (__result || (!creature.HasPower<ComeWhatMay>() && !PowerfulAndHelpless.IsHelpless(creature))) return;
 
         __result = true;
         preventer = null;

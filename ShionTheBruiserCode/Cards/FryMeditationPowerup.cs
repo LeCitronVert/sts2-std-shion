@@ -19,7 +19,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Whenever you Retain a card, gain 1 (2) Vigor.
 /// </summary>
-public class FryMeditationPowerup() : FryTheCommanderCard(1, //todo : choose cost
+public class FryMeditationPowerup() : FryTheCommanderCard(1,
     CardType.Power, CardRarity.Uncommon,
     TargetType.Self)
 {

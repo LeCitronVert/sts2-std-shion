@@ -19,10 +19,12 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Cooldown 3. Channel 1 Dark.
 /// </summary>
-public class FryCastingAShadow() : FryCooldownCard(1,
+public class FryCastingAShadow() : FryCooldownCard(0,
     CardType.Skill, CardRarity.Rare,
     TargetType.Self)
 {
+    public override int CanonicalStarCost => 1;
+
     protected override int BaseCooldown => 3;
 
     protected override IEnumerable<DynamicVar> CooldownCardVars => [];

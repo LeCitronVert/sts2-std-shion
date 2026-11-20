@@ -19,7 +19,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Gain 4 Block. If the enemy intends to attack, decrease ALL your Requested counters by 1.
 /// </summary>
-public class FryCallOnMe() : FryTheCommanderCard(0, //todo : choose cost
+public class FryCallOnMe() : FryTheCommanderCard(1,
     CardType.Skill, CardRarity.Common,
     TargetType.AnyEnemy)
 {

@@ -19,7 +19,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Gain 5 (7) Block for each Requested counter you have.
 /// </summary>
-public class FryKindaBusyHere() : FryTheCommanderCard(1, //todo : choose cost
+public class FryKindaBusyHere() : FryTheCommanderCard(2,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {

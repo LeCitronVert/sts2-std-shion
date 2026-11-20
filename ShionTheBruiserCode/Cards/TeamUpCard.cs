@@ -79,10 +79,18 @@ public abstract class TeamUpCard(int cost, CardType type, TargetType target) :
             copy._copies = copies;
             copy.AddKeyword(CardKeyword.Ethereal);
             if (!copy.Keywords.Contains(CardKeyword.Exhaust)) copy.AddKeyword(CardKeyword.Exhaust);
+            PrepareCopy(copy, play);
             copy.OnBecamePartnerCopy();
             copies.Add(copy);
             await CardPileCmd.AddGeneratedCardToCombat(copy, PileType.Hand, Owner);
         }
+    }
+
+    /// <summary>
+    /// Called on the Initiator's card for each copy it hands out, with the Initiator's play (e.g. to pass on its X).
+    /// </summary>
+    protected virtual void PrepareCopy(TeamUpCard copy, CardPlay play)
+    {
     }
 
     /// <summary>

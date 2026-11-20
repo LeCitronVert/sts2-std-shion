@@ -19,10 +19,12 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Apply 2 Weak. Exhaust. (Request 5. Add nothing into your Hand. Actually adds All for Nothing, because it's funny.)
 /// </summary>
-public class FryFakeTexting() : FryTheCommanderCard(0, //todo : choose cost
+public class FryFakeTexting() : FryTheCommanderCard(0,
     CardType.Skill, CardRarity.Common,
     TargetType.AnyEnemy)
 {
+    public override int CanonicalStarCost => 1;
+
     public const int RequestTurns = 5;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];

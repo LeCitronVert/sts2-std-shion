@@ -23,6 +23,8 @@ public class FrySummonBiggerFish() : FryTheCommanderCard(1,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
+    public override int CanonicalStarCost => 2;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<SummonBiggerFish>(1M)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(FryCardKeywords.Request)];

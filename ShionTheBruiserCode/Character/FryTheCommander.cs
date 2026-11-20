@@ -55,7 +55,7 @@ public class FryTheCommander : PlaceholderCharacterModel, IEpochCharacter, IChar
 
     public override IReadOnlyList<RelicModel> StartingRelics =>
     [
-        ModelDb.Relic<FryRelicTodo1>(),
+        ModelDb.Relic<BattlewornCape>(),
     ];
 
     public override CardPoolModel CardPool => ModelDb.CardPool<FryTheCommanderCardPool>();

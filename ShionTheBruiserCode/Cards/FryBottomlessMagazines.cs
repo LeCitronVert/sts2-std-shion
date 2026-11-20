@@ -19,10 +19,12 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Request 1. Draw cards until your Hand is full.
 /// </summary>
-public class FryBottomlessMagazines() : FryTheCommanderCard(1, //todo : choose cost
+public class FryBottomlessMagazines() : FryTheCommanderCard(0,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
+    public override int CanonicalStarCost => 1;
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [FryCardKeywords.Request];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Request", 1M)];
