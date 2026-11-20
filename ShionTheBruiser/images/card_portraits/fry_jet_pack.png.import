@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d4a3u818kg1ee"
-path="res://.godot/imported/fry_jetpack.png-debad450937887acc4091ee00279a1b2.ctex"
+uid="uid://db23qtib4cne6"
+path="res://.godot/imported/fry_jet_pack.png-94932e29479691084120cca5743a7cd0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ShionTheBruiser/images/card_portraits/big/fry_jetpack.png"
-dest_files=["res://.godot/imported/fry_jetpack.png-debad450937887acc4091ee00279a1b2.ctex"]
+source_file="res://ShionTheBruiser/images/card_portraits/fry_jet_pack.png"
+dest_files=["res://.godot/imported/fry_jet_pack.png-94932e29479691084120cca5743a7cd0.ctex"]
 
 [params]
 
