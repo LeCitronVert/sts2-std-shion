@@ -126,9 +126,11 @@ public static class FryMechanicsHelper
     {
         var creature = card.Owner.Creature;
         var oldWand = card.Owner.GetRelic<OldWand>();
+        var repeats = 1;
         if (oldWand is not null)
         {
             turns += oldWand.DynamicVars["Turns"].IntValue;
+            repeats = 2;
             var once = effect;
             effect = async ctx =>
             {
@@ -154,7 +156,7 @@ public static class FryMechanicsHelper
         }
 
         var request = (Requested)ModelDb.Power<Requested>().ToMutable();
-        request.Setup(card, effect);
+        request.Setup(card, effect, repeats);
         await PowerCmd.Apply(choiceContext, request, creature, turns, creature, card);
     }
 
