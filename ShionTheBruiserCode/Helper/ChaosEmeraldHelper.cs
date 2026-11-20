@@ -34,6 +34,9 @@ public static class ChaosEmeraldHelper
     public static ChaosEmeraldColor ColorFor(CharacterModel? character) => character switch
     {
         Character.ShionTheBruiser => ChaosEmeraldColor.Purple,
+#if STS2_BETA
+        Fool => ChaosEmeraldColor.Purple,
+#endif
         SlalTheEndless => ChaosEmeraldColor.Cyan,
         Silent => ChaosEmeraldColor.Green,
         Regent => ChaosEmeraldColor.Yellow,
