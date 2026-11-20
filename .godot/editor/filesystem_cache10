@@ -7,8 +7,8 @@ ShionTheBruiser.json::JSON::-1::1795020829::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1794599726
-::res://bin/ExportRelease/net9.0/publish/::1795165813
-ShionTheBruiser.deps.json::JSON::-1::1795165813::0::1::::<><><>0<>0<><>::
+::res://bin/ExportRelease/net9.0/publish/::1795166534
+ShionTheBruiser.deps.json::JSON::-1::1795166534::0::1::::<><><>0<>0<><>::
 ::res://bin/ExportRelease/net9.0/publish-beta/::1794997063
 ShionTheBruiser.deps.json::JSON::-1::1794997063::0::1::::<><><>0<>0<><>::
 ::res://ci/::1794598486
@@ -34,7 +34,7 @@ cosmo_icon.png::CompressedTexture2D::5823658573262251201::1794068555::1794068724
 cosmo_icon_outline.png::CompressedTexture2D::4823421426555408018::1794068562::1794068724::1::::<><><>0<>0<>d574c65d80ab514e2bb9175881c9214d<>res://.godot/imported/cosmo_icon_outline.png-5ae4704b6e85683f60fa0a0fa15975c7.ctex::
 cosmo_map.png::CompressedTexture2D::8105355013552257716::1794068555::1794068724::1::::<><><>0<>0<>e279e971932235c26d0222b40e3ffa71<>res://.godot/imported/cosmo_map.png-b604c26a8f0faab057b95ebc26667779.ctex::
 cosmo_map_outline.png::CompressedTexture2D::947208570367827263::1794068562::1794068724::1::::<><><>0<>0<>cff426f59ed88e0c3ced13e9aea04a3e<>res://.godot/imported/cosmo_map_outline.png-f21ae496c774e4f901fb2836c6ad0189.ctex::
-::res://ShionTheBruiser/images/card_portraits/::1795136521
+::res://ShionTheBruiser/images/card_portraits/::1795168641
 all_out_attack.png::CompressedTexture2D::8650508069548672495::1793531670::1793532504::1::::<><><>0<>0<>f13544a784a9bd6bc4af199c16023ac6<>res://.godot/imported/all_out_attack.png-f54bda6ad8a0255122c32f3428ec8847.ctex::
 cacophony.png::CompressedTexture2D::962768695978171583::1793531670::1793532504::1::::<><><>0<>0<>b0228e6efcff5de600830a63965a8281<>res://.godot/imported/cacophony.png-b36aeeecc62a0d86a299daa710989b20.ctex::
 card.png::CompressedTexture2D::1049500711854334682::1781940056::1782158780::1::::<><><>0<>0<>e86ff99e55e178dfa257e115aff98269<>res://.godot/imported/card.png-ed4193b7714d803835eb3395cc67803f.ctex::
@@ -103,7 +103,7 @@ fry_implausible_deniability.png::CompressedTexture2D::228271831312940276::179513
 fry_improvised_armour.png::CompressedTexture2D::8495747572993571199::1795135310::1795136521::1::::<><><>0<>0<>98dcdfd7caf9fc0eaa1a4fa164d135d2<>res://.godot/imported/fry_improvised_armour.png-241ce83e4c1e7157af05d9a199db1fa2.ctex::
 fry_infinity_plus_one_sword.png::CompressedTexture2D::8164253622474227750::1795135310::1795136521::1::::<><><>0<>0<>6066126eddd15eb527183d5a0af29533<>res://.godot/imported/fry_infinity_plus_one_sword.png-9fdfd06b537b678805ff5d805e89963c.ctex::
 fry_i_will_tear_your_arms_off.png::CompressedTexture2D::4477069102316878023::1795135309::1795136521::1::::<><><>0<>0<>1a38f7254ff1fa3842a47191c1b4ccc8<>res://.godot/imported/fry_i_will_tear_your_arms_off.png-cac7a6103613c4a1c49674dcd49bb58b.ctex::
-fry_jetpack.png::CompressedTexture2D::1938714335666851224::1795135310::1795136521::1::::<><><>0<>0<>348123d700b5b8f4ad0297452080b5ec<>res://.godot/imported/fry_jetpack.png-0acbfc23dc7174a24f69e45018be1650.ctex::
+fry_jetpack.png::CompressedTexture2D::1938714335666851224::1795168549::1795168641::1::::<><><>0<>0<>348123d700b5b8f4ad0297452080b5ec<>res://.godot/imported/fry_jetpack.png-0acbfc23dc7174a24f69e45018be1650.ctex::
 fry_jettison_jetpack_attack.png::CompressedTexture2D::789372936179552564::1795135310::1795136521::1::::<><><>0<>0<>fd8a0cea39af41697c592a7f1ba8fc49<>res://.godot/imported/fry_jettison_jetpack_attack.png-82710caa5df26a94611f44a206203556.ctex::
 fry_just_in_time.png::CompressedTexture2D::1462581146563749022::1795135310::1795136521::1::::<><><>0<>0<>f9757ff77fce5c64e0ce7b304d9061ca<>res://.godot/imported/fry_just_in_time.png-3b4dc7c08bef9b0b416f8ddf68550be3.ctex::
 fry_kinda_busy_here.png::CompressedTexture2D::7770084765109782306::1795135310::1795136521::1::::<><><>0<>0<>f4e2a722e357ffd91471a0f459fbc1b4<>res://.godot/imported/fry_kinda_busy_here.png-995bcd31067a5d3153ea7aefd1710a39.ctex::
@@ -122,6 +122,7 @@ fry_no_kill_like_overkill.png::CompressedTexture2D::7130093684783927915::1795135
 fry_no_sell.png::CompressedTexture2D::4905738607612608827::1795135312::1795136521::1::::<><><>0<>0<>00170ad663f0c301d17898905e907355<>res://.godot/imported/fry_no_sell.png-7d16648a206e51a00cb3355d65b5e5ee.ctex::
 fry_our_mages_are_different.png::CompressedTexture2D::1217665977409042282::1795135312::1795136521::1::::<><><>0<>0<>b20bb2ce86c371b62f3f488894128fd4<>res://.godot/imported/fry_our_mages_are_different.png-ae62bf6e5d57fd43f06e0da333a8dff8.ctex::
 fry_out_gambitted.png::CompressedTexture2D::8182414873078773259::1795135312::1795136521::1::::<><><>0<>0<>7434354ba0fd438095b68703a1488fec<>res://.godot/imported/fry_out_gambitted.png-7453ea5c62c690af7cb697d333e3184e.ctex::
+fry_perfect_poison.png::CompressedTexture2D::1607831405765281484::1795168550::1795168641::1::::<><><>0<>0<>e30807d6315e96c7f5f940bb377599dd<>res://.godot/imported/fry_perfect_poison.png-0ab64b3f163e49d50b54e18abd8ecdfb.ctex::
 fry_perpetual_motion_monster.png::CompressedTexture2D::866446661822568360::1795135313::1795136521::1::::<><><>0<>0<>ec2140af72083742b0983ecd8de22772<>res://.godot/imported/fry_perpetual_motion_monster.png-1fe43aa87aa9ce1122ad5acbbec960ef.ctex::
 fry_powerful_and_helpless.png::CompressedTexture2D::2614709606506317603::1795135313::1795136521::1::::<><><>0<>0<>44bd489769b1fec9debd879075fade11<>res://.godot/imported/fry_powerful_and_helpless.png-5b0630350a632143aae9a48c6337cdc5.ctex::
 fry_praetorian_guard.png::CompressedTexture2D::2524454819864263034::1795135313::1795136521::1::::<><><>0<>0<>b7ae64138219a470e620b3b48cc26a49<>res://.godot/imported/fry_praetorian_guard.png-50e96daa7a92a3267a95e8b7526ae10e.ctex::
@@ -150,7 +151,7 @@ fry_stealth_mentor.png::CompressedTexture2D::545806319739950648::1795135315::179
 fry_strike.png::CompressedTexture2D::866430913576134509::1795135316::1795136521::1::::<><><>0<>0<>7c3c6816fbbfcd719771cc80c4313540<>res://.godot/imported/fry_strike.png-96cedf43b3a68d60438c3e4723aeaa46.ctex::
 fry_sucking_in_lines.png::CompressedTexture2D::607302744844247607::1795135316::1795136521::1::::<><><>0<>0<>a6d8703edd8da25ad9122d903b73377a<>res://.godot/imported/fry_sucking_in_lines.png-f790389e090f6025beed62be11d9c26a.ctex::
 fry_summon_bigger_fish.png::CompressedTexture2D::6726456167746729570::1795135316::1795136521::1::::<><><>0<>0<>0bc0f4bc4d41ddf62928c82a68dded38<>res://.godot/imported/fry_summon_bigger_fish.png-6ec8a42577ea47d9cd1d9f8659472663.ctex::
-fry_tactical_rock_paper_scissors.png::CompressedTexture2D::3282728824208827044::1795135316::1795136521::1::::<><><>0<>0<>453dcf5eb91dbc51eec9a7061cee0740<>res://.godot/imported/fry_tactical_rock_paper_scissors.png-bba203921c6c9e22c5a5d45c5973b719.ctex::
+fry_tactical_rock_paper_scissors.png::CompressedTexture2D::3282728824208827044::1795168550::1795168641::1::::<><><>0<>0<>453dcf5eb91dbc51eec9a7061cee0740<>res://.godot/imported/fry_tactical_rock_paper_scissors.png-bba203921c6c9e22c5a5d45c5973b719.ctex::
 fry_talking_is_a_free_action.png::CompressedTexture2D::3173420228989158976::1795135316::1795136521::1::::<><><>0<>0<>b17a0bacf342f5e7569bb9dd2e35483e<>res://.godot/imported/fry_talking_is_a_free_action.png-042f4dc0818c500fbea5d82c9676bd50.ctex::
 fry_the_door_slams_you.png::CompressedTexture2D::1612364391258026263::1795135316::1795136521::1::::<><><>0<>0<>a3a088eb04fb23824ac24b6e0869bd58<>res://.godot/imported/fry_the_door_slams_you.png-01022777772ba6840d28eb2cf929cee0.ctex::
 fry_time_master.png::CompressedTexture2D::5336735400299376396::1795135316::1795136521::1::::<><><>0<>0<>1a7215981886020a2bdf21b12b511f9a<>res://.godot/imported/fry_time_master.png-5337a7c81ae4c84d690f4c8371bda0f3.ctex::
@@ -602,7 +603,7 @@ slal_strike.png::CompressedTexture2D::5918578733995773492::1785182956::178518302
 slal_wall_of_text.png::CompressedTexture2D::6096153770101103649::1785189360::1785218102::1::::<><><>0<>0<>1e432662ce6d45f0e34680b5b23a1b9e<>res://.godot/imported/slal_wall_of_text.png-bb6e44530c48e57502c53b65e98b7223.ctex::
 special_stage.png::CompressedTexture2D::8845264401202963198::1793017840::1793018465::1::::<><><>0<>0<>2fbc103b8f3d1cc96cd06b92fe2b05b7<>res://.godot/imported/special_stage.png-cd0d00afe6492e2bd603f5bc33d24ee7.ctex::
 yes.png::CompressedTexture2D::5279192743463950200::1783248434::1783250447::1::::<><><>0<>0<>87bbd865506a411f480cb67c509dc39c<>res://.godot/imported/yes.png-816f261255c7e33f7f4cf5b55e6f45af.ctex::
-::res://ShionTheBruiser/images/card_portraits/big/::1795136528
+::res://ShionTheBruiser/images/card_portraits/big/::1795168641
 all_out_attack.png::CompressedTexture2D::6299955981734787318::1793531670::1793532504::1::::<><><>0<>0<>018e75d02c396f131e3b827ee30ad69e<>res://.godot/imported/all_out_attack.png-150cd7f91daff9bc3ec674ac1a176de0.ctex::
 berserk_drive.png::CompressedTexture2D::1173516633182531861::1783421669::1783421693::1::::<><><>0<>0<>a0e7ab2b45a81d3fbcd341103134a846<>res://.godot/imported/berserk_drive.png-005441c15d646c8791a92b1851669ba4.ctex::
 cacophony.png::CompressedTexture2D::2972143823063063703::1793531670::1793532504::1::::<><><>0<>0<>cb1ca32c3f4937d900b847c9d7093d92<>res://.godot/imported/cacophony.png-490c1868402284d9411fd89762322f28.ctex::
@@ -672,7 +673,7 @@ fry_implausible_deniability.png::CompressedTexture2D::4877697009701980057::17951
 fry_improvised_armour.png::CompressedTexture2D::3412690323298338244::1795135310::1795136523::1::::<><><>0<>0<>8076d287cec1778a901d20e5a02dbb58<>res://.godot/imported/fry_improvised_armour.png-ead0de0c4a9c1dc3e98b5004005597f3.ctex::
 fry_infinity_plus_one_sword.png::CompressedTexture2D::9191159664908158348::1795135310::1795136523::1::::<><><>0<>0<>140833b0c23b58baff49995e6d1967c4<>res://.godot/imported/fry_infinity_plus_one_sword.png-8a6c8f1ef7d2938e86683e8a107f5605.ctex::
 fry_i_will_tear_your_arms_off.png::CompressedTexture2D::982821212480042862::1795135309::1795136523::1::::<><><>0<>0<>cf19cffa816f7017a46bf889022133c0<>res://.godot/imported/fry_i_will_tear_your_arms_off.png-b317bbc66e35d53ef8afd3bf7f463731.ctex::
-fry_jetpack.png::CompressedTexture2D::9196476083206269156::1795135310::1795136523::1::::<><><>0<>0<>71a5874a5d6abacb1e63a71cff78fc64<>res://.godot/imported/fry_jetpack.png-debad450937887acc4091ee00279a1b2.ctex::
+fry_jetpack.png::CompressedTexture2D::9196476083206269156::1795168549::1795168641::1::::<><><>0<>0<>71a5874a5d6abacb1e63a71cff78fc64<>res://.godot/imported/fry_jetpack.png-debad450937887acc4091ee00279a1b2.ctex::
 fry_jettison_jetpack_attack.png::CompressedTexture2D::5511867740751872827::1795135310::1795136527::1::::<><><>0<>0<>5a2bd498a68c0d05935dbe5af37c924e<>res://.godot/imported/fry_jettison_jetpack_attack.png-c79145e9b15fe753fb726babe99103f0.ctex::
 fry_just_in_time.png::CompressedTexture2D::413857073001336625::1795135310::1795136527::1::::<><><>0<>0<>51ed268ad1269e435df81a70402e2441<>res://.godot/imported/fry_just_in_time.png-9202721bd3ffebaa441ab75960e3491a.ctex::
 fry_kinda_busy_here.png::CompressedTexture2D::7923748599693703860::1795135310::1795136527::1::::<><><>0<>0<>5a16fcefb35fcc851823dbdbfcd77819<>res://.godot/imported/fry_kinda_busy_here.png-e583f6c48512a0a54cebb609e7a69be8.ctex::
@@ -691,6 +692,7 @@ fry_no_kill_like_overkill.png::CompressedTexture2D::1376595036018797106::1795135
 fry_no_sell.png::CompressedTexture2D::7033778459682566161::1795135312::1795136528::1::::<><><>0<>0<>9f558181b6474c6a4d0477f17648a754<>res://.godot/imported/fry_no_sell.png-75f73b9b996e00e759c14066534df707.ctex::
 fry_our_mages_are_different.png::CompressedTexture2D::3986885025193117324::1795135312::1795136528::1::::<><><>0<>0<>e24a73e380d105234d990f4552daf345<>res://.godot/imported/fry_our_mages_are_different.png-44311e11fefb96f1d46018382a0cda8e.ctex::
 fry_out_gambitted.png::CompressedTexture2D::6404819079950989427::1795135312::1795136528::1::::<><><>0<>0<>b003f33052ac86d80f83e41d798c79f0<>res://.godot/imported/fry_out_gambitted.png-d26a8c7e1b97ddcd475211554fa68e5f.ctex::
+fry_perfect_poison.png::CompressedTexture2D::4588105674640955308::1795168550::1795168641::1::::<><><>0<>0<>b89788c1ac9be0070c4dbbb1f748bc00<>res://.godot/imported/fry_perfect_poison.png-7936361fa953cbed80d2466b4f4bf050.ctex::
 fry_perpetual_motion_monster.png::CompressedTexture2D::4643134022896626954::1795135312::1795136528::1::::<><><>0<>0<>1caafbffc748838e7ec4194b1d12d206<>res://.godot/imported/fry_perpetual_motion_monster.png-1e78e4f868526a4db2006c7114d104ea.ctex::
 fry_powerful_and_helpless.png::CompressedTexture2D::1916505470369749389::1795135313::1795136528::1::::<><><>0<>0<>3913aa73eabf8d59b4470a093a7b5420<>res://.godot/imported/fry_powerful_and_helpless.png-9e3a8bb32ae94c301f3019a74d14a3be.ctex::
 fry_praetorian_guard.png::CompressedTexture2D::6847690704233727901::1795135313::1795136528::1::::<><><>0<>0<>92758499a2e05a3315efe3748cf31aba<>res://.godot/imported/fry_praetorian_guard.png-44bfadbf06ede9efe2bacb7d6b653626.ctex::
@@ -719,7 +721,7 @@ fry_stealth_mentor.png::CompressedTexture2D::5246034817329494435::1795135315::17
 fry_strike.png::CompressedTexture2D::1167714164495022078::1795135315::1795136526::1::::<><><>0<>0<>065f43a90535e2e434c8ba6aa7a789a9<>res://.godot/imported/fry_strike.png-efe3effb172302de1faab480a002fc5d.ctex::
 fry_sucking_in_lines.png::CompressedTexture2D::8795538297324391431::1795135316::1795136526::1::::<><><>0<>0<>e907811ab9328f796fc6394f9161bcef<>res://.godot/imported/fry_sucking_in_lines.png-e6180774e72d8e1c1fe2118afd6405d3.ctex::
 fry_summon_bigger_fish.png::CompressedTexture2D::1091231545791848493::1795135316::1795136526::1::::<><><>0<>0<>f1975d063f4760302b6b4f0fab2c0f2f<>res://.godot/imported/fry_summon_bigger_fish.png-61b58cca5426c462f1b7361ea518f236.ctex::
-fry_tactical_rock_paper_scissors.png::CompressedTexture2D::1554942355042621089::1795135316::1795136526::1::::<><><>0<>0<>ce21c69bb8b6d68d6307262f5d7878bf<>res://.godot/imported/fry_tactical_rock_paper_scissors.png-52ecae209baa375daf798b03203c4464.ctex::
+fry_tactical_rock_paper_scissors.png::CompressedTexture2D::1554942355042621089::1795168550::1795168641::1::::<><><>0<>0<>ce21c69bb8b6d68d6307262f5d7878bf<>res://.godot/imported/fry_tactical_rock_paper_scissors.png-52ecae209baa375daf798b03203c4464.ctex::
 fry_talking_is_a_free_action.png::CompressedTexture2D::18667579803109683::1795135316::1795136526::1::::<><><>0<>0<>66af48a6f14c12130fa9e13259ec45e3<>res://.godot/imported/fry_talking_is_a_free_action.png-b303b07a935e1eb9d7cce993b4bcdf19.ctex::
 fry_the_door_slams_you.png::CompressedTexture2D::6009128204659289519::1795135316::1795136526::1::::<><><>0<>0<>6b35d3284cca37e81fd779b153052092<>res://.godot/imported/fry_the_door_slams_you.png-e67ca36fbc9ce903165859b97d9102fc.ctex::
 fry_time_master.png::CompressedTexture2D::428186951003718631::1795135316::1795136527::1::::<><><>0<>0<>80a547c6909a728bc624ea35382fa78c<>res://.godot/imported/fry_time_master.png-14d17b6f260e2932ed7beb81cac19d07.ctex::
@@ -1622,7 +1624,7 @@ edge_chao.gd::GDScript::5685643953746631835::1793637921::0::1::::<>Node2D<><>0<>
 edge_chao.tscn::PackedScene::-1::1793637924::0::1::::<><><>0<>0<><>::res://ShionTheBruiser/scenes/companions/edge_chao.gd
 ::res://ShionTheBruiser/scenes/encounters/::1794316680
 strife_architect.tscn::PackedScene::-1::1794316680::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiser/scenes/fx/::1795165560
+::res://ShionTheBruiser/scenes/fx/::1795166538
 afterimage.gd::GDScript::5600540285835060731::1794833327::0::1::::<>Node2D<><>0<>0<><>::
 afterimage.gdshader::Shader::2593867934528463215::1794833137::0::1::::<><><>0<>0<><>::
 afterimage.tscn::PackedScene::-1::1794833137::0::1::::<><><>0<>0<><>::res://ShionTheBruiser/scenes/fx/afterimage.gd
@@ -1639,6 +1641,8 @@ come_what_may_speedlines.gdshader::Shader::8516956543215622501::1793467500::0::1
 come_what_may_speedlines.tscn::PackedScene::-1::1793467171::0::1::::<><><>0<>0<><>::res://ShionTheBruiser/scenes/fx/come_what_may_speedlines.gd
 confetti.gd::GDScript::5962828551225403864::1793526893::0::1::::<>Node2D<><>0<>0<><>::
 confetti.tscn::PackedScene::-1::1793526859::0::1::::<><><>0<>0<><>::res://ShionTheBruiser/scenes/fx/confetti.gd
+cooldown_clock.gd::GDScript::3253227302728278164::1795166109::0::1::::<>Node2D<><>0<>0<><>::
+cooldown_clock.tscn::PackedScene::-1::1795166109::0::1::::<><><>0<>0<><>::res://ShionTheBruiser/scenes/fx/cooldown_clock.gd
 crit_indicator.gd::GDScript::1372069390936087795::1792503850::0::1::::<>Control<><>0<>0<><>::
 crit_indicator.tscn::PackedScene::-1::1792503855::0::1::::<><><>0<>0<><>::res://ShionTheBruiser/scenes/fx/crit_indicator.gd<>res://ShionTheBruiser/images/powers/shion_crit_tracker_power.png
 dragon_roar.gd::GDScript::1826148923738646100::1793526893::0::1::::<>Node2D<><>0<>0<><>::
@@ -1745,7 +1749,7 @@ FryCastingAShadow.cs::CSharpScript::4842294013197997922::1795135111::0::1::::<><
 FryChekhovsGun.cs::CSharpScript::6598936214590324110::1792675405::0::1::::<><><>0<>0<><>::
 FryClawStrike.cs::CSharpScript::3049220594843885517::1794598061::0::1::::<><><>0<>0<><>::
 FryCombatPragmatist.cs::CSharpScript::2310795235776166379::1795135111::0::1::::<><><>0<>0<><>::
-FryCooldownCard.cs::CSharpScript::8857022652806864278::1795020717::0::1::::<><><>0<>0<><>::
+FryCooldownCard.cs::CSharpScript::8857022652806864278::1795166108::0::1::::<><><>0<>0<><>::
 FryCripplingTheCompetition.cs::CSharpScript::2527760701432774666::1795135057::0::1::::<><><>0<>0<><>::
 FryCrosshairAware.cs::CSharpScript::2607474458877344019::1792675405::0::1::::<><><>0<>0<><>::
 FryCurbStompBattle.cs::CSharpScript::4112360176177110567::1795135111::0::1::::<><><>0<>0<><>::
@@ -2226,8 +2230,8 @@ TeamBattle.cs::CSharpScript::2145944776590101777::1794063267::0::1::::<><><>0<>0
 TheGambler.cs::CSharpScript::2724165014916345818::1794062828::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiserCode/Extensions/::1784594829
 StringExtensions.cs::CSharpScript::7657938563527260869::1784594829::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Helper/::1795135912
-ChaosEmeraldHelper.cs::CSharpScript::5035153769625751730::1793017875::0::1::::<><><>0<>0<><>::
+::res://ShionTheBruiserCode/Helper/::1795166444
+ChaosEmeraldHelper.cs::CSharpScript::5035153769625751730::1795166444::0::1::::<><><>0<>0<><>::
 DreamersMechanicsHelper.cs::CSharpScript::1367708701330932763::1793532107::0::1::::<><><>0<>0<><>::
 FoolTeamUpHelper.cs::CSharpScript::8551773147155785701::1794661511::0::1::::<><><>0<>0<><>::
 FryMechanicsHelper.cs::CSharpScript::5896359720773048801::1795136295::0::1::::<><><>0<>0<><>::
@@ -2348,7 +2352,7 @@ CriticalDraw.cs::CSharpScript::1437147261964541114::1784496083::0::1::::<><><>0<
 CriticalDrawPower.cs::CSharpScript::661017190971709337::1784495203::0::1::::<><><>0<>0<><>::
 CritRateUp.cs::CSharpScript::949192775608573404::1783231099::0::1::::<><><>0<>0<><>::
 CyanEmeraldChallenge.cs::CSharpScript::8225410803025507347::1793092462::0::1::::<><><>0<>0<><>::
-DamageDebt.cs::CSharpScript::8555759135963675957::1792675405::0::1::::<><><>0<>0<><>::
+DamageDebt.cs::CSharpScript::8555759135963675957::1795166325::0::1::::<><><>0<>0<><>::
 DangerousIdeas.cs::CSharpScript::6650491458755514597::1793451878::0::1::::<><><>0<>0<><>::
 DarkArts.cs::CSharpScript::2320860018374173027::1782761118::0::1::::<><><>0<>0<><>::
 DarkPowers.cs::CSharpScript::8234953469314563942::1792675405::0::1::::<><><>0<>0<><>::
@@ -2445,7 +2449,7 @@ OctopusForm.cs::CSharpScript::4529002248726281928::1793469153::0::1::::<><><>0<>
 OctopusFormStrengthDown.cs::CSharpScript::2976432138453784399::1792257404::0::1::::<><><>0<>0<><>::
 OfferLife.cs::CSharpScript::7846020771218228369::1795020717::0::1::::<><><>0<>0<><>::
 OnceMore.cs::CSharpScript::1130614297712284188::1792607518::0::1::::<><><>0<>0<><>::
-OurMagesAreDifferent.cs::CSharpScript::3353408472538394181::1795135706::0::1::::<><><>0<>0<><>::
+OurMagesAreDifferent.cs::CSharpScript::3353408472538394181::1795166108::0::1::::<><><>0<>0<><>::
 PeacePromiseStrengthDown.cs::CSharpScript::4856007885643565742::1794068032::0::1::::<><><>0<>0<><>::
 PerfectPoison.cs::CSharpScript::1500546123212257019::1795135581::0::1::::<><><>0<>0<><>::
 PinwheelForm.cs::CSharpScript::1242515573335637290::1793567540::0::1::::<><><>0<>0<><>::
@@ -2681,13 +2685,13 @@ DamageCapVar.cs::CSharpScript::6621522850874298219::1782151646::0::1::::<><><>0<
 HasTargetVar.cs::CSharpScript::3245866986048990123::1794597728::0::1::::<><><>0<>0<><>::
 InCombatPowerAmountVar.cs::CSharpScript::2379550944823328950::1794597728::0::1::::<><><>0<>0<><>::
 PatchUpVar.cs::CSharpScript::3704163300152184645::1794938589::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Visuals/::1795165560
+::res://ShionTheBruiserCode/Visuals/::1795165817
 AnimationRestartPatch.cs::CSharpScript::4570962197437255581::1794657725::0::1::::<><><>0<>0<><>::
 BloodHealthBarPatch.cs::CSharpScript::7948626422957363071::1794136669::0::1::::<><><>0<>0<><>::
 ChaosEmeraldsScreen.cs::CSharpScript::2715992751403064611::1794316554::0::1::::<><><>0<>0<><>::
 CompanionVisuals.cs::CSharpScript::2108756909768018280::1793637949::0::1::::<><><>0<>0<><>::
 ConfusionSpinOff.cs::CSharpScript::5856244999957691517::1794598190::0::1::::<><><>0<>0<><>::
-CooldownLookPatch.cs::CSharpScript::6779018605790125653::1795165560::0::1::::<><><>0<>0<><>::
+CooldownLookPatch.cs::CSharpScript::6779018605790125653::1795166121::0::1::::<><><>0<>0<><>::
 CreatureFxController.cs::CSharpScript::500496703940618308::1794833153::0::1::::<><><>0<>0<><>::
 CreatureLook.cs::CSharpScript::7534575344331544173::1793527110::0::1::::<><><>0<>0<><>::
 CreatureMotion.cs::CSharpScript::6339868063481429582::1793890378::0::1::::<><><>0<>0<><>::
