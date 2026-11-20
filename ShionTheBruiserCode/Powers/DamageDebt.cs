@@ -30,6 +30,28 @@ public class DamageDebt : FryTheCommanderPower
         await FryMechanicsHelper.PayDebt(choiceContext, Owner, amount);
     }
 
+    private static readonly Color PulseColor = new("#FF1A1A", 1f);
+
+    /// <summary>
+    /// Fades the overlay in and out on the GPU, so the segment slowly pulses between the normal HP fill
+    /// beneath it (alpha 0) and bright red (alpha 1) without needing the health bar to refresh.
+    /// </summary>
+    private static ShaderMaterial? _pulseMaterial;
+    private static ShaderMaterial PulseMaterial => _pulseMaterial ??= new ShaderMaterial
+    {
+        Shader = new Shader
+        {
+            Code = """
+                shader_type canvas_item;
+                uniform float period = 1.8;
+                void fragment() {
+                    float pulse = 0.5 - 0.5 * cos(TIME * TAU / period);
+                    COLOR.a *= pulse;
+                }
+                """,
+        },
+    };
+
     public override IEnumerable<HealthBarForecastSegment> GetHealthBarForecastSegments(HealthBarForecastContext context)
     {
         if (Owner.HasPower<Refuse>()) yield break;
@@ -37,7 +59,8 @@ public class DamageDebt : FryTheCommanderPower
         yield return new HealthBarForecastSegment
         {
             Amount = Math.Min(Amount, Owner.CurrentHp),
-            Color = new Color("#FF8C00", 1f),
+            Color = PulseColor,
+            OverlayMaterial = PulseMaterial,
             Direction = HealthBarForecastDirection.FromRight,
             Order = 0,
         };
