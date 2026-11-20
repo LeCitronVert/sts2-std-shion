@@ -33,6 +33,9 @@ public abstract class FryCooldownCard(int cost, CardType type, CardRarity rarity
 
     public bool IsOnCooldown => CooldownLeft > 0;
 
+    /// <summary>Turns of Cooldown left, including the current one (0 = not on Cooldown).</summary>
+    public int CooldownTurnsLeft => Math.Max(CooldownLeft, 0);
+
     private int CooldownLeft
     {
         get => DynamicVars[CooldownLeftKey].IntValue;

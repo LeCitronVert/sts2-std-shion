@@ -97,6 +97,8 @@ public static class OurMagesCooldown
 
     public static bool IsOnCooldown(CardModel card) => TurnsLeft.Get(card) > 0;
 
+    public static int TurnsLeftOf(CardModel card) => Math.Max(TurnsLeft.Get(card), 0);
+
     public static void Start(CardModel card, int turns)
     {
         TurnsLeft.Set(card, turns);
