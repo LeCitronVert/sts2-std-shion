@@ -5,7 +5,7 @@
 # Refresh them after a game update, from a game install on that branch:
 #   cp ".../data_sts2_macos_x86_64/"{sts2,0Harmony}.dll ci/game-refs/        # main
 #   cp ".../data_sts2_macos_x86_64/"{sts2,0Harmony}.dll ci/game-refs-beta/   # beta
-# The release holds one zip per branch (the .pck is shared; only the dll and manifest differ).
+# The release holds a single universal zip: a loader dll picks the live or beta build at startup.
 
 name: Build & Release
 
@@ -81,28 +81,13 @@ jobs:
       - name: Build and publish
         run: dotnet publish "$MOD_NAME.csproj" -p:GodotPath="$GODOT_BIN"
 
-      - name: Package
+      # The publish is only needed for the .pck; the universal step below builds the dlls itself.
+      - name: Check .pck export
         run: |
           out="$Sts2Path/mods/$MOD_NAME"
           ls -la "$out"
           # GodotPublish only warns on failure; a release without the .pck is useless.
           test -f "$out/$MOD_NAME.pck" || { echo "::error::$MOD_NAME.pck was not exported"; exit 1; }
-          test -f "$out/$MOD_NAME.dll" || { echo "::error::$MOD_NAME.dll missing"; exit 1; }
-          cd "$Sts2Path/mods"
-          zip -r "$GITHUB_WORKSPACE/$MOD_NAME.zip" "$MOD_NAME"
-
-      # Same mod compiled against the beta game (STS2_BETA); reuses the main build's .pck.
-      - name: Build for beta branch
-        run: |
-          beta="$RUNNER_TEMP/sts2-beta"
-          mkdir -p "$beta/data_sts2_linuxbsd_x86_64" "$beta/mods"
-          cp ci/game-refs-beta/*.dll "$beta/data_sts2_linuxbsd_x86_64/"
-          dotnet build "$MOD_NAME.csproj" -c Release -p:Sts2Path="$beta" -p:Sts2Beta=true
-          out="$beta/mods/$MOD_NAME"
-          test -f "$out/$MOD_NAME.dll" || { echo "::error::beta $MOD_NAME.dll missing"; exit 1; }
-          cp "$Sts2Path/mods/$MOD_NAME/$MOD_NAME.pck" "$out/"
-          cd "$beta/mods"
-          zip -r "$GITHUB_WORKSPACE/$MOD_NAME-beta.zip" "$MOD_NAME"
 
       # One folder for both branches: a loader ShionTheBruiser.dll picks ShionTheBruiser.Live.dll or .Beta.dll
       # at startup (see Loader/). Live builds against the fake install (ci/game-refs), beta against ci/game-refs-beta.
@@ -136,8 +121,7 @@ jobs:
             git log --no-merges --format='- %s (%h)' "$range"
             echo
             echo "**Install:** unzip into the game's \`mods\` folder so you get \`mods/$MOD_NAME/\`."
-            echo "Use \`$MOD_NAME.zip\` on the main game branch, \`$MOD_NAME-beta.zip\` on the public beta,"
-            echo "or \`$MOD_NAME-universal.zip\` (experimental) on either."
+            echo "\`$MOD_NAME-universal.zip\` works on both the main game branch and the public beta."
           } > release-notes.md
           cat release-notes.md
 
@@ -149,7 +133,4 @@ jobs:
           target_commitish: ${{ github.sha }}
           make_latest: true
           body_path: release-notes.md
-          files: |
-            ${{ env.MOD_NAME }}.zip
-            ${{ env.MOD_NAME }}-beta.zip
-            ${{ env.MOD_NAME }}-universal.zip
+          files: ${{ env.MOD_NAME }}-universal.zip
