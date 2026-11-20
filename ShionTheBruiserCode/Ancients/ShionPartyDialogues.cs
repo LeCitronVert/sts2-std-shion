@@ -91,6 +91,7 @@ public static class ShionPartyDialogues
             Once(Self, 0, Self, 0, Self),
             Repeat(0),
             Repeat(0),
-            Repeat(Self)),
+            Repeat(Self),
+            Once(0, Self, 0, Self, Self)),
     ];
 }
