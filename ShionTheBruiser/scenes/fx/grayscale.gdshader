@@ -1,6 +1,7 @@
 shader_type canvas_item;
 
 // Eleventh Hour / Extreme Speed: the affected creature's body in black and white.
+// Also the art of cards on Cooldown (CooldownLookPatch.cs).
 // Set on the creature's body by CreatureLook.cs (replaces its material while active).
 
 uniform float amount : hint_range(0.0, 1.0) = 1.0;
