@@ -12,6 +12,9 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 /// <summary>
 /// Each turn, the first X HP you should lose are not lost. You gain Damage Debt instead.
 /// (Like Hardened Shell, but the other way around.)
+/// Runs in the AfterOsty phase so summons that take unblocked damage for the owner (Osty, or anything using
+/// ModifyUnblockedDamageTarget) absorb it first; only damage that reaches the owner becomes Damage Debt.
+/// Still runs before the vanilla Buffer (AfterOstyLate).
 /// </summary>
 public class BadFaith : FryTheCommanderPower
 {
@@ -25,7 +28,7 @@ public class BadFaith : FryTheCommanderPower
     private int _absorbedThisTurn;
     private int _pendingDebt;
 
-    public override decimal ModifyHpLostBeforeOstyLate(Creature target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyHpLostAfterOsty(Creature target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
         if (target != Owner || amount <= 0 || FryMechanicsHelper.IsPayingDebt) return amount;
 
@@ -37,7 +40,7 @@ public class BadFaith : FryTheCommanderPower
         return amount - absorbed;
     }
 
-    public override async Task AfterModifyingHpLostBeforeOsty()
+    public override async Task AfterModifyingHpLostAfterOsty()
     {
         if (_pendingDebt <= 0) return;
 
