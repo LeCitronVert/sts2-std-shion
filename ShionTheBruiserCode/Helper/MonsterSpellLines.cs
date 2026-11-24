@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.Random;
@@ -13,6 +14,9 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Helper;
 /// Lines live in <c>combat_messages.json</c>: <c>MONSTER_SPELL.{Group}.{N}</c> and, while Berserk,
 /// <c>MONSTER_SPELL.{Group}Berserk.{N}</c> instead. N counts up from 0 with no gaps.
 /// Enemies are grouped by their model's class name; any enemy not listed (including modded ones) uses <c>Other</c>.
+///
+/// Shion says the line out loud (purple speech bubble, like Whispering Earring); anyone else only thinks it,
+/// in a thought bubble with purple text, or red text while Berserk.
 /// </summary>
 public static class MonsterSpellLines
 {
@@ -85,7 +89,8 @@ public static class MonsterSpellLines
     public static void TryPlay(Creature speaker, string? sourceId, Rng rng)
     {
         var key = $"{Prefix}.{GroupOf(sourceId)}";
-        if (ShionMechanicsHelper.IsBerserk(speaker)) key += "Berserk";
+        var berserk = ShionMechanicsHelper.IsBerserk(speaker);
+        if (berserk) key += "Berserk";
 
         // Always the same two rolls, whatever the line count: clients with another language (which may
         // have fewer lines) must consume the shared RNG the same way
@@ -96,7 +101,21 @@ public static class MonsterSpellLines
         if (!speaks || count == 0) return;
 
         var index = roll % count;
-        TalkCmd.Play(new LocString(Table, $"{key}.{index}"), speaker, VfxColor.Purple, VfxDuration.Short);
+        var line = new LocString(Table, $"{key}.{index}");
+
+        if (speaker.Player?.Character is Character.ShionTheBruiser)
+            TalkCmd.Play(line, speaker, VfxColor.Purple, VfxDuration.Short);
+        else
+            Think(line, speaker, berserk ? "red" : "purple");
+    }
+
+    /// <summary>Same as <see cref="ThinkCmd.Play"/> (same display time), but with the text wrapped in a colour tag.</summary>
+    private static void Think(LocString line, Creature speaker, string colorTag)
+    {
+        var text = line.GetFormattedText();
+        var seconds = Math.Max(text.Length * 0.08, 1.5);
+        var bubble = NThoughtBubbleVfx.Create($"[{colorTag}]{text}[/{colorTag}]", speaker, seconds);
+        if (bubble != null) speaker.GetVfxContainer()?.AddChildSafely(bubble);
     }
 
     private static int Count(string prefix)
