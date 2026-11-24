@@ -13,6 +13,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -35,7 +36,7 @@ public class FryYouNukeEm() : FryCooldownCard(1,
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, play)
             .TargetingAllOpponents(CombatState)
-            .WithHitFx("vfx/vfx_heavy_blunt")
+            .BeforeDamage(() => VanillaVfx.FireSmokePuffs(CombatState.HittableEnemies.ToList()))
             .Execute(choiceContext);
     }
 

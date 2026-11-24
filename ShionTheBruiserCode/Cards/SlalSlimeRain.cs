@@ -59,7 +59,7 @@ public class SlalSlimeRain(): SlalSlimyCard(2,
         await DamageCmd.Attack(card.DynamicVars.Damage.BaseValue)
             .FromCard(card, play)
             .TargetingAllOpponents(card.CombatState)
-            .WithHitFx("vfx/vfx_attack_blunt", tmpSfx: "heavy_attack.mp3")
+            .WithHitFx("vfx/vfx_slime_impact", tmpSfx: "heavy_attack.mp3")
             .Execute(choiceContext);
     }
 

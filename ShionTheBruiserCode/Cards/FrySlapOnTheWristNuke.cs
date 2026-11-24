@@ -13,6 +13,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -44,6 +45,7 @@ public class FrySlapOnTheWristNuke() : FryTheCommanderCard(3,
             await DamageCmd.Attack(DynamicVars["OtherDamage"].BaseValue)
                 .FromCard(this, play)
                 .Targeting(other)
+                .BeforeDamage(() => VanillaVfx.FireSmokePuffs([other]))
                 .Execute(choiceContext);
         }
     }

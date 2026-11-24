@@ -13,6 +13,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -40,7 +41,7 @@ public class FryFireballs() : FryCooldownCard(0,
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, play)
             .Targeting(play.Target)
-            .WithHitFx("vfx/vfx_attack_blunt")
+            .WithHitVfxNode(t => NFireBurstVfx.Create(t, 0.75f))
             .Execute(choiceContext);
 
         foreach (var other in CombatState.HittableEnemies.Where(e => e != play.Target).ToList())
@@ -48,7 +49,7 @@ public class FryFireballs() : FryCooldownCard(0,
             await DamageCmd.Attack(DynamicVars["OtherDamage"].BaseValue)
                 .FromCard(this, play)
                 .Targeting(other)
-                .WithHitFx("vfx/vfx_attack_blunt")
+                .WithHitVfxNode(t => NFireBurstVfx.Create(t, 0.5f))
                 .Execute(choiceContext);
         }
     }

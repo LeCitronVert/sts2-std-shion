@@ -13,6 +13,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -34,10 +35,13 @@ public class FryMagicMissileStorm() : FryCooldownCard(1,
     protected override async Task OnCooldownCardPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         ArgumentNullException.ThrowIfNull(play.Target);
+        // Comet: cast, a small magic missile falls on the target, then the hit
+        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+        await VanillaVfx.SmallMagicMissile(play.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, play)
             .Targeting(play.Target)
-            .WithHitFx("vfx/vfx_attack_blunt")
+            .WithNoAttackerAnim()
             .Execute(choiceContext);
         _isFree = true;
     }

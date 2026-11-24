@@ -13,6 +13,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -44,7 +45,7 @@ public class FryClawStrike() : FryTheCommanderCard(1,
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, play)
             .Targeting(play.Target)
-            .WithHitFx("vfx/vfx_attack_slash")
+            .WithHitVfxNode(t => NScratchVfx.Create(t, goingRight: true))
             .Execute(choiceContext);
 
         var increase = DynamicVars["Increase"].BaseValue;

@@ -31,7 +31,7 @@ public class SeelsViolentRush() : SeelsTheRecklessCard(2,
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, play)
             .TargetingAllOpponents(CombatState)
-            .WithHitFx("vfx/vfx_attack_slash")
+            .WithHitFx("vfx/vfx_giant_horizontal_slash")
             .Execute(choiceContext);
 
         await SeelsMechanicsHelper.AddSlashes(Owner, 1, PileType.Hand, IsUpgraded);

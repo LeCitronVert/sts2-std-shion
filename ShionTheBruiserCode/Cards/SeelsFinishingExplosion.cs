@@ -10,6 +10,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -44,7 +45,7 @@ public class SeelsFinishingExplosion() : SeelsTheRecklessCard(0,
         await DamageCmd.Attack(DynamicVars.CalculatedDamage)
             .FromCard(this, play)
             .TargetingAllOpponents(CombatState)
-            .WithHitFx("vfx/vfx_attack_blunt")
+            .BeforeDamage(() => VanillaVfx.FireSmokePuffs(CombatState.HittableEnemies.ToList()))
             .Execute(choiceContext);
     }
 

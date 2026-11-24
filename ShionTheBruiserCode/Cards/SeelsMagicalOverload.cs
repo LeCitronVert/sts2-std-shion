@@ -10,6 +10,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -37,7 +38,8 @@ public class SeelsMagicalOverload() : SeelsTheRecklessCard(1,
             .FromCard(this, play)
             .TargetingRandomOpponents(CombatState)
             .WithHitCount(hits)
-            .WithHitFx("vfx/vfx_attack_blunt")
+            .WithHitVfxNode(VanillaVfx.SmallMagicMissileNode)
+            .BeforeDamage(VanillaVfx.WaitForSmallMagicMissile)
             .Execute(choiceContext);
     }
 

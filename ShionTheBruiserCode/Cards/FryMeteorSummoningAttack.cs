@@ -13,6 +13,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -32,10 +33,12 @@ public class FryMeteorSummoningAttack() : FryCooldownCard(0,
     protected override async Task OnCooldownCardPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         ArgumentNullException.ThrowIfNull(play.Target);
+        // Meteor Strike: a large magic missile crashes on the target, then the hit
+        await VanillaVfx.LargeMagicMissile(play.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, play)
             .Targeting(play.Target)
-            .WithHitFx("vfx/vfx_heavy_blunt")
+            .WithHitFx(null, null, "blunt_attack.mp3")
             .Execute(choiceContext);
     }
 

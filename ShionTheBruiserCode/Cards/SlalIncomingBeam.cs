@@ -81,6 +81,7 @@ public class SlalIncomingBeam() : SlalTheEndlessCard(0,
             .FromCard(card, play)
             .TargetingAllOpponents(card.CombatState)
             .WithNoAttackerAnim()
+            .BeforeDamage(() => PlayBeamImpacts(card.CombatState.HittableEnemies))
             .Execute(choiceContext);
 
         CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(
@@ -89,6 +90,21 @@ public class SlalIncomingBeam() : SlalTheEndlessCard(0,
 
     /// <summary>Gap between the right edge of the screen and where the beam starts.</summary>
     private const float OffScreenMargin = 150f;
+
+    /// <summary>Hyperbeam's impact on each enemy the beam goes through. Visual only.</summary>
+    private static Task PlayBeamImpacts(IEnumerable<Creature> enemies)
+    {
+        var container = NCombatRoom.Instance?.CombatVfxContainer;
+        if (container == null) return Task.CompletedTask;
+        var screen = container.GetCanvasTransform().AffineInverse() * container.GetViewportRect();
+        foreach (var enemy in enemies)
+        {
+            if (enemy.GetCreatureNode() is not { } node || !GodotObject.IsInstanceValid(node)) continue;
+            var to = node.VfxSpawnPosition;
+            container.AddChildSafely(NHyperbeamImpactVfx.Create(new Vector2(screen.End.X + OffScreenMargin, to.Y), to));
+        }
+        return Task.CompletedTask;
+    }
 
     /// <summary>
     /// The beam comes from behind the enemies, from out of the screen on the right, and goes through all of them

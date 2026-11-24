@@ -13,6 +13,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
@@ -42,7 +43,9 @@ public class FryInfinityPlusOneSword() : FryTheCommanderCard(0,
             .FromCard(this, play)
             .Targeting(play.Target)
             .WithHitCount(DynamicVars.Repeat.IntValue)
-            .WithHitFx("vfx/vfx_heavy_blunt")
+            .WithHitFx(null, null, "heavy_attack.mp3")
+            .WithHitVfxNode(t => NBigSlashVfx.Create(t))
+            .WithHitVfxNode(t => NBigSlashImpactVfx.Create(t))
             .Execute(choiceContext);
     }
 

@@ -44,7 +44,7 @@ public class FryCapeSwish() : FryTheCommanderCard(0,
                 await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
                     .FromCard(this, play)
                     .TargetingAllOpponents(CombatState)
-                    .WithHitFx("vfx/vfx_attack_slash")
+                    .WithHitFx("vfx/vfx_giant_horizontal_slash")
                     .Execute(ctx);
                 await PowerCmd.Apply<CapeSwishStrength>(ctx, Owner.Creature, DynamicVars.Strength.BaseValue, Owner.Creature, this);
             }
