@@ -21,8 +21,9 @@ public class ExtremeSpeed() : CustomTemporaryPowerModelWrapper<ShionExtremeSpeed
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        // Same timing as the base temporary power: tick at the end of the opposing side's turn.
-        if (Amount > 1 && !participants.Contains(Owner))
+        // Same timing as the base temporary power (UntilEndOfOtherSideTurn = false): tick at the end
+        // of the owner's own side turn. Above 1, peel one turn off instead of removing everything.
+        if (Amount > 1 && participants.Contains(Owner))
         {
             // Base AfterPowerAmountChanged mirrors the -1 onto Slow, keeping both in sync.
             await PowerCmd.Decrement(this);
