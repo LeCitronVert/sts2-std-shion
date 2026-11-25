@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Patches;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using MegaCrit.Sts2.Core.HoverTips;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
@@ -46,7 +47,7 @@ public class CounterStrategy() : ShionTheBruiserPower, ICardAfflictionListener
     {
         // Same classification as vanilla Artifact: negative Strength/Dexterity count as debuffs, while a debuff
         // ticking down (negative amount on a non-negative power) reads as Buff. Defensive is your own stance.
-        if (power.GetTypeForAmount(amount) != PowerType.Debuff || power.Owner != Owner || !power.IsVisible
+        if (power.GetTypeForAmount(amount) != PowerType.Debuff || power.Owner != Owner || !ShionMechanicsHelper.IsVisibleForLogic(power)
             || power is DefensiveDebuff || ConsumeTempBuffExpiry(power, amount, applier, cardSource))
         {
             return;

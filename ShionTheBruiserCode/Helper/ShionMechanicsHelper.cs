@@ -28,6 +28,22 @@ public interface IPatchUpListener
 
 public static class ShionMechanicsHelper
 {
+    private static readonly System.Reflection.PropertyInfo? IsVisibleInternalProp =
+        typeof(PowerModel).GetProperty("IsVisibleInternal",
+            System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public);
+
+    /// <summary>
+    /// Multiplayer-safe replacement for <see cref="PowerModel.IsVisible"/> in gameplay logic. Vanilla IsVisible
+    /// returns false for an instanced power (e.g. Sandpit) whose Target is another player, so it differs per peer
+    /// and desyncs any hook that branches on it. This only asks whether the power is a hidden tracker.
+    /// </summary>
+    public static bool IsVisibleForLogic(PowerModel power)
+    {
+        if (IsVisibleInternalProp?.GetValue(power) is bool visible) return visible;
+        return true;
+    }
+
+
     public static int GetDragonUniqueBuffCount(Creature creature)
     {
         // Get count of unique Buffs.

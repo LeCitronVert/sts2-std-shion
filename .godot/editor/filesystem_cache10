@@ -7,8 +7,8 @@ ShionTheBruiser.json::JSON::-1::1795020829::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1794599726
-::res://bin/ExportRelease/net9.0/publish/::1795194564
-ShionTheBruiser.deps.json::JSON::-1::1795166534::0::1::::<><><>0<>0<><>::
+::res://bin/ExportRelease/net9.0/publish/::1795605523
+ShionTheBruiser.deps.json::JSON::-1::1795538729::0::1::::<><><>0<>0<><>::
 ::res://bin/ExportRelease/net9.0/publish-beta/::1794997063
 ShionTheBruiser.deps.json::JSON::-1::1794997063::0::1::::<><><>0<>0<><>::
 ::res://ci/::1794598486
@@ -1744,10 +1744,10 @@ FryBottomlessMagazines.cs::CSharpScript::4420704750379792189::1795135111::0::1::
 FryBreakMeter.cs::CSharpScript::8005909169767154159::1794598061::0::1::::<><><>0<>0<><>::
 FryCallingYourAttacks.cs::CSharpScript::4334538310787097212::1792675405::0::1::::<><><>0<>0<><>::
 FryCallOnMe.cs::CSharpScript::5666031698035035686::1795135111::0::1::::<><><>0<>0<><>::
-FryCapeSwish.cs::CSharpScript::7042399129537014703::1794598061::0::1::::<><><>0<>0<><>::
+FryCapeSwish.cs::CSharpScript::7042399129537014703::1795538593::0::1::::<><><>0<>0<><>::
 FryCastingAShadow.cs::CSharpScript::4842294013197997922::1795135111::0::1::::<><><>0<>0<><>::
 FryChekhovsGun.cs::CSharpScript::6598936214590324110::1792675405::0::1::::<><><>0<>0<><>::
-FryClawStrike.cs::CSharpScript::3049220594843885517::1794598061::0::1::::<><><>0<>0<><>::
+FryClawStrike.cs::CSharpScript::3049220594843885517::1795538593::0::1::::<><><>0<>0<><>::
 FryCombatPragmatist.cs::CSharpScript::2310795235776166379::1795135111::0::1::::<><><>0<>0<><>::
 FryCooldownCard.cs::CSharpScript::8857022652806864278::1795166108::0::1::::<><><>0<>0<><>::
 FryCripplingTheCompetition.cs::CSharpScript::2527760701432774666::1795135057::0::1::::<><><>0<>0<><>::
@@ -1766,7 +1766,7 @@ FryExpendableClone.cs::CSharpScript::6087332152857753893::1792675405::0::1::::<>
 FryFakeTexting.cs::CSharpScript::5470814791567127154::1795135111::0::1::::<><><>0<>0<><>::
 FryFastAsLightning.cs::CSharpScript::6449972967858066951::1795135056::0::1::::<><><>0<>0<><>::
 FryFauxAffablyEvil.cs::CSharpScript::1288065556361026978::1795135111::0::1::::<><><>0<>0<><>::
-FryFireballs.cs::CSharpScript::6780914373837783931::1794598061::0::1::::<><><>0<>0<><>::
+FryFireballs.cs::CSharpScript::6780914373837783931::1795538593::0::1::::<><><>0<>0<><>::
 FryFissionMailed.cs::CSharpScript::4243908692423152261::1795135057::0::1::::<><><>0<>0<><>::
 FryFriendlyGhost.cs::CSharpScript::5537993214956408393::1792675405::0::1::::<><><>0<>0<><>::
 FryGettingTheBoot.cs::CSharpScript::1894257286856335317::1794598061::0::1::::<><><>0<>0<><>::
@@ -1776,7 +1776,7 @@ FryHereWeGoAgain.cs::CSharpScript::5356611829499692796::1795020717::0::1::::<><>
 FryHyperDestructiveBouncingBall.cs::CSharpScript::6436309562333281806::1792675405::0::1::::<><><>0<>0<><>::
 FryImplausibleDeniability.cs::CSharpScript::316504742559706122::1795135111::0::1::::<><><>0<>0<><>::
 FryImprovisedArmour.cs::CSharpScript::6080537456714567338::1792675405::0::1::::<><><>0<>0<><>::
-FryInfinityPlusOneSword.cs::CSharpScript::5686649032200964656::1794598061::0::1::::<><><>0<>0<><>::
+FryInfinityPlusOneSword.cs::CSharpScript::5686649032200964656::1795538593::0::1::::<><><>0<>0<><>::
 FryIWillTearYourArmsOff.cs::CSharpScript::6573960635240324710::1795135056::0::1::::<><><>0<>0<><>::
 FryJetPack.cs::CSharpScript::6334535523149560773::1795020717::0::1::::<><><>0<>0<><>::
 FryJettisonJetpackAttack.cs::CSharpScript::1673034240869424863::1794598061::0::1::::<><><>0<>0<><>::
@@ -1784,13 +1784,13 @@ FryJustInTime.cs::CSharpScript::1873339848580133701::1795135111::0::1::::<><><>0
 FryKindaBusyHere.cs::CSharpScript::8747486007412883351::1795135111::0::1::::<><><>0<>0<><>::
 FryLastChanceHitPoint.cs::CSharpScript::1431221754512524702::1795135111::0::1::::<><><>0<>0<><>::
 FryMadeOfExplodium.cs::CSharpScript::2515476629270699664::1795135581::0::1::::<><><>0<>0<><>::
-FryMagicMissileStorm.cs::CSharpScript::211124292008980088::1794598061::0::1::::<><><>0<>0<><>::
+FryMagicMissileStorm.cs::CSharpScript::211124292008980088::1795538593::0::1::::<><><>0<>0<><>::
 FryManaDrain.cs::CSharpScript::5778567544869007948::1795135057::0::1::::<><><>0<>0<><>::
 FryManaShield.cs::CSharpScript::3271233676841659734::1792675405::0::1::::<><><>0<>0<><>::
 FryMasterOfAll.cs::CSharpScript::7780568666890059267::1795135056::0::1::::<><><>0<>0<><>::
 FryMechaExpansionPack.cs::CSharpScript::5814372729564836486::1795135111::0::1::::<><><>0<>0<><>::
 FryMeditationPowerup.cs::CSharpScript::1422589086375269162::1795135111::0::1::::<><><>0<>0<><>::
-FryMeteorSummoningAttack.cs::CSharpScript::8206369274713470711::1794598061::0::1::::<><><>0<>0<><>::
+FryMeteorSummoningAttack.cs::CSharpScript::8206369274713470711::1795538593::0::1::::<><><>0<>0<><>::
 FryMidSeasonUpgrade.cs::CSharpScript::2107071933459124794::1792689744::0::1::::<><><>0<>0<><>::
 FryMultiMeleeMaster.cs::CSharpScript::9177618135524288516::1795135111::0::1::::<><><>0<>0<><>::
 FryNoEndorHolocaust.cs::CSharpScript::7908546419559735580::1795135089::0::1::::<><><>0<>0<><>::
@@ -1819,7 +1819,7 @@ FrySacredBowAndArrows.cs::CSharpScript::7034758003554437595::1795135784::0::1:::
 FrySaltTheEarth.cs::CSharpScript::3241530586886378110::1795135111::0::1::::<><><>0<>0<><>::
 FryScottyTime.cs::CSharpScript::7593106302973933178::1795135111::0::1::::<><><>0<>0<><>::
 FrySkelebot9000.cs::CSharpScript::8088833540900582614::1795136070::0::1::::<><><>0<>0<><>::
-FrySlapOnTheWristNuke.cs::CSharpScript::4312161614875791227::1795135057::0::1::::<><><>0<>0<><>::
+FrySlapOnTheWristNuke.cs::CSharpScript::4312161614875791227::1795538593::0::1::::<><><>0<>0<><>::
 FrySpellBlade.cs::CSharpScript::2770831574754440589::1795135706::0::1::::<><><>0<>0<><>::
 FrySpikesOfVillainy.cs::CSharpScript::3884917547523597965::1792675405::0::1::::<><><>0<>0<><>::
 FrySpinToDeflectStuff.cs::CSharpScript::717228002549052674::1792689744::0::1::::<><><>0<>0<><>::
@@ -1837,7 +1837,7 @@ FryTurnsRed.cs::CSharpScript::7776338851134739444::1795135057::0::1::::<><><>0<>
 FryUltimateForm.cs::CSharpScript::3009477246970006396::1792675405::0::1::::<><><>0<>0<><>::
 FryUnbelievablyImpatient.cs::CSharpScript::7745618511707944062::1795135057::0::1::::<><><>0<>0<><>::
 FryWhatWereYouThinking.cs::CSharpScript::54510469342648899::1795135111::0::1::::<><><>0<>0<><>::
-FryYouNukeEm.cs::CSharpScript::7891436825838271076::1794598061::0::1::::<><><>0<>0<><>::
+FryYouNukeEm.cs::CSharpScript::7891436825838271076::1795538593::0::1::::<><><>0<>0<><>::
 GoodPals.cs::CSharpScript::6499832909932757439::1793646232::0::1::::<><><>0<>0<><>::
 IroncladBitterEnd.cs::CSharpScript::2969775204303369827::1793532028::0::1::::<><><>0<>0<><>::
 IroncladDoubleDown.cs::CSharpScript::637537654833051476::1794661356::0::1::::<><><>0<>0<><>::
@@ -1887,7 +1887,7 @@ SeelsExsanguination.cs::CSharpScript::8707790559315588812::1795020717::0::1::::<
 SeelsEyeOpeningRealization.cs::CSharpScript::2775807119409985050::1794130094::0::1::::<><><>0<>0<><>::
 SeelsFinalRush.cs::CSharpScript::4641070757404450163::1794598061::0::1::::<><><>0<>0<><>::
 SeelsFinalShowdown.cs::CSharpScript::4138197658593422283::1793636724::0::1::::<><><>0<>0<><>::
-SeelsFinishingExplosion.cs::CSharpScript::1160194743687475408::1794598061::0::1::::<><><>0<>0<><>::
+SeelsFinishingExplosion.cs::CSharpScript::1160194743687475408::1795538593::0::1::::<><><>0<>0<><>::
 SeelsFunnyDance.cs::CSharpScript::2028373038831993643::1793813553::0::1::::<><><>0<>0<><>::
 SeelsGamblersLuck.cs::CSharpScript::5389455118786054848::1793719782::0::1::::<><><>0<>0<><>::
 SeelsGamblingAddiction.cs::CSharpScript::7153523749065137731::1794598061::0::1::::<><><>0<>0<><>::
@@ -1907,7 +1907,7 @@ SeelsJoltingPain.cs::CSharpScript::7341032814153765278::1793719694::0::1::::<><>
 SeelsLaughItOff.cs::CSharpScript::2277137235266210758::1793719782::0::1::::<><><>0<>0<><>::
 SeelsLiveWithThePain.cs::CSharpScript::581650577184807400::1793719815::0::1::::<><><>0<>0<><>::
 SeelsLure.cs::CSharpScript::7719062052766084::1793636659::0::1::::<><><>0<>0<><>::
-SeelsMagicalOverload.cs::CSharpScript::4804957577436101227::1794598061::0::1::::<><><>0<>0<><>::
+SeelsMagicalOverload.cs::CSharpScript::4804957577436101227::1795538593::0::1::::<><><>0<>0<><>::
 SeelsMassiveDefend.cs::CSharpScript::3482811000013571314::1793719838::0::1::::<><><>0<>0<><>::
 SeelsMismatchedMagic.cs::CSharpScript::5608666753833988339::1793531881::0::1::::<><><>0<>0<><>::
 SeelsMutilate.cs::CSharpScript::8420857855125168022::1794598061::0::1::::<><><>0<>0<><>::
@@ -1930,7 +1930,7 @@ SeelsRoyalMage.cs::CSharpScript::8594840556123156340::1793531997::0::1::::<><><>
 SeelsRunningJokester.cs::CSharpScript::7020652438872871150::1793890284::0::1::::<><><>0<>0<><>::
 SeelsSavagery.cs::CSharpScript::876130462661425177::1794051738::0::1::::<><><>0<>0<><>::
 SeelsScarletShadow.cs::CSharpScript::4037300630186705053::1794051993::0::1::::<><><>0<>0<><>::
-SeelsScratch.cs::CSharpScript::3322411705427871578::1794598061::0::1::::<><><>0<>0<><>::
+SeelsScratch.cs::CSharpScript::3322411705427871578::1795538593::0::1::::<><><>0<>0<><>::
 SeelsScratchinPals.cs::CSharpScript::6666549791551288744::1793814157::0::1::::<><><>0<>0<><>::
 SeelsShedThePain.cs::CSharpScript::7091925058483078925::1794296800::0::1::::<><><>0<>0<><>::
 SeelsShowOff.cs::CSharpScript::366395376767022707::1794598190::0::1::::<><><>0<>0<><>::
@@ -1952,7 +1952,7 @@ SeelsTossACoin.cs::CSharpScript::342275561254398215::1794052053::0::1::::<><><>0
 SeelsUltraKill.cs::CSharpScript::6770889197197503823::1794598061::0::1::::<><><>0<>0<><>::
 SeelsUntelegraphAttacks.cs::CSharpScript::3253373029784662589::1794296901::0::1::::<><><>0<>0<><>::
 SeelsUTurn.cs::CSharpScript::7383089685008978608::1794052001::0::1::::<><><>0<>0<><>::
-SeelsViolentRush.cs::CSharpScript::3621609853151219498::1794598061::0::1::::<><><>0<>0<><>::
+SeelsViolentRush.cs::CSharpScript::3621609853151219498::1795538593::0::1::::<><><>0<>0<><>::
 SeelsWeirdFlex.cs::CSharpScript::8100798691221940639::1793813690::0::1::::<><><>0<>0<><>::
 SeelsWink.cs::CSharpScript::8710769918376922283::1794052053::0::1::::<><><>0<>0<><>::
 ShionAnOpening.cs::CSharpScript::7011172140595757932::1792442313::0::1::::<><><>0<>0<><>::
@@ -2119,7 +2119,7 @@ SlalGorillaForm.cs::CSharpScript::7139620648718443635::1793193718::0::1::::<><><
 SlalHarmlessLook.cs::CSharpScript::4275952132934711402::1792504953::0::1::::<><><>0<>0<><>::
 SlalHatTip.cs::CSharpScript::4020840088599621362::1793567546::0::1::::<><><>0<>0<><>::
 SlalHumanForm.cs::CSharpScript::2996073394397051639::1792778743::0::1::::<><><>0<>0<><>::
-SlalIncomingBeam.cs::CSharpScript::5913780303554452430::1794598061::0::1::::<><><>0<>0<><>::
+SlalIncomingBeam.cs::CSharpScript::5913780303554452430::1795538609::0::1::::<><><>0<>0<><>::
 SlalInstantMattress.cs::CSharpScript::1565130686821204207::1793312476::0::1::::<><><>0<>0<><>::
 SlalIntroduction.cs::CSharpScript::1142570265458019722::1793193656::0::1::::<><><>0<>0<><>::
 SlalKickstartEvent.cs::CSharpScript::5738289500394808689::1793451950::0::1::::<><><>0<>0<><>::
@@ -2156,7 +2156,7 @@ SlalSlimeForm.cs::CSharpScript::326313686007131964::1794052019::0::1::::<><><>0<
 SlalSlimeHammer.cs::CSharpScript::5733842983300179745::1794598061::0::1::::<><><>0<>0<><>::
 SlalSlimeHug.cs::CSharpScript::5015901039681629077::1793530244::0::1::::<><><>0<>0<><>::
 SlalSlimeItOff.cs::CSharpScript::8425528690800095138::1793530244::0::1::::<><><>0<>0<><>::
-SlalSlimeRain.cs::CSharpScript::4071905612838289721::1795020717::0::1::::<><><>0<>0<><>::
+SlalSlimeRain.cs::CSharpScript::4071905612838289721::1795538593::0::1::::<><><>0<>0<><>::
 SlalSlimeStrikes.cs::CSharpScript::2864540701177446718::1794598061::0::1::::<><><>0<>0<><>::
 SlalSlimyCard.cs::CSharpScript::4200537369747223920::1792779214::0::1::::<><><>0<>0<><>::
 SlalSparrowForm.cs::CSharpScript::5960242670945349255::1793635495::0::1::::<><><>0<>0<><>::
@@ -2238,7 +2238,7 @@ FryMechanicsHelper.cs::CSharpScript::5896359720773048801::1795136295::0::1::::<>
 MaimHelper.cs::CSharpScript::392007258857544104::1794661864::0::1::::<><><>0<>0<><>::
 MonsterMagicHelper.cs::CSharpScript::2424719276935796326::1782837107::0::1::::<><><>0<>0<><>::
 MonsterPowersHelper.cs::CSharpScript::6250185130500123800::1794138367::0::1::::<><><>0<>0<><>::
-MonsterSpellLines.cs::CSharpScript::1409701177486583119::1793527530::0::1::::<><><>0<>0<><>::
+MonsterSpellLines.cs::CSharpScript::1409701177486583119::1795537685::0::1::::<><><>0<>0<><>::
 PreviewHelper.cs::CSharpScript::6436008676017542931::1794296930::0::1::::<><><>0<>0<><>::
 SeelsMechanicsHelper.cs::CSharpScript::8100201785959170499::1795020730::0::1::::<><><>0<>0<><>::
 ShionHooksHelper.cs::CSharpScript::7312245568866882451::1793728451::0::1::::<><><>0<>0<><>::
@@ -2300,14 +2300,14 @@ ShionTheBruiserPotion.cs::CSharpScript::9201725349623556408::1783339625::0::1:::
 SlalTheEndlessPotion.cs::CSharpScript::8376483660968667012::1784597711::0::1::::<><><>0<>0<><>::
 SlimePotion.cs::CSharpScript::7989781476553595685::1793813802::0::1::::<><><>0<>0<><>::
 UltraSpicyBrew.cs::CSharpScript::9048578971562818039::1784853353::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Powers/::1795136521
+::res://ShionTheBruiserCode/Powers/::1795250887
 AceOfSpade.cs::CSharpScript::899769670653131295::1793740867::0::1::::<><><>0<>0<><>::
 AggravatingDemeanor.cs::CSharpScript::8129228658966784852::1793719953::0::1::::<><><>0<>0<><>::
 AnchoredDown.cs::CSharpScript::5901246561197500973::1792505028::0::1::::<><><>0<>0<><>::
 AnglerfishForm.cs::CSharpScript::518667432377815112::1793451958::0::1::::<><><>0<>0<><>::
 AppleJuiceStocks.cs::CSharpScript::96923723691877307::1793451878::0::1::::<><><>0<>0<><>::
 BackSlap.cs::CSharpScript::8776972409031157113::1795020717::0::1::::<><><>0<>0<><>::
-BadFaith.cs::CSharpScript::4490199475496218159::1792675405::0::1::::<><><>0<>0<><>::
+BadFaith.cs::CSharpScript::4490199475496218159::1795250887::0::1::::<><><>0<>0<><>::
 BattleTempo.cs::CSharpScript::8564905511811489123::1792870359::0::1::::<><><>0<>0<><>::
 BeastForm.cs::CSharpScript::5715196285400937346::1794051730::0::1::::<><><>0<>0<><>::
 BeastFormStrength.cs::CSharpScript::8359877296941374534::1794051730::0::1::::<><><>0<>0<><>::
@@ -2685,7 +2685,7 @@ DamageCapVar.cs::CSharpScript::6621522850874298219::1782151646::0::1::::<><><>0<
 HasTargetVar.cs::CSharpScript::3245866986048990123::1794597728::0::1::::<><><>0<>0<><>::
 InCombatPowerAmountVar.cs::CSharpScript::2379550944823328950::1794597728::0::1::::<><><>0<>0<><>::
 PatchUpVar.cs::CSharpScript::3704163300152184645::1794938589::0::1::::<><><>0<>0<><>::
-::res://ShionTheBruiserCode/Visuals/::1795165817
+::res://ShionTheBruiserCode/Visuals/::1795538736
 AnimationRestartPatch.cs::CSharpScript::4570962197437255581::1794657725::0::1::::<><><>0<>0<><>::
 BloodHealthBarPatch.cs::CSharpScript::7948626422957363071::1794136669::0::1::::<><><>0<>0<><>::
 ChaosEmeraldsScreen.cs::CSharpScript::2715992751403064611::1794316554::0::1::::<><><>0<>0<><>::
@@ -2707,3 +2707,4 @@ ShionVfx.cs::CSharpScript::4005563270271299469::1793528991::0::1::::<><><>0<>0<>
 SlalVfx.cs::CSharpScript::5160427002322636377::1794299432::0::1::::<><><>0<>0<><>::
 TeamBlastGaugePatch.cs::CSharpScript::6694855378995654689::1793178610::0::1::::<><><>0<>0<><>::
 TeamBlastIntro.cs::CSharpScript::6865524904665539020::1793722883::0::1::::<><><>0<>0<><>::
+VanillaVfx.cs::CSharpScript::1602996057882747161::1795538593::0::1::::<><><>0<>0<><>::
