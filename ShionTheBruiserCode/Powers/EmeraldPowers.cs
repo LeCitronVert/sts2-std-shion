@@ -12,6 +12,13 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
+/// <summary>The Emerald wheel's section icons (images/ui/emerald_wheel), reused as the Emerald powers' icons.</summary>
+internal static class EmeraldPowerIcons
+{
+    public static string Path(string name) =>
+        System.IO.Path.Join(MainFile.ResPath, "images", "ui", "emerald_wheel", name + "_available.png");
+}
+
 /// <summary>
 /// Ivy (Green Chaos Emerald): for (Amount) turns, the debuffs you apply to others are doubled.
 /// </summary>
@@ -19,6 +26,10 @@ public sealed class EmeraldIvy : ShionTheBruiserPower
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
+
+    // Same icon as its Emerald wheel section
+    public override string CustomPackedIconPath => EmeraldPowerIcons.Path("ivy");
+    public override string CustomBigIconPath => EmeraldPowerIcons.Path("ivy");
 
     public override decimal ModifyPowerAmountGivenMultiplicative(PowerModel power, Creature giver, decimal amount, Creature? target,
         CardModel? cardSource)
@@ -107,6 +118,10 @@ public sealed class EmeraldAvatar : ShionTheBruiserPower
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
+    // Same icon as its Emerald wheel section
+    public override string CustomPackedIconPath => EmeraldPowerIcons.Path("avatar");
+    public override string CustomBigIconPath => EmeraldPowerIcons.Path("avatar");
+
     public override int ModifyCardPlayCount(CardModel card, Creature? target, int playCount)
     {
         if (card.Owner.Creature != Owner || card.Type != CardType.Power) return playCount;
@@ -127,6 +142,10 @@ public sealed class EmeraldBullet : ShionTheBruiserPower
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
+
+    // Same icon as its Emerald wheel section
+    public override string CustomPackedIconPath => EmeraldPowerIcons.Path("bullet");
+    public override string CustomBigIconPath => EmeraldPowerIcons.Path("bullet");
 
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer,
         CardModel? cardSource

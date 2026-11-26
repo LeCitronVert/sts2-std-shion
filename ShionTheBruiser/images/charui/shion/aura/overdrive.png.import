@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://caiostye1k22j"
-path="res://.godot/imported/overdrive.png-deb6ed2099f9e4f546b4699c3a538fb1.ctex"
+path="res://.godot/imported/overdrive.png-211e904d11d99ba01a2a4a9b9770cde4.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://ShionTheBruiser/images/charui/shion/aura/overdrive.png"
-dest_files=["res://.godot/imported/overdrive.png-deb6ed2099f9e4f546b4699c3a538fb1.ctex"]
+dest_files=["res://.godot/imported/overdrive.png-211e904d11d99ba01a2a4a9b9770cde4.ctex"]
 
 [params]
 
