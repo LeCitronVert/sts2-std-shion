@@ -121,6 +121,33 @@ public static class StrifeTransition
     }
 }
 
+/// <summary>
+/// Since the v0.111.1 hotfix / current beta, the Architect's "Proceed" calls RunManager.WinRun directly (local, no
+/// ActChangeSynchronizer), so <see cref="StrifeTransition"/> never ran. When Act 4 is unlocked, turn that click back
+/// into the old "player ready" vote: once every player is ready, ActChangeSynchronizer calls EnterNextAct on every
+/// client, and StrifeTransition plays the cutscene there, in sync.
+/// </summary>
+[HarmonyPatch(typeof(RunManager), nameof(RunManager.WinRun))]
+public static class StrifeArchitectWinRunPatch
+{
+    [HarmonyPrefix]
+    public static bool Prefix(ref Task __result)
+    {
+        var state = StrifeRun.State;
+        if (state?.CurrentRoom is not EventRoom { CanonicalEvent: TheArchitect } || !StrifeRun.IsStrifeUnlocked(state)
+            || state.Acts.Any(a => StrifeAct.IsStrife(a)))
+            return true;
+
+        if (state.Players.Count > 1)
+        {
+            MegaCrit.Sts2.Core.Nodes.Rooms.NCombatRoom.Instance?.SetWaitingForOtherPlayersOverlayVisible(visible: true);
+        }
+        RunManager.Instance.ActChangeSynchronizer.SetLocalPlayerReady();
+        __result = Task.CompletedTask;
+        return false;
+    }
+}
+
 /// <summary>The run's true ending, after <see cref="StrifeEnding"/>.</summary>
 public static class StrifeVictory
 {
