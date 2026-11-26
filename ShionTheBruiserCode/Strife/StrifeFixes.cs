@@ -1,4 +1,5 @@
 using HarmonyLib;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Helpers;
@@ -153,5 +154,21 @@ public static class StrifeArchitectMultiTargetPatch
     {
         if (!__instance.IsMultiTargeted || !__result.Any(FieldExperiment.IsProtected)) return;
         __result = __result.Where(c => !FieldExperiment.IsProtected(c)).ToList();
+    }
+}
+
+/// <summary>
+/// A forced kill (<c>CreatureCmd.Kill(creature, force: true)</c>, which some mods use for instakills) skips
+/// <see cref="ArchitectsDesign.ShouldDie"/> and would really kill the Architect, ending the fight early. It's never forced
+/// on him unless he's being "defeated" (<see cref="ArchitectsDesign.AllowDeath"/>), so it goes through his death
+/// prevention like any other kill (see <see cref="ArchitectsDesign"/>'s instakill recovery).
+/// </summary>
+[HarmonyPatch(typeof(CreatureCmd), "KillWithoutCheckingWinCondition")]
+public static class StrifeArchitectForcedKillPatch
+{
+    [HarmonyPrefix]
+    public static void Prefix(Creature creature, ref bool force)
+    {
+        if (force && creature.GetPower<ArchitectsDesign>() is { AllowDeath: false }) force = false;
     }
 }

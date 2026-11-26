@@ -92,19 +92,42 @@ public sealed class ArchitectsDesign : ShionTheBruiserPower
         if (Owner.CurrentHp < Owner.MaxHp) Owner.SetCurrentHpInternal(Owner.MaxHp);
     }
 
-    public override Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature,
+    public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature,
 #if STS2_BETA
         CardModel? source,
 #endif
         bool wasRemovalPrevented, float deathAnimLength)
     {
-        if (creature != Owner && creature.Side == Owner.Side && Owner.IsAlive)
+        if (creature == Owner)
+        {
+            if (wasRemovalPrevented && !AllowDeath) await RecoverFromInstakill();
+            return;
+        }
+        if (creature.Side == Owner.Side && Owner.IsAlive)
         {
             Architect?.OnSummonDied();
             // Visual only: he stands back up once his last summon is gone, and the others close the gap
             StrifeLayout.ArrangeDeferred();
         }
-        return Task.CompletedTask;
+    }
+
+    /// <summary>
+    /// Every instakill (Doom, <see cref="CreatureCmd.Kill(Creature, bool)"/>, <see cref="CreatureCmd.SetCurrentHp"/> to 0,
+    /// other mods' executes...) sets his HP to 0 before asking <see cref="ShouldDie"/>. His death is prevented, but he'd stay
+    /// at 0 HP: "dead" and stuck. Undo it here (the base game re-kills him if he's still dead after this):
+    /// during a DPS check, it empties the check's health bar (what's left of it counts as damage), otherwise his HP goes
+    /// back to full.
+    /// </summary>
+    private async Task RecoverFromInstakill()
+    {
+        if (!Owner.IsDead) return;
+        if (Architect is { InCheck: true } architect)
+        {
+            var remaining = Math.Max(1, architect.CheckHp);
+            architect.AddDamage(remaining);
+            await architect.OnCheckDamaged(remaining);
+        }
+        if (Owner.IsDead) Owner.SetCurrentHpInternal(Owner.MaxHp);
     }
 }
 
