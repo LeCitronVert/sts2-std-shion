@@ -7,7 +7,7 @@ ShionTheBruiser.json::JSON::-1::1795020829::0::1::::<><><>0<>0<><>::
 ::res://bin/::1781941777
 ::res://bin/ExportRelease/::1781941777
 ::res://bin/ExportRelease/net9.0/::1794599726
-::res://bin/ExportRelease/net9.0/publish/::1795711946
+::res://bin/ExportRelease/net9.0/publish/::1795712447
 ShionTheBruiser.deps.json::JSON::-1::1795711356::0::1::::<><><>0<>0<><>::
 ::res://bin/ExportRelease/net9.0/publish-beta/::1794997063
 ShionTheBruiser.deps.json::JSON::-1::1794997063::0::1::::<><><>0<>0<><>::
@@ -2688,7 +2688,7 @@ StrifePowers.cs::CSharpScript::7421602666621777465::1795711052::0::1::::<><><>0<
 StrifeRun.cs::CSharpScript::7029773787308503780::1794316220::0::1::::<><><>0<>0<><>::
 StrifeScores.cs::CSharpScript::6195433211841160956::1794316797::0::1::::<><><>0<>0<><>::
 StrifeShrine.cs::CSharpScript::1966910140778160854::1794315829::0::1::::<><><>0<>0<><>::
-StrifeTransition.cs::CSharpScript::7442780205977205097::1795706674::0::1::::<><><>0<>0<><>::
+StrifeTransition.cs::CSharpScript::7442780205977205097::1795712345::0::1::::<><><>0<>0<><>::
 SuperForm.cs::CSharpScript::4845857576258439275::1795710856::0::1::::<><><>0<>0<><>::
 ::res://ShionTheBruiserCode/Timeline/::1794068724
 CharacterUnlockEpoch.cs::CSharpScript::2177026565359277390::1793207253::0::1::::<><><>0<>0<><>::

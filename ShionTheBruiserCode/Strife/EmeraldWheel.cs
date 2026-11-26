@@ -242,10 +242,12 @@ public static class EmeraldWheelUi
             var tips = new List<IHoverTip>();
             if (EmeraldWheel.Sections[index] is { } color)
             {
-                tips.Add(HoverTipFactory.FromCard(ChaosEmeraldHelper.EmeraldPowerCard(color)));
+                var held = ChaosEmeraldHelper.HeldColors(player).Contains(color);
+                // On cooldown: only the "already used" text, the card preview hid it
+                if (!held || EmeraldWheel.CanPick(player, color))
+                    tips.Add(HoverTipFactory.FromCard(ChaosEmeraldHelper.EmeraldPowerCard(color)));
                 if (!EmeraldWheel.CanPick(player, color))
                 {
-                    var held = ChaosEmeraldHelper.HeldColors(player).Contains(color);
                     tips.Add(new HoverTip(new LocString("static_hover_tips",
                         held ? "SHIONTHEBRUISER-EMERALD_WHEEL_USED.description" : "SHIONTHEBRUISER-EMERALD_WHEEL_MISSING.description")));
                 }

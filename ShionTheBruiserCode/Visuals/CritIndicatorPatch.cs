@@ -59,6 +59,11 @@ public static class CritIndicatorPatch
         };
         indicator.MouseExited += () => NHoverTipSet.Remove(indicator);
 
+        // Not every power application raises the combat state event (tracker added mid-fight): a short poll keeps it exact
+        var timer = new Godot.Timer { WaitTime = 0.1f, Autostart = true };
+        timer.Timeout += Refresh;
+        indicator.AddChild(timer);
+
         CombatManager.Instance.StateTracker.CombatStateChanged += OnCombatStateChanged;
         indicator.TreeExiting += () => CombatManager.Instance.StateTracker.CombatStateChanged -= OnCombatStateChanged;
         Refresh();

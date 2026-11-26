@@ -59,11 +59,10 @@ public class DragonCheer() : CritContributorPower, ICritHitRateContributor
         return Task.CompletedTask;
     }
 
-    public override Task AfterApplied(Creature? applier, CardModel? cardSource)
+    public override async Task AfterApplied(Creature? applier, CardModel? cardSource)
     {
+        await base.AfterApplied(applier, cardSource);
         ChangePulse();
-        
-        return Task.CompletedTask;
     }
     
 

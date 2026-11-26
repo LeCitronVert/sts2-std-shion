@@ -19,7 +19,9 @@ signal closed
 @export var ring_color := Color(0.04, 0.06, 0.1, 0.88)
 @export var separator_color := Color(0.75, 0.78, 0.85, 0.55)
 @export var highlight_color := Color(1.0, 0.82, 0.1, 1.0)
-@export var blocked_highlight_color := Color(0.45, 0.45, 0.5, 0.9)
+@export var blocked_highlight_color := Color(0.2, 0.2, 0.23, 0.95)
+@export var blocked_color := Color(0.01, 0.01, 0.02, 0.95)
+@export var blocked_icon_modulate := Color(0.45, 0.45, 0.45, 1.0)
 @export var inner_line_color := Color(0.85, 0.88, 0.95, 0.6)
 @export var stick_deadzone := 0.5
 
@@ -149,9 +151,9 @@ func _draw() -> void:
 	for i in _count():
 		var from_angle := _section_angle(i) - step * 0.5
 		var to_angle := _section_angle(i) + step * 0.5
-		var color: Color = ring_color
+		var can_pick: bool = i < _selectable.size() and _selectable[i]
+		var color: Color = ring_color if can_pick else blocked_color
 		if i == _hovered:
-			var can_pick: bool = i < _selectable.size() and _selectable[i]
 			color = highlight_color if can_pick else blocked_highlight_color
 		var outer_arc := _arc(outer, from_angle, to_angle)
 		var inner_arc := _arc(inner, to_angle, from_angle)
@@ -173,4 +175,5 @@ func _draw() -> void:
 		if texture == null:
 			continue
 		var pos := center + Vector2.from_angle(_section_angle(i)) * icon_radius - Vector2(size_now, size_now) * 0.5
-		draw_texture_rect(texture, Rect2(pos, Vector2(size_now, size_now)), false, Color(1, 1, 1, _appear))
+		var tint := Color.WHITE if i < _selectable.size() and _selectable[i] else blocked_icon_modulate
+		draw_texture_rect(texture, Rect2(pos, Vector2(size_now, size_now)), false, Color(tint, _appear))

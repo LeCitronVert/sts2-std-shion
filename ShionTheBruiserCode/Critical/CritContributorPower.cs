@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Critical;
@@ -36,6 +37,18 @@ public abstract class CritContributorPower : ShionTheBruiserPower
                 applier: Owner,
                 cardSource: null);
         }
+    }
+
+    /// <summary>
+    /// Applied mid-combat (card, potion, other power): BeforeCombatStart has already run, so add the tracker now,
+    /// or the crit indicator never shows. Recalculated here since this power was applied before the tracker existed.
+    /// </summary>
+    public override async Task AfterApplied(Creature? applier, MegaCrit.Sts2.Core.Models.CardModel? cardSource)
+    {
+        await base.AfterApplied(applier, cardSource);
+        if (Owner.CombatState == null) return;
+        await ShionMechanicsHelper.EnsureCreatureHasCritTracker(Owner);
+        Owner.GetPower<ShionCritTrackerPower>()?.RecalculateCritRates();
     }
 
     /// <summary>
