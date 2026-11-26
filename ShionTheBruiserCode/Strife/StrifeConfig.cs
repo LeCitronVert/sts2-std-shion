@@ -7,7 +7,7 @@ using MegaCrit.Sts2.Core.Rooms;
 namespace ShionTheBruiser.ShionTheBruiserCode.Strife;
 
 /// <summary>
-/// Everything about the Act 4 (Strife) Architect fight that is meant to be tweaked: the summon cycle, the Ring Bounties,
+/// Everything about the Act 4 (Strife) Architect fight that is meant to be tweaked: the summon cycle,
 /// the buff cycle, Growing Impatience and the Super Form numbers.
 /// </summary>
 public static class StrifeConfig
@@ -62,37 +62,10 @@ public static class StrifeConfig
         _ => [ModelDb.Act<Glory>()],
     };
 
-    // ── Ring Bounty ──────────────────────────────────────────────────────────
+    // ── Rings ────────────────────────────────────────────────────────────────
 
-    public const int EliteBounty = 50;
-    public const int BossBounty = 100;
-
-    /// <summary>
-    /// Creatures spawned mid-fight by a summon (Phrog Parasite's Wrigglers, Fabricator's bots...) that aren't listed in
-    /// <see cref="BountyByMonster"/>.
-    /// </summary>
-    public const int SpawnedBounty = 0; //todo : choose bounty
-
-    /// <summary>
-    /// Per-monster Ring Bounty, overriding the Elite / Boss / spawned default. Keyed by the monster's class.
-    /// Example: [typeof(Wriggler)] = 5.
-    /// </summary>
-    public static readonly IReadOnlyDictionary<Type, int> BountyByMonster = new Dictionary<Type, int>
-    {
-    };
-
-    /// <param name="monster">The creature's monster.</param>
-    /// <param name="summonedAs">Room type of the encounter it was summoned with, or null for a creature spawned mid-fight.</param>
-    public static int BountyFor(MonsterModel monster, RoomType? summonedAs)
-    {
-        if (BountyByMonster.TryGetValue(monster.GetType(), out var bounty)) return bounty;
-        return summonedAs switch
-        {
-            RoomType.Boss => BossBounty,
-            RoomType.Elite => EliteBounty,
-            _ => SpawnedBounty,
-        };
-    }
+    // His summons have no Ring Bounty since 2026-11-26: whoever damages the Architect gains that many Rings instead
+    // (ArchitectsDesign). The RingBounty power is kept, unused.
 
     // ── Buff cycle (while summons are alive) ─────────────────────────────────
 

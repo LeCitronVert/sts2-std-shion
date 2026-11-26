@@ -1,62 +1,45 @@
+using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
-using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
-using BaseLib.Utils;
-using MegaCrit.Sts2.Core.Models.CardPools;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
+/// <summary>
+/// Purple Chaos Emerald (Emerald Power): gain 1 (2) Intangible. Counter the next 2 (4) hindrances.
+/// </summary>
 [Pool(typeof(TokenCardPool))]
-public class EmeraldPowerVision() : ShionTheBruiserCard(0,
-    CardType.Power, CardRarity.Token,
-    TargetType.Self)
+public class EmeraldPowerVision() : EmeraldPowerCard(CardType.Power, TargetType.Self)
 {
+    public override ChaosEmeraldColor Color => ChaosEmeraldColor.Purple;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new PowerVar<IntangiblePower>(1),
+        new DynamicVar("Counters", 2),
     ];
-    
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [DreamersKeywords.EmeraldPower];
-    public override bool CanBeGeneratedInCombat => false;
-    public override bool CanBeGeneratedByModifiers => false;
 
-    
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromPower<CounterStrategy>(),
         HoverTipFactory.FromPower<IntangiblePower>(),
+        HoverTipFactory.FromPower<CounterStrategy>(),
     ];
 
-    protected override async Task OnPlay(
-        PlayerChoiceContext choiceContext,
-        CardPlay play)
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        var card = this;
-        await PowerCmd.Apply<IntangiblePower>(
-            choiceContext,
-            card.Owner.Creature,
-            card.DynamicVars["IntangiblePower"].BaseValue,
-            card.Owner.Creature,
-            card
-        );
-        
-        await PowerCmd.Apply<CounterStrategy>(
-            choiceContext,
-            card.Owner.Creature,
-            1,
-            card.Owner.Creature,
-            card
-        );
-
-        await DreamersMechanicsHelper.ExhaustAllEmeraldPowers(choiceContext, play);
-;    }
+        await PowerCmd.Apply<IntangiblePower>(choiceContext, Owner.Creature,
+            DynamicVars["IntangiblePower"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<CounterStrategy>(choiceContext, Owner.Creature,
+            DynamicVars["Counters"].BaseValue, Owner.Creature, this);
+    }
 
     protected override void OnUpgrade()
     {
         DynamicVars["IntangiblePower"].UpgradeValueBy(1);
+        DynamicVars["Counters"].UpgradeValueBy(2);
     }
 }

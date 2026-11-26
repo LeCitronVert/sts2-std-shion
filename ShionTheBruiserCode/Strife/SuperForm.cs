@@ -13,6 +13,7 @@ using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Extensions;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Relics;
 
@@ -51,10 +52,12 @@ public class SuperForm : ShionTheBruiserRelic
 }
 
 /// <summary>
-/// Unblocked damage you take is absorbed by your Rings (Gold) first, 1 Ring per point, until you run out.
+/// Unblocked damage you take is absorbed by your Rings (Gold) first, 1 Ring per point, until you run out. That protection
+/// can be turned off and back on from the Emerald wheel (<see cref="EmeraldWheel"/>), visuals included.
 /// Damage you deal yourself isn't absorbed.
-/// Whenever an enemy dies, shuffle all your Emerald Powers into your Draw Pile, wherever they are, and if the Team Blast
-/// gauge was used this combat, it's unlocked and back to 0 for the whole team.
+/// Also holds this fight's Emerald wheel state: each Emerald Power can be picked once per fight. Whenever an enemy dies,
+/// one used Emerald Power (at random) can be picked again, and if the Team Blast gauge was used this combat, it's unlocked
+/// and back to 0 for the whole team.
 /// Visuals (aura, sparks, sweat, Ring health bar segment, music): <see cref="SuperFormFx"/>, <see cref="RingVisuals"/>.
 /// </summary>
 public sealed class SuperFormPower : ShionTheBruiserPower
@@ -66,14 +69,42 @@ public sealed class SuperFormPower : ShionTheBruiserPower
     public override string CustomPackedIconPath => "super_form.png".RelicImagePath();
     public override string CustomBigIconPath => "super_form.png".RelicImagePath();
 
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(DreamersKeywords.EmeraldPower)];
+
     private int _pendingRingLoss;
 
     private int Rings => Owner.Player?.Gold ?? 0;
 
+    // ── Emerald wheel state (only changed by EmeraldWheelAction and hooks: the same on every client) ──
+
+    /// <summary>Whether the Rings absorb damage (toggled from the Emerald wheel).</summary>
+    public bool ProtectionOn { get; private set; } = true;
+
+    // Created on first use: a field initializer would be shared with the canonical model by MutableClone
+    private HashSet<ChaosEmeraldColor>? _usedEmeralds;
+
+    public bool IsUsed(ChaosEmeraldColor color) => _usedEmeralds?.Contains(color) == true;
+
+    public void MarkUsed(ChaosEmeraldColor color)
+    {
+        (_usedEmeralds ??= []).Add(color);
+        Flash();
+    }
+
+    public void ToggleProtection()
+    {
+        ProtectionOn = !ProtectionOn;
+        Flash();
+    }
+
+    /// <summary>Whether this creature's Rings absorb damage right now (logic and visuals).</summary>
+    public static bool IsProtecting(Creature creature) =>
+        creature.IsAlive && creature.GetPower<SuperFormPower>() is { ProtectionOn: true };
+
     // Only called by real damage (not by previews), so tracking the absorbed amount here is safe
     public override decimal ModifyHpLostAfterOsty(Creature target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        if (target != Owner || amount <= 0 || dealer == Owner || Owner.Player == null) return amount;
+        if (target != Owner || amount <= 0 || dealer == Owner || Owner.Player == null || !ProtectionOn) return amount;
         var available = Rings - _pendingRingLoss;
         if (available <= 0) return amount;
 
@@ -91,28 +122,23 @@ public sealed class SuperFormPower : ShionTheBruiserPower
         await PlayerCmd.LoseGold(loss, player, GoldLossType.Lost);
     }
 
-    public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature,
+    public override Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature,
 #if STS2_BETA
         CardModel? source,
 #endif
         bool wasRemovalPrevented, float deathAnimLength)
     {
-        if (creature.Side == Owner.Side || Owner.IsDead || Owner.Player is not { } player) return;
+        if (creature.Side == Owner.Side || Owner.IsDead || Owner.Player is not { } player) return Task.CompletedTask;
 
         // A used Team Blast gauge is unlocked and back to 0 for the whole team
         if (Singletons.TeamBlastSingleton.Instance?.ResetUsedGauge() == true) Flash();
 
-        // Those already in the Draw Pile stay where they are
-        var emeraldPowers = new[] { PileType.Hand, PileType.Discard, PileType.Exhaust }
-            .SelectMany(pile => pile.GetPile(player).Cards)
-            .Where(c => c.Keywords.Contains(DreamersKeywords.EmeraldPower))
-            .ToList();
-        if (emeraldPowers.Count == 0) return;
-
+        // One used Emerald Power (at random) can be picked again. Sorted first: the same pick on every client
+        var used = ChaosEmeraldHelper.AllColors.Where(IsUsed).ToList();
+        if (used.Count == 0) return Task.CompletedTask;
+        var refreshed = player.RunState.Rng.Niche.NextItem(used);
+        _usedEmeralds!.Remove(refreshed);
         Flash();
-        foreach (var card in emeraldPowers)
-        {
-            await CardPileCmd.Add(card, PileType.Draw, CardPilePosition.Random);
-        }
+        return Task.CompletedTask;
     }
 }

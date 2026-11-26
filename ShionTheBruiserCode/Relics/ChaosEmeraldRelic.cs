@@ -1,16 +1,22 @@
 using BaseLib.Utils;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Extensions;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using ShionTheBruiser.ShionTheBruiserCode.Strife;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 /// <summary>
 /// Base class for the Chaos Emerald relics, only obtainable through the Special Stage quest.
 /// EventRelicPool never feeds random relic drops, so these can't be found anywhere else.
-/// The combo ("Chaos Emeralds") variants share the effect of their solo version; they will unlock Act 4 later.
+/// At the start of each combat, adds its Emerald Power card to the Draw Pile. With <see cref="SuperForm"/>, it doesn't:
+/// the card is picked from the Emerald wheel instead (<see cref="EmeraldWheel"/>).
+/// The combo ("Chaos Emeralds") variants share the effect of their solo version and unlock Act 4.
 /// </summary>
 [Pool(typeof(EventRelicPool))]
 public abstract class ChaosEmeraldRelic : ShionTheBruiserRelic
@@ -29,4 +35,22 @@ public abstract class ChaosEmeraldRelic : ShionTheBruiserRelic
     protected override string PackedIconOutlinePath => $"emeralds/emerald_{Variant}_white.png".RelicImagePath();
 
     protected override string BigIconPath => PackedIconPath;
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromCard(ChaosEmeraldHelper.EmeraldPowerCard(Color)),
+        HoverTipFactory.FromKeyword(DreamersKeywords.EmeraldPower),
+    ];
+
+    public override async Task BeforeCombatStart()
+    {
+        // Super Form: picked from the Emerald wheel instead
+        if (SuperForm.Has(Owner)) return;
+
+        var card = Owner.Creature.CombatState?.CreateCard(ChaosEmeraldHelper.EmeraldPowerCard(Color), Owner);
+        if (card is null) return;
+
+        CardCmd.PreviewCardPileAdd(
+            await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Draw, Owner, CardPilePosition.Random)
+        );
+    }
 }

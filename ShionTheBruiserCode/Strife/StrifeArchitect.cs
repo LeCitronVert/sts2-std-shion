@@ -213,6 +213,7 @@ public sealed class StrifeArchitect : CustomMonsterModel
         await PowerCmd.Apply<FieldExperiment>(context, Creature, 1m, Creature, null);
         await PowerCmd.Apply<MakeYourPoint>(context, Creature, 1m, Creature, null);
         await PowerCmd.Apply<GrowingImpatience>(context, Creature, StartingCardLimit, Creature, null);
+        if (PlayerCount > 1) await PowerCmd.Apply<BalanceInAllThings>(context, Creature, 1m, Creature, null);
         Creature.HpDisplay = HpDisplay.InfiniteWithoutNumbers;
     }
 
@@ -244,8 +245,6 @@ public sealed class StrifeArchitect : CustomMonsterModel
             var encounter = mutables[index];
             StrifeLayout.BeginGroup(encounter, index == backIndex ? 0 : 1, mutables.Count);
 
-            var design = Design;
-            if (design != null) design.PendingSummonType = encounter.RoomType;
             try
             {
                 foreach (var (monster, slot) in encounter.MonstersWithSlots)
@@ -255,7 +254,6 @@ public sealed class StrifeArchitect : CustomMonsterModel
             }
             finally
             {
-                if (design != null) design.PendingSummonType = null;
                 StrifeLayout.EndGroup();
             }
         }

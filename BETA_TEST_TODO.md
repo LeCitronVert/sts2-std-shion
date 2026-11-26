@@ -2121,3 +2121,49 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - Our Mages Are Different: X = the Blood actually Bent. X = 0 gives no Cooldown. Exhausting Blood Bend cards don't come back.
 - Recycled Animation is left as "the first time you spend Stars each turn" (the sheet's "first #1# Stars" reads the same at 1).
 - Stealth Mentor still picks the cards at random (the sheet doesn't say who chooses).
+
+## 40. Chaos Emeralds rework, Emerald wheel (Super Form), Architect Rings
+
+**Setup**
+- [ ] Re-export the `.pck` with MegaDot: new `scenes/fx/emerald_wheel.tscn` + `.gd`, 16 icons in `images/ui/emerald_wheel/`, 8 new portraits (`card_portraits/emerald_power_{slow,avatar,bullet,extra}.png` + `big/`), and replaced Ivy / Water portraits. New `.cs` files need their `.uid` (EmeraldPowerCard, EmeraldPowerSlow/Avatar/Bullet/Extra, Powers/EmeraldPowers, Strife/EmeraldWheel). Build both branches, then launch.
+
+**Chaos Emeralds (outside Act 4: the card goes into the Draw Pile at the start of each combat)**
+- [ ] Purple → Vision: 1 (2) Intangible + Counter Strategy 2 (4).
+- [ ] Cyan → Water: unchanged effect (copies every Power you played), now free. The draw cost reduction and the upgrade are gone.
+- [ ] Green → Ivy: this turn (upgraded: this turn and next), the debuffs you apply to others are doubled (negative Strength/Dexterity too).
+- [ ] Yellow → Slow: every enemy takes +50% (+100%) Attack damage this turn, +10% per card played after it. Gone at the end of your turn.
+- [ ] Blue → Avatar: the next Power card you play is played 3 (5) more times.
+- [ ] Red → Bullet: this turn, your Attack damage ×2 (×3).
+- [ ] Grey (also Necrobinder / other characters) → Extra: 2 (3) Free Attack, Free Skill and Free Power.
+- [ ] Yellow / Blue / Red / Grey lost their old effects (first card free + merchant, extra energy, Vulnerable Block, Glam). Loading an old save with a Yellow Emerald still works.
+- [ ] Emerald Power keyword: the card costs 0 even with cost-raising effects, it's Retained at the end of turn (it shows "Retain"), and it Exhausts when played (Vision too, though it's a Power). Playing one no longer exhausts the other Emerald Powers.
+
+**Emerald wheel (Act 4, Super Form)**
+- [ ] With Super Form, no Emerald Power is added to the Draw Pile at the start of the fight.
+- [ ] A button with your own Chaos Emeralds icon sits above the energy counter, only during fights with Super Form. Hover shows its tooltip. Check the position isn't covered by anything.
+- [ ] Clicking it opens the wheel: Super Form at the top, then Water, Vision, Ivy, Avatar, Slow, Bullet, Extra clockwise. Hovering a section shows the card (plus "already used" / "you don't have it" if greyed out).
+- [ ] Picking a power adds it to your hand and greys it out for the fight. Clicking outside the ring / right click closes it.
+- [ ] Killing an enemy makes ONE used power (random) available again. The button dims once nothing is left.
+- [ ] Super Form section: turns off the Ring protection (you lose HP instead of Rings), the aura / particles / sparks and the yellow Ring segment on the health bar. Picking it again turns everything back on. The icon shows the on/off state.
+- [ ] Gamepad: the button can be focused and selected; in the wheel, the left stick points at a section, D-pad left/right steps around (up = top, down = bottom), confirm picks, back closes.
+- [ ] Multiplayer: picks and toggles by one player show up for the others (card in their hand, aura off) with no desync. A pick made during the enemy turn waits for the next player turn.
+
+**Architect (Act 4)**
+- [ ] Damaging the Architect gives the attacker that many Rings (pets / Osty: their owner). Blocked damage and hits while he's protected give nothing.
+- [ ] His summons have no Ring Bounty at all.
+- [ ] Multiplayer only: he has Balance in All Things. When he himself kills a player (not a summon's kill), he gains 100 Strength. Solo: no such power.
+- [ ] Doom on him stays through phases (summons → check → summons) until it triggers. When it empties a check's bar, that Doom is used up and doesn't break the next check by itself.
+
+**Visuals**
+- [ ] New portraits look right (center-cropped to the card ratio). The Ivy beta portrait is still the old art.
+- [ ] Ivy / Slow / Avatar / Bullet / Balance in All Things use the default power icon (listed in `MISSING_IMAGES.tsv`).
+
+**Decisions I made**
+- Your answers: an enemy death refreshes one random used wheel power; the "exhaust all other Emerald Powers" rule is gone; Doom is used up only when it triggers; the new cards are Skills (Vision stays a Power).
+- "Loses Strength when damaged" was already gone since the DPS-check rework (Make Your Point's old effect), so only the Rings part was added.
+- Rings to the attacker = the unblocked damage he suffered (same number as his score, before his 1 HP cap). Multi-hit attacks give Rings per hit.
+- Slow is a separate "Slow" power (shows the % directly, like the base game's), so it doesn't stay on enemies after your turn. The Slow card itself doesn't count toward the +10%.
+- Bullet stacks additively if two are played the same turn (×2 then ×4).
+- Extra's Free Skill can be used up by another Emerald Power (they're Skills).
+- The wheel closes after each pick, including the Super Form toggle. Ring protection turned off still keeps the Super Form music.
+- The Ring Bounty tunables were removed from `StrifeConfig`; the `RingBounty` power is kept, unused.

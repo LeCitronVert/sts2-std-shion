@@ -71,6 +71,22 @@ public static class ChaosEmeraldHelper
         _ => ModelDb.Relic<GreyChaosEmeralds>(),
     };
 
+    /// <summary>The Emerald Power card each Chaos Emerald gives (canonical model).</summary>
+    public static Cards.EmeraldPowerCard EmeraldPowerCard(ChaosEmeraldColor color) => color switch
+    {
+        ChaosEmeraldColor.Purple => ModelDb.Card<Cards.EmeraldPowerVision>(),
+        ChaosEmeraldColor.Cyan => ModelDb.Card<Cards.EmeraldPowerWater>(),
+        ChaosEmeraldColor.Green => ModelDb.Card<Cards.EmeraldPowerIvy>(),
+        ChaosEmeraldColor.Yellow => ModelDb.Card<Cards.EmeraldPowerSlow>(),
+        ChaosEmeraldColor.Blue => ModelDb.Card<Cards.EmeraldPowerAvatar>(),
+        ChaosEmeraldColor.Red => ModelDb.Card<Cards.EmeraldPowerBullet>(),
+        _ => ModelDb.Card<Cards.EmeraldPowerExtra>(),
+    };
+
+    /// <summary>Colors of the Chaos Emerald relics (solo or combo) the player holds, in display order.</summary>
+    public static IReadOnlyList<ChaosEmeraldColor> HeldColors(Player player) =>
+        AllColors.Where(c => player.Relics.Any(r => r is ChaosEmeraldRelic emerald && emerald.Color == c)).ToList();
+
     /// <summary>
     /// True if the player holds the Emerald (solo or combo) of their own character.
     /// </summary>

@@ -1,6 +1,4 @@
 using BaseLib.Utils;
-using ShionTheBruiser.ShionTheBruiserCode.Enums;
-using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -8,22 +6,18 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
+using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Play a copy of ALL the Power cards you played this combat.
-/// Whenever you draw this card, reduce its cost by 1 this combat. Exhaust. (Costs 2 less)
-/// Emerald Power. Shuffled into the Draw Pile by the Cyan Chaos Emerald.
+/// Cyan Chaos Emerald (Emerald Power): play a copy of ALL the Power cards you played this combat.
+/// Emerald Powers are always free, so its old cost (4, reduced on draw, -2 upgraded) is gone.
 /// </summary>
 [Pool(typeof(TokenCardPool))]
-public class EmeraldPowerWater() : ShionTheBruiserCard(4,
-    CardType.Skill, CardRarity.Token,
-    TargetType.Self)
+public class EmeraldPowerWater() : EmeraldPowerCard(CardType.Skill, TargetType.Self)
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, DreamersKeywords.EmeraldPower];
-    public override bool CanBeGeneratedInCombat => false;
-    public override bool CanBeGeneratedByModifiers => false;
+    public override ChaosEmeraldColor Color => ChaosEmeraldColor.Cyan;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CalculationBaseVar(0),
@@ -40,34 +34,23 @@ public class EmeraldPowerWater() : ShionTheBruiserCard(4,
             .ToList();
     }
 
-    public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        if (card == this) EnergyCost.AddThisCombat(-1, reduceOnly: true);
-        return Task.CompletedTask;
-    }
-
-    protected override async Task OnPlay(
-        PlayerChoiceContext choiceContext,
-        CardPlay play)
-    {
-        var card = this;
-        if (card.CombatState is null) return;
+        if (CombatState is null) return;
 
         // Listed first, so the copies played here aren't copied again
-        foreach (var original in GetPowersPlayed(card))
+        foreach (var original in GetPowersPlayed(this))
         {
-            if (CombatManager.Instance.IsOverOrEnding || card.Owner.Creature.IsDead) break;
+            if (CombatManager.Instance.IsOverOrEnding || Owner.Creature.IsDead) break;
 
-            var copy = card.CombatState.CloneCard(original);
-            await CardPileCmd.AddGeneratedCardToCombat(copy, PileType.Hand, card.Owner);
+            var copy = CombatState.CloneCard(original);
+            await CardPileCmd.AddGeneratedCardToCombat(copy, PileType.Hand, Owner);
             await CardCmd.AutoPlay(choiceContext, copy, null);
         }
-
-        await DreamersMechanicsHelper.ExhaustAllEmeraldPowers(choiceContext, play);
     }
 
-    protected override void OnUpgrade()
+    // Its upgrade used to lower its cost, which no longer exists
+    protected override void OnUpgrade() //todo : upgrade not specified
     {
-        EnergyCost.UpgradeBy(-2);
     }
 }

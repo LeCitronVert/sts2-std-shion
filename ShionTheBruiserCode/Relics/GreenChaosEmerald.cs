@@ -1,36 +1,11 @@
-using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.HoverTips;
-using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
+/// <summary>
+/// At the start of each combat, add its Emerald Power to your Draw Pile (see <see cref="ChaosEmeraldRelic"/>).
+/// </summary>
 public class GreenChaosEmerald() : ChaosEmeraldRelic
 {
     public override ChaosEmeraldColor Color => ChaosEmeraldColor.Green;
-
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
-        HoverTipFactory.FromCard<EmeraldPowerIvy>(),
-        HoverTipFactory.FromKeyword(DreamersKeywords.EmeraldPower),
-    ];
-
-    public override async Task BeforeCombatStart()
-    {
-        var card = Owner.Creature.CombatState?.CreateCard<EmeraldPowerIvy>(Owner);
-
-        if (card is null)
-        {
-            return;
-        }
-
-        CardCmd.PreviewCardPileAdd(
-            await CardPileCmd.AddGeneratedCardToCombat(
-                card,
-                PileType.Draw,
-                Owner,
-                CardPilePosition.Random
-            )
-        );
-    }
 }

@@ -8,5 +8,12 @@
   "SHIONTHEBRUISER-PATCH_UP.title": "Patch Up",
   "SHIONTHEBRUISER-PATCH_UP.description": "Heal for {PatchUp:cond:>0?[blue]{PatchUp}[/blue] HP|the amount specified}.\nThis healing cannot put you above [blue]{PatchUpLimit}%[/blue] of your Max HP{PatchUpInCombat:cond:>0?.|, unless modified by other effects.}",
   "SHIONTHEBRUISER-TEAM_BLAST_GAUGE.title": "Team Blast",
-  "SHIONTHEBRUISER-TEAM_BLAST_GAUGE.description": "Players fill this gauge together by dealing damage, blocking damage and taking damage, or when any creature dies (less if it's [gold]Osty[/gold]).\nOnce full, players with a [gold]Team Blast[/gold] card add an [gold]Ethereal[/gold] copy of it into their [gold]Hand[/gold] at the start of each turn (only one per card). Each [gold]Team Blast[/gold] in any player's deck makes the gauge fill 20% faster.\nOnly one [gold]Team Blast[/gold] can be used per combat. The gauge carries over between combats, but empties at [gold]Rest Sites[/gold] and after a combat where a [gold]Team Blast[/gold] was used.{ChargeBonus:cond:>0?\nFilling {ChargeBonus}% faster.|}{Locked:cond:>0?\n[gold]Locked[/gold] for this combat.|}"
+  "SHIONTHEBRUISER-TEAM_BLAST_GAUGE.description": "Players fill this gauge together by dealing damage, blocking damage and taking damage, or when any creature dies (less if it's [gold]Osty[/gold]).\nOnce full, players with a [gold]Team Blast[/gold] card add an [gold]Ethereal[/gold] copy of it into their [gold]Hand[/gold] at the start of each turn (only one per card). Each [gold]Team Blast[/gold] in any player's deck makes the gauge fill 20% faster.\nOnly one [gold]Team Blast[/gold] can be used per combat. The gauge carries over between combats, but empties at [gold]Rest Sites[/gold] and after a combat where a [gold]Team Blast[/gold] was used.{ChargeBonus:cond:>0?\nFilling {ChargeBonus}% faster.|}{Locked:cond:>0?\n[gold]Locked[/gold] for this combat.|}",
+  "SHIONTHEBRUISER-EMERALD_WHEEL.title": "Chaos Emeralds",
+  "SHIONTHEBRUISER-EMERALD_WHEEL.description": "Add an [gold]Emerald Power[/gold] to your hand (each one once per fight), or turn your Rings' protection off and on.",
+  "SHIONTHEBRUISER-EMERALD_WHEEL_USED.description": "Already used this fight. Defeating an enemy makes one used [gold]Emerald Power[/gold] available again.",
+  "SHIONTHEBRUISER-EMERALD_WHEEL_MISSING.description": "You don't have this Chaos Emerald.",
+  "SHIONTHEBRUISER-EMERALD_WHEEL_TOGGLE.title": "Super Form",
+  "SHIONTHEBRUISER-EMERALD_WHEEL_TOGGLE.on": "Your Rings absorb the damage you take.\nSelect to turn it off.",
+  "SHIONTHEBRUISER-EMERALD_WHEEL_TOGGLE.off": "Your Rings don't absorb damage.\nSelect to turn it back on."
 }

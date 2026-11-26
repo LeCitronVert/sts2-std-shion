@@ -11,17 +11,6 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 public static class DreamersMechanicsHelper
 {
-    public static async Task ExhaustAllEmeraldPowers(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        foreach (var c in ShionMechanicsHelper.GetAllCombatCards(cardPlay.Card.Owner).Where(c => c.Keywords.Contains(DreamersKeywords.EmeraldPower)).ToList())
-        {
-            await CardCmd.Exhaust(
-                choiceContext,
-                c
-            );
-        }
-    }
-    
     public static async Task ExhaustAllTeamBlasts(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var card = cardPlay.Card;

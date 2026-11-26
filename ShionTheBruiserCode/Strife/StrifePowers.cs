@@ -5,6 +5,8 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Rooms;
@@ -24,8 +26,10 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Strife;
 /// The damage he takes is added up instead (<see cref="StrifeArchitect.TotalDamage"/>).</item>
 /// <item>During a DPS check (<see cref="MakeYourPoint"/>) his HP is the check's health bar instead (still never below 1:
 /// emptying it stuns him).</item>
-/// <item>Gives each enemy that joins the fight its Ring Bounty (<see cref="StrifeConfig.BountyFor"/>).</item>
+/// <item>Whoever damages him gains that many Rings (Gold): the player, or the owner of the pet / Osty that hit him.</item>
+/// <item>Doom that empties a check's health bar is used up; Doom that didn't trigger stays on him between phases.</item>
 /// </list>
+/// His summons have no Ring Bounty.
 /// </summary>
 public sealed class ArchitectsDesign : ShionTheBruiserPower
 {
@@ -36,12 +40,6 @@ public sealed class ArchitectsDesign : ShionTheBruiserPower
     /// <summary>Set by the Architect only when he's "defeated".</summary>
     public bool AllowDeath { get; set; }
 
-    /// <summary>
-    /// Room type of the encounter being summoned right now (Elite / Boss), so the creatures it adds get that bounty.
-    /// Null for creatures spawned mid-fight by the summons themselves.
-    /// </summary>
-    public RoomType? PendingSummonType { get; set; }
-
     private StrifeArchitect? Architect => Owner.Monster as StrifeArchitect;
 
     public override bool ShouldDie(Creature creature) => creature != Owner || AllowDeath;
@@ -50,9 +48,6 @@ public sealed class ArchitectsDesign : ShionTheBruiserPower
     {
         if (creature == Owner || creature.Side != Owner.Side || creature.Monster == null || Owner.IsDead) return;
         var context = new ThrowingPlayerChoiceContext();
-
-        var bounty = StrifeConfig.BountyFor(creature.Monster, PendingSummonType);
-        if (bounty > 0) await PowerCmd.Apply<RingBounty>(context, creature, bounty, Owner, null);
 
         // Only what his own buffs gave him: debuffs on him (Make Your Point, players' Strength down...) aren't shared
         var strength = Architect?.SharedStrength ?? 0;
@@ -83,6 +78,12 @@ public sealed class ArchitectsDesign : ShionTheBruiserPower
         var total = result.BlockedDamage + unblocked;
         Architect?.AddDamage(total);
 
+        // The attacker gains Rings equal to the damage he suffered
+        if (unblocked > 0 && (dealer?.Player ?? dealer?.PetOwner) is { } attacker && attacker.Creature.IsAlive)
+        {
+            await PlayerCmd.GainGold(unblocked, attacker);
+        }
+
         if (Architect is { InCheck: true } architect)
         {
             await architect.OnCheckDamaged(unblocked);
@@ -111,6 +112,13 @@ public sealed class ArchitectsDesign : ShionTheBruiserPower
         }
     }
 
+    /// <summary>Doom that triggered on him (it emptied a check's health bar) is used up.</summary>
+    public override async Task AfterDiedToDoom(PlayerChoiceContext choiceContext, IReadOnlyList<Creature> creatures)
+    {
+        if (!creatures.Contains(Owner) || AllowDeath || Owner.GetPower<DoomPower>() is not { } doom) return;
+        await PowerCmd.Remove(doom);
+    }
+
     /// <summary>
     /// Every instakill (Doom, <see cref="CreatureCmd.Kill(Creature, bool)"/>, <see cref="CreatureCmd.SetCurrentHp"/> to 0,
     /// other mods' executes...) sets his HP to 0 before asking <see cref="ShouldDie"/>. His death is prevented, but he'd stay
@@ -128,6 +136,29 @@ public sealed class ArchitectsDesign : ShionTheBruiserPower
             await architect.OnCheckDamaged(remaining);
         }
         if (Owner.IsDead) Owner.SetCurrentHpInternal(Owner.MaxHp);
+    }
+}
+
+/// <summary>
+/// Multiplayer only: whenever the Architect himself kills a player (not a pet, Osty or summon), he gains 100 Strength.
+/// </summary>
+public sealed class BalanceInAllThings : ShionTheBruiserPower
+{
+    public const int StrengthGain = 100;
+
+    public override PowerType Type => PowerType.Buff;
+    public override PowerStackType StackType => PowerStackType.Single;
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("StrengthGain", StrengthGain)];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>()];
+
+    public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result,
+        ValueProp props, Creature? dealer, CardModel? cardSource)
+    {
+        if (dealer != Owner || !target.IsPlayer || !result.WasTargetKilled || Owner.IsDead) return;
+        Flash();
+        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, StrengthGain, Owner, null);
     }
 }
 

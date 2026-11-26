@@ -106,7 +106,7 @@ public static class RingHealthBarPatch
         if (poison.GetParent() is not { } mask) return;
 
         var segment = mask.GetNodeOrNull<NinePatchRect>(SegmentName);
-        var rings = creature.IsAlive && creature.HasPower<SuperFormPower>() ? creature.Player?.Gold ?? 0 : 0;
+        var rings = SuperFormPower.IsProtecting(creature) ? creature.Player?.Gold ?? 0 : 0;
         if (rings <= 0 || creature.MaxHp <= 0)
         {
             if (segment != null) segment.Visible = false;
@@ -185,7 +185,7 @@ public sealed class SuperFormFx
     private void Poll()
     {
         if (!GodotObject.IsInstanceValid(_node) || _creature.Player is not { } player) return;
-        var active = _creature.IsAlive && _creature.HasPower<SuperFormPower>();
+        var active = SuperFormPower.IsProtecting(_creature);
         var rings = player.Gold;
         var hasRings = rings > 0;
 
