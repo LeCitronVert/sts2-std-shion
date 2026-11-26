@@ -1,6 +1,7 @@
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Context;
+using MegaCrit.Sts2.Core.Entities.Ancients;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Events;
@@ -126,25 +127,48 @@ public static class StrifeTransition
 /// ActChangeSynchronizer), so <see cref="StrifeTransition"/> never ran. When Act 4 is unlocked, turn that click back
 /// into the old "player ready" vote: once every player is ready, ActChangeSynchronizer calls EnterNextAct on every
 /// client, and StrifeTransition plays the cutscene there, in sync.
+/// Patches TheArchitect.WinRun itself (not RunManager.WinRun): the new version clears the event's options after the
+/// win, which would leave a finished event (and the room's Proceed button) on screen during the cutscene.
 /// </summary>
-[HarmonyPatch(typeof(RunManager), nameof(RunManager.WinRun))]
+[HarmonyPatch(typeof(TheArchitect), "WinRun")]
 public static class StrifeArchitectWinRunPatch
 {
     [HarmonyPrefix]
-    public static bool Prefix(ref Task __result)
+    public static bool Prefix(TheArchitect __instance, ref Task __result)
     {
         var state = StrifeRun.State;
-        if (state?.CurrentRoom is not EventRoom { CanonicalEvent: TheArchitect } || !StrifeRun.IsStrifeUnlocked(state)
-            || state.Acts.Any(a => StrifeAct.IsStrife(a)))
+        if (state == null || !StrifeRun.IsStrifeUnlocked(state) || state.Acts.Any(a => StrifeAct.IsStrife(a)))
             return true;
 
-        if (state.Players.Count > 1)
+        __result = OldWinRun(__instance);
+        return false;
+    }
+
+    private static readonly Func<TheArchitect, AncientDialogue?> DialogueGetter =
+        AccessTools.MethodDelegate<Func<TheArchitect, AncientDialogue?>>(AccessTools.PropertyGetter(typeof(TheArchitect), "Dialogue"));
+
+    private static readonly Func<TheArchitect, ArchitectAttackers, Task<bool>> AnimPlayerAttack =
+        AccessTools.MethodDelegate<Func<TheArchitect, ArchitectAttackers, Task<bool>>>(
+            AccessTools.Method(typeof(TheArchitect), "AnimPlayerAttackIfNecessary"));
+
+    private static readonly Func<TheArchitect, ArchitectAttackers, Task<bool>> AnimArchitectAttack =
+        AccessTools.MethodDelegate<Func<TheArchitect, ArchitectAttackers, Task<bool>>>(
+            AccessTools.Method(typeof(TheArchitect), "AnimArchitectAttackIfNecessary"));
+
+    /// <summary>The pre-update TheArchitect.WinRun.</summary>
+    private static async Task OldWinRun(TheArchitect architect)
+    {
+        if (!LocalContext.IsMe(architect.Owner)) return;
+        if (DialogueGetter(architect) is { } dialogue)
+        {
+            await AnimPlayerAttack(architect, dialogue.EndAttackers);
+            await AnimArchitectAttack(architect, dialogue.EndAttackers);
+        }
+        if (architect.Owner!.RunState.Players.Count > 1)
         {
             MegaCrit.Sts2.Core.Nodes.Rooms.NCombatRoom.Instance?.SetWaitingForOtherPlayersOverlayVisible(visible: true);
         }
         RunManager.Instance.ActChangeSynchronizer.SetLocalPlayerReady();
-        __result = Task.CompletedTask;
-        return false;
     }
 }
 
