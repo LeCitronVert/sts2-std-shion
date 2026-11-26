@@ -101,18 +101,23 @@ public struct NetEmeraldWheelAction : INetAction
 }
 
 /// <summary>
-/// The Emerald wheel button (the player's Chaos Emeralds relic) above the energy counter, shown while the local player is
+/// The Emerald wheel button (the player's Chaos Emeralds relic) above the draw pile button, shown while the local player is
 /// in Super Form, and the wheel it opens (scenes/fx/emerald_wheel.tscn). Hovering a section shows its card (or Super Form).
 /// Controller: the button can be focused and selected; the wheel follows the left stick / D-pad. Visual only: the pick
 /// itself goes through <see cref="EmeraldWheelAction"/>.
 /// </summary>
-[HarmonyPatch(typeof(NEnergyCounter), nameof(NEnergyCounter._Ready))]
+[HarmonyPatch(typeof(NCombatCardPile), nameof(NCombatCardPile.Initialize))]
 public static class EmeraldWheelUi
 {
     private static readonly string ScenePath = Path.Join(MainFile.ResPath, "scenes", "fx", "emerald_wheel.tscn");
 
-    private static readonly AccessTools.FieldRef<NEnergyCounter, Player> PlayerRef =
-        AccessTools.FieldRefAccess<NEnergyCounter, Player>("_player");
+    private const string ButtonName = "EmeraldWheelButton";
+
+    // A card tip and text tips are laid out from the same point unless aligned: the text ended up behind the card
+    private static readonly AccessTools.FieldRef<NHoverTipSet, VFlowContainer> TextTipsRef =
+        AccessTools.FieldRefAccess<NHoverTipSet, VFlowContainer>("_textHoverTipContainer");
+    private static readonly AccessTools.FieldRef<NHoverTipSet, NHoverTipCardContainer> CardTipsRef =
+        AccessTools.FieldRefAccess<NHoverTipSet, NHoverTipCardContainer>("_cardHoverTipContainer");
 
     private const float ButtonSize = 72f;
     private const float VerticalGap = 10f;
@@ -134,16 +139,30 @@ public static class EmeraldWheelUi
 
     private static Texture2D? Load(string path) => ResourceLoader.Exists(path) ? GD.Load<Texture2D>(path) : null;
 
-    [HarmonyPostfix]
-    public static void Postfix(NEnergyCounter __instance)
+    /// <summary>Puts the text tips (already used / missing) right of the card tip instead of behind it.</summary>
+    private static void PlaceTextRightOfCard(NHoverTipSet set)
     {
-        var player = PlayerRef(__instance);
-        if (player == null || !ResourceLoader.Exists(ScenePath)) return;
+        if (!GodotObject.IsInstanceValid(set)) return;
+        var text = TextTipsRef(set);
+        var cards = CardTipsRef(set);
+        if (text == null || cards == null || cards.GetChildCount() == 0) return;
+        var cardRect = cards.GetGlobalRect();
+        text.GlobalPosition = new Vector2(cardRect.End.X + 10f, cardRect.Position.Y);
+    }
+
+    [HarmonyPostfix]
+    public static void Postfix(NCombatCardPile __instance, Player player)
+    {
+        if (__instance is not NDrawPileButton || !ResourceLoader.Exists(ScenePath)) return;
+        if (__instance.GetParent() is not { } parent) return;
+        // Initialize runs again for later fights / runs: one button, for this player
+        if (parent.GetNodeOrNull(ButtonName) is { } old) old.QueueFree();
+        var pile = (Control)__instance;
 
         var relic = (ChaosEmeraldRelic)ChaosEmeraldHelper.ComboRelic(ChaosEmeraldHelper.ColorFor(player));
         var button = new TextureButton
         {
-            Name = "EmeraldWheelButton",
+            Name = ButtonName,
             TextureNormal = Load(relic.PackedIconPath),
             IgnoreTextureSize = true,
             StretchMode = TextureButton.StretchModeEnum.KeepAspectCentered,
@@ -152,8 +171,18 @@ public static class EmeraldWheelUi
             FocusMode = Control.FocusModeEnum.All,
             Visible = false,
         };
-        __instance.AddChild(button);
-        button.Position = new Vector2((__instance.Size.X - ButtonSize) * 0.5f, -ButtonSize - VerticalGap);
+        // Sibling, not child: the pile button scales up on hover and slides in and out. Follows it every frame
+        button.TopLevel = true;
+        parent.AddChild(button);
+        var tree = pile.GetTree();
+        void Follow()
+        {
+            if (!GodotObject.IsInstanceValid(button) || !GodotObject.IsInstanceValid(pile)) return;
+            var rect = pile.GetGlobalRect();
+            button.GlobalPosition = new Vector2(rect.Position.X + (rect.Size.X - ButtonSize) * 0.5f, rect.Position.Y - ButtonSize - VerticalGap);
+        }
+        tree.ProcessFrame += Follow;
+        button.TreeExiting += () => tree.ProcessFrame -= Follow;
 
         Control? wheel = null;
         string? shownState = null;
@@ -230,7 +259,12 @@ public static class EmeraldWheelUi
             }
 
             var center = wheel.GetGlobalRect().GetCenter();
-            NHoverTipSet.CreateAndShow(wheel, tips)?.SetGlobalPosition(center + new Vector2(WheelOuterRadius + 30f, -200f));
+            if (NHoverTipSet.CreateAndShow(wheel, tips) is not { } set) return;
+            set.SetGlobalPosition(center + new Vector2(WheelOuterRadius + 30f, -200f));
+            if (tips.Count < 2 || tips[0] is not CardHoverTip) return;
+            PlaceTextRightOfCard(set);
+            // Sizes settle after layout: once more next frame
+            Callable.From(() => PlaceTextRightOfCard(set)).CallDeferred();
         }
 
         void Open()
@@ -268,7 +302,7 @@ public static class EmeraldWheelUi
             NHoverTipSet.CreateAndShow(button, new HoverTip(
                     new LocString("static_hover_tips", "SHIONTHEBRUISER-EMERALD_WHEEL.title"),
                     new LocString("static_hover_tips", "SHIONTHEBRUISER-EMERALD_WHEEL.description")))
-                ?.SetGlobalPosition(button.GlobalPosition + new Vector2(ButtonSize + 12f, -120f));
+                ?.SetGlobalPosition(button.GlobalPosition + new Vector2(ButtonSize + 12f, -60f));
         };
         button.MouseExited += () => NHoverTipSet.Remove(button);
 

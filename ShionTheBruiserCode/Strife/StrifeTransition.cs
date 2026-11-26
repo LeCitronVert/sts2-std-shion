@@ -147,12 +147,14 @@ public static class StrifeArchitectWinRunPatch
     private static readonly Func<TheArchitect, AncientDialogue?> DialogueGetter =
         AccessTools.MethodDelegate<Func<TheArchitect, AncientDialogue?>>(AccessTools.PropertyGetter(typeof(TheArchitect), "Dialogue"));
 
-    private static readonly Func<TheArchitect, ArchitectAttackers, Task<bool>> AnimPlayerAttack =
-        AccessTools.MethodDelegate<Func<TheArchitect, ArchitectAttackers, Task<bool>>>(
+    // Typed as plain Task: AnimArchitectAttackIfNecessary returns Task (not Task<bool>) on current builds, and delegate
+    // return covariance lets Task<bool> methods bind too, so this works whichever signature the game ships.
+    private static readonly Func<TheArchitect, ArchitectAttackers, Task> AnimPlayerAttack =
+        AccessTools.MethodDelegate<Func<TheArchitect, ArchitectAttackers, Task>>(
             AccessTools.Method(typeof(TheArchitect), "AnimPlayerAttackIfNecessary"));
 
-    private static readonly Func<TheArchitect, ArchitectAttackers, Task<bool>> AnimArchitectAttack =
-        AccessTools.MethodDelegate<Func<TheArchitect, ArchitectAttackers, Task<bool>>>(
+    private static readonly Func<TheArchitect, ArchitectAttackers, Task> AnimArchitectAttack =
+        AccessTools.MethodDelegate<Func<TheArchitect, ArchitectAttackers, Task>>(
             AccessTools.Method(typeof(TheArchitect), "AnimArchitectAttackIfNecessary"));
 
     /// <summary>The pre-update TheArchitect.WinRun.</summary>

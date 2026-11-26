@@ -2140,8 +2140,8 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 
 **Emerald wheel (Act 4, Super Form)**
 - [ ] With Super Form, no Emerald Power is added to the Draw Pile at the start of the fight.
-- [ ] A button with your own Chaos Emeralds icon sits above the energy counter, only during fights with Super Form. Hover shows its tooltip. Check the position isn't covered by anything.
-- [ ] Clicking it opens the wheel: Super Form at the top, then Water, Vision, Ivy, Avatar, Slow, Bullet, Extra clockwise. Hovering a section shows the card (plus "already used" / "you don't have it" if greyed out).
+- [ ] A button with your own Chaos Emeralds icon sits above the draw pile button (it follows it when the pile slides in / out), only during fights with Super Form. It no longer covers the Crit display. Hover shows its tooltip.
+- [ ] Clicking it opens the wheel: Super Form at the top, then Water, Vision, Ivy, Avatar, Slow, Bullet, Extra clockwise. Hovering a section shows the card; for a greyed-out one, the "already used" / "you don't have it" box sits right of the card (not behind it).
 - [ ] Picking a power adds it to your hand and greys it out for the fight. Clicking outside the ring / right click closes it.
 - [ ] Killing an enemy makes ONE used power (random) available again. The button dims once nothing is left.
 - [ ] Super Form section: turns off the Ring protection (you lose HP instead of Rings), the aura / particles / sparks and the yellow Ring segment on the health bar. Picking it again turns everything back on. The icon shows the on/off state.
