@@ -1,4 +1,6 @@
 using HarmonyLib;
+using MegaCrit.Sts2.Core.Commands.Builders;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.RestSite;
@@ -133,5 +135,23 @@ public static class RemovedCreatureTurnStartPatch
         if (__instance.CombatState != null) return true;
         __result = Task.CompletedTask;
         return false;
+    }
+}
+
+/// <summary>
+/// Random-target and all-enemy attacks (<see cref="AttackCommand.TargetingRandomOpponents"/> /
+/// <see cref="AttackCommand.TargetingAllOpponents"/>) pick their targets among living opponents, not hittable ones,
+/// so they still landed on the Architect (for 0) while his <see cref="FieldExperiment"/> protects him: random hits were
+/// wasted on him and on-hit effects triggered. Leave him out of those targets while he's protected.
+/// The list is re-read on every hit, so he becomes a valid target again as soon as his protection ends.
+/// </summary>
+[HarmonyPatch(typeof(AttackCommand), "GetPossibleTargets")]
+public static class StrifeArchitectMultiTargetPatch
+{
+    [HarmonyPostfix]
+    public static void Postfix(AttackCommand __instance, ref IReadOnlyList<Creature> __result)
+    {
+        if (!__instance.IsMultiTargeted || !__result.Any(FieldExperiment.IsProtected)) return;
+        __result = __result.Where(c => !FieldExperiment.IsProtected(c)).ToList();
     }
 }

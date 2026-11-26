@@ -119,6 +119,9 @@ public sealed class FieldExperiment : ShionTheBruiserPower
     private bool Protects(Creature? creature) =>
         creature == Owner && Owner.IsAlive && Owner.Monster is StrifeArchitect { AnySummonAlive: true, InCheck: false };
 
+    /// <summary>Whether this creature is an Architect currently protected by his Field Experiment.</summary>
+    public static bool IsProtected(Creature creature) => creature.GetPower<FieldExperiment>()?.Protects(creature) ?? false;
+
     public override bool ShouldAllowHitting(Creature creature) => !Protects(creature);
 
     public override bool ShouldAllowTargeting(Creature target) => !Protects(target);
