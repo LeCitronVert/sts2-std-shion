@@ -14,7 +14,7 @@ Scope Lens	Relic	Shion	A scope lens with crosshairs		Code has no icon paths yet:
 Shell Bell	Relic	Shion	A seashell-shaped bell		Code has no icon paths yet: needs PackedIconPath/outline/big overrides once art lands
 Battle Rags	Relic	Shion	Outline only (battle_rags_outline.png)		Icon exists, outline missing
 Come What May	Power	Shion	A stickuma like https://img.game8.co/4246882/e39bb4373e927215d73731dbeacb0172.png/show, but visibly crying		
-Dark Arts	Power	Shion	A fist wreathed in dark purple flames		
+OverDrive	Power	Shion	A fist wreathed in dark purple flames		
 Champagne	Relic	Slal	A champagne bottle popping, three bubbles in different rarity colours		
 Evil Waffle	Relic	Slal	A waffle with an evil grin and little horns		
 Genie's Advice	Relic	Slal	A genie lamp with a small scroll		
@@ -206,7 +206,6 @@ Corrupted Punch Construct	Power	Fry + Necrobinder (Team-Up)	A grey punch constru
 Shipping Delivery	Power	Fry + Defect (Team-Up)	A delivery box with a star	Currently uses the generic power.png
 Shipping Orb	Orb	Fry + Defect (Team-Up)	Uses the Requested icon (see Requested)	Dark Orb tinted Fry's red; shows no icon until requested.png exists
 Ivy (Emerald)	Power	All (Green Chaos Emerald)	The Ivy wheel icon (images/ui/emerald_wheel/ivy_available.png)		Currently uses the generic power.png
-Slow (Emerald)	Power	All (Yellow Chaos Emerald)	The Slow wheel icon (clock)		Currently uses the generic power.png
 Avatar (Emerald)	Power	All (Blue Chaos Emerald)	The Avatar wheel icon (two figures)		Currently uses the generic power.png
 Bullet (Emerald)	Power	All (Red Chaos Emerald)	The Bullet wheel icon (fireball)		Currently uses the generic power.png
 Balance in All Things	Power	Act 4 Architect	A balanced scale		Currently uses the generic power.png

@@ -94,7 +94,7 @@ public class CreatureFxController
     [
         ("spirit_burst", c => c.HasPower<SpiritBurst>()),
         ("spirit_break", c => c.HasPower<SpiritBreak>()),
-        ("dark_arts", c => c.HasPower<DarkArts>()),
+        ("overdrive", c => c.HasPower<Overdrive>()),
         ("fell_dragon", c => c.HasPower<FellDragon>()),
         ("crit_above_50_or_vigor_above_20", c =>
             (c.GetPower<ShionCritTrackerPower>()?.HitRatePercent ?? 0) >= AuraCritThreshold

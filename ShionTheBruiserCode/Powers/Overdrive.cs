@@ -7,7 +7,7 @@ using MegaCrit.Sts2.Core.Models;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
-public class DarkArts : ShionTheBruiserPower
+public class Overdrive : ShionTheBruiserPower
 {
     public override PowerType Type =>
         PowerType.Buff;

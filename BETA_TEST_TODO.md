@@ -2156,7 +2156,7 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 
 **Visuals**
 - [ ] New portraits look right (center-cropped to the card ratio). The Ivy beta portrait is still the old art.
-- [ ] Ivy / Slow / Avatar / Bullet / Balance in All Things use the default power icon (listed in `MISSING_IMAGES.tsv`).
+- [ ] Ivy / Avatar / Bullet / Balance in All Things use the default power icon (listed in `MISSING_IMAGES.tsv`).
 
 **Decisions I made**
 - Your answers: an enemy death refreshes one random used wheel power; the "exhaust all other Emerald Powers" rule is gone; Doom is used up only when it triggers; the new cards are Skills (Vision stays a Power).
@@ -2167,3 +2167,28 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - Extra's Free Skill can be used up by another Emerald Power (they're Skills).
 - The wheel closes after each pick, including the Super Form toggle. Ring protection turned off still keeps the Super Form music.
 - The Ring Bounty tunables were removed from `StrifeConfig`; the `RingBounty` power is kept, unused.
+
+## OverDrive / Hyper Guard art / Fae Return (2026-11-26)
+
+**OverDrive (was Dark Arts)**
+- [ ] Card and power are named OverDrive; card text, power tooltip and the aura still work (aura key renamed to `overdrive`).
+- [ ] New OverDrive and Hyper Guard portraits show (normal + big). Beta-art portraits are unchanged.
+- [ ] Open the project in MegaDot once so the renamed / replaced images get reimported before exporting.
+
+**Fae Return**
+- [ ] Costs 2.
+- [ ] Counts a gift when an ally's card adds cards to your piles (hand, draw, discard, exhaust, play) — including modded cards that use a plain add (e.g. Team Blast-style copies) and vanilla generated cards (Pal Armor, Largesse...). One gift per ally card play, however many cards it gave.
+- [ ] Counts a card whose ownership is transferred to you by another player.
+- [ ] Doesn't count cards you create for yourself, even during an ally's card play (e.g. your own power reacting to their card).
+
+**Decisions I made**
+- Renamed the classes/IDs too (`ShionOverdrive` / `Overdrive`, IDs `SHION_OVERDRIVE` / `OVERDRIVE`) — old saves holding Dark Arts lose that card.
+- Gift tracking moved to a combat singleton (`CardGiftSingleton`) that watches cards entering combat piles, since many card adds never reach the combat history.
+
+**Emerald Slow → base game Slow**
+- [ ] Emerald Power Slow applies the base game's Slow (its icon and tooltip), starting at 50% (100% upgraded) right after the card is played, then +10% per card.
+- [ ] It ends at the end of your turn: Slow disappears from enemies that had no other Slow.
+- [ ] On Bygone Effigy (native Slow) or an enemy under Extreme Speed: the % is added to their Slow, the damage bonus is one shared % (no more double-multiplying), and their Slow stays after your turn.
+- [ ] Extreme Speed's Slow still ends on schedule when it runs out, even if Emerald Slow was played on top.
+- [ ] With Ivy active, it starts at 100% (200% upgraded). Artifact blocks it (one charge).
+- [ ] Multiplayer: the Slow % matches on every client.

@@ -18,7 +18,7 @@ const FRAME_BOTTOM := 203.0
 ## Light colour of each aura (the average colour of its spritesheet)
 const AURA_COLORS := {
 	"crit_above_50_or_vigor_above_20": Color8(251, 171, 11),
-	"dark_arts": Color8(12, 225, 166),
+	"overdrive": Color8(12, 225, 166),
 	"fell_dragon": Color8(173, 10, 239),
 	"spirit_break": Color8(16, 152, 241),
 	"spirit_burst": Color8(253, 82, 8),

@@ -1,3 +1,5 @@
+using System.Reflection;
+using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -5,6 +7,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
@@ -37,41 +40,62 @@ public sealed class EmeraldIvy : ShionTheBruiserPower
 }
 
 /// <summary>
-/// Slow (Yellow Chaos Emerald), on an enemy until the end of the players' turn: it takes (Amount)% more Attack damage.
-/// Goes up by 10% whenever a card is played (like the base game's Slow).
+/// Slow (Yellow Chaos Emerald): hidden marker for the base game's <see cref="SlowPower"/> that the Slow Emerald Power added.
+/// <para>Base Slow's Amount works as a count of its sources (Bygone Effigy's own, Extreme Speed's, this one): Amount = how many
+/// Slow stacks this Emerald added, taken back off at the end of the players' turn. Slow is only removed once no other
+/// source is left. Its % (the hidden SlowAmount counter) resets when the enemy's turn starts anyway.</para>
 /// </summary>
 public sealed class EmeraldSlow : ShionTheBruiserPower
 {
-    public const int PerCardPlayed = 10;
-
-    public override PowerType Type => PowerType.Debuff;
+    // Shown through the base game's Slow; None so it isn't a debuff of its own (Artifact, Ivy...)
+    public override PowerType Type => PowerType.None;
     public override PowerStackType StackType => PowerStackType.Counter;
+    protected override bool IsVisibleInternal => false;
 
-    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        // The Slow card that applied it doesn't count: it starts at its initial value
-        if (Owner.IsDead || cardPlay.Card is Cards.EmeraldPowerSlow) return;
-        await PowerCmd.ModifyAmount(choiceContext, this, PerCardPlayed, null, null, silent: true);
-    }
+    public override string CustomPackedIconPath => ModelDb.Power<SlowPower>().PackedIconPath;
+    public override string CustomBigIconPath => ModelDb.Power<SlowPower>().ResolvedBigIconPath;
 
-    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer,
-        CardModel? cardSource
-        , CardPlay? cardPlay
-    )
-    {
-        if (target != Owner || !props.IsPoweredAttack()) return 1m;
-        return 1m + Amount / 100m;
-    }
+    private const string SlowCounterKey = "SlowAmount";
+    private const string SlowDisplayKey = "DisplayAmount";
 
-    public override Task AfterModifyingDamageAmount(CardModel? cardSource)
+    private static readonly MethodInfo RefreshDisplayAmount =
+        AccessTools.Method(typeof(PowerModel), "InvokeDisplayAmountChanged");
+
+    /// <summary>
+    /// Applies the base game's Slow to <paramref name="target"/> and raises its % by <paramref name="startingPercent"/>
+    /// (minus the 10% the playing card itself adds once its play finishes).
+    /// </summary>
+    public static async Task Apply(PlayerChoiceContext choiceContext, Creature target, decimal startingPercent,
+        Creature applier, CardModel cardSource)
     {
-        Flash();
-        return Task.CompletedTask;
+        var before = target.GetPowerAmount<SlowPower>();
+        await PowerCmd.Apply<SlowPower>(choiceContext, target, 1m, applier, cardSource);
+        var slow = target.GetPower<SlowPower>();
+        var added = (slow?.Amount ?? 0) - before;
+        if (slow == null || added <= 0) return; // Blocked (Artifact...)
+
+        // Amount multipliers (Ivy) scale the starting % too
+        var steps = startingPercent / 10m * added - 1m;
+        var counter = slow.DynamicVars[SlowCounterKey];
+        counter.BaseValue = Math.Max(0m, counter.BaseValue + steps);
+        slow.DynamicVars[SlowDisplayKey].BaseValue = counter.BaseValue * 10m;
+        RefreshDisplayAmount.Invoke(slow, null);
+
+        await PowerCmd.Apply<EmeraldSlow>(choiceContext, target, added, applier, cardSource);
     }
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side == CombatSide.Player) await PowerCmd.Remove(this);
+        if (side != CombatSide.Player) return;
+
+        var slow = Owner.GetPower<SlowPower>();
+        if (slow != null)
+        {
+            // Only take back what this Emerald added: other sources (Extreme Speed, Bygone Effigy) keep theirs
+            if (slow.Amount <= Amount) await PowerCmd.Remove(slow);
+            else await PowerCmd.ModifyAmount(choiceContext, slow, -Amount, null, null, silent: true);
+        }
+        await PowerCmd.Remove(this);
     }
 }
 

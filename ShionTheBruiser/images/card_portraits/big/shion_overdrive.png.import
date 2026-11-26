@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://caiostye1k22j"
-path="res://.godot/imported/dark_arts.png-deb6ed2099f9e4f546b4699c3a538fb1.ctex"
+uid="uid://bspsd63j6ufae"
+path="res://.godot/imported/shion_overdrive.png-dbade9d96fe63727a49c66223d3ef329.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ShionTheBruiser/images/charui/shion/aura/dark_arts.png"
-dest_files=["res://.godot/imported/dark_arts.png-deb6ed2099f9e4f546b4699c3a538fb1.ctex"]
+source_file="res://ShionTheBruiser/images/card_portraits/big/shion_overdrive.png"
+dest_files=["res://.godot/imported/shion_overdrive.png-dbade9d96fe63727a49c66223d3ef329.ctex"]
 
 [params]
 
