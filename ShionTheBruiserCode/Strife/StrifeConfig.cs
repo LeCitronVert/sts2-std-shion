@@ -64,6 +64,9 @@ public static class StrifeConfig
 
     // ── Rings ────────────────────────────────────────────────────────────────
 
+    /// <summary>Every player starts the Architect fight with this many Rings.</summary>
+    public const int StartingRings = 10;
+
     // ── Perfected Design (every summon) ──────────────────────────────────────
 
     /// <summary>His summons deal this much more damage (×) and take this much of the damage (×).</summary>

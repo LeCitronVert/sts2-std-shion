@@ -218,6 +218,15 @@ public sealed class StrifeArchitect : CustomMonsterModel
         Creature.HpDisplay = HpDisplay.InfiniteWithoutNumbers;
     }
 
+    public override async Task BeforeCombatStart()
+    {
+        if (Creature.CombatState is not { } combatState) return;
+        foreach (var player in combatState.Players)
+        {
+            await Rings.Gain(new ThrowingPlayerChoiceContext(), player.Creature, StartingRings);
+        }
+    }
+
     private async Task SummonMove(IReadOnlyList<Creature> _)
     {
         if (CycleDone) return;

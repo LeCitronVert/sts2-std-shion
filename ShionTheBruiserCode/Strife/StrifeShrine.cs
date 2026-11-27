@@ -45,12 +45,24 @@ public class StrifeShrine : CustomAncientModel
     public override Color DialogueColor => new("2b2838");
     public override Color ButtonColor => new(0.08f, 0.07f, 0.1f, 0.6f);
 
+    /// <summary>
+    /// No dialogue, but the game needs one to pick (NEventRoom.SetupLayout throws on null and the room hangs):
+    /// one repeating dialogue with no lines, so the options show right away.
+    /// </summary>
     protected override AncientDialogueSet DefineDialogues() => new()
     {
         FirstVisitEverDialogue = null,
         CharacterDialogues = new Dictionary<string, IReadOnlyList<AncientDialogue>>(),
-        AgnosticDialogues = [],
+        AgnosticDialogues = [SilentDialogue()],
     };
+
+    private static AncientDialogue SilentDialogue()
+    {
+        // The constructor requires at least 1 line; its Lines list is a List, emptied here
+        var dialogue = new AncientDialogue("") { IsRepeating = true };
+        ((List<AncientDialogueLine>)dialogue.Lines).Clear();
+        return dialogue;
+    }
 
     protected override IReadOnlyList<EventOption> GenerateInitialOptions() =>
         Options.Select(relic => ShrineOption(relic.ToMutable())).ToList();
