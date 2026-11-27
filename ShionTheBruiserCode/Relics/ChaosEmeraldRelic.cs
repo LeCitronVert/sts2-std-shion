@@ -2,11 +2,13 @@ using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Extensions;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Strife;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
@@ -14,8 +16,9 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 /// <summary>
 /// Base class for the Chaos Emerald relics, only obtainable through the Special Stage quest.
 /// EventRelicPool never feeds random relic drops, so these can't be found anywhere else.
-/// At the start of each combat, adds its Emerald Power card to the Draw Pile. With <see cref="SuperForm"/>, it doesn't:
-/// the card is picked from the Emerald wheel instead (<see cref="EmeraldWheel"/>).
+/// At the start of each combat, applies its passive (<see cref="EmeraldPassive"/>) and adds its Emerald Power card (its
+/// Burst, which turns the passive off from the next turn on) to the Draw Pile. With <see cref="SuperForm"/>, the card
+/// isn't added: it's picked from the Emerald wheel into the Hand instead (<see cref="EmeraldWheel"/>).
 /// The combo ("Chaos Emeralds") variants share the effect of their solo version and unlock Act 4.
 /// </summary>
 [Pool(typeof(EventRelicPool))]
@@ -43,6 +46,8 @@ public abstract class ChaosEmeraldRelic : ShionTheBruiserRelic
 
     public override async Task BeforeCombatStart()
     {
+        await EmeraldPassive.Apply(new ThrowingPlayerChoiceContext(), Owner.Creature, Color);
+
         // Super Form: picked from the Emerald wheel instead
         if (SuperForm.Has(Owner)) return;
 

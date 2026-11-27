@@ -22,24 +22,34 @@ using ShionTheBruiser.ShionTheBruiserCode.Strife;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Grey Chaos Emerald (Emerald Power, 3-cost Power): add Replay 1 to the first 1 (2) Attack(s) you play each turn (after they are played).
+/// Grey Chaos Emerald Burst (Emerald Power, 3 (2)-cost Power): draw cards until your hand is full. Your hand is free to
+/// play this turn (the cards in it once the drawing is done).
 /// </summary>
 [Pool(typeof(TokenCardPool))]
 public class EmeraldPowerExtra() : EmeraldPowerCard(3, TargetType.Self)
 {
     public override ChaosEmeraldColor Color => ChaosEmeraldColor.Grey;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Attacks", 1M)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CalculationBaseVar(0),
+        new CalculationExtraVar(1),
+        new CalculatedVar("DrawAmount").WithMultiplier((card, _) => ((EmeraldPowerExtra)card).PreviewDraw()),
+    ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.Static(StaticHoverTip.ReplayDynamic, new DynamicVar("Times", 1M))];
+    private static int SpaceInHand(CardModel card, IEnumerable<CardModel> hand) => Math.Max(0, CardPile.MaxCardsInHand - hand.Count());
+
+    // This card has left the Hand when it resolves
+    private decimal PreviewDraw() => CombatState is null ? 0 : SpaceInHand(this, PreviewHelper.OtherCardsInHand(this));
 
     protected override async Task OnEmeraldPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await PowerCmd.Apply<EmeraldExtra>(choiceContext, Owner.Creature, DynamicVars["Attacks"].BaseValue, Owner.Creature, this);
+        var space = SpaceInHand(this, PileType.Hand.GetPile(Owner).Cards);
+        if (space > 0) await CardPileCmd.Draw(choiceContext, space, Owner);
+        foreach (var card in PileType.Hand.GetPile(Owner).Cards.ToList()) card.SetToFreeThisTurn();
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Attacks"].UpgradeValueBy(1M);
+        EnergyCost.UpgradeBy(-1);
     }
 }

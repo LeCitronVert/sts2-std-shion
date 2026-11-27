@@ -29,7 +29,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Strife;
 /// <item>Whoever damages him gains that many Rings: the player, or the owner of the pet / Osty that hit him.</item>
 /// <item>Doom that empties a check's health bar is used up; Doom that didn't trigger stays on him between phases.</item>
 /// </list>
-/// His summons have no Ring Bounty.
+/// His summons have no Ring Bounty, and each one gets <see cref="PerfectedDesign"/> when it joins.
 /// </summary>
 public sealed class ArchitectsDesign : ShionTheBruiserPower
 {
@@ -48,6 +48,8 @@ public sealed class ArchitectsDesign : ShionTheBruiserPower
     {
         if (creature == Owner || creature.Side != Owner.Side || creature.Monster == null || Owner.IsDead) return;
         var context = new ThrowingPlayerChoiceContext();
+
+        await PowerCmd.Apply<PerfectedDesign>(context, creature, 1m, Owner, null);
 
         // Only what his own buffs gave him: debuffs on him (Make Your Point, players' Strength down...) aren't shared
         var strength = Architect?.SharedStrength ?? 0;
@@ -136,6 +138,29 @@ public sealed class ArchitectsDesign : ShionTheBruiserPower
             await architect.OnCheckDamaged(remaining);
         }
         if (Owner.IsDead) Owner.SetCurrentHpInternal(Owner.MaxHp);
+    }
+}
+
+/// <summary>
+/// On every enemy the Architect summons: it deals double damage and takes half damage
+/// (<see cref="StrifeConfig.PerfectedDesignDamageDealt"/>, <see cref="StrifeConfig.PerfectedDesignDamageTaken"/>).
+/// </summary>
+public sealed class PerfectedDesign : ShionTheBruiserPower
+{
+    public override PowerType Type => PowerType.Buff;
+    public override PowerStackType StackType => PowerStackType.Single;
+
+    // No icon drawn yet (MISSING_IMAGES.tsv)
+    public override string CustomPackedIconPath => "ring_bounty.png".PowerImagePath();
+    public override string CustomBigIconPath => "ring_bounty.png".BigPowerImagePath();
+
+    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource
+        , CardPlay? cardPlay
+    )
+    {
+        if (dealer == Owner && target != Owner) return StrifeConfig.PerfectedDesignDamageDealt;
+        if (target == Owner && dealer != Owner) return StrifeConfig.PerfectedDesignDamageTaken;
+        return 1m;
     }
 }
 

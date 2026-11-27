@@ -22,24 +22,23 @@ using ShionTheBruiser.ShionTheBruiserCode.Strife;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Red Chaos Emerald (Emerald Power, 2 (1)-cost Power): whenever you attack a Vulnerable enemy, heal 1.
+/// Red Chaos Emerald Burst (Emerald Power, 2-cost Power): this turn, deal 20% (30%) more Attack damage for every unique
+/// debuff the enemy has.
 /// </summary>
 [Pool(typeof(TokenCardPool))]
 public class EmeraldPowerBullet() : EmeraldPowerCard(2, TargetType.Self)
 {
     public override ChaosEmeraldColor Color => ChaosEmeraldColor.Red;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new HealVar(1M)];
-
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<VulnerablePower>()];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Percent", 20M)];
 
     protected override async Task OnEmeraldPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await PowerCmd.Apply<EmeraldBullet>(choiceContext, Owner.Creature, DynamicVars.Heal.BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<EmeraldBulletBurst>(choiceContext, Owner.Creature, DynamicVars["Percent"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars["Percent"].UpgradeValueBy(10M);
     }
 }

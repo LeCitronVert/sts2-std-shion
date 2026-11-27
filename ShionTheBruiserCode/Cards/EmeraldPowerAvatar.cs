@@ -22,24 +22,26 @@ using ShionTheBruiser.ShionTheBruiserCode.Strife;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Blue Chaos Emerald (Emerald Power, 2 (1)-cost Power): at the end of your turn, gain 1 energy next turn for each card in your Hand.
+/// Blue Chaos Emerald Burst (Emerald Power, 2-cost Power): gain 1 (2) energy. The next card you play becomes an X-cost
+/// card and gains Replay X (<see cref="EmeraldAvatarBurst"/>).
 /// </summary>
 [Pool(typeof(TokenCardPool))]
 public class EmeraldPowerAvatar() : EmeraldPowerCard(2, TargetType.Self)
 {
     public override ChaosEmeraldColor Color => ChaosEmeraldColor.Blue;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(1)];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<EmeraldAvatar>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.Static(StaticHoverTip.ReplayDynamic, new DynamicVar("Times", 1M))];
 
     protected override async Task OnEmeraldPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await PowerCmd.Apply<EmeraldAvatar>(choiceContext, Owner.Creature, 1M, Owner.Creature, this);
+        await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
+        await PowerCmd.Apply<EmeraldAvatarBurst>(choiceContext, Owner.Creature, 1M, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars.Energy.UpgradeValueBy(1);
     }
 }

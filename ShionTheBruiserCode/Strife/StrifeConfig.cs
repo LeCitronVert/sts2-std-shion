@@ -64,6 +64,12 @@ public static class StrifeConfig
 
     // ── Rings ────────────────────────────────────────────────────────────────
 
+    // ── Perfected Design (every summon) ──────────────────────────────────────
+
+    /// <summary>His summons deal this much more damage (×) and take this much of the damage (×).</summary>
+    public const decimal PerfectedDesignDamageDealt = 2m;
+    public const decimal PerfectedDesignDamageTaken = 0.5m;
+
     // His summons have no Ring Bounty since 2026-11-26: whoever damages the Architect gains that many Rings instead
     // (ArchitectsDesign). The RingBounty power is kept, unused.
 
@@ -81,11 +87,15 @@ public static class StrifeConfig
         Impatience,
     }
 
+    /// <summary>Since 2026-11-27 (harder Architect): three Intensify per 10 buffs instead of one, the first on his second buff.</summary>
     public static readonly IReadOnlyList<BuffKind> BuffCycle =
     [
-        BuffKind.Strength, BuffKind.Block, BuffKind.Vigor, BuffKind.HealPercent, BuffKind.Intensify,
-        BuffKind.Strength, BuffKind.Block, BuffKind.Vigor, BuffKind.HealPercent, BuffKind.Impatience,
+        BuffKind.Strength, BuffKind.Intensify, BuffKind.Block, BuffKind.Vigor, BuffKind.Intensify,
+        BuffKind.Strength, BuffKind.HealPercent, BuffKind.Intensify, BuffKind.Vigor, BuffKind.Impatience,
     ];
+
+    /// <summary>Tier his buffs start at (each tier doubles them, see <see cref="BuffValue"/>). 1 = his first buffs are already doubled.</summary>
+    public const int StartingTier = 1;
 
     /// <summary>Value of a buff at tier 0 (before any Intensify). Each Intensify doubles it.</summary>
     public static int BuffBaseValue(BuffKind kind) => kind switch
@@ -115,8 +125,8 @@ public static class StrifeConfig
     // ── Make Your Point (DPS checks) ─────────────────────────────────────────
 
     /// <summary>Damage of his attack (total, split between the hits). Ascension 9 (Deadly Enemies) uses the second one.</summary>
-    public const int CheckAttackDamage = 100;
-    public const int CheckAttackDamageAscension = 150;
+    public const int CheckAttackDamage = 150;
+    public const int CheckAttackDamageAscension = 225;
 
     /// <summary>Each consecutive turn he attacks in the same check, the damage is multiplied by (1 + this).</summary>
     public const decimal ConsecutiveAttackBoost = 0.5m;
@@ -125,9 +135,14 @@ public static class StrifeConfig
     public const decimal AttackCycleDamageBoost = 0.2m;
     public const int AttackCycleExtraHits = 1;
 
-    /// <summary>Health bar of a check: HpBase × players (dead ones too) × (1 + PerAttack × attacks he made). Ascension 8 (Tough Enemies) uses the second base.</summary>
-    public const int CheckHpBase = 300;
-    public const int CheckHpBaseAscension = 400;
+    /// <summary>
+    /// Health bar of a check: HpBase × players (dead ones too) × (1 + PerExtraPlayer × (players − 1)) × (1 + PerAttack × attacks
+    /// he made). Ascension 8 (Tough Enemies) uses the second base. With 0.5 per extra player: ×1 solo, ×3 for 2 players,
+    /// ×6 for 3, ×10 for 4.
+    /// </summary>
+    public const int CheckHpBase = 450;
+    public const int CheckHpBaseAscension = 600;
+    public const decimal CheckHpPerExtraPlayer = 0.5m;
     public const decimal CheckHpPerAttack = 0.2m;
 
     // ── Growing Impatience ───────────────────────────────────────────────────

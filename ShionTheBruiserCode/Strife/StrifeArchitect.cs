@@ -54,8 +54,8 @@ public sealed class StrifeArchitect : CustomMonsterModel
 
     public int BuffIndex { get; private set; }
 
-    /// <summary>How many Intensify buffs he did.</summary>
-    public int Tier { get; private set; }
+    /// <summary>His buffs' tier: <see cref="StrifeConfig.StartingTier"/> + how many Intensify buffs he did.</summary>
+    public int Tier { get; private set; } = StartingTier;
 
     /// <summary>Strength his own buffs gave him (shared with summons that join later; debuffs don't count).</summary>
     public int SharedStrength { get; private set; }
@@ -138,13 +138,14 @@ public sealed class StrifeArchitect : CustomMonsterModel
 
     private int CheckHitDamage => (int)Math.Ceiling(CheckTotalDamage / (decimal)CheckHits);
 
-    /// <summary>HpBase × players (dead ones too) × (1 + 0.2 × attack turns he made).</summary>
+    /// <summary>HpBase × players (dead ones too) × (1 + 0.5 × extra players) × (1 + 0.2 × attack turns he made).</summary>
     private int NewCheckMaxHp
     {
         get
         {
             decimal hpBase = HasAscension(AscensionLevel.ToughEnemies) ? CheckHpBaseAscension : CheckHpBase;
-            return (int)Math.Ceiling(hpBase * PlayerCount * (1m + CheckHpPerAttack * AttackTurns));
+            var players = PlayerCount;
+            return (int)Math.Ceiling(hpBase * players * (1m + CheckHpPerExtraPlayer * (players - 1)) * (1m + CheckHpPerAttack * AttackTurns));
         }
     }
 

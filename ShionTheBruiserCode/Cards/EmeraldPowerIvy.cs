@@ -22,30 +22,23 @@ using ShionTheBruiser.ShionTheBruiserCode.Strife;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Green Chaos Emerald (Emerald Power, 2-cost Power): (upgraded: your Attacks apply 1 Weak.) Whenever you play a Skill, apply 1 (2) Poison to ALL enemies.
+/// Green Chaos Emerald Burst (Emerald Power, 2-cost Power): all debuffs you apply this turn are doubled (tripled).
 /// </summary>
 [Pool(typeof(TokenCardPool))]
 public class EmeraldPowerIvy() : EmeraldPowerCard(2, TargetType.Self)
 {
     public override ChaosEmeraldColor Color => ChaosEmeraldColor.Green;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<PoisonPower>(1M),
-        new PowerVar<WeakPower>(0M),
-    ];
-
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<PoisonPower>(), HoverTipFactory.FromPower<WeakPower>()];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Multiplier", 2M)];
 
     protected override async Task OnEmeraldPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         var creature = Owner.Creature;
-        await PowerCmd.Apply<EmeraldIvy>(choiceContext, creature, DynamicVars.Poison.BaseValue, creature, this);
-        creature.GetPower<EmeraldIvy>()?.SetWeak(DynamicVars.Weak.BaseValue);
+        await PowerCmd.Apply<EmeraldIvyBurst>(choiceContext, creature, DynamicVars["Multiplier"].BaseValue, creature, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Weak.UpgradeValueBy(1M);
-        DynamicVars.Poison.UpgradeValueBy(1M);
+        DynamicVars["Multiplier"].UpgradeValueBy(1M);
     }
 }

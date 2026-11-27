@@ -9,11 +9,12 @@ using ShionTheBruiser.ShionTheBruiserCode.Enums;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Base class of the Chaos Emerald cards (all Powers). The Emerald Power keyword: gain 10 Rings; playing an Emerald Power
-/// first removes the active Emerald Power effect (so only one is active, and Water can't copy them); always Retained.
-/// They cost energy, except when picked from the Super Form Emerald wheel (<see cref="Strife.EmeraldWheel"/>), which makes
-/// that copy free. Each Chaos Emerald adds its card to the Draw Pile at the start of combat; with Super Form, the card is
-/// picked from the wheel instead.
+/// Base class of the Chaos Emerald cards (all Powers): each one is its emerald's Burst. The Emerald Power keyword: gain
+/// 10 Rings, and that emerald's passive (<see cref="EmeraldPassive"/>) turns off from the start of your next turn;
+/// always Retained. They cost energy, except when picked from the Super Form Emerald wheel
+/// (<see cref="Strife.EmeraldWheel"/>), which makes that copy free. Each Chaos Emerald adds its card to the Draw Pile at
+/// the start of combat; with Super Form (the Architect), the card is picked from the wheel into your Hand instead.
+/// Water's copies and the "first card / Power you play" passives skip Emerald Powers.
 /// </summary>
 public abstract class EmeraldPowerCard(int cost, TargetType target) :
     ShionTheBruiserCard(cost, CardType.Power, CardRarity.Token, target)
@@ -40,7 +41,7 @@ public abstract class EmeraldPowerCard(int cost, TargetType target) :
     protected sealed override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         var creature = Owner.Creature;
-        await EmeraldPowerEffect.RemoveAll(creature);
+        EmeraldPassive.Get(creature, Color)?.TurnOffNextTurn();
         await Rings.Gain(choiceContext, creature, RingsGained);
         await OnEmeraldPlay(choiceContext, play);
     }

@@ -210,3 +210,4 @@ Command	Power	Fry	A Valkyr insignia / officer badge		Fry status: Valkyrs deal/gr
 Placeholder B (Act 4 shrine)	Relic	Act 4	A Chaos Emerald over a glowing card		StrifeShrineCard; uses the default relic.png
 Placeholder C (Act 4 shrine)	Relic	Act 4	A Chaos Emerald over a relic and potion		StrifeShrineRelic; uses the default relic.png
 Placeholder A (Act 4 shrine) outline	Relic	Act 4			StrifeShrineRings uses the Ring icon (ui/ring.png); no outline
+Perfected Design	Power	Act 4 (Architect)	A glowing blueprint or a flawless geometric crystal, dark grey with gold lines		On every Architect summon; currently borrows ring_bounty.png

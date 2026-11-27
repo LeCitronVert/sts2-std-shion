@@ -2255,3 +2255,46 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - The Gambler's Max HP only comes from "Play once" (not "Play until you win").
 - Shrine choices are relics named "Placeholder A/B/C" with the default relic art (A uses the Ring icon). New cards/relic/power without art are in `MISSING_IMAGES.tsv`.
 - I overwrote the existing Anvil Gag / Funny Gag / Fresh Idea portraits with the new art (old ones are in git).
+
+## 42. Emerald Passive / Burst rework + harder Architect (2026-11-27)
+
+**Setup**
+- [ ] Both DLLs built (live + beta refs). No new images (no pck re-export needed for this pass).
+
+**Emerald passives** (each held Chaos Emerald, solo or combo, applies its passive at the start of every fight, Super Form or not; visible as a power with its wheel icon)
+- [ ] Water: the first Power you play from your Hand each fight is played an additional time (then the passive is gone for the fight). Emerald Powers and autoplays don't count.
+- [ ] Vision: each enemy attack that hits you (multi-hit = once) gives +1 card at the start of your next turn (Draw Cards Next Turn).
+- [ ] Ivy: per hit of your Attacks, blocked damage applies 1 Weak, unblocked damage applies 1 Poison (both on a partly blocked hit).
+- [ ] Slow: each energy gain during your turn (cards, Energy Next Turn...) draws 1 card. Not the turn's energy reset, not on the enemy turn.
+- [ ] Avatar: end of turn, +1 energy next turn per card in Hand (unchanged).
+- [ ] Bullet: heal 1 per Vulnerable enemy you attack (unchanged).
+- [ ] Extra: the first card you play from your Hand each turn is played an additional time. Emerald Powers are skipped and don't use it up.
+
+**Emerald Powers = Bursts** (costs unchanged; +10 Rings; Retained; free and added to Hand from the wheel vs the Architect)
+- [ ] Playing an emerald's card turns ONLY that emerald's passive off: its tooltip shows "Turns off at the start of your next turn" in red, and it's removed at the start of your next turn (still works until then, e.g. Avatar at end of this turn).
+- [ ] Playing an Emerald Power no longer removes the other emerald effects.
+- [ ] Water: plays copies of the first 3 (5) different Powers you played this fight (Emerald Powers excluded). In-combat preview "(Copies N)".
+- [ ] Vision: 1 (2) Intangible, Counter the next 1 (2) hindrance(s). No more extra draw.
+- [ ] Ivy: Ivy Burst power, this turn debuffs you apply to enemies are doubled (tripled), incl. the Ivy passive's Weak/Poison. Debuffs on yourself aren't.
+- [ ] Slow: Slow Burst, this turn (this turn and next) gain Rings equal to the unblocked damage you (or your pets/Osty) deal. Stacks with the Architect's own Rings.
+- [ ] Avatar: gain 1 (2) energy. The next card you play costs all your energy (cost shows your current energy in Hand), and is played X more times (X = energy spent). An X-cost card stays X and also gets the X replays. Paying 0 = no replay, still used up.
+- [ ] Bullet: Bullet Burst, this turn your Attacks deal +20% (30%) per different visible debuff on the target (shows in damage previews).
+- [ ] Extra: draw until your Hand is full ("(Draw N)" preview), then every card in Hand is free this turn. Upgrade: 3 → 2 cost.
+- [ ] Relic tooltips: passive text + "add X to your Draw Pile; playing it turns this off from your next turn on". Emerald Power keyword text updated.
+- [ ] MP: two players with emeralds, both use bursts/passives, no desync (esp. Avatar burst and Extra/Water extra plays).
+
+**The Architect (harder)**
+- [ ] Make Your Point attack: 150 total (225 at Ascension 9), was 100/150.
+- [ ] Check health bar: 450 base (600 at Ascension 8), was 300/400, × players × (1 + 0.5 × extra players) → solo ×1, 2p ×3, 3p ×6, 4p ×10, then +20% per attack he made.
+- [ ] Every summon gets Perfected Design (borrowed Ring Bounty icon): double damage dealt, half damage taken.
+- [ ] Buff cycle: Strength, Intensify, Block, Vigor, Intensify, Strength, Heal, Intensify, Vigor, Impatience (3 Intensify per 10 instead of 1). His buffs start one tier up (first Strength = 4, Plating from the first Block).
+
+**Decisions I made**
+- Your answers: "initial damage" = the damage he deals; a Burst only turns off its own emerald's passive; spec value upgrades replace the -1 cost upgrades, Extra upgrades 3 → 2 cost; Vision counts each enemy attack.
+- Passives are visible powers applied by the relics (wheel icons reused). Bursts with a lasting part are their own powers reusing the same icon (the intended images).
+- Water passive is once per fight ("each fight"); Extra's is once per turn. Both skip Emerald Powers so a Burst is never doubled, and only count plays from the Hand.
+- Water Burst: "unique" = different card names; counts Powers you played from anywhere (autoplays too), in order.
+- Ivy Burst doubles debuff amounts you apply to enemies only. Slow Burst counts unblocked damage. Bullet Burst counts visible debuff types only.
+- Avatar Burst's "becomes X-cost": it costs exactly your current energy (cards can't become true X-cost), so the card's own numbers don't scale with X; it's the Replay X that does.
+- Extra Burst: "your hand" = the cards in Hand after the draw.
+- Architect numbers (all in `Strife/StrifeConfig.cs`): CheckAttackDamage 150/225, CheckHpBase 450/600, CheckHpPerExtraPlayer 0.5, StartingTier 1, new BuffCycle, PerfectedDesignDamageDealt 2 / Taken 0.5. Easy to crank further.
