@@ -22,8 +22,8 @@ using ShionTheBruiser.ShionTheBruiserCode.Strife;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Blue Chaos Emerald Burst (Emerald Power, 2-cost Power): gain 1 (2) energy. The next card you play becomes an X-cost
-/// card and gains Replay X (<see cref="EmeraldAvatarBurst"/>).
+/// Blue Chaos Emerald Burst (Emerald Power, 2-cost Power): gain 1 (2) energy. Choose a card in your Hand: until you play
+/// it, it becomes an X-cost card with Replay X (<see cref="EmeraldAvatarBurst"/>).
 /// </summary>
 [Pool(typeof(TokenCardPool))]
 public class EmeraldPowerAvatar() : EmeraldPowerCard(2, TargetType.Self)
@@ -37,7 +37,13 @@ public class EmeraldPowerAvatar() : EmeraldPowerCard(2, TargetType.Self)
     protected override async Task OnEmeraldPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
-        await PowerCmd.Apply<EmeraldAvatarBurst>(choiceContext, Owner.Creature, 1M, Owner.Creature, this);
+        var chosen = (await CardSelectCmd.FromHand(choiceContext, Owner, new CardSelectorPrefs(SelectionScreenPrompt, 1),
+            c => c is not EmeraldPowerCard, this)).FirstOrDefault();
+        if (chosen == null) return;
+        var creature = Owner.Creature;
+        if (creature.GetPower<EmeraldAvatarBurst>() is null)
+            await PowerCmd.Apply<EmeraldAvatarBurst>(choiceContext, creature, 1M, creature, this);
+        creature.GetPower<EmeraldAvatarBurst>()?.Choose(chosen);
     }
 
     protected override void OnUpgrade()

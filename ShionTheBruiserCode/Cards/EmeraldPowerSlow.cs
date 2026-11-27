@@ -22,23 +22,24 @@ using ShionTheBruiser.ShionTheBruiserCode.Strife;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Yellow Chaos Emerald Burst (Emerald Power, 1-cost Power): this (2) turn(s), gain as many Rings as the damage you deal.
+/// Yellow Chaos Emerald Burst (Emerald Power, 1-cost Power): this turn, gain Rings equal to (twice) the damage you deal
+/// (blocked damage included).
 /// </summary>
 [Pool(typeof(TokenCardPool))]
 public class EmeraldPowerSlow() : EmeraldPowerCard(1, TargetType.Self)
 {
     public override ChaosEmeraldColor Color => ChaosEmeraldColor.Yellow;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Turns", 1M)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Multiplier", 1M)];
 
     protected override async Task OnEmeraldPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         var creature = Owner.Creature;
-        await PowerCmd.Apply<EmeraldSlowBurst>(choiceContext, creature, DynamicVars["Turns"].BaseValue, creature, this);
+        await PowerCmd.Apply<EmeraldSlowBurst>(choiceContext, creature, DynamicVars["Multiplier"].BaseValue, creature, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Turns"].UpgradeValueBy(1M);
+        DynamicVars["Multiplier"].UpgradeValueBy(1M);
     }
 }

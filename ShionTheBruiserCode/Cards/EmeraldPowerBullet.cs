@@ -22,23 +22,27 @@ using ShionTheBruiser.ShionTheBruiserCode.Strife;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Red Chaos Emerald Burst (Emerald Power, 2-cost Power): this turn, deal 20% (30%) more Attack damage for every unique
-/// debuff the enemy has.
+/// Red Chaos Emerald Burst (Emerald Power, 2 (1)-cost Power): Stun ALL enemies.
 /// </summary>
 [Pool(typeof(TokenCardPool))]
 public class EmeraldPowerBullet() : EmeraldPowerCard(2, TargetType.Self)
 {
     public override ChaosEmeraldColor Color => ChaosEmeraldColor.Red;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Percent", 20M)];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.Static(StaticHoverTip.Stun)];
 
     protected override async Task OnEmeraldPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        await PowerCmd.Apply<EmeraldBulletBurst>(choiceContext, Owner.Creature, DynamicVars["Percent"].BaseValue, Owner.Creature, this);
+        if (CombatState is not { } combatState) return;
+        foreach (var enemy in combatState.HittableEnemies.ToList())
+        {
+            if (CombatManager.Instance.IsOverOrEnding) return;
+            if (enemy.IsAlive) await CreatureCmd.Stun(enemy);
+        }
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Percent"].UpgradeValueBy(10M);
+        EnergyCost.UpgradeBy(-1);
     }
 }

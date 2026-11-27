@@ -22,36 +22,35 @@ using ShionTheBruiser.ShionTheBruiserCode.Strife;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Cyan Chaos Emerald Burst (Emerald Power, 2-cost Power): play a copy of the first 3 (5) unique Powers you've played this
-/// fight (Emerald Powers excluded; "unique" = different cards by name).
+/// Cyan Chaos Emerald Burst (Emerald Power, 3 (2)-cost Power): play a copy of every Power you've played this fight
+/// (Emerald Powers excluded; each play counts, Replays don't), then end your turn.
 /// </summary>
 [Pool(typeof(TokenCardPool))]
-public class EmeraldPowerWater() : EmeraldPowerCard(2, TargetType.Self)
+public class EmeraldPowerWater() : EmeraldPowerCard(3, TargetType.Self)
 {
     public override ChaosEmeraldColor Color => ChaosEmeraldColor.Cyan;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("Powers", 3M),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
         new CalculatedVar("Copies").WithMultiplier((card, _) => ((EmeraldPowerWater)card).PowersToCopy().Count),
     ];
 
-    /// <summary>The first (Powers) different Powers played this fight, in order (shared by OnPlay and the preview).</summary>
+    /// <summary>Every Power played this fight, in order (shared by OnPlay and the preview).</summary>
     private List<CardModel> PowersToCopy()
     {
         if (CombatState is null || !CombatManager.Instance.IsInProgress) return [];
         return CombatManager.Instance.History.CardPlaysStarted
+            .Where(e => e.CardPlay.IsFirstInSeries)
             .Select(e => e.CardPlay.Card)
             .Where(c => c.Owner == Owner && c.Type == CardType.Power && c is not EmeraldPowerCard)
-            .DistinctBy(c => c.Id)
-            .Take(DynamicVars["Powers"].IntValue)
             .ToList();
     }
 
     protected override async Task OnEmeraldPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         if (CombatState is not { } combatState) return;
+        // Snapshot first: the copies' own plays are added to the history
         foreach (var power in PowersToCopy())
         {
             if (CombatManager.Instance.IsOverOrEnding || Owner.Creature.IsDead) return;
@@ -59,10 +58,12 @@ public class EmeraldPowerWater() : EmeraldPowerCard(2, TargetType.Self)
             await CardPileCmd.AddGeneratedCardToCombat(copy, PileType.Hand, Owner);
             await CardCmd.AutoPlay(choiceContext, copy, null);
         }
+        if (CombatManager.Instance.IsOverOrEnding || Owner.Creature.IsDead) return;
+        PlayerCmd.EndTurn(Owner, false);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Powers"].UpgradeValueBy(2M);
+        EnergyCost.UpgradeBy(-1);
     }
 }

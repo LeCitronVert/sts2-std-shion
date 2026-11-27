@@ -91,110 +91,93 @@ public abstract class EmeraldPassive : ShionTheBruiserPower
     protected static bool IsEmeraldPower(CardModel card) => card is EmeraldPowerCard;
 }
 
-/// <summary>Water passive (Cyan): the first Power you play from your Hand each fight is played an additional time.</summary>
+/// <summary>
+/// Water passive (Cyan): the first Power you play from your Hand each turn adds an Ethereal copy of itself to your Hand
+/// (Emerald Powers are skipped and don't use it up).
+/// </summary>
 public sealed class EmeraldWater : EmeraldPassive
 {
     public override ChaosEmeraldColor Color => ChaosEmeraldColor.Cyan;
     protected override string IconName => "water";
 
-    private bool Applies(CardModel card) =>
-        card.Owner.Creature == Owner && card.Type == CardType.Power && !IsEmeraldPower(card) &&
-        !CardAutoPlayTracker.IsBeingAutoPlayed(card);
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CardKeyword.Ethereal)];
 
-    public override int ModifyCardPlayCount(CardModel card, Creature? target, int playCount) =>
-        Applies(card) ? playCount + 1 : playCount;
+    private bool _usedThisTurn;
 
-    // Once per fight: used up
-    public override async Task AfterModifyingCardPlayCount(CardModel card)
+    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (card.Owner.Creature != Owner) return;
+        var card = cardPlay.Card;
+        if (_usedThisTurn || !cardPlay.IsFirstInSeries || card.Owner.Creature != Owner || card.Type != CardType.Power ||
+            IsEmeraldPower(card) || CardAutoPlayTracker.IsBeingAutoPlayed(card)) return;
+        if (Owner.IsDead || CombatManager.Instance.IsOverOrEnding || Owner.CombatState is not { } combatState) return;
+        _usedThisTurn = true;
         Flash();
-        await PowerCmd.Remove(this);
+        var copy = combatState.CloneCard(card);
+        if (!copy.Keywords.Contains(CardKeyword.Ethereal)) copy.AddKeyword(CardKeyword.Ethereal);
+        await CardPileCmd.AddGeneratedCardToCombat(copy, PileType.Hand, card.Owner);
+    }
+
+    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
+    {
+        if (participants.Contains(Owner)) _usedThisTurn = false;
+        return Task.CompletedTask;
     }
 }
 
-/// <summary>Vision passive (Purple): whenever you're attacked, draw 1 additional card at the start of your turn (per attack).</summary>
+/// <summary>Vision passive (Purple): Attack damage you take from enemies is reduced by 3 (before Vulnerable etc.).</summary>
 public sealed class EmeraldVision : EmeraldPassive
 {
+    public const decimal Reduction = 3m;
+
     public override ChaosEmeraldColor Color => ChaosEmeraldColor.Purple;
     protected override string IconName => "vision";
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<DrawCardsNextTurnPower>()];
-
-    public override async Task AfterAttack(PlayerChoiceContext choiceContext, AttackCommand command)
+    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource
+        , CardPlay? cardPlay
+    )
     {
-        if (Owner.IsDead || command.Attacker is not { } attacker || attacker.Side == Owner.Side) return;
-        if (!command.Results.SelectMany(r => r).Any(r => r.Receiver == Owner)) return;
-        Flash();
-        await PowerCmd.Apply<DrawCardsNextTurnPower>(choiceContext, Owner, 1m, Owner, null);
+        if (target != Owner || dealer == null || dealer.Side == Owner.Side || !props.IsPoweredAttack() || amount <= 0) return 0m;
+        return -Math.Min(Reduction, amount);
     }
 }
 
-/// <summary>
-/// Ivy passive (Green): when you deal blocked Attack damage, apply 1 Weak; when you deal unblocked Attack damage, apply
-/// 1 Poison (checked per hit, both can happen on the same hit).
-/// </summary>
+/// <summary>Ivy passive (Green): whenever you play a Skill, apply 1 Poison to a random enemy.</summary>
 public sealed class EmeraldIvy : EmeraldPassive
 {
     public override ChaosEmeraldColor Color => ChaosEmeraldColor.Green;
     protected override string IconName => "ivy";
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<WeakPower>(), HoverTipFactory.FromPower<PoisonPower>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<PoisonPower>()];
 
-    public override async Task AfterDamageGiven(PlayerChoiceContext choiceContext, Creature? dealer, DamageResult result,
-        ValueProp props, Creature target, CardModel? cardSource)
+    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (dealer != Owner || Owner.IsDead || !props.IsPoweredAttack() || target.Side == Owner.Side || !target.IsAlive) return;
-        if (result.BlockedDamage > 0)
-        {
-            Flash();
-            await PowerCmd.Apply<WeakPower>(choiceContext, target, 1m, Owner, null);
-        }
-        if (result.UnblockedDamage > 0 && target.IsAlive)
-        {
-            Flash();
-            await PowerCmd.Apply<PoisonPower>(choiceContext, target, 1m, Owner, null);
-        }
+        if (cardPlay.Card.Owner.Creature != Owner || cardPlay.Card.Type != CardType.Skill) return;
+        if (Owner.IsDead || CombatManager.Instance.IsOverOrEnding || Owner.CombatState is not { } combatState) return;
+        if (Owner.Player is not { } player) return;
+        var target = player.RunState.Rng.CombatTargets.NextItem(combatState.HittableEnemies);
+        if (target == null) return;
+        Flash();
+        await PowerCmd.Apply<PoisonPower>(choiceContext, target, 1m, Owner, null);
     }
 }
 
 /// <summary>
-/// Slow passive (Yellow): whenever you gain energy during your turn, draw 1 card (per gain).
-/// "Gain energy" = PlayerCmd.GainEnergy (cards, Energy Next Turn...), not the turn's energy reset
-/// (<see cref="EmeraldSlowEnergyPatch"/>).
+/// Slow passive (Yellow): whenever you deal unblocked Attack damage, gain Rings equal to half of it (rounded down, per
+/// hit).
 /// </summary>
 public sealed class EmeraldSlow : EmeraldPassive
 {
     public override ChaosEmeraldColor Color => ChaosEmeraldColor.Yellow;
     protected override string IconName => "slow";
 
-    public async Task AfterEnergyGained(Player player)
+    public override async Task AfterDamageGiven(PlayerChoiceContext choiceContext, Creature? dealer, DamageResult result,
+        ValueProp props, Creature target, CardModel? cardSource)
     {
-        if (Owner.IsDead || Owner.CombatState?.CurrentSide != Owner.Side || CombatManager.Instance.IsOverOrEnding) return;
+        if (dealer != Owner || Owner.IsDead || !props.IsPoweredAttack() || target.Side == Owner.Side) return;
+        var rings = result.UnblockedDamage / 2;
+        if (rings <= 0) return;
         Flash();
-        await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), 1m, player);
-    }
-}
-
-/// <summary>Calls <see cref="EmeraldSlow"/> after each energy gain that actually gave energy.</summary>
-[HarmonyPatch(typeof(PlayerCmd), nameof(PlayerCmd.GainEnergy))]
-public static class EmeraldSlowEnergyPatch
-{
-    [HarmonyPrefix]
-    public static void Prefix(Player player, out int __state) => __state = player.PlayerCombatState?.Energy ?? 0;
-
-    [HarmonyPostfix]
-    public static void Postfix(Player player, int __state, ref Task __result)
-    {
-        if (player.Creature.GetPower<EmeraldSlow>() is null) return;
-        __result = After(__result, player, __state);
-    }
-
-    private static async Task After(Task original, Player player, int before)
-    {
-        await original;
-        var gained = (player.PlayerCombatState?.Energy ?? 0) - before;
-        if (gained > 0 && player.Creature.GetPower<EmeraldSlow>() is { } slow) await slow.AfterEnergyGained(player);
+        await Rings.Gain(choiceContext, Owner, rings);
     }
 }
 
@@ -234,33 +217,25 @@ public sealed class EmeraldBullet : EmeraldPassive
 }
 
 /// <summary>
-/// Extra passive (Grey): the first card you play from your Hand each turn is played an additional time (Emerald Powers
-/// are skipped and don't use it up).
+/// Extra passive (Grey): at the end of your turn, a random card in your Discard Pile without Replay gains Replay 1 (for
+/// the rest of the fight). Runs before the Hand is discarded.
 /// </summary>
 public sealed class EmeraldExtra : EmeraldPassive
 {
     public override ChaosEmeraldColor Color => ChaosEmeraldColor.Grey;
     protected override string IconName => "extra";
 
-    private bool _usedThisTurn;
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.Static(StaticHoverTip.ReplayStatic)];
 
-    private bool Applies(CardModel card) =>
-        !_usedThisTurn && card.Owner.Creature == Owner && !IsEmeraldPower(card) && !CardAutoPlayTracker.IsBeingAutoPlayed(card);
-
-    public override int ModifyCardPlayCount(CardModel card, Creature? target, int playCount) =>
-        Applies(card) ? playCount + 1 : playCount;
-
-    public override Task AfterModifyingCardPlayCount(CardModel card)
+    public override Task BeforeFlush(PlayerChoiceContext choiceContext, Player player)
     {
-        if (card.Owner.Creature != Owner) return Task.CompletedTask;
-        _usedThisTurn = true;
+        if (player.Creature != Owner || Owner.IsDead || CombatManager.Instance.IsOverOrEnding) return Task.CompletedTask;
+        var options = PileType.Discard.GetPile(player).Cards.Where(c => c.BaseReplayCount <= 0).ToList();
+        if (options.Count == 0) return Task.CompletedTask;
+        var card = player.RunState.Rng.CombatCardSelection.NextItem(options);
+        if (card == null) return Task.CompletedTask;
         Flash();
-        return Task.CompletedTask;
-    }
-
-    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
-    {
-        if (participants.Contains(Owner)) _usedThisTurn = false;
+        card.BaseReplayCount += 1;
         return Task.CompletedTask;
     }
 }
@@ -298,47 +273,46 @@ public sealed class EmeraldIvyBurst : EmeraldBurst
     }
 }
 
-/// <summary>Slow Burst: for Amount turns (this one included), gain as many Rings as the unblocked damage you deal.</summary>
+/// <summary>Slow Burst: this turn, gain Rings equal to Amount (1, upgraded 2) times the damage you deal (blocked included).</summary>
 public sealed class EmeraldSlowBurst : EmeraldBurst
 {
-    public override PowerStackType StackType => PowerStackType.Counter;
     protected override string IconName => "slow";
 
     public override async Task AfterDamageGiven(PlayerChoiceContext choiceContext, Creature? dealer, DamageResult result,
         ValueProp props, Creature target, CardModel? cardSource)
     {
-        if (dealer == null || Owner.IsDead || result.UnblockedDamage <= 0 || target.Side == Owner.Side) return;
+        if (dealer == null || Owner.IsDead || result.TotalDamage <= 0 || target.Side == Owner.Side) return;
         if (dealer != Owner && dealer.PetOwner?.Creature != Owner) return;
         Flash();
-        await Rings.Gain(choiceContext, Owner, result.UnblockedDamage);
-    }
-
-    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
-    {
-        if (participants.Contains(Owner)) await PowerCmd.Decrement(this);
+        await Rings.Gain(choiceContext, Owner, result.TotalDamage * Amount);
     }
 }
 
 /// <summary>
-/// Avatar Burst: the next card you play from your Hand (not an Emerald Power) costs all your energy, like an X-cost
-/// card, and is played X more times (X = energy spent). An X-cost card stays X-cost and is also replayed X times.
-/// The cost is set in a pure hook (reads the current energy); X is captured when the energy is actually spent.
+/// Avatar Burst: the cards chosen with Avatar cost all your energy, like an X-cost card, and are played X more times
+/// (X = energy spent), until they're played (not only this turn). An X-cost card stays X-cost and is also replayed X
+/// times. The cost is set in a pure hook (reads the current energy); X is captured when the energy is actually spent.
+/// Removed once none of its cards are waiting anymore.
 /// </summary>
 public sealed class EmeraldAvatarBurst : EmeraldBurst
 {
     protected override string IconName => "avatar";
 
-    private CardModel? _card;
-    private int _x;
+    private readonly List<CardModel> _chosen = [];
+    private readonly Dictionary<CardModel, int> _x = [];
 
-    private bool Eligible(CardModel card) => card.Owner.Creature == Owner && !IsEmerald(card);
-
-    private static bool IsEmerald(CardModel card) => card is EmeraldPowerCard;
+    public void Choose(CardModel card)
+    {
+        AssertMutable();
+        if (!_chosen.Contains(card)) _chosen.Add(card);
+        card.InvokeEnergyCostChanged();
+        Flash();
+    }
 
     public override bool TryModifyEnergyCostInCombat(CardModel card, decimal originalCost, out decimal modifiedCost)
     {
         modifiedCost = originalCost;
-        if (_card != null || !Eligible(card) || originalCost < 0 || card.Pile?.Type != PileType.Hand) return false;
+        if (!_chosen.Contains(card) || originalCost < 0 || card.Pile?.Type != PileType.Hand) return false;
         modifiedCost = Owner.Player?.PlayerCombatState?.Energy ?? 0;
         return true;
     }
@@ -346,34 +320,24 @@ public sealed class EmeraldAvatarBurst : EmeraldBurst
     // Real plays only (SpendResources): the card that uses it up
     public override Task AfterEnergySpent(CardModel card, int amount)
     {
-        if (_card != null || !Eligible(card)) return Task.CompletedTask;
-        _card = card;
-        _x = Math.Max(0, amount);
+        if (!_chosen.Contains(card)) return Task.CompletedTask;
+        _x[card] = Math.Max(0, amount);
         Flash();
         return Task.CompletedTask;
     }
 
     public override int ModifyCardPlayCount(CardModel card, Creature? target, int playCount) =>
-        card == _card && _x > 0 ? playCount + _x : playCount;
+        _x.TryGetValue(card, out var x) && x > 0 ? playCount + x : playCount;
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (cardPlay.Card != _card) return;
-        await PowerCmd.Remove(this);
+        var card = cardPlay.Card;
+        if (!_chosen.Remove(card)) return;
+        _x.Remove(card);
+        if (_chosen.Count == 0) await PowerCmd.Remove(this);
     }
-}
 
-/// <summary>Bullet Burst: this turn, your Attacks deal Amount% more damage for each different debuff the target has.</summary>
-public sealed class EmeraldBulletBurst : EmeraldBurst
-{
-    protected override string IconName => "bullet";
-
-    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource
-        , CardPlay? cardPlay
-    )
-    {
-        if (dealer != Owner || target == null || target.Side == Owner.Side || !props.IsPoweredAttack()) return 1m;
-        var debuffs = target.Powers.Where(p => p.Type == PowerType.Debuff && p.IsVisible).Select(p => p.GetType()).Distinct().Count();
-        return 1m + Amount / 100m * debuffs;
-    }
+    // Lasts until its cards are played, not just this turn
+    public override Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants) =>
+        Task.CompletedTask;
 }

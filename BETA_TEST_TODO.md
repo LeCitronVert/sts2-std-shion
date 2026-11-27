@@ -2311,3 +2311,41 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 **Decisions I made**
 - "Lose Exhaust" is checked when the card is played, so the card text still shows Exhaust. Only cards that actually Blood Bent are affected (no keyword marks Blood Bend cards before they're played).
 - The old version only fired on cards headed to the Discard Pile, but it checked that pile before the card had left the Play pile, so it probably never worked.
+
+## 43. Emerald Powers effect change (2026-11-27)
+
+Setup: re-export the pck (no new images; the Bullet Burst power was deleted, the other Burst powers keep the wheel icons).
+
+**Water (Cyan)**
+- [ ] Card costs 3 (upgraded 2).
+- [ ] Passive: the first Power you play from your Hand each turn adds an Ethereal copy of itself to your Hand. Resets every turn. Emerald Powers don't trigger it.
+- [ ] Burst: plays a copy of every Power you played this fight (duplicates count, Replays don't, Emerald Powers skipped), then ends your turn. The in-combat "(Copies N)" preview matches.
+
+**Vision (Purple)**
+- [ ] Passive: enemy Attack damage you take is 3 lower, and the enemy intents show the lower number. Burst unchanged.
+
+**Ivy (Green)**
+- [ ] Passive: each Skill you play applies 1 Poison to a random enemy (a Replayed Skill triggers it once per play). Burst unchanged.
+
+**Avatar (Blue)**
+- [ ] Burst: gain 1 (2) energy, then choose a card in your Hand. While in Hand it costs all your energy, and it's played X more times (X = energy spent).
+- [ ] The chosen card stays X-cost over turns (also after being discarded and redrawn) until you play it, then goes back to normal. Using the Burst twice keeps both cards.
+
+**Bullet (Red)**
+- [ ] Burst: Stun ALL enemies. Costs 2 (upgraded 1).
+
+**Slow (Yellow)**
+- [ ] Passive: unblocked Attack damage you deal gives Rings equal to half of it, rounded down per hit (a 5-damage hit gives 2).
+- [ ] Burst: this turn, Rings equal to the damage you deal, blocked damage included (upgraded: twice). Pets count. Lasts this turn only.
+
+**Extra (Grey)**
+- [ ] Passive: at the end of your turn, a random card in your Discard Pile that has no Replay gains Replay 1 for the rest of the fight. It runs before your Hand is discarded.
+- [ ] Burst: plays a copy of every card you played this turn (Emerald Powers skipped). The "(Copies N)" preview matches. Still costs 3 (upgraded 2).
+
+**Decisions I made**
+- Your answers: Avatar keeps its energy gain (+1 when upgraded), and the X-cost lasts until the card is played. Water and Bullet upgrade to -1 cost. Slow's Burst counts all damage.
+- Slow's passive rounds down per hit and only counts your own Attacks. The Burst also counts pets, as before.
+- Vision's -3 is applied before multipliers like Vulnerable (it's an additive modifier), so a 10-damage hit with Vulnerable deals (10-3)×1.5 = 10.
+- Water and Extra Bursts auto-play generated copies (random targets), like the old Water Burst. Their copies count as played cards for other effects.
+- Extra passive: "without Replay" = Base Replay 0. Curses and Statuses can be picked too.
+- Deleted the old Slow energy patch and the Bullet Burst power (both unused now).
