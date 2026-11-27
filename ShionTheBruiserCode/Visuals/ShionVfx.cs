@@ -47,6 +47,9 @@ public static class ShionVfx
     /// <summary>Raised to play Spirit Burst's lightning once (Borrow Technique).</summary>
     public static event Action<Creature>? SpiritBurstLightningOnce;
 
+    /// <summary>Raised when OverDrive is played: its aura shows for a moment, then fades.</summary>
+    public static event Action<Creature>? OverdrivePlayed;
+
     /// <summary>Raised when Nap is played: Zs fly out and the creature's animations slow down until they're gone.</summary>
     public static event Action<Creature>? NapPlayed;
 
@@ -60,6 +63,8 @@ public static class ShionVfx
         SpiritBurstAutoPlayChanged?.Invoke(creature, autoPlaying);
 
     public static void PlaySpiritBurstLightningOnce(Creature creature) => SpiritBurstLightningOnce?.Invoke(creature);
+
+    public static void PlayOverdrive(Creature creature) => OverdrivePlayed?.Invoke(creature);
 
     public static void PlayNap(Creature creature) => NapPlayed?.Invoke(creature);
 

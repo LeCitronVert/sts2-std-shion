@@ -89,7 +89,7 @@
     "SHIONTHEBRUISER-SHION_CRUNCH.title": "Crunch",
     "SHIONTHEBRUISER-SHION_DRAGONSONG.description": "Whenever you would lose HP, lose [blue]1[/blue] less for each unique buff you have, up to {Dragonsong:diff()} less.",
     "SHIONTHEBRUISER-SHION_DRAGONSONG.title": "Dragonsong",
-    "SHIONTHEBRUISER-SHION_OVERDRIVE.description": "Lose {HpLoss:diff()} HP.\nThe next {Overdrive:diff()} {Overdrive:plural:card|cards} you play this turn {Overdrive:plural:is|are} played an additional time.\n[gold]Berserk:[/gold] This card costs {energyPrefix:energyIcons(1)} less and you don't lose HP.",
+    "SHIONTHEBRUISER-SHION_OVERDRIVE.description": "Lose {HpLoss:diff()} HP.\nGain {FreeAttackPower:diff()} [gold]Free Attack[/gold].\nGain {FreeSkillPower:diff()} [gold]Free Skill[/gold].\nGain {FreePowerPower:diff()} [gold]Free Power[/gold].\n[gold]Berserk:[/gold] This card costs {energyPrefix:energyIcons(1)} less and you don't lose HP.",
     "SHIONTHEBRUISER-SHION_OVERDRIVE.title": "OverDrive",
     "SHIONTHEBRUISER-SHION_MIGHTY_DEFEND.description": "Gain {InCombat:{CalculatedBlock:diff()}|{CalculationBase:diff()}} [gold]Block[/gold].\nGain additional [gold]Block[/gold] equal to your [gold]Strength[/gold].",
     "SHIONTHEBRUISER-SHION_MIGHTY_DEFEND.title": "Mighty Defend",

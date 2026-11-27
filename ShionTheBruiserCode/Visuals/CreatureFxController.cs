@@ -39,7 +39,7 @@ public static class CreatureFxPatch
 /// Keeps a creature's visual effects in sync with its state:
 /// <list type="bullet">
 /// <item>Berserk sparks (scenes/fx/berserk_sparks.tscn) on any creature that has the Berserk tracker and is Berserk.</item>
-/// <item>Shion's auras (scenes/fx/shion_auras.tscn), stacked in order of application. Any player also gets Shion's blue flames
+/// <item>Shion's auras (scenes/fx/shion_auras.tscn), stacked in order of application (OverDrive's only for a moment when played). Any player also gets Shion's blue flames
 /// (Spirit Break's) from Burlesque Wind-Up until the Vigor it gave is used up.</item>
 /// <item>Flashback bulbs (scenes/fx/memory_bulbs.tscn) above the head, one per stack of Flashback, hopping when Flashback plays cards.</item>
 /// <item>Spirit Burst's lightning (scenes/fx/spirit_burst_lightning.tscn) across the screen behind any player, while Spirit Burst
@@ -94,7 +94,6 @@ public class CreatureFxController
     [
         ("spirit_burst", c => c.HasPower<SpiritBurst>()),
         ("spirit_break", c => c.HasPower<SpiritBreak>()),
-        ("overdrive", c => c.HasPower<Overdrive>()),
         ("fell_dragon", c => c.HasPower<FellDragon>()),
         ("crit_above_50_or_vigor_above_20", c =>
             (c.GetPower<ShionCritTrackerPower>()?.HitRatePercent ?? 0) >= AuraCritThreshold
@@ -138,6 +137,12 @@ public class CreatureFxController
     /// Visual state only.
     /// </summary>
     private bool _burlesqueAuraActive;
+
+    /// <summary>OverDrive's aura: shown for <see cref="OverdriveAuraSeconds"/> after the card is played.</summary>
+    private const string OverdriveAura = "overdrive";
+    private const double OverdriveAuraSeconds = 1.0;
+    /// <summary>Pending OverDrive flashes (playing it again while shown extends it). Visual state only.</summary>
+    private int _overdriveFlashes;
 
     /// <summary>Active auras, in order of application.</summary>
     private readonly List<string> _activeAuras = [];
@@ -197,6 +202,7 @@ public class CreatureFxController
         void OnSpiritBurstAutoPlayChanged(Creature creature, bool autoPlaying) => controller.SetSpiritBurstLightning(creature, autoPlaying);
         void OnSpiritBurstLightningOnce(Creature creature) => controller.PlaySpiritBurstLightningOnce(creature);
         void OnNapPlayed(Creature creature) => controller.PlayNap(creature);
+        void OnOverdrivePlayed(Creature creature) => controller.FlashOverdrive(creature);
         void OnEepyPlayed(Creature creature) => controller.PlayEepy(creature);
         void OnDragonsongReduced(Creature creature) => controller.FlashDragonsong(creature);
 
@@ -205,6 +211,7 @@ public class CreatureFxController
         ShionVfx.SpiritBurstAutoPlayChanged += OnSpiritBurstAutoPlayChanged;
         ShionVfx.SpiritBurstLightningOnce += OnSpiritBurstLightningOnce;
         ShionVfx.NapPlayed += OnNapPlayed;
+        ShionVfx.OverdrivePlayed += OnOverdrivePlayed;
         ShionVfx.EepyPlayed += OnEepyPlayed;
         ShionVfx.DragonsongReduced += OnDragonsongReduced;
         node.TreeExiting += () =>
@@ -214,6 +221,7 @@ public class CreatureFxController
             ShionVfx.SpiritBurstAutoPlayChanged -= OnSpiritBurstAutoPlayChanged;
             ShionVfx.SpiritBurstLightningOnce -= OnSpiritBurstLightningOnce;
             ShionVfx.NapPlayed -= OnNapPlayed;
+            ShionVfx.OverdrivePlayed -= OnOverdrivePlayed;
             ShionVfx.EepyPlayed -= OnEepyPlayed;
             ShionVfx.DragonsongReduced -= OnDragonsongReduced;
             // The vignette lives on the run's UI, not under the creature
@@ -253,6 +261,7 @@ public class CreatureFxController
         if (_creature.HasPower<BurlesqueWindUp>()) _burlesqueAuraActive = true;
         else if (_creature.GetPowerAmount<VigorPower>() <= 0) _burlesqueAuraActive = false;
         SetAuraActive(BurlesqueAura, alive && _burlesqueAuraActive);
+        SetAuraActive(OverdriveAura, alive && isShion && _overdriveFlashes > 0);
 
         _auras.Call("set_auras", _activeAuras.ToArray());
     }
@@ -387,6 +396,18 @@ public class CreatureFxController
     {
         if (creature != _creature || _spiritBurstLightning == null || !GodotObject.IsInstanceValid(_spiritBurstLightning)) return;
         _spiritBurstLightning.Call("play_once");
+    }
+
+    private void FlashOverdrive(Creature creature)
+    {
+        if (creature != _creature || _auras == null || !GodotObject.IsInstanceValid(_auras)) return;
+        _overdriveFlashes++;
+        Refresh();
+        _auras.GetTree().CreateTimer(OverdriveAuraSeconds).Timeout += () =>
+        {
+            _overdriveFlashes--;
+            if (GodotObject.IsInstanceValid(_auras)) Refresh();
+        };
     }
 
     private void HopMemoryBulb(Creature creature, int index)
