@@ -2298,3 +2298,16 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - Avatar Burst's "becomes X-cost": it costs exactly your current energy (cards can't become true X-cost), so the card's own numbers don't scale with X; it's the Replay X that does.
 - Extra Burst: "your hand" = the cards in Hand after the draw.
 - Architect numbers (all in `Strife/StrifeConfig.cs`): CheckAttackDamage 150/225, CheckHpBase 450/600, CheckHpPerExtraPlayer 0.5, StartingTier 1, new BuffCycle, PerfectedDesignDamageDealt 2 / Taken 0.5. Easy to crank further.
+
+## Our Mages Are Different rework (2026-11-27)
+
+- [ ] Partner plays an Exhaust Blood Bend card with Blood ≥ 1 (Hack, Blood Bath, Blood Cage, Blood Prison, Exsanguination, Scarlet Shadow, Blowout Blast): it isn't Exhausted. It comes back to Hand with Retain, free, Cooldown X (gray art, clock shows X).
+- [ ] Same with 0 Blood (X = 0): it goes to the Discard Pile instead of being Exhausted, with no Cooldown.
+- [ ] Playing it while on Cooldown does nothing and sends it to the Discard Pile, not the Exhaust Pile.
+- [ ] Blood Bend cards without Exhaust (Payback Time, upgraded Exsanguination) no longer get Cooldown.
+- [ ] Cards Exhausted by something else (e.g. Team Blast) still Exhaust.
+- [ ] Replayed cards (e.g. Double Tap style) only come back once, after the last play.
+
+**Decisions I made**
+- "Lose Exhaust" is checked when the card is played, so the card text still shows Exhaust. Only cards that actually Blood Bent are affected (no keyword marks Blood Bend cards before they're played).
+- The old version only fired on cards headed to the Discard Pile, but it checked that pile before the card had left the Play pile, so it probably never worked.

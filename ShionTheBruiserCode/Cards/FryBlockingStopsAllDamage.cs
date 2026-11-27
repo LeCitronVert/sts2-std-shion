@@ -22,7 +22,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// This turn, if you have Block, you can't lose HP. Exhaust. Upgrade: costs 1.
+/// If you have Block, you can't lose HP until your next turn. Exhaust. Upgrade: costs 1.
 /// </summary>
 public class FryBlockingStopsAllDamage() : FryTheCommanderCard(2,
     CardType.Skill, CardRarity.Rare,

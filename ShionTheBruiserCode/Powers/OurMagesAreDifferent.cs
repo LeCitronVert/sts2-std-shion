@@ -25,15 +25,16 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 /// <summary>
 /// Our Mages Are Different (Team-Up), on Fry.
 /// Whenever you lose HP, gain Amount Stars.
-/// Whenever a Partner plays a card that Blood Bends X (X ≥ 1), it gets Cooldown X: it returns to their Hand with Retain
-/// and is free for X turns; played during those turns, it's discarded with no effect (OurMagesCooldownPatch).
+/// Whenever a Partner plays an Exhaust card that Blood Bends X, it loses Exhaust (goes to the Discard Pile instead).
+/// If X ≥ 1, it also gets Cooldown X: it returns to their Hand with Retain and is free for X turns; played during those
+/// turns, it's discarded with no effect (OurMagesCooldownPatch).
 /// </summary>
 public class OurMagesAreDifferent : TeamUpPower, ISeelsListener
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(FryCardKeywords.Cooldown)];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(FryCardKeywords.Cooldown), HoverTipFactory.FromKeyword(CardKeyword.Exhaust)];
 
     private readonly Dictionary<CardModel, int> _pending = [];
 
@@ -47,11 +48,26 @@ public class OurMagesAreDifferent : TeamUpPower, ISeelsListener
 
     public Task AfterBloodBend(PlayerChoiceContext choiceContext, Player player, int x, CardModel? source)
     {
-        if (source is null || x <= 0 || !LivingPartners.Contains(player.Creature) || OurMagesCooldown.IsOnCooldown(source)) return Task.CompletedTask;
+        if (source is null || x < 0 || !LivingPartners.Contains(player.Creature) || OurMagesCooldown.IsOnCooldown(source)) return Task.CompletedTask;
         _pending[source] = x;
         return Task.CompletedTask;
     }
 
+    /// <summary>
+    /// A Partner's Exhaust card played while on Cooldown does nothing and is discarded, not Exhausted.
+    /// The result pile is picked before OnPlay, while the card is still on Cooldown (the patch ends it during OnPlay).
+    /// </summary>
+    public override CardLocation ModifyCardPlayResultLocation(CardModel card, bool isAutoPlay, ResourceInfo resources, CardLocation location)
+    {
+        if (location.pileType != PileType.Exhaust || !OurMagesCooldown.IsOnCooldown(card)
+            || !card.Keywords.Contains(CardKeyword.Exhaust) || !Partners.Contains(card.Owner.Creature)) return location;
+        return location with { pileType = PileType.Discard };
+    }
+
+    /// <summary>
+    /// Runs while the card is still in the Play pile, before the game sends it to its result pile: moving it out of
+    /// the Play pile here skips the Exhaust.
+    /// </summary>
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var card = cardPlay.Card;
@@ -59,12 +75,20 @@ public class OurMagesAreDifferent : TeamUpPower, ISeelsListener
         if (cardPlay.PlayIndex < cardPlay.PlayCount - 1) return;
         _pending.Remove(card);
 
-        // Exhausted or Power cards don't come back.
-        if (card.Pile?.Type is not PileType.Discard) return;
+        // Only Exhaust cards on their way to the Exhaust Pile (not Powers, not cards Exhausted by something else).
+        if (cardPlay.ResultPile is not PileType.Exhaust || !card.Keywords.Contains(CardKeyword.Exhaust)) return;
+        if (card.Pile?.Type is not PileType.Play) return;
 
         Flash();
-        OurMagesCooldown.Start(card, x);
-        await CardPileCmd.Add(card, PileType.Hand);
+        if (x > 0)
+        {
+            OurMagesCooldown.Start(card, x);
+            await CardPileCmd.Add(card, PileType.Hand);
+        }
+        else
+        {
+            await CardPileCmd.Add(card, PileType.Discard);
+        }
     }
 
     public override bool TryModifyEnergyCostInCombat(CardModel card, decimal originalCost, out decimal modifiedCost)

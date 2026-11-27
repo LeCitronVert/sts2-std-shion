@@ -13,7 +13,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// Team-Up (Fry): when you Patch Up, reduce your partner's Damage Debt by that amount.
 /// When your partner ends their turn with Refuse, you gain 10 Block.
 /// </summary>
-public class ShionDragonTigerFlash() : ShionTeamUpCard(3,
+public class ShionDragonTigerFlash() : ShionTeamUpCard(2,
     CardType.Power,
     TargetType.Self)
 {
@@ -33,6 +33,7 @@ public class ShionDragonTigerFlash() : ShionTeamUpCard(3,
 
     protected override void OnUpgrade()
     {
+        EnergyCost.UpgradeBy(-1);
         AddKeyword(CardKeyword.Innate);
     }
 }

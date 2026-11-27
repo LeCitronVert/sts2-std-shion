@@ -18,7 +18,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Team-Up (Seels), Fry: your partner's Blood Bend X cards gain Cooldown X. You gain 1 Star whenever you lose HP.
+/// Team-Up (Seels), Fry: your partner's Exhaust Blood Bend X cards lose Exhaust and gain Cooldown X. You gain 1 Star whenever you lose HP.
 /// </summary>
 public class FryOurMagesAreDifferent() : FryTeamUpCard(2,
     CardType.Power,
