@@ -1,3 +1,5 @@
+using MegaCrit.Sts2.Core.Models.CardPools;
+using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -18,7 +20,8 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// Token (added by Final Rush). Deal 4 damage to ALL enemies.
 /// Deal 2 (4) additional damage for each Slash in your Exhaust Pile. Exhaust.
 /// </summary>
-public class SeelsFinishingExplosion() : SeelsTheRecklessCard(0,
+[Pool(typeof(TokenCardPool))]
+public class SeelsFinishingExplosion() : SeelsTheRecklessCard(1,
     CardType.Attack, CardRarity.Token,
     TargetType.AllEnemies)
 {

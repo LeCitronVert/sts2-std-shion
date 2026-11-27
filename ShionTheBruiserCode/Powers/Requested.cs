@@ -35,7 +35,7 @@ public class Requested : FryTheCommanderPower
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         SourceCard is null ? [] : [HoverTipFactory.FromCard(SourceCard)];
 
-    /// <param name="repeats">How many times the effect triggers (Old Wand doubles it), shown in the tooltip.</param>
+    /// <param name="repeats">How many times the effect triggers, shown in the tooltip.</param>
     public void Setup(CardModel sourceCard, Func<PlayerChoiceContext, Task> effect, int repeats = 1)
     {
         SourceCard = sourceCard;

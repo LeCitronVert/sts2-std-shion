@@ -43,7 +43,7 @@ public class FryManaDrain() : FryTheCommanderCard(1,
             .Sum(i => i.GetTotalDamage([card.Owner.Creature], target));
     }
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<BadFaith>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(FryCardKeywords.Argue)];
 
     protected override bool ShouldGlowGoldInternal => CombatState?.HittableEnemies.Any(FryMechanicsHelper.IntendsToAttack) ?? false;
 
@@ -51,7 +51,7 @@ public class FryManaDrain() : FryTheCommanderCard(1,
     {
         ArgumentNullException.ThrowIfNull(play.Target);
         var power = GetAttackPower(this, play.Target);
-        await FryMechanicsHelper.GainBadFaith(choiceContext, Owner.Creature, power, this);
+        await FryMechanicsHelper.Argue(choiceContext, Owner.Creature, power, this);
     }
 
     protected override void OnUpgrade()

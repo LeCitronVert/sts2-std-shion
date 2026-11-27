@@ -1,13 +1,18 @@
+using BaseLib.Utils;
 using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
@@ -17,7 +22,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Choose 1 (2) card(s) in your Draw Pile to put on top of your Draw Pile.
+/// Choose 1 (2) card(s) in your Draw Pile to put on top of your Draw Pile. Argue 2 (3).
 /// </summary>
 public class FryTalkingIsAFreeAction() : FryTheCommanderCard(0,
     CardType.Skill, CardRarity.Common,
@@ -25,7 +30,12 @@ public class FryTalkingIsAFreeAction() : FryTheCommanderCard(0,
 {
     public override int CanonicalStarCost => 1;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(1)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CardsVar(1),
+        new DynamicVar("Argue", 2M),
+    ];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(FryCardKeywords.Argue)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
@@ -36,10 +46,12 @@ public class FryTalkingIsAFreeAction() : FryTheCommanderCard(0,
             new CardSelectorPrefs(SelectionScreenPrompt, DynamicVars.Cards.IntValue)
         );
         await CardPileCmd.Add(cards, PileType.Draw, CardPilePosition.Top);
+        await FryMechanicsHelper.Argue(choiceContext, Owner.Creature, DynamicVars["Argue"].BaseValue, this);
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars.Cards.UpgradeValueBy(1M);
+        DynamicVars["Argue"].UpgradeValueBy(1M);
     }
 }

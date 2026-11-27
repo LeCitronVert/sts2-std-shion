@@ -21,21 +21,21 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Event card. For each of your Erratic cards, deal damage equal to this card's energy cost to a random enemy.
-/// At the end of your turn, if this is in your Hand, Gamble your Hand (this card included). Exhaust. Eternal. Upgrade: costs 0.
+/// Event card. Erratic. Deal 1 damage to ALL enemies. Whenever you draw this card, increase its damage by 1 for each of your
+/// Erratic cards and draw 1 additional card. Whenever you end your turn with this card in your Hand, Gamble your Hand
+/// (this card included). Eternal. Upgrade: costs 0, loses Eternal.
 /// </summary>
 public class SeelsGamblingAddiction() : SeelsTheRecklessCard(1,
     CardType.Skill, CardRarity.Event,
-    TargetType.RandomEnemy)
+    TargetType.AllEnemies)
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, CardKeyword.Eternal];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [SeelsCardKeywords.Erratic, CardKeyword.Eternal];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new DamageVar(1M, ValueProp.Move),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
-        new CalculatedVar("DamageAmount").WithMultiplier((card, _) =>
-            card.CombatState is null ? 0 : card.EnergyCost.GetAmountToSpend()),
-        new CalculatedVar("Hits").WithMultiplier((card, _) => CountErraticCards(card)),
+        new CalculatedVar("ErraticAmount").WithMultiplier((card, _) => CountErraticCards(card)),
     ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
@@ -53,18 +53,27 @@ public class SeelsGamblingAddiction() : SeelsTheRecklessCard(1,
     {
         if (CombatState is null) return;
 
-        // The energy cost it was played for (0 if it was made free).
-        var damage = play.Resources.EnergyValue;
-        var hits = CountErraticCards(this);
-        if (damage <= 0 || hits <= 0) return;
-
-        await DamageCmd.Attack(damage)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, play)
-            .Unpowered()
-            .TargetingRandomOpponents(CombatState)
-            .WithHitCount(hits)
+            .TargetingAllOpponents(CombatState)
             .WithHitFx("vfx/vfx_attack_blunt")
             .Execute(choiceContext);
+    }
+
+    // Erratic from the start: the Seels tracker (which randomizes Erratic costs on draw) may not exist yet
+    public override async Task AfterCardDrawnEarly(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    {
+        if (card != this || Owner.Creature.HasPower<SeelsTracker>()) return;
+        await SeelsMechanicsHelper.RandomizeErraticCost(choiceContext, this);
+        SeelsMechanicsHelper.EnsureCreatureHasSeelsTracker(Owner.Creature);
+    }
+
+    public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    {
+        if (card != this || CombatState is null) return;
+        var increase = CountErraticCards(this);
+        if (increase > 0) DynamicVars.Damage.BaseValue += increase;
+        await CardPileCmd.Draw(choiceContext, 1, Owner);
     }
 
     // Not HasTurnEndInHandEffect/OnTurnEndInHand: the game moves the card to the Play pile before that hook and to
@@ -81,5 +90,6 @@ public class SeelsGamblingAddiction() : SeelsTheRecklessCard(1,
     protected override void OnUpgrade()
     {
         EnergyCost.UpgradeBy(-1);
+        RemoveKeyword(CardKeyword.Eternal);
     }
 }

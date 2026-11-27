@@ -1,3 +1,4 @@
+using ShionTheBruiser.ShionTheBruiserCode.Cards;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
@@ -78,6 +79,8 @@ public sealed class EmeraldWheelAction(Player player, int choice) : GameAction
 
         power.MarkUsed(color);
         var card = combatState.CreateCard(ChaosEmeraldHelper.EmeraldPowerCard(color), player);
+        // Picked from the wheel: free to play
+        if (card is EmeraldPowerCard emerald) emerald.FromWheel = true;
         await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, player);
     }
 

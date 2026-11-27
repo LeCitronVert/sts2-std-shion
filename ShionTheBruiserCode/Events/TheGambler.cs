@@ -68,6 +68,7 @@ public sealed class TheGambler : DreamersEventModel
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new GoldVar(40),
+        new MaxHpVar(1),
         new StringVar(CurseNameKey),
         new StringVar(ResultKey),
     ];
@@ -121,6 +122,7 @@ public sealed class TheGambler : DreamersEventModel
     private async Task PlayOnce()
     {
         await PlayerCmd.LoseGold(DynamicVars.Gold.IntValue, Owner!, GoldLossType.Spent);
+        await CreatureCmd.GainMaxHp(Owner!.Creature, DynamicVars.MaxHp.IntValue);
         RollCurse();
 
         // The result line needs CurseName resolved before it goes into the page text

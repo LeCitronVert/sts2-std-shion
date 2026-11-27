@@ -9,7 +9,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 /// <summary>
 /// Cosmo (multiplayer, cursed). Obtain the Chaos Emerald of another party member's character, and add 2 of that
-/// character's basic Defends to your Deck.
+/// character's basic Defends to your Deck. The added Defends are Eternal.
 /// Only offered when you unlocked (in your save) the Emerald of at least one partner's character, and don't hold it yet.
 /// Unlocks are read from the synced unlock state (<see cref="CosmoUnlockExtras"/>), so every client agrees.
 /// </summary>
@@ -48,7 +48,9 @@ public class ChaosRing : CosmoRelic
         if (defend == null) return;
         for (var i = 0; i < Defends; i++)
         {
-            CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(Owner.RunState.CreateCard(defend, Owner), PileType.Deck));
+            var card = Owner.RunState.CreateCard(defend, Owner);
+            PermanentEternal.Add(card);
+            CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(card, PileType.Deck));
         }
     }
 }

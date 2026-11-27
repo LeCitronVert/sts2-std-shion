@@ -13,12 +13,12 @@ using ShionTheBruiser.ShionTheBruiserCode.Helper;
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// The Valkyrs deal double damage to this enemy for X turns.
+/// The Valkyrs deal double damage to this enemy for the rest of the combat (Double Tap).
 /// </summary>
 public class ValkyrMark : FryTheCommanderPower
 {
     public override PowerType Type => PowerType.Debuff;
-    public override PowerStackType StackType => PowerStackType.Counter;
+    public override PowerStackType StackType => PowerStackType.Single;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(FryCardKeywords.Valkyrs)];
 
@@ -27,10 +27,5 @@ public class ValkyrMark : FryTheCommanderPower
     )
     {
         return target == Owner && FryMechanicsHelper.IsValkyrDamage ? 2m : 1m;
-    }
-
-    public override Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
-    {
-        return side == CombatSide.Player ? PowerCmd.TickDownDuration(this) : Task.CompletedTask;
     }
 }

@@ -21,7 +21,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// Cooldown 1. Deal 14 (17) damage. Deal 3 (6) damage to ALL other enemies.
 /// </summary>
 public class FryFireballs() : FryCooldownCard(0,
-    CardType.Attack, CardRarity.Common,
+    CardType.Attack, CardRarity.Rare,
     TargetType.AnyEnemy)
 {
     public override int CanonicalStarCost => 1;

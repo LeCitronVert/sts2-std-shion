@@ -24,7 +24,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// Add a copy of the first 0-cost Attack you play each turn into your Hand (stacks). (Draw 1 card.) Put this card into your Draw Pile. Ethereal.
 /// </summary>
 public class SeelsComboMeter() : SeelsTheRecklessCard(1,
-    CardType.Skill, CardRarity.Uncommon,
+    CardType.Skill, CardRarity.Rare,
     TargetType.Self)
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Ethereal];

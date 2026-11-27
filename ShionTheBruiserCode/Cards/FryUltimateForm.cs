@@ -40,7 +40,7 @@ public class FryUltimateForm() : FryTheCommanderCard(3,
     {
         var creature = Owner.Creature;
         await FryMechanicsHelper.Refuse(choiceContext, creature, DynamicVars["Refuse"].BaseValue, this);
-        await FryMechanicsHelper.GainBadFaith(choiceContext, creature, DynamicVars["BadFaith"].BaseValue, this);
+        await FryMechanicsHelper.Argue(choiceContext, creature, DynamicVars["BadFaith"].BaseValue, this);
         await PowerCmd.Apply<UltimateForm>(choiceContext, creature, DynamicVars["UltimateForm"].BaseValue, creature, this);
     }
 

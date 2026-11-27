@@ -2192,3 +2192,66 @@ Open the character select screen (singleplayer, then multiplayer) and click thro
 - [ ] Extreme Speed's Slow still ends on schedule when it runs out, even if Emerald Slow was played on top.
 - [ ] With Ivy active, it starts at 100% (200% upgraded). Artifact blocks it (one charge).
 - [ ] Multiplayer: the Slow % matches on every client.
+
+## 41. "Change Pending L" pass (Al notes, 2026-11-27)
+
+**Setup**
+- [ ] Open the project in MegaDot once so the new/replaced portraits get imported (Slal: Elaborate Flourish new; Anvil Gag, Funny Gag, Fresh Idea replaced. Fry: Draw Aggro, Anything You Can Do, its 6 new tokens, No Endor Holocaust), then re-export the pck.
+- [ ] Both DLLs built (live + beta refs).
+
+**Seels**
+- [ ] Combo Meter is Rare, Recall Blood is Uncommon.
+- [ ] Finishing Explosion costs 1 and is in the token pool (can show up from random token generation). Final Rush costs 1.
+- [ ] Pin Them Down+ still adds plain Slashes (not Slash+), in hand and draw pile.
+- [ ] Gambling Addiction: Erratic (cost randomized on draw, even if nothing else made you Erratic this fight). Deals 1 damage to ALL. On draw: +1 damage per Erratic card you own and draws 1 more card. Ending the turn with it in hand Gambles your Hand. Eternal; upgrade = 0-cost and loses Eternal. No longer Exhausts.
+
+**Slal**
+- [ ] Enthusiastic Wave+: 1 Fresh Idea+ to ALL players (was 2).
+- [ ] Slal vs Shrinking Beetle: Shrink halves Slal's HP-based size instead of snapping to 0.5, and when Shrink ends he goes back to his HP-based size (not 1.0).
+
+**Fry: keywords and statuses**
+- [ ] Argue X: loses up to X Damage Debt, the rest of X becomes Bad Faith. Hover tip shows on every Argue card.
+- [ ] Command: lasts the whole fight, adds X to each Valkyr damage instance and Valkyr Block grant.
+- [ ] Request X, Y and Z: one Requested counter per number, each triggers the effect. Request keyword text updated.
+- [ ] Decoy Trial now shares Argue and Refuse only (Bad Faith / Damage Debt from other sources no longer shared).
+- [ ] Summon Bigger Fish (0 + 2 Stars, Uncommon): gain 2 (3) Command whenever a Requested counter reaches 0.
+- [ ] Double Tap: Valkyr Mark lasts the whole fight (no more turn countdown), always applied.
+
+**Fry: cards** (each matches the sheet's new text/cost/upgrade)
+- [ ] Refuge in Audacity, Desperation Attack, Just in Time, Double Tap, Crippling the Competition (now a Skill), Boots of Toughness, Call on Me, Crosshair Aware (+ Retain), Fake Texting (always Requests; upgrade loses Exhaust), All for Nothing (+ gains 1 energy), Gratuitous English, Implausible Deniability, Talking Is a Free Action, Unbelievably Impatient (Cooldown or Retain), Salt the Earth, Praetorian Guard, Combat Pragmatist, Bottomless Magazines, Claw Strike (Common), No Kill like Overkill, Slap-On-The-Wrist Nuke, Blatant Lies, Attack Pattern Alpha, Calling Your Attacks, Discarded Not Delivered, Multi-Melee Master, Kinda Busy Here, Punch Parry, Retcon, Scotty Time, Sucking-In Lines (now an Attack), Mana Drain, You Nuke 'Em, Hyper-Destructive Bouncing Ball, Rule of Cool (anyone on your side attacking counts), Ultimate Form, Turns Red (3/4), Blocking Stops All Damage, What Were You Thinking?, No-Sell (solo only), Curb-Stomp Battle, No Endor Holocaust (back: Request 10, deal 100), Decoy Trial, Mecha Expansion Pack, Actually a Doombot, Apocalypse Stroll (1 Star), Fireballs (Rare).
+- [ ] New Draw Aggro (Common) shows in rewards.
+- [ ] I Will Tear Your Arms Off no longer appears in rewards/shops/random generation.
+- [ ] Anything You Can Do (MP): pick another player, then pick a card; both of you get it (upgraded if the card is). Options = the characters present (Regent BFS, Defect Casting a Shadow, Slal Narrative Shapeshifting, Seels Signature Laugh, Ironclad Comeback Mechanic, Silent Diagonal Speed Boost, Necrobinder Friendly Ghost, Shion Heal Thyself, Fry I Can Do Better) + The Münchausen always.
+- [ ] Each of those 10 tokens: cost 1, its Cooldown, its effect and upgrade.
+
+**Fry relics**
+- [ ] Leaf Bracer: Block per Star gained. Strategies Manual: +1 Strength this turn per Request card. Stock Valkyr Frame: first card each combat free; first card bought at each merchant free. Inhibitor Ring: +1 energy whenever you spend Stars. Old Wand: Glam on a random deck card after Elite fights (Requests no longer delayed/doubled).
+
+**Cosmo / events**
+- [ ] Chaos Ring's added Defends are Eternal, still Eternal after save & reload.
+- [ ] Halloween Party (MP, cursed): choose another player's basic Attack, it's Eternal (survives reload), and you get that player's starting relic. Never offered alongside Planet Egg.
+- [ ] The Gambler: each "Play once" (40 Gold) gives +1 Max HP. Celebrate text says "quick to leave".
+
+**Rings / Emerald Powers / Act 4 shrine**
+- [ ] Rings are a buff (old Ring icon), no longer Gold. They absorb unblocked damage 1:1 for anyone (no Super Form needed); with Super Form, the wheel's top section still turns that off/on.
+- [ ] Winning a fight turns leftover Rings into Gold. Rings don't carry over.
+- [ ] Top bar shows a Ring counter next to Gold during fights (and while you hold Super Form).
+- [ ] Ring health bar segment shows for any player whose Rings protect them. Super Form aura/music follow the Rings buff.
+- [ ] Architect damage and Ring Bounty give Rings (the buff).
+- [ ] Every Emerald Power: +10 Rings, removes the previous Emerald Power effect, Retained, costs its listed energy (Vision 1), free when picked from the Super Form wheel.
+- [ ] Water / Vision / Ivy / Slow / Avatar / Bullet / Extra lasting effects work as on the sheet (Extra's Replay sticks to the card for the fight).
+- [ ] Act 4 shrine: full heal, then choose Placeholder A (50 Rings at the start of the next fight), B (pick 1 of 3 upgraded Rares, skippable) or C (random Rare relic + empty potion slots filled with Rare potions). No more 100 Gold.
+
+**Decisions I made**
+- Your answers: Argue = lose X Damage Debt, rest as Bad Faith. Command lasts the fight. Broken Clockwatch kept as is (sheet text duplicated Old Wand). Emerald costs as listed, Vision 1, free from the wheel. Rings last one fight and become Gold.
+- Rings protect without Super Form. Super Form only adds the on/off toggle.
+- Yellow Emerald (Slow) counts energy from `PlayerCmd.GainEnergy` (cards, Energy Next Turn...) but not the turn's energy reset.
+- Ivy's Weak (upgraded only) triggers once per Attack command on each enemy hit. Bullet heals 1 per Vulnerable enemy hit per attack.
+- Old Wand enchants a random eligible card (no choice). Stock Valkyr Frame's free card is per merchant visit.
+- Gambling Addiction stays a Skill; its damage is now normal (powered) damage.
+- Boots of Toughness+ = Argue 5 (`//todo`: sheet upgrade text is stale). Kinda Busy Here+ = 6 Block per counter (`//todo`). Hyper-Destructive Bouncing Ball+ = 1 more starting hit (`//todo`; it's 0 energy now). Bottomless Magazines+ = Retain (`//todo`).
+- No Endor Holocaust hits a random enemy if the chosen one died before the Request triggers.
+- Mecha Expansion Pack's 7 Strength / 7 Dexterity are permanent, once per counter (3 counters). Shrink still 3 (`//todo`).
+- The Gambler's Max HP only comes from "Play once" (not "Play until you win").
+- Shrine choices are relics named "Placeholder A/B/C" with the default relic art (A uses the Ring icon). New cards/relic/power without art are in `MISSING_IMAGES.tsv`.
+- I overwrote the existing Anvil Gag / Funny Gag / Fresh Idea portraits with the new art (old ones are in git).

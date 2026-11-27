@@ -20,7 +20,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Cooldown 1. Deal 20 damage to ALL enemies.
 /// </summary>
-public class FryYouNukeEm() : FryCooldownCard(1,
+public class FryYouNukeEm() : FryCooldownCard(0,
     CardType.Attack, CardRarity.Rare,
     TargetType.AllEnemies)
 {
@@ -28,7 +28,7 @@ public class FryYouNukeEm() : FryCooldownCard(1,
 
     protected override int BaseCooldown => 1;
 
-    protected override IEnumerable<DynamicVar> CooldownCardVars => [new DamageVar(20M, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CooldownCardVars => [new DamageVar(30M, ValueProp.Move)];
 
     protected override async Task OnCooldownCardPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
@@ -42,6 +42,6 @@ public class FryYouNukeEm() : FryCooldownCard(1,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(6M); //todo : upgrade not specified
+        DynamicVars.Damage.UpgradeValueBy(10M);
     }
 }

@@ -1,14 +1,17 @@
-using System.Reflection;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Strife;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
@@ -20,150 +23,198 @@ internal static class EmeraldPowerIcons
 }
 
 /// <summary>
-/// Ivy (Green Chaos Emerald): for (Amount) turns, the debuffs you apply to others are doubled.
+/// The lasting effect of an Emerald Power card. Only one can be active: playing an Emerald Power first removes the
+/// active one (<see cref="Cards.EmeraldPowerCard"/>).
 /// </summary>
-public sealed class EmeraldIvy : ShionTheBruiserPower
+public abstract class EmeraldPowerEffect : ShionTheBruiserPower
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
+    protected abstract string IconName { get; }
+
     // Same icon as its Emerald wheel section
-    public override string CustomPackedIconPath => EmeraldPowerIcons.Path("ivy");
-    public override string CustomBigIconPath => EmeraldPowerIcons.Path("ivy");
+    public override string CustomPackedIconPath => EmeraldPowerIcons.Path(IconName);
+    public override string CustomBigIconPath => EmeraldPowerIcons.Path(IconName);
 
-    public override decimal ModifyPowerAmountGivenMultiplicative(PowerModel power, Creature giver, decimal amount, Creature? target,
-        CardModel? cardSource)
+    public static async Task RemoveAll(Creature creature)
     {
-        if (giver != Owner || target == null || target == Owner) return 1m;
-        return power.GetTypeForAmount(amount) == PowerType.Debuff ? 2m : 1m;
-    }
-
-    public override Task AfterModifyingPowerAmountGiven(PowerModel power)
-    {
-        Flash();
-        return Task.CompletedTask;
-    }
-
-    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
-    {
-        if (participants.Contains(Owner)) await PowerCmd.Decrement(this);
-    }
-}
-
-/// <summary>
-/// Slow (Yellow Chaos Emerald): hidden marker for the base game's <see cref="SlowPower"/> that the Slow Emerald Power added.
-/// <para>Base Slow's Amount works as a count of its sources (Bygone Effigy's own, Extreme Speed's, this one): Amount = how many
-/// Slow stacks this Emerald added, taken back off at the end of the players' turn. Slow is only removed once no other
-/// source is left. Its % (the hidden SlowAmount counter) resets when the enemy's turn starts anyway.</para>
-/// </summary>
-public sealed class EmeraldSlow : ShionTheBruiserPower
-{
-    // Shown through the base game's Slow; None so it isn't a debuff of its own (Artifact, Ivy...)
-    public override PowerType Type => PowerType.None;
-    public override PowerStackType StackType => PowerStackType.Counter;
-    protected override bool IsVisibleInternal => false;
-
-    public override string CustomPackedIconPath => ModelDb.Power<SlowPower>().PackedIconPath;
-    public override string CustomBigIconPath => ModelDb.Power<SlowPower>().ResolvedBigIconPath;
-
-    private const string SlowCounterKey = "SlowAmount";
-    private const string SlowDisplayKey = "DisplayAmount";
-
-    private static readonly MethodInfo RefreshDisplayAmount =
-        AccessTools.Method(typeof(PowerModel), "InvokeDisplayAmountChanged");
-
-    /// <summary>
-    /// Applies the base game's Slow to <paramref name="target"/> and raises its % by <paramref name="startingPercent"/>
-    /// (minus the 10% the playing card itself adds once its play finishes).
-    /// </summary>
-    public static async Task Apply(PlayerChoiceContext choiceContext, Creature target, decimal startingPercent,
-        Creature applier, CardModel cardSource)
-    {
-        var before = target.GetPowerAmount<SlowPower>();
-        await PowerCmd.Apply<SlowPower>(choiceContext, target, 1m, applier, cardSource);
-        var slow = target.GetPower<SlowPower>();
-        var added = (slow?.Amount ?? 0) - before;
-        if (slow == null || added <= 0) return; // Blocked (Artifact...)
-
-        // Amount multipliers (Ivy) scale the starting % too
-        var steps = startingPercent / 10m * added - 1m;
-        var counter = slow.DynamicVars[SlowCounterKey];
-        counter.BaseValue = Math.Max(0m, counter.BaseValue + steps);
-        slow.DynamicVars[SlowDisplayKey].BaseValue = counter.BaseValue * 10m;
-        RefreshDisplayAmount.Invoke(slow, null);
-
-        await PowerCmd.Apply<EmeraldSlow>(choiceContext, target, added, applier, cardSource);
-    }
-
-    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
-    {
-        if (side != CombatSide.Player) return;
-
-        var slow = Owner.GetPower<SlowPower>();
-        if (slow != null)
+        foreach (var effect in creature.Powers.OfType<EmeraldPowerEffect>().ToList())
         {
-            // Only take back what this Emerald added: other sources (Extreme Speed, Bygone Effigy) keep theirs
-            if (slow.Amount <= Amount) await PowerCmd.Remove(slow);
-            else await PowerCmd.ModifyAmount(choiceContext, slow, -Amount, null, null, silent: true);
+            await PowerCmd.Remove(effect);
         }
-        await PowerCmd.Remove(this);
+    }
+}
+
+/// <summary>Water (Cyan Chaos Emerald): whenever you play a Power from your Hand, play a copy of that Power.</summary>
+public sealed class EmeraldWater : EmeraldPowerEffect
+{
+    protected override string IconName => "water";
+
+    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        var card = cardPlay.Card;
+        if (card.Owner.Creature != Owner || card.Type != CardType.Power || cardPlay.IsAutoPlay || !cardPlay.IsFirstInSeries) return;
+        if (Owner.CombatState is not { } combatState || CombatManager.Instance.IsOverOrEnding || Owner.IsDead) return;
+
+        Flash();
+        var copy = combatState.CloneCard(card);
+        await CardPileCmd.AddGeneratedCardToCombat(copy, PileType.Hand, card.Owner);
+        await CardCmd.AutoPlay(choiceContext, copy, null);
+    }
+}
+
+/// <summary>Vision (Purple Chaos Emerald): draw (Amount) additional cards at the start of your turn.</summary>
+public sealed class EmeraldVision : EmeraldPowerEffect
+{
+    protected override string IconName => "vision";
+
+    public override decimal ModifyHandDraw(Player player, decimal count) =>
+        player.Creature == Owner ? count + Amount : count;
+}
+
+/// <summary>
+/// Ivy (Green Chaos Emerald): whenever you play a Skill, apply (Amount) Poison to ALL enemies. Your Attacks apply
+/// (Weak) Weak (upgraded card only).
+/// </summary>
+public sealed class EmeraldIvy : EmeraldPowerEffect
+{
+    public const string WeakKey = "Weak";
+
+    protected override string IconName => "ivy";
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar(WeakKey, 0)];
+
+    public void SetWeak(decimal amount)
+    {
+        AssertMutable();
+        DynamicVars[WeakKey].BaseValue = amount;
+        InvokeDisplayAmountChanged();
+    }
+
+    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        if (cardPlay.Card.Owner.Creature != Owner || cardPlay.Card.Type != CardType.Skill || Owner.CombatState is not { } combatState) return;
+        var enemies = combatState.HittableEnemies.ToList();
+        if (enemies.Count == 0) return;
+        Flash();
+        await PowerCmd.Apply<PoisonPower>(choiceContext, enemies, Amount, Owner, null);
+    }
+
+    public override async Task AfterAttack(PlayerChoiceContext choiceContext, AttackCommand command)
+    {
+        var weak = DynamicVars[WeakKey].BaseValue;
+        if (weak <= 0 || command.Attacker != Owner || command.ModelSource is not CardModel) return;
+        var targets = command.Results.SelectMany(r => r).Select(r => r.Receiver)
+            .Distinct().Where(c => c.IsAlive && c.Side != Owner.Side).ToList();
+        if (targets.Count == 0) return;
+        Flash();
+        await PowerCmd.Apply<WeakPower>(choiceContext, targets, weak, Owner, null);
     }
 }
 
 /// <summary>
-/// Avatar (Blue Chaos Emerald): the next Power card you play is played (Amount) additional times.
+/// Slow (Yellow Chaos Emerald): whenever you gain energy, gain as many Rings (times the stacks).
+/// "Gain energy" = PlayerCmd.GainEnergy (cards, Energy Next Turn...), not the turn's energy reset
+/// (<see cref="EmeraldSlowEnergyPatch"/>).
 /// </summary>
-public sealed class EmeraldAvatar : ShionTheBruiserPower
+public sealed class EmeraldSlow : EmeraldPowerEffect
 {
-    public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Counter;
+    protected override string IconName => "slow";
 
-    // Same icon as its Emerald wheel section
-    public override string CustomPackedIconPath => EmeraldPowerIcons.Path("avatar");
-    public override string CustomBigIconPath => EmeraldPowerIcons.Path("avatar");
-
-    public override int ModifyCardPlayCount(CardModel card, Creature? target, int playCount)
+    public async Task AfterEnergyGained(int amount)
     {
-        if (card.Owner.Creature != Owner || card.Type != CardType.Power) return playCount;
-        return playCount + Amount;
+        if (amount <= 0 || Owner.IsDead) return;
+        Flash();
+        await Rings.Gain(new ThrowingPlayerChoiceContext(), Owner, amount * Amount);
+    }
+}
+
+/// <summary>Calls <see cref="EmeraldSlow"/> after each energy gain, with the energy actually gained.</summary>
+[HarmonyPatch(typeof(PlayerCmd), nameof(PlayerCmd.GainEnergy))]
+public static class EmeraldSlowEnergyPatch
+{
+    [HarmonyPrefix]
+    public static void Prefix(Player player, out int __state) => __state = player.PlayerCombatState?.Energy ?? 0;
+
+    [HarmonyPostfix]
+    public static void Postfix(Player player, int __state, ref Task __result)
+    {
+        if (player.Creature.GetPower<EmeraldSlow>() is null) return;
+        __result = After(__result, player, __state);
     }
 
-    public override async Task AfterModifyingCardPlayCount(CardModel card)
+    private static async Task After(Task original, Player player, int before)
     {
+        await original;
+        var gained = (player.PlayerCombatState?.Energy ?? 0) - before;
+        if (gained > 0 && player.Creature.GetPower<EmeraldSlow>() is { } slow) await slow.AfterEnergyGained(gained);
+    }
+}
+
+/// <summary>Avatar (Blue Chaos Emerald): at the end of your turn, gain 1 energy next turn for each card in your Hand.</summary>
+public sealed class EmeraldAvatar : EmeraldPowerEffect
+{
+    protected override string IconName => "avatar";
+
+    public override async Task BeforeFlush(PlayerChoiceContext choiceContext, Player player)
+    {
+        if (player.Creature != Owner) return;
+        var cards = PileType.Hand.GetPile(player).Cards.Count;
+        if (cards <= 0) return;
         Flash();
-        await PowerCmd.Remove(this);
+        await PowerCmd.Apply<EnergyNextTurnPower>(choiceContext, Owner, cards * Amount, Owner, null);
+    }
+}
+
+/// <summary>Bullet (Red Chaos Emerald): whenever you attack a Vulnerable enemy, heal 1 (per enemy hit).</summary>
+public sealed class EmeraldBullet : EmeraldPowerEffect
+{
+    protected override string IconName => "bullet";
+
+    public override async Task AfterAttack(PlayerChoiceContext choiceContext, AttackCommand command)
+    {
+        if (command.Attacker != Owner || Owner.IsDead) return;
+        var vulnerable = command.Results.SelectMany(r => r).Select(r => r.Receiver)
+            .Distinct().Count(c => c.Side != Owner.Side && c.HasPower<VulnerablePower>());
+        if (vulnerable <= 0) return;
+        Flash();
+        await CreatureCmd.Heal(Owner, vulnerable * Amount);
     }
 }
 
 /// <summary>
-/// Bullet (Red Chaos Emerald): this turn, your Attack damage is multiplied by (Amount).
+/// Extra (Grey Chaos Emerald): the first (Amount) Attacks you play each turn gain Replay 1 after they are played (so they
+/// need to be drawn again to benefit from it).
 /// </summary>
-public sealed class EmeraldBullet : ShionTheBruiserPower
+public sealed class EmeraldExtra : EmeraldPowerEffect
 {
-    public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Counter;
+    protected override string IconName => "extra";
 
-    // Same icon as its Emerald wheel section
-    public override string CustomPackedIconPath => EmeraldPowerIcons.Path("bullet");
-    public override string CustomBigIconPath => EmeraldPowerIcons.Path("bullet");
+    public override int DisplayAmount => Math.Max(0, Amount - _attacksThisTurn);
 
-    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer,
-        CardModel? cardSource
-        , CardPlay? cardPlay
-    )
+    private int _attacksThisTurn;
+
+    public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (dealer != Owner || !props.IsPoweredAttack() || Amount <= 0) return 1m;
-        return Amount;
-    }
+        var card = cardPlay.Card;
+        if (card.Owner.Creature != Owner || card.Type != CardType.Attack || !cardPlay.IsFirstInSeries) return Task.CompletedTask;
+        if (_attacksThisTurn >= Amount) return Task.CompletedTask;
 
-    public override Task AfterModifyingDamageAmount(CardModel? cardSource)
-    {
+        _attacksThisTurn++;
+        card.BaseReplayCount += 1;
         Flash();
+        InvokeDisplayAmountChanged();
         return Task.CompletedTask;
     }
 
-    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
-        if (participants.Contains(Owner)) await PowerCmd.Remove(this);
+        if (side == Owner.Side)
+        {
+            _attacksThisTurn = 0;
+            InvokeDisplayAmountChanged();
+        }
+        return Task.CompletedTask;
     }
 }

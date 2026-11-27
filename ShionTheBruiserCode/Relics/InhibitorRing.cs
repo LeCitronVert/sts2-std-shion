@@ -6,34 +6,19 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 /// <summary>
-/// The first time you reach 10 Stars each combat, gain 10 more.
+/// Whenever you spend Stars, gain 1 energy.
 /// </summary>
 public class InhibitorRing : FryTheCommanderRelic
 {
     public override RelicRarity Rarity => RelicRarity.Rare;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("Threshold", 10M),
-        new StarsVar(10),
-    ];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(1)];
 
-    private bool _usedThisCombat;
-
-    public override Task BeforeCombatStart()
+    public override async Task AfterStarsSpent(int amount, Player spender)
     {
-        _usedThisCombat = false;
-        Status = RelicStatus.Active;
-        return Task.CompletedTask;
-    }
+        if (spender != Owner || amount <= 0) return;
 
-    public override async Task AfterStarsGained(int amount, Player gainer)
-    {
-        if (_usedThisCombat || gainer != Owner || amount <= 0) return;
-        if ((Owner.PlayerCombatState?.Stars ?? 0) < DynamicVars["Threshold"].IntValue) return;
-
-        _usedThisCombat = true;
-        Status = RelicStatus.Normal;
         Flash();
-        await PlayerCmd.GainStars(DynamicVars.Stars.BaseValue, Owner);
+        await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
     }
 }

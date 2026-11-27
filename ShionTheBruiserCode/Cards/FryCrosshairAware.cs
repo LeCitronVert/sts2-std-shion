@@ -40,6 +40,6 @@ public class FryCrosshairAware() : FryTheCommanderCard(0,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(3M);
+        AddKeyword(CardKeyword.Retain);
     }
 }

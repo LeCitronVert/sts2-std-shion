@@ -26,7 +26,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Strife;
 /// The damage he takes is added up instead (<see cref="StrifeArchitect.TotalDamage"/>).</item>
 /// <item>During a DPS check (<see cref="MakeYourPoint"/>) his HP is the check's health bar instead (still never below 1:
 /// emptying it stuns him).</item>
-/// <item>Whoever damages him gains that many Rings (Gold): the player, or the owner of the pet / Osty that hit him.</item>
+/// <item>Whoever damages him gains that many Rings: the player, or the owner of the pet / Osty that hit him.</item>
 /// <item>Doom that empties a check's health bar is used up; Doom that didn't trigger stays on him between phases.</item>
 /// </list>
 /// His summons have no Ring Bounty.
@@ -81,7 +81,7 @@ public sealed class ArchitectsDesign : ShionTheBruiserPower
         // The attacker gains Rings equal to the damage he suffered
         if (unblocked > 0 && (dealer?.Player ?? dealer?.PetOwner) is { } attacker && attacker.Creature.IsAlive)
         {
-            await PlayerCmd.GainGold(unblocked, attacker);
+            await Rings.Gain(choiceContext, attacker.Creature, unblocked);
         }
 
         if (Architect is { InCheck: true } architect)
@@ -257,7 +257,7 @@ public sealed class GrowingImpatience : ShionTheBruiserPower
 }
 
 /// <summary>
-/// When this enemy dies, every player gains this many Rings (Gold). At the end of each of its turns, it drops by the
+/// When this enemy dies, every player gains this many Rings. At the end of each of its turns, it drops by the
 /// number of turns it has been alive (1, then 2, then 3...).
 /// </summary>
 public sealed class RingBounty : ShionTheBruiserPower
@@ -276,7 +276,7 @@ public sealed class RingBounty : ShionTheBruiserPower
         Flash();
         foreach (var player in combatState.Players)
         {
-            await PlayerCmd.GainGold(Amount, player);
+            await Rings.Gain(new ThrowingPlayerChoiceContext(), player.Creature, Amount);
         }
     }
 

@@ -19,7 +19,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Whenever you attack an enemy and it has less HP than (1x / 2x) the amount of energy and Stars you spent this turn, it dies.
 /// </summary>
-public class FryRuleOfCool() : FryTheCommanderCard(1,
+public class FryRuleOfCool() : FryTheCommanderCard(0,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {

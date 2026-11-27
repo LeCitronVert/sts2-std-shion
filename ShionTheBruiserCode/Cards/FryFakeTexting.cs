@@ -1,13 +1,18 @@
+using BaseLib.Utils;
 using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.CardPools;
+using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
@@ -17,17 +22,18 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Apply 2 Weak. Exhaust. (Request 5. Add nothing into your Hand. Actually adds All for Nothing, because it's funny.)
+/// Apply 2 Weak. Exhaust (upgrade: no Exhaust). Request 5. Add nothing into your Hand (actually adds All for Nothing,
+/// because it's funny).
 /// </summary>
 public class FryFakeTexting() : FryTheCommanderCard(0,
     CardType.Skill, CardRarity.Common,
     TargetType.AnyEnemy)
 {
-    public override int CanonicalStarCost => 1;
-
     public const int RequestTurns = 5;
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override int CanonicalStarCost => 1;
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, FryCardKeywords.Request];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<WeakPower>(2M)];
 
@@ -37,8 +43,6 @@ public class FryFakeTexting() : FryTheCommanderCard(0,
     {
         ArgumentNullException.ThrowIfNull(play.Target);
         await PowerCmd.Apply<WeakPower>(choiceContext, play.Target, DynamicVars.Weak.BaseValue, Owner.Creature, this);
-
-        if (!IsUpgraded) return;
         await FryMechanicsHelper.Request(choiceContext, this, RequestTurns, async _ =>
         {
             if (CombatState is null) return;
@@ -49,6 +53,6 @@ public class FryFakeTexting() : FryTheCommanderCard(0,
 
     protected override void OnUpgrade()
     {
-        AddKeyword(FryCardKeywords.Request);
+        RemoveKeyword(CardKeyword.Exhaust);
     }
 }

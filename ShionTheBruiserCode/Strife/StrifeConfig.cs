@@ -143,6 +143,4 @@ public static class StrifeConfig
 
     // ── Super Form ───────────────────────────────────────────────────────────
 
-    /// <summary>Gold gained at the Act 4 start (shadowed Chaos Emeralds node).</summary>
-    public const int ShrineGold = 100;
 }

@@ -22,7 +22,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// Includes Claw Strike and the Defect's Claw.
 /// </summary>
 public class FryClawStrike() : FryTheCommanderCard(1,
-    CardType.Attack, CardRarity.Uncommon,
+    CardType.Attack, CardRarity.Common,
     TargetType.AnyEnemy)
 {
     private static readonly System.Reflection.MethodInfo? BuffClaw =

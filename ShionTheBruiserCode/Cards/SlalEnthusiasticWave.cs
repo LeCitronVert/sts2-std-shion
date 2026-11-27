@@ -11,7 +11,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
 /// Always Novel. Add 1 Fresh Idea+ into another player's Hand.
-/// Upgraded: add 2 Fresh Idea+ into ALL players' Hands (including yours).
+/// Upgraded: add 1 Fresh Idea+ into ALL players' Hands (including yours).
 /// </summary>
 public class SlalEnthusiasticWave() : SlalTheEndlessCard(0,
     CardType.Skill, CardRarity.Uncommon,
@@ -60,8 +60,8 @@ public class SlalEnthusiasticWave() : SlalTheEndlessCard(0,
         }
     }
 
+    // Upgrade only changes the target (ALL players), still 1 Fresh Idea+ each
     protected override void OnUpgrade()
     {
-        DynamicVars.Cards.UpgradeValueBy(1);
     }
 }

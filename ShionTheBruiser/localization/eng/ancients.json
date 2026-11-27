@@ -879,8 +879,8 @@
   "SHIONTHEBRUISER-COSMO.talk.SHIONTHEBRUISER-SEELS_THE_RECKLESS.13-0.char": "([sine]Psst, Cosmo![/sine] Look at these guys! What's wrong with them?)",
   "SHIONTHEBRUISER-STRIFE_SHRINE.title": "Chaos Emeralds",
   "SHIONTHEBRUISER-STRIFE_SHRINE.epithet": "TODO",
-  "SHIONTHEBRUISER-STRIFE_SHRINE.pages.INITIAL.description": "You are fully healed. You gain 100 [gold]Gold[/gold].",
-  "SHIONTHEBRUISER-STRIFE_SHRINE.pages.DONE.description": "You are fully healed. You gain 100 [gold]Gold[/gold].",
+  "SHIONTHEBRUISER-STRIFE_SHRINE.pages.INITIAL.description": "You are fully healed. The Chaos Emeralds offer you one last gift.",
+  "SHIONTHEBRUISER-STRIFE_SHRINE.pages.DONE.description": "The Chaos Emeralds fall silent.",
   "SHIONTHEBRUISER-STRIFE_SHRINE.talk.firstVisitEver.0-0.ancient": "TODO",
   "SHIONTHEBRUISER-STRIFE_SHRINE.talk.ANY.0-0r.ancient": "TODO"
 }

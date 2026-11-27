@@ -19,10 +19,12 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// At the start of your turn, deal 3 damage to a random enemy 1 time and increase the number of hits by 2.
 /// </summary>
-public class FryHyperDestructiveBouncingBall() : FryTheCommanderCard(2,
+public class FryHyperDestructiveBouncingBall() : FryTheCommanderCard(0,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
+    public override int CanonicalStarCost => 2;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<HyperDestructiveBouncingBall>(1M)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
@@ -32,6 +34,6 @@ public class FryHyperDestructiveBouncingBall() : FryTheCommanderCard(2,
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1); //todo : upgrade not specified
+        DynamicVars["HyperDestructiveBouncingBall"].UpgradeValueBy(1M); //todo : upgrade not specified
     }
 }

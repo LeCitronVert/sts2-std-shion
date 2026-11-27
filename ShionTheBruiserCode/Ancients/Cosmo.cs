@@ -39,6 +39,7 @@ public class Cosmo : CustomAncientModel
         ModelDb.Relic<SuperBulldozuratorPuzzlitowersonic>(),
         ModelDb.Relic<PeacePromise>(),
         ModelDb.Relic<ChaosRing>(),
+        ModelDb.Relic<HalloweenParty>(),
         ModelDb.Relic<LeafRobe>(),
         ModelDb.Relic<InvisibleNotebook>(),
         ModelDb.Relic<ForceCursor>(),

@@ -21,7 +21,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gloat 2. Add 1 Inky Slash (Slash+) into your Hand, and 1 (2) more into your Draw Pile per energy this card costs.
+/// Gloat 2. Add 1 Inky Slash (never upgraded) into your Hand, and 1 (2) more into your Draw Pile per energy this card costs.
 /// </summary>
 public class SeelsPinThemDown() : SeelsTheRecklessCard(2,
     CardType.Skill, CardRarity.Uncommon,
@@ -42,14 +42,14 @@ public class SeelsPinThemDown() : SeelsTheRecklessCard(2,
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [
         HoverTipFactory.FromPower<Gloat>(),
-        HoverTipFactory.FromCard<SeelsSlash>(IsUpgraded),
+        HoverTipFactory.FromCard<SeelsSlash>(),
         ..HoverTipFactory.FromEnchantment<Inky>(),
     ];
 
     private List<CardModel> CreateInkySlashes(int amount) =>
         Enumerable.Range(0, amount).Select(_ =>
         {
-            var slash = SeelsMechanicsHelper.CreateSlash(Owner, IsUpgraded);
+            var slash = SeelsMechanicsHelper.CreateSlash(Owner, false);
             SeelsMechanicsHelper.Enchant<Inky>(slash, 1);
             return slash;
         }).ToList();

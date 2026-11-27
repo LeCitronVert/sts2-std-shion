@@ -32,7 +32,7 @@ public static class FryMechanicsHelper
     public static int GetDamageDebt(Creature creature) => creature.GetPowerAmount<DamageDebt>();
 
     /// <summary>
-    /// Decoy Trial: Bad Faith, Refuse and Damage Debt loss granted by a card also benefit ALL other players.
+    /// Decoy Trial: Argue and Refuse also benefit ALL other players.
     /// </summary>
     private static IEnumerable<Creature> GetBeneficiaries(Creature creature, CardModel? source)
     {
@@ -48,11 +48,26 @@ public static class FryMechanicsHelper
     public static async Task GainBadFaith(PlayerChoiceContext choiceContext, Creature creature, decimal amount, CardModel? source)
     {
         if (amount <= 0) return;
+        await PowerCmd.Apply<BadFaith>(choiceContext, creature, amount, creature, source);
+    }
+
+    /// <summary>
+    /// Argue X: lose up to X Damage Debt, and gain the rest of X as Bad Faith.
+    /// With Decoy Trial, ALL other players Argue X too (each against their own Damage Debt).
+    /// </summary>
+    public static async Task Argue(PlayerChoiceContext choiceContext, Creature creature, decimal amount, CardModel? source)
+    {
+        if (amount <= 0) return;
         foreach (var target in GetBeneficiaries(creature, source).ToList())
         {
-            await PowerCmd.Apply<BadFaith>(choiceContext, target, amount, creature, source);
+            var debtLoss = Math.Min(amount, GetDamageDebt(target));
+            await LoseDamageDebt(choiceContext, target, debtLoss, source);
+            await GainBadFaith(choiceContext, target, amount - debtLoss, source);
         }
     }
+
+    /// <summary>The Damage Debt Argue X would remove right now (for previews).</summary>
+    public static decimal ArgueDebtLoss(Creature creature, decimal amount) => Math.Max(0, Math.Min(amount, GetDamageDebt(creature)));
 
     public static async Task Refuse(PlayerChoiceContext choiceContext, Creature creature, decimal amount, CardModel? source)
     {
@@ -66,19 +81,16 @@ public static class FryMechanicsHelper
     public static async Task LoseDamageDebt(PlayerChoiceContext choiceContext, Creature creature, decimal amount, CardModel? source)
     {
         if (amount <= 0) return;
-        foreach (var target in GetBeneficiaries(creature, source).ToList())
-        {
-            var debt = target.GetPower<DamageDebt>();
-            if (debt is null) continue;
+        var debt = creature.GetPower<DamageDebt>();
+        if (debt is null) return;
 
-            if (amount >= debt.Amount)
-            {
-                await PowerCmd.Remove(debt);
-            }
-            else
-            {
-                await PowerCmd.ModifyAmount(choiceContext, debt, -amount, creature, source);
-            }
+        if (amount >= debt.Amount)
+        {
+            await PowerCmd.Remove(debt);
+        }
+        else
+        {
+            await PowerCmd.ModifyAmount(choiceContext, debt, -amount, creature, source);
         }
     }
 
@@ -120,44 +132,38 @@ public static class FryMechanicsHelper
 
     /// <summary>
     /// Request X: the effect triggers at the start of your turn in X turns (immediately if X is 0 or less).
-    /// Summon Bigger Fish can lower X. Old Wand adds 2 turns and makes the effect trigger an additional time.
     /// </summary>
-    public static async Task Request(PlayerChoiceContext choiceContext, CardModel card, int turns, Func<PlayerChoiceContext, Task> effect)
+    public static Task Request(PlayerChoiceContext choiceContext, CardModel card, int turns, Func<PlayerChoiceContext, Task> effect)
+    {
+        return Request(choiceContext, card, [turns], effect);
+    }
+
+    /// <summary>
+    /// Request X, Y and Z: one Requested counter per number, each triggering the effect when it reaches 0.
+    /// Strategies Manual triggers once per Request (not per counter).
+    /// </summary>
+    public static async Task Request(PlayerChoiceContext choiceContext, CardModel card, IReadOnlyList<int> turns, Func<PlayerChoiceContext, Task> effect)
     {
         var creature = card.Owner.Creature;
-        var oldWand = card.Owner.GetRelic<OldWand>();
-        var repeats = 1;
-        if (oldWand is not null)
-        {
-            turns += oldWand.DynamicVars["Turns"].IntValue;
-            repeats = 2;
-            var once = effect;
-            effect = async ctx =>
-            {
-                oldWand.Flash();
-                await once(ctx);
-                await once(ctx);
-            };
-        }
+        var manual = card.Owner.GetRelic<StrategiesManual>();
+        if (manual is not null) await manual.OnRequest(choiceContext);
 
-        var biggerFish = creature.GetPower<SummonBiggerFish>();
-        if (biggerFish is not null && biggerFish.TryConsume())
+        foreach (var t in turns)
         {
-            turns--;
-        }
-
-        if (turns <= 0)
-        {
-            if (!await PowerfulAndHelpless.TryReplaceRequest(choiceContext, creature))
+            if (creature.IsDead) return;
+            if (t <= 0)
             {
-                await effect(choiceContext);
+                if (!await PowerfulAndHelpless.TryReplaceRequest(choiceContext, creature))
+                {
+                    await effect(choiceContext);
+                }
+                continue;
             }
-            return;
-        }
 
-        var request = (Requested)ModelDb.Power<Requested>().ToMutable();
-        request.Setup(card, effect, repeats);
-        await PowerCmd.Apply(choiceContext, request, creature, turns, creature, card);
+            var request = (Requested)ModelDb.Power<Requested>().ToMutable();
+            request.Setup(card, effect);
+            await PowerCmd.Apply(choiceContext, request, creature, t, creature, card);
+        }
     }
 
     /// <summary>
@@ -179,11 +185,12 @@ public static class FryMechanicsHelper
     public static bool IsValkyrDamage { get; private set; }
 
     /// <summary>
-    /// The Valkyrs deal damage: it is not affected by any of your modifiers (no dealer, no card source),
-    /// but the target's own modifiers (like Vulnerable) still apply.
+    /// The Valkyrs deal damage: it is not affected by any of your modifiers (no dealer, no card source) except
+    /// Command, which adds to it. The target's own modifiers (like Vulnerable) still apply.
     /// </summary>
-    public static async Task ValkyrsDamage(PlayerChoiceContext choiceContext, IEnumerable<Creature> targets, decimal amount)
+    public static async Task ValkyrsDamage(PlayerChoiceContext choiceContext, Creature owner, IEnumerable<Creature> targets, decimal amount)
     {
+        amount += GetCommand(owner);
         var targetList = targets.Where(t => t.IsAlive).ToList();
         if (amount <= 0 || targetList.Count == 0) return;
 
@@ -200,12 +207,22 @@ public static class FryMechanicsHelper
     }
 
     /// <summary>
-    /// The Valkyrs grant Block: not affected by any of your modifiers.
+    /// The Valkyrs grant Block: not affected by any of your modifiers (except Command).
     /// </summary>
-    public static async Task ValkyrsBlock(Creature target, decimal amount)
+    public static async Task ValkyrsBlock(Creature owner, Creature target, decimal amount)
     {
+        amount += GetCommand(owner);
         if (amount <= 0) return;
         await CreatureCmd.GainBlock(target, amount, ValueProp.Unpowered, null);
+    }
+
+    /// <summary>Command: added to each instance of damage and Block the Valkyrs deal or grant for this player.</summary>
+    public static int GetCommand(Creature owner) => owner.GetPowerAmount<Command>();
+
+    public static async Task GainCommand(PlayerChoiceContext choiceContext, Creature creature, decimal amount, CardModel? source)
+    {
+        if (amount <= 0) return;
+        await PowerCmd.Apply<Command>(choiceContext, creature, amount, creature, source);
     }
 
     // ── Misc ────────────────────────────────────────────────────────────────

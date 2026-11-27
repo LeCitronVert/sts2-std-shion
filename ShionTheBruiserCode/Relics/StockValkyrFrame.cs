@@ -1,36 +1,74 @@
-using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Merchant;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.ValueProps;
-using ShionTheBruiser.ShionTheBruiserCode.Enums;
-using ShionTheBruiser.ShionTheBruiserCode.Helper;
+using MegaCrit.Sts2.Core.Rooms;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 /// <summary>
-/// When you deal unblocked Attack damage, the Valkyrs attack for 25% of that damage (rounded down).
+/// The first card you play each combat is free (energy and Stars). The first card you buy at each merchant is free.
 /// </summary>
 public class StockValkyrFrame : FryTheCommanderRelic
 {
     public override RelicRarity Rarity => RelicRarity.Rare;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Percent", 25M)];
+    private bool _cardPlayedThisCombat;
+    private bool _cardBoughtThisShop;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(FryCardKeywords.Valkyrs)];
-
-    public override async Task AfterDamageGiven(PlayerChoiceContext choiceContext, Creature? dealer, DamageResult result,
-        ValueProp props, Creature target, CardModel? cardSource)
+    public override Task BeforeCombatStart()
     {
-        if (dealer != Owner.Creature || !props.IsPoweredAttack() || FryMechanicsHelper.IsValkyrDamage) return;
-        if (result.UnblockedDamage <= 0 || target.IsDead) return;
+        _cardPlayedThisCombat = false;
+        Status = RelicStatus.Active;
+        return Task.CompletedTask;
+    }
 
-        var amount = Math.Floor(result.UnblockedDamage * DynamicVars["Percent"].BaseValue / 100M);
-        if (amount <= 0) return;
+    private bool IsFree(CardModel card) =>
+        !_cardPlayedThisCombat && card.Owner == Owner && card.Pile?.Type == PileType.Hand;
 
+    public override bool TryModifyEnergyCostInCombat(CardModel card, decimal originalCost, out decimal modifiedCost)
+    {
+        modifiedCost = originalCost;
+        if (!IsFree(card)) return false;
+        modifiedCost = 0m;
+        return true;
+    }
+
+    public override bool TryModifyStarCost(CardModel card, decimal originalCost, out decimal modifiedCost)
+    {
+        modifiedCost = originalCost;
+        if (!IsFree(card)) return false;
+        modifiedCost = 0m;
+        return true;
+    }
+
+    public override Task BeforeCardPlayed(CardPlay cardPlay)
+    {
+        if (_cardPlayedThisCombat || cardPlay.Card.Owner != Owner) return Task.CompletedTask;
+        _cardPlayedThisCombat = true;
+        Status = RelicStatus.Normal;
         Flash();
-        await FryMechanicsHelper.ValkyrsDamage(choiceContext, [target], amount);
+        return Task.CompletedTask;
+    }
+
+    public override Task AfterRoomEntered(AbstractRoom room)
+    {
+        if (room.RoomType == RoomType.Shop) _cardBoughtThisShop = false;
+        return Task.CompletedTask;
+    }
+
+    public override decimal ModifyMerchantPrice(Player player, MerchantEntry entry, decimal cost)
+    {
+        if (player != Owner || _cardBoughtThisShop || entry is not MerchantCardEntry) return cost;
+        return 0m;
+    }
+
+    public override Task AfterItemPurchased(Player player, MerchantEntry itemPurchased, int goldSpent)
+    {
+        if (player != Owner || itemPurchased is not MerchantCardEntry || _cardBoughtThisShop) return Task.CompletedTask;
+        _cardBoughtThisShop = true;
+        Flash();
+        return Task.CompletedTask;
     }
 }

@@ -1,13 +1,18 @@
+using BaseLib.Utils;
 using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.CardPools;
+using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
@@ -17,33 +22,32 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Costs X Stars. Request 2. The Valkyrs deal 9 (12) damage to a random enemy X times.
+/// Request 2, 3 and 4. The Valkyrs deal 9 (12) damage to a random enemy X times (X = Stars spent).
 /// </summary>
 public class FryAttackPatternAlpha() : FryTheCommanderCard(0,
     CardType.Skill, CardRarity.Uncommon,
     TargetType.Self)
 {
+    private static readonly int[] Requests = [2, 3, 4];
+
     public override bool HasStarCostX => true;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [FryCardKeywords.Request, FryCardKeywords.Valkyrs];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("Request", 2M),
-        new DamageVar(9M, ValueProp.Unpowered),
-    ];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(9M, ValueProp.Unpowered)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         var x = ResolveStarXValue();
         if (x <= 0) return;
 
-        await FryMechanicsHelper.Request(choiceContext, this, DynamicVars["Request"].IntValue, async ctx =>
+        await FryMechanicsHelper.Request(choiceContext, this, Requests, async ctx =>
         {
             for (var i = 0; i < x && CombatState is not null; i++)
             {
                 var target = Owner.RunState.Rng.CombatTargets.NextItem(CombatState.HittableEnemies.ToList());
                 if (target is null) break;
-                await FryMechanicsHelper.ValkyrsDamage(ctx, [target], DynamicVars.Damage.BaseValue);
+                await FryMechanicsHelper.ValkyrsDamage(ctx, Owner.Creature, [target], DynamicVars.Damage.BaseValue);
             }
         });
     }

@@ -13,7 +13,9 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Strife;
 
 /// <summary>
 /// Act 4's first node, shown on the map as a shadowed Grey "Chaos Emeralds" relic.
-/// Fully heals the player (Ascension doesn't reduce it, unlike other Ancients) and gives Gold. No dialogue, no choice.
+/// Fully heals the player (Ascension doesn't reduce it, unlike other Ancients), then offers 3 choices
+/// (<see cref="StrifeShrineOption"/>): 50 Rings at the start of the next fight, an upgraded Rare card, or a Rare relic and
+/// Rare potions. No dialogue.
 /// </summary>
 public class StrifeShrine : CustomAncientModel
 {
@@ -23,7 +25,14 @@ public class StrifeShrine : CustomAncientModel
     /// <summary>The "shadow" tint of the emerald (map icon and scene).</summary>
     public static readonly Color ShadowTint = new(0.13f, 0.12f, 0.17f);
 
-    protected override OptionPools MakeOptionPools => new(MakePool(Array.Empty<RelicModel>()));
+    private static IReadOnlyList<RelicModel> Options =>
+    [
+        ModelDb.Relic<StrifeShrineRings>(),
+        ModelDb.Relic<StrifeShrineCard>(),
+        ModelDb.Relic<StrifeShrineRelic>(),
+    ];
+
+    protected override OptionPools MakeOptionPools => new(MakePool(Options.ToArray()));
 
     public override bool IsValidForAct(ActModel act) => StrifeAct.IsStrife(act);
 
@@ -43,8 +52,18 @@ public class StrifeShrine : CustomAncientModel
         AgnosticDialogues = [],
     };
 
-    // No relic to pick: the event goes straight to its DONE page
-    protected override IReadOnlyList<EventOption> GenerateInitialOptions() => [];
+    protected override IReadOnlyList<EventOption> GenerateInitialOptions() =>
+        Options.Select(relic => ShrineOption(relic.ToMutable())).ToList();
+
+#if STS2_BETA
+    private EventOption ShrineOption(RelicModel relic) => RelicOption(relic, async () =>
+    {
+        await RelicCmd.Obtain(relic, Owner!);
+        Done();
+    }, "INITIAL");
+#else
+    private EventOption ShrineOption(RelicModel relic) => RelicOption(relic, "INITIAL", null);
+#endif
 
     protected override async Task BeforeEventStarted(bool isPreFinished)
     {
@@ -52,7 +71,6 @@ public class StrifeShrine : CustomAncientModel
         if (isPreFinished) return;
         var creature = Owner!.Creature;
         await CreatureCmd.Heal(creature, creature.MaxHp - creature.CurrentHp, playAnim: false);
-        await PlayerCmd.GainGold(StrifeConfig.ShrineGold, Owner);
     }
 }
 

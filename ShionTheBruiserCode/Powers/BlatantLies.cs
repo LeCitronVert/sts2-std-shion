@@ -21,6 +21,6 @@ public class BlatantLies : FryTheCommanderPower
         if (player != Owner.Player) return;
 
         Flash();
-        await FryMechanicsHelper.GainBadFaith(choiceContext, Owner, Amount, null);
+        await FryMechanicsHelper.Argue(choiceContext, Owner, Amount, null);
     }
 }

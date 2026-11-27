@@ -23,7 +23,7 @@ public class FryTurnsRed() : FryTheCommanderCard(2,
     CardType.Power, CardRarity.Rare,
     TargetType.Self)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<FryTurnsRedPower>(1M)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<FryTurnsRedPower>(3M)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>()];
 

@@ -1,19 +1,33 @@
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using MegaCrit.Sts2.Core.Models.Enchantments;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Rooms;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Relics;
 
 /// <summary>
-/// All Requests take 2 more turns to execute, but trigger an additional time.
-/// Handled in FryMechanicsHelper.Request.
+/// At the end of an Elite fight, enchant a random card in your Deck with Glam.
 /// </summary>
 public class OldWand : FryTheCommanderRelic
 {
     public override RelicRarity Rarity => RelicRarity.Shop;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Turns", 2M)];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => HoverTipFactory.FromEnchantment<Glam>();
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(FryCardKeywords.Request)];
+    public override Task AfterCombatVictory(CombatRoom room)
+    {
+        if (room.RoomType != RoomType.Elite || Owner.Creature.IsDead) return Task.CompletedTask;
+
+        var glam = ModelDb.Enchantment<Glam>();
+        var candidates = Owner.Deck.Cards.Where(c => c.Enchantment == null && glam.CanEnchant(c)).ToList();
+        if (candidates.Count == 0) return Task.CompletedTask;
+
+        Flash();
+        var card = Owner.RunState.Rng.Niche.NextItem(candidates)!;
+        CardCmd.Enchant<Glam>(card, 1m);
+        CardCmd.Preview(card);
+        return Task.CompletedTask;
+    }
 }

@@ -19,15 +19,15 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// The first time a Request card is played each combat, decrease its Request by 1.
 /// </summary>
-public class FrySummonBiggerFish() : FryTheCommanderCard(1,
-    CardType.Power, CardRarity.Rare,
+public class FrySummonBiggerFish() : FryTheCommanderCard(0,
+    CardType.Power, CardRarity.Uncommon,
     TargetType.Self)
 {
     public override int CanonicalStarCost => 2;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<SummonBiggerFish>(1M)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<SummonBiggerFish>(2M)];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(FryCardKeywords.Request)];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(FryCardKeywords.Request), HoverTipFactory.FromPower<Command>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
@@ -36,6 +36,6 @@ public class FrySummonBiggerFish() : FryTheCommanderCard(1,
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars["SummonBiggerFish"].UpgradeValueBy(1M);
     }
 }

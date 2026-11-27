@@ -1,49 +1,63 @@
+using BaseLib.Utils;
 using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Combat.History.Entries;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Cards;
+using MegaCrit.Sts2.Core.Models.Characters;
+using MegaCrit.Sts2.Core.Models.Orbs;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.ValueProps;
+using ShionTheBruiser.ShionTheBruiserCode.Character;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
+using ShionTheBruiser.ShionTheBruiserCode.Variables;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Heal 3 HP for each card in your Hand. Discard your Hand.
+/// Cooldown 3. Patch Up 2 (3) for each card in your Hand. Discard your Hand. (Shion)
+/// Token: one of Anything You Can Do's options (<see cref="FryAnythingYouCanDo"/>).
 /// </summary>
-public class FryHealThyself() : FryTheCommanderCard(1,
-    CardType.Skill, CardRarity.Rare,
+[Pool(typeof(TokenCardPool))]
+public class FryHealThyself() : FryCooldownCard(1,
+    CardType.Skill, CardRarity.Token,
     TargetType.Self)
 {
-    public override int CanonicalStarCost => 2;
+    protected override int BaseCooldown => 3;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new HealVar(3M),
+    protected override IEnumerable<DynamicVar> CooldownCardVars => [
+        new PatchUpVar(2),
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
-        new CalculatedVar("HealAmount").WithMultiplier((card, _) =>
-            PreviewHelper.OtherCardsInHand(card).Count * card.DynamicVars.Heal.BaseValue),
+        new CalculatedVar("PatchUpAmount").WithMultiplier((card, _) =>
+            PreviewHelper.OtherCardsInHand(card).Count * card.DynamicVars[PatchUpVar.Key].BaseValue),
     ];
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [];
+
+    protected override async Task OnCooldownCardPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         var hand = PileType.Hand.GetPile(Owner).Cards.ToList();
         if (hand.Count == 0) return;
 
-        await CreatureCmd.Heal(Owner.Creature, hand.Count * DynamicVars.Heal.BaseValue);
+        await ShionMechanicsHelper.PatchUpCreature(hand.Count * DynamicVars[PatchUpVar.Key].IntValue, Owner.Creature);
         await CardCmd.Discard(choiceContext, hand);
     }
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars[PatchUpVar.Key].UpgradeValueBy(1M);
     }
 }

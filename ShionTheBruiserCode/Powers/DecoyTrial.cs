@@ -4,7 +4,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// Whenever you gain Bad Faith, Refuse or lose Damage Debt from a card, ALL other players benefit from it too.
+/// Whenever you Argue or Refuse, ALL other players benefit from it too.
 /// Handled in <see cref="Helper.FryMechanicsHelper"/>. Does not stack.
 /// </summary>
 public class DecoyTrial : FryTheCommanderPower

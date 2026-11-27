@@ -16,7 +16,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Deal 2 damage to a random enemy for each Slash in your Exhaust Pile. Add Finishing Explosion to your Hand. Exhaust (upgrade: no Exhaust).
 /// </summary>
-public class SeelsFinalRush() : SeelsTheRecklessCard(2,
+public class SeelsFinalRush() : SeelsTheRecklessCard(1,
     CardType.Attack, CardRarity.Rare,
     TargetType.RandomEnemy)
 {

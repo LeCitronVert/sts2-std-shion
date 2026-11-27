@@ -23,7 +23,7 @@ public class FryApocalypseStroll() : FryCooldownCard(0,
     CardType.Attack, CardRarity.Ancient,
     TargetType.AnyEnemy)
 {
-    public override int CanonicalStarCost => 2;
+    public override int CanonicalStarCost => 1;
 
     protected override int BaseCooldown => 1;
 

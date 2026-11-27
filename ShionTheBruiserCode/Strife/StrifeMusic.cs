@@ -64,7 +64,7 @@ public static class StrifeMusic
         var me = state == null ? null : LocalContext.GetMe(state.Players);
         if (!CutsceneActive && me != null && CombatManager.Instance.IsInProgress && me.Creature.HasPower<SuperFormPower>())
         {
-            track = me.Gold > 0 ? EggReverie : EggPanic;
+            track = Rings.Get(me.Creature) > 0 ? EggReverie : EggPanic;
         }
         Play(track);
     }

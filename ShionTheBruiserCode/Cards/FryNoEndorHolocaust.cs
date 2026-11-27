@@ -1,59 +1,61 @@
+using BaseLib.Utils;
 using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.CardPools;
+using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
 using ShionTheBruiser.ShionTheBruiserCode.Helper;
 using ShionTheBruiser.ShionTheBruiserCode.Powers;
 using ShionTheBruiser.ShionTheBruiserCode.Variables;
-using BaseLib.Utils;
-using MegaCrit.Sts2.Core.Models.CardPools;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Remove the enemy's Block. Lose Damage Debt equal to the amount of Block removed. Retain.
+/// Request 10. Deal 100 damage.
 /// </summary>
-// Trashed for now: kept in the code, but out of rewards, shops and random generation.
-[Pool(typeof(TokenCardPool))]
-public class FryNoEndorHolocaust() : FryTheCommanderCard(1, //todo : choose cost
-    CardType.Skill, CardRarity.Token,
+public class FryNoEndorHolocaust() : FryTheCommanderCard(1,
+    CardType.Attack, CardRarity.Rare,
     TargetType.AnyEnemy)
 {
-    public override bool CanBeGeneratedInCombat => false;
-
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [FryCardKeywords.Request];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new HasTargetVar(),
-        new CalculationBaseVar(0),
-        new CalculationExtraVar(1),
-        new CalculatedVar("DebtLossAmount").WithMultiplier((card, target) =>
-            Math.Min(target?.Block ?? 0, FryMechanicsHelper.GetDamageDebt(card.Owner.Creature))),
+        new DynamicVar("Request", 10M),
+        new DamageVar(100M, ValueProp.Move),
     ];
-
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<DamageDebt>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         ArgumentNullException.ThrowIfNull(play.Target);
-        var block = play.Target.Block;
-        if (block <= 0) return;
-
-        await CreatureCmd.LoseBlock(choiceContext, play.Target, block, Owner.Creature);
-        await FryMechanicsHelper.LoseDamageDebt(choiceContext, Owner.Creature, block, this);
+        var target = play.Target;
+        await FryMechanicsHelper.Request(choiceContext, this, DynamicVars["Request"].IntValue, async ctx =>
+        {
+            if (CombatState is null) return;
+            // The chosen enemy may be dead by then: hit a random one instead
+            var hit = target.IsAlive ? target : Owner.RunState.Rng.CombatTargets.NextItem(CombatState.HittableEnemies.ToList());
+            if (hit is null) return;
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+                .FromCard(this, null)
+                .Targeting(hit)
+                .WithHitFx("vfx/vfx_heavy_blunt")
+                .Execute(ctx);
+        });
     }
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1); //todo : upgrade not specified
+        DynamicVars["Request"].UpgradeValueBy(-2M); //todo : upgrade not specified
     }
 }

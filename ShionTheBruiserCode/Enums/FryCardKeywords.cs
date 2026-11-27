@@ -17,4 +17,7 @@ public static class FryCardKeywords
 
     [CustomEnum, KeywordProperties(AutoKeywordPosition.None)]
     public static CardKeyword Valkyrs;
+
+    [CustomEnum, KeywordProperties(AutoKeywordPosition.None)]
+    public static CardKeyword Argue;
 }

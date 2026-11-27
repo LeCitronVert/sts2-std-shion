@@ -23,6 +23,8 @@ public class FryNoSell() : FryTheCommanderCard(3,
     CardType.Skill, CardRarity.Rare,
     TargetType.Self)
 {
+    public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.SingleplayerOnly;
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<Refuse>(1M)];

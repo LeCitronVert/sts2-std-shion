@@ -17,7 +17,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Whenever you gain Bad Faith, Refuse or lose Damage Debt from a card, ALL other players benefit from it too. Does not stack.
+/// Whenever you Argue or Refuse, ALL other players benefit from it too. Does not stack.
 /// </summary>
 public class FryDecoyTrial() : FryTheCommanderCard(2,
     CardType.Power, CardRarity.Rare,

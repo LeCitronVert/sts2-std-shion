@@ -1,13 +1,18 @@
+using BaseLib.Utils;
 using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.CardPools;
+using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.ValueProps;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
@@ -17,7 +22,7 @@ using ShionTheBruiser.ShionTheBruiserCode.Powers;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Gain 4 Block. Discard any number of cards with Cooldown. Draw that many cards.
+/// Gain 4 (6) Block. Discard any number of cards with Cooldown or Retain. Draw that many cards.
 /// </summary>
 public class FryUnbelievablyImpatient() : FryTheCommanderCard(0,
     CardType.Skill, CardRarity.Common,
@@ -29,6 +34,9 @@ public class FryUnbelievablyImpatient() : FryTheCommanderCard(0,
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(FryCardKeywords.Cooldown)];
 
+    private static bool CanDiscard(CardModel card) =>
+        card.Keywords.Contains(FryCardKeywords.Cooldown) || card.Keywords.Contains(CardKeyword.Retain);
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
@@ -37,7 +45,7 @@ public class FryUnbelievablyImpatient() : FryTheCommanderCard(0,
             choiceContext,
             Owner,
             new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 0, CardPile.MaxCardsInHand),
-            c => c.Keywords.Contains(FryCardKeywords.Cooldown),
+            CanDiscard,
             this
         )).ToList();
         if (discarded.Count == 0) return;
@@ -47,6 +55,6 @@ public class FryUnbelievablyImpatient() : FryTheCommanderCard(0,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(2M); //todo : upgrade not specified
+        DynamicVars.Block.UpgradeValueBy(2M);
     }
 }

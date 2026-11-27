@@ -21,8 +21,7 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Strife;
 
 /// <summary>
 /// Granted to every player by the Chaos Emeralds at the end of Act 3 (<see cref="StrifeTransition"/>).
-/// At the start of each fight, enter <see cref="SuperFormPower"/>. Your Gold is shown as Rings (cosmetic, see
-/// <see cref="RingVisuals"/>).
+/// At the start of each fight, enter <see cref="SuperFormPower"/>.
 /// </summary>
 [Pool(typeof(EventRelicPool))]
 public class SuperForm : ShionTheBruiserRelic
@@ -42,19 +41,12 @@ public class SuperForm : ShionTheBruiserRelic
         await PowerCmd.Apply<SuperFormPower>(new ThrowingPlayerChoiceContext(), Owner.Creature, 1m, Owner.Creature, null);
     }
 
-    public override Task AfterObtained()
-    {
-        RingVisuals.RefreshGoldIcon();
-        return Task.CompletedTask;
-    }
-
     public static bool Has(Player? player) => player?.Relics.Any(r => r is SuperForm) == true;
 }
 
 /// <summary>
-/// Unblocked damage you take is absorbed by your Rings (Gold) first, 1 Ring per point, until you run out. That protection
-/// can be turned off and back on from the Emerald wheel (<see cref="EmeraldWheel"/>), visuals included.
-/// Damage you deal yourself isn't absorbed.
+/// Lets you turn your <see cref="Rings"/>' damage protection off and back on from the Emerald wheel
+/// (<see cref="EmeraldWheel"/>), visuals included. Without Super Form, Rings always protect.
 /// Also holds this fight's Emerald wheel state: each Emerald Power can be picked once per fight. Whenever an enemy dies,
 /// one used Emerald Power (at random) can be picked again, and if the Team Blast gauge was used this combat, it's unlocked
 /// and back to 0 for the whole team.
@@ -70,10 +62,6 @@ public sealed class SuperFormPower : ShionTheBruiserPower
     public override string CustomBigIconPath => "super_form.png".RelicImagePath();
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(DreamersKeywords.EmeraldPower)];
-
-    private int _pendingRingLoss;
-
-    private int Rings => Owner.Player?.Gold ?? 0;
 
     // ── Emerald wheel state (only changed by EmeraldWheelAction and hooks: the same on every client) ──
 
@@ -97,30 +85,9 @@ public sealed class SuperFormPower : ShionTheBruiserPower
         Flash();
     }
 
-    /// <summary>Whether this creature's Rings absorb damage right now (logic and visuals).</summary>
+    /// <summary>Whether this creature is in Super Form with its Ring protection on (aura visuals).</summary>
     public static bool IsProtecting(Creature creature) =>
         creature.IsAlive && creature.GetPower<SuperFormPower>() is { ProtectionOn: true };
-
-    // Only called by real damage (not by previews), so tracking the absorbed amount here is safe
-    public override decimal ModifyHpLostAfterOsty(Creature target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
-    {
-        if (target != Owner || amount <= 0 || dealer == Owner || Owner.Player == null || !ProtectionOn) return amount;
-        var available = Rings - _pendingRingLoss;
-        if (available <= 0) return amount;
-
-        var absorbed = (int)Math.Min(available, Math.Ceiling(amount));
-        _pendingRingLoss += absorbed;
-        return Math.Max(0m, amount - absorbed);
-    }
-
-    public override async Task AfterModifyingHpLostAfterOsty()
-    {
-        if (_pendingRingLoss <= 0 || Owner.Player is not { } player) return;
-        var loss = _pendingRingLoss;
-        _pendingRingLoss = 0;
-        Flash();
-        await PlayerCmd.LoseGold(loss, player, GoldLossType.Lost);
-    }
 
     public override Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature,
 #if STS2_BETA

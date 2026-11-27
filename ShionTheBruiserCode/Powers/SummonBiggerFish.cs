@@ -1,30 +1,28 @@
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using ShionTheBruiser.ShionTheBruiserCode.Enums;
+using ShionTheBruiser.ShionTheBruiserCode.Helper;
 
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// The first X times a Request card is played each combat, decrease its Request by 1.
+/// Whenever one of your Requested counters reaches 0, gain X Command.
 /// </summary>
-public class SummonBiggerFish : FryTheCommanderPower
+public class SummonBiggerFish : FryTheCommanderPower, IFryListener
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override int DisplayAmount => Math.Max(0, Amount - _uses);
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [
+        HoverTipFactory.FromKeyword(FryCardKeywords.Request),
+        HoverTipFactory.FromPower<Command>(),
+    ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(FryCardKeywords.Request)];
-
-    private int _uses;
-
-    public bool TryConsume()
+    public async Task AfterRequestCounterReachedZero(PlayerChoiceContext choiceContext, Requested request)
     {
-        if (DisplayAmount <= 0) return false;
-
-        _uses++;
+        if (request.Owner != Owner || Owner.IsDead) return;
         Flash();
-        InvokeDisplayAmountChanged();
-        return true;
+        await FryMechanicsHelper.GainCommand(choiceContext, Owner, Amount, null);
     }
 }

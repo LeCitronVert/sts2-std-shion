@@ -19,7 +19,7 @@ using MegaCrit.Sts2.Core.Models.CardPools;
 namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 
 /// <summary>
-/// Ethereal. Exhaust. Does nothing.
+/// Ethereal. Exhaust. Does nothing (upgraded: gain 1 energy).
 /// </summary>
 [Pool(typeof(TokenCardPool))]
 public class FryAllForNothing() : FryTheCommanderCard(0,
@@ -28,10 +28,12 @@ public class FryAllForNothing() : FryTheCommanderCard(0,
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Ethereal, CardKeyword.Exhaust];
 
-    protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {
-        return Task.CompletedTask;
+        if (IsUpgraded) await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
     }
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(1)];
 
     protected override void OnUpgrade()
     {

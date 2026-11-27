@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.Models;
 namespace ShionTheBruiser.ShionTheBruiserCode.Powers;
 
 /// <summary>
-/// Whenever you attack an enemy and it has less HP than (X times) the amount of energy and Stars you spent this turn, it dies.
+/// Whenever ANYONE attacks an enemy and it has less HP than (X times) the amount of energy and Stars you spent this turn, it dies.
 /// </summary>
 public class RuleOfCool : FryTheCommanderPower
 {
@@ -41,7 +41,8 @@ public class RuleOfCool : FryTheCommanderPower
 
     public override async Task AfterAttack(PlayerChoiceContext choiceContext, AttackCommand command)
     {
-        if (command.Attacker != Owner) return;
+        // ANYONE on your side (you, other players, pets): an enemy never attacks another enemy
+        if (command.Attacker is null || command.Attacker.Side != Owner.Side) return;
 
         var threshold = _spentThisTurn * Amount;
         var victims = command.Results.SelectMany(r => r)

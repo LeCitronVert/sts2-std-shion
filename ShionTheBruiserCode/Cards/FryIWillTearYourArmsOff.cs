@@ -1,3 +1,5 @@
+using MegaCrit.Sts2.Core.Models.CardPools;
+using BaseLib.Utils;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -19,10 +21,14 @@ namespace ShionTheBruiser.ShionTheBruiserCode.Cards;
 /// <summary>
 /// Deal 14 (16) damage. Apply 2 (3) Weak.
 /// </summary>
+// Trashed (sheet strikes it out): kept as a Token, out of rewards, shops and random generation
+[Pool(typeof(TokenCardPool))]
 public class FryIWillTearYourArmsOff() : FryTheCommanderCard(2,
-    CardType.Attack, CardRarity.Common,
+    CardType.Attack, CardRarity.Token,
     TargetType.AnyEnemy)
 {
+    public override bool CanBeGeneratedInCombat => false;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(14M, ValueProp.Move),
         new PowerVar<WeakPower>(2M),

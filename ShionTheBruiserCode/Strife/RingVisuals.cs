@@ -1,3 +1,5 @@
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.addons.mega_text;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Context;
@@ -13,51 +15,16 @@ using ShionTheBruiser.ShionTheBruiserCode.Visuals;
 namespace ShionTheBruiser.ShionTheBruiserCode.Strife;
 
 /// <summary>
-/// Super Form's Rings, cosmetic only:
+/// Rings visuals (<see cref="Rings"/>):
 /// <list type="bullet">
-/// <item>The top bar's Gold icon becomes a Ring while the local player has the Super Form relic.</item>
-/// <item>In a fight with Super Form, a yellow segment from the left of the health bar shows how much damage the Rings
-/// can still absorb (full when you have at least your Max HP in Rings).</item>
+/// <item>A Rings counter next to the top bar's Gold (<see cref="RingTopBar"/>).</item>
+/// <item>A yellow segment from the left of the health bar shows how much damage the Rings can still absorb (full when
+/// you have at least your Max HP in Rings).</item>
 /// </list>
 /// </summary>
 public static class RingVisuals
 {
     public static readonly string RingIconPath = "ui/ring.png".ImagePath();
-
-    private static Texture2D? _originalGoldIcon;
-
-    /// <summary>Swaps the top bar's Gold icon for the Ring (or back).</summary>
-    public static void RefreshGoldIcon()
-    {
-        var gold = NRun.Instance?.GlobalUi?.TopBar?.Gold;
-        var state = StrifeRun.State;
-        if (gold == null || !GodotObject.IsInstanceValid(gold) || state == null) return;
-        if (FindIcon(gold) is not { } icon) return;
-
-        var useRing = SuperForm.Has(LocalContext.GetMe(state.Players)) && ResourceLoader.Exists(RingIconPath);
-        if (useRing)
-        {
-            if (icon.Texture?.ResourcePath != RingIconPath)
-            {
-                _originalGoldIcon ??= icon.Texture;
-                icon.Texture = GD.Load<Texture2D>(RingIconPath);
-            }
-        }
-        else if (_originalGoldIcon != null && icon.Texture?.ResourcePath == RingIconPath)
-        {
-            icon.Texture = _originalGoldIcon;
-        }
-    }
-
-    private static TextureRect? FindIcon(Node root)
-    {
-        foreach (var child in root.GetChildren())
-        {
-            if (child is TextureRect rect) return rect;
-            if (FindIcon(child) is { } found) return found;
-        }
-        return null;
-    }
 
     public static void RefreshHealthBar(NCreature node)
     {
@@ -75,14 +42,84 @@ public static class RingVisuals
     }
 }
 
+/// <summary>
+/// The local player's Rings in the top bar, right of the Gold: the Ring icon and the amount. Shown while they have Rings
+/// in a fight, or hold Super Form (0 then). Polled, visual only.
+/// </summary>
 [HarmonyPatch(typeof(NTopBarGold), nameof(NTopBarGold.Initialize))]
-public static class RingTopBarPatch
+public static class RingTopBar
 {
+    private const string NodeName = "DreamersRingsCounter";
+    private const float PollInterval = 0.2f;
+
     [HarmonyPostfix]
-    public static void Postfix(Player player) => Callable.From(RingVisuals.RefreshGoldIcon).CallDeferred();
+    public static void Postfix(NTopBarGold __instance, Player player) =>
+        Callable.From(() => Attach(__instance, player)).CallDeferred();
+
+    private static void Attach(NTopBarGold gold, Player player)
+    {
+        if (!GodotObject.IsInstanceValid(gold) || gold.GetParent() is not { } parent) return;
+        parent.GetNodeOrNull(NodeName)?.QueueFree();
+
+        var goldLabel = gold.GetNodeOrNull<MegaLabel>("%GoldLabel");
+        var goldIcon = FindIcon(gold);
+        if (goldLabel == null) return;
+
+        var box = new HBoxContainer { Name = NodeName, MouseFilter = Control.MouseFilterEnum.Ignore };
+        box.AddThemeConstantOverride("separation", 4);
+        var icon = new TextureRect
+        {
+            Texture = ResourceLoader.Exists(RingVisuals.RingIconPath) ? GD.Load<Texture2D>(RingVisuals.RingIconPath) : null,
+            ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+            StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
+            CustomMinimumSize = goldIcon?.Size is { X: > 0 } size ? size : new Vector2(48, 48),
+            MouseFilter = Control.MouseFilterEnum.Ignore,
+        };
+        var label = (MegaLabel)goldLabel.Duplicate();
+        label.UniqueNameInOwner = false;
+        box.AddChild(icon);
+        box.AddChild(label);
+
+        parent.AddChild(box);
+        if (parent is Container)
+        {
+            parent.MoveChild(box, gold.GetIndex() + 1);
+        }
+        else
+        {
+            box.Position = gold.Position + new Vector2(gold.Size.X + 12, 0);
+            box.Size = new Vector2(0, gold.Size.Y);
+        }
+
+        var last = -1;
+        void Poll()
+        {
+            if (!GodotObject.IsInstanceValid(box) || !GodotObject.IsInstanceValid(label)) return;
+            var rings = CombatManager.Instance.IsInProgress ? Rings.Get(player.Creature) : 0;
+            box.Visible = rings > 0 || SuperForm.Has(player);
+            if (rings == last) return;
+            last = rings;
+            label.SetTextAutoSize($"{rings}");
+        }
+
+        var timer = new Godot.Timer { WaitTime = PollInterval, Autostart = true };
+        timer.Timeout += Poll;
+        box.AddChild(timer);
+        Poll();
+    }
+
+    private static TextureRect? FindIcon(Node root)
+    {
+        foreach (var child in root.GetChildren())
+        {
+            if (child is TextureRect rect) return rect;
+            if (FindIcon(child) is { } found) return found;
+        }
+        return null;
+    }
 }
 
-/// <summary>The yellow Ring segment on a Super Form player's health bar.</summary>
+/// <summary>The yellow Ring segment on the health bar of a creature whose Rings protect it.</summary>
 [HarmonyPatch(typeof(NHealthBar), nameof(NHealthBar.RefreshValues))]
 public static class RingHealthBarPatch
 {
@@ -106,7 +143,7 @@ public static class RingHealthBarPatch
         if (poison.GetParent() is not { } mask) return;
 
         var segment = mask.GetNodeOrNull<NinePatchRect>(SegmentName);
-        var rings = SuperFormPower.IsProtecting(creature) ? creature.Player?.Gold ?? 0 : 0;
+        var rings = Rings.IsProtecting(creature) ? Rings.Get(creature) : 0;
         if (rings <= 0 || creature.MaxHp <= 0)
         {
             if (segment != null) segment.Visible = false;
@@ -186,7 +223,7 @@ public sealed class SuperFormFx
     {
         if (!GodotObject.IsInstanceValid(_node) || _creature.Player is not { } player) return;
         var active = SuperFormPower.IsProtecting(_creature);
-        var rings = player.Gold;
+        var rings = Rings.Get(_creature);
         var hasRings = rings > 0;
 
         // Every poll: the game refuses to spawn the flames while the creature isn't interactable, so it retries

@@ -52,6 +52,6 @@ public class FrySlapOnTheWristNuke() : FryTheCommanderCard(3,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(8M); //todo : upgrade not specified
+        DynamicVars.Damage.UpgradeValueBy(10M);
     }
 }
